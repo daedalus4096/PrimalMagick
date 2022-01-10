@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
@@ -42,17 +44,17 @@ public class ItemAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager) {
+    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
         if (this.setValues != null) {
             return this.setValues;
         } else if (this.baseEntryId != null) {
             if (this.baseEntry == null) {
-                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager);
+                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager, history);
                 if (this.baseEntry == null) {
-                    throw new IllegalStateException("Failed to look up base " + this.baseEntryId.toString() + " for affinity calculation for " + this.targetId.toString());
+                    return null;
                 }
             }
-            SourceList retVal = this.baseEntry.getTotal(recipeManager);
+            SourceList retVal = this.baseEntry.getTotal(recipeManager, history);
             if (retVal != null) {
                 if (this.addValues != null) {
                     retVal = retVal.add(this.addValues);

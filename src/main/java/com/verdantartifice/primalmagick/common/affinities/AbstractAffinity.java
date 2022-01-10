@@ -1,6 +1,9 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -21,12 +24,12 @@ public abstract class AbstractAffinity implements IAffinity {
     }
 
     @Override
-    public SourceList getTotal(@Nonnull RecipeManager recipeManager) {
+    public SourceList getTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
         if (this.totalCache == null) {
-            this.totalCache = this.calculateTotal(recipeManager);
+            this.totalCache = this.calculateTotal(recipeManager, history);
         }
-        return this.totalCache.copy();
+        return this.totalCache == null ? null : this.totalCache.copy();
     }
     
-    protected abstract SourceList calculateTotal(@Nonnull RecipeManager recipeManager);
+    protected abstract SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history);
 }

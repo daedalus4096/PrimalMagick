@@ -1,6 +1,9 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -19,5 +22,5 @@ public interface IAffinity {
     
     IAffinitySerializer<?> getSerializer();
     
-    SourceList getTotal(@Nonnull RecipeManager recipeManager);
+    SourceList getTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history);
 }

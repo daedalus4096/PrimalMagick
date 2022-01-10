@@ -3,6 +3,7 @@ v2.0.2
 * Update model for ritual altar
 * Update texture for rock salt ore
 * Add config file entries to control shrine spacing in worldgen
+* Fix client crash when fetching affinities for items with circular recipe chains
 
 v2.0.1
 ------

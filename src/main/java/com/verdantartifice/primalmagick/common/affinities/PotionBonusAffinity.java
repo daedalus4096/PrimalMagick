@@ -1,6 +1,9 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -32,7 +35,7 @@ public class PotionBonusAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager) {
+    protected SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
         if (this.bonusValues != null) {
             return this.bonusValues;
         } else {

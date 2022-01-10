@@ -150,14 +150,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager) {
+    public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
         Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
             return new HashMap<>();
         });
         if (map.containsKey(id)) {
             return map.get(id);
         } else {
-            return this.generateItemAffinity(id, recipeManager, new ArrayList<>());
+            return this.generateItemAffinity(id, recipeManager, history);
         }
     }
     
@@ -188,7 +188,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (entityAffinity == null) {
             return null;
         } else {
-            return this.capAffinities(entityAffinity.getTotal(null), MAX_AFFINITY);
+            return this.capAffinities(entityAffinity.getTotal(null, new ArrayList<>()), MAX_AFFINITY);
         }
     }
     
@@ -215,7 +215,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         
         // Extract source values from the affinity data
-        SourceList retVal = itemAffinity.getTotal(recipeManager);
+        SourceList retVal = itemAffinity.getTotal(recipeManager, history);
         
         // Append any needed bonus affinities for NBT data, then cap the result to a reasonable value
         return this.capAffinities(this.addBonusAffinities(stack, retVal, recipeManager), MAX_AFFINITY);
@@ -257,7 +257,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         // Look up all recipes with the given item as an output
         for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem() != null && r.getResultItem().getItem().getRegistryName().equals(id)).collect(Collectors.toList())) {
             // Compute the affinities from the recipe's ingredients
-            SourceList ingSources = generateItemAffinityValuesFromIngredients(recipe, recipeManager, history);
+            SourceList ingSources = this.generateItemAffinityValuesFromIngredients(recipe, recipeManager, history);
             if (recipe instanceof IHasManaCost) {
                 // Add affinities from mana costs
                 IHasManaCost manaRecipe = (IHasManaCost)recipe;
@@ -392,7 +392,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (potion != null && potion != Potions.EMPTY) {
             IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, potion.getRegistryName());
             if (bonus != null) {
-                retVal.add(bonus.getTotal(recipeManager));
+                retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()));
             }
         }
         
@@ -402,7 +402,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             for (Enchantment enchant : enchants.keySet()) {
                 IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, enchant.getRegistryName());
                 if (bonus != null) {
-                    retVal.add(bonus.getTotal(recipeManager).multiply(enchants.get(enchant)));
+                    retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()).multiply(enchants.get(enchant)));
                 }
             }
         }
