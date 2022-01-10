@@ -1,3 +1,7 @@
+v2.0.2
+------
+* Update model for ritual altar
+
 v2.0.1
 ------
 * Full release for MC 1.18.1!
