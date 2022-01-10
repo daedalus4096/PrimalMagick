@@ -4,6 +4,7 @@ v2.0.2
 * Update texture for rock salt ore
 * Add config file entries to control shrine spacing in worldgen
 * Fix client crash when fetching affinities for items with circular recipe chains
+* Fix client crash when fetching affinities for items made in a non-standard crafting grid
 
 v2.0.1
 ------

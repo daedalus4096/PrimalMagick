@@ -291,7 +291,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         NonNullList<ItemStack> containerList = NonNullList.create();
         if (recipe instanceof CraftingRecipe) {
             CraftingRecipe craftingRecipe = (CraftingRecipe)recipe;
-            CraftingContainer inv = new CraftingContainer(new FakeContainer(), 3, 3);
+            CraftingContainer inv = new CraftingContainer(new FakeContainer(), ingredients.size(), 1);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
                 ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, history);
