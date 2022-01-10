@@ -1,6 +1,7 @@
 v2.0.2
 ------
 * Update model for ritual altar
+* Update texture for rock salt ore
 
 v2.0.1
 ------
