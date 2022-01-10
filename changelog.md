@@ -5,6 +5,7 @@ v2.0.2
 * Add config file entries to control shrine spacing in worldgen
 * Fix client crash when fetching affinities for items with circular recipe chains
 * Fix client crash when fetching affinities for items made in a non-standard crafting grid
+* Increment to Forge version 39.0.17
 
 v2.0.1
 ------
