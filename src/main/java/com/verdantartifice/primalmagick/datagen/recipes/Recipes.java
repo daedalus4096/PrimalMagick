@@ -170,7 +170,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("NNN")
             .key('N', ItemTagsPM.NUGGETS_HEXIUM)
             .key('T', Items.SOUL_TORCH)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPIRIT_LANTERN")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUNLAMP"), SimpleResearchKey.parse("HEXIUM")))
             .manaCost(new SourceList().add(Source.INFERNAL, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_PRISM.get())
