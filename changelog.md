@@ -1,3 +1,7 @@
+v2.0.3
+------
+* Update model for runecarving table
+
 v2.0.2
 ------
 * Update model for ritual altar
