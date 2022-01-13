@@ -130,9 +130,11 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             for (ManaCostWidget widget : this.costWidgets) {
                 int amount = manaCosts.getAmount(widget.getSource());
                 widget.visible = (amount > 0);
-                widget.setAmount(amount);
-                widget.x = this.leftPos + 1 + dx + (this.getXSize() - widgetSetWidth) / 2;
-                dx += 18;
+                if (widget.visible) {
+                    widget.setAmount(amount);
+                    widget.x = this.leftPos + 1 + dx + (this.getXSize() - widgetSetWidth) / 2;
+                    dx += 18;
+                }
             }
         } else {
             this.costWidgets.forEach(widget -> {
