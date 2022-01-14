@@ -229,12 +229,11 @@ public class TileInventoryPM extends TilePM implements WorldlyContainer {
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         ContainerHelper.saveAllItems(compound, this.items);
-        return compound;
     }
-    
+
     @Override
     public void onLoad() {
         super.onLoad();

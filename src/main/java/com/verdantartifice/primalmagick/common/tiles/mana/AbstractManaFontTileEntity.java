@@ -44,11 +44,11 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putShort("mana", (short)this.mana);
-        return super.save(compound);
     }
-    
+
     public int getMana() {
         return this.mana;
     }

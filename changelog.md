@@ -3,6 +3,7 @@ v2.0.3
 * Update model for runecarving table
 * Fix misaligned mana cost widgets on Arcane Workbench screen
 * Fix broken Spirit Lantern recipe
+* Fix block entity saving
 
 v2.0.2
 ------

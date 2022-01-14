@@ -49,7 +49,9 @@ public class TilePM extends BlockEntity {
     
     @Override
     public CompoundTag getUpdateTag() {
-        return this.save(new CompoundTag());
+        CompoundTag retVal = new CompoundTag();
+        this.saveAdditional(retVal);
+        return retVal;
     }
     
     @Override
