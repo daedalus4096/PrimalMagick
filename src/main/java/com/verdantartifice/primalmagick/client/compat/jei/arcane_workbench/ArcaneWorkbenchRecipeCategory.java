@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -15,29 +15,30 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
- * Recipe category class for a arcane workbench recipe.
+ * Recipe category class for an arcane workbench recipe.
  * 
  * @author Daedalus4096
  */
-public class ShapedArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<ShapedArcaneRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "shaped_arcane_workbench");
+public class ArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
+    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "arcane_workbench");
 
-    public ShapedArcaneWorkbenchRecipeCategory(IGuiHelper guiHelper) {
-        super(ShapedArcaneRecipe.class, guiHelper, UID, "block.primalmagick.arcane_workbench");
+    public ArcaneWorkbenchRecipeCategory(IGuiHelper guiHelper) {
+        super(IArcaneRecipe.class, guiHelper, UID, "block.primalmagick.arcane_workbench");
         this.setBackground(guiHelper.createBlankDrawable(116, 54));
         this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
     }
 
     @Override
-    public void setIngredients(ShapedArcaneRecipe recipe, IIngredients ingredients) {
+    public void setIngredients(IArcaneRecipe recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, ShapedArcaneRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, IArcaneRecipe recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         
         // Initialize recipe output
@@ -49,12 +50,19 @@ public class ShapedArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<Shaped
             int x = index % 3;
             int y = index / 3;
             guiItemStacks.init(index + 1, true, x * 18, y * 18);
-            guiItemStacks.set(index, Arrays.asList(recipe.getIngredients().get(index).getItems()));
+            if (index < recipe.getIngredients().size()) {
+                guiItemStacks.set(index + 1, Arrays.asList(recipe.getIngredients().get(index).getItems()));
+            }
+        }
+        
+        // If the recipe is shapeless, mark it as such
+        if (!(recipe instanceof IShapedRecipe<?>)) {
+            recipeLayout.setShapeless();
         }
     }
 
     @Override
-    public void draw(ShapedArcaneRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IArcaneRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
         // TODO Show mana costs and possibly research requirements
         super.draw(recipe, stack, mouseX, mouseY);
     }

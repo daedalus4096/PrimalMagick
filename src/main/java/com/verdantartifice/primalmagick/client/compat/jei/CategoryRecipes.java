@@ -2,12 +2,16 @@ package com.verdantartifice.primalmagick.client.compat.jei;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeType;
 
 /**
  * Helper class to fetch which recipes belong to each recipe category.
@@ -32,9 +36,12 @@ public class CategoryRecipes {
         }
     }
     
-    public List<ShapedArcaneRecipe> getShapedArcaneRecipes(IRecipeCategory<ShapedArcaneRecipe> category) {
-        // TODO Stub
-//        CategoryRecipeValidator<ShapedArcaneRecipe> validator = new CategoryRecipeValidator<>(category, 9);
-        return null;
+    public List<IArcaneRecipe> getArcaneRecipes(IRecipeCategory<IArcaneRecipe> category) {
+        CategoryRecipeValidatorPM<IArcaneRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.ARCANE_CRAFTING, validator);
+    }
+    
+    private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
+        return recipeManager.getAllRecipesFor(recipeType).stream().filter(r -> validator.isRecipeValid(r) && validator.isRecipeHandled(r)).toList();
     }
 }
