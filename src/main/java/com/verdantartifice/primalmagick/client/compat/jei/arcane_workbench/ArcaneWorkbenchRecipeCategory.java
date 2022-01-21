@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench;
 
-import java.util.Arrays;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
@@ -10,6 +8,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
@@ -24,9 +23,12 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  */
 public class ArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "arcane_workbench");
+    
+    private final ICraftingGridHelper craftingGridHelper;
 
     public ArcaneWorkbenchRecipeCategory(IGuiHelper guiHelper) {
         super(IArcaneRecipe.class, guiHelper, UID, "block.primalmagick.arcane_workbench");
+        this.craftingGridHelper = guiHelper.createCraftingGridHelper(1);
         this.setBackground(guiHelper.createBlankDrawable(116, 54));
         this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
     }
@@ -50,13 +52,12 @@ public class ArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<IArcaneRecip
             int x = index % 3;
             int y = index / 3;
             guiItemStacks.init(index + 1, true, x * 18, y * 18);
-            if (index < recipe.getIngredients().size()) {
-                guiItemStacks.set(index + 1, Arrays.asList(recipe.getIngredients().get(index).getItems()));
-            }
         }
         
-        // If the recipe is shapeless, mark it as such
-        if (!(recipe instanceof IShapedRecipe<?>)) {
+        if (recipe instanceof IShapedRecipe<?> shapedRecipe) {
+            this.craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(VanillaTypes.ITEM), shapedRecipe.getRecipeWidth(), shapedRecipe.getRecipeHeight());
+        } else {
+            this.craftingGridHelper.setInputs(guiItemStacks, ingredients.getInputs(VanillaTypes.ITEM));
             recipeLayout.setShapeless();
         }
     }
