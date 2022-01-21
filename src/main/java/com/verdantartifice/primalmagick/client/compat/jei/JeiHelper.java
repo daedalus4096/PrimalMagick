@@ -1,7 +1,7 @@
-package com.verdantartifice.primalmagick.common.compat.jei;
+package com.verdantartifice.primalmagick.client.compat.jei;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.compat.jei.arcane_workbench.ShapedArcaneWorkbenchRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench.ShapedArcaneWorkbenchRecipeCategory;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;

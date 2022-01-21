@@ -1,10 +1,10 @@
-package com.verdantartifice.primalmagick.common.compat.jei.arcane_workbench;
+package com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench;
 
 import java.util.Arrays;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 

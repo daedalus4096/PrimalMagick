@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.compat.jei;
+package com.verdantartifice.primalmagick.client.compat.jei;
 
 import javax.annotation.Nullable;
 
