@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.client.compat.jei;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneWorkbenchRecipeCategory;
-import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcocterRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneCraftingRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
@@ -56,8 +56,8 @@ public class JeiHelper implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
-        this.arcaneCategory = new ArcaneWorkbenchRecipeCategory(guiHelper);
-        this.concoctingCategory = new ConcocterRecipeCategory(guiHelper);
+        this.arcaneCategory = new ArcaneCraftingRecipeCategory(guiHelper);
+        this.concoctingCategory = new ConcoctingRecipeCategory(guiHelper);
         registration.addRecipeCategories(
             this.arcaneCategory,
             this.concoctingCategory
@@ -68,28 +68,28 @@ public class JeiHelper implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         CategoryRecipes categoryRecipes = new CategoryRecipes();
         if (this.arcaneCategory != null) {
-            registration.addRecipes(categoryRecipes.getArcaneRecipes(this.arcaneCategory), ArcaneWorkbenchRecipeCategory.UID);
+            registration.addRecipes(categoryRecipes.getArcaneRecipes(this.arcaneCategory), ArcaneCraftingRecipeCategory.UID);
         }
         if (this.concoctingCategory != null) {
-            registration.addRecipes(categoryRecipes.getConcoctingRecipes(this.concoctingCategory), ConcocterRecipeCategory.UID);
+            registration.addRecipes(categoryRecipes.getConcoctingRecipes(this.concoctingCategory), ConcoctingRecipeCategory.UID);
         }
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), ArcaneWorkbenchRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(ItemsPM.CONCOCTER.get()), ConcocterRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), ArcaneCraftingRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(ItemsPM.CONCOCTER.get()), ConcoctingRecipeCategory.UID);
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ArcaneWorkbenchRecipeCategory.UID, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(ConcocterContainer.class, ConcocterRecipeCategory.UID, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ArcaneCraftingRecipeCategory.UID, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(ConcocterContainer.class, ConcoctingRecipeCategory.UID, 1, 9, 11, 36);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, ArcaneWorkbenchRecipeCategory.UID);
-        registration.addRecipeClickArea(ConcocterScreen.class, 104, 35, 22, 15, ConcocterRecipeCategory.UID);
+        registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, ArcaneCraftingRecipeCategory.UID);
+        registration.addRecipeClickArea(ConcocterScreen.class, 104, 35, 22, 15, ConcoctingRecipeCategory.UID);
     }
 }

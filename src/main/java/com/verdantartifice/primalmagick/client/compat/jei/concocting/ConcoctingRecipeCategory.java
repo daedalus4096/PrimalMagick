@@ -23,7 +23,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-public class ConcocterRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe> {
+public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "concocter");
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/arcane_workbench.png");
     private static final int MANA_COST_X_OFFSET = 64;
@@ -32,7 +32,7 @@ public class ConcocterRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe>
     private final ICraftingGridHelper craftingGridHelper;
     private final IDrawableStatic manaCostIcon;
 
-    public ConcocterRecipeCategory(IGuiHelper guiHelper) {
+    public ConcoctingRecipeCategory(IGuiHelper guiHelper) {
         super(IConcoctingRecipe.class, guiHelper, UID, "block.primalmagick.concocter");
         this.craftingGridHelper = guiHelper.createCraftingGridHelper(1);
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);

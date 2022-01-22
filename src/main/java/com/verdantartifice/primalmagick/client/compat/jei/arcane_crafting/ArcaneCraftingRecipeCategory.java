@@ -29,7 +29,7 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
+public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "arcane_workbench");
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/arcane_workbench.png");
     private static final int MANA_COST_X_OFFSET = 64;
@@ -38,7 +38,7 @@ public class ArcaneWorkbenchRecipeCategory extends RecipeCategoryPM<IArcaneRecip
     private final ICraftingGridHelper craftingGridHelper;
     private final IDrawableStatic manaCostIcon;
 
-    public ArcaneWorkbenchRecipeCategory(IGuiHelper guiHelper) {
+    public ArcaneCraftingRecipeCategory(IGuiHelper guiHelper) {
         super(IArcaneRecipe.class, guiHelper, UID, "block.primalmagick.arcane_workbench");
         this.craftingGridHelper = guiHelper.createCraftingGridHelper(1);
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
