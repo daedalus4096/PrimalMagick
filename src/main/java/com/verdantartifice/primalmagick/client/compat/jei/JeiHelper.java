@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneCraftingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
+import com.verdantartifice.primalmagick.client.compat.jei.runecarving.RunecarvingRecipeCategory;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -13,6 +14,7 @@ import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContain
 import com.verdantartifice.primalmagick.common.containers.ConcocterContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import mezz.jei.api.IModPlugin;
@@ -41,6 +43,8 @@ public class JeiHelper implements IModPlugin {
     private IRecipeCategory<IArcaneRecipe> arcaneCategory;
     @Nullable
     private IRecipeCategory<IConcoctingRecipe> concoctingCategory;
+    @Nullable
+    private IRecipeCategory<IRunecarvingRecipe> runecarvingCategory;
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -58,9 +62,11 @@ public class JeiHelper implements IModPlugin {
         IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
         this.arcaneCategory = new ArcaneCraftingRecipeCategory(guiHelper);
         this.concoctingCategory = new ConcoctingRecipeCategory(guiHelper);
+        this.runecarvingCategory = new RunecarvingRecipeCategory(guiHelper);
         registration.addRecipeCategories(
             this.arcaneCategory,
-            this.concoctingCategory
+            this.concoctingCategory,
+            this.runecarvingCategory
         );
     }
 
@@ -73,12 +79,16 @@ public class JeiHelper implements IModPlugin {
         if (this.concoctingCategory != null) {
             registration.addRecipes(categoryRecipes.getConcoctingRecipes(this.concoctingCategory), ConcoctingRecipeCategory.UID);
         }
+        if (this.runecarvingCategory != null) {
+            registration.addRecipes(categoryRecipes.getRunecarvingRecipes(this.runecarvingCategory), RunecarvingRecipeCategory.UID);
+        }
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), ArcaneCraftingRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(ItemsPM.CONCOCTER.get()), ConcoctingRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.CONCOCTER.get()), ConcoctingRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RUNECARVING_TABLE.get()), RunecarvingRecipeCategory.UID);
     }
 
     @Override

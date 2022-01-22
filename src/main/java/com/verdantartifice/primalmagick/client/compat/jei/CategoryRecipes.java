@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -45,6 +46,11 @@ public class CategoryRecipes {
     public List<IConcoctingRecipe> getConcoctingRecipes(IRecipeCategory<IConcoctingRecipe> category) {
         CategoryRecipeValidatorPM<IConcoctingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.CONCOCTING, validator);
+    }
+    
+    public List<IRunecarvingRecipe> getRunecarvingRecipes(IRecipeCategory<IRunecarvingRecipe> category) {
+        CategoryRecipeValidatorPM<IRunecarvingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 2, true);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RUNECARVING, validator);
     }
     
     private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
