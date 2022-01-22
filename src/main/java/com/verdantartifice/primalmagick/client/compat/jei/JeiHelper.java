@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench.ArcaneWorkbenchRecipeCategory;
+import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
@@ -12,6 +13,7 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -63,5 +65,10 @@ public class JeiHelper implements IModPlugin {
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ArcaneWorkbenchRecipeCategory.UID, 1, 9, 11, 36);
+    }
+
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+        registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, ArcaneWorkbenchRecipeCategory.UID);
     }
 }
