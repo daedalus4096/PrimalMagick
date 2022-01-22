@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagick.client.compat.jei;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench.ArcaneWorkbenchRecipeCategory;
-import com.verdantartifice.primalmagick.client.compat.jei.concocter.ConcocterRecipeCategory;
-import com.verdantartifice.primalmagick.client.compat.jei.concocter.ConcoctionSubtypeInterpreter;
+import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneWorkbenchRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcocterRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;

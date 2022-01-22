@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.compat.jei.arcane_workbench;
+package com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting;
 
 import java.util.ArrayList;
 import java.util.List;

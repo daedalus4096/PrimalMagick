@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.compat.jei.concocter;
+package com.verdantartifice.primalmagick.client.compat.jei.concocting;
 
 import java.util.List;
 
