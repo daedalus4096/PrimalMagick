@@ -5,6 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 
@@ -57,6 +58,11 @@ public class CategoryRecipes {
     public List<IDissolutionRecipe> getDissolutionRecipes(IRecipeCategory<IDissolutionRecipe> category) {
         CategoryRecipeValidatorPM<IDissolutionRecipe> validator = new CategoryRecipeValidatorPM<>(category, 1, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.DISSOLUTION, validator);
+    }
+    
+    public List<IRitualRecipe> getRitualRecipes(IRecipeCategory<IRitualRecipe> category) {
+        CategoryRecipeValidatorPM<IRitualRecipe> validator = new CategoryRecipeValidatorPM<>(category, 100, true);  // TODO Fix max inputs for JEI rituals
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RITUAL, validator);
     }
     
     private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {

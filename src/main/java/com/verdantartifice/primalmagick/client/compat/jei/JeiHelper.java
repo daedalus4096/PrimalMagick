@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.Arcane
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
 import com.verdantartifice.primalmagick.client.compat.jei.dissolution.DissolutionRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.ritual.RitualRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.runecarving.RunecarvingRecipeCategory;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
@@ -18,6 +19,7 @@ import com.verdantartifice.primalmagick.common.containers.DissolutionChamberCont
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
@@ -51,6 +53,8 @@ public class JeiHelper implements IModPlugin {
     private IRecipeCategory<IRunecarvingRecipe> runecarvingCategory;
     @Nullable
     private IRecipeCategory<IDissolutionRecipe> dissolutionCategory;
+    @Nullable
+    private IRecipeCategory<IRitualRecipe> ritualCategory;
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -70,11 +74,13 @@ public class JeiHelper implements IModPlugin {
         this.concoctingCategory = new ConcoctingRecipeCategory(guiHelper);
         this.runecarvingCategory = new RunecarvingRecipeCategory(guiHelper);
         this.dissolutionCategory = new DissolutionRecipeCategory(guiHelper);
+        this.ritualCategory = new RitualRecipeCategory(guiHelper);
         registration.addRecipeCategories(
             this.arcaneCategory,
             this.concoctingCategory,
             this.runecarvingCategory,
-            this.dissolutionCategory
+            this.dissolutionCategory,
+            this.ritualCategory
         );
     }
 
@@ -93,6 +99,9 @@ public class JeiHelper implements IModPlugin {
         if (this.dissolutionCategory != null) {
             registration.addRecipes(categoryRecipes.getDissolutionRecipes(this.dissolutionCategory), DissolutionRecipeCategory.UID);
         }
+        if (this.ritualCategory != null) {
+            registration.addRecipes(categoryRecipes.getRitualRecipes(this.ritualCategory), RitualRecipeCategory.UID);
+        }
     }
 
     @Override
@@ -101,6 +110,7 @@ public class JeiHelper implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(BlocksPM.CONCOCTER.get()), ConcoctingRecipeCategory.UID);
         registration.addRecipeCatalyst(new ItemStack(BlocksPM.RUNECARVING_TABLE.get()), RunecarvingRecipeCategory.UID);
         registration.addRecipeCatalyst(new ItemStack(BlocksPM.DISSOLUTION_CHAMBER.get()), DissolutionRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RITUAL_ALTAR.get()), RitualRecipeCategory.UID);
     }
 
     @Override
