@@ -1,6 +1,7 @@
 v2.0.4
 ------
 * Add JEI support
+* Add Enchantment Descriptions support
 
 v2.0.3
 ------
