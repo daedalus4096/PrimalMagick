@@ -21,6 +21,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -95,6 +97,10 @@ public class BlockIngredient implements Predicate<Block> {
     
     public boolean hasNoMatchingBlocks() {
         return this.acceptedBlocks.length == 0 && (this.matchingBlocks == null || this.matchingBlocks.length == 0);
+    }
+    
+    public Ingredient asIngredient() {
+        return Ingredient.of(Arrays.stream(this.acceptedBlocks).flatMap(ibl -> ibl.getBlocks().stream()).toArray(ItemLike[]::new));
     }
     
     protected static BlockIngredient fromBlockListStream(Stream<? extends BlockIngredient.IBlockList> stream) {

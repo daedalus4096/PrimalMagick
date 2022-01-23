@@ -1,3 +1,7 @@
+v2.0.4
+------
+* Add JEI support
+
 v2.0.3
 ------
 * Update model for runecarving table

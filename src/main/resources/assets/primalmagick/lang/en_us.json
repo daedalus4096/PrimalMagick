@@ -2389,5 +2389,8 @@
     "death.attack.primalmagick.indirect_sorcery": "%1$s was killed by %2$s using sorcery",
     "death.attack.primalmagick.indirect_sorcery.item": "%1$s was killed by %2$s using %3$s",
     
-    "itemGroup.primalmagick": "Primal Magick"
+    "itemGroup.primalmagick": "Primal Magick",
+    
+    "gui.primalmagick.jei.ritual.offerings.header": "Offerings",
+    "gui.primalmagick.jei.ritual.props.header": "Props"
 }
