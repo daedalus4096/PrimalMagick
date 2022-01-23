@@ -4,6 +4,7 @@ v2.0.4
 * Add Enchantment Descriptions support
 * Fix error when placing certain block entities
 * Fix statistic recording for runescribing and spellcrafting
+* Allow the spellcasting altar to face different directions
 
 v2.0.3
 ------
