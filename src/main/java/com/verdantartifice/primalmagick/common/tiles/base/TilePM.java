@@ -61,7 +61,9 @@ public class TilePM extends BlockEntity {
     
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        this.load(pkt.getTag());
+        if (pkt.getTag() != null) {
+            this.load(pkt.getTag());
+        }
     }
     
     /**
