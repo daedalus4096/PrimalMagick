@@ -99,6 +99,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
 
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
+                super.checkTakeAchievements(stack);
                 StatsManager.incrementValue(this.player, StatsPM.CRAFTED_RUNEWORKING, stack.getCount());
             }
         });

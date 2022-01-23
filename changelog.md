@@ -3,6 +3,7 @@ v2.0.4
 * Add JEI support
 * Add Enchantment Descriptions support
 * Fix error when placing certain block entities
+* Fix statistic recording for runescribing and spellcrafting
 
 v2.0.3
 ------

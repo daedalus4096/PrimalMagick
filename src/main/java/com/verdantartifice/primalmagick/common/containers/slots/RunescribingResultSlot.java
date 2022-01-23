@@ -77,4 +77,10 @@ public class RunescribingResultSlot extends Slot {
             }
         }
     }
+
+    @Override
+    protected void onQuickCraft(ItemStack stack, int amount) {
+        // Handle crafting side effects
+        this.checkTakeAchievements(stack);
+    }
 }
