@@ -122,7 +122,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
         if (slotIndex == 0) {
             return true;
         } else if (slotIndex == 1) {
-            return isFuel(this.items.get(1));
+            return isFuel(stack);
         } else {
             return false;
         }
