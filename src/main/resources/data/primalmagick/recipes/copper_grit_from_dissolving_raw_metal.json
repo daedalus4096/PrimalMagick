@@ -5,7 +5,7 @@
     "earth": 1
   },
   "ingredient": {
-    "item": "minecraft:raw_copper"
+    "tag": "forge:raw_materials/copper"
   },
   "result": {
     "item": "primalmagick:copper_grit",

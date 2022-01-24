@@ -5,7 +5,7 @@
     "earth": 1
   },
   "ingredient": {
-    "item": "minecraft:copper_ore"
+    "tag": "forge:ores/copper"
   },
   "result": {
     "item": "primalmagick:copper_grit",

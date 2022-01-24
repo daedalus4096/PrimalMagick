@@ -6,7 +6,7 @@
       "item": "primalmagick:earthshatter_hammer"
     },
     {
-      "item": "minecraft:raw_gold"
+      "tag": "forge:raw_materials/gold"
     }
   ],
   "result": {

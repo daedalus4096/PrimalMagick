@@ -6,7 +6,7 @@
       "item": "primalmagick:earthshatter_hammer"
     },
     {
-      "item": "minecraft:copper_ore"
+      "tag": "forge:ores/copper"
     }
   ],
   "result": {

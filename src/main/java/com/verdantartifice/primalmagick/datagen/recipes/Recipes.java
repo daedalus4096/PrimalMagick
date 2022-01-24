@@ -488,7 +488,7 @@ public class Recipes extends RecipeProvider {
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DREAM_VISION_TALISMAN.get())
             .addIngredient(Items.AMETHYST_SHARD)
             .addIngredient(Tags.Items.INGOTS_GOLD)
-            .addIngredient(Items.COPPER_INGOT)
+            .addIngredient(Tags.Items.INGOTS_COPPER)
             .addIngredient(Tags.Items.STRING)
             .addIngredient(ItemTags.SAND)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -526,7 +526,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("CCC")
             .patternLine("CRC")
             .patternLine("MPM")
-            .key('C', Items.COPPER_INGOT)
+            .key('C', Tags.Items.INGOTS_COPPER)
             .key('R', ItemsPM.MANA_PRISM.get())
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
@@ -1722,7 +1722,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "iron_grit_from_ore"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.IRON_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Items.RAW_IRON)
+            .requires(Tags.Items.RAW_MATERIALS_IRON)
             .group("earthshatter_hammer_grit")
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "iron_grit_from_raw_metal"));
@@ -1734,19 +1734,19 @@ public class Recipes extends RecipeProvider {
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "gold_grit_from_ore"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.GOLD_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Items.RAW_GOLD)
+            .requires(Tags.Items.RAW_MATERIALS_GOLD)
             .group("earthshatter_hammer_grit")
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "gold_grit_from_raw_metal"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.COPPER_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Items.COPPER_ORE)
+            .requires(Tags.Items.ORES_COPPER)
             .group("earthshatter_hammer_grit")
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "copper_grit_from_ore"));
         ShapelessRecipeBuilder.shapeless(ItemsPM.COPPER_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Items.RAW_COPPER)
+            .requires(Tags.Items.RAW_MATERIALS_COPPER)
             .group("earthshatter_hammer_grit")
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "copper_grit_from_raw_metal"));
@@ -4085,7 +4085,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("CPC")
             .patternLine("PBP")
             .patternLine("MMM")
-            .key('C', Items.COPPER_INGOT)
+            .key('C', Tags.Items.INGOTS_COPPER)
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('B', Items.BREWING_STAND)
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())
@@ -5923,7 +5923,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "iron_grit_from_dissolving_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
-            .ingredient(Items.RAW_IRON)
+            .ingredient(Tags.Items.RAW_MATERIALS_IRON)
             .setGroup("iron_grit_dissolution")
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "iron_grit_from_dissolving_raw_metal"));
@@ -5933,17 +5933,17 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "gold_grit_from_dissolving_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.GOLD_GRIT.get(), 3)
-            .ingredient(Items.RAW_GOLD)
+            .ingredient(Tags.Items.RAW_MATERIALS_GOLD)
             .setGroup("gold_grit_dissolution")
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "gold_grit_from_dissolving_raw_metal"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
-            .ingredient(Items.COPPER_ORE)
+            .ingredient(Tags.Items.ORES_COPPER)
             .setGroup("copper_grit_dissolution")
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "copper_grit_from_dissolving_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
-            .ingredient(Items.RAW_COPPER)
+            .ingredient(Tags.Items.RAW_MATERIALS_COPPER)
             .setGroup("copper_grit_dissolution")
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "copper_grit_from_dissolving_raw_metal"));

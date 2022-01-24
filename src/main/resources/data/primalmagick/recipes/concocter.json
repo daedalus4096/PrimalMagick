@@ -11,7 +11,7 @@
   ],
   "key": {
     "C": {
-      "item": "minecraft:copper_ingot"
+      "tag": "forge:ingots/copper"
     },
     "P": {
       "item": "primalmagick:magitech_parts_enchanted"

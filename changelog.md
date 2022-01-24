@@ -8,6 +8,7 @@ v2.0.4
 * Fix bug with hoppering fuel into empty calcinators
 * Fix additional block entity saving bugs
 * Increment to Forge version 39.0.59
+* Update recipes to use new Forge tags
 
 v2.0.3
 ------
