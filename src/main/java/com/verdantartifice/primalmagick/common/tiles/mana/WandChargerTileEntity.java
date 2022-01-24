@@ -90,10 +90,10 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
-        return super.save(compound);
     }
 
     @Override

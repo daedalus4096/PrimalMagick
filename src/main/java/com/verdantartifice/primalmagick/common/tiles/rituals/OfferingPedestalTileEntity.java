@@ -53,11 +53,11 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         if (this.altarPos != null) {
             compound.putLong("AltarPos", this.altarPos.asLong());
         }
-        return super.save(compound);
     }
 
     @Override

@@ -6,6 +6,7 @@ v2.0.4
 * Fix statistic recording for runescribing and spellcrafting
 * Allow the spellcasting altar to face different directions
 * Fix bug with hoppering fuel into empty calcinators
+* Fix additional block entity saving bugs
 
 v2.0.3
 ------

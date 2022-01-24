@@ -139,7 +139,8 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
@@ -150,7 +151,6 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
-        return super.save(compound);
     }
 
     @Override

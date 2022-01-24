@@ -64,11 +64,11 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("Souls", this.souls);
         compound.putInt("FluidAmount", this.fluidAmount);
         compound.putInt("Charge", this.charge);
-        return super.save(compound);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SanguineCrucibleTileEntity entity) {

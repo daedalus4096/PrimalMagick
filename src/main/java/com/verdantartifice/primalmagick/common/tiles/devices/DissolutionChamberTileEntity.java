@@ -104,11 +104,11 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("ProcessTime", this.processTime);
         compound.putInt("ProcessTimeTotal", this.processTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
-        return super.save(compound);
     }
 
     @Override

@@ -231,7 +231,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putBoolean("Active", this.active);
         compound.putBoolean("CurrentStepComplete", this.currentStepComplete);
         compound.putInt("ActiveCount", this.activeCount);
@@ -259,7 +260,6 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         if (this.channeledOfferingPos != null) {
             compound.putLong("ChanneledOfferingPos", this.channeledOfferingPos.asLong());
         }
-        return super.save(compound);
     }
     
     protected void reset() {

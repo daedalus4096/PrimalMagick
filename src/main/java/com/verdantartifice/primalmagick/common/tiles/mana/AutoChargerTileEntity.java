@@ -47,9 +47,9 @@ public class AutoChargerTileEntity extends TileInventoryPM {
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("ChargeTime", this.chargeTime);
-        return super.save(compound);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {

@@ -32,12 +32,12 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         if (this.altarPos != null) {
             compound.putLong("AltarPos", this.altarPos.asLong());
         }
         compound.putBoolean("PropOpen", this.isOpen);
-        return super.save(compound);
     }
     
     @Override

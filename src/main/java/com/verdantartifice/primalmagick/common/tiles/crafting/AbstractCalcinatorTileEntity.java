@@ -142,7 +142,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
     
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("BurnTime", this.burnTime);
         compound.putInt("BurnTimeTotal", this.burnTimeTotal);
         compound.putInt("CookTime", this.cookTime);
@@ -151,7 +152,6 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
         }
-        return super.save(compound);
     }
 
     @Override

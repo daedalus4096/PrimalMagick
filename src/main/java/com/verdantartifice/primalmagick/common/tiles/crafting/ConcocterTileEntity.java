@@ -131,7 +131,8 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    protected void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("CookTime", this.cookTime);
         compound.putInt("CookTimeTotal", this.cookTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
@@ -139,7 +140,6 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         if (this.ownerUUID != null) {
             compound.putUUID("OwnerUUID", this.ownerUUID);
         }
-        return super.save(compound);
     }
 
     @Override
