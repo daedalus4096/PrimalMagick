@@ -7,6 +7,7 @@ v2.0.4
 * Allow the spellcasting altar to face different directions
 * Fix bug with hoppering fuel into empty calcinators
 * Fix additional block entity saving bugs
+* Increment to Forge version 39.0.59
 
 v2.0.3
 ------
