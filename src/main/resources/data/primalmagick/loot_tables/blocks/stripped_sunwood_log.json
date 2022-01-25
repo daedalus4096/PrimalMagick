@@ -14,8 +14,7 @@
         {
           "condition": "minecraft:survives_explosion"
         }
-      ],
-      "functions": []
+      ]
     },
     {
       "rolls": 1.0,
@@ -34,8 +33,7 @@
             "pulsing": "true"
           }
         }
-      ],
-      "functions": []
+      ]
     }
   ]
 }

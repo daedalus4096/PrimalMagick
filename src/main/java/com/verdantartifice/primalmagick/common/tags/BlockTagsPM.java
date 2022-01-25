@@ -21,6 +21,7 @@ public class BlockTagsPM {
     public static final IOptionalNamedTag<Block> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final IOptionalNamedTag<Block> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final IOptionalNamedTag<Block> DEAD_CORALS = tag("dead_corals");
+    public static final IOptionalNamedTag<Block> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final IOptionalNamedTag<Block> HALLOWOOD_LOGS = tag("hallowood_logs");
     public static final IOptionalNamedTag<Block> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final IOptionalNamedTag<Block> RITUAL_CANDLES = tag("ritual_candles");

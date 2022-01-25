@@ -105,6 +105,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(ItemTagsPM.DEAD_CORAL_BLOCKS).add(Items.DEAD_BRAIN_CORAL_BLOCK, Items.DEAD_BUBBLE_CORAL_BLOCK, Items.DEAD_FIRE_CORAL_BLOCK, Items.DEAD_HORN_CORAL_BLOCK, Items.DEAD_TUBE_CORAL_BLOCK);
         this.tag(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL, Items.DEAD_BUBBLE_CORAL, Items.DEAD_FIRE_CORAL, Items.DEAD_HORN_CORAL, Items.DEAD_TUBE_CORAL);
         this.tag(ItemTagsPM.DEAD_CORALS).addTag(ItemTagsPM.DEAD_CORAL_PLANTS).add(Items.DEAD_BRAIN_CORAL_FAN, Items.DEAD_BUBBLE_CORAL_FAN, Items.DEAD_FIRE_CORAL_FAN, Items.DEAD_HORN_CORAL_FAN, Items.DEAD_TUBE_CORAL_FAN);
+        this.tag(ItemTagsPM.ENCHANTING_TABLES).add(Items.ENCHANTING_TABLE).addOptional(new ResourceLocation("quark", "matrix_enchanter"));
         this.tag(ItemTagsPM.ESSENCES).addTag(ItemTagsPM.ESSENCES_DUSTS).addTag(ItemTagsPM.ESSENCES_SHARDS).addTag(ItemTagsPM.ESSENCES_CRYSTALS).addTag(ItemTagsPM.ESSENCES_CLUSTERS);
         this.tag(ItemTagsPM.HALLOWOOD_LOGS).add(ItemsPM.HALLOWOOD_LOG.get(), ItemsPM.STRIPPED_HALLOWOOD_LOG.get(), ItemsPM.HALLOWOOD_WOOD.get(), ItemsPM.STRIPPED_HALLOWOOD_WOOD.get());
         this.tag(ItemTagsPM.MAGICKAL_CLOTH).add(ItemsPM.SPELLCLOTH.get(), ItemsPM.HEXWEAVE.get(), ItemsPM.SAINTSWOOL.get());

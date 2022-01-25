@@ -130,7 +130,7 @@ public class ProjectProvider implements DataProvider {
             .material(ExperienceMaterialBuilder.experience(3, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("enchanting_studies").requiredResearch("BASIC_MANAWEAVING")
-            .material(ItemMaterialBuilder.item(Items.ENCHANTING_TABLE, false).weight(5).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsPM.ENCHANTING_TABLES, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(5).build())
             .material(ExperienceMaterialBuilder.experience(3, true).bonusReward(0.125D).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())

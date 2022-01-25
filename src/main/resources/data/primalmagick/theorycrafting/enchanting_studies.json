@@ -5,10 +5,10 @@
   "aid_blocks": [],
   "material_options": [
     {
-      "type": "item",
-      "stack": "minecraft:enchanting_table",
+      "type": "tag",
+      "name": "primalmagick:enchanting_tables",
+      "quantity": 1,
       "consumed": false,
-      "match_nbt": false,
       "weight": 5.0
     },
     {

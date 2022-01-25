@@ -21,6 +21,7 @@ public class ItemTagsPM {
     public static final IOptionalNamedTag<Item> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final IOptionalNamedTag<Item> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final IOptionalNamedTag<Item> DEAD_CORALS = tag("dead_corals");
+    public static final IOptionalNamedTag<Item> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final IOptionalNamedTag<Item> ESSENCES = tag("essences");
     public static final IOptionalNamedTag<Item> HALLOWOOD_LOGS = tag("hallowood_logs");
     public static final IOptionalNamedTag<Item> MAGICKAL_CLOTH = tag("magickal_cloth");

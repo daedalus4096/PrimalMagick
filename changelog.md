@@ -1,3 +1,7 @@
+v2.0.5
+------
+* Let the Enchanting Studies research project recognize Quark Matrix Enchanters as valid materials
+
 v2.0.4
 ------
 * Add JEI support
