@@ -1,6 +1,11 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
+        maven { 
+          url 'https://maven.minecraftforge.net'
+	  content {
+             includeGroupByRegex "net.minecraftforge.*"
+          }
+	}
         maven { url = 'https://plugins.gradle.org/m2/' }
         mavenCentral()
     }
@@ -129,10 +134,16 @@ repositories {
     maven { // JEI
         name 'DVS1 Maven FS'
         url 'https://dvs1.progwml6.com/files/maven'
+        content  {
+            includeGroup "mezz.jei"
+        }
     }
     maven { // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
+        name "ModMaven"
+        url "https://modmaven.dev"
+        content  {
+            includeGroup "mezz.jei"
+        }
     }
 }
 
