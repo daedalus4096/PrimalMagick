@@ -129,10 +129,16 @@ repositories {
     maven { // JEI
         name 'DVS1 Maven FS'
         url 'https://dvs1.progwml6.com/files/maven'
+        content  {
+            includeGroup "mezz.jei"
+        }
     }
     maven { // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.dev"
+        name "ModMaven"
+        url "https://modmaven.dev"
+        content  {
+            includeGroup "mezz.jei"
+        }
     }
 }
 
