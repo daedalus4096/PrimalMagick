@@ -29,6 +29,9 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue SHOW_UNSCANNED_AFFINITIES;
     public static ForgeConfigSpec.IntValue SHRINE_AVERAGE_DISTANCE_CHUNKS;
     public static ForgeConfigSpec.IntValue SHRINE_MINIMUM_DISTANCE_CHUNKS;
+    public static ForgeConfigSpec.BooleanValue GENERATE_MARBLE;
+    public static ForgeConfigSpec.BooleanValue GENERATE_ROCK_SALT;
+    public static ForgeConfigSpec.BooleanValue GENERATE_QUARTZ;
     
     static {
         buildCommonConfigSpec();
@@ -42,6 +45,9 @@ public class Config {
         builder.comment("Worldgen settings").push(CATEGORY_WORLDGEN);
         SHRINE_AVERAGE_DISTANCE_CHUNKS = builder.comment("Average distance apart in chunks between shrine spawn attempts").defineInRange("shrineAverageDistanceChunks", 20, 1, 1000000);
         SHRINE_MINIMUM_DISTANCE_CHUNKS = builder.comment("Minimum distance apart in chunks between shrine spawn attempts; must be less than average").defineInRange("shrineMinimumDistanceChunks", 10, 1, 1000000);
+        GENERATE_MARBLE = builder.comment("Whether to generate raw marble in the Overworld.", "WARNING: Disabling this will cripple players' ability to progress", "without another source of this mod's marble.").define("generateMarble", true);
+        GENERATE_ROCK_SALT = builder.comment("Whether to generate rock salt ore in the Overworld.", "WARNING: Disabling this will cripple players' ability to progress", "without another source of this mod's salt.").define("generateRockSalt", true);
+        GENERATE_QUARTZ = builder.comment("Whether to generate quartz ore in the Overworld.", "Disabling this will slow players' ability to progress.").define("generateQuartz", true);
         builder.pop();
         
         builder.comment("Misc settings").push(CATEGORY_MISC);

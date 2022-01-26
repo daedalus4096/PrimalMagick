@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.events;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.VegetationPlacementsPM;
@@ -31,11 +32,17 @@ public class BiomeEvents {
         
         // Add raw marble, rock salt, and quartz seams to all non-Nether, non-End biomes
         if (isOverworldBiome(event.getName(), cat)) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_UPPER);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_LOWER);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_UPPER);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_LOWER);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_QUARTZ);
+            if (Config.GENERATE_MARBLE.get()) {
+                event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_UPPER);
+                event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_MARBLE_RAW_LOWER);
+            }
+            if (Config.GENERATE_ROCK_SALT.get()) {
+                event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_UPPER);
+                event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_ROCK_SALT_LOWER);
+            }
+            if (Config.GENERATE_QUARTZ.get()) {
+                event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OrePlacementsPM.ORE_QUARTZ);
+            }
         }
         
         // Add treefolk spawns and sunwood/moonwood trees to forests
