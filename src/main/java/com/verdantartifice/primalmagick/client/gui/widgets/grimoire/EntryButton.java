@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
@@ -38,7 +39,7 @@ public class EntryButton extends AbstractTopicButton {
                 
                 // Push the current grimoire topic onto the history stack
                 GrimoireScreen.HISTORY.add(geb.getScreen().getMenu().getTopic());
-                geb.getScreen().getMenu().setTopic(geb.getEntry());
+                geb.getScreen().getMenu().setTopic(new EntryResearchTopic(geb.getEntry()));
                 if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
                     PrimalMagickCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {

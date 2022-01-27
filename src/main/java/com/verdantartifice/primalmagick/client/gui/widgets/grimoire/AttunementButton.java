@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.components.Button;
@@ -33,7 +34,7 @@ public class AttunementButton extends AbstractTopicButton {
                 GrimoireScreen.HISTORY.add(gab.getScreen().getMenu().getTopic());
                 
                 // Set the new grimoire topic and open a new screen for it
-                gab.getScreen().getMenu().setTopic(gab.getSource());
+                gab.getScreen().getMenu().setTopic(new SourceResearchTopic(gab.getSource()));
                 gab.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     gab.getScreen().getMenu(),
                     gab.getScreen().getPlayerInventory(),

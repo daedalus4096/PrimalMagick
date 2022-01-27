@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.client.gui.components.Button;
@@ -79,7 +80,7 @@ public class IngredientWidget extends Button {
                 GrimoireScreen.HISTORY.add(iw.getScreen().getMenu().getTopic());
                 
                 // Set the new grimoire topic and open a new screen for it
-                iw.getScreen().getMenu().setTopic(iw.getDisplayStack().getHoverName().getString());
+                iw.getScreen().getMenu().setTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString()));
                 iw.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     iw.getScreen().getMenu(),
                     iw.getScreen().getPlayerInventory(),

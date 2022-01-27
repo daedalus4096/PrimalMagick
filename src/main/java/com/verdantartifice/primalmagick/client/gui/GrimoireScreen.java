@@ -48,6 +48,13 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -83,7 +90,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     
-    public static final List<Object> HISTORY = new ArrayList<>();
+    public static final List<AbstractResearchTopic> HISTORY = new ArrayList<>();
     
     protected int scaledLeft;
     protected int scaledTop;
@@ -161,26 +168,29 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     protected void initPages() {
         // Parse grimoire pages based on the current topic
         this.pages.clear();
-        if (this.menu.getTopic() == null) {
+        if (this.menu.getTopic() instanceof MainIndexResearchTopic) {
             this.parseIndexPages();
-        } else if (this.menu.getTopic() instanceof ResearchDiscipline) {
-            this.parseDisciplinePages((ResearchDiscipline)this.menu.getTopic());
-        } else if (this.menu.getTopic() instanceof ResearchEntry) {
-            this.parseEntryPages((ResearchEntry)this.menu.getTopic());
-        } else if (this.menu.getTopic() instanceof Source) {
-            this.parseAttunementPage((Source)this.menu.getTopic());
-        } else if (this.menu.getTopic() instanceof Enchantment) {
-            this.parseRuneEnchantmentPage((Enchantment)this.menu.getTopic());
-        } else if (this.menu.getTopic() instanceof String nameStr && this.indexMap.containsKey(nameStr)) {
-            this.parseRecipeEntryPages(nameStr);
-        } else if (StatisticsPage.TOPIC.equals(this.menu.getTopic())) {
-            this.parseStatsPages();
-        } else if (AttunementIndexPage.TOPIC.equals(this.menu.getTopic())) {
-            this.parseAttunementIndexPages();
-        } else if (RuneEnchantmentIndexPage.TOPIC.equals(this.menu.getTopic())) {
-            this.parseRuneEnchantmentIndexPages();
-        } else if (RecipeIndexPage.TOPIC.equals(this.menu.getTopic())) {
-            this.parseRecipeIndexPages();
+        } else if (this.menu.getTopic() instanceof DisciplineResearchTopic discTopic) {
+            this.parseDisciplinePages(discTopic.getData());
+        } else if (this.menu.getTopic() instanceof EntryResearchTopic entryTopic) {
+            this.parseEntryPages(entryTopic.getData());
+        } else if (this.menu.getTopic() instanceof SourceResearchTopic sourceTopic) {
+            this.parseAttunementPage(sourceTopic.getData());
+        } else if (this.menu.getTopic() instanceof EnchantmentResearchTopic enchTopic) {
+            this.parseRuneEnchantmentPage(enchTopic.getData());
+        } else if (this.menu.getTopic() instanceof OtherResearchTopic otherTopic) {
+            String data = otherTopic.getData();
+            if (this.isIndexKey(data)) {
+                this.parseRecipeEntryPages(data);
+            } else if (StatisticsPage.TOPIC.getData().equals(data)) {
+                this.parseStatsPages();
+            } else if (AttunementIndexPage.TOPIC.getData().equals(data)) {
+                this.parseAttunementIndexPages();
+            } else if (RuneEnchantmentIndexPage.TOPIC.getData().equals(data)) {
+                this.parseRuneEnchantmentIndexPages();
+            } else if (RecipeIndexPage.TOPIC.getData().equals(data)) {
+                this.parseRecipeIndexPages();
+            }
         }
     }
     
@@ -920,7 +930,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
         if (!HISTORY.isEmpty()) {
-            Object lastTopic = HISTORY.remove(HISTORY.size() - 1);
+            AbstractResearchTopic lastTopic = HISTORY.remove(HISTORY.size() - 1);
             this.menu.setTopic(lastTopic);
             this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
             return true;

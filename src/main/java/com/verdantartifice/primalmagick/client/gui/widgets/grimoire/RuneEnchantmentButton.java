@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -33,7 +34,7 @@ public class RuneEnchantmentButton extends AbstractTopicButton {
                 GrimoireScreen.HISTORY.add(greb.getScreen().getMenu().getTopic());
                 
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getMenu().setTopic(greb.getEnchantment());
+                greb.getScreen().getMenu().setTopic(new EnchantmentResearchTopic(greb.getEnchantment()));
                 greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     greb.getScreen().getMenu(),
                     greb.getScreen().getPlayerInventory(),

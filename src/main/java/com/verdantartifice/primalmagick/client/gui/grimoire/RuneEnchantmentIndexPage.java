@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantmentButton;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,7 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class RuneEnchantmentIndexPage extends AbstractPage {
-    public static final String TOPIC = "rune_enchantments";
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("rune_enchantments");
 
     protected List<Enchantment> contents = new ArrayList<>();
     protected boolean firstPage;

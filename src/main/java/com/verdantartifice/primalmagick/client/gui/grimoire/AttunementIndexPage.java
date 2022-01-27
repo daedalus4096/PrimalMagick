@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementButton;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,7 @@ import net.minecraft.network.chat.TranslatableComponent;
  * @author Daedalus4096
  */
 public class AttunementIndexPage extends AbstractPage {
-    public static final String TOPIC = "attunements";
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("attunements");
 
     protected boolean firstPage;
 
