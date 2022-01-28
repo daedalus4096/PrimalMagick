@@ -19,11 +19,9 @@ public class StatisticsButton extends AbstractTopicButton {
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
-            if (button instanceof StatisticsButton) {
-                StatisticsButton gsb = (StatisticsButton)button;
-                
+            if (button instanceof StatisticsButton gsb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(gsb.getScreen().getMenu().getTopic());
+                GrimoireScreen.HISTORY.add(gsb.getScreen().getMenu().getTopic().withPage(gsb.getScreen().getCurrentPage()));
                 
                 // Set the new grimoire topic and open a new screen for it
                 gsb.getScreen().getMenu().setTopic(StatisticsPage.TOPIC);

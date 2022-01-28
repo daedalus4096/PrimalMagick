@@ -10,8 +10,8 @@ import com.verdantartifice.primalmagick.common.sources.Source;
  * @author Daedalus4096
  */
 public class SourceResearchTopic extends AbstractResearchTopic {
-    public SourceResearchTopic(Source source) {
-        super(AbstractResearchTopic.Type.SOURCE, source.getTag());
+    public SourceResearchTopic(Source source, int page) {
+        super(AbstractResearchTopic.Type.SOURCE, source.getTag(), page);
     }
     
     @Nullable

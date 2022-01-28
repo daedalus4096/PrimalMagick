@@ -16,7 +16,7 @@ import net.minecraft.network.chat.TranslatableComponent;
  * @author Daedalus4096
  */
 public class AttunementIndexPage extends AbstractPage {
-    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("attunements");
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("attunements", 0);
 
     protected boolean firstPage;
 

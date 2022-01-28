@@ -9,6 +9,6 @@ public class MainIndexResearchTopic extends AbstractResearchTopic {
     public static final MainIndexResearchTopic INSTANCE = new MainIndexResearchTopic();
     
     protected MainIndexResearchTopic() {
-        super(AbstractResearchTopic.Type.MAIN_INDEX, "");
+        super(AbstractResearchTopic.Type.MAIN_INDEX, "", 0);
     }
 }

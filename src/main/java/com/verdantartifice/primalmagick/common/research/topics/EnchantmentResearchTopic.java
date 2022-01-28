@@ -12,8 +12,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class EnchantmentResearchTopic extends AbstractResearchTopic {
-    public EnchantmentResearchTopic(Enchantment enchantment) {
-        super(AbstractResearchTopic.Type.ENCHANTMENT, enchantment.getRegistryName().toString());
+    public EnchantmentResearchTopic(Enchantment enchantment, int page) {
+        super(AbstractResearchTopic.Type.ENCHANTMENT, enchantment.getRegistryName().toString(), page);
     }
     
     @Nullable

@@ -163,6 +163,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.generateIndexMap();
         this.initPages();
         this.initButtons();
+        this.setCurrentPage(this.menu.getTopic().getPage());
     }
     
     protected void initPages() {
@@ -907,6 +908,15 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
                 firstPage = false;
             }
         }
+    }
+    
+    public int getCurrentPage() {
+        return this.currentPage;
+    }
+    
+    public void setCurrentPage(int newPage) {
+        this.currentPage = newPage;
+        this.lastStageIndex = this.currentStageIndex;   // Prevent current page from resetting when transitioning to a recipe entry topic
     }
     
     public boolean nextPage() {

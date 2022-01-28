@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
  * @author Daedalus4096
  */
 public class DisciplineResearchTopic extends AbstractResearchTopic {
-    public DisciplineResearchTopic(ResearchDiscipline discipline) {
-        super(AbstractResearchTopic.Type.RESEARCH_DISCIPLINE, discipline.getKey());
+    public DisciplineResearchTopic(ResearchDiscipline discipline, int page) {
+        super(AbstractResearchTopic.Type.RESEARCH_DISCIPLINE, discipline.getKey(), page);
     }
     
     @Nullable

@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopi
  * @author Daedalus4096
  */
 public class StatisticsPage extends AbstractPage {
-    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("stats");
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("stats", 0);
     
     protected List<IPageElement> contents = new ArrayList<>();
     protected boolean firstPage;

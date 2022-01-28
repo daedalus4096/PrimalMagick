@@ -19,7 +19,7 @@ import net.minecraft.network.chat.TextComponent;
  * @author Daedalus4096
  */
 public class RecipeIndexPage extends AbstractPage {
-    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("recipe_index");
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("recipe_index", 0);
     
     protected List<String> contents = new ArrayList<>();
     protected boolean firstPage;

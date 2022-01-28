@@ -12,8 +12,8 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
  * @author Daedalus4096
  */
 public class EntryResearchTopic extends AbstractResearchTopic {
-    public EntryResearchTopic(ResearchEntry entry) {
-        super(AbstractResearchTopic.Type.RESEARCH_ENTRY, entry.getKey().getRootKey());
+    public EntryResearchTopic(ResearchEntry entry, int page) {
+        super(AbstractResearchTopic.Type.RESEARCH_ENTRY, entry.getKey().getRootKey(), page);
     }
     
     @Nullable

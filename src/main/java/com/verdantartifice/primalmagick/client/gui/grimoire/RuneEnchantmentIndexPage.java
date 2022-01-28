@@ -21,7 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class RuneEnchantmentIndexPage extends AbstractPage {
-    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("rune_enchantments");
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("rune_enchantments", 0);
 
     protected List<Enchantment> contents = new ArrayList<>();
     protected boolean firstPage;

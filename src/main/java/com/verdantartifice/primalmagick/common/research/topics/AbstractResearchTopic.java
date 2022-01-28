@@ -11,15 +11,26 @@ import net.minecraft.util.StringRepresentable;
 public abstract class AbstractResearchTopic {
     protected final AbstractResearchTopic.Type type;
     protected final String data;
+    protected final int page;
     
-    protected AbstractResearchTopic(AbstractResearchTopic.Type type, String data) {
+    protected AbstractResearchTopic(AbstractResearchTopic.Type type, String data, int page) {
         this.type = type;
         this.data = data;
+        this.page = page;
+    }
+    
+    public int getPage() {
+        return this.page;
+    }
+    
+    public AbstractResearchTopic withPage(int newPage) {
+        return ResearchTopicFactory.create(this.type, this.data, newPage);
     }
     
     public void encode(FriendlyByteBuf buf) {
         buf.writeEnum(this.type);
         buf.writeUtf(this.data);
+        buf.writeVarInt(this.page);
     }
     
     protected static enum Type implements StringRepresentable {

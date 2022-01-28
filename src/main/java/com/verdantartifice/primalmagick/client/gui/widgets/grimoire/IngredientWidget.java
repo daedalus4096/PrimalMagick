@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
@@ -77,10 +78,13 @@ public class IngredientWidget extends Button {
         public void onPress(Button button) {
             if (button instanceof IngredientWidget iw) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(iw.getScreen().getMenu().getTopic());
+                int curPage = iw.getScreen().getCurrentPage();
+                AbstractResearchTopic curTopic = iw.getScreen().getMenu().getTopic();
+                AbstractResearchTopic newTopic = curTopic.withPage(curPage);
+                GrimoireScreen.HISTORY.add(newTopic);
                 
                 // Set the new grimoire topic and open a new screen for it
-                iw.getScreen().getMenu().setTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString()));
+                iw.getScreen().getMenu().setTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString(), 0));
                 iw.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     iw.getScreen().getMenu(),
                     iw.getScreen().getPlayerInventory(),

@@ -8,8 +8,8 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public class OtherResearchTopic extends AbstractResearchTopic {
-    public OtherResearchTopic(String data) {
-        super(AbstractResearchTopic.Type.OTHER, data);
+    public OtherResearchTopic(String data, int page) {
+        super(AbstractResearchTopic.Type.OTHER, data, page);
     }
     
     @Nullable

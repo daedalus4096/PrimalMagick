@@ -21,25 +21,29 @@ public class ResearchTopicFactory {
     public static AbstractResearchTopic decode(FriendlyByteBuf buf) {
         AbstractResearchTopic.Type type = buf.readEnum(AbstractResearchTopic.Type.class);
         String data = buf.readUtf();
-        
+        int page = buf.readVarInt();
+        return create(type, data, page);
+    }
+    
+    public static AbstractResearchTopic create(AbstractResearchTopic.Type type, String data, int page) {
         switch (type) {
         case MAIN_INDEX:
             return MainIndexResearchTopic.INSTANCE;
         case RESEARCH_DISCIPLINE:
             ResearchDiscipline disc = ResearchDisciplines.getDiscipline(data);
-            return disc == null ? MainIndexResearchTopic.INSTANCE : new DisciplineResearchTopic(disc);
+            return disc == null ? MainIndexResearchTopic.INSTANCE : new DisciplineResearchTopic(disc, page);
         case RESEARCH_ENTRY:
             ResearchEntry entry = ResearchEntries.getEntry(SimpleResearchKey.parse(data));
-            return entry == null ? MainIndexResearchTopic.INSTANCE : new EntryResearchTopic(entry);
+            return entry == null ? MainIndexResearchTopic.INSTANCE : new EntryResearchTopic(entry, page);
         case SOURCE:
             Source source = Source.getSource(data);
-            return source == null ? MainIndexResearchTopic.INSTANCE : new SourceResearchTopic(source);
+            return source == null ? MainIndexResearchTopic.INSTANCE : new SourceResearchTopic(source, page);
         case ENCHANTMENT:
             ResourceLocation loc = ResourceLocation.tryParse(data);
             Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(loc);
-            return ench == null ? MainIndexResearchTopic.INSTANCE : new EnchantmentResearchTopic(ench);
+            return ench == null ? MainIndexResearchTopic.INSTANCE : new EnchantmentResearchTopic(ench, page);
         case OTHER:
-            return new OtherResearchTopic(data);
+            return new OtherResearchTopic(data, page);
         default:
             throw new IllegalArgumentException("Unknown research topic type");
         }
