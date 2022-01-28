@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.RuneEnchantmentPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StagePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StatisticsPage;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -220,6 +221,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.addRenderableWidget(this.nextPageButton);
         this.addRenderableWidget(this.prevPageButton);
         this.addRenderableWidget(this.backButton);
+        this.addRenderableWidget(new MainIndexButton(this.leftPos + 142, this.topPos + 177, this));
         this.updateNavButtonVisibility();
     }
     
