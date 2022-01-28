@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
 import net.minecraft.nbt.CompoundTag;
@@ -172,6 +173,20 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param project the newly active theorycrafting research project
      */
     public void setActiveResearchProject(Project project);
+    
+    /**
+     * Gets the player's last active grimoire research topic.
+     * 
+     * @return the player's last active grimoire research topic
+     */
+    public AbstractResearchTopic getLastResearchTopic();
+    
+    /**
+     * Sets the player's last active grimoire research topic.
+     * 
+     * @param topic the player's last active grimoire research topic
+     */
+    public void setLastResearchTopic(AbstractResearchTopic topic);
     
     /**
      * Sync the given player's research and knowledge data to the their client.

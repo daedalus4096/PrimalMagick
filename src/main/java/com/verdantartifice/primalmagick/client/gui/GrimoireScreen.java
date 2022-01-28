@@ -40,6 +40,8 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.data.SetLastResearchTopicPacket;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
@@ -164,6 +166,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.initPages();
         this.initButtons();
         this.setCurrentPage(this.menu.getTopic().getPage());
+        PacketHandler.sendToServer(new SetLastResearchTopicPacket(this.menu.getTopic()));
     }
     
     protected void initPages() {
@@ -956,10 +959,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     @Override
     public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
-        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
-            // Clear the topic history when closing the screen
-            HISTORY.clear();
-        } else if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+        if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }

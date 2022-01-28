@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
@@ -35,16 +39,20 @@ public class GrimoireItem extends Item implements MenuProvider {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         // Open the grimoire GUI on right click
-        if (!worldIn.isClientSide && playerIn instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && playerIn instanceof ServerPlayer serverPlayer) {
+            IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(playerIn).orElse(null);
+            AbstractResearchTopic lastTopic = knowledge == null || knowledge.getLastResearchTopic() == null ? MainIndexResearchTopic.INSTANCE : knowledge.getLastResearchTopic();
             StatsManager.incrementValue(playerIn, StatsPM.GRIMOIRE_READ);
-            NetworkHooks.openGui((ServerPlayer)playerIn, this);
+            NetworkHooks.openGui(serverPlayer, this, buf -> {
+                lastTopic.encode(buf);
+            });
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
     }
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-        return new GrimoireContainer(windowId);
+        return new GrimoireContainer(windowId, MainIndexResearchTopic.INSTANCE);
     }
 
     @Override

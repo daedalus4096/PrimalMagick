@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.containers;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -22,7 +23,7 @@ public class ContainersPM {
     }
     
     public static final RegistryObject<MenuType<GrimoireContainer>> GRIMOIRE = CONTAINERS.register("grimoire", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new GrimoireContainer(windowId);
+        return new GrimoireContainer(windowId, ResearchTopicFactory.decode(data));
     }));
     public static final RegistryObject<MenuType<ArcaneWorkbenchContainer>> ARCANE_WORKBENCH = CONTAINERS.register("arcane_workbench", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ArcaneWorkbenchContainer(windowId, inv);

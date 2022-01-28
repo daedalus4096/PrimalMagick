@@ -14,9 +14,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public class GrimoireContainer extends AbstractContainerMenu {
     protected AbstractResearchTopic topic;
     
-    public GrimoireContainer(int windowId) {
+    public GrimoireContainer(int windowId, AbstractResearchTopic topic) {
         super(ContainersPM.GRIMOIRE.get(), windowId);
-        this.topic = MainIndexResearchTopic.INSTANCE;
+        this.topic = topic == null ? MainIndexResearchTopic.INSTANCE : topic;
     }
 
     @Override

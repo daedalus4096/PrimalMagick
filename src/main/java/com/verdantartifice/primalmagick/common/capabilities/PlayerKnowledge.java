@@ -18,6 +18,8 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledg
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
@@ -43,6 +45,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
     
     private Project project = null;     // Currently active research project
+    private AbstractResearchTopic topic = null; // Last active grimoire research topic
 
     @Override
     @Nonnull
@@ -88,6 +91,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         // Serialize active research project, if any
         if (this.project != null) {
             rootTag.put("project", this.project.serializeNBT());
+        }
+        
+        // Serialize last active grimoire topic, if any
+        if (this.topic != null) {
+            rootTag.put("topic", this.topic.serializeNBT());
         }
         
         return rootTag;
@@ -146,6 +154,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (nbt.contains("project")) {
             this.project = ProjectFactory.getProjectFromNBT(nbt.getCompound("project"));
         }
+        
+        // Deserialize last active grimoire topic
+        if (nbt.contains("topic")) {
+            this.topic = ResearchTopicFactory.deserializeNBT(nbt.getCompound("topic"));
+        }
     }
 
     @Override
@@ -154,6 +167,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.stages.clear();
         this.flags.clear();
         this.project = null;
+        this.topic = null;
     }
     
     @Override
@@ -345,6 +359,16 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void setActiveResearchProject(Project project) {
         this.project = project;
+    }
+
+    @Override
+    public AbstractResearchTopic getLastResearchTopic() {
+        return this.topic;
+    }
+
+    @Override
+    public void setLastResearchTopic(AbstractResearchTopic topic) {
+        this.topic = topic;
     }
 
     @Override

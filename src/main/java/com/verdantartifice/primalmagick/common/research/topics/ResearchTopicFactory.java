@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -23,6 +24,13 @@ public class ResearchTopicFactory {
         String data = buf.readUtf();
         int page = buf.readVarInt();
         return create(type, data, page);
+    }
+    
+    public static AbstractResearchTopic deserializeNBT(CompoundTag tag) {
+        AbstractResearchTopic.Type type = AbstractResearchTopic.Type.fromName(tag.getString("Type"));
+        AbstractResearchTopic topic = create(type, "", 0);
+        topic.deserializeNBT(tag);
+        return topic;
     }
     
     public static AbstractResearchTopic create(AbstractResearchTopic.Type type, String data, int page) {
