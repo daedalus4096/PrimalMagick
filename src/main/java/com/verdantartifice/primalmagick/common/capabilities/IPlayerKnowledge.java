@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -187,6 +188,20 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param topic the player's last active grimoire research topic
      */
     public void setLastResearchTopic(AbstractResearchTopic topic);
+    
+    /**
+     * Gets the player's grimoire research topic history.
+     * 
+     * @return the player's grimoire research topic history
+     */
+    public List<AbstractResearchTopic> getResearchTopicHistory();
+    
+    /**
+     * Sets the player's grimoire research topic history.
+     * 
+     * @param history the player's grimoire research topic history
+     */
+    public void setResearchTopicHistory(List<AbstractResearchTopic> history);
     
     /**
      * Sync the given player's research and knowledge data to the their client.

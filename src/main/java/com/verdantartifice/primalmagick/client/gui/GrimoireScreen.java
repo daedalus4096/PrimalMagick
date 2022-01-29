@@ -43,7 +43,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
-import com.verdantartifice.primalmagick.common.network.packets.data.SetLastResearchTopicPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
@@ -94,8 +94,6 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;
-    
-    public static final LinkedList<AbstractResearchTopic> HISTORY = new LinkedList<>();
     
     protected int scaledLeft;
     protected int scaledTop;
@@ -169,7 +167,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.initPages();
         this.initButtons();
         this.setCurrentPage(this.menu.getTopic().getPage());
-        PacketHandler.sendToServer(new SetLastResearchTopicPacket(this.menu.getTopic()));
+        PacketHandler.sendToServer(new SetResearchTopicHistoryPacket(this.menu.getTopic(), this.getHistoryView()));
     }
     
     protected void initPages() {
@@ -946,8 +944,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
-        if (!HISTORY.isEmpty()) {
-            AbstractResearchTopic lastTopic = HISTORY.pop();
+        if (!this.getMenu().getTopicHistory().isEmpty()) {
+            AbstractResearchTopic lastTopic = this.getMenu().getTopicHistory().pop();
             this.menu.setTopic(lastTopic);
             this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
             return true;
@@ -958,7 +956,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     protected void updateNavButtonVisibility() {
         this.prevPageButton.visible = (this.currentPage >= 2);
         this.nextPageButton.visible = (this.currentPage < this.pages.size() - 2);
-        this.backButton.visible = !HISTORY.isEmpty();
+        this.backButton.visible = !this.getMenu().getTopicHistory().isEmpty();
     }
     
     @Override
@@ -980,11 +978,11 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     public void pushCurrentHistoryTopic() {
-        HISTORY.push(this.getMenu().getTopic().withPage(this.getCurrentPage()));
+        this.getMenu().getTopicHistory().push(this.getMenu().getTopic().withPage(this.getCurrentPage()));
     }
     
     public List<AbstractResearchTopic> getHistoryView() {
-        return HISTORY.subList(0, HISTORY_LIMIT);
+        return this.getMenu().getTopicHistory().subList(0, Math.min(this.getMenu().getTopicHistory().size(), HISTORY_LIMIT));
     }
     
     protected static class DisciplinePageProperties {

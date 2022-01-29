@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.research.topics;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -24,6 +27,15 @@ public class ResearchTopicFactory {
         String data = buf.readUtf();
         int page = buf.readVarInt();
         return create(type, data, page);
+    }
+    
+    public static List<AbstractResearchTopic> decodeHistory(FriendlyByteBuf buf) {
+        int size = buf.readVarInt();
+        List<AbstractResearchTopic> retVal = new LinkedList<>();
+        for (int index = 0; index < size; index++) {
+            retVal.add(decode(buf));
+        }
+        return retVal;
     }
     
     public static AbstractResearchTopic deserializeNBT(CompoundTag tag) {

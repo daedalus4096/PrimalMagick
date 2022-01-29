@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
@@ -43,6 +46,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
     private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
+    private final List<AbstractResearchTopic> topicHistory = new LinkedList<>();    // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
     private AbstractResearchTopic topic = null; // Last active grimoire research topic
@@ -97,6 +101,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (this.topic != null) {
             rootTag.put("topic", this.topic.serializeNBT());
         }
+        
+        // Serialize grimoire topic history
+        ListTag historyList = new ListTag();
+        for (AbstractResearchTopic topic : this.topicHistory) {
+            historyList.add(topic.serializeNBT());
+        }
+        rootTag.put("topicHistory", historyList);
         
         return rootTag;
     }
@@ -159,6 +170,15 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         if (nbt.contains("topic")) {
             this.topic = ResearchTopicFactory.deserializeNBT(nbt.getCompound("topic"));
         }
+        
+        // Deserialize grimoire topic history
+        ListTag historyList = nbt.getList("topicHistory", Tag.TAG_COMPOUND);
+        for (int index = 0; index < historyList.size(); index++) {
+            AbstractResearchTopic topic = ResearchTopicFactory.deserializeNBT(historyList.getCompound(index));
+            if (topic != null) {
+                this.topicHistory.add(topic);
+            }
+        }
     }
 
     @Override
@@ -168,6 +188,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         this.flags.clear();
         this.project = null;
         this.topic = null;
+        this.topicHistory.clear();
     }
     
     @Override
@@ -369,6 +390,17 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     @Override
     public void setLastResearchTopic(AbstractResearchTopic topic) {
         this.topic = topic;
+    }
+
+    @Override
+    public List<AbstractResearchTopic> getResearchTopicHistory() {
+        return ImmutableList.copyOf(this.topicHistory);
+    }
+
+    @Override
+    public void setResearchTopicHistory(List<AbstractResearchTopic> history) {
+        this.topicHistory.clear();
+        this.topicHistory.addAll(history);
     }
 
     @Override

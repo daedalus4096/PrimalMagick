@@ -23,7 +23,7 @@ public class ContainersPM {
     }
     
     public static final RegistryObject<MenuType<GrimoireContainer>> GRIMOIRE = CONTAINERS.register("grimoire", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new GrimoireContainer(windowId, ResearchTopicFactory.decode(data));
+        return new GrimoireContainer(windowId, ResearchTopicFactory.decode(data), ResearchTopicFactory.decodeHistory(data));
     }));
     public static final RegistryObject<MenuType<ArcaneWorkbenchContainer>> ARCANE_WORKBENCH = CONTAINERS.register("arcane_workbench", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ArcaneWorkbenchContainer(windowId, inv);
