@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -26,14 +27,12 @@ public class RuneEnchantmentButton extends AbstractTopicButton {
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
-            if (button instanceof RuneEnchantmentButton) {
-                RuneEnchantmentButton greb = (RuneEnchantmentButton)button;
-                
+            if (button instanceof RuneEnchantmentButton greb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(greb.getScreen().getMenu().getTopic());
+                greb.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getMenu().setTopic(greb.getEnchantment());
+                greb.getScreen().getMenu().setTopic(new EnchantmentResearchTopic(greb.getEnchantment(), 0));
                 greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     greb.getScreen().getMenu(),
                     greb.getScreen().getPlayerInventory(),

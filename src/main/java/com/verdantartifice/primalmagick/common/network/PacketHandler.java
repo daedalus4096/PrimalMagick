@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.network;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
@@ -112,6 +113,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket::encode, PlaceGhostArcaneRecipePacket::decode, PlaceGhostArcaneRecipePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SeenArcaneRecipePacket.class, SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode, SeenArcaneRecipePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket::encode, ChangeArcaneRecipeBookSettingsPacket::decode, ChangeArcaneRecipeBookSettingsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode, SetResearchTopicHistoryPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

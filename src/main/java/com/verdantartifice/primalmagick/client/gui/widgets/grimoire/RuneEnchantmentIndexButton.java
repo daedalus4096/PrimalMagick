@@ -19,11 +19,9 @@ public class RuneEnchantmentIndexButton extends AbstractTopicButton {
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
-            if (button instanceof RuneEnchantmentIndexButton) {
-                RuneEnchantmentIndexButton greb = (RuneEnchantmentIndexButton)button;
-                
+            if (button instanceof RuneEnchantmentIndexButton greb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(greb.getScreen().getMenu().getTopic());
+                greb.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
                 greb.getScreen().getMenu().setTopic(RuneEnchantmentIndexPage.TOPIC);

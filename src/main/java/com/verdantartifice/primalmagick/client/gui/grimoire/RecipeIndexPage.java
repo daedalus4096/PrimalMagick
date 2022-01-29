@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeEntryButton;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.network.chat.TextComponent;
 
@@ -18,7 +19,7 @@ import net.minecraft.network.chat.TextComponent;
  * @author Daedalus4096
  */
 public class RecipeIndexPage extends AbstractPage {
-    public static final String TOPIC = "recipe_index";
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("recipe_index", 0);
     
     protected List<String> contents = new ArrayList<>();
     protected boolean firstPage;

@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -26,14 +27,12 @@ public class DisciplineButton extends AbstractTopicButton {
     private static class Handler implements OnPress {
         @Override
         public void onPress(Button button) {
-            if (button instanceof DisciplineButton) {
-                DisciplineButton gdb = (DisciplineButton)button;
-                
+            if (button instanceof DisciplineButton gdb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(gdb.getScreen().getMenu().getTopic());
+                gdb.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
-                gdb.getScreen().getMenu().setTopic(gdb.getDiscipline());
+                gdb.getScreen().getMenu().setTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));
                 gdb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
                     gdb.getScreen().getMenu(),
                     gdb.getScreen().getPlayerInventory(),

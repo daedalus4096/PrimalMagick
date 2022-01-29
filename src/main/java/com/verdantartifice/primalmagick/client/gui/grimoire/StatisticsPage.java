@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 /**
  * Grimoire page showing the player's mod-relevant statistics (e.g. the number of times they cast
@@ -16,7 +17,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
  * @author Daedalus4096
  */
 public class StatisticsPage extends AbstractPage {
-    public static final String TOPIC = "stats";
+    public static final OtherResearchTopic TOPIC = new OtherResearchTopic("stats", 0);
     
     protected List<IPageElement> contents = new ArrayList<>();
     protected boolean firstPage;
