@@ -28,9 +28,9 @@ public class ResearchTopicFactory {
     
     public static AbstractResearchTopic deserializeNBT(CompoundTag tag) {
         AbstractResearchTopic.Type type = AbstractResearchTopic.Type.fromName(tag.getString("Type"));
-        AbstractResearchTopic topic = create(type, "", 0);
-        topic.deserializeNBT(tag);
-        return topic;
+        String data = tag.getString("Data");
+        int page = tag.getInt("Page");
+        return create(type, data, page);
     }
     
     public static AbstractResearchTopic create(AbstractResearchTopic.Type type, String data, int page) {
