@@ -43,7 +43,7 @@ public class MainIndexButton extends Button {
             if (button instanceof MainIndexButton indexButton) {
                 // Push the current grimoire topic onto the history stack if we're not already on the main menu
                 if (!indexButton.getScreen().getMenu().getTopic().equals(MainIndexResearchTopic.INSTANCE)) {
-                    GrimoireScreen.HISTORY.add(indexButton.getScreen().getMenu().getTopic().withPage(indexButton.getScreen().getCurrentPage()));
+                    indexButton.getScreen().pushCurrentHistoryTopic();
                 }
                 
                 // Set the new grimoire topic and open a new screen for it

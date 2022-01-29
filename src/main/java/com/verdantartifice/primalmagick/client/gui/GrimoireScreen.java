@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.Optional;
@@ -92,8 +93,9 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
+    private static final int HISTORY_LIMIT = 64;
     
-    public static final List<AbstractResearchTopic> HISTORY = new ArrayList<>();
+    public static final LinkedList<AbstractResearchTopic> HISTORY = new LinkedList<>();
     
     protected int scaledLeft;
     protected int scaledTop;
@@ -945,7 +947,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
         if (!HISTORY.isEmpty()) {
-            AbstractResearchTopic lastTopic = HISTORY.remove(HISTORY.size() - 1);
+            AbstractResearchTopic lastTopic = HISTORY.pop();
             this.menu.setTopic(lastTopic);
             this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
             return true;
@@ -975,6 +977,14 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             }
         }
         return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
+    }
+    
+    public void pushCurrentHistoryTopic() {
+        HISTORY.push(this.getMenu().getTopic().withPage(this.getCurrentPage()));
+    }
+    
+    public List<AbstractResearchTopic> getHistoryView() {
+        return HISTORY.subList(0, HISTORY_LIMIT);
     }
     
     protected static class DisciplinePageProperties {

@@ -37,7 +37,7 @@ public class EntryButton extends AbstractTopicButton {
                 Minecraft mc = Minecraft.getInstance();
                 
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(geb.getScreen().getMenu().getTopic().withPage(geb.getScreen().getCurrentPage()));
+                geb.getScreen().pushCurrentHistoryTopic();
                 geb.getScreen().getMenu().setTopic(new EntryResearchTopic(geb.getEntry(), 0));
                 if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags

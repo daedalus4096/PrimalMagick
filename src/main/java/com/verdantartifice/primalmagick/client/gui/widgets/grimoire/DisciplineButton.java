@@ -29,7 +29,7 @@ public class DisciplineButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof DisciplineButton gdb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(gdb.getScreen().getMenu().getTopic().withPage(gdb.getScreen().getCurrentPage()));
+                gdb.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
                 gdb.getScreen().getMenu().setTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));

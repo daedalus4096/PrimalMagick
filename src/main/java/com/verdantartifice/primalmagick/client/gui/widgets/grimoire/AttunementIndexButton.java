@@ -21,7 +21,7 @@ public class AttunementIndexButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof AttunementIndexButton gab) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(gab.getScreen().getMenu().getTopic().withPage(gab.getScreen().getCurrentPage()));
+                gab.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
                 gab.getScreen().getMenu().setTopic(AttunementIndexPage.TOPIC);

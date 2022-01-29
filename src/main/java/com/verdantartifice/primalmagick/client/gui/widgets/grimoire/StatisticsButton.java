@@ -21,7 +21,7 @@ public class StatisticsButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof StatisticsButton gsb) {
                 // Push the current grimoire topic onto the history stack
-                GrimoireScreen.HISTORY.add(gsb.getScreen().getMenu().getTopic().withPage(gsb.getScreen().getCurrentPage()));
+                gsb.getScreen().pushCurrentHistoryTopic();
                 
                 // Set the new grimoire topic and open a new screen for it
                 gsb.getScreen().getMenu().setTopic(StatisticsPage.TOPIC);
