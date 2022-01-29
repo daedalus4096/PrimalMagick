@@ -21,10 +21,12 @@ import net.minecraft.network.chat.Component;
  */
 public abstract class AbstractTopicButton extends Button {
     protected GrimoireScreen screen;
+    protected AbstractIndexIcon icon;
     
-    public AbstractTopicButton(int x, int y, int width, int height, Component text, GrimoireScreen screen, OnPress onPress) {
+    public AbstractTopicButton(int x, int y, int width, int height, Component text, GrimoireScreen screen, AbstractIndexIcon icon, OnPress onPress) {
         super(x, y, width, height, text, onPress);
         this.screen = screen;
+        this.icon = icon;
     }
 
     public GrimoireScreen getScreen() {
@@ -44,17 +46,24 @@ public abstract class AbstractTopicButton extends Button {
             fill(matrixStack, this.x - 5, this.y, this.x + this.width + 5, this.y + this.height, color);
         }
         int strWidth = mc.font.width(this.getMessage().getString());
+        int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
-        if (strWidth <= this.width) {
-            mc.font.draw(matrixStack, this.getMessage(), this.x, this.y + dy, Color.BLACK.getRGB());
+        if (strWidth <= (this.width - dx)) {
+            mc.font.draw(matrixStack, this.getMessage(), this.x + dx, this.y + dy, Color.BLACK.getRGB());
+            if (this.icon != null) {
+                this.icon.render(matrixStack, this.x - 2, this.y + dy - 4);
+            }
         } else {
             // If the button text is too long, scale it down to fit on one line
-            float scale = (float)this.width / (float)strWidth;
+            float scale = (float)(this.width - dx) / (float)strWidth;
             matrixStack.pushPose();
-            matrixStack.translate(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            matrixStack.translate(this.x + dx, this.y + dy + (1.0F * scale), 0.0F);
             matrixStack.scale(scale, scale, scale);
             mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
             matrixStack.popPose();
+            if (this.icon != null) {
+                this.icon.render(matrixStack, this.x - 2, this.y + dy - 4);
+            }
         }
         matrixStack.popPose();
     }

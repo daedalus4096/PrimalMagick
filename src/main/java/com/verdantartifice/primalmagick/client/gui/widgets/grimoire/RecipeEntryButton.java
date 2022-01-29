@@ -15,7 +15,7 @@ public class RecipeEntryButton extends AbstractTopicButton {
     protected String recipeName;
     
     public RecipeEntryButton(int x, int y, Component text, GrimoireScreen screen, String recipeName) {
-        super(x, y, 123, 12, text, screen, new Handler());
+        super(x, y, 123, 12, text, screen, null, new Handler());
         this.recipeName = recipeName;
     }
     

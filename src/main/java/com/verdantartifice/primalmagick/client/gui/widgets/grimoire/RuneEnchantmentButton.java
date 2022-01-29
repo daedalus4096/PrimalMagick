@@ -16,7 +16,7 @@ public class RuneEnchantmentButton extends AbstractTopicButton {
     protected Enchantment enchant;
     
     public RuneEnchantmentButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Enchantment enchant) {
-        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, null, new Handler());
         this.enchant = enchant;
     }
     
