@@ -2,6 +2,8 @@ v2.0.5
 ------
 * Let the Enchanting Studies research project recognize Quark Matrix Enchanters as valid materials
 * Add config options to disable ore worldgen features; use with caution
+* Have the grimoire remember player browsing history between sessions
+* Make the grimoire ribbon a shortcut to the main index
 
 v2.0.4
 ------
