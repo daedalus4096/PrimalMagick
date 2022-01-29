@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
  */
 public class StatisticsButton extends AbstractTopicButton {
     public StatisticsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
+        super(widthIn, heightIn, 123, 18, text, screen, new Handler());
     }
     
     private static class Handler implements OnPress {

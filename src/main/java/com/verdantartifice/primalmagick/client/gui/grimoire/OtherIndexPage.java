@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
@@ -46,36 +47,36 @@ public class OtherIndexPage extends AbstractPage {
         // Add attunements button if attunements are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
             text = new TranslatableComponent("primalmagick.grimoire.attunement_header");
-            screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
-            y += 12;
+            Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += button.getHeight();
         }
         
         // Add recipes button
         ResearchEntry firstSteps = ResearchEntries.getEntry(SimpleResearchKey.FIRST_STEPS);
         if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
             text = new TranslatableComponent("primalmagick.grimoire.recipe_index_header");
-            screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
-            y += 12;
+            Button button = screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += button.getHeight();
         }
         
         // Add rune enchantments button if rune enchantments are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
             text = new TranslatableComponent("primalmagick.grimoire.rune_enchantment_header");
-            screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
-            y += 12;
+            Button button = screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += button.getHeight();
         }
         
         // Add scans button if at least one scan is unlocked
         ResearchDiscipline scans = ResearchDisciplines.getDiscipline("SCANS");
         if (scans != null && scans.getUnlockResearchKey().isKnownBy(Minecraft.getInstance().player)) {
             text = new TranslatableComponent(scans.getNameTranslationKey());
-            screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, scans));
-            y += 12;
+            Button button = screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, scans, true, true));
+            y += button.getHeight();
         }
         
         // Add statistics button
         text = new TranslatableComponent("primalmagick.grimoire.stats_header");
-        screen.addWidgetToScreen(new StatisticsButton(x + 12 + (side * 140), y, text, screen));
-        y += 12;
+        Button button = screen.addWidgetToScreen(new StatisticsButton(x + 12 + (side * 140), y, text, screen));
+        y += button.getHeight();
     }
 }
