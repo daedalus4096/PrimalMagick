@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
@@ -23,7 +22,7 @@ public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
     public EntryButton(int x, int y, Component text, GrimoireScreen screen, ResearchEntry entry) {
-        super(x, y, 123, 12, text, screen, ItemIndexIcon.of(ItemsPM.GRIMOIRE.get(), false), new Handler());
+        super(x, y, 123, 12, text, screen, IndexIconFactory.fromEntryIcon(entry.getIcon(), false), new Handler());
         this.entry = entry;
     }
     
