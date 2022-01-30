@@ -298,6 +298,13 @@ public class ResearchEntry {
             return this.isItem ? ForgeRegistries.ITEMS.getValue(this.location) : null;
         }
         
+        public JsonObject toJson() {
+            JsonObject retVal = new JsonObject();
+            retVal.addProperty("isItem", this.isItem);
+            retVal.addProperty("location", this.location.toString());
+            return retVal;
+        }
+        
         @Nullable
         public static ResearchEntry.Icon parse(@Nullable JsonObject obj) {
             if (obj == null) {
