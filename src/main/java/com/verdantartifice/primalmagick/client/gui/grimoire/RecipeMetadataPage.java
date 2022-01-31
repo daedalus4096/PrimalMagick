@@ -99,7 +99,7 @@ public class RecipeMetadataPage extends AbstractPage {
             }
             
             y += 3 * mc.font.lineHeight;
-            screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, new TranslatableComponent(entry.getNameTranslationKey()), screen, entry));
+            screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, new TranslatableComponent(entry.getNameTranslationKey()), screen, entry, false));
         }
     }
 }
