@@ -276,10 +276,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     private List<ResearchDiscipline> buildDisciplineList() {
-        // Gather a list of all research disciplines, sorted by their display names
-        return ResearchDisciplines.getAllDisciplines().stream()
-                                    .sorted(Comparator.comparing(d -> (new TranslatableComponent(d.getNameTranslationKey())).getString()))
-                                    .collect(Collectors.toList());
+        // Gather a list of all research disciplines, sorted by their registration order
+        return ResearchDisciplines.getAllDisciplinesSorted();
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
