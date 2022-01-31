@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
@@ -16,7 +17,7 @@ public class RuneEnchantmentButton extends AbstractTopicButton {
     protected Enchantment enchant;
     
     public RuneEnchantmentButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Enchantment enchant) {
-        super(widthIn, heightIn, 123, 12, text, screen, null, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(ResearchDisciplines.getDiscipline("RUNEWORKING").getIconLocation(), false), new Handler());
         this.enchant = enchant;
     }
     
