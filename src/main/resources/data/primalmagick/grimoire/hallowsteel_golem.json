@@ -2,6 +2,10 @@
   "key": "HALLOWSTEEL_GOLEM",
   "name": "primalmagick.research.hallowsteel_golem.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_golem_controller"
+  },
   "parents": [
     "SUPREME_MAGITECH",
     "HEXIUM_GOLEM",

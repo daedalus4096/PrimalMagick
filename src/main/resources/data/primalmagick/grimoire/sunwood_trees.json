@@ -3,6 +3,10 @@
   "name": "primalmagick.research.sunwood_trees.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sunwood_sapling"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

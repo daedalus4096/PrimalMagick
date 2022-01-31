@@ -2,6 +2,10 @@
   "key": "SUNLAMP",
   "name": "primalmagick.research.sunlamp.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sunlamp"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "PRIMALITE"

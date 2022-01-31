@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_CONJURE_ANIMAL",
   "name": "primalmagick.research.spell_payload_conjure_animal.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/blood.png"
+  },
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_BLOOD"

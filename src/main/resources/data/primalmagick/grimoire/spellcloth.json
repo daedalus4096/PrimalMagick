@@ -2,6 +2,10 @@
   "key": "SPELLCLOTH",
   "name": "primalmagick.research.spellcloth.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:spellcloth_head"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "IMBUED_WOOL",

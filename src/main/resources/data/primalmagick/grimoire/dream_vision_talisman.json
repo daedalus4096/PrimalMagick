@@ -2,6 +2,10 @@
   "key": "DREAM_VISION_TALISMAN",
   "name": "primalmagick.research.dream_vision_talisman.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dream_vision_talisman"
+  },
   "parents": [
     "EXPERT_RITUAL",
     "RITUAL_CANDLES",

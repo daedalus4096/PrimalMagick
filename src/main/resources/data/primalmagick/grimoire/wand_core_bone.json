@@ -2,6 +2,10 @@
   "key": "WAND_CORE_BONE",
   "name": "primalmagick.research.wand_core_bone.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:bone_wand_core_item"
+  },
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",

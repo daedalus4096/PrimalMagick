@@ -2,6 +2,10 @@
   "key": "MASTER_RITUAL",
   "name": "primalmagick.research.master_ritual.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
   "parents": [
     "RITUAL_LECTERN",
     "RITUAL_BELL"

@@ -3,6 +3,10 @@
   "name": "primalmagick.research.moonwood_trees.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:moonwood_sapling"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

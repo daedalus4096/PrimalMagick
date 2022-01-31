@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_TELEPORT",
   "name": "primalmagick.research.spell_payload_teleport.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/void.png"
+  },
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_VOID"

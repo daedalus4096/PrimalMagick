@@ -2,6 +2,10 @@
   "key": "RUNE_POWER",
   "name": "primalmagick.research.rune_power.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_power"
+  },
   "parents": [
     "MASTER_RUNEWORKING",
     "CRYSTAL_SYNTHESIS",

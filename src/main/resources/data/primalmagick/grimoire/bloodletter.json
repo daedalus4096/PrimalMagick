@@ -2,6 +2,10 @@
   "key": "BLOODLETTER",
   "name": "primalmagick.research.bloodletter.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:bloodletter"
+  },
   "parents": [
     "MASTER_RITUAL",
     "t_discover_blood"

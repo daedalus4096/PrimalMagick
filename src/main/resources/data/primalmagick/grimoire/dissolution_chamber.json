@@ -2,6 +2,10 @@
   "key": "DISSOLUTION_CHAMBER",
   "name": "primalmagick.research.dissolution_chamber.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dissolution_chamber"
+  },
   "parents": [
     "MASTER_MAGITECH",
     "MASTER_MANAWEAVING",

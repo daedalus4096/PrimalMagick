@@ -2,6 +2,10 @@
   "key": "PRIMAL_FISHING_ROD",
   "name": "primalmagick.research.primal_fishing_rod.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_fishing_rod"
+  },
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",

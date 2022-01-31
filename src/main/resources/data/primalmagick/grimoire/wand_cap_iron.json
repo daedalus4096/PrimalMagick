@@ -2,6 +2,10 @@
   "key": "WAND_CAP_IRON",
   "name": "primalmagick.research.wand_cap_iron.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:iron_wand_cap_item"
+  },
   "parents": [
     "ADVANCED_WANDMAKING"
   ],

@@ -2,6 +2,10 @@
   "key": "RUNE_CREATURE",
   "name": "primalmagick.research.rune_creature.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_creature"
+  },
   "parents": [
     "EXPERT_RUNEWORKING"
   ],

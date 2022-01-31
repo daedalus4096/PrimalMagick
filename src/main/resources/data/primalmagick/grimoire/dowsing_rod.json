@@ -2,6 +2,10 @@
   "key": "DOWSING_ROD",
   "name": "primalmagick.research.dowsing_rod.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dowsing_rod"
+  },
   "parents": [
     "BASIC_RITUAL"
   ],

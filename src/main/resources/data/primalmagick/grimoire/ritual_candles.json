@@ -2,6 +2,10 @@
   "key": "RITUAL_CANDLES",
   "name": "primalmagick.research.ritual_candles.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ritual_candle_white"
+  },
   "parents": [
     "BASIC_RITUAL"
   ],

@@ -2,6 +2,10 @@
   "key": "IGNYX",
   "name": "primalmagick.research.ignyx.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ignyx"
+  },
   "parents": [
     "EXPERT_ALCHEMY",
     "CALCINATOR_BASIC",

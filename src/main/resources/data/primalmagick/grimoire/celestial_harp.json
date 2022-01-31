@@ -2,6 +2,10 @@
   "key": "CELESTIAL_HARP",
   "name": "primalmagick.research.celestial_harp.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:celestial_harp"
+  },
   "parents": [
     "SUPREME_RITUAL",
     "t_discover_hallowed"

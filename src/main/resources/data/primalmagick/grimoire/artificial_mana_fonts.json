@@ -2,6 +2,10 @@
   "key": "ARTIFICIAL_MANA_FONTS",
   "name": "primalmagick.research.artificial_mana_fonts.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:artificial_font_earth"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS",

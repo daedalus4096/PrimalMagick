@@ -3,6 +3,10 @@
   "name": "primalmagick.research.alchemical_waste.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:alchemical_waste"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

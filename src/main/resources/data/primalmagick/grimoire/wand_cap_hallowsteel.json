@@ -2,6 +2,10 @@
   "key": "WAND_CAP_HALLOWSTEEL",
   "name": "primalmagick.research.wand_cap_hallowsteel.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_wand_cap_item"
+  },
   "parents": [
     "SUPREME_MANAWEAVING",
     "WAND_CAP_HEXIUM",

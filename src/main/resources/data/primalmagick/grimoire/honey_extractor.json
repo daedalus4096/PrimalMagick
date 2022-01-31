@@ -2,6 +2,10 @@
   "key": "HONEY_EXTRACTOR",
   "name": "primalmagick.research.honey_extractor.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:honey_extractor"
+  },
   "parents": [
     "BASIC_MAGITECH"
   ],

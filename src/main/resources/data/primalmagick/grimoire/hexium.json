@@ -2,6 +2,10 @@
   "key": "HEXIUM",
   "name": "primalmagick.research.hexium.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_ingot"
+  },
   "parents": [
     "MASTER_ALCHEMY",
     "PRIMALITE",

@@ -2,6 +2,10 @@
   "key": "WAND_CORE_BLAZE_ROD",
   "name": "primalmagick.research.wand_core_blaze_rod.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:blaze_rod_wand_core_item"
+  },
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",

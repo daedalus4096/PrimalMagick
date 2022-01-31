@@ -2,6 +2,10 @@
   "key": "SEASCRIBE_PEN",
   "name": "primalmagick.research.seascribe_pen.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:seascribe_pen"
+  },
   "parents": [
     "BASIC_MAGITECH",
     "THEORYCRAFTING"

@@ -2,6 +2,10 @@
   "key": "PRIMALITE",
   "name": "primalmagick.research.primalite.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primalite_ingot"
+  },
   "parents": [
     "EXPERT_ALCHEMY"
   ],

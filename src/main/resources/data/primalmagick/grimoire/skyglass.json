@@ -2,6 +2,10 @@
   "key": "SKYGLASS",
   "name": "primalmagick.research.skyglass.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:skyglass"
+  },
   "parents": [
     "STONEMELDING"
   ],

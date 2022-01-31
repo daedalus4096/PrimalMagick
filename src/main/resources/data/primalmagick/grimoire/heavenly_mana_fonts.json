@@ -2,6 +2,10 @@
   "key": "HEAVENLY_MANA_FONTS",
   "name": "primalmagick.research.heavenly_mana_fonts.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:heavenly_font_earth"
+  },
   "parents": [
     "FORBIDDEN_MANA_FONTS",
     "SUPREME_MANAWEAVING",

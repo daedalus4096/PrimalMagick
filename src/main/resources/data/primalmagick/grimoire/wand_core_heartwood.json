@@ -2,6 +2,10 @@
   "key": "WAND_CORE_HEARTWOOD",
   "name": "primalmagick.research.wand_core_heartwood.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:heartwood_wand_core_item"
+  },
   "parents": [
     "ADVANCED_WANDMAKING"
   ],

@@ -2,6 +2,10 @@
   "key": "FORBIDDEN_BOW",
   "name": "primalmagick.research.forbidden_bow.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_bow"
+  },
   "parents": [
     "t_discover_infernal",
     "MASTER_RITUAL",

@@ -3,6 +3,10 @@
   "name": "primalmagick.research.bookshelf.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:bookshelf"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

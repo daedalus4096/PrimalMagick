@@ -2,6 +2,10 @@
   "key": "BASIC_RUNEWORKING",
   "name": "primalmagick.research.basic_runeworking.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_runeworking.png"
+  },
   "parents": [
     "UNLOCK_RUNEWORKING"
   ],

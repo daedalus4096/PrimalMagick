@@ -2,6 +2,10 @@
   "key": "BASIC_MAGITECH",
   "name": "primalmagick.research.basic_magitech.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
   "parents": [
     "UNLOCK_MAGITECH"
   ],

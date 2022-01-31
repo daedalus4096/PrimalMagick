@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_CONJURE_LAVA",
   "name": "primalmagick.research.spell_payload_conjure_lava.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/infernal.png"
+  },
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_CONJURE_WATER",

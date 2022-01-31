@@ -2,6 +2,10 @@
   "key": "WAND_CHARGER",
   "name": "primalmagick.research.wand_charger.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_charger"
+  },
   "parents": [
     "BASIC_MANAWEAVING"
   ],

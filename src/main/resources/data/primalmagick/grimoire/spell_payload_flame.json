@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_FLAME",
   "name": "primalmagick.research.spell_payload_flame.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/infernal.png"
+  },
   "parents": [
     "EXPERT_SORCERY",
     "t_discover_infernal"

@@ -2,6 +2,10 @@
   "key": "UNLOCK_SORCERY",
   "name": "primalmagick.research.unlock_sorcery.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
   "parents": [
     "WAND_CHARGER"
   ],

@@ -2,6 +2,10 @@
   "key": "FORBIDDEN_SWORD",
   "name": "primalmagick.research.forbidden_sword.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_sword"
+  },
   "parents": [
     "t_discover_void",
     "MASTER_RITUAL",

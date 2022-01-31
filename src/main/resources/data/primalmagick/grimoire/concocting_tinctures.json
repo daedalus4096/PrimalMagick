@@ -2,6 +2,10 @@
   "key": "CONCOCTING_TINCTURES",
   "name": "primalmagick.research.concocting_tinctures.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
   "parents": [
     "EXPERT_MAGITECH",
     "SKYGLASS",

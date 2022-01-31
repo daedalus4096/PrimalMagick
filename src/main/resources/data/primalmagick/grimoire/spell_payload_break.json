@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_BREAK",
   "name": "primalmagick.research.spell_payload_break.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/earth.png"
+  },
   "parents": [
     "EXPERT_SORCERY"
   ],

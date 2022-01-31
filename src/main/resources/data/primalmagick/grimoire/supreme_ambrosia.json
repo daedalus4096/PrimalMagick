@@ -2,6 +2,10 @@
   "key": "SUPREME_AMBROSIA",
   "name": "primalmagick.research.supreme_ambrosia.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ambrosia_supreme_earth"
+  },
   "parents": [
     "SUPREME_RITUAL",
     "GREATER_AMBROSIA",

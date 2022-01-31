@@ -2,6 +2,10 @@
   "key": "SUPREME_MAGITECH",
   "name": "primalmagick.research.supreme_magitech.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
   "parents": [
     "HEXIUM_GOLEM"
   ],

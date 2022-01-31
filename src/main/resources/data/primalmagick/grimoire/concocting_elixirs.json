@@ -2,6 +2,10 @@
   "key": "CONCOCTING_ELIXIRS",
   "name": "primalmagick.research.concocting_elixirs.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
   "parents": [
     "SUPREME_MAGITECH",
     "CONCOCTING_PHILTERS",

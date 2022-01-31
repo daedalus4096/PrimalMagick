@@ -2,6 +2,10 @@
   "key": "CLUSTER_SYNTHESIS",
   "name": "primalmagick.research.cluster_synthesis.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cluster_earth"
+  },
   "parents": [
     "SUPREME_ALCHEMY",
     "CRYSTAL_SYNTHESIS"

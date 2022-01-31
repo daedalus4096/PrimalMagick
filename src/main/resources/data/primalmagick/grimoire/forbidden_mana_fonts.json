@@ -2,6 +2,10 @@
   "key": "FORBIDDEN_MANA_FONTS",
   "name": "primalmagick.research.forbidden_mana_fonts.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_font_earth"
+  },
   "parents": [
     "ARTIFICIAL_MANA_FONTS",
     "MASTER_MANAWEAVING",

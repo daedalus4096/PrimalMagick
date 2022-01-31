@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_CONJURE_STONE",
   "name": "primalmagick.research.spell_payload_conjure_stone.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/earth.png"
+  },
   "parents": [
     "EXPERT_SORCERY"
   ],

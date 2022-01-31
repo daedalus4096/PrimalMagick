@@ -2,6 +2,10 @@
   "key": "SUPREME_SORCERY",
   "name": "primalmagick.research.supreme_sorcery.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
   "parents": [
     "SPELL_VEHICLE_BOLT",
     "SPELL_MOD_QUICKEN"

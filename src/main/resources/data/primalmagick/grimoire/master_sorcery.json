@@ -2,6 +2,10 @@
   "key": "MASTER_SORCERY",
   "name": "primalmagick.research.master_sorcery.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
   "parents": [
     "SPELL_VEHICLE_PROJECTILE",
     "SPELL_MOD_AMPLIFY"

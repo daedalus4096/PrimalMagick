@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_DRAIN_SOUL",
   "name": "primalmagick.research.spell_payload_drain_soul.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/infernal.png"
+  },
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_FLAME"

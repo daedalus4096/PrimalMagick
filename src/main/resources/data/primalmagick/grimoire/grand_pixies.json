@@ -2,6 +2,10 @@
   "key": "GRAND_PIXIES",
   "name": "primalmagick.research.grand_pixies.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:pixie_grand_earth"
+  },
   "parents": [
     "MASTER_RITUAL",
     "PIXIES",

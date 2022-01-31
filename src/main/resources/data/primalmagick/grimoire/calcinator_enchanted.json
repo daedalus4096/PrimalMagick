@@ -2,6 +2,10 @@
   "key": "CALCINATOR_ENCHANTED",
   "name": "primalmagick.research.calcinator_enchanted.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:calcinator_enchanted"
+  },
   "parents": [
     "EXPERT_ALCHEMY",
     "EXPERT_MANAWEAVING",

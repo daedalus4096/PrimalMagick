@@ -2,6 +2,10 @@
   "key": "RUNIC_GRINDSTONE",
   "name": "primalmagick.research.runic_grindstone.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:runic_grindstone"
+  },
   "parents": [
     "RUNE_DISPEL"
   ],

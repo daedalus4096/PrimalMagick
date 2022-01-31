@@ -2,6 +2,10 @@
   "key": "SANGUINE_CORE_DEMONS",
   "name": "primalmagick.research.sanguine_core_demons.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],

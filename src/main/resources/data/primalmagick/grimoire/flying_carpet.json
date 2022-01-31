@@ -2,6 +2,10 @@
   "key": "FLYING_CARPET",
   "name": "primalmagick.research.flying_carpet.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:flying_carpet"
+  },
   "parents": [
     "MASTER_RITUAL",
     "CRYSTAL_SYNTHESIS",

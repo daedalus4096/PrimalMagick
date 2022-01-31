@@ -2,6 +2,10 @@
   "key": "EXPERT_MAGITECH",
   "name": "primalmagick.research.expert_magitech.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
   "parents": [
     "HONEY_EXTRACTOR",
     "SEASCRIBE_PEN"

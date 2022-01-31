@@ -2,6 +2,10 @@
   "key": "SOUL_ANVIL",
   "name": "primalmagick.research.soul_anvil.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:soul_anvil"
+  },
   "parents": [
     "MASTER_RITUAL",
     "HEXIUM",

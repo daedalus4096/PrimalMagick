@@ -2,6 +2,10 @@
   "key": "WAND_CAP_HEXIUM",
   "name": "primalmagick.research.wand_cap_hexium.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_wand_cap_item"
+  },
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CAP_PRIMALITE",

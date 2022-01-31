@@ -2,6 +2,10 @@
   "key": "WAND_CORE_PURPUR",
   "name": "primalmagick.research.wand_core_purpur.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:purpur_wand_core_item"
+  },
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",

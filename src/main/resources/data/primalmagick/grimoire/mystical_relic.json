@@ -3,6 +3,10 @@
   "name": "primalmagick.research.mystical_relic.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mystical_relic"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

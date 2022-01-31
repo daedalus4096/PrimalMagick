@@ -2,6 +2,10 @@
   "key": "CLEANSING_RITE",
   "name": "primalmagick.research.cleansing_rite.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
   "parents": [
     "MASTER_RITUAL",
     "SANGUINE_CRUCIBLE",

@@ -2,6 +2,10 @@
   "key": "RUNE_HALLOWED",
   "name": "primalmagick.research.rune_hallowed.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_hallowed"
+  },
   "parents": [
     "MASTER_RUNEWORKING",
     "t_discover_hallowed"
