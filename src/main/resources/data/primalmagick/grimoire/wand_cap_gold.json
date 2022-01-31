@@ -2,6 +2,10 @@
   "key": "WAND_CAP_GOLD",
   "name": "primalmagick.research.wand_cap_gold.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:gold_wand_cap_item"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_CAP_IRON"

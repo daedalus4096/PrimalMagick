@@ -2,6 +2,10 @@
   "key": "CRYOTREATMENT",
   "name": "primalmagick.research.cryotreatment.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:ice"
+  },
   "parents": [
     "STONEMELDING"
   ],

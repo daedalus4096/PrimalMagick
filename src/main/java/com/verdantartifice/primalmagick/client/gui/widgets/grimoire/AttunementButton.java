@@ -16,7 +16,7 @@ public class AttunementButton extends AbstractTopicButton {
     protected Source source;
     
     public AttunementButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Source source) {
-        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(source.getImage(), false), new Handler());
         this.source = source;
     }
     

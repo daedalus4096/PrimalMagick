@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopi
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * GUI button to view the grimoire page for a given recipe.
@@ -14,8 +15,8 @@ import net.minecraft.network.chat.Component;
 public class RecipeEntryButton extends AbstractTopicButton {
     protected String recipeName;
     
-    public RecipeEntryButton(int x, int y, Component text, GrimoireScreen screen, String recipeName) {
-        super(x, y, 123, 12, text, screen, new Handler());
+    public RecipeEntryButton(int x, int y, Component text, GrimoireScreen screen, String recipeName, ItemStack outputStack) {
+        super(x, y, 123, 12, text, screen, ItemIndexIcon.of(outputStack, false), new Handler());
         this.recipeName = recipeName;
     }
     

@@ -2,6 +2,10 @@
   "key": "SOURCE_MOON",
   "name": "primalmagick.research.source_moon.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/moon.png"
+  },
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],

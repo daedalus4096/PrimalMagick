@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_CONJURE_WATER",
   "name": "primalmagick.research.spell_payload_conjure_water.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sea.png"
+  },
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_FROST"

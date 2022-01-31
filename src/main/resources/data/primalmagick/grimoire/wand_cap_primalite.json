@@ -2,6 +2,10 @@
   "key": "WAND_CAP_PRIMALITE",
   "name": "primalmagick.research.wand_cap_primalite.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primalite_wand_cap_item"
+  },
   "parents": [
     "WAND_CAP_GOLD",
     "PRIMALITE"

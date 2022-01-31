@@ -2,6 +2,10 @@
   "key": "PRIMAL_HOE",
   "name": "primalmagick.research.primal_hoe.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:primal_hoe"
+  },
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",

@@ -2,6 +2,10 @@
   "key": "SUPREME_RITUAL",
   "name": "primalmagick.research.supreme_ritual.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
   "parents": [
     "BLOODLETTER",
     "SOUL_ANVIL"

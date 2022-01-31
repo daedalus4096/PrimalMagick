@@ -2,6 +2,10 @@
   "key": "HEXIUM_GOLEM",
   "name": "primalmagick.research.hexium_golem.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hexium_golem_controller"
+  },
   "parents": [
     "MASTER_MAGITECH",
     "PRIMALITE_GOLEM",

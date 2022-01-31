@@ -2,6 +2,10 @@
   "key": "WAND_GEM_ADEPT",
   "name": "primalmagick.research.wand_gem_adept.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:adept_wand_gem_item"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_GEM_APPRENTICE",

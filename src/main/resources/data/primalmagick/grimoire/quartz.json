@@ -3,6 +3,10 @@
   "name": "primalmagick.research.quartz.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:quartz"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

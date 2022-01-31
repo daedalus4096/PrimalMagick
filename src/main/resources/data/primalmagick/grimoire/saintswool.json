@@ -2,6 +2,10 @@
   "key": "SAINTSWOOL",
   "name": "primalmagick.research.saintswool.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:saintswool_head"
+  },
   "parents": [
     "SUPREME_MANAWEAVING",
     "HEXWEAVE",

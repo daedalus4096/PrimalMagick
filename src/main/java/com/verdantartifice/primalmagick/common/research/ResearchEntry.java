@@ -18,6 +18,9 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of a research entry, the primary component of the research system.  A research entry
@@ -33,25 +36,27 @@ public class ResearchEntry {
     protected SimpleResearchKey key;
     protected String disciplineKey;
     protected String nameTranslationKey;
+    protected ResearchEntry.Icon icon;
     protected CompoundResearchKey parentResearch;
     protected boolean hidden;
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
-    protected ResearchEntry(@Nonnull SimpleResearchKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey) {
+    protected ResearchEntry(@Nonnull SimpleResearchKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
         this.key = key;
         this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
         this.hidden = false;
+        this.icon = icon;
     }
     
     @Nullable
-    public static ResearchEntry create(@Nullable SimpleResearchKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey) {
+    public static ResearchEntry create(@Nullable SimpleResearchKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
         if (key == null || disciplineKey == null || nameTranslationKey == null) {
             return null;
         } else {
             // ResearchEntry main keys should never have a stage
-            return new ResearchEntry(key.stripStage(), disciplineKey, nameTranslationKey);
+            return new ResearchEntry(key.stripStage(), disciplineKey, nameTranslationKey, icon);
         }
     }
     
@@ -61,7 +66,8 @@ public class ResearchEntry {
         ResearchEntry entry = create(
             SimpleResearchKey.parse(obj.getAsJsonPrimitive("key").getAsString()),
             obj.getAsJsonPrimitive("discipline").getAsString(),
-            obj.getAsJsonPrimitive("name").getAsString()
+            obj.getAsJsonPrimitive("name").getAsString(),
+            ResearchEntry.Icon.parse(obj.getAsJsonObject("icon"))
         );
         if (entry == null) {
             throw new JsonParseException("Invalid entry data in research JSON");
@@ -93,7 +99,8 @@ public class ResearchEntry {
         SimpleResearchKey key = SimpleResearchKey.parse(buf.readUtf());
         String discipline = buf.readUtf();
         String name = buf.readUtf();
-        ResearchEntry entry = create(key, discipline, name);
+        ResearchEntry.Icon icon = ResearchEntry.Icon.fromNetwork(buf);
+        ResearchEntry entry = create(key, discipline, name, icon);
         entry.hidden = buf.readBoolean();
         entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
         int stageCount = buf.readVarInt();
@@ -111,6 +118,7 @@ public class ResearchEntry {
         buf.writeUtf(entry.key.toString());
         buf.writeUtf(entry.disciplineKey);
         buf.writeUtf(entry.nameTranslationKey);
+        ResearchEntry.Icon.toNetwork(buf, entry.icon);
         buf.writeBoolean(entry.hidden);
         buf.writeUtf(entry.parentResearch == null ? "" : entry.parentResearch.toString());
         buf.writeVarInt(entry.stages.size());
@@ -136,6 +144,11 @@ public class ResearchEntry {
     @Nonnull
     public String getNameTranslationKey() {
         return this.nameTranslationKey;
+    }
+    
+    @Nullable
+    public ResearchEntry.Icon getIcon() {
+        return this.icon;
     }
     
     @Nullable
@@ -253,5 +266,75 @@ public class ResearchEntry {
         }
         
         return retVal;
+    }
+    
+    public static class Icon {
+        protected final boolean isItem;
+        protected final ResourceLocation location;
+        
+        protected Icon(boolean isItem, ResourceLocation location) {
+            this.isItem = isItem;
+            this.location = location;
+        }
+        
+        public static Icon of(ItemLike item) {
+            return new Icon(true, item.asItem().getRegistryName());
+        }
+        
+        public static Icon of(ResourceLocation loc) {
+            return new Icon(false, loc);
+        }
+        
+        public boolean isItem() {
+            return this.isItem;
+        }
+        
+        public ResourceLocation getLocation() {
+            return this.location;
+        }
+        
+        @Nullable
+        public Item asItem() {
+            return this.isItem ? ForgeRegistries.ITEMS.getValue(this.location) : null;
+        }
+        
+        public JsonObject toJson() {
+            JsonObject retVal = new JsonObject();
+            retVal.addProperty("isItem", this.isItem);
+            retVal.addProperty("location", this.location.toString());
+            return retVal;
+        }
+        
+        @Nullable
+        public static ResearchEntry.Icon parse(@Nullable JsonObject obj) {
+            if (obj == null) {
+                return null;
+            }
+            boolean isItem = obj.getAsJsonPrimitive("isItem").getAsBoolean();
+            ResourceLocation loc = ResourceLocation.tryParse(obj.getAsJsonPrimitive("location").getAsString());
+            return loc == null ? null : new Icon(isItem, loc);
+        }
+        
+        @Nullable
+        public static ResearchEntry.Icon fromNetwork(FriendlyByteBuf buf) {
+            boolean hasIcon = buf.readBoolean();
+            if (!hasIcon) {
+                return null;
+            } else {
+                boolean isItem = buf.readBoolean();
+                ResourceLocation loc = ResourceLocation.tryParse(buf.readUtf());
+                return loc == null ? null : new Icon(isItem, loc);
+            }
+        }
+        
+        public static void toNetwork(FriendlyByteBuf buf, @Nullable ResearchEntry.Icon icon) {
+            if (icon == null) {
+                buf.writeBoolean(false);
+            } else {
+                buf.writeBoolean(true);
+                buf.writeBoolean(icon.isItem);
+                buf.writeUtf(icon.location.toString());
+            }
+        }
     }
 }

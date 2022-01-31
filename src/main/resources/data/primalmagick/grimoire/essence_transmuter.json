@@ -2,6 +2,10 @@
   "key": "ESSENCE_TRANSMUTER",
   "name": "primalmagick.research.essence_transmuter.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_transmuter"
+  },
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING"

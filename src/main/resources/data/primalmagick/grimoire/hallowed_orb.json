@@ -3,6 +3,10 @@
   "name": "primalmagick.research.hallowed_orb.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowed_orb"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

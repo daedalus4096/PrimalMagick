@@ -2,6 +2,10 @@
   "key": "AMBROSIA",
   "name": "primalmagick.research.ambrosia.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ambrosia_basic_earth"
+  },
   "parents": [
     "EXPERT_RITUAL",
     "ATTUNEMENTS",

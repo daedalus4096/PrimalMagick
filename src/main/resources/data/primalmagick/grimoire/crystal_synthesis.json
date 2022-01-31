@@ -2,6 +2,10 @@
   "key": "CRYSTAL_SYNTHESIS",
   "name": "primalmagick.research.crystal_synthesis.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_crystal_earth"
+  },
   "parents": [
     "MASTER_ALCHEMY",
     "SHARD_SYNTHESIS"

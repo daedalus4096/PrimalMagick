@@ -2,6 +2,10 @@
   "key": "CLUSTER_DESYNTHESIS",
   "name": "primalmagick.research.cluster_desynthesis.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cluster_earth"
+  },
   "parents": [
     "CLUSTER_SYNTHESIS"
   ],

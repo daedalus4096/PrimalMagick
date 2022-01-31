@@ -2,6 +2,10 @@
   "key": "THEORYCRAFTING",
   "name": "primalmagick.research.theorycrafting.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/knowledge_theory.png"
+  },
   "parents": [
     "FIRST_STEPS"
   ],

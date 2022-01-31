@@ -2,6 +2,10 @@
   "key": "WAND_INSCRIPTION",
   "name": "primalmagick.research.wand_inscription.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_inscription_table"
+  },
   "parents": [
     "BASIC_SORCERY",
     "ADVANCED_WANDMAKING"

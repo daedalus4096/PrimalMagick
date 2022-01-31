@@ -2,6 +2,10 @@
   "key": "SOURCE_SEA",
   "name": "primalmagick.research.source_sea.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sea.png"
+  },
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],

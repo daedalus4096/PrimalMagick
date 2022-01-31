@@ -62,8 +62,8 @@ public class DisciplineIndexPage extends AbstractPage {
         // Add a button to the screen for each discipline in the page contents
         for (ResearchDiscipline discipline : this.getDisciplines()) {
             Component text = new TranslatableComponent(discipline.getNameTranslationKey());
-            screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, discipline));
-            y += 12;
+            DisciplineButton button = screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, discipline, true, true));
+            y += button.getHeight();
         }
     }
 }

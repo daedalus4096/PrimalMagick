@@ -4,6 +4,8 @@ v2.0.5
 * Add config options to disable ore worldgen features; use with caution
 * Have the grimoire remember player browsing history between sessions
 * Make the grimoire ribbon a shortcut to the main index
+* Show icons on grimoire entries
+* Change sort order of disciplines in the grimoire main index
 
 v2.0.4
 ------

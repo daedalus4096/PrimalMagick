@@ -2,6 +2,10 @@
   "key": "WAND_CORE_PURE_PRIMAL",
   "name": "primalmagick.research.wand_core_pure_primal.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:pure_primal_wand_core_item"
+  },
   "parents": [
     "SUPREME_RITUAL",
     "WAND_CORE_DARK_PRIMAL",

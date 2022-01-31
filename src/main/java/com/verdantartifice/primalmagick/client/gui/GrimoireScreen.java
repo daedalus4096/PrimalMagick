@@ -276,10 +276,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     private List<ResearchDiscipline> buildDisciplineList() {
-        // Gather a list of all research disciplines, sorted by their display names
-        return ResearchDisciplines.getAllDisciplines().stream()
-                                    .sorted(Comparator.comparing(d -> (new TranslatableComponent(d.getNameTranslationKey())).getString()))
-                                    .collect(Collectors.toList());
+        // Gather a list of all research disciplines, sorted by their registration order
+        return ResearchDisciplines.getAllDisciplinesSorted();
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
@@ -874,7 +872,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
-            tempPage.addContent(recipeName);
+            tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem());
             heightRemaining -= 12;
             if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 155;

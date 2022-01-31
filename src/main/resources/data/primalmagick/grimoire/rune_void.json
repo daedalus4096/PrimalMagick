@@ -2,6 +2,10 @@
   "key": "RUNE_VOID",
   "name": "primalmagick.research.rune_void.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_void"
+  },
   "parents": [
     "EXPERT_RUNEWORKING",
     "t_discover_void"

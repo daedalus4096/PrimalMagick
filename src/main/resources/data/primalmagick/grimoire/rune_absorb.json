@@ -2,6 +2,10 @@
   "key": "RUNE_ABSORB",
   "name": "primalmagick.research.rune_absorb.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_absorb"
+  },
   "parents": [
     "EXPERT_RUNEWORKING"
   ],

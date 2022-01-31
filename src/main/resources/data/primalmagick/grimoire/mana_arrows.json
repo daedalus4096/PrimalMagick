@@ -2,6 +2,10 @@
   "key": "MANA_ARROWS",
   "name": "primalmagick.research.mana_arrows.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_arrow_earth"
+  },
   "parents": [
     "BASIC_MANAWEAVING"
   ],

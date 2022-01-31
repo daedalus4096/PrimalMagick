@@ -2,6 +2,10 @@
   "key": "HALLOWSTEEL",
   "name": "primalmagick.research.hallowsteel.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowsteel_ingot"
+  },
   "parents": [
     "SUPREME_ALCHEMY",
     "HEXIUM",

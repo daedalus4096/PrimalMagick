@@ -2,6 +2,10 @@
   "key": "ARCANOMETER",
   "name": "primalmagick.research.arcanometer.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:arcanometer"
+  },
   "parents": [
     "EXPERT_MAGITECH"
   ],

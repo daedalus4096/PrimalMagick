@@ -3,6 +3,10 @@
   "name": "primalmagick.research.hallowood_trees.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowood_sapling"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

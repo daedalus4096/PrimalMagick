@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_HEALING",
   "name": "primalmagick.research.spell_payload_healing.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sun.png"
+  },
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_SOLAR"

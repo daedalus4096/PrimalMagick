@@ -2,6 +2,10 @@
   "key": "ENTROPY_SINK",
   "name": "primalmagick.research.entropy_sink.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:entropy_sink"
+  },
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING",

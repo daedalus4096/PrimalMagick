@@ -2,6 +2,10 @@
   "key": "MANA_SALTS",
   "name": "primalmagick.research.mana_salts.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_salts"
+  },
   "parents": [
     "WAND_CHARGER"
   ],

@@ -2,6 +2,10 @@
   "key": "WAND_GEM_ARCHMAGE",
   "name": "primalmagick.research.wand_gem_archmage.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:archmage_wand_gem_item"
+  },
   "parents": [
     "SUPREME_MANAWEAVING",
     "WAND_GEM_WIZARD",

@@ -2,6 +2,10 @@
   "key": "RUNE_BLOOD",
   "name": "primalmagick.research.rune_blood.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_blood"
+  },
   "parents": [
     "EXPERT_RUNEWORKING",
     "t_discover_blood"

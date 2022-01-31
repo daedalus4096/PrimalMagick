@@ -2,6 +2,10 @@
   "key": "INCENSE_BRAZIER",
   "name": "primalmagick.research.incense_brazier.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:incense_brazier"
+  },
   "parents": [
     "BASIC_RITUAL"
   ],

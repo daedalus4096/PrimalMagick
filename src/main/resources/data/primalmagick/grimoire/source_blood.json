@@ -2,6 +2,10 @@
   "key": "SOURCE_BLOOD",
   "name": "primalmagick.research.source_blood.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/blood.png"
+  },
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_blood"

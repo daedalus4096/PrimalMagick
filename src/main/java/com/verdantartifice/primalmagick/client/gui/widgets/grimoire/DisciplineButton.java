@@ -13,10 +13,10 @@ import net.minecraft.network.chat.Component;
  * @author Daedalus4096
  */
 public class DisciplineButton extends AbstractTopicButton {
-    protected ResearchDiscipline discipline;
+    protected final ResearchDiscipline discipline;
 
-    public DisciplineButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchDiscipline discipline) {
-        super(widthIn, heightIn, 123, 12, text, screen, new Handler());
+    public DisciplineButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, ResearchDiscipline discipline, boolean showIcon, boolean enlarge) {
+        super(widthIn, heightIn, 123, enlarge ? 18 : 12, text, screen, showIcon ? GenericIndexIcon.of(discipline.getIconLocation(), true) : null, new Handler());
         this.discipline = discipline;
     }
     

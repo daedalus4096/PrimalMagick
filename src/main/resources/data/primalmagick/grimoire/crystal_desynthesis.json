@@ -2,6 +2,10 @@
   "key": "CRYSTAL_DESYNTHESIS",
   "name": "primalmagick.research.crystal_desynthesis.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_crystal_earth"
+  },
   "parents": [
     "CRYSTAL_SYNTHESIS"
   ],

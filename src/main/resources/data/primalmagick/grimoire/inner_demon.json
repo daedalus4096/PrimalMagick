@@ -3,6 +3,10 @@
   "name": "primalmagick.research.inner_demon.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sanguine_core_blank"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

@@ -2,6 +2,10 @@
   "key": "AUTO_CHARGER",
   "name": "primalmagick.research.auto_charger.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:auto_charger"
+  },
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING",

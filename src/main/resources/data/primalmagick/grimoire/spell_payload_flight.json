@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_FLIGHT",
   "name": "primalmagick.research.spell_payload_flight.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sky.png"
+  },
   "parents": [
     "SUPREME_SORCERY",
     "SPELL_PAYLOAD_LIGHTNING"

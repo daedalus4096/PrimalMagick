@@ -2,6 +2,10 @@
   "key": "SPELL_PAYLOAD_FROST",
   "name": "primalmagick.research.spell_payload_frost.title",
   "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sea.png"
+  },
   "parents": [
     "BASIC_SORCERY"
   ],

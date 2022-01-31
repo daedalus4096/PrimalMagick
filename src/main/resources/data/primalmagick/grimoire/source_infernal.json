@@ -2,6 +2,10 @@
   "key": "SOURCE_INFERNAL",
   "name": "primalmagick.research.source_infernal.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/infernal.png"
+  },
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_infernal"

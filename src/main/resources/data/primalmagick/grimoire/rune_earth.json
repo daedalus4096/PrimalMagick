@@ -2,6 +2,10 @@
   "key": "RUNE_EARTH",
   "name": "primalmagick.research.rune_earth.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_earth"
+  },
   "parents": [
     "BASIC_RUNEWORKING"
   ],

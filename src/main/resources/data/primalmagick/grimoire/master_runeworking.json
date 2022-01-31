@@ -2,6 +2,10 @@
   "key": "MASTER_RUNEWORKING",
   "name": "primalmagick.research.master_runeworking.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_runeworking.png"
+  },
   "parents": [
     "RUNE_ABSORB",
     "RUNE_CREATURE"

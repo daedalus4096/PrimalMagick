@@ -3,6 +3,10 @@
   "name": "primalmagick.research.beacon.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:beacon"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

@@ -2,6 +2,10 @@
   "key": "EARTHSHATTER_HAMMER",
   "name": "primalmagick.research.earthshatter_hammer.title",
   "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:earthshatter_hammer"
+  },
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS"

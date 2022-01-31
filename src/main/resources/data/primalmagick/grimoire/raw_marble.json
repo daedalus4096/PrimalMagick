@@ -3,6 +3,10 @@
   "name": "primalmagick.research.raw_marble.title",
   "discipline": "SCANS",
   "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:marble_raw"
+  },
   "parents": [
     "UNLOCK_SCANS"
   ],

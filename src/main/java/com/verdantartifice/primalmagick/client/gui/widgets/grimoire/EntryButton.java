@@ -21,8 +21,8 @@ import net.minecraft.network.chat.Component;
 public class EntryButton extends AbstractTopicButton {
     protected ResearchEntry entry;
 
-    public EntryButton(int x, int y, Component text, GrimoireScreen screen, ResearchEntry entry) {
-        super(x, y, 123, 12, text, screen, new Handler());
+    public EntryButton(int x, int y, Component text, GrimoireScreen screen, ResearchEntry entry, boolean showIcon) {
+        super(x, y, 123, 12, text, screen, showIcon ? IndexIconFactory.fromEntryIcon(entry.getIcon(), false) : null, new Handler());
         this.entry = entry;
     }
     

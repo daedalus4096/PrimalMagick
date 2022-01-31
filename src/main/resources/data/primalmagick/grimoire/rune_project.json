@@ -2,6 +2,10 @@
   "key": "RUNE_PROJECT",
   "name": "primalmagick.research.rune_project.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_project"
+  },
   "parents": [
     "BASIC_RUNEWORKING"
   ],

@@ -2,6 +2,10 @@
   "key": "SACRED_SHIELD",
   "name": "primalmagick.research.sacred_shield.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:sacred_shield"
+  },
   "parents": [
     "t_discover_hallowed",
     "SUPREME_RITUAL",

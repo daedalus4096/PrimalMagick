@@ -2,6 +2,10 @@
   "key": "MASTER_MAGITECH",
   "name": "primalmagick.research.master_magitech.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
   "parents": [
     "ARCANOMETER",
     "PRIMALITE_GOLEM"

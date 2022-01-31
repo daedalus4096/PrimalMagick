@@ -2,6 +2,10 @@
   "key": "SOURCE_EARTH",
   "name": "primalmagick.research.source_earth.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/earth.png"
+  },
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],

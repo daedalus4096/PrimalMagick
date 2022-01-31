@@ -2,6 +2,10 @@
   "key": "CONCOCTING_PHILTERS",
   "name": "primalmagick.research.concocting_philters.title",
   "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:concocter"
+  },
   "parents": [
     "MASTER_MAGITECH",
     "CONCOCTING_TINCTURES",

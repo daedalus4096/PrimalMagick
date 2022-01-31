@@ -2,6 +2,10 @@
   "key": "EXPERT_ALCHEMY",
   "name": "primalmagick.research.expert_alchemy.title",
   "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
   "parents": [
     "CALCINATOR_BASIC",
     "STONEMELDING"

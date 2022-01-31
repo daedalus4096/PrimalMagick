@@ -2,6 +2,10 @@
   "key": "MANAFRUIT",
   "name": "primalmagick.research.manafruit.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:manafruit"
+  },
   "parents": [
     "BASIC_RITUAL",
     "MANA_SALTS",

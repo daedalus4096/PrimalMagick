@@ -2,6 +2,10 @@
   "key": "FORBIDDEN_TRIDENT",
   "name": "primalmagick.research.forbidden_trident.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:forbidden_trident"
+  },
   "parents": [
     "t_discover_blood",
     "MASTER_RITUAL",

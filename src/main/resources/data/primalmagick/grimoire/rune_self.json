@@ -2,6 +2,10 @@
   "key": "RUNE_SELF",
   "name": "primalmagick.research.rune_self.title",
   "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_self"
+  },
   "parents": [
     "RUNE_ITEM"
   ],

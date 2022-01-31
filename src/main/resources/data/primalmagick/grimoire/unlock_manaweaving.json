@@ -2,6 +2,10 @@
   "key": "UNLOCK_MANAWEAVING",
   "name": "primalmagick.research.unlock_manaweaving.title",
   "discipline": "BASICS",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
   "parents": [
     "FIRST_STEPS"
   ],

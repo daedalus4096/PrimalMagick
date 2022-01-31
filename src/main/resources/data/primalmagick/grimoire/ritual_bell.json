@@ -2,6 +2,10 @@
   "key": "RITUAL_BELL",
   "name": "primalmagick.research.ritual_bell.title",
   "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:ritual_bell"
+  },
   "parents": [
     "EXPERT_RITUAL"
   ],
