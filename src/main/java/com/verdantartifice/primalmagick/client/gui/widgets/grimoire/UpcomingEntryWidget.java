@@ -29,10 +29,12 @@ import net.minecraft.network.chat.TranslatableComponent;
  */
 public class UpcomingEntryWidget extends AbstractWidget {
     protected ResearchEntry entry;
+    protected AbstractIndexIcon icon;
 
-    public UpcomingEntryWidget(int x, int y, Component text, ResearchEntry entry) {
+    public UpcomingEntryWidget(int x, int y, Component text, ResearchEntry entry, boolean showIcon) {
         super(x, y, 123, 12, text);
         this.entry = entry;
+        this.icon = showIcon ? IndexIconFactory.fromEntryIcon(entry.getIcon(), false) : null;
     }
 
     @Override
@@ -42,17 +44,24 @@ public class UpcomingEntryWidget extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int strWidth = mc.font.width(this.getMessage().getString());
+        int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
-        if (strWidth <= this.width) {
-            mc.font.draw(matrixStack, this.getMessage(), this.x, this.y + dy, Color.GRAY.getRGB());
+        if (strWidth <= (this.width - dx)) {
+            mc.font.draw(matrixStack, this.getMessage(), this.x + dx, this.y + dy, Color.GRAY.getRGB());
+            if (this.icon != null) {
+                this.icon.render(matrixStack, this.x - 2, this.y + dy - (this.icon.isLarge() ? 4 : 1));
+            }
         } else {
             // If the button text is too long, scale it down to fit on one line
-            float scale = (float)this.width / (float)strWidth;
+            float scale = (float)(this.width - dx) / (float)strWidth;
             matrixStack.pushPose();
-            matrixStack.translate(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            matrixStack.translate(this.x + dx, this.y + dy + (1.0F * scale), 0.0F);
             matrixStack.scale(scale, scale, scale);
             mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.GRAY.getRGB());
             matrixStack.popPose();
+            if (this.icon != null) {
+                this.icon.render(matrixStack, this.x - 2, this.y + dy - (this.icon.isLarge() ? 4 : 1));
+            }
         }
         matrixStack.popPose();
 
