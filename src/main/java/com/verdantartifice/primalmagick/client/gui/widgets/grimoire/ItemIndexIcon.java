@@ -26,13 +26,17 @@ import net.minecraft.world.level.ItemLike;
 public class ItemIndexIcon extends AbstractIndexIcon {
     protected final ItemStack stack;
     
-    protected ItemIndexIcon(ItemLike item, boolean large) {
+    protected ItemIndexIcon(ItemStack stack, boolean large) {
         super(large);
-        this.stack = new ItemStack(item.asItem());
+        this.stack = stack;
     }
     
     public static ItemIndexIcon of(ItemLike item, boolean large) {
-        return new ItemIndexIcon(item, large);
+        return new ItemIndexIcon(new ItemStack(item.asItem()), large);
+    }
+    
+    public static ItemIndexIcon of(ItemStack stack, boolean large) {
+        return new ItemIndexIcon(stack, large);
     }
     
     @Override

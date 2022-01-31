@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeEntryB
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Grimoire page listing all of the mod recipes that the player has unlocked.
@@ -21,7 +22,7 @@ import net.minecraft.network.chat.TextComponent;
 public class RecipeIndexPage extends AbstractPage {
     public static final OtherResearchTopic TOPIC = new OtherResearchTopic("recipe_index", 0);
     
-    protected List<String> contents = new ArrayList<>();
+    protected List<IndexItem> contents = new ArrayList<>();
     protected boolean firstPage;
 
     public RecipeIndexPage() {
@@ -33,12 +34,12 @@ public class RecipeIndexPage extends AbstractPage {
     }
     
     @Nonnull
-    public List<String> getContents() {
+    public List<IndexItem> getContents() {
         return Collections.unmodifiableList(this.contents);
     }
     
-    public boolean addContent(String entry) {
-        return this.contents.add(entry);
+    public boolean addContent(String entry, ItemStack stack) {
+        return this.contents.add(new IndexItem(entry, stack));
     }
     
     public boolean isFirstPage() {
@@ -60,11 +61,20 @@ public class RecipeIndexPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        for (String name : this.getContents()) {
+        for (IndexItem item : this.getContents()) {
             // Render a recipe entry button for each recipe
-            screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, new TextComponent(name), screen, name));
+            screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, new TextComponent(item.name), screen, item.name, item.iconStack));
             y += 12;
         }
     }
 
+    private static class IndexItem {
+        public final String name;
+        public final ItemStack iconStack;
+        
+        public IndexItem(String name, ItemStack stack) {
+            this.name = name;
+            this.iconStack = stack;
+        }
+    }
 }

@@ -874,7 +874,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
-            tempPage.addContent(recipeName);
+            tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem());
             heightRemaining -= 12;
             if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 155;
