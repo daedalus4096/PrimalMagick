@@ -1337,6 +1337,9 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("DRAGON_EGG", discipline).hidden().icon(Items.DRAGON_EGG).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
+        ResearchEntryBuilder.entry("DRAGON_HEAD", discipline).hidden().icon(Items.DRAGON_HEAD).parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
         ResearchEntryBuilder.entry("MYSTICAL_RELIC", discipline).hidden().icon(ItemsPM.MYSTICAL_RELIC.get()).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MYSTICAL_RELIC.get()).build())
             .build(consumer);

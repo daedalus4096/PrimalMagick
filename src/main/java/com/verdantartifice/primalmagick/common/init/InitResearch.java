@@ -101,6 +101,7 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEEHIVE, SimpleResearchKey.parse("BEEHIVE")));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEACON, SimpleResearchKey.parse("BEACON")));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_EGG, SimpleResearchKey.parse("DRAGON_EGG")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_HEAD, SimpleResearchKey.parse("DRAGON_HEAD")));
         SimpleResearchKey relic = SimpleResearchKey.parse("MYSTICAL_RELIC");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC.get(), relic));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), relic));

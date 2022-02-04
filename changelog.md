@@ -8,6 +8,7 @@ v2.0.5
 * Change sort order of disciplines in the grimoire main index
 * Update models for wands and staves
 * Update texture for refined salt
+* Add missing scan research entry for dragon heads
 
 v2.0.4
 ------
