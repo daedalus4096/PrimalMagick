@@ -7,6 +7,7 @@ v2.0.5
 * Show icons on grimoire entries
 * Change sort order of disciplines in the grimoire main index
 * Update models for wands and staves
+* Update texture for refined salt
 
 v2.0.4
 ------
