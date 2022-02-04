@@ -6,6 +6,7 @@ v2.0.5
 * Make the grimoire ribbon a shortcut to the main index
 * Show icons on grimoire entries
 * Change sort order of disciplines in the grimoire main index
+* Update models for wands and staves
 
 v2.0.4
 ------
