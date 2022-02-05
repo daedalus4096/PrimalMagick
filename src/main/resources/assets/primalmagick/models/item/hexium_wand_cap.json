@@ -1,6 +1,6 @@
 {
     "parent": "primalmagick:item/wand_cap",
     "textures": {
-        "cap": "primalmagick:block/hexium_block"
+        "cap": "primalmagick:item/hexium_wand_cap"
     }
 }

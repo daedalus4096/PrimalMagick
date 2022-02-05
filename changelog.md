@@ -1,3 +1,7 @@
+v2.0.6
+------
+* Fix texture references for wand and staff caps
+
 v2.0.5
 ------
 * Let the Enchanting Studies research project recognize Quark Matrix Enchanters as valid materials
