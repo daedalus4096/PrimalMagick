@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
@@ -20,11 +21,14 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -42,7 +46,7 @@ import net.minecraftforge.network.NetworkHooks;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarBlock extends Block {
+public class SpellcraftingAltarBlock extends BaseEntityBlock {
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/spellcrafting_altar"));
 
@@ -56,6 +60,11 @@ public class SpellcraftingAltarBlock extends Block {
         return SHAPE;
     }
     
+    @Override
+    public RenderShape getRenderShape(BlockState p_49232_) {
+        return RenderShape.MODEL;
+    }
+
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Make the block face the player when placed
@@ -80,6 +89,12 @@ public class SpellcraftingAltarBlock extends Block {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+        if (!worldIn.isClientSide) {
+            BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+            if (blockEntity == null) {
+                LOGGER.warn("No spellcrafting altar block entity detected at position!");
+            }
+        }
         if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the spellcrafting altar
             NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
@@ -95,5 +110,10 @@ public class SpellcraftingAltarBlock extends Block {
             });
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new SpellcraftingAltarTileEntity(pos, state);
     }
 }

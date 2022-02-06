@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntit
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
@@ -71,4 +72,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<RunecarvingTableTileEntity>> RUNECARVING_TABLE = TILE_ENTITIES.register("runecarving_table", () -> BlockEntityType.Builder.of(RunecarvingTableTileEntity::new, BlocksPM.RUNECARVING_TABLE.get()).build(null));
     public static final RegistryObject<BlockEntityType<EssenceTransmuterTileEntity>> ESSENCE_TRANSMUTER = TILE_ENTITIES.register("essence_transmuter", () -> BlockEntityType.Builder.of(EssenceTransmuterTileEntity::new, BlocksPM.ESSENCE_TRANSMUTER.get()).build(null));
     public static final RegistryObject<BlockEntityType<DissolutionChamberTileEntity>> DISSOLUTION_CHAMBER = TILE_ENTITIES.register("dissolution_chamber", () -> BlockEntityType.Builder.of(DissolutionChamberTileEntity::new, BlocksPM.DISSOLUTION_CHAMBER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SpellcraftingAltarTileEntity>> SPELLCRAFTING_ALTAR = TILE_ENTITIES.register("spellcrafting_altar", () -> BlockEntityType.Builder.of(SpellcraftingAltarTileEntity::new, BlocksPM.SPELLCRAFTING_ALTAR.get()).build(null));
 }
