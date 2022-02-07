@@ -47,7 +47,7 @@ import net.minecraftforge.network.NetworkHooks;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarBlock extends BaseEntityBlock {
-    protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/spellcrafting_altar"));
 
     public SpellcraftingAltarBlock() {

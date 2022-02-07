@@ -5,6 +5,10 @@ import java.awt.Color;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
+import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
+import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
@@ -14,7 +18,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.Material;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * Custom tile entity renderer for spellcrafting altar blocks.
@@ -22,7 +29,13 @@ import net.minecraft.world.inventory.InventoryMenu;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
+    public static final ResourceLocation RING_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/spellcrafting_altar/spellcrafting_altar_ring");
+    public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
+
+    protected final SpellcraftingAltarRingModel ringModel;
+    
     public SpellcraftingAltarTER(BlockEntityRendererProvider.Context context) {
+        this.ringModel = new SpellcraftingAltarRingModel(context.bakeLayer(ModelLayersPM.SPELLCRAFTING_ALTAR_RING));
     }
 
     protected void addVertex(VertexConsumer renderer, PoseStack stack, float x, float y, float z, float r, float g, float b, float u, float v) {
@@ -37,6 +50,19 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
     @Override
     public void render(SpellcraftingAltarTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Minecraft mc = Minecraft.getInstance();
+        BlockState state = tileEntityIn.getBlockState();
+        
+        // Render the altar's ring
+        matrixStack.pushPose();
+        matrixStack.translate(0.5D, 0D, 0.5D);
+        matrixStack.translate(0D, 2.5D, 0D);    // Model position correction
+        float facingAngle = state.getValue(SpellcraftingAltarBlock.FACING).getClockWise().toYRot();
+        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-facingAngle));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));  // Model rotation correction
+        VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
+        this.ringModel.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStack.popPose();
 
         // Color the tile entity core according to the block's source
         Color sourceColor = new Color(Source.SKY.getColor()); // FIXME Get color from tile entity
@@ -57,6 +83,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
         matrixStack.scale(scale, scale, scale);
         
+        // TODO Abstract into a model instead of plotting individual vertices
         // Draw the south face of the core
         this.addVertex(builder, matrixStack, -ds, ds, ds, r, g, b, sprite.getU0(), sprite.getV1());
         this.addVertex(builder, matrixStack, -ds, -ds, ds, r, g, b, sprite.getU0(), sprite.getV0());

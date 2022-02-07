@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.client.renderers.itemstack.HexiumShieldI
 import com.verdantartifice.primalmagick.client.renderers.itemstack.PrimaliteShieldISTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.containers.slots.BottleSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.HoneycombSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.LapisLazuliSlot;
@@ -52,6 +53,7 @@ public class TextureStitchEvents {
             // Add other sprites to the block atlas texture
             event.addSprite(ManaFontTER.TEXTURE);
             event.addSprite(RitualBellTER.TEXTURE);
+            event.addSprite(SpellcraftingAltarTER.RING_TEXTURE);
             event.addSprite(PrimaliteShieldISTER.TEXTURE_SHIELD_BASE);
             event.addSprite(PrimaliteShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
             event.addSprite(HexiumShieldISTER.TEXTURE_SHIELD_BASE);
