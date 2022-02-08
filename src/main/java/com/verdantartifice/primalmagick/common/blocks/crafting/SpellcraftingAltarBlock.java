@@ -91,23 +91,10 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide) {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
-            if (blockEntity == null) {
-                LOGGER.warn("No spellcrafting altar block entity detected at position!");
+            if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
+                // Open the GUI for the spellcrafting altar
+                NetworkHooks.openGui(serverPlayer, altarTile);
             }
-        }
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
-            // Open the GUI for the spellcrafting altar
-            NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
-                @Override
-                public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new SpellcraftingAltarContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
-                }
-
-                @Override
-                public Component getDisplayName() {
-                    return new TranslatableComponent(SpellcraftingAltarBlock.this.getDescriptionId());
-                }
-            });
         }
         return InteractionResult.SUCCESS;
     }

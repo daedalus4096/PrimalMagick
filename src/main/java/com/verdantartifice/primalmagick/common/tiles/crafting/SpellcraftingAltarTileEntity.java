@@ -1,14 +1,17 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
+import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -24,14 +27,12 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        // TODO Auto-generated method stub
-        return null;
+        return new SpellcraftingAltarContainer(windowId, playerInv, ContainerLevelAccess.create(this.level, this.getBlockPos()));
     }
 
     @Override
     public Component getDisplayName() {
-        // TODO Auto-generated method stub
-        return null;
+        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
     }
 
 }
