@@ -64,6 +64,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180F));
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-facingAngle));
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));  // Model rotation correction
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(tileEntityIn.getCurrentRotation(partialTicks)));    // Spin the ring according to tile control
         VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
         this.ringModel.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.popPose();
