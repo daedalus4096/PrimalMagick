@@ -31,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
     public static final ResourceLocation RING_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/spellcrafting_altar/spellcrafting_altar_ring");
     public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
+    private static final double BOB_CYCLE_TIME_TICKS = 200D;
 
     protected final SpellcraftingAltarRingModel ringModel;
     
@@ -51,11 +52,14 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
     public void render(SpellcraftingAltarTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Minecraft mc = Minecraft.getInstance();
         BlockState state = tileEntityIn.getBlockState();
+        long time = tileEntityIn.getLevel().getLevelData().getGameTime();
         
         // Render the altar's ring
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0D, 0.5D);
         matrixStack.translate(0D, 2.5D, 0D);    // Model position correction
+        double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / BOB_CYCLE_TIME_TICKS));
+        matrixStack.translate(0D, bobDelta, 0D);    // Bob the ring up and down
         float facingAngle = state.getValue(SpellcraftingAltarBlock.FACING).getClockWise().toYRot();
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180F));
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(-facingAngle));
@@ -70,7 +74,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         float g = sourceColor.getGreen() / 255.0F;
         float b = sourceColor.getBlue() / 255.0F;
         float ds = 0.1875F;
-        int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
+        int rot = (int)(time % 360);
         float scale = 0.5F;
         
         TextureAtlasSprite sprite = mc.getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS).getSprite(ManaFontTER.TEXTURE);
