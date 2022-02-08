@@ -92,7 +92,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         } else if (this.currentRotation.isPause()) {
             return (float)this.nextSegment.getDegreeOffset();
         } else {
-            return Mth.lerp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, this.lastSegment.getDegreeOffset(), this.nextSegment.getDegreeOffset() - (this.currentRotation.isReverse() ? 360 : 0));
+            return Mth.lerp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, this.lastSegment.getDegreeOffset(), this.nextSegment.getDegreeTarget(this.lastSegment, this.currentRotation));
         }
     }
 
@@ -114,6 +114,16 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         
         public int getDegreeOffset() {
             return this.degreeOffset;
+        }
+        
+        public int getDegreeTarget(Segment last, RotationPhase rotation) {
+            int delta = this.degreeOffset - last.degreeOffset;
+            if (rotation.isReverse() && delta > 0) {
+                delta -= 360;
+            } else if (!rotation.isReverse() && delta < 0) {
+                delta += 360;
+            }
+            return delta;
         }
     }
     
