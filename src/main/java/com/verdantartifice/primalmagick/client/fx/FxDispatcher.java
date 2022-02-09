@@ -150,6 +150,31 @@ public class FxDispatcher {
         }
     }
     
+    public void spellcraftingGlow(BlockPos pos, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingGlow(pos, r, g, b);
+    }
+    
+    public void spellcraftingGlow(BlockPos pos, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Level world = this.getWorld();
+        Random rng = world.random;
+
+        int count = (3 + rng.nextInt(3));
+        for (int index = 0; index < count; index++) {
+            double x = pos.getX() + 0.40625D + (rng.nextDouble() * 0.1875D);
+            double y = pos.getY() + 1.125D;
+            double z = pos.getZ() + 0.40625D + (rng.nextDouble() * 0.1875D);
+            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0375D, 0.0D);
+            if (p != null) {
+                p.setColor(r, g, b);
+            }
+        }
+    }
+    
     public void teleportArrival(double x, double y, double z) {
         // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
         Level world = getWorld();

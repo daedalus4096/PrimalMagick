@@ -127,7 +127,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             float r = (next.getRed() * blend) + (last.getRed() * inverse);
             float g = (next.getGreen() * blend) + (last.getGreen() * inverse);
             float b = (next.getBlue() * blend) + (last.getBlue() * inverse);
-            return new Color(r / 255F, g / 255F, b / 255F);
+            return new Color(Mth.clamp(r / 255F, 0, 1F), Mth.clamp(g / 255F, 0, 1F), Mth.clamp(b / 255F, 0, 1F));
         }
     }
 

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
@@ -125,5 +126,8 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         this.addVertex(builder, matrixStack, -ds, -ds, -ds, r, g, b, sprite.getU0(), sprite.getV0());
         
         matrixStack.popPose();
+        
+        // Draw a particle stream rising from the core
+        FxDispatcher.INSTANCE.spellcraftingGlow(tileEntityIn.getBlockPos(), r, g, b);
     }
 }
