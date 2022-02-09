@@ -70,7 +70,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
-        if (entity.phaseTicks++ >= entity.nextUpdate) {
+        if (level.isClientSide && entity.phaseTicks++ >= entity.nextUpdate) {
             entity.nextRotationPhase();
         }
     }
@@ -78,8 +78,8 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     protected void nextRotationPhase() {
         this.currentRotation = this.currentRotation.getNext();
         if (!this.currentRotation.isPause()) {
-            Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
             this.lastSegment = this.nextSegment;
+            Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
             this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
         }
         this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
@@ -117,13 +117,13 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         }
         
         public int getDegreeTarget(Segment last, RotationPhase rotation) {
-            int delta = this.degreeOffset - last.degreeOffset;
-            if (rotation.isReverse() && delta > 0) {
-                delta -= 360;
-            } else if (!rotation.isReverse() && delta < 0) {
-                delta += 360;
+            if (rotation.isReverse() && this.degreeOffset >= last.degreeOffset) {
+                return this.degreeOffset - 360;
+            } else if (!rotation.isReverse() && this.degreeOffset <= last.degreeOffset) {
+                return this.degreeOffset + 360;
+            } else {
+                return this.degreeOffset;
             }
-            return delta;
         }
     }
     
@@ -153,7 +153,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             switch (this) {
             case CLOCKWISE:
             case COUNTER_CLOCKWISE:
-                int segmentDelta = Math.abs(next.getDegreeOffset() - last.getDegreeOffset()) / 45;
+                int segmentDelta = Math.abs(next.getDegreeTarget(last, this) - last.getDegreeOffset()) / 45;
                 return TICKS_PER_SEGMENT_ROTATION * segmentDelta;
             case CLOCKWISE_PAUSE:
             case COUNTER_CLOCKWISE_PAUSE:

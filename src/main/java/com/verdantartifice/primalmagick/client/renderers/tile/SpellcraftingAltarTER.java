@@ -82,7 +82,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         VertexConsumer builder = buffer.getBuffer(RenderType.solid());
         
         matrixStack.pushPose();
-        matrixStack.translate(0.5D, 0.875D, 0.5D);
+        matrixStack.translate(0.5D, 1.125D, 0.5D);
         matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the core around its Y-axis
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
         matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
