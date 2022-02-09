@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
@@ -70,7 +69,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.popPose();
 
         // Color the tile entity core according to the block's source
-        Color sourceColor = new Color(Source.SKY.getColor()); // FIXME Get color from tile entity
+        Color sourceColor = tileEntityIn.getCurrentColor(partialTicks);
         float r = sourceColor.getRed() / 255.0F;
         float g = sourceColor.getGreen() / 255.0F;
         float b = sourceColor.getBlue() / 255.0F;

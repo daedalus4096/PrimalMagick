@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
+import java.awt.Color;
 import java.util.Arrays;
+import java.util.List;
 
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 
@@ -28,12 +31,15 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider {
     protected static final int TICKS_PER_SEGMENT_ROTATION = 10;
     protected static final int TICKS_PER_PAUSE = 20;
+    protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON);
     
     protected int phaseTicks = 0;
     protected int nextUpdate = 0;
     protected Segment lastSegment = Segment.U1;
     protected Segment nextSegment = Segment.U1;
     protected RotationPhase currentRotation = RotationPhase.COUNTER_CLOCKWISE_PAUSE;
+    protected Source lastSource = Source.EARTH;
+    protected Source nextSource = Source.EARTH;
     
     public SpellcraftingAltarTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), pos, state);
@@ -52,11 +58,17 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
+        
         this.phaseTicks = compound.getInt("PhaseTicks");
         this.nextUpdate = compound.getInt("NextUpdate");
         this.lastSegment = Segment.values()[compound.getInt("LastSegmentIndex")];
         this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
         this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
+        
+        Source last = Source.getSource(compound.getString("LastSource"));
+        this.lastSource = last == null ? Source.EARTH : last;
+        Source next = Source.getSource(compound.getString("NextSource"));
+        this.nextSource = next == null ? Source.EARTH : next;
     }
 
     @Override
@@ -67,6 +79,8 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());
         compound.putInt("NextSegmentIndex", this.nextSegment.ordinal());
         compound.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
+        compound.putString("LastSource", this.lastSource.getTag());
+        compound.putString("NextSource", this.nextSource.getTag());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
@@ -81,6 +95,10 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             this.lastSegment = this.nextSegment;
             Segment[] nextPossibleSegments = Arrays.stream(Segment.values()).filter(s -> !s.equals(this.lastSegment)).toArray(Segment[]::new);
             this.nextSegment = nextPossibleSegments[this.level.random.nextInt(nextPossibleSegments.length)];
+            
+            this.lastSource = this.nextSource;
+            Source[] nextPossibleSources = ALLOWED_SOURCES.stream().filter(s -> !s.equals(this.lastSource)).toArray(Source[]::new);
+            this.nextSource = nextPossibleSources[this.level.random.nextInt(nextPossibleSources.length)];
         }
         this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
         this.phaseTicks = 0;
@@ -93,6 +111,23 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             return (float)this.nextSegment.getDegreeOffset();
         } else {
             return Mth.lerp((this.phaseTicks + partialTicks) / (float)this.nextUpdate, this.lastSegment.getDegreeOffset(), this.nextSegment.getDegreeTarget(this.lastSegment, this.currentRotation));
+        }
+    }
+    
+    public Color getCurrentColor(float partialTicks) {
+        if (this.nextUpdate == 0) {
+            return new Color(Source.EARTH.getColor());
+        } else if (this.currentRotation.isPause()) {
+            return new Color(this.nextSource.getColor());
+        } else {
+            Color last = new Color(this.lastSource.getColor());
+            Color next = new Color(this.nextSource.getColor());
+            float blend = (this.phaseTicks + partialTicks) / (float)this.nextUpdate;
+            float inverse = 1F - blend;
+            float r = (next.getRed() * blend) + (last.getRed() * inverse);
+            float g = (next.getGreen() * blend) + (last.getGreen() * inverse);
+            float b = (next.getBlue() * blend) + (last.getBlue() * inverse);
+            return new Color(r / 255F, g / 255F, b / 255F);
         }
     }
 
