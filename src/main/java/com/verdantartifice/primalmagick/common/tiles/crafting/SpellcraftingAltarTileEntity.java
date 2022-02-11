@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -21,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition of a spellcrafting altar tile entity.  Holds the tile inventory and controls its
@@ -87,6 +90,9 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         if (level.isClientSide && entity.phaseTicks++ >= entity.nextUpdate) {
             entity.nextRotationPhase();
         }
+        if (level.isClientSide && entity.currentRotation.isPause()) {
+            entity.emitRuneParticle();
+        }
     }
     
     protected void nextRotationPhase() {
@@ -129,6 +135,19 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             float b = (next.getBlue() * blend) + (last.getBlue() * inverse);
             return new Color(Mth.clamp(r / 255F, 0, 1F), Mth.clamp(g / 255F, 0, 1F), Mth.clamp(b / 255F, 0, 1F));
         }
+    }
+    
+    protected void emitRuneParticle() {
+        Vec3 center = Vec3.upFromBottomCenterOf(this.worldPosition, 1.1875D);
+        Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getNormal());
+        Vec3 centerOffset = facingNormal.scale(0.5D);
+        double x = center.x + centerOffset.x;
+        double y = center.y;
+        double z = center.z + centerOffset.z;
+        double dx = centerOffset.x;
+        double dy = 0D;
+        double dz = centerOffset.z;
+        FxDispatcher.INSTANCE.spellcraftingRuneU(x, y, z, dx, dy, dz, this.nextSource.getColor());
     }
 
     protected static enum Segment {
