@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticleData;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -289,6 +290,10 @@ public class FxDispatcher {
         }
     }
     
+    public void spellcraftingRuneU(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneU(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, int color) {
         Color c = new Color(color);
         float r = c.getRed() / 255.0F;
@@ -300,6 +305,66 @@ public class FxDispatcher {
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneV(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneV(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneV(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneT(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneT(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneT(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneD(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneD(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneD(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), x, y, z, dx, dy, dz);
         if (p != null) {
             p.setColor(r, g, b);
         }

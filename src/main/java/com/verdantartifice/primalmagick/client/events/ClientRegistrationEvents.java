@@ -47,6 +47,9 @@ public class ClientRegistrationEvents {
         mc.particleEngine.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
         mc.particleEngine.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
         mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
     }
     
     /**
