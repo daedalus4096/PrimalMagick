@@ -85,6 +85,7 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ArcaneSearchRegistry.getInstance());
     }
 }

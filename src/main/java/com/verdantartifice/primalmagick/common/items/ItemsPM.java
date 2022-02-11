@@ -34,6 +34,7 @@ import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.misc.SeascribePenItem;
+import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -293,7 +294,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> CALCINATOR_FORBIDDEN = ITEMS.register("calcinator_forbidden", () -> new BlockItem(BlocksPM.CALCINATOR_FORBIDDEN.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<BlockItem> CALCINATOR_HEAVENLY = ITEMS.register("calcinator_heavenly", () -> new BlockItem(BlocksPM.CALCINATOR_HEAVENLY.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC)));
     public static final RegistryObject<BurnableBlockItem> WAND_INSCRIPTION_TABLE = ITEMS.register("wand_inscription_table", () -> new BurnableBlockItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
-    public static final RegistryObject<BlockItem> SPELLCRAFTING_ALTAR = ITEMS.register("spellcrafting_altar", () -> new BlockItem(BlocksPM.SPELLCRAFTING_ALTAR.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<SpellcraftingAltarBlockItem> SPELLCRAFTING_ALTAR = ITEMS.register("spellcrafting_altar", () -> new SpellcraftingAltarBlockItem(BlocksPM.SPELLCRAFTING_ALTAR.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> WAND_CHARGER = ITEMS.register("wand_charger", () -> new BlockItem(BlocksPM.WAND_CHARGER.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BurnableBlockItem> RESEARCH_TABLE = ITEMS.register("research_table", () -> new BurnableBlockItem(BlocksPM.RESEARCH_TABLE.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> SUNLAMP = ITEMS.register("sunlamp", () -> new BlockItem(BlocksPM.SUNLAMP.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
