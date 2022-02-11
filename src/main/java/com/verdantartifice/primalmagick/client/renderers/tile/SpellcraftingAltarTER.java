@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
     public static final ResourceLocation RING_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/spellcrafting_altar/spellcrafting_altar_ring");
     public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
-    private static final double BOB_CYCLE_TIME_TICKS = 200D;
 
     protected final SpellcraftingAltarRingModel ringModel;
     
@@ -58,7 +57,7 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0D, 0.5D);
         matrixStack.translate(0D, 2.5D, 0D);    // Model position correction
-        double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / BOB_CYCLE_TIME_TICKS));
+        double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / (double)SpellcraftingAltarTileEntity.BOB_CYCLE_TIME_TICKS));
         matrixStack.translate(0D, bobDelta, 0D);    // Bob the ring up and down
         float facingAngle = state.getValue(SpellcraftingAltarBlock.FACING).getClockWise().toYRot();
         matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180F));

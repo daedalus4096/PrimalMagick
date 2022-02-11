@@ -32,6 +32,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider {
+    public static final int BOB_CYCLE_TIME_TICKS = 200;
     protected static final int TICKS_PER_SEGMENT_ROTATION = 10;
     protected static final int TICKS_PER_PAUSE = 20;
     protected static final List<Source> ALLOWED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON);
@@ -142,13 +143,18 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getNormal());
         Vec3 centerOffset = facingNormal.scale(0.5D);
         Vec3 movement = facingNormal.scale(0.05D);
+        long time = this.getLevel().getLevelData().getGameTime();
+        double bobDelta = 0.125D * Math.sin(time * (2D * Math.PI / (double)BOB_CYCLE_TIME_TICKS));
+        
         double x = center.x + centerOffset.x;
-        double y = center.y;
+        double y = center.y + bobDelta;
         double z = center.z + centerOffset.z;
         double dx = movement.x;
         double dy = 0D;
         double dz = movement.z;
-        FxDispatcher.INSTANCE.spellcraftingRuneU(x, y, z, dx, dy, dz, this.nextSource.getColor());
+        int color = this.nextSource.getColor();
+        
+        FxDispatcher.INSTANCE.spellcraftingRuneU(x, y, z, dx, dy, dz, color);
     }
 
     protected static enum Segment {

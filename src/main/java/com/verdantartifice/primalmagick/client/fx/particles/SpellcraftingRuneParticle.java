@@ -7,6 +7,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.Mth;
 
 /**
  * Particle type shown when the ring on the spellcrafting altar pauses on a rune.
@@ -14,6 +15,8 @@ import net.minecraft.core.particles.SimpleParticleType;
  * @author Daedalus4096
  */
 public class SpellcraftingRuneParticle extends TextureSheetParticle {
+    private static final float BASE_QUAD_SIZE = 0.25F;
+    
     protected final SpriteSet spriteSet;
 
     public SpellcraftingRuneParticle(ClientLevel world, double x, double y, double z, SpriteSet spriteSet) {
@@ -25,7 +28,7 @@ public class SpellcraftingRuneParticle extends TextureSheetParticle {
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
-        this.quadSize = 0.25F;
+        this.quadSize = BASE_QUAD_SIZE;
         this.gravity = 0.0F;
         this.lifetime = 10;
         this.spriteSet = spriteSet;
@@ -40,6 +43,7 @@ public class SpellcraftingRuneParticle extends TextureSheetParticle {
     @Override
     public void tick() {
         super.tick();
+        this.quadSize = BASE_QUAD_SIZE * Mth.lerp((float)this.age / (float)this.lifetime, 1F, 2F);
         this.setSpriteFromAge(this.spriteSet);
     }
 
