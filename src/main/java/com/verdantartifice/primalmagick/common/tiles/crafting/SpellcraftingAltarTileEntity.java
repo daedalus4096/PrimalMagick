@@ -90,9 +90,6 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         if (level.isClientSide && entity.phaseTicks++ >= entity.nextUpdate) {
             entity.nextRotationPhase();
         }
-        if (level.isClientSide && entity.currentRotation.isPause()) {
-            entity.emitRuneParticle();
-        }
     }
     
     protected void nextRotationPhase() {
@@ -108,6 +105,9 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         }
         this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
         this.phaseTicks = 0;
+        if (this.level.isClientSide && this.currentRotation.isPause()) {
+            this.emitRuneParticle();
+        }
     }
     
     public float getCurrentRotation(float partialTicks) {
@@ -141,12 +141,13 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         Vec3 center = Vec3.upFromBottomCenterOf(this.worldPosition, 1.1875D);
         Vec3 facingNormal = Vec3.atLowerCornerOf(this.getBlockState().getValue(SpellcraftingAltarBlock.FACING).getNormal());
         Vec3 centerOffset = facingNormal.scale(0.5D);
+        Vec3 movement = facingNormal.scale(0.05D);
         double x = center.x + centerOffset.x;
         double y = center.y;
         double z = center.z + centerOffset.z;
-        double dx = centerOffset.x;
+        double dx = movement.x;
         double dy = 0D;
-        double dz = centerOffset.z;
+        double dz = movement.z;
         FxDispatcher.INSTANCE.spellcraftingRuneU(x, y, z, dx, dy, dz, this.nextSource.getColor());
     }
 

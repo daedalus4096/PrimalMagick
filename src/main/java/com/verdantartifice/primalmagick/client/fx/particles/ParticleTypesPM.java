@@ -51,4 +51,5 @@ public class ParticleTypesPM {
             return NoteEmitterParticleData.CODEC;
         }
     });
+    public static final RegistryObject<SimpleParticleType> SPELLCRAFTING_RUNE_U = PARTICLE_TYPES.register("spellcrafting_rune_u", () -> new SimpleParticleType(true));
 }

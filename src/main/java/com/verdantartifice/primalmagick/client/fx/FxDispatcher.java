@@ -299,8 +299,7 @@ public class FxDispatcher {
     
     public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
-        // FIXME Use spellcrafting rune U particle type instead
-        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), x, y, z, dx, dy, dz);
         if (p != null) {
             p.setColor(r, g, b);
         }
