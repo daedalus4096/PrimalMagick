@@ -3,6 +3,6 @@
 	"textures": {
 		"inner": "primalmagick:block/marble_pillar_inner",
 		"side": "primalmagick:block/marble_pillar_top",
-		"top": "primalmagick:block/marble_raw"
+		"top": "primalmagick:block/marble_pillar_base"
 	}
 }
