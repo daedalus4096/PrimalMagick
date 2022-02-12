@@ -656,6 +656,18 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), BlocksPM.MARBLE_WALL.get())
             .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "marble_wall_from_marble_raw_stonecutting"));
+        ShapedRecipeBuilder.shaped(BlocksPM.MARBLE_TILES.get(), 4)
+            .pattern("MM")
+            .pattern("MM")
+            .define('M', BlocksPM.MARBLE_BRICKS.get())
+            .unlockedBy("has_marble_bricks", has(BlocksPM.MARBLE_BRICKS.get()))
+            .save(consumer);
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_RAW.get()), BlocksPM.MARBLE_TILES.get())
+            .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
+            .save(consumer, new ResourceLocation(PrimalMagick.MODID, "marble_tiles_from_marble_raw_stonecutting"));
+        SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), BlocksPM.MARBLE_TILES.get())
+            .unlockedBy("has_marble_bricks", has(BlocksPM.MARBLE_BRICKS.get()))
+            .save(consumer, new ResourceLocation(PrimalMagick.MODID, "marble_tiles_from_marble_bricks_stonecutting"));
     }
 
     protected void registerEnchantedMarbleRecipes(Consumer<FinishedRecipe> consumer) {
