@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticleData;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticleData;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -150,6 +151,31 @@ public class FxDispatcher {
         }
     }
     
+    public void spellcraftingGlow(BlockPos pos, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingGlow(pos, r, g, b);
+    }
+    
+    public void spellcraftingGlow(BlockPos pos, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Level world = this.getWorld();
+        Random rng = world.random;
+
+        int count = (3 + rng.nextInt(3));
+        for (int index = 0; index < count; index++) {
+            double x = pos.getX() + 0.40625D + (rng.nextDouble() * 0.1875D);
+            double y = pos.getY() + 1.125D;
+            double z = pos.getZ() + 0.40625D + (rng.nextDouble() * 0.1875D);
+            Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, 0.0D, 0.0375D, 0.0D);
+            if (p != null) {
+                p.setColor(r, g, b);
+            }
+        }
+    }
+    
     public void teleportArrival(double x, double y, double z) {
         // Show a cluster of particles at the point where a player arrives from a teleport spell; similar to Ender Pearl effect
         Level world = getWorld();
@@ -259,6 +285,86 @@ public class FxDispatcher {
     public void manaArrowTrail(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELL_SPARKLE.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneU(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneU(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneU(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneU(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneV(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneV(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneV(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneV(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneT(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneT(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneT(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneT(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), x, y, z, dx, dy, dz);
+        if (p != null) {
+            p.setColor(r, g, b);
+        }
+    }
+    
+    public void spellcraftingRuneD(SpellcraftingAltarTileEntity.RuneParticleData data) {
+        this.spellcraftingRuneD(data.x, data.y, data.z, data.dx, data.dy, data.dz, data.color);
+    }
+    
+    public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, int color) {
+        Color c = new Color(color);
+        float r = c.getRed() / 255.0F;
+        float g = c.getGreen() / 255.0F;
+        float b = c.getBlue() / 255.0F;
+        this.spellcraftingRuneD(x, y, z, dx, dy, dz, r, g, b);
+    }
+    
+    public void spellcraftingRuneD(double x, double y, double z, double dx, double dy, double dz, float r, float g, float b) {
+        Minecraft mc = Minecraft.getInstance();
+        Particle p = mc.particleEngine.createParticle(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), x, y, z, dx, dy, dz);
         if (p != null) {
             p.setColor(r, g, b);
         }

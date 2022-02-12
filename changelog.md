@@ -1,6 +1,8 @@
 v2.0.6
 ------
 * Fix texture references for wand and staff caps
+* Update model for spellcrafting altar
+    * NOTE: Players upgrading existing worlds must break and re-place the block for the new renderer to activate
 
 v2.0.5
 ------

@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParti
 import com.verdantartifice.primalmagick.client.fx.particles.PropMarkerParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle;
+import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -45,6 +46,10 @@ public class ClientRegistrationEvents {
         mc.particleEngine.register(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
         mc.particleEngine.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
         mc.particleEngine.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
     }
     
     /**
@@ -80,6 +85,7 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getItemStackRenderer());
         event.registerReloadListener(ArcaneSearchRegistry.getInstance());
     }
 }

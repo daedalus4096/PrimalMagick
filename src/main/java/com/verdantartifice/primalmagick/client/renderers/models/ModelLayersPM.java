@@ -17,4 +17,5 @@ public class ModelLayersPM {
     public static final ModelLayerLocation SPELL_MINE = new ModelLayerLocation(new ResourceLocation(PrimalMagick.MODID, "spell_mine"), "main");
     public static final ModelLayerLocation SPELL_PROJECTILE = new ModelLayerLocation(new ResourceLocation(PrimalMagick.MODID, "spell_projectile"), "main");
     public static final ModelLayerLocation TREEFOLK = new ModelLayerLocation(new ResourceLocation(PrimalMagick.MODID, "treefolk"), "main");
+    public static final ModelLayerLocation SPELLCRAFTING_ALTAR_RING = new ModelLayerLocation(new ResourceLocation(PrimalMagick.MODID, "spellcrafting_altar_ring"), "main");
 }
