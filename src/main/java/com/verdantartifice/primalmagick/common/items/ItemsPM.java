@@ -110,6 +110,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_PILLAR = ITEMS.register("marble_pillar", () -> new BlockItem(BlocksPM.MARBLE_PILLAR.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> MARBLE_CHISELED = ITEMS.register("marble_chiseled", () -> new BlockItem(BlocksPM.MARBLE_CHISELED.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> MARBLE_RUNED = ITEMS.register("marble_runed", () -> new BlockItem(BlocksPM.MARBLE_RUNED.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<BlockItem> MARBLE_TILES = ITEMS.register("marble_tiles", () -> new BlockItem(BlocksPM.MARBLE_TILES.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
 
     // Register enchanted marble block items
     public static final RegistryObject<BlockItem> MARBLE_ENCHANTED = ITEMS.register("marble_enchanted", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
