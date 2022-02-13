@@ -58,6 +58,7 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_PILLAR.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_CHISELED.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RUNED.get(), rawMarble));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_TILES.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.parse("HALLOWED_ORB")));
         SimpleResearchKey hallowood = SimpleResearchKey.parse("HALLOWOOD_TREES");
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.HALLOWOOD_LOGS, hallowood));

@@ -108,6 +108,7 @@ public class BlocksPM {
     public static final RegistryObject<PillarBlock> MARBLE_PILLAR = BLOCKS.register("marble_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_CHISELED = BLOCKS.register("marble_chiseled", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_RUNED = BLOCKS.register("marble_runed", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<Block> MARBLE_TILES = BLOCKS.register("marble_tiles", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
     
     // Register enchanted marble blocks
     public static final RegistryObject<Block> MARBLE_ENCHANTED = BLOCKS.register("marble_enchanted", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 12.0F).sound(SoundType.STONE)));
