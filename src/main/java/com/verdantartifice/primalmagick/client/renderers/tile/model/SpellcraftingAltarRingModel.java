@@ -37,11 +37,11 @@ public class SpellcraftingAltarRingModel extends Model {
         .texOffs(18, 10).addBox(-3.0F, -4.0F, 4.2427F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
         .texOffs(36, 0).addBox(-7.2426F, -4.0F, -3.0F, 3.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        ring.addOrReplaceChild("segment8_r1", CubeListBuilder.create().texOffs(36, 10).addBox(-3.0F, -4.0F, -7.2426F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
-        .texOffs(0, 7).addBox(4.2426F, -4.0F, -3.0F, 3.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+        ring.addOrReplaceChild("segment8_r1", CubeListBuilder.create().texOffs(36, 10).addBox(-3.0F, -4.01F, -7.2426F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
+        .texOffs(0, 7).addBox(4.2426F, -4.01F, -3.0F, 3.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
-        ring.addOrReplaceChild("segment6_r1", CubeListBuilder.create().texOffs(18, 17).addBox(-3.0F, -4.0F, 4.2427F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
-        .texOffs(18, 0).addBox(4.2426F, -4.0F, -3.0F, 3.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+        ring.addOrReplaceChild("segment6_r1", CubeListBuilder.create().texOffs(18, 17).addBox(-3.0F, -4.01F, 4.2427F, 6.0F, 4.0F, 3.0F, new CubeDeformation(0.0F))
+        .texOffs(18, 0).addBox(4.2426F, -4.01F, -3.0F, 3.0F, 4.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 32);
     }
