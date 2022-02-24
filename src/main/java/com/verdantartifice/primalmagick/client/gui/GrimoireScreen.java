@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -974,6 +975,17 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
     }
     
+    @Override
+    public boolean mouseClicked(double xPos, double yPos, int keyCode) {
+        boolean retVal = super.mouseClicked(xPos, yPos, keyCode);
+        if (keyCode == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
+            if (this.goBack()) {
+                Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+            }
+        }
+        return retVal;
+    }
+
     public void pushCurrentHistoryTopic() {
         this.getMenu().getTopicHistory().push(this.getMenu().getTopic().withPage(this.getCurrentPage()));
     }

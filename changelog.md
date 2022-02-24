@@ -8,6 +8,7 @@ v2.0.6
 * Update model for Offering Pedestal
 * Update textures for cloth armor
 * Allow re-mapping of grimoire navigation keybinds
+* Make right-clicking in the grimoire GUI go back a topic
 
 v2.0.5
 ------
