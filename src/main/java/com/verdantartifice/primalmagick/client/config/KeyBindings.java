@@ -16,6 +16,9 @@ public class KeyBindings {
     public static KeyMapping changeSpellKey;    // Key for changing the active spell of a wand
     public static KeyMapping carpetForwardKey;  // Key for commanding a flying carpet forward
     public static KeyMapping carpetBackwardKey; // Key for commanding a flying carpet backward
+    public static KeyMapping grimoireNextPage;  // Key for going to the next page in a grimoire entry
+    public static KeyMapping grimoirePrevPage;  // Key for going to the previous page in a grimoire entry
+    public static KeyMapping grimoirePrevTopic; // Key for going back to the previous grimoire topic
     
     private static final String KEY_CATEGORY = "key.categories." + PrimalMagick.MODID;
     
@@ -28,5 +31,14 @@ public class KeyBindings {
         
         carpetBackwardKey = new KeyMapping("key.primalmagick.carpet_backward", GLFW.GLFW_KEY_S, KEY_CATEGORY);
         ClientRegistry.registerKeyBinding(carpetBackwardKey);
+        
+        grimoireNextPage = new KeyMapping("key.primalmagick.grimoire_next_page", GLFW.GLFW_KEY_RIGHT, KEY_CATEGORY);
+        ClientRegistry.registerKeyBinding(grimoireNextPage);
+        
+        grimoirePrevPage = new KeyMapping("key.primalmagick.grimoire_prev_page", GLFW.GLFW_KEY_LEFT, KEY_CATEGORY);
+        ClientRegistry.registerKeyBinding(grimoirePrevPage);
+        
+        grimoirePrevTopic = new KeyMapping("key.primalmagick.grimoire_prev_topic", GLFW.GLFW_KEY_BACKSPACE, KEY_CATEGORY);
+        ClientRegistry.registerKeyBinding(grimoirePrevTopic);
     }
 }

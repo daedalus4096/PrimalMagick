@@ -2227,6 +2227,9 @@
     "key.primalmagick.change_spell": "Cycle Active Spell",
     "key.primalmagick.carpet_forward": "Flying Carpet Forward",
     "key.primalmagick.carpet_backward": "Flying Carpet Backward",
+    "key.primalmagick.grimoire_next_page": "Grimoire Next Page",
+    "key.primalmagick.grimoire_prev_page": "Grimoire Previous Page",
+    "key.primalmagick.grimoire_prev_topic": "Grimoire Previous Topic",
     
     "stat.primalmagick.grimoire_read": "Times Grimoire consulted",
     "stat.primalmagick.items_analyzed": "Item types analyzed",

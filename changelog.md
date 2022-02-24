@@ -7,6 +7,7 @@ v2.0.6
 * Add new Marble Tiles decorative block
 * Update model for Offering Pedestal
 * Update textures for cloth armor
+* Allow re-mapping of grimoire navigation keybinds
 
 v2.0.5
 ------

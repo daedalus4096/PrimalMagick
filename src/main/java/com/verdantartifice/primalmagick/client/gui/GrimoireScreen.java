@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AbstractRecipePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementGainPage;
@@ -958,15 +958,15 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     @Override
     public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
-        if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
+        if (keyCode == KeyBindings.grimoirePrevTopic.getKey().getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == GLFW.GLFW_KEY_LEFT) {
+        } else if (keyCode == KeyBindings.grimoirePrevPage.getKey().getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == GLFW.GLFW_KEY_RIGHT) {
+        } else if (keyCode == KeyBindings.grimoireNextPage.getKey().getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
