@@ -5,6 +5,7 @@ v2.0.6
     * NOTE: Players upgrading existing worlds must break and re-place the block for the new renderer to activate
 * Update textures for basic marble
 * Add new Marble Tiles decorative block
+* Update model for Offering Pedestal
 
 v2.0.5
 ------
