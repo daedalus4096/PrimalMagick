@@ -6,6 +6,7 @@ v2.0.6
 * Update textures for basic marble
 * Add new Marble Tiles decorative block
 * Update model for Offering Pedestal
+* Update textures for cloth armor
 
 v2.0.5
 ------
