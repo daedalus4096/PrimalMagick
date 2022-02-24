@@ -40,7 +40,8 @@
         "primalmagick:long_strength_philter",
         "primalmagick:strong_strength_philter",
         "primalmagick:slow_falling_philter",
-        "primalmagick:long_slow_falling_philter"
+        "primalmagick:long_slow_falling_philter",
+        "primalmagick:luck_philter"
       ]
     }
   ],

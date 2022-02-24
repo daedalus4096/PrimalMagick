@@ -42,7 +42,8 @@
         "primalmagick:long_strength_tincture",
         "primalmagick:strong_strength_tincture",
         "primalmagick:slow_falling_tincture",
-        "primalmagick:long_slow_falling_tincture"
+        "primalmagick:long_slow_falling_tincture",
+        "primalmagick:luck_tincture"
       ]
     }
   ],

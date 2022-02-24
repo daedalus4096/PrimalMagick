@@ -40,7 +40,8 @@
         "primalmagick:long_strength_elixir",
         "primalmagick:strong_strength_elixir",
         "primalmagick:slow_falling_elixir",
-        "primalmagick:long_slow_falling_elixir"
+        "primalmagick:long_slow_falling_elixir",
+        "primalmagick:luck_elixir"
       ]
     }
   ],

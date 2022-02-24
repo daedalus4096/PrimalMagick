@@ -4372,6 +4372,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
             .manaCost(new SourceList().add(Source.INFERNAL, 1))
             .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.TINCTURE))
+            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
+            .useDefaultGroup()
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 1))
+            .build(consumer);
     }
     
     protected void registerPhilterRecipes(Consumer<FinishedRecipe> consumer) {
@@ -4643,6 +4652,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.PHILTER))
+            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
+            .useDefaultGroup()
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 3))
+            .build(consumer);
     }
     
     protected void registerElixirRecipes(Consumer<FinishedRecipe> consumer) {
@@ -4910,6 +4928,15 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
+            .useDefaultGroup()
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 9))
+            .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.ELIXIR))
+            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 9))
@@ -5253,6 +5280,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.INFERNAL, 3))
+            .build(consumer);
+        ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK, FuseType.MEDIUM))
+            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
             .manaCost(new SourceList().add(Source.INFERNAL, 3))
             .build(consumer);
     }

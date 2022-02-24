@@ -40,7 +40,8 @@
         "primalmagick:long_strength_bomb",
         "primalmagick:strong_strength_bomb",
         "primalmagick:slow_falling_bomb",
-        "primalmagick:long_slow_falling_bomb"
+        "primalmagick:long_slow_falling_bomb",
+        "primalmagick:luck_bomb"
       ]
     }
   ],

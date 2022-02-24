@@ -471,6 +471,7 @@ public class ItemsPM {
     public static final RegistryObject<DreamVisionTalismanItem> DREAM_VISION_TALISMAN = ITEMS.register("dream_vision_talisman", DreamVisionTalismanItem::new);
     public static final RegistryObject<IgnyxItem> IGNYX = ITEMS.register("ignyx", () -> new IgnyxItem(new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<DowsingRodItem> DOWSING_ROD = ITEMS.register("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1).durability(63)));
+    public static final RegistryObject<Item> FOUR_LEAF_CLOVER = ITEMS.register("four_leaf_clover", () -> new Item(new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = ITEMS.register("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
