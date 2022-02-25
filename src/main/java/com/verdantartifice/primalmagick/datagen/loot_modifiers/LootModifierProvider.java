@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BloodyFleshModifie
 import com.verdantartifice.primalmagick.common.loot.modifiers.BonusNuggetModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFarmingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
@@ -21,7 +22,9 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
@@ -95,5 +98,15 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1F, 0.05F).build()
                 }, 1, 1, 0));
+        this.add("four_leaf_clover_short_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
+                new LootItemCondition[] {
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS).build(),
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.002F, 0.002F).build()
+                }));
+        this.add("four_leaf_clover_tall_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
+                new LootItemCondition[] {
+                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build(),
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.002F, 0.002F).build()
+                }));
     }
 }

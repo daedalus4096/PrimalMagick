@@ -1,0 +1,14 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:block_state_property",
+      "block": "minecraft:grass"
+    },
+    {
+      "condition": "minecraft:random_chance_with_looting",
+      "chance": 0.002,
+      "looting_multiplier": 0.002
+    }
+  ],
+  "type": "primalmagick:four_leaf_clover"
+}
