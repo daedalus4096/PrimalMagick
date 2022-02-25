@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "top": "primalmagick:block/zephyr_engine_top",
+		"bottom": "primalmagick:block/wood_table_bottom",
+        "side": "primalmagick:block/zephyr_engine_side"
+    }
+}
