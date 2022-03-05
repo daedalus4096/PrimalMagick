@@ -1,10 +1,16 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import java.util.Random;
+
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -23,6 +29,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -97,4 +104,31 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     }
 
     protected abstract Direction getWindDirection(BlockState state);
+
+    @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+        if (state.getValue(POWERED)) {
+            double lifetime = 20D;
+            int power = level.getBestNeighborSignal(pos);
+            Direction windDir = this.getWindDirection(state);
+            Vec3i velocity = windDir.getNormal().multiply(power);
+            Vec3 start = this.getParticleStartPoint(state, level, pos, random);
+            FxDispatcher.INSTANCE.manaArrowTrail(start.x, start.y, start.z, velocity.getX() / lifetime, velocity.getY() / lifetime, velocity.getZ() / lifetime, this.getParticleColor());
+        }
+    }
+    
+    protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, Random random) {
+        Direction dir = state.getValue(FACING);
+        Vec3 dirUnit = new Vec3(dir.getNormal().getX(), dir.getNormal().getY(), dir.getNormal().getZ());
+        Vec3 center = Vec3.atCenterOf(pos);
+        Vec3 retVal = center.add(dirUnit.scale(0.5D));
+        for (Axis axis : Axis.values()) {
+            Direction deltaDir = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
+            Vec3 normal = new Vec3(deltaDir.step()).scale(random.nextDouble() - 0.5D);
+            retVal = retVal.add(normal);
+        }
+        return retVal;
+    }
+
+    protected abstract int getParticleColor();
 }
