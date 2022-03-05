@@ -40,8 +40,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
-    protected static final DirectionProperty FACING = BlockStateProperties.FACING;
-    protected static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     
     public AbstractWindGeneratorBlock() {
         super(Block.Properties.of(Material.WOOD).strength(1.5F, 6.0F).sound(SoundType.WOOD));
@@ -103,7 +103,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         return createTickerHelper(type, TileEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTileEntity::tick);
     }
 
-    protected abstract Direction getWindDirection(BlockState state);
+    public abstract Direction getWindDirection(BlockState state);
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
