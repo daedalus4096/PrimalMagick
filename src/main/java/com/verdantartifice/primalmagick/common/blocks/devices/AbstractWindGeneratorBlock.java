@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -15,13 +15,14 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -42,7 +43,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        // TODO Assemble more detailed shape for base table
+        // TODO Assemble more detailed shape for device
         return Shapes.block();
     }
     
@@ -54,7 +55,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         // Use the clicked face to determine orientation of the block
-        return this.defaultBlockState().setValue(FACING, context.getClickedFace());
+        return this.defaultBlockState().setValue(FACING, context.getClickedFace()).setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
     }
     
     @Override
@@ -73,21 +74,27 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         builder.add(FACING, POWERED);
     }
     
+    @SuppressWarnings("deprecation")
     @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        // TODO Auto-generated method stub
-        return null;
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+        if (!level.isClientSide) {
+            boolean powered = state.getValue(POWERED);
+            if (powered != level.hasNeighborSignal(pos)) {
+                level.setBlock(pos, state.cycle(POWERED), UPDATE_CLIENTS);
+            }
+        }
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        // TODO Temporary
-        if (!worldIn.isClientSide) {
-            boolean active = state.getValue(POWERED);
-            worldIn.setBlock(pos, state.setValue(POWERED, !active), Block.UPDATE_ALL);
-        }
-        return InteractionResult.SUCCESS;
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new WindGeneratorTileEntity(pos, state);
     }
-    
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, TileEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTileEntity::tick);
+    }
+
     protected abstract Direction getWindDirection(BlockState state);
 }
