@@ -11,6 +11,7 @@ v2.0.6
 * Make right-clicking in the grimoire GUI go back a topic
 * Add four-leaf clovers, to help you concoct some luck if you can find one in the tall grass
 * Allow magical tree leaves to be harvested by any shears-like tool
+* Increment to Forge version 39.1.0
 
 v2.0.5
 ------
