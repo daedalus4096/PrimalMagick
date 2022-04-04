@@ -2,8 +2,8 @@ package com.verdantartifice.primalmagick.common.tags;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.common.Tags.IOptionalNamedTag;
 
 /**
  * Collection of custom-defined Forge extension item tags.  Used to determine tag contents and for
@@ -12,12 +12,12 @@ import net.minecraftforge.common.Tags.IOptionalNamedTag;
  * @author Daedalus4096
  */
 public class ItemTagsForgeExt {
-    public static final IOptionalNamedTag<Item> DUSTS_IRON = tag("dusts/iron");
-    public static final IOptionalNamedTag<Item> DUSTS_GOLD = tag("dusts/gold");
-    public static final IOptionalNamedTag<Item> DUSTS_COPPER = tag("dusts/copper");
-    public static final IOptionalNamedTag<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
+    public static final TagKey<Item> DUSTS_IRON = tag("dusts/iron");
+    public static final TagKey<Item> DUSTS_GOLD = tag("dusts/gold");
+    public static final TagKey<Item> DUSTS_COPPER = tag("dusts/copper");
+    public static final TagKey<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
 
-    private static IOptionalNamedTag<Item> tag(String name) {
-        return ItemTags.createOptional(new ResourceLocation("forge", name));
+    private static TagKey<Item> tag(String name) {
+        return ItemTags.create(new ResourceLocation("forge", name));
     }
 }
