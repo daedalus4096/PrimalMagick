@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -12,21 +13,21 @@ import net.minecraft.world.level.ItemLike;
  * @author Daedalus4096
  */
 public class ScanItemTagResearchTrigger extends AbstractScanResearchTrigger {
-    protected final Tag<Item> target;
+    protected final TagKey<Item> target;
     
-    public ScanItemTagResearchTrigger(Tag<Item> target, SimpleResearchKey toUnlock) {
+    public ScanItemTagResearchTrigger(TagKey<Item> target, SimpleResearchKey toUnlock) {
         this(target, toUnlock, true);
     }
     
-    public ScanItemTagResearchTrigger(Tag<Item> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+    public ScanItemTagResearchTrigger(TagKey<Item> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
         super(toUnlock, unlockScansPage);
         this.target = target;
     }
 
     @Override
     public boolean matches(ServerPlayer player, Object obj) {
-        if (obj instanceof ItemLike) {
-            return this.target.contains(((ItemLike)obj).asItem());
+        if (obj instanceof ItemLike itemLike) {
+            return new ItemStack(itemLike).is(this.target);
         } else {
             return false;
         }
