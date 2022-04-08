@@ -6,7 +6,7 @@ import com.google.gson.JsonSerializationContext;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -21,20 +21,20 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
  * @author Daedalus4096
  */
 public class MatchBlockTag implements LootItemCondition {
-    protected final Tag.Named<Block> tag;
+    protected final TagKey<Block> tag;
     
-    public MatchBlockTag(Tag.Named<Block> tag) {
+    public MatchBlockTag(TagKey<Block> tag) {
         this.tag = tag;
     }
 
-    public static LootItemCondition.Builder builder(Tag.Named<Block> tag) {
+    public static LootItemCondition.Builder builder(TagKey<Block> tag) {
         return () -> new MatchBlockTag(tag);
     }
     
     @Override
     public boolean test(LootContext context) {
         BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
-        return state != null && this.tag.contains(state.getBlock());
+        return state != null && state.is(this.tag);
     }
 
     @Override
@@ -45,13 +45,13 @@ public class MatchBlockTag implements LootItemCondition {
     public static class ConditionSerializer implements Serializer<MatchBlockTag> {
         @Override
         public void serialize(JsonObject obj, MatchBlockTag condition, JsonSerializationContext context) {
-            obj.addProperty("tag", condition.tag.getName().toString());
+            obj.addProperty("tag", condition.tag.location().toString());
         }
 
         @Override
         public MatchBlockTag deserialize(JsonObject obj, JsonDeserializationContext context) {
             ResourceLocation name = new ResourceLocation(obj.getAsJsonPrimitive("tag").getAsString());
-            return new MatchBlockTag(BlockTags.createOptional(name));
+            return new MatchBlockTag(BlockTags.create(name));
         }
     }
 }

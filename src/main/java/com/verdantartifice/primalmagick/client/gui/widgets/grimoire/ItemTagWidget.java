@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,13 +10,13 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Display widget for showing all the possible itemstacks for a given tag.  Used
@@ -37,8 +38,9 @@ public class ItemTagWidget extends AbstractWidget {
     
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        Tag<Item> itemTag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(this.tag);
-        Collection<Item> tagContents = itemTag.getValues();
+        TagKey<Item> itemTag = ItemTags.create(this.tag);
+        List<Item> tagContents = new ArrayList<Item>();
+        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

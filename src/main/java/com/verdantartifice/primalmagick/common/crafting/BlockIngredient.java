@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -18,8 +20,7 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -114,7 +115,7 @@ public class BlockIngredient implements Predicate<Block> {
         }));
     }
     
-    public static BlockIngredient fromTag(Tag<Block> tag) {
+    public static BlockIngredient fromTag(TagKey<Block> tag) {
         return fromBlockListStream(Stream.of(new BlockIngredient.TagList(tag)));
     }
     
@@ -139,9 +140,7 @@ public class BlockIngredient implements Predicate<Block> {
             }
         } else if (json.has("tag")) {
             ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            Tag<Block> tag = SerializationTags.getInstance().getTagOrThrow(Registry.BLOCK_REGISTRY, loc, (resourceLocation) -> {
-                throw new JsonSyntaxException("Unknown block tag '" + resourceLocation.toString() + "'");
-            });
+            TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, loc);
             return new BlockIngredient.TagList(tag);
         } else {
             throw new JsonParseException("A block ingredient entry needs either a tag or a block");
@@ -195,23 +194,25 @@ public class BlockIngredient implements Predicate<Block> {
     }
     
     protected static class TagList implements BlockIngredient.IBlockList {
-        private final Tag<Block> tag;
+        private final TagKey<Block> tag;
         
-        public TagList(Tag<Block> tag) {
+        public TagList(TagKey<Block> tag) {
             this.tag = tag;
         }
         
         @Override
         public Collection<Block> getBlocks() {
-            return this.tag.getValues();
+            List<Block> retVal = new ArrayList<Block>();
+            for (Block block : ForgeRegistries.BLOCKS.tags().getTag(this.tag)) {
+                retVal.add(block);
+            }
+            return retVal;
         }
 
         @Override
         public JsonObject serialize() {
             JsonObject json = new JsonObject();
-            json.addProperty("tag", SerializationTags.getInstance().getIdOrThrow(Registry.BLOCK_REGISTRY, this.tag, () -> {
-                return new IllegalStateException("Unknown block tag");
-            }).toString());
+            json.addProperty("tag", this.tag.location().toString());
             return json;
         }
     }

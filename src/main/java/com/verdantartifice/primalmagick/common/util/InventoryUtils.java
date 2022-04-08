@@ -10,12 +10,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.SerializationTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
@@ -104,10 +103,10 @@ public class InventoryUtils {
         if (tagName == null) {
             return true;
         }
-        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+        TagKey<Item> tag = ItemTags.create(tagName);
         for (ItemStack searchStack : player.getInventory().items) {
             // Only the items need match, not the NBT data
-            if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
+            if (!searchStack.isEmpty() && searchStack.is(tag)) {
                 amount -= searchStack.getCount();
                 if (amount <= 0) {
                     // Once a sufficient number of the given item are found, return true
@@ -209,11 +208,11 @@ public class InventoryUtils {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+        TagKey<Item> tag = ItemTags.create(tagName);
         for (int index = 0; index < player.getInventory().items.size(); index++) {
             ItemStack searchStack = player.getInventory().items.get(index);
             // Only the items need match, not the NBT data
-            if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
+            if (!searchStack.isEmpty() && searchStack.is(tag)) {
                 if (searchStack.getCount() > amount) {
                     searchStack.shrink(amount);
                     amount = 0;
@@ -320,10 +319,10 @@ public class InventoryUtils {
     public static NonNullList<ItemStack> find(@Nullable Player player, @Nullable ResourceLocation tagName) {
         NonNullList<ItemStack> retVal = NonNullList.create();
         if (player != null && tagName != null) {
-            Tag<Item> tag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(tagName);
+            TagKey<Item> tag = ItemTags.create(tagName);
             for (ItemStack searchStack : player.getInventory().items) {
                 // Only the items need match, not the NBT data
-                if (!searchStack.isEmpty() && tag.contains(searchStack.getItem())) {
+                if (!searchStack.isEmpty() && searchStack.is(tag)) {
                     retVal.add(searchStack);
                 }
             }

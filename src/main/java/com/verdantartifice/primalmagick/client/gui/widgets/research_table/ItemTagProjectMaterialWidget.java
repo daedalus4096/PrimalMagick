@@ -16,12 +16,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.SerializationTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Display widget for an item tag research project material.  Used on the research table screen.
@@ -70,8 +73,9 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
 
     @Nonnull
     protected ItemStack getStackToDisplay() {
-        Tag<Item> itemTag = SerializationTags.getInstance().getOrEmpty(Registry.ITEM_REGISTRY).getTagOrEmpty(this.material.getTagName());
-        Collection<Item> tagContents = itemTag.getValues();
+        TagKey<Item> itemTag = ItemTags.create(this.material.getTagName());
+        List<Item> tagContents = new ArrayList<Item>();
+        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
         if (tagContents != null && !tagContents.isEmpty()) {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());

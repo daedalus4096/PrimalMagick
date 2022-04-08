@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 public class ItemTagMaterialBuilder {
@@ -20,17 +20,17 @@ public class ItemTagMaterialBuilder {
     protected double bonusReward = 0.0D;
     protected CompoundResearchKey requiredResearch;
 
-    protected ItemTagMaterialBuilder(@Nonnull Tag.Named<Item> tag, int quantity, boolean consumed) {
-        this.tagName = tag.getName();
+    protected ItemTagMaterialBuilder(@Nonnull TagKey<Item> tag, int quantity, boolean consumed) {
+        this.tagName = tag.location();
         this.quantity = quantity;
         this.consumed = consumed;
     }
     
-    public static ItemTagMaterialBuilder tag(@Nonnull Tag.Named<Item> tag, boolean consumed) {
+    public static ItemTagMaterialBuilder tag(@Nonnull TagKey<Item> tag, boolean consumed) {
         return tag(tag, 1, consumed);
     }
     
-    public static ItemTagMaterialBuilder tag(@Nonnull Tag.Named<Item> tag, int quantity, boolean consumed) {
+    public static ItemTagMaterialBuilder tag(@Nonnull TagKey<Item> tag, int quantity, boolean consumed) {
         return new ItemTagMaterialBuilder(tag, quantity, consumed);
     }
     
