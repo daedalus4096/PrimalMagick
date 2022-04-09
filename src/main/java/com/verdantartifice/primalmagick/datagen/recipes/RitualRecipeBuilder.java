@@ -15,7 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -125,7 +125,7 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(Tag<Item> tag, int quantity) {
+    public RitualRecipeBuilder addIngredient(TagKey<Item> tag, int quantity) {
         return this.addIngredient(Ingredient.of(tag), quantity);
     }
     
@@ -135,7 +135,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of items to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addIngredient(Tag<Item> tag) {
+    public RitualRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(tag, 1);
     }
     
@@ -191,7 +191,7 @@ public class RitualRecipeBuilder {
      * @param quantity the number of the tag to add
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(Tag<Block> tag, int quantity) {
+    public RitualRecipeBuilder addProp(TagKey<Block> tag, int quantity) {
         return this.addProp(BlockIngredient.fromTag(tag), quantity);
     }
     
@@ -201,7 +201,7 @@ public class RitualRecipeBuilder {
      * @param tag the tag of blocks to be added
      * @return the modified builder
      */
-    public RitualRecipeBuilder addProp(Tag<Block> tag) {
+    public RitualRecipeBuilder addProp(TagKey<Block> tag) {
         return this.addProp(tag, 1);
     }
     

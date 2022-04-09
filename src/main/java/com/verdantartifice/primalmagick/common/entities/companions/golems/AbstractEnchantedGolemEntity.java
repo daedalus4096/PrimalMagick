@@ -26,7 +26,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -264,15 +264,14 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
         return SoundEvents.IRON_GOLEM_DEATH;
     }
     
-    protected abstract Tag<Item> getRepairMaterialTag();
+    protected abstract TagKey<Item> getRepairMaterialTag();
     
     protected abstract float getRepairHealAmount();
 
     @Override
     protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
         ItemStack itemstack = playerIn.getItemInHand(hand);
-        Item item = itemstack.getItem();
-        if (!this.getRepairMaterialTag().contains(item)) {
+        if (!itemstack.is(this.getRepairMaterialTag())) {
             InteractionResult actionResult = super.mobInteract(playerIn, hand);
             if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !this.level.isClientSide) {
                 long time = playerIn.level.getGameTime();

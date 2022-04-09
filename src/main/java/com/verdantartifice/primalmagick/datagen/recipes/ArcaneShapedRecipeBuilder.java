@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -102,7 +102,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param tag the item tag to use for the given symbol
      * @return the modified builder
      */
-    public ArcaneShapedRecipeBuilder key(Character symbol, Tag<Item> tag) {
+    public ArcaneShapedRecipeBuilder key(Character symbol, TagKey<Item> tag) {
         return key(symbol, Ingredient.of(tag));
     }
     

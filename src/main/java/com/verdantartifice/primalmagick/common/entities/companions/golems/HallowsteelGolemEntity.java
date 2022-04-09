@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.entities.companions.golems;
 
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
@@ -27,7 +27,7 @@ public class HallowsteelGolemEntity extends AbstractEnchantedGolemEntity {
     }
 
     @Override
-    protected Tag<Item> getRepairMaterialTag() {
+    protected TagKey<Item> getRepairMaterialTag() {
         return ItemTagsPM.INGOTS_HALLOWSTEEL;
     }
 

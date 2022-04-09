@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class LootModifierSerializersPM {
-    private static final DeferredRegister<GlobalLootModifierSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, PrimalMagick.MODID);
+    private static final DeferredRegister<GlobalLootModifierSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get(), PrimalMagick.MODID);
     
     public static void init() {
         SERIALIZERS.register(FMLJavaModLoadingContext.get().getModEventBus());
