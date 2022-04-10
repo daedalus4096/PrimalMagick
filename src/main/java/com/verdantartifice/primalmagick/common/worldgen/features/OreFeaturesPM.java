@@ -23,9 +23,9 @@ public class OreFeaturesPM {
     public static ConfiguredFeature<?, ?> ORE_QUARTZ;
     
     public static void setupOreFeatures() {
-        ORE_MARBLE_RAW = registerOreFeature("ore_marble_raw", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
-        ORE_ROCK_SALT = registerOreFeature("ore_rock_salt", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));
-        ORE_QUARTZ = registerOreFeature("ore_quartz", Feature.ORE.configured(new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)));
+        ORE_MARBLE_RAW = registerOreFeature("ore_marble_raw", new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
+        ORE_ROCK_SALT = registerOreFeature("ore_rock_salt", new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));
+        ORE_QUARTZ = registerOreFeature("ore_quartz", new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)));
     }
     
     private static <FC extends FeatureConfiguration> ConfiguredFeature<FC, ?> registerOreFeature(String key, ConfiguredFeature<FC, ?> configuredFeature) {
