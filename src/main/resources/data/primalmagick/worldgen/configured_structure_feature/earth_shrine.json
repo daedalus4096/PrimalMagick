@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:shrine",
+  "config": {
+    "type": "earth"
+  },
+  "biomes": "#primalmagick:has_structure/earth_shrine",
+  "adapt_noise": true,
+  "spawn_overrides": {
+  }
+}

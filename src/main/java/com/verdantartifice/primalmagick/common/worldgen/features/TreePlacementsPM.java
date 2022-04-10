@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
@@ -41,7 +42,7 @@ public class TreePlacementsPM {
         TREE_HALLOWOOD_CHECKED = registerTreePlacement("tree_hallowood_checked", TreeFeaturesPM.TREE_HALLOWOOD, PlacementUtils.filteredByBlockSurvival(BlocksPM.HALLOWOOD_SAPLING.get()));
     }
     
-    private static Holder<PlacedFeature> registerTreePlacement(String key, ConfiguredFeature<?, ?> feature, PlacementModifier... placementModifiers) {
-        return PlacementUtils.register(PrimalMagick.MODID + ":" + key, Holder.direct(feature), placementModifiers);
+    private static Holder<PlacedFeature> registerTreePlacement(String key, Holder<ConfiguredFeature<TreeConfiguration, ?>> featureHolder, PlacementModifier... placementModifiers) {
+        return PlacementUtils.register(PrimalMagick.MODID + ":" + key, featureHolder, placementModifiers);
     }
 }

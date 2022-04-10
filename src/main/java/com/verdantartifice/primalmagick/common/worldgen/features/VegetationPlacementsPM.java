@@ -9,6 +9,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
@@ -26,7 +27,7 @@ public class VegetationPlacementsPM {
         TREES_WILD_MOONWOOD = registerTreePlacement("trees_wild_moonwood", TreeFeaturesPM.TREE_MOONWOOD_FULL, VegetationPlacements.treePlacement(PlacementUtils.countExtra(0, 0.05f, 1), BlocksPM.MOONWOOD_SAPLING.get()));
     }
     
-    private static Holder<PlacedFeature> registerTreePlacement(String key, ConfiguredFeature<?, ?> feature, List<PlacementModifier> placementModifiers) {
-        return PlacementUtils.register(PrimalMagick.MODID + ":" + key, Holder.direct(feature), placementModifiers);
+    private static Holder<PlacedFeature> registerTreePlacement(String key, Holder<ConfiguredFeature<TreeConfiguration, ?>> featureHolder, List<PlacementModifier> placementModifiers) {
+        return PlacementUtils.register(PrimalMagick.MODID + ":" + key, featureHolder, placementModifiers);
     }
 }

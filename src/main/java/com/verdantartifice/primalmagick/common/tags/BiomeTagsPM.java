@@ -16,6 +16,12 @@ import net.minecraft.world.level.biome.Biome;
 public class BiomeTagsPM {
     public static final TagKey<Biome> IS_END = tag("is_end");
     
+    public static final TagKey<Biome> HAS_EARTH_SHRINE = tag("has_structure/earth_shrine");
+    public static final TagKey<Biome> HAS_SEA_SHRINE = tag("has_structure/sea_shrine");
+    public static final TagKey<Biome> HAS_SKY_SHRINE = tag("has_structure/sky_shrine");
+    public static final TagKey<Biome> HAS_SUN_SHRINE = tag("has_structure/sun_shrine");
+    public static final TagKey<Biome> HAS_MOON_SHRINE = tag("has_structure/moon_shrine");
+    
     private static TagKey<Biome> tag(String name) {
         return TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(PrimalMagick.MODID, name));
     }

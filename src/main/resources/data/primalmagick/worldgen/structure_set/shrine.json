@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "primalmagick:shrine",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 11893192,
+    "spacing": 20,
+    "separation": 10,
+    "type": "minecraft:random_spread"
+  }
+}

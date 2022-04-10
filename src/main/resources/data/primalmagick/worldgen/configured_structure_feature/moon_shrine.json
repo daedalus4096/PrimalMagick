@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:shrine",
+  "config": {
+    "type": "moon"
+  },
+  "biomes": "#primalmagick:has_structure/moon_shrine",
+  "adapt_noise": true,
+  "spawn_overrides": {
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:shrine",
+  "config": {
+    "type": "sun"
+  },
+  "biomes": "#primalmagick:has_structure/sun_shrine",
+  "adapt_noise": true,
+  "spawn_overrides": {
+  }
+}
