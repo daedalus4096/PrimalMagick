@@ -1,7 +1,23 @@
 {
   "structures": [
     {
-      "structure": "primalmagick:shrine",
+      "structure": "primalmagick:earth_shrine",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sea_shrine",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sky_shrine",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:sun_shrine",
+      "weight": 1
+    },
+    {
+      "structure": "primalmagick:moon_shrine",
       "weight": 1
     }
   ],

@@ -38,12 +38,19 @@ public class ShrinePiece extends TemplateStructurePiece {
     protected final ShrineStructure.Type type;
     
     public ShrinePiece(StructureManager templateManager, ShrineStructure.Type type, BlockPos pos) {
-        super(StructurePieceTypesPM.SHRINE, 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
+        super(StructurePieceTypesPM.SHRINE.get(), 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
         this.type = type;
     }
 
     public ShrinePiece(StructureManager templateManager, CompoundTag nbt) {
-        super(StructurePieceTypesPM.SHRINE, nbt, templateManager, (dummy) -> {
+        super(StructurePieceTypesPM.SHRINE.get(), nbt, templateManager, (dummy) -> {
+            return makePlaceSettings();
+        });
+        this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
+    }
+    
+    public ShrinePiece(StructurePieceSerializationContext context, CompoundTag nbt) {
+        super(StructurePieceTypesPM.SHRINE.get(), nbt, context.structureManager(), (dummy) -> {
             return makePlaceSettings();
         });
         this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
