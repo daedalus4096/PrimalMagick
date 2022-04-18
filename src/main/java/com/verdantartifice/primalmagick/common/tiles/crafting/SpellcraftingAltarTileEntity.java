@@ -3,11 +3,11 @@ package com.verdantartifice.primalmagick.common.tiles.crafting;
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Consumer;
 
-import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
@@ -89,7 +89,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {
-        if (level.isClientSide && entity.phaseTicks++ >= entity.nextUpdate) {
+        if (entity.phaseTicks++ >= entity.nextUpdate && !level.isClientSide) {
             entity.nextRotationPhase();
         }
     }
@@ -107,7 +107,11 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         }
         this.nextUpdate = this.currentRotation.getDuration(this.lastSegment, this.nextSegment);
         this.phaseTicks = 0;
-        if (this.level.isClientSide && this.currentRotation.isPause()) {
+        
+        this.setChanged();
+        this.syncTile(true);
+        
+        if (!this.level.isClientSide && this.currentRotation.isPause()) {
             this.emitRuneParticle();
         }
     }
@@ -147,44 +151,27 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
         long time = this.getLevel().getLevelData().getGameTime();
         double bobDelta = 0.125D * Math.sin(time * (2D * Math.PI / (double)BOB_CYCLE_TIME_TICKS));
         
-        RuneParticleData data = new RuneParticleData();
-        data.x = center.x + centerOffset.x;
-        data.y = center.y + bobDelta;
-        data.z = center.z + centerOffset.z;
-        data.dx = movement.x;
-        data.dy = 0D;
-        data.dz = movement.z;
-        data.color = this.nextSource.getColor();
-        
-        this.nextSegment.emitParticle(data);
+        PacketHandler.sendToAllAround(
+                new SpellcraftingRunePacket(this.nextSegment, center.x + centerOffset.x, center.y + bobDelta, center.z + centerOffset.z, movement.x, 0D, movement.z, this.nextSource.getColor()), 
+                this.level.dimension(), 
+                this.worldPosition, 
+                64.0D);
     }
     
-    public static class RuneParticleData {
-        public double x;
-        public double y;
-        public double z;
-        public double dx;
-        public double dy;
-        public double dz;
-        public int color;
-    }
-
-    protected static enum Segment {
-        U1(0, FxDispatcher.INSTANCE::spellcraftingRuneU),
-        V1(45, FxDispatcher.INSTANCE::spellcraftingRuneV),
-        T1(90, FxDispatcher.INSTANCE::spellcraftingRuneT),
-        D1(135, FxDispatcher.INSTANCE::spellcraftingRuneD),
-        U2(180, FxDispatcher.INSTANCE::spellcraftingRuneU),
-        V2(225, FxDispatcher.INSTANCE::spellcraftingRuneV),
-        T2(270, FxDispatcher.INSTANCE::spellcraftingRuneT),
-        D2(315, FxDispatcher.INSTANCE::spellcraftingRuneD);
+    public static enum Segment {
+        U1(0),
+        V1(45),
+        T1(90),
+        D1(135),
+        U2(180),
+        V2(225),
+        T2(270),
+        D2(315);
         
         private final int degreeOffset;
-        private final Consumer<RuneParticleData> emitter;
         
-        private Segment(int degrees, Consumer<RuneParticleData> emitter) {
+        private Segment(int degrees) {
             this.degreeOffset = degrees;
-            this.emitter = emitter;
         }
         
         public int getDegreeOffset() {
@@ -199,10 +186,6 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
             } else {
                 return this.degreeOffset;
             }
-        }
-        
-        public void emitParticle(RuneParticleData data) {
-            this.emitter.accept(data);
         }
     }
     

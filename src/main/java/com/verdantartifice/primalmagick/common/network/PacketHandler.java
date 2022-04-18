@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMark
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPacket;
+import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArrivalPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
@@ -114,6 +115,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SeenArcaneRecipePacket.class, SeenArcaneRecipePacket::encode, SeenArcaneRecipePacket::decode, SeenArcaneRecipePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket::encode, ChangeArcaneRecipeBookSettingsPacket::decode, ChangeArcaneRecipeBookSettingsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode, SetResearchTopicHistoryPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SpellcraftingRunePacket.class, SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode, SpellcraftingRunePacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

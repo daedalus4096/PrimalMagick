@@ -1,3 +1,7 @@
+v2.0.7
+------
+* Fix multiplayer server crash when using spellcrafting altar
+
 v2.0.6
 ------
 * Fix texture references for wand and staff caps
