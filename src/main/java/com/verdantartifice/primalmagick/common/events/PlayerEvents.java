@@ -63,6 +63,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
@@ -89,7 +90,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
@@ -580,12 +581,13 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onUseHoe(UseHoeEvent event) {
-        ItemStack stack = event.getContext().getItemInHand();
+        UseOnContext context = event.getContext();
+        ItemStack stack = context.getItemInHand();
         int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.VERDANT.get(), stack);
         if (enchantLevel > 0) {
             Player player = event.getPlayer();
-            Level level = event.getContext().getLevel();
-            BlockPos pos = event.getContext().getClickedPos();
+            Level level = context.getLevel();
+            BlockPos pos = context.getClickedPos();
             BlockState state = level.getBlockState(pos);
             if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
                 if (mealBlock.isValidBonemealTarget(level, pos, state, level.isClientSide)) {
@@ -598,7 +600,7 @@ public class PlayerEvents {
                         // one damage to be applied automatically.
                         int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1)) - 1;
                         if (damage > 0) {
-                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(event.getContext().getHand()));
+                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
                         // Setting an ALLOW result causes the rest of the hoe functionality to be skipped, and one damage to be
