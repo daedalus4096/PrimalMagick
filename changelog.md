@@ -4,6 +4,8 @@ v2.1.0-beta
     * NOTE: Due to technical changes by Mojang, compatibility with worlds from 1.18.1 and before is not guaranteed
 * Make different types of shrine separately locateable with commands (e.g. /locate primalmagick:earth_shrine)
 * Make sun shrines also spawn in badland type biomes
+* Remove config options to control shrine spacing during worldgen
+    * NOTE: Due to technical changes by Mojang, these values are now located in the shrine's structure_set JSON file
 
 v2.0.7
 ------
