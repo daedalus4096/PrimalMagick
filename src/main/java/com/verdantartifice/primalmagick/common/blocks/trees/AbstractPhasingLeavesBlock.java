@@ -121,7 +121,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
     }
     
     private static int getDistance(BlockState neighbor) {
-        if (BlockTags.LOGS.contains(neighbor.getBlock())) {
+        if (neighbor.is(BlockTags.LOGS)) {
             return 0;
         } else if (neighbor.getBlock() instanceof AbstractPhasingLeavesBlock || neighbor.getBlock() instanceof LeavesBlock) {
             return neighbor.getValue(DISTANCE);

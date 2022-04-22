@@ -37,6 +37,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
@@ -44,27 +45,30 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -86,7 +90,7 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
@@ -225,16 +229,16 @@ public class PlayerEvents {
                 return;
             }
             
-            Biome biome = player.level.getBiome(player.blockPosition());
+            Holder<Biome> biomeHolder = player.level.getBiome(player.blockPosition());
             boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
             
-            if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && Biome.BiomeCategory.NETHER.equals(biome.getBiomeCategory())) {
+            if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
                 player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && Biome.BiomeCategory.THEEND.equals(biome.getBiomeCategory())) {
+            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTagsPM.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
@@ -253,7 +257,7 @@ public class PlayerEvents {
             // If the player is working on the Sea Source research, check if they're in the ocean
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
-                if (Biome.BiomeCategory.OCEAN.equals(biome.getBiomeCategory()) && !knowledge.isResearchKnown(key)) {
+                if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -271,7 +275,7 @@ public class PlayerEvents {
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-                if (Biome.BiomeCategory.DESERT.equals(biome.getBiomeCategory()) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -280,7 +284,7 @@ public class PlayerEvents {
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-                if (Biome.BiomeCategory.FOREST.equals(biome.getBiomeCategory()) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -470,14 +474,12 @@ public class PlayerEvents {
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
-            for (ResourceLocation tag : stack.getItem().getTags()) {
-                if (tag != null) {
-                    int tagHash = ("tag:" + tag.toString()).hashCode();
-                    if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
-                        ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
-                    }
+            stack.getTags().filter(tag -> tag != null).forEach(tag -> {
+                int tagHash = ("tag:" + tag.toString()).hashCode();
+                if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
+                    ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
                 }
-            }
+            });
         }
     }
     
@@ -579,12 +581,13 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onUseHoe(UseHoeEvent event) {
-        ItemStack stack = event.getContext().getItemInHand();
+        UseOnContext context = event.getContext();
+        ItemStack stack = context.getItemInHand();
         int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.VERDANT.get(), stack);
         if (enchantLevel > 0) {
             Player player = event.getPlayer();
-            Level level = event.getContext().getLevel();
-            BlockPos pos = event.getContext().getClickedPos();
+            Level level = context.getLevel();
+            BlockPos pos = context.getClickedPos();
             BlockState state = level.getBlockState(pos);
             if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
                 if (mealBlock.isValidBonemealTarget(level, pos, state, level.isClientSide)) {
@@ -597,7 +600,7 @@ public class PlayerEvents {
                         // one damage to be applied automatically.
                         int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1)) - 1;
                         if (damage > 0) {
-                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(event.getContext().getHand()));
+                            stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
                         // Setting an ALLOW result causes the rest of the hoe functionality to be skipped, and one damage to be

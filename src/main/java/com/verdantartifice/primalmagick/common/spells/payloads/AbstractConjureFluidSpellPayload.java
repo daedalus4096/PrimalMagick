@@ -70,6 +70,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected ItemStack getSimulatedItemStack(@Nonnull Fluid fluid) {
         if (fluid.is(FluidTags.WATER)) {
             return new ItemStack(Items.WATER_BUCKET);
@@ -80,6 +81,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected void placeFluid(Player player, Level world, BlockPos pos, BlockHitResult blockTarget) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();

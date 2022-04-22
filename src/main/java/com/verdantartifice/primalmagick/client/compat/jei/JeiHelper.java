@@ -88,42 +88,42 @@ public class JeiHelper implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         CategoryRecipes categoryRecipes = new CategoryRecipes();
         if (this.arcaneCategory != null) {
-            registration.addRecipes(categoryRecipes.getArcaneRecipes(this.arcaneCategory), ArcaneCraftingRecipeCategory.UID);
+            registration.addRecipes(RecipeTypesPM.ARCANE_CRAFTING, categoryRecipes.getArcaneRecipes(this.arcaneCategory));
         }
         if (this.concoctingCategory != null) {
-            registration.addRecipes(categoryRecipes.getConcoctingRecipes(this.concoctingCategory), ConcoctingRecipeCategory.UID);
+            registration.addRecipes(RecipeTypesPM.CONCOCTING, categoryRecipes.getConcoctingRecipes(this.concoctingCategory));
         }
         if (this.runecarvingCategory != null) {
-            registration.addRecipes(categoryRecipes.getRunecarvingRecipes(this.runecarvingCategory), RunecarvingRecipeCategory.UID);
+            registration.addRecipes(RecipeTypesPM.RUNECARVING, categoryRecipes.getRunecarvingRecipes(this.runecarvingCategory));
         }
         if (this.dissolutionCategory != null) {
-            registration.addRecipes(categoryRecipes.getDissolutionRecipes(this.dissolutionCategory), DissolutionRecipeCategory.UID);
+            registration.addRecipes(RecipeTypesPM.DISSOLUTION, categoryRecipes.getDissolutionRecipes(this.dissolutionCategory));
         }
         if (this.ritualCategory != null) {
-            registration.addRecipes(categoryRecipes.getRitualRecipes(this.ritualCategory), RitualRecipeCategory.UID);
+            registration.addRecipes(RecipeTypesPM.RITUAL, categoryRecipes.getRitualRecipes(this.ritualCategory));
         }
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), ArcaneCraftingRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.CONCOCTER.get()), ConcoctingRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RUNECARVING_TABLE.get()), RunecarvingRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.DISSOLUTION_CHAMBER.get()), DissolutionRecipeCategory.UID);
-        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RITUAL_ALTAR.get()), RitualRecipeCategory.UID);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), RecipeTypesPM.ARCANE_CRAFTING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.CONCOCTER.get()), RecipeTypesPM.CONCOCTING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RUNECARVING_TABLE.get()), RecipeTypesPM.RUNECARVING);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.DISSOLUTION_CHAMBER.get()), RecipeTypesPM.DISSOLUTION);
+        registration.addRecipeCatalyst(new ItemStack(BlocksPM.RITUAL_ALTAR.get()), RecipeTypesPM.RITUAL);
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ArcaneCraftingRecipeCategory.UID, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(ConcocterContainer.class, ConcoctingRecipeCategory.UID, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(DissolutionChamberContainer.class, DissolutionRecipeCategory.UID, 1, 1, 3, 36);
+        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, RecipeTypesPM.ARCANE_CRAFTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(ConcocterContainer.class, RecipeTypesPM.CONCOCTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(DissolutionChamberContainer.class, RecipeTypesPM.DISSOLUTION, 1, 1, 3, 36);
     }
 
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
-        registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, ArcaneCraftingRecipeCategory.UID);
-        registration.addRecipeClickArea(ConcocterScreen.class, 104, 35, 22, 15, ConcoctingRecipeCategory.UID);
-        registration.addRecipeClickArea(DissolutionChamberScreen.class, 79, 35, 22, 15, DissolutionRecipeCategory.UID);
+        registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, RecipeTypesPM.ARCANE_CRAFTING);
+        registration.addRecipeClickArea(ConcocterScreen.class, 104, 35, 22, 15, RecipeTypesPM.CONCOCTING);
+        registration.addRecipeClickArea(DissolutionChamberScreen.class, 79, 35, 22, 15, RecipeTypesPM.DISSOLUTION);
     }
 }

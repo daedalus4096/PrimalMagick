@@ -11,12 +11,12 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -45,31 +45,19 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public void setIngredients(IRitualRecipe recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayoutBuilder builder, IRitualRecipe recipe, IFocusGroup focuses) {
         List<Ingredient> offerings = recipe.getIngredients();
         List<Ingredient> props = recipe.getProps().stream().map(b -> b.asIngredient()).toList();
-        List<Ingredient> allIngredients = new ArrayList<>();
-        allIngredients.addAll(offerings);
-        allIngredients.addAll(props);
-        ingredients.setInputIngredients(allIngredients);
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-    }
-
-    @Override
-    public void setRecipe(IRecipeLayout recipeLayout, IRitualRecipe recipe, IIngredients ingredients) {
-        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         int ingredientCount = recipe.getIngredients().size();
         int propCount = recipe.getProps().size();
         
         for (int index = 0; index < ingredientCount; index++) {
-            guiItemStacks.init(index, true, (index % 6) * 18, 13 + ((index / 6) * 18));
+            builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index % 6) * 18, 14 + ((index / 6) * 18)).addIngredients(offerings.get(index));
         }
         for (int index = 0; index < propCount; index++) {
-            guiItemStacks.init(index + ingredientCount, true, (index % 6) * 18, 62 + ((index / 6) * 18));
+            builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index % 6) * 18, 63 + ((index / 6) * 18)).addIngredients(props.get(index));
         }
-        guiItemStacks.init(ingredientCount + propCount, false, 148, 31);
-        
-        guiItemStacks.set(ingredients);
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 149, 32).addItemStack(recipe.getResultItem());
     }
 
     @Override
@@ -84,7 +72,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public List<Component> getTooltipStrings(IRitualRecipe recipe, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(IRitualRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         SourceList manaCosts = recipe.getManaCosts();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
@@ -96,7 +84,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
             }
             return tooltip;
         } else {
-            return super.getTooltipStrings(recipe, mouseX, mouseY);
+            return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
     }
 }

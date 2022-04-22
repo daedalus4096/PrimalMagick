@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.StringRepresentable;
@@ -38,11 +37,6 @@ public class ShrineStructure extends StructureFeature<ShrineConfig> {
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
-    }
-
-    @Override
-    public String getFeatureName() {
-        return PrimalMagick.MODID + ":shrine";
     }
 
     public static enum Type implements StringRepresentable {

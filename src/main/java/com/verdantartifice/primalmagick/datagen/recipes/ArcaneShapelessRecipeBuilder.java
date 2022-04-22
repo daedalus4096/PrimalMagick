@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -111,7 +111,7 @@ public class ArcaneShapelessRecipeBuilder {
      * @param tag the tag of items to be added
      * @return the modified builder
      */
-    public ArcaneShapelessRecipeBuilder addIngredient(Tag<Item> tag) {
+    public ArcaneShapelessRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(Ingredient.of(tag));
     }
     

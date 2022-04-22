@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -53,7 +53,7 @@ public class DissolutionRecipeBuilder {
         return this.ingredient(Ingredient.of(item));
     }
     
-    public DissolutionRecipeBuilder ingredient(Tag<Item> tag) {
+    public DissolutionRecipeBuilder ingredient(TagKey<Item> tag) {
         return this.ingredient(Ingredient.of(tag));
     }
     

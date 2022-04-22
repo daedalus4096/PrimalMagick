@@ -1,0 +1,10 @@
+{
+  "type": "primalmagick:shrine",
+  "config": {
+    "type": "sea"
+  },
+  "biomes": "#primalmagick:has_structure/sea_shrine",
+  "adapt_noise": true,
+  "spawn_overrides": {
+  }
+}

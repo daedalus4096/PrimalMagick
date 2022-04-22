@@ -28,8 +28,6 @@ import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionType
 import com.verdantartifice.primalmagick.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
-import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredStructureFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.OreFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.TreeFeaturesPM;
@@ -82,8 +80,6 @@ public class ModLifecycleEvents {
         TreeFeaturesPM.setupTreeFeatures();
         TreePlacementsPM.setupTreePlacements();
         VegetationPlacementsPM.setupTreePlacements();
-        StructureFeaturesPM.setupStructures();
-        ConfiguredStructureFeaturesPM.registerConfiguredStructures();
         LootConditionTypesPM.register();
 
         registerCommandArguments(event);

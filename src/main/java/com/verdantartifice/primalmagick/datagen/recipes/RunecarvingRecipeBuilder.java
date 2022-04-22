@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -81,7 +81,7 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder firstIngredient(Tag<Item> tag) {
+    public RunecarvingRecipeBuilder firstIngredient(TagKey<Item> tag) {
         return this.firstIngredient(Ingredient.of(tag));
     }
     
@@ -112,7 +112,7 @@ public class RunecarvingRecipeBuilder {
      * @param tag the tag to be added
      * @return the modified builder
      */
-    public RunecarvingRecipeBuilder secondIngredient(Tag<Item> tag) {
+    public RunecarvingRecipeBuilder secondIngredient(TagKey<Item> tag) {
         return this.secondIngredient(Ingredient.of(tag));
     }
     
