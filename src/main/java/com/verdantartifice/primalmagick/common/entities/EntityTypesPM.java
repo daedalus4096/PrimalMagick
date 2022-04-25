@@ -33,6 +33,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.pixies.Majest
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticSunPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.MajesticVoidPixieEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
+import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
@@ -161,6 +162,11 @@ public class EntityTypesPM {
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new InnerDemonEntity(EntityTypesPM.INNER_DEMON.get(), world))
             .build(PrimalMagick.MODID + ":inner_demon"));
+    public static final RegistryObject<EntityType<FriendlyWitchEntity>> FRIENDLY_WITCH = ENTITY_TYPES.register("friendly_witch", () -> EntityType.Builder.<FriendlyWitchEntity>of(FriendlyWitchEntity::new, MobCategory.CREATURE)
+            .sized(0.6F, 1.95F)
+            .clientTrackingRange(8)
+            .setCustomClientFactory((spawnEntity, world) -> new FriendlyWitchEntity(EntityTypesPM.FRIENDLY_WITCH.get(), world))
+            .build(PrimalMagick.MODID + ":friendly_witch"));
     public static final RegistryObject<EntityType<PrimaliteGolemEntity>> PRIMALITE_GOLEM = ENTITY_TYPES.register("primalite_golem", () -> EntityType.Builder.<PrimaliteGolemEntity>of(PrimaliteGolemEntity::new, MobCategory.MISC)
             .sized(1.4F, 2.7F)
             .clientTrackingRange(10)
