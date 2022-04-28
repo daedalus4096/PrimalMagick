@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.events;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -42,6 +43,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
+import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
@@ -624,14 +626,22 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        Player player = event.getPlayer();
-        ItemStack stack = player.getItemInHand(event.getHand());
+        ItemStack stack = event.getPlayer().getItemInHand(event.getHand());
         Entity target = event.getTarget();
+        Level level = target.getLevel();
         
         // Befriend the targeted witch, if appropriate
-        if (target.getType() == EntityType.WITCH && stack.getItem() instanceof NameTagItem && stack.hasCustomHoverName() && stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
+        if ( !level.isClientSide && 
+             target.getType() == EntityType.WITCH && 
+             stack.getItem() instanceof NameTagItem && 
+             stack.hasCustomHoverName() && 
+             stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
             CompoundTag originalData = target.saveWithoutId(new CompoundTag());
-            EntitySwapper.enqueue(target.getLevel(), new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
+            EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
+            List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
+            for (Player player : nearby) {
+                player.sendMessage(new TranslatableComponent("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
+            }
         }
     }
 }
