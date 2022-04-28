@@ -75,6 +75,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     private static final List<VillagerTrades.ItemListing> TRADE_LISTINGS = Util.make(new ArrayList<>(), list -> {
         list.add(new BasicItemListing(1, new ItemStack(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get()), 12, 5, 0.05F));
         list.add(new BasicItemListing(4, new ItemStack(ItemsPM.BLOOD_NOTES.get()), 12, 5, 0.05F));
+        list.add(new BasicItemListing(8, new ItemStack(ItemsPM.SHEEP_TOME.get()), 12, 5, 0.05F));
     });
 
     protected UUID angerTarget;
