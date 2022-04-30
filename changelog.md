@@ -1,3 +1,7 @@
+v2.1.1
+------
+* Add a secret means to befriend witches, RIP Corspilla
+
 v2.1.0-beta
 -----------
 * Update to MC 1.18.2
