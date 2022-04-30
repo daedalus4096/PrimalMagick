@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -16,7 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -29,28 +27,21 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition of a polymorph spell.  Temporarily replaces the target living, non-player, non-boss
- * entity with a neutral wolf.  The length of the replacement scales with the payload's duration
+ * entity with another entity.  The length of the replacement scales with the payload's duration
  * property.  NBT data of the original entity is preserved for the swap back.  Has no effect on
  * blocks.
  * 
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.misc.EntitySwapper}
  */
-public class PolymorphSpellPayload extends AbstractSpellPayload {
-    public static final String TYPE = "polymorph";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH"));
-
-    public PolymorphSpellPayload() {
+public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload {
+    public AbstractPolymorphSpellPayload() {
         super();
     }
     
-    public PolymorphSpellPayload(int duration) {
+    public AbstractPolymorphSpellPayload(int duration) {
         super();
         this.getProperty("duration").setValue(duration);
-    }
-    
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
     }
     
     @Override
@@ -59,6 +50,8 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
         propMap.put("duration", new SpellProperty("duration", "primalmagick.spell.property.duration", 1, 5));
         return propMap;
     }
+    
+    protected abstract EntityType<?> getNewEntityType();
     
     @Override
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
@@ -69,7 +62,7 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
                 UUID entityId = entityTarget.getEntity().getUUID();
                 CompoundTag originalData = entityTarget.getEntity().saveWithoutId(new CompoundTag());
                 int ticks = 20 * this.getDurationSeconds(spell, spellSource);
-                EntitySwapper.enqueue(world, new EntitySwapper(entityId, EntityType.WOLF, originalData, Optional.of(Integer.valueOf(ticks)), 0));
+                EntitySwapper.enqueue(world, new EntitySwapper(entityId, this.getNewEntityType(), originalData, Optional.of(Integer.valueOf(ticks)), 0));
             }
         }
     }
@@ -83,17 +76,14 @@ public class PolymorphSpellPayload extends AbstractSpellPayload {
     public int getBaseManaCost() {
         return 5 * this.getPropertyValue("duration");
     }
+    
+    protected abstract SoundEvent getCastSoundEvent();
 
     @Override
     public void playSounds(Level world, BlockPos origin) {
-        world.playSound(null, origin, SoundEvents.WOLF_AMBIENT, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
+        world.playSound(null, origin, this.getCastSoundEvent(), SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
 
-    @Override
-    protected String getPayloadType() {
-        return TYPE;
-    }
-    
     protected int getDurationSeconds(SpellPackage spell, ItemStack spellSource) {
         return 6 * this.getModdedPropertyValue("duration", spell, spellSource);
     }
