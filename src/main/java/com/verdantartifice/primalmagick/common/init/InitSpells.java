@@ -25,7 +25,8 @@ import com.verdantartifice.primalmagick.common.spells.payloads.HealingSpellPaylo
 import com.verdantartifice.primalmagick.common.spells.payloads.HolyDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.LightningDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.LunarDamageSpellPayload;
-import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphSheepSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphWolfSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SolarDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.TeleportSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.VoidDamageSpellPayload;
@@ -73,7 +74,8 @@ public class InitSpells {
         SpellManager.registerPayloadType(FlightSpellPayload.TYPE, FlightSpellPayload::new, FlightSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureLightSpellPayload.TYPE, ConjureLightSpellPayload::new, ConjureLightSpellPayload::getResearch);
         SpellManager.registerPayloadType(HealingSpellPayload.TYPE, HealingSpellPayload::new, HealingSpellPayload::getResearch);
-        SpellManager.registerPayloadType(PolymorphSpellPayload.TYPE, PolymorphSpellPayload::new, PolymorphSpellPayload::getResearch);
+        SpellManager.registerPayloadType(PolymorphWolfSpellPayload.TYPE, PolymorphWolfSpellPayload::new, PolymorphWolfSpellPayload::getResearch);
+        SpellManager.registerPayloadType(PolymorphSheepSpellPayload.TYPE, PolymorphSheepSpellPayload::new, PolymorphSheepSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureAnimalSpellPayload.TYPE, ConjureAnimalSpellPayload::new, ConjureAnimalSpellPayload::getResearch);
         SpellManager.registerPayloadType(ConjureLavaSpellPayload.TYPE, ConjureLavaSpellPayload::new, ConjureLavaSpellPayload::getResearch);
         SpellManager.registerPayloadType(DrainSoulSpellPayload.TYPE, DrainSoulSpellPayload::new, DrainSoulSpellPayload::getResearch);

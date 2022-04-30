@@ -1,0 +1,17 @@
+{
+  "key": "SPELL_PAYLOAD_POLYMORPH_SHEEP",
+  "name": "primalmagick.research.spell_payload_polymorph_sheep.title",
+  "discipline": "SORCERY",
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/moon.png"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.spell_payload_polymorph_sheep.text.stage.1"
+    }
+  ],
+  "addenda": []
+}

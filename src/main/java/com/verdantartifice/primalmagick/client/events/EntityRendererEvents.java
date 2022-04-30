@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRender
 import com.verdantartifice.primalmagick.client.renderers.entity.FishingHookRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
+import com.verdantartifice.primalmagick.client.renderers.entity.FriendlyWitchRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.GrandPixieRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelGolemRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.HallowsteelTridentRenderer;
@@ -63,6 +64,7 @@ public class EntityRendererEvents {
         event.registerEntityRenderer(EntityTypesPM.FLYING_CARPET.get(), FlyingCarpetRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.TREEFOLK.get(), TreefolkRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.INNER_DEMON.get(), InnerDemonRenderer::new);
+        event.registerEntityRenderer(EntityTypesPM.FRIENDLY_WITCH.get(), FriendlyWitchRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemRenderer::new);

@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
+import com.verdantartifice.primalmagick.common.items.misc.ResearchGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.misc.SeascribePenItem;
@@ -61,6 +62,7 @@ import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -479,6 +481,7 @@ public class ItemsPM {
     public static final RegistryObject<KnowledgeGainItem> MYSTICAL_RELIC = ITEMS.register("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> MYSTICAL_RELIC_FRAGMENT = ITEMS.register("mystical_relic_fragment", () -> new Item(new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = ITEMS.register("blood_notes", () -> new ForbiddenSourceGainItem(Source.BLOOD, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ResearchGainItem> SHEEP_TOME = ITEMS.register("sheep_tome", () -> new ResearchGainItem(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH_SHEEP"), new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = ITEMS.register("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

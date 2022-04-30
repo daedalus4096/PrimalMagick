@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.golems.Primal
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.IBasicPixie;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.IGrandPixie;
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.IMajesticPixie;
+import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
 
@@ -26,6 +27,7 @@ public class AttributeEvents {
     public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(EntityTypesPM.TREEFOLK.get(), TreefolkEntity.getAttributeModifiers().build());
         event.put(EntityTypesPM.INNER_DEMON.get(), InnerDemonEntity.getAttributeModifiers().build());
+        event.put(EntityTypesPM.FRIENDLY_WITCH.get(), FriendlyWitchEntity.getAttributeModifiers().build());
         event.put(EntityTypesPM.PRIMALITE_GOLEM.get(), PrimaliteGolemEntity.getAttributeModifiers().build());
         event.put(EntityTypesPM.HEXIUM_GOLEM.get(), HexiumGolemEntity.getAttributeModifiers().build());
         event.put(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), HallowsteelGolemEntity.getAttributeModifiers().build());

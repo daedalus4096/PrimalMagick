@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.common.events;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,9 +27,12 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.enchantments.VerdantEnchantment;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
+import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
+import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -38,6 +43,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
+import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
@@ -60,9 +66,12 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -611,6 +620,27 @@ public class PlayerEvents {
                         level.levelEvent(1505, pos, 0);
                     }
                 }
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
+        ItemStack stack = event.getPlayer().getItemInHand(event.getHand());
+        Entity target = event.getTarget();
+        Level level = target.getLevel();
+        
+        // Befriend the targeted witch, if appropriate
+        if ( !level.isClientSide && 
+             target.getType() == EntityType.WITCH && 
+             stack.getItem() instanceof NameTagItem && 
+             stack.hasCustomHoverName() && 
+             stack.getHoverName().getString().equals(FriendlyWitchEntity.HONORED_NAME)) {
+            CompoundTag originalData = target.saveWithoutId(new CompoundTag());
+            EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
+            List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
+            for (Player player : nearby) {
+                player.sendMessage(new TranslatableComponent("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
             }
         }
     }

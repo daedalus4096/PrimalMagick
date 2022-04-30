@@ -688,9 +688,11 @@
     "item.primalmagick.ignyx": "Ignyx",
     "item.primalmagick.dowsing_rod": "Dowsing Rod",
     "item.primalmagick.four_leaf_clover": "Four-Leaf Clover",
+    "item.primalmagick.sheep_tome": "Tome of Polymorph: Sheep",
     
     "entity.primalmagick.treefolk": "Treefolk",
     "entity.primalmagick.inner_demon": "Inner Demon",
+    "entity.primalmagick.friendly_witch": "Witch",
     "entity.primalmagick.primalite_golem": "Primalite Golem",
     "entity.primalmagick.hexium_golem": "Hexium Golem",
     "entity.primalmagick.hallowsteel_golem": "Hallowsteel Golem",
@@ -764,6 +766,7 @@
     "tooltip.primalmagick.theory_notes": "Use to gain an arcane theory",
     "tooltip.primalmagick.mystical_relic": "Use to gain an arcane theory, or keep to trade",
     "tooltip.primalmagick.forbidden_source_item": "Dare you decipher it?",
+    "tooltip.primalmagick.research_item": "Use to gain arcane research",
     "tooltip.primalmagick.research_table.material.consumed": "This material will be consumed",
     "tooltip.primalmagick.research_table.material.has_bonus": "This material will grant bonus research progress",
     
@@ -1225,6 +1228,9 @@
     "primalmagick.research.spell_payload_polymorph.title": "Spell Payload: Polymorph",
     "primalmagick.research.spell_payload_polymorph.text.stage.1": "Now this could be fun...  A little trick of the Moon to change something's shape?  It just might work!",
     "primalmagick.research.spell_payload_polymorph.text.stage.2": "With the blessing of the Moon, I can now transform almost any living (or undead) entity into its favored creature: a wolf.  The transformation is not permanent, but it should give me time to beat a hasty retreat, or just have a good laugh.<BR>While it is technically possible to tame a polymorphed wolf, there isn't much point.  When the target of the spell reverts to its original form, it won't think any more highly of me than it did before being shape changed.",
+    
+    "primalmagick.research.spell_payload_polymorph_sheep.title": "Spell Payload: Polymorph - Sheep",
+    "primalmagick.research.spell_payload_polymorph_sheep.text.stage.1": "With the secrets I learned from that witch, I can now transform almost any living (or undead) creature into a sheep using Moon magic!  The transformation is not permanent, but I should have enough time to shear myself a little wool.<BR>That witch seemed nice.  I'll miss her.",
     
     "primalmagick.research.spell_payload_conjure_animal.title": "Spell Payload: Conjure Animal",
     "primalmagick.research.spell_payload_conjure_animal.text.stage.1": "The creation of new life, now that is power.  Let us see if I can exercise that power with the might of the Blood.",
@@ -1937,6 +1943,8 @@
     "event.primalmagick.dowsing_rod.salt_connection.inactive": "No salt connection found",
     "event.primalmagick.dowsing_rod.symmetry.found": "Symmetric match found!",
     "event.primalmagick.dowsing_rod.symmetry.not_found": "No symmetric match found",
+    "event.primalmagick.friendly_witch.spawn": "%1$s says, \"BAH! Fine! Whaddaya want?\"",
+    "event.primalmagick.research.gain": "You have learned a new arcane secret! Check your Grimoire!",
     
     "primalmagick.dream_journal.title": "Dream Journal",
     "primalmagick.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
@@ -2028,6 +2036,7 @@
     "primalmagick.spell.payload.type.conjure_light": "Conjure Light",
     "primalmagick.spell.payload.type.healing": "Healing",
     "primalmagick.spell.payload.type.polymorph": "Polymorph",
+    "primalmagick.spell.payload.type.polymorph_sheep": "Polymorph: Sheep",
     "primalmagick.spell.payload.type.conjure_animal": "Conjure Animal",
     "primalmagick.spell.payload.type.conjure_lava": "Conjure Lava",
     "primalmagick.spell.payload.type.drain_soul": "Drain Soul",
@@ -2045,6 +2054,7 @@
     "primalmagick.spell.payload.detail_tooltip.flight": "Flight (%1$s sec)",
     "primalmagick.spell.payload.detail_tooltip.healing": "Healing (%1$s health)",
     "primalmagick.spell.payload.detail_tooltip.polymorph": "Polymorph (%1$s sec)",
+    "primalmagick.spell.payload.detail_tooltip.polymorph_sheep": "Polymorph (%1$s sec)",
     "primalmagick.spell.payload.detail_tooltip.drain_soul": "Drain Soul (%1$s sec)",
     "primalmagick.spell.payload.default_name.none": "",
     "primalmagick.spell.payload.default_name.earth_damage": "Earthen",
@@ -2063,6 +2073,7 @@
     "primalmagick.spell.payload.default_name.conjure_light": "Illuminating",
     "primalmagick.spell.payload.default_name.healing": "Healing",
     "primalmagick.spell.payload.default_name.polymorph": "Morphing",
+    "primalmagick.spell.payload.default_name.polymorph_sheep": "Sheeping",
     "primalmagick.spell.payload.default_name.conjure_animal": "Beast",
     "primalmagick.spell.payload.default_name.conjure_lava": "Lava",
     "primalmagick.spell.payload.default_name.drain_soul": "Soul-Draining",

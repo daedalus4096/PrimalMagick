@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoun
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -22,26 +21,25 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 /**
- * Definition of an item that unlocks a primal source when used.
+ * Definition of an item that unlocks arcane research when used.
  * 
  * @author Daedalus4096
  */
-public class ForbiddenSourceGainItem extends Item {
-    protected final Source source;
+public class ResearchGainItem extends Item {
+    protected final SimpleResearchKey key;
     
-    public ForbiddenSourceGainItem(Source source, Item.Properties properties) {
+    public ResearchGainItem(SimpleResearchKey key, Item.Properties properties) {
         super(properties);
-        this.source = source;
+        this.key = key;
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
             if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
-                if (!this.source.getDiscoverKey().isKnownByStrict(player)) {
-                    ResearchManager.completeResearch(player, this.source.getDiscoverKey());
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source." + this.source.getTag() + ".alternate").withStyle(ChatFormatting.GREEN), false);
+                if (!this.key.isKnownByStrict(player)) {
+                    ResearchManager.completeResearch(player, this.key);
+                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.research.gain").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -62,6 +60,6 @@ public class ForbiddenSourceGainItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(new TranslatableComponent("tooltip.primalmagick.forbidden_source_item").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.add(new TranslatableComponent("tooltip.primalmagick.research_item").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }
