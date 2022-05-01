@@ -1,6 +1,7 @@
 v2.1.1
 ------
 * Add a secret means to befriend witches, RIP Corspilla
+* Prevent hellish chain attacks from targeting team mates
 
 v2.1.0-beta
 -----------

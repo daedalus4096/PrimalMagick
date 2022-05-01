@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
@@ -60,9 +61,7 @@ public class CombatEvents {
     @SubscribeEvent
     public static void onAttack(LivingAttackEvent event) {
         // Handle effects caused by damage target
-        if (event.getEntityLiving() instanceof Player) {
-            Player target = (Player)event.getEntityLiving();
-            
+        if (event.getEntityLiving() instanceof Player target) {
             // Players with greater infernal attunement are immune to all fire damage
             if (event.getSource().isFire() && AttunementManager.meetsThreshold(target, Source.INFERNAL, AttunementThreshold.GREATER)) {
                 event.setCanceled(true);
@@ -80,16 +79,14 @@ public class CombatEvents {
         }
         
         // Handle effects caused by damage source
-        if (event.getSource().getEntity() instanceof Player) {
-            Player attacker = (Player)event.getSource().getEntity();
-            
+        if (event.getSource().getEntity() instanceof Player attacker) {
             // If the attacker has lesser infernal attunement, launch a hellish chain at the next closest nearby target
             if (!DamageSourcesPM.HELLISH_CHAIN_TYPE.equals(event.getSource().msgId) && 
                     event.getAmount() > 0.0F && 
                     !attacker.level.isClientSide && 
                     AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
                 List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntityLiving().position(), 
-                        Arrays.asList(event.getEntityLiving(), attacker), LivingEntity.class, 4.0D);
+                        Arrays.asList(event.getEntityLiving(), attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);
                     target.hurt(DamageSourcesPM.causeHellishChainDamage(attacker), event.getAmount() / 2.0F);

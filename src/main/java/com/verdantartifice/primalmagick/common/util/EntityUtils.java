@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.util;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -15,6 +16,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -106,6 +108,22 @@ public class EntityUtils {
      * optionally excluding one or more entities.
      * 
      * @param world the world to be searched
+     * @param center the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @param selector the filter predicate to apply to the returned list of entities
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<T> entityClass, double range, Predicate<Entity> selector) {
+        return getEntitiesInRange(world, center.x(), center.y(), center.z(), exclude, entityClass, range, selector);
+    }
+
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.
+     * 
+     * @param world the world to be searched
      * @param x the x-coordinate of the center point of the area to search
      * @param y the y-coordinate of the center point of the area to search
      * @param z the z-coordinate of the center point of the area to search
@@ -115,7 +133,25 @@ public class EntityUtils {
      * @return a list of all such entities in range
      */
     public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<T> entityClass, double range) {
-        List<T> retVal = world.getEntitiesOfClass(entityClass, new AABB(x, y, z, x, y, z).inflate(range, range, range));
+        return getEntitiesInRange(world, x, y, z, exclude, entityClass, range, EntitySelector.NO_SPECTATORS);
+    }
+    
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.
+     * 
+     * @param world the world to be searched
+     * @param x the x-coordinate of the center point of the area to search
+     * @param y the y-coordinate of the center point of the area to search
+     * @param z the z-coordinate of the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @param selector the filter predicate to apply to the returned list of entities
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRange(@Nonnull Level world, double x, double y, double z, @Nullable List<Entity> exclude, @Nonnull Class<T> entityClass, double range, Predicate<Entity> selector) {
+        List<T> retVal = world.getEntitiesOfClass(entityClass, new AABB(x, y, z, x, y, z).inflate(range, range, range), selector);
         if (exclude != null) {
             List<Integer> excludeIds = exclude.stream().map(e -> Integer.valueOf(e.getId())).collect(Collectors.toList());
             retVal = retVal.stream().filter(e -> !excludeIds.contains(Integer.valueOf(e.getId()))).collect(Collectors.toList());
@@ -152,7 +188,23 @@ public class EntityUtils {
      * @return a list of all such entities in range
      */
     public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<T> entityClass, double range) {
-        List<? extends T> entities = getEntitiesInRange(world, center, exclude, entityClass, range);
+        return getEntitiesInRangeSorted(world, center, exclude, entityClass, range, EntitySelector.NO_SPECTATORS);
+    }
+    
+    /**
+     * Get a list of all entities of the given type within a given distance of the given center point,
+     * optionally excluding one or more entities.  The returned list is sorted by distance to the given
+     * center point in ascending order.
+     * 
+     * @param world the world to be searched
+     * @param center the center point of the area to search
+     * @param exclude entities to exclude from the search results
+     * @param entityClass the type of entity to search for
+     * @param range the radius in which to search
+     * @return a list of all such entities in range
+     */
+    public static <T extends Entity> List<T> getEntitiesInRangeSorted(@Nonnull Level world, @Nonnull Vec3 center, @Nullable List<Entity> exclude, @Nonnull Class<T> entityClass, double range, Predicate<Entity> selector) {
+        List<? extends T> entities = getEntitiesInRange(world, center, exclude, entityClass, range, selector);
         return entities.stream().sorted(new EntityDistanceComparator(center)).collect(Collectors.toList());
     }
     
