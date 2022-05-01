@@ -73,8 +73,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     public void execute(HitResult target, Vec3 burstPoint, SpellPackage spell, Level world, LivingEntity caster, ItemStack spellSource, Entity projectileEntity) {
         if (target != null && target.getType() == HitResult.Type.ENTITY) {
             EntityHitResult entityTarget = (EntityHitResult)target;
-            if (entityTarget.getEntity() instanceof LivingEntity) {
-                LivingEntity entity = (LivingEntity)entityTarget.getEntity();
+            if (entityTarget.getEntity() instanceof LivingEntity entity) {
                 if (entity.isInvertedHealAndHarm()) {
                     // Undead entities get dealt damage
                     entity.hurt(this.getDamageSource(caster, spell, projectileEntity), 1.5F * this.getBaseAmount(spell, spellSource));
@@ -85,7 +84,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
                     float healAmount = (float)this.getBaseAmount(spell, spellSource);
                     float overhealing = (curHealth + healAmount) - maxHealth;
                     entity.heal(healAmount);
-                    if (overhealing > 0F) {
+                    if (overhealing > Math.max(0F, entity.getAbsorptionAmount())) {
                         // Grant a level of absorption for each four points of overhealing done
                         int level = (int)Math.floor(overhealing / 4.0F);
                         if (level > 0) {
