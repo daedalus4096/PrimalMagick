@@ -84,7 +84,7 @@ public class HealingSpellPayload extends AbstractSpellPayload {
                     float healAmount = (float)this.getBaseAmount(spell, spellSource);
                     float overhealing = (curHealth + healAmount) - maxHealth;
                     entity.heal(healAmount);
-                    if (overhealing > Math.max(0F, entity.getAbsorptionAmount())) {
+                    if (overhealing > 0 && overhealing >= entity.getAbsorptionAmount()) {
                         // Grant a level of absorption for each four points of overhealing done
                         int level = (int)Math.floor(overhealing / 4.0F);
                         if (level > 0) {
