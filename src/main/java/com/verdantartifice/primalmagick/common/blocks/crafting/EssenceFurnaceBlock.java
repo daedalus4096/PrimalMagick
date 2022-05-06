@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import java.util.Random;
 
+import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
 
@@ -63,7 +64,7 @@ public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
             double d6 = ((rand.nextDouble() * 3.0D) + 3.0D) / 16.0D;
             double d7 = axis == Direction.Axis.Z ? (double)direction.getStepZ() * d3 : d4;
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
-            worldIn.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
+            worldIn.addParticle(ParticleTypesPM.INFERNAL_FLAME.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
             
             // Add smoke at calcinator smokestack
             double d8 = rand.nextDouble() * 0.2D - 0.1D;
