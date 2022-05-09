@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -40,7 +39,7 @@ public class WindGeneratorTileEntity extends TilePM {
                 return !e.isSpectator() && (e instanceof ItemEntity || e instanceof LivingEntity);
             });
             for (Entity affectedEntity : affected) {
-                affectedEntity.move(MoverType.SELF, windStep);
+                affectedEntity.setDeltaMovement(affectedEntity.getDeltaMovement().add(windStep));
             }
         }
     }
