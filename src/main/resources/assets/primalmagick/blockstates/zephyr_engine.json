@@ -6,11 +6,11 @@
         "facing=south,powered=false": { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 180 },
         "facing=west,powered=false":  { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 270 },
         "facing=east,powered=false":  { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 90 },
-		"facing=up,powered=true": { "model": "primalmagick:block/zephyr_engine_active" },
-		"facing=down,powered=true": { "model": "primalmagick:block/zephyr_engine_active", "x": 180 },
-        "facing=north,powered=true": { "model": "primalmagick:block/zephyr_engine_active", "x": 90 },
-        "facing=south,powered=true": { "model": "primalmagick:block/zephyr_engine_active", "x": 90, "y": 180 },
-        "facing=west,powered=true":  { "model": "primalmagick:block/zephyr_engine_active", "x": 90, "y": 270 },
-        "facing=east,powered=true":  { "model": "primalmagick:block/zephyr_engine_active", "x": 90, "y": 90 }
+		"facing=up,powered=true": { "model": "primalmagick:block/zephyr_engine" },
+		"facing=down,powered=true": { "model": "primalmagick:block/zephyr_engine", "x": 180 },
+        "facing=north,powered=true": { "model": "primalmagick:block/zephyr_engine", "x": 90 },
+        "facing=south,powered=true": { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 180 },
+        "facing=west,powered=true":  { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 270 },
+        "facing=east,powered=true":  { "model": "primalmagick:block/zephyr_engine", "x": 90, "y": 90 }
     }
 }
