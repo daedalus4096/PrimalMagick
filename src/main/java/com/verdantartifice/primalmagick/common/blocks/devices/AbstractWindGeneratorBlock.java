@@ -129,4 +129,6 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         }
         return retVal;
     }
+
+    public abstract int getCoreColor();
 }

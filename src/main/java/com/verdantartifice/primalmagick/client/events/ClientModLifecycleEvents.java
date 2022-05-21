@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.RunescribingAltarT
 import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
+import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -116,6 +117,7 @@ public class ClientModLifecycleEvents {
         BlockEntityRenderers.register(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), SanguineCrucibleTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.AUTO_CHARGER.get(), AutoChargerTER::new);
         BlockEntityRenderers.register(TileEntityTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarTER::new);
+        BlockEntityRenderers.register(TileEntityTypesPM.WIND_GENERATOR.get(), WindGeneratorTER::new);
     }
     
     private static void registerItemProperties(FMLClientSetupEvent event) {
