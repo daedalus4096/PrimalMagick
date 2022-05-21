@@ -56,4 +56,5 @@ public class ParticleTypesPM {
     public static final RegistryObject<SimpleParticleType> SPELLCRAFTING_RUNE_T = PARTICLE_TYPES.register("spellcrafting_rune_t", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> SPELLCRAFTING_RUNE_D = PARTICLE_TYPES.register("spellcrafting_rune_d", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> INFERNAL_FLAME = PARTICLE_TYPES.register("infernal_flame", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> AIR_CURRENT = PARTICLE_TYPES.register("air_current", () -> new SimpleParticleType(false));
 }

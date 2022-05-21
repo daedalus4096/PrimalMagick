@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import java.util.Random;
 
-import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
+import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
 
@@ -113,7 +113,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
             Direction windDir = this.getWindDirection(state);
             Vec3i velocity = windDir.getNormal().multiply(power);
             Vec3 start = this.getParticleStartPoint(state, level, pos, random);
-            FxDispatcher.INSTANCE.manaArrowTrail(start.x, start.y, start.z, velocity.getX() / lifetime, velocity.getY() / lifetime, velocity.getZ() / lifetime, this.getParticleColor());
+            level.addParticle(ParticleTypesPM.AIR_CURRENT.get(), start.x, start.y, start.z, velocity.getX() / lifetime, velocity.getY() / lifetime, velocity.getZ() / lifetime);
         }
     }
     
@@ -129,6 +129,4 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         }
         return retVal;
     }
-
-    protected abstract int getParticleColor();
 }
