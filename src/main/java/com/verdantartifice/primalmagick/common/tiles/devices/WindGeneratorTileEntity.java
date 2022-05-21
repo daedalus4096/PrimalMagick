@@ -5,6 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.blocks.devices.AbstractWindGeneratorBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -36,7 +37,7 @@ public class WindGeneratorTileEntity extends TilePM {
             Direction facing = state.getValue(AbstractWindGeneratorBlock.FACING);
             AABB zone = new AABB(pos).expandTowards(new Vec3(facing.step()).scale(power));
             List<Entity> affected = level.getEntitiesOfClass(Entity.class, zone, e -> {
-                return !e.isSpectator() && (e instanceof ItemEntity || e instanceof LivingEntity);
+                return !e.isSpectator() && (e instanceof ItemEntity || e instanceof LivingEntity) && RayTraceUtils.hasLineOfSight(e, pos);
             });
             for (Entity affectedEntity : affected) {
                 affectedEntity.setDeltaMovement(affectedEntity.getDeltaMovement().add(windStep));

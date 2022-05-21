@@ -136,6 +136,32 @@ public class RayTraceUtils {
     }
     
     /**
+     * Determine whether the source entity has an unobstructed line of sight from its eye to the target block.
+     * 
+     * @param source the source entity
+     * @param target the position of the target block
+     * @return true if the source entity has an unobstructed line of sight to the target block, false otherwise
+     */
+    public static boolean hasLineOfSight(@Nullable Entity source, @Nullable BlockPos target) {
+        if (source == null || target == null) {
+            return false;
+        }
+        
+        Vec3 sourceVec = source.getEyePosition();
+        Vec3 targetVec = Vec3.atCenterOf(target);
+        ClipContext context = new ClipContext(sourceVec, targetVec, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, source);
+        BlockHitResult result = source.getLevel().clip(context);
+        
+        if (result == null || result.getType() == HitResult.Type.MISS) {
+            return true;
+        } else if (result.getType() == HitResult.Type.BLOCK) {
+            return target.equals(result.getBlockPos());
+        } else {
+            return false;
+        }
+    }
+    
+    /**
      * Determine whether the source block has an unobstructed line of sight to the target block.
      * 
      * @param world the world in which to test
@@ -144,6 +170,7 @@ public class RayTraceUtils {
      * @return true if the source block has an unobstructed line of sight to the target block, false otherwise
      */
     public static boolean hasLineOfSight(@Nullable Level world, @Nullable BlockPos source, @Nullable BlockPos target) {
+        // TODO Refactor this to use the standard ClipContext now that the entity seems optional
         if (world == null || source == null || target == null) {
             return false;
         }
