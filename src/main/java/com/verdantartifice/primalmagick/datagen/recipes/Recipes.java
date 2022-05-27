@@ -537,6 +537,18 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), 9)
             .unlockedBy("has_fragment", has(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get()))
             .save(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ZEPHYR_ENGINE.get())
+            .patternLine("IPI")
+            .patternLine("WSW")
+            .patternLine("WRW")
+            .key('I', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .key('W', Items.WARPED_PLANKS)
+            .key('S', ItemsPM.ESSENCE_SHARD_SKY.get())
+            .key('R', Tags.Items.DUSTS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ZEPHYR_ENGINE")))
+            .manaCost(new SourceList().add(Source.SKY, 40))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

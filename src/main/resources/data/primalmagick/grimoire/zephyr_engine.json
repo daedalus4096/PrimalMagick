@@ -1,0 +1,35 @@
+{
+  "key": "ZEPHYR_ENGINE",
+  "name": "primalmagick.research.zephyr_engine.title",
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:zephyr_engine"
+  },
+  "parents": [
+    "EXPERT_MAGITECH",
+    "PRIMALITE",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.zephyr_engine.text.stage.1",
+      "required_item": [
+        "minecraft:piston"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ]
+    },
+    {
+      "text": "primalmagick.research.zephyr_engine.text.stage.2",
+      "attunements": {
+        "sky": 2
+      },
+      "recipes": [
+        "primalmagick:zephyr_engine"
+      ]
+    }
+  ],
+  "addenda": []
+}

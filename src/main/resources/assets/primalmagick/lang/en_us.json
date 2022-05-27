@@ -210,6 +210,7 @@
     "block.primalmagick.salt_block": "Block of Refined Salt",
     "block.primalmagick.essence_transmuter": "Essence Transmuter",
     "block.primalmagick.dissolution_chamber": "Dissolution Chamber",
+    "block.primalmagick.zephyr_engine": "Zephyr Engine",
     
     "item.primalmagick.grimoire": "Grimoire",
     "item.primalmagick.arcanometer": "Arcanometer",
@@ -1787,6 +1788,10 @@
     "primalmagick.research.dissolution_chamber.title": "Dissolution Chamber",
     "primalmagick.research.dissolution_chamber.text.stage.1": "Even using an Earthshatter Hammer, my works present an untenable demand upon my mineral stocks.  There must be a way to stretch my stores even further.<BR>I have more important things to do than dig in the dirt like some peasant!",
     "primalmagick.research.dissolution_chamber.text.stage.2": "Brilliant!  With the careful application of Earth mana, I can now precisely dissolve select types of mineral.  The end result of this process is a larger amount of pure metals to be smelted into ingots.<BR>I can also utilize this process to break down stone into ever-finer particles with minimal loss of mass.  Very useful for when I need to create large quantities of sand for glazing.  There may even be other things that I can dissolve this way.",
+    
+    "primalmagick.research.zephyr_engine.title": "Zephyr Engine",
+    "primalmagick.research.zephyr_engine.text.stage.1": "Larger machines are often focused on moving things around, but pistons are so short-ranged and water canals are messy.  Perhaps I can design a machine to generate a strong wind to accomplish the same thing, but better?",
+    "primalmagick.research.zephyr_engine.text.stage.2": "Action at a distance doesn't have to be magickal, though the magick does make it a lot cooler.  This new Zephyr Engine will push any items or creatures in front of it away.<BR>The engine's output scales with the strength of the redstone signal it receives as input.  Stronger signals will result in more powerful wind that reaches farther away and pushes things faster.",
     
     "primalmagick.research.raw_marble.title": "Marble",
     "primalmagick.research.raw_marble.text.stage.1": "Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magick, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.",

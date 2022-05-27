@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
@@ -52,6 +53,7 @@ public class ClientRegistrationEvents {
         mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
         mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
         mc.particleEngine.register(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
     }
     
     /**
