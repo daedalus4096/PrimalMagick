@@ -5,7 +5,6 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.blocks.devices.AbstractWindGeneratorBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
-import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,12 +31,25 @@ public class WindGeneratorTileEntity extends TilePM {
         // Move entities in the direction of this device's generated wind
         if (state.getBlock() instanceof AbstractWindGeneratorBlock block && state.getValue(AbstractWindGeneratorBlock.POWERED)) {
             int power = level.getBestNeighborSignal(pos);
+            Direction facing = state.getValue(AbstractWindGeneratorBlock.FACING);
+            if (power < 1) {
+                return;
+            }
+            
+            int lineOfSightPower = 0;
+            while (lineOfSightPower < power) {
+                if (!level.isEmptyBlock(pos.relative(facing, lineOfSightPower + 1))) {
+                    break;
+                } else {
+                    lineOfSightPower++;
+                }
+            }
+            
             Direction windDir = block.getWindDirection(state);
             Vec3 windStep = new Vec3(windDir.step()).scale(0.1D * (power / 15D));
-            Direction facing = state.getValue(AbstractWindGeneratorBlock.FACING);
-            AABB zone = new AABB(pos).expandTowards(new Vec3(facing.step()).scale(power));
+            AABB zone = new AABB(pos).expandTowards(new Vec3(facing.step()).scale(lineOfSightPower));
             List<Entity> affected = level.getEntitiesOfClass(Entity.class, zone, e -> {
-                return !e.isSpectator() && (e instanceof ItemEntity || e instanceof LivingEntity) && RayTraceUtils.hasLineOfSight(e, pos);
+                return !e.isSpectator() && (e instanceof ItemEntity || e instanceof LivingEntity);
             });
             for (Entity affectedEntity : affected) {
                 affectedEntity.setDeltaMovement(affectedEntity.getDeltaMovement().add(windStep));
