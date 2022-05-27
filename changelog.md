@@ -1,3 +1,7 @@
+v2.1.2
+------
+* Add Zephyr Engine, to generate wind tunnels
+
 v2.1.1
 ------
 * Add a secret means to befriend witches, RIP Corspilla
