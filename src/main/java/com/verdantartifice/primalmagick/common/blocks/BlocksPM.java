@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBloc
 import com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.VoidTurbineBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ZephyrEngineBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.HallowsteelGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.HexiumGolemControllerBlock;
@@ -324,6 +325,7 @@ public class BlocksPM {
     public static final RegistryObject<EssenceTransmuterBlock> ESSENCE_TRANSMUTER = BLOCKS.register("essence_transmuter", EssenceTransmuterBlock::new);
     public static final RegistryObject<DissolutionChamberBlock> DISSOLUTION_CHAMBER = BLOCKS.register("dissolution_chamber", DissolutionChamberBlock::new);
     public static final RegistryObject<ZephyrEngineBlock> ZEPHYR_ENGINE = BLOCKS.register("zephyr_engine", ZephyrEngineBlock::new);
+    public static final RegistryObject<VoidTurbineBlock> VOID_TURBINE = BLOCKS.register("void_turbine", VoidTurbineBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

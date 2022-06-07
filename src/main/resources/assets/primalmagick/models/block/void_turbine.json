@@ -1,11 +1,11 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "block/void_turbine_side",
-		"1": "block/void_turbine_bottom",
-		"2": "block/void_turbine_top",
-		"3": "block/void_turbine_inner",
-		"particle": "block/void_turbine_side"
+		"0": "primalmagick:block/void_turbine_side",
+		"1": "primalmagick:block/void_turbine_bottom",
+		"2": "primalmagick:block/void_turbine_top",
+		"3": "primalmagick:block/void_turbine_inner",
+		"particle": "primalmagick:block/void_turbine_side"
 	},
 	"elements": [
 		{
