@@ -5,6 +5,7 @@ v2.1.2
 * Fix bug allowing players to get extra companions through clever use of game mechanics
 * Greatly increase spawn rate of quartz ore in new Overworld chunks
 * Add Dissolution Chamber recipe for breaking down quartz blocks
+* Decrease required Magitech crafts for tier progression
 
 v2.1.1
 ------
