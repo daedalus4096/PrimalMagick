@@ -54,6 +54,7 @@ public class ClientRegistrationEvents {
         mc.particleEngine.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
         mc.particleEngine.register(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
         mc.particleEngine.register(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
+        mc.particleEngine.register(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
     }
     
     /**
