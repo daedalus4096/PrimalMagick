@@ -1291,6 +1291,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemStack(Items.PISTON).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 2).recipe(ItemsPM.ZEPHYR_ENGINE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("VOID_TURBINE", discipline).icon(ItemsPM.VOID_TURBINE.get()).parent("MASTER_MAGITECH").parent("HEXIUM").parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).requiredItemStack(Items.STICKY_PISTON).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).recipe(ItemsPM.VOID_TURBINE.get()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {

@@ -1,0 +1,35 @@
+{
+  "key": "VOID_TURBINE",
+  "name": "primalmagick.research.void_turbine.title",
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:void_turbine"
+  },
+  "parents": [
+    "MASTER_MAGITECH",
+    "HEXIUM",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.void_turbine.text.stage.1",
+      "required_item": [
+        "minecraft:sticky_piston"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ]
+    },
+    {
+      "text": "primalmagick.research.void_turbine.text.stage.2",
+      "attunements": {
+        "void": 3
+      },
+      "recipes": [
+        "primalmagick:void_turbine"
+      ]
+    }
+  ],
+  "addenda": []
+}
