@@ -203,4 +203,18 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
         }
         super.die(cause);
     }
+
+    @Override
+    public void tick() {
+        super.tick();
+        
+        // Kill this companion if it's no longer present on its owner's companion list
+        if (!this.level.isClientSide && this.tickCount % 100 == 0) {
+            Player owner = this.getCompanionOwner();
+            if (owner != null && !CompanionManager.isCurrentCompanion(owner, this)) {
+                this.setCompanionOwnerId(null);
+                this.kill();
+            }
+        }
+    }
 }

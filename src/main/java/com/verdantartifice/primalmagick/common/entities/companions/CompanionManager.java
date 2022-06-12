@@ -79,4 +79,13 @@ public class CompanionManager {
             }
         }
     }
+    
+    public static boolean isCurrentCompanion(@Nullable Player player, @Nullable AbstractCompanionEntity companion) {
+        if (player == null || companion == null) {
+            return false;
+        } else {
+            IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
+            return companions != null && companions.contains(companion.getCompanionType(), companion.getUUID());
+        }
+    }
 }

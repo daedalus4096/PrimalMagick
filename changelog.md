@@ -2,6 +2,7 @@ v2.1.2
 ------
 * Add Zephyr Engine and Void Turbine, to generate wind tunnels
 * Fix issue with wand transform mod compatibility
+* Fix bug allowing players to get extra companions through clever use of game mechanics
 
 v2.1.1
 ------
