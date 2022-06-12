@@ -244,6 +244,7 @@ public class ClientModLifecycleEvents {
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.HONEY_EXTRACTOR.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.RUNECARVING_TABLE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.ZEPHYR_ENGINE.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlocksPM.VOID_TURBINE.get(), RenderType.cutout());
 
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.SKYGLASS.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_BLACK.get(), RenderType.translucent());

@@ -1,6 +1,6 @@
 v2.1.2
 ------
-* Add Zephyr Engine, to generate wind tunnels
+* Add Zephyr Engine and Void Turbine, to generate wind tunnels
 * Fix issue with wand transform mod compatibility
 
 v2.1.1

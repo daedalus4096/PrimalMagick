@@ -549,6 +549,18 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ZEPHYR_ENGINE")))
             .manaCost(new SourceList().add(Source.SKY, 40))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.VOID_TURBINE.get())
+            .patternLine("IPI")
+            .patternLine("CSC")
+            .patternLine("CRC")
+            .key('I', ItemTagsPM.INGOTS_HEXIUM)
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .key('C', Items.CRIMSON_PLANKS)
+            .key('S', ItemsPM.ESSENCE_SHARD_VOID.get())
+            .key('R', Tags.Items.DUSTS_REDSTONE)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("VOID_TURBINE")))
+            .manaCost(new SourceList().add(Source.VOID, 40))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
