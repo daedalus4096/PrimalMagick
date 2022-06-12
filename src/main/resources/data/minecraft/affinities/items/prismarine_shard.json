@@ -3,6 +3,6 @@
   "target": "minecraft:prismarine_shard",
   "set": {
     "earth": 2,
-    "sea": 5
+    "sea": 10
   }
 }

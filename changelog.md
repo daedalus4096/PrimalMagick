@@ -8,6 +8,7 @@ v2.1.2
 * Decrease required Magitech crafts for tier progression
 * Add theorycraft speed config to modify Research Table theory yields
 * Increase drop chance of Four-Leaf Clovers
+* Increase Sea and Sky affinities of several items
 
 v2.1.1
 ------

@@ -3,6 +3,6 @@
   "target": "minecraft:dead_brain_coral_block",
   "base": "minecraft:dead_brain_coral",
   "add": {
-    "sea": 5
+    "sea": 15
   }
 }

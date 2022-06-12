@@ -2,7 +2,7 @@
   "type": "item",
   "target": "minecraft:chicken",
   "set": {
-    "sky": 2,
+    "sky": 5,
     "blood": 5
   }
 }

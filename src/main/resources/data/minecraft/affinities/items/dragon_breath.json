@@ -2,7 +2,7 @@
   "type": "item",
   "target": "minecraft:dragon_breath",
   "set": {
-    "sky": 10,
-    "void": 10
+    "sky": 20,
+    "void": 20
   }
 }

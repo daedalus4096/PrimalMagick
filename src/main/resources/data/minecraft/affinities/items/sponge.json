@@ -2,7 +2,7 @@
   "type": "item",
   "target": "minecraft:sponge",
   "set": {
-    "sea": 10,
+    "sea": 20,
     "void": 10
   }
 }

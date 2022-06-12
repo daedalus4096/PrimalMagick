@@ -3,6 +3,6 @@
   "target": "minecraft:brain_coral_block",
   "base": "minecraft:dead_brain_coral_block",
   "add": {
-    "sun": 5
+    "sun": 15
   }
 }

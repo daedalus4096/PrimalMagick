@@ -2,7 +2,7 @@
   "type": "item",
   "target": "minecraft:ghast_tear",
   "set": {
-    "sky": 5,
+    "sky": 20,
     "blood": 5,
     "infernal": 10
   }

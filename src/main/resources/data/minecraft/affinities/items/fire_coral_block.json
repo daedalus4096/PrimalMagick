@@ -3,6 +3,6 @@
   "target": "minecraft:fire_coral_block",
   "base": "minecraft:dead_fire_coral_block",
   "add": {
-    "sun": 5
+    "sun": 15
   }
 }
