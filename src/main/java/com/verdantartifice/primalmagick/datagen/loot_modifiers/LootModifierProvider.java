@@ -101,12 +101,12 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
         this.add("four_leaf_clover_short_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS).build(),
-                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.002F, 0.002F).build()
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.004F, 0.003F).build()
                 }));
         this.add("four_leaf_clover_tall_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build(),
-                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.002F, 0.002F).build()
+                        LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.004F, 0.003F).build()
                 }));
     }
 }

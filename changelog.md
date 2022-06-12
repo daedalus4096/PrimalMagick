@@ -7,6 +7,7 @@ v2.1.2
 * Add Dissolution Chamber recipe for breaking down quartz blocks
 * Decrease required Magitech crafts for tier progression
 * Add theorycraft speed config to modify Research Table theory yields
+* Increase drop chance of Four-Leaf Clovers
 
 v2.1.1
 ------
