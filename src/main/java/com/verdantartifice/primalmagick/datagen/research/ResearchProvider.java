@@ -1285,7 +1285,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "copper_grit_from_dissolving_raw_metal")).recipe(new ResourceLocation(PrimalMagick.MODID, "cobblestone_from_dissolving_stone"))
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "gravel_from_dissolving_cobblestone")).recipe(new ResourceLocation(PrimalMagick.MODID, "sand_from_dissolving_gravel"))
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "bone_meal_from_dissolving_bone")).recipe(new ResourceLocation(PrimalMagick.MODID, "blaze_powder_from_dissolving_blaze_rod"))
-                    .recipe(new ResourceLocation(PrimalMagick.MODID, "string_from_dissolving_wool")).build())
+                    .recipe(new ResourceLocation(PrimalMagick.MODID, "string_from_dissolving_wool")).recipe(new ResourceLocation(PrimalMagick.MODID, "quartz_from_dissolving_quartz_block")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ZEPHYR_ENGINE", discipline).icon(ItemsPM.ZEPHYR_ENGINE.get()).parent("EXPERT_MAGITECH").parent("PRIMALITE").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemStack(Items.PISTON).build())

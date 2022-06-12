@@ -4,6 +4,7 @@ v2.1.2
 * Fix issue with wand transform mod compatibility
 * Fix bug allowing players to get extra companions through clever use of game mechanics
 * Greatly increase spawn rate of quartz ore in new Overworld chunks
+* Add Dissolution Chamber recipe for breaking down quartz blocks
 
 v2.1.1
 ------

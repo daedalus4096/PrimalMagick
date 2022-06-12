@@ -6042,5 +6042,9 @@ public class Recipes extends RecipeProvider {
             .ingredient(ItemTags.WOOL)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "string_from_dissolving_wool"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.QUARTZ, 4)
+            .ingredient(Items.QUARTZ_BLOCK)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "quartz_from_dissolving_quartz_block"));
     }
 }
