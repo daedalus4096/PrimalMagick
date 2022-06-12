@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftSpeed;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -30,6 +31,7 @@ public class Config {
     public static ForgeConfigSpec.BooleanValue GENERATE_MARBLE;
     public static ForgeConfigSpec.BooleanValue GENERATE_ROCK_SALT;
     public static ForgeConfigSpec.BooleanValue GENERATE_QUARTZ;
+    public static ForgeConfigSpec.EnumValue<TheorycraftSpeed> THEORYCRAFT_SPEED;
     
     static {
         buildCommonConfigSpec();
@@ -48,6 +50,7 @@ public class Config {
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_UNSCANNED_AFFINITIES = builder.comment("Show affinities of blocks and items even without scanning them").define("showUnscannedAffinities", false);
+        THEORYCRAFT_SPEED = builder.comment("Progress rate modifier for Research Table theory yields").defineEnum("theorycraftSpeed", TheorycraftSpeed.NORMAL);
         builder.pop();
         
         COMMON_CONFIG_SPEC = builder.build();

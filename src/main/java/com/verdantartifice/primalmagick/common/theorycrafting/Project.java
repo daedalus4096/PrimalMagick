@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
+import com.verdantartifice.primalmagick.common.config.Config;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -141,7 +142,14 @@ public class Project implements INBTSerializable<CompoundTag> {
     }
     
     public int getTheoryPointReward() {
-        return (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.getMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getBonusReward()).sum()));
+        int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.getMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getBonusReward()).sum()));
+        TheorycraftSpeed modifier = Config.THEORYCRAFT_SPEED.get();
+        if (modifier == TheorycraftSpeed.SLOW) {
+            value /= 2;
+        } else if (modifier == TheorycraftSpeed.FAST) {
+            value *= 2;
+        }
+        return value;
     }
     
     @Nullable

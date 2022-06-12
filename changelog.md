@@ -6,6 +6,7 @@ v2.1.2
 * Greatly increase spawn rate of quartz ore in new Overworld chunks
 * Add Dissolution Chamber recipe for breaking down quartz blocks
 * Decrease required Magitech crafts for tier progression
+* Add theorycraft speed config to modify Research Table theory yields
 
 v2.1.1
 ------
