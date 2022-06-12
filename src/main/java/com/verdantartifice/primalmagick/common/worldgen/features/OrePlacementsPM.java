@@ -27,13 +27,15 @@ public class OrePlacementsPM {
     public static Holder<PlacedFeature> ORE_ROCK_SALT_UPPER;
     public static Holder<PlacedFeature> ORE_ROCK_SALT_LOWER;
     public static Holder<PlacedFeature> ORE_QUARTZ;
+    public static Holder<PlacedFeature> ORE_QUARTZ_LOWER;
     
     public static void setupOrePlacements() {
         ORE_MARBLE_RAW_UPPER = registerOrePlacement("ore_marble_raw_upper", OreFeaturesPM.ORE_MARBLE_RAW, rareOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))));
         ORE_MARBLE_RAW_LOWER = registerOrePlacement("ore_marble_raw_lower", OreFeaturesPM.ORE_MARBLE_RAW, commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))));
         ORE_ROCK_SALT_UPPER = registerOrePlacement("ore_rock_salt_upper", OreFeaturesPM.ORE_ROCK_SALT, rareOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))));
         ORE_ROCK_SALT_LOWER = registerOrePlacement("ore_rock_salt_lower", OreFeaturesPM.ORE_ROCK_SALT, commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))));
-        ORE_QUARTZ = registerOrePlacement("ore_quartz", OreFeaturesPM.ORE_QUARTZ, rareOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(128))));
+        ORE_QUARTZ = registerOrePlacement("ore_quartz", OreFeaturesPM.ORE_QUARTZ, commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128))));
+        ORE_QUARTZ_LOWER = registerOrePlacement("ore_quartz_lower", OreFeaturesPM.ORE_QUARTZ, commonOrePlacement(20, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60))));
     }
     
     private static Holder<PlacedFeature> registerOrePlacement(String key, ConfiguredFeature<?, ?> feature, List<PlacementModifier> placementModifiers) {
