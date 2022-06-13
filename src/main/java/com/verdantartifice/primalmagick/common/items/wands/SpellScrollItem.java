@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellScrollItem extends Item {
-    protected static final Component TOOLTIP = new TranslatableComponent("tooltip.primalmagick.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
+    protected static final Component TOOLTIP = Component.translatable("tooltip.primalmagick.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
     
     public SpellScrollItem() {
         super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP));
@@ -58,8 +58,8 @@ public class SpellScrollItem extends Item {
     public Component getName(ItemStack stack) {
         // A scroll's name is determined by that of the spell it holds (e.g. "Scroll of Lightning Bolt")
         SpellPackage spell = this.getSpell(stack);
-        Component spellName = (spell == null) ? new TranslatableComponent("tooltip.primalmagick.none") : spell.getName();
-        return new TranslatableComponent(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
+        Component spellName = (spell == null) ? Component.translatable("tooltip.primalmagick.none") : spell.getName();
+        return Component.translatable(this.getDescriptionId(stack), spellName).withStyle(ChatFormatting.ITALIC);
     }
     
     @Override

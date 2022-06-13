@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -48,11 +48,11 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
             for (Player player : players) {
                 if (!ResearchManager.isResearchComplete(player, shrineResearch) && !ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
                     ResearchManager.completeResearch(player, shrineResearch);
-                    player.sendMessage(new TranslatableComponent("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    player.sendMessage(Component.translatable("event.primalmagick.found_shrine").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
                 }
                 if (!ResearchManager.isResearchComplete(player, siphonResearch) && InventoryUtils.isPlayerCarrying(player, new ItemStack(ItemsPM.MUNDANE_WAND.get()))) {
                     ResearchManager.completeResearch(player, siphonResearch);
-                    player.sendMessage(new TranslatableComponent("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    player.sendMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
                 }
                 if (state.getBlock() instanceof AncientManaFontBlock) {
                     StatsManager.discoverShrine(player, ((AncientManaFontBlock)state.getBlock()).getSource(), pos);

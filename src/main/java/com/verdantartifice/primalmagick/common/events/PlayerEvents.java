@@ -56,7 +56,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -245,13 +245,13 @@ public class PlayerEvents {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
             if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTagsPM.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
@@ -259,7 +259,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
                 if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -268,7 +268,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
                 if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -277,7 +277,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
                 if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -286,7 +286,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
                 if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -295,7 +295,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
                 if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
             }
         });
@@ -513,7 +513,7 @@ public class PlayerEvents {
                 }
                 if (success) {
                     // Only show success effects once, regardless of how many talismans were triggered
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -530,12 +530,12 @@ public class PlayerEvents {
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag contents = new CompoundTag();
         contents.putInt("generation", 3);
-        contents.putString("title", new TranslatableComponent("primalmagick.dream_journal.title").getString());
+        contents.putString("title", Component.translatable("primalmagick.dream_journal.title").getString());
         contents.putString("author", player.getName().getString());
         ListTag pages = new ListTag();
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.1").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.2").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.3").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.1").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.2").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         
@@ -543,7 +543,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.sendMessage(new TranslatableComponent("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+        player.sendMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
     }
     
     @SubscribeEvent
@@ -640,7 +640,7 @@ public class PlayerEvents {
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
             for (Player player : nearby) {
-                player.sendMessage(new TranslatableComponent("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
+                player.sendMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
             }
         }
     }

@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Base class for a spell vehicle.  Handles property management and serialization.
@@ -56,12 +55,12 @@ public abstract class AbstractSpellVehicle implements ISpellVehicle {
 
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagick.spell.vehicle.type." + this.getVehicleType());
+        return Component.translatable("primalmagick.spell.vehicle.type." + this.getVehicleType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagick.spell.vehicle.default_name." + this.getVehicleType());
+        return Component.translatable("primalmagick.spell.vehicle.default_name." + this.getVehicleType());
     }
     
     @Override

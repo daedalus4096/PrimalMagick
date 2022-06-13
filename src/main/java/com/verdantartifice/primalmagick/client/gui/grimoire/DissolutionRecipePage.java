@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSumm
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -50,7 +50,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
-        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, new TranslatableComponent(this.getRecipeTypeTranslationKey())));
+        screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
 
         // Render ingredient stacks
         screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(0), x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + 32, y + 67 + 27, screen));

@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineBu
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Grimoire page showing the list of available disciplines.
@@ -61,7 +60,7 @@ public class DisciplineIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discipline in the page contents
         for (ResearchDiscipline discipline : this.getDisciplines()) {
-            Component text = new TranslatableComponent(discipline.getNameTranslationKey());
+            Component text = Component.translatable(discipline.getNameTranslationKey());
             DisciplineButton button = screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, discipline, true, true));
             y += button.getHeight();
         }

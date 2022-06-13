@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
 
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -22,7 +22,7 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     protected int index;
 
     public ProjectMaterialSelectionCheckbox(int xIn, int yIn, ResearchTableScreen screen, boolean selected, int index) {
-        super(xIn, yIn, 16, 16, TextComponent.EMPTY, new Handler());
+        super(xIn, yIn, 16, 16, Component.empty(), new Handler());
         this.screen = screen;
         this.selected = selected;
         this.index = index;

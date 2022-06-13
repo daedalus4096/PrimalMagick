@@ -15,8 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -30,7 +28,7 @@ public class ManaCostSummaryWidget extends AbstractWidget {
     protected SourceList manaCosts;
     
     public ManaCostSummaryWidget(SourceList manaCosts, int x, int y) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.manaCosts = manaCosts;
     }
     
@@ -51,15 +49,15 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         if (this.isHoveredOrFocused()) {
             List<Component> tooltip = new ArrayList<>();
             if (this.manaCosts.isEmpty()) {
-                tooltip.add(new TranslatableComponent("primalmagick.crafting.no_mana"));
+                tooltip.add(Component.translatable("primalmagick.crafting.no_mana"));
             } else {
-                tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_cost_header"));
+                tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
                 for (Source source : this.manaCosts.getSourcesSorted()) {
                     boolean discovered = source.isDiscovered(mc.player);
                     Component sourceText = discovered ? 
                             source.getNameText() :
-                            new TranslatableComponent(Source.getUnknownTranslationKey());
-                    tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+                            Component.translatable(Source.getUnknownTranslationKey());
+                    tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
                 }
             }
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.research;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ItemLike;
 
@@ -24,6 +24,6 @@ public class ScanSourceUnlockTrigger extends ScanItemResearchTrigger {
     @Override
     public void onMatch(ServerPlayer player, Object obj) {
         super.onMatch(player, obj);
-        player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source." + this.source.getTag()).withStyle(ChatFormatting.GREEN), false);
+        player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getTag()).withStyle(ChatFormatting.GREEN), false);
     }
 }

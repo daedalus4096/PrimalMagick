@@ -13,8 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -29,7 +27,7 @@ public class KnowledgeWidget extends AbstractWidget {
     protected boolean isComplete;
     
     public KnowledgeWidget(Knowledge knowledge, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.knowledge = knowledge;
         this.isComplete = isComplete;
     }
@@ -49,7 +47,7 @@ public class KnowledgeWidget extends AbstractWidget {
         matrixStack.popPose();
         
         // Draw amount str
-        Component amountText = new TextComponent(Integer.toString(this.knowledge.getAmount()));
+        Component amountText = Component.literal(Integer.toString(this.knowledge.getAmount()));
         int width = mc.font.width(amountText.getString());
         matrixStack.pushPose();
         matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
@@ -68,7 +66,7 @@ public class KnowledgeWidget extends AbstractWidget {
         
         if (this.isHoveredOrFocused()) {
             // Render tooltip
-            Component knowledgeText = new TranslatableComponent(this.knowledge.getType().getNameTranslationKey());
+            Component knowledgeText = Component.translatable(this.knowledge.getType().getNameTranslationKey());
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), this.x, this.y);
         }
     }

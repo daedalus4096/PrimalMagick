@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -119,10 +119,10 @@ public class RequirementsPage extends AbstractPage {
         // Init progress button if applicable
         y = startY + 141;
         if (screen.isProgressing()) {
-            Component text = new TranslatableComponent("primalmagick.grimoire.completing_text");
+            Component text = Component.translatable("primalmagick.grimoire.completing_text");
             screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text));
         } else if (this.stage.arePrerequisitesMet(mc.player)) {
-            Component text = new TranslatableComponent("primalmagick.grimoire.complete_button");
+            Component text = Component.translatable("primalmagick.grimoire.complete_button");
             screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
         }
     }
@@ -141,7 +141,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
-            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("primalmagick.grimoire.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18;    // Make room for obtain widgets
@@ -149,7 +149,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
-            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("primalmagick.grimoire.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18;    // Make room for craft widgets
@@ -157,7 +157,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("primalmagick.grimoire.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18;    // Make room for knowledge widgets
@@ -165,7 +165,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
-            Component leadComponent = new TranslatableComponent("primalmagick.grimoire.required_research_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("primalmagick.grimoire.required_research_header").withStyle(ChatFormatting.UNDERLINE);
             mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18;    // Make room for research widgets

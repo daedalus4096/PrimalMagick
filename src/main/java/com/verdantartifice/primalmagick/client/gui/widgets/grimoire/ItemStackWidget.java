@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -27,7 +26,7 @@ public class ItemStackWidget extends AbstractWidget {
     protected boolean isComplete;
     
     public ItemStackWidget(ItemStack stack, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.stack = stack;
         this.isComplete = isComplete;
     }
@@ -41,7 +40,7 @@ public class ItemStackWidget extends AbstractWidget {
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {
-            Component amountText = new TextComponent(Integer.toString(this.stack.getCount()));
+            Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
             matrixStack.pushPose();
             matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 900.0F);

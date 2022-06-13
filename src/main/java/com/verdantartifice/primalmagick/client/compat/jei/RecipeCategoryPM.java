@@ -7,7 +7,7 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +29,7 @@ public abstract class RecipeCategoryPM<T> implements IRecipeCategory<T> {
         this.recipeClass = recipeClass;
         this.guiHelper = guiHelper;
         this.uid = uid;
-        this.title = new TranslatableComponent(titleTranslationKey);
+        this.title = Component.translatable(titleTranslationKey);
     }
 
     @Nullable

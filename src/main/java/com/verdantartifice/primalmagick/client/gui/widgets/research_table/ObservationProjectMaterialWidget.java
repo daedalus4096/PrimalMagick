@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.theorycrafting.ObservationProjectMaterial;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.level.block.Block;
 
 /**
@@ -42,6 +42,6 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     
     @Override
     protected List<Component> getHoverText() {
-        return Collections.singletonList(new TranslatableComponent(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
+        return Collections.singletonList(Component.translatable(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
     }
 }

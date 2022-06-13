@@ -31,8 +31,6 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -61,7 +59,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         
         // Set up the spell name text entry widget
-        this.nameField = new EditBox(this.font, this.leftPos + 49, this.topPos + 12, 103, 12, TextComponent.EMPTY);
+        this.nameField = new EditBox(this.font, this.leftPos + 49, this.topPos + 12, 103, 12, Component.empty());
         this.nameField.setCanLoseFocus(false);
         this.nameField.changeFocus(true);
         this.nameField.setTextColor(-1);
@@ -132,7 +130,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
             this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8)));
         }
         
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.vehicle.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), Component.translatable("primalmagick.spell.vehicle.header"));
         
         // Init spell vehicle type selector
         y += 12;
@@ -144,13 +142,13 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (SpellProperty property : this.menu.getSpellPackage().getVehicle().getProperties()) {
             y += 12;
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v))));
-            this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
+            this.texts.put(new Vec3i(x + 18, y + 2, 7), Component.literal(Integer.toString(property.getValue())));
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getVehicle().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.VEHICLE, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
         
         y = startY + 48;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.payload.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), Component.translatable("primalmagick.spell.payload.header"));
         
         // Init spell payload type selector
         y += 12;
@@ -162,7 +160,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (SpellProperty property : this.menu.getSpellPackage().getPayload().getProperties()) {
             y += 12;
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v))));
-            this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
+            this.texts.put(new Vec3i(x + 18, y + 2, 7), Component.literal(Integer.toString(property.getValue())));
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPayload().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PAYLOAD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
@@ -170,7 +168,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         // Move to the top of the right-hand column
         x += 110;
         y = startY;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.primary_mod.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), Component.translatable("primalmagick.spell.primary_mod.header"));
         
         // Init primary spell mod type selector
         y += 12;
@@ -182,13 +180,13 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (SpellProperty property : this.menu.getSpellPackage().getPrimaryMod().getProperties()) {
             y += 12;
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v))));
-            this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
+            this.texts.put(new Vec3i(x + 18, y + 2, 7), Component.literal(Integer.toString(property.getValue())));
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getPrimaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.PRIMARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
         
         y = startY + 48;
-        this.texts.put(new Vec3i(x, y + 2, 106), new TranslatableComponent("primalmagick.spell.secondary_mod.header"));
+        this.texts.put(new Vec3i(x, y + 2, 106), Component.translatable("primalmagick.spell.secondary_mod.header"));
         
         // Init secondary spell mod type selector
         y += 12;
@@ -200,7 +198,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (SpellProperty property : this.menu.getSpellPackage().getSecondaryMod().getProperties()) {
             y += 12;
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 8, y, false, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v))));
-            this.texts.put(new Vec3i(x + 18, y + 2, 7), new TextComponent(Integer.toString(property.getValue())));
+            this.texts.put(new Vec3i(x + 18, y + 2, 7), Component.literal(Integer.toString(property.getValue())));
             this.localWidgets.add(this.addRenderableWidget(new CyclicBoundedSpinnerButton(x + 26, y, true, property.getMin(), property.getMax(), this.menu.getSpellPackage().getSecondaryMod().getProperty(property.getName())::getValue, (v) -> this.updateSpellPropertyValue(SpellComponent.SECONDARY_MOD, property.getName(), v))));
             this.texts.put(new Vec3i(x + 35, y + 2, Math.min(71, this.font.width(property.getDescription().getString()))), property.getDescription());
         }
@@ -322,7 +320,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         protected final Consumer<Integer> setter;
         
         public CyclicBoundedSpinnerButton(int xPos, int yPos, boolean increment, int min, int max, Supplier<Integer> getter, Consumer<Integer> setter) {
-            super(xPos, yPos, 7, 11, TextComponent.EMPTY, new Handler());
+            super(xPos, yPos, 7, 11, Component.empty(), new Handler());
             this.isIncrement = increment;
             this.min = min;
             this.max = max;

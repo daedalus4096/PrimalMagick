@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -31,7 +31,7 @@ public class ItemTagWidget extends AbstractWidget {
     protected boolean isComplete;
     
     public ItemTagWidget(ResourceLocation tag, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.tag = tag;
         this.isComplete = isComplete;
     }

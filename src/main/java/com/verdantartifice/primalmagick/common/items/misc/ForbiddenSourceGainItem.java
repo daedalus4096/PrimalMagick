@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -41,7 +40,7 @@ public class ForbiddenSourceGainItem extends Item {
                 if (!this.source.getDiscoverKey().isKnownByStrict(player)) {
                     ResearchManager.completeResearch(player, this.source.getDiscoverKey());
                     ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source." + this.source.getTag() + ".alternate").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getTag() + ".alternate").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -49,11 +48,11 @@ public class ForbiddenSourceGainItem extends Item {
                         player.getItemInHand(hand).shrink(1);
                     }
                 } else {
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.already_known").withStyle(ChatFormatting.RED), true);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.already_known").withStyle(ChatFormatting.RED), true);
                 }
             } else {
                 // Players who haven't started mod progression get no benefit
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
             }
         }
         return super.use(level, player, hand);
@@ -62,6 +61,6 @@ public class ForbiddenSourceGainItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(new TranslatableComponent("tooltip.primalmagick.forbidden_source_item").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tooltip.primalmagick.forbidden_source_item").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

@@ -16,8 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -34,7 +32,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     protected boolean hasBonus;
     
     public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.hasBonus = material.getBonusReward() > 0.0D;
         this.consumed = material.isConsumed();
@@ -91,10 +89,10 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         matrixStack.translate(0, 0, 200);
         List<Component> tooltip = new ArrayList<>(this.getHoverText());
         if (this.consumed) {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         if (this.hasBonus) {
-            tooltip.add(new TranslatableComponent("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
         GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
         matrixStack.popPose();

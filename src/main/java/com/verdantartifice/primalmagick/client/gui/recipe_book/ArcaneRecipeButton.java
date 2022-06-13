@@ -15,8 +15,6 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +30,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     protected static final float ANIMATION_TIME = 15.0F;
     protected static final int BACKGROUND_SIZE = 25;
     public static final int TICKS_TO_SWAP = 30;
-    protected static final Component MORE_RECIPES_TOOLTIP = new TranslatableComponent("gui.recipebook.moreRecipes");
+    protected static final Component MORE_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.moreRecipes");
     
     protected AbstractArcaneRecipeBookMenu<?> menu;
     protected ArcaneRecipeBook book;
@@ -42,7 +40,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     protected int currentIndex;
     
     public ArcaneRecipeButton() {
-        super(0, 0, BACKGROUND_SIZE, BACKGROUND_SIZE, TextComponent.EMPTY);
+        super(0, 0, BACKGROUND_SIZE, BACKGROUND_SIZE, Component.empty());
     }
     
     public void init(ArcaneRecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
@@ -147,11 +145,11 @@ public class ArcaneRecipeButton extends AbstractWidget {
     @Override
     public void updateNarration(NarrationElementOutput output) {
         ItemStack stack = this.getRecipe().getResultItem();
-        output.add(NarratedElementType.TITLE, new TranslatableComponent("narration.recipe", stack.getHoverName()));
+        output.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", stack.getHoverName()));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
-            output.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"), new TranslatableComponent("narration.recipe.usage.more"));
+            output.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"), Component.translatable("narration.recipe.usage.more"));
         } else {
-            output.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"));
+            output.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"));
         }
     }
 

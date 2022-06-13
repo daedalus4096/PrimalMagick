@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -106,11 +105,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagick.spell.mod.type." + this.getModType());
+        return Component.translatable("primalmagick.spell.mod.type." + this.getModType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagick.spell.mod.default_name." + this.getModType());
+        return Component.translatable("primalmagick.spell.mod.default_name." + this.getModType());
     }
 }

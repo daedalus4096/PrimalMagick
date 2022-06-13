@@ -26,7 +26,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -143,12 +143,12 @@ public class ModularWandItem extends AbstractWandItem {
     public Component getName(ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
         WandCore core = this.getWandCore(stack);
-        Component coreName = (core == null) ? new TranslatableComponent("primalmagick.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
+        Component coreName = (core == null) ? Component.translatable("primalmagick.wand_core.unknown.name") : Component.translatable(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        Component capName = (cap == null) ? new TranslatableComponent("primalmagick.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? Component.translatable("primalmagick.wand_cap.unknown.name") : Component.translatable(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        Component gemName = (gem == null) ? new TranslatableComponent("primalmagick.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
-        return new TranslatableComponent("item.primalmagick.modular_wand", gemName, capName, coreName);
+        Component gemName = (gem == null) ? Component.translatable("primalmagick.wand_gem.unknown.name") : Component.translatable(gem.getNameTranslationKey());
+        return Component.translatable("item.primalmagick.modular_wand", gemName, capName, coreName);
     }
     
     @Override
@@ -266,19 +266,19 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public Component getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
-            return new TranslatableComponent("primalmagick.spells.capacity", 0);
+            return Component.translatable("primalmagick.spells.capacity", 0);
         } else {
             WandCore core = this.getWandCore(stack);
             if (core == null) {
-                return new TranslatableComponent("primalmagick.spells.capacity", 0);
+                return Component.translatable("primalmagick.spells.capacity", 0);
             } else {
                 int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
-                    return new TranslatableComponent("primalmagick.spells.capacity", baseSlots);
+                    return Component.translatable("primalmagick.spells.capacity", baseSlots);
                 } else {
-                    Component bonusText = new TranslatableComponent(bonusSlot.getNameTranslationKey());
-                    return new TranslatableComponent("primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
+                    Component bonusText = Component.translatable(bonusSlot.getNameTranslationKey());
+                    return Component.translatable("primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
                 }
             }
         }

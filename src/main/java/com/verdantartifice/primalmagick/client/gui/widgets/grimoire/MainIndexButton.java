@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 /**
  * GUI button to go to the main index in the grimoire.
@@ -19,7 +19,7 @@ public class MainIndexButton extends Button {
     protected GrimoireScreen screen;
 
     public MainIndexButton(int xPos, int yPos, GrimoireScreen screen) {
-        super(xPos, yPos, 10, 26, TextComponent.EMPTY, new Handler());
+        super(xPos, yPos, 10, 26, Component.empty(), new Handler());
         this.screen = screen;
     }
     

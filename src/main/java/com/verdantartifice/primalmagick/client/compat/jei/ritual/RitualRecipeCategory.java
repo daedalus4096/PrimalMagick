@@ -19,7 +19,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -63,8 +63,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     @Override
     public void draw(IRitualRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
-        mc.font.draw(stack, new TranslatableComponent("gui.primalmagick.jei.ritual.offerings.header"), 0, 2, 0xFF808080);
-        mc.font.draw(stack, new TranslatableComponent("gui.primalmagick.jei.ritual.props.header"), 0, 51, 0xFF808080);
+        mc.font.draw(stack, Component.translatable("gui.primalmagick.jei.ritual.offerings.header"), 0, 2, 0xFF808080);
+        mc.font.draw(stack, Component.translatable("gui.primalmagick.jei.ritual.props.header"), 0, 51, 0xFF808080);
         
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
@@ -78,9 +78,9 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_cost_header"));
+            tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
             for (Source source : manaCosts.getSourcesSorted()) {
-                tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
+                tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
             }
             return tooltip;
         } else {

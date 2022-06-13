@@ -20,8 +20,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -43,11 +41,11 @@ public class AttunementThresholdWidget extends AbstractWidget {
     protected final Component tooltipText;
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
-        super(x, y, 18, 18, TextComponent.EMPTY);
+        super(x, y, 18, 18, Component.empty());
         this.source = source;
         this.threshold = threshold;
         this.texture = new ResourceLocation(PrimalMagick.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
-        this.tooltipText = new TranslatableComponent("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag());
+        this.tooltipText = Component.translatable("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag());
     }
     
     @Override

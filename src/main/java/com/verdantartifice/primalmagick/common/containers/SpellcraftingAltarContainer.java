@@ -26,8 +26,6 @@ import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -148,19 +146,19 @@ public class SpellcraftingAltarContainer extends AbstractContainerMenu {
         boolean secondaryActive = this.getSpellSecondaryModComponent().isActive();
         if (vehiclePiece == null || payloadPiece == null || vehiclePiece.getString().isEmpty() || payloadPiece.getString().isEmpty()) {
             // If the constructed spell is invalid, don't show a default name
-            return new TextComponent("");
+            return Component.literal("");
         } else if (!primaryActive && !secondaryActive) {
             // No mods selected
-            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
+            return Component.translatable("primalmagick.spell.default_name_format.mods.0", vehiclePiece, payloadPiece);
         } else if (primaryActive && secondaryActive) {
             // Two mods selected
-            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
+            return Component.translatable("primalmagick.spell.default_name_format.mods.2", vehiclePiece, payloadPiece, primaryModPiece, secondaryModPiece);
         } else if (primaryActive) {
             // Only a primary mod selected
-            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
+            return Component.translatable("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, primaryModPiece);
         } else {
             // Only a secondary mod selected
-            return new TranslatableComponent("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
+            return Component.translatable("primalmagick.spell.default_name_format.mods.1", vehiclePiece, payloadPiece, secondaryModPiece);
         }
     }
     

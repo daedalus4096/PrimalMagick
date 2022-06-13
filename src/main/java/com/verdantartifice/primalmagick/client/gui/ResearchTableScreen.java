@@ -34,7 +34,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -111,13 +111,13 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             int y = 11;
             
             // Render title text
-            Component titleText = new TranslatableComponent(this.project.getNameTranslationKey()).withStyle(ChatFormatting.BOLD);
+            Component titleText = Component.translatable(this.project.getNameTranslationKey()).withStyle(ChatFormatting.BOLD);
             int titleWidth = mc.font.width(titleText);
             mc.font.draw(matrixStack, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
             y += (int)(mc.font.lineHeight * 1.66D);
             
             // Render description text
-            Component descText = new TranslatableComponent(this.project.getTextTranslationKey());
+            Component descText = Component.translatable(this.project.getTextTranslationKey());
             List<FormattedText> descLines = mc.font.getSplitter().splitLines(descText, 154, Style.EMPTY); // list formatted string to width
             for (FormattedText line : descLines) {
                 mc.font.draw(matrixStack, line.getString(), 38, y, Color.BLACK.getRGB());
@@ -125,12 +125,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             }
         } else if (!this.menu.isWritingReady()) {
             // Render missing writing materials text
-            Component text = new TranslatableComponent("primalmagick.research_table.missing_writing_supplies");
+            Component text = Component.translatable("primalmagick.research_table.missing_writing_supplies");
             int width = mc.font.width(text.getString());
             mc.font.draw(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
         } else {
             // Render ready to start text
-            Component text = new TranslatableComponent("primalmagick.research_table.ready");
+            Component text = Component.translatable("primalmagick.research_table.ready");
             int width = mc.font.width(text.getString());
             mc.font.draw(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
         }
@@ -179,17 +179,17 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
                 // Render starting widget
-                Component text = new TranslatableComponent("primalmagick.research_table.starting");
+                Component text = Component.translatable("primalmagick.research_table.starting");
                 this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
             } else {
                 // Render start project button
-                Component text = new TranslatableComponent("primalmagick.research_table.start");
+                Component text = Component.translatable("primalmagick.research_table.start");
                 this.addRenderableWidget(new StartProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
             }
         } else if (this.isProjectReady()) {
             if (this.progressing) {
                 // Render completing widget
-                Component text = new TranslatableComponent("primalmagick.research_table.completing");
+                Component text = Component.translatable("primalmagick.research_table.completing");
                 this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
             } else {
                 this.menu.getWorldPosCallable().execute((level, tablePos) -> {
@@ -197,7 +197,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
                     Player player = this.minecraft.player;
                     double chance = 100.0D * this.project.getSuccessChance();
                     Set<Block> surroundings = TheorycraftManager.getSurroundings(level, tablePos);
-                    Component text = new TranslatableComponent("primalmagick.research_table.complete", FORMATTER.format(chance));
+                    Component text = Component.translatable("primalmagick.research_table.complete", FORMATTER.format(chance));
                     
                     this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
                     this.completeProjectButton.active = this.project.isSatisfied(player, surroundings);

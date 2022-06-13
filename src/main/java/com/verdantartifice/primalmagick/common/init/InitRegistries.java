@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -34,5 +35,6 @@ public class InitRegistries {
         EnchantmentsPM.init();
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();
+        ArgumentTypesPM.init();
     }
 }

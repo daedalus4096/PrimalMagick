@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Grimoire page showing the list of available research entries in a discipline.
@@ -69,7 +68,7 @@ public class DisciplinePage extends AbstractPage {
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry entry) {
                 // If the current content object is a research entry, add a button for it to the screen
-                Component text = new TranslatableComponent(entry.getNameTranslationKey());
+                Component text = Component.translatable(entry.getNameTranslationKey());
                 if (entry.isAvailable(mc.player)) {
                     screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry, true));
                 } else {

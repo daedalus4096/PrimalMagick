@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Grimoire page showing the list of discovered attunements.
@@ -51,7 +50,7 @@ public class AttunementIndexPage extends AbstractPage {
         Minecraft mc = Minecraft.getInstance();
         for (Source source : Source.SORTED_SOURCES) {
             if (source.isDiscovered(mc.player)) {
-                Component text = new TranslatableComponent(source.getNameTranslationKey());
+                Component text = Component.translatable(source.getNameTranslationKey());
                 screen.addWidgetToScreen(new AttunementButton(x + 12 + (side * 140), y, text, screen, source));
                 y += 12;
             }

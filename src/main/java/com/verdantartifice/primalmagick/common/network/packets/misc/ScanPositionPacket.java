@@ -14,7 +14,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -77,7 +77,7 @@ public class ScanPositionPacket implements IMessageToServer {
                                 if (chestStack != null && !chestStack.isEmpty()) {
                                     // Limit how much of an inventory can be scanned
                                     if (scanCount >= AffinityManager.MAX_SCAN_COUNT) {
-                                        player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.toobig").withStyle(ChatFormatting.RED), true);
+                                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.toobig").withStyle(ChatFormatting.RED), true);
                                         break;
                                     }
                                     if (ResearchManager.setScanned(chestStack, player, false)) {
@@ -91,10 +91,10 @@ public class ScanPositionPacket implements IMessageToServer {
                         
                         // If at least one unscanned item was processed, send a success message
                         if (found) {
-                            player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
                             knowledge.sync(player); // Sync immediately, rather than scheduling, for snappy arcanometer response
                         } else {
-                            player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
                         }
                     });
                 }

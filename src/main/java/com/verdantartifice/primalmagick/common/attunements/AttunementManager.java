@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -140,7 +139,7 @@ public class AttunementManager {
                     if (oldTotal < thresholdValue && newTotal >= thresholdValue) {
                         // If gaining a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
+                            player.displayClientMessage(Component.translatable("primalmagick.attunement.threshold_gain", sourceText, thresholdText), false);
                         }
                         
                         // Apply any new attribute modifiers from the threshold gain
@@ -153,7 +152,7 @@ public class AttunementManager {
                     if (oldTotal >= thresholdValue && newTotal < thresholdValue) {
                         // If losing a threshold, send a message to the player
                         if (source.isDiscovered(player)) {
-                            player.displayClientMessage(new TranslatableComponent("primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
+                            player.displayClientMessage(Component.translatable("primalmagick.attunement.threshold_loss", sourceText, thresholdText), false);
                         }
                         
                         // Remove any lost attribute modifiers from the threshold loss

@@ -11,8 +11,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.ExperienceProjectM
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -54,7 +52,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
-            Component amountText = new TextComponent(Integer.toString(this.material.getLevels()));
+            Component amountText = Component.literal(Integer.toString(this.material.getLevels()));
             int width = mc.font.width(amountText);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pushPose();
@@ -94,6 +92,6 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
     
     @Override
     protected List<Component> getHoverText() {
-        return Collections.singletonList(new TranslatableComponent("argument.entity.options.level.description"));
+        return Collections.singletonList(Component.translatable("argument.entity.options.level.description"));
     }
 }

@@ -12,8 +12,6 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -32,7 +30,7 @@ public class ResearchWidget extends AbstractWidget {
     protected boolean isComplete;
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.key = key;
         this.isComplete = isComplete;
     }
@@ -72,7 +70,7 @@ public class ResearchWidget extends AbstractWidget {
         
         if (this.isHoveredOrFocused()) {
             // Render tooltip
-            Component text = new TranslatableComponent("primalmagick.research." + this.key.getRootKey() + ".text");
+            Component text = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);
         }
     }

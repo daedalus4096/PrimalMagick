@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -66,6 +66,6 @@ public class MineSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getDurationMinutes(spell, spellSource));
+        return Component.translatable("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getDurationMinutes(spell, spellSource));
     }
 }

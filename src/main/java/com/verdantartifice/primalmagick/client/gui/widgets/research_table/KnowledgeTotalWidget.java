@@ -14,8 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -31,7 +29,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     protected LazyOptional<IPlayerKnowledge> knowledgeOpt;
     
     public KnowledgeTotalWidget(int x, int y, IPlayerKnowledge.KnowledgeType type) {
-        super(x, y, 16, 19, TextComponent.EMPTY);
+        super(x, y, 16, 19, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.type = type;
         this.knowledgeOpt = PrimalMagickCapabilities.getKnowledge(mc.player);
@@ -59,7 +57,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         this.knowledgeOpt.ifPresent(knowledge -> {
             // Draw amount str
             int levels = knowledge.getKnowledge(this.type);
-            Component amountText = new TextComponent(Integer.toString(levels));
+            Component amountText = Component.literal(Integer.toString(levels));
             int width = mc.font.width(amountText);
             matrixStack.pushPose();
             matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
@@ -92,7 +90,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     @Override
     public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
         // Render tooltip
-        Component knowledgeText = new TranslatableComponent(this.type.getNameTranslationKey());
+        Component knowledgeText = Component.translatable(this.type.getNameTranslationKey());
         GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
     }
 }

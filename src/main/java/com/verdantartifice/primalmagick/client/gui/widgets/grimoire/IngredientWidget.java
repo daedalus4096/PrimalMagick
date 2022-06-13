@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -27,7 +27,7 @@ public class IngredientWidget extends Button {
     protected GrimoireScreen screen;
 
     public IngredientWidget(@Nullable Ingredient ingredient, int xIn, int yIn, GrimoireScreen screen) {
-        super(xIn, yIn, 16, 16, TextComponent.EMPTY, new Handler());
+        super(xIn, yIn, 16, 16, Component.empty(), new Handler());
         this.ingredient = ingredient;
         this.screen = screen;
     }

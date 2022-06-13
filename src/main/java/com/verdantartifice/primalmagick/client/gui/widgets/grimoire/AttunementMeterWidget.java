@@ -19,8 +19,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -33,7 +31,7 @@ public class AttunementMeterWidget extends AbstractWidget {
     protected final Color temporaryColor;
     
     public AttunementMeterWidget(@Nonnull Source source, int x, int y) {
-        super(x, y, 12, 102, TextComponent.EMPTY);
+        super(x, y, 12, 102, Component.empty());
         this.source = source;
         Color baseColor = new Color(this.source.getColor());
         this.permanentColor = baseColor.darker();
@@ -72,12 +70,12 @@ public class AttunementMeterWidget extends AbstractWidget {
         if (this.isHoveredOrFocused()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
-            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
+            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
+            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
             if (i > 0) {
-                tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
+                tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
             }
-            tooltip.add(new TranslatableComponent("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
+            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
         }
     }

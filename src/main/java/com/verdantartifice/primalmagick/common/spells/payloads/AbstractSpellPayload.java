@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.spells.mods.AmplifySpellMod;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
@@ -105,12 +104,12 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagick.spell.payload.type." + this.getPayloadType());
+        return Component.translatable("primalmagick.spell.payload.type." + this.getPayloadType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagick.spell.payload.default_name." + this.getPayloadType());
+        return Component.translatable("primalmagick.spell.payload.default_name." + this.getPayloadType());
     }
     
     @Override
