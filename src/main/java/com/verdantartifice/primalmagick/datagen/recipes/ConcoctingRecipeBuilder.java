@@ -109,7 +109,7 @@ public class ConcoctingRecipeBuilder {
     
     public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
         this.validate(id);
-        String groupStr = this.useDefaultGroup ? PotionUtils.getPotion(this.result).getRegistryName().getPath() : this.group;
+        String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(this.result)).getPath() : this.group;
         consumer.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, groupStr, this.research, this.manaCosts));
     }
     
@@ -119,7 +119,7 @@ public class ConcoctingRecipeBuilder {
         if (type == null || potion == null || potion == Potions.EMPTY) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(consumer, new ResourceLocation(PrimalMagick.MODID, potion.getRegistryName().getPath() + "_" + type.getSerializedName()));
+        this.build(consumer, new ResourceLocation(PrimalMagick.MODID, ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
     }
     
     public static class Result implements FinishedRecipe {

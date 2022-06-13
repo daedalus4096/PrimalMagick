@@ -80,7 +80,7 @@ public class BlockIngredient implements Predicate<Block> {
         this.determineMatchingBlocks();
         buf.writeVarInt(this.matchingBlocks.length);
         for (int index = 0; index < this.matchingBlocks.length; index++) {
-            buf.writeResourceLocation(this.matchingBlocks[index].getRegistryName());
+            buf.writeResourceLocation(ForgeRegistries.BLOCKS.getKey(this.matchingBlocks[index]));
         }
     }
     

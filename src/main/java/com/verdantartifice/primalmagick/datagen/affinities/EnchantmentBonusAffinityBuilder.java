@@ -19,7 +19,7 @@ public class EnchantmentBonusAffinityBuilder {
     protected SourceList multiplierValues;
 
     protected EnchantmentBonusAffinityBuilder(@Nonnull Enchantment target) {
-        this.targetId = target.getRegistryName();
+        this.targetId = ForgeRegistries.ENCHANTMENTS.getKey(target);
     }
     
     public static EnchantmentBonusAffinityBuilder enchantmentBonusAffinity(@Nonnull Enchantment target) {

@@ -51,6 +51,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of the /primalmagick debug command and its /pm alias.
@@ -395,8 +396,8 @@ public class PrimalMagickCommand {
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), item.getItem().getRegistryName().toString()), true);
-            target.sendMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), item.getItem().getRegistryName().toString()), Util.NIL_UUID);
+            source.sendSuccess(Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), true);
+            target.sendMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), Util.NIL_UUID);
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
         }

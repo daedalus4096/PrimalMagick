@@ -443,7 +443,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             if (block instanceof IRitualPropBlock) {
                 IRitualPropBlock propBlock = (IRitualPropBlock)block;
                 if (propBlock.isUniversal() && !propBlock.isPropActivated(propState, this.level, propPos)) {
-                    propSteps.add(new UniversalRitualStep(propPos, block.getRegistryName()));
+                    propSteps.add(new UniversalRitualStep(propPos, ForgeRegistries.BLOCKS.getKey(block)));
                 }
             }
         }
@@ -750,7 +750,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 if ( !(block instanceof IRitualPropBlock) || 
                      !requiredProp.test(block) ||
                      !((IRitualPropBlock)block).isBlockSaltPowered(this.level, this.awaitedPropPos) ) {
-                    this.onPropInterrupted(block, propState, requiredProp.getMatchingBlocks()[0].getRegistryName());
+                    this.onPropInterrupted(block, propState, ForgeRegistries.BLOCKS.getKey(requiredProp.getMatchingBlocks()[0]));
                 }
             }
             this.nextCheckCount = this.activeCount + 20;

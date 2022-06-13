@@ -103,12 +103,12 @@ public class EntityLootTables implements DataProvider {
     
     private void registerEmptyLootTable(EntityType<?> type) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredEntities.add(type.getRegistryName());
+        this.registeredEntities.add(ForgeRegistries.ENTITIES.getKey(type));
     }
     
     private void registerLootTable(EntityType<?> type, LootTable.Builder builder) {
         this.lootTables.put(type, builder);
-        this.registeredEntities.add(type.getRegistryName());
+        this.registeredEntities.add(ForgeRegistries.ENTITIES.getKey(type));
     }
     
     protected void addTables() {

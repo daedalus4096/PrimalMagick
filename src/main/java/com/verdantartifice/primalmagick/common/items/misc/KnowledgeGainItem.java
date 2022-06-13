@@ -20,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of an item that grants observation or theory progress when used by a player.
@@ -58,7 +59,7 @@ public class KnowledgeGainItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        String translationKey = "tooltip." + PrimalMagick.MODID + "." + this.getRegistryName().getPath();
+        String translationKey = "tooltip." + PrimalMagick.MODID + "." + ForgeRegistries.ITEMS.getKey(this).getPath();
         tooltip.add(Component.translatable(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

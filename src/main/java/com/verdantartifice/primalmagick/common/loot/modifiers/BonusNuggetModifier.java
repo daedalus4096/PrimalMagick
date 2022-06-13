@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Global loot modifier that gives a chance for bonus nuggets when mining quartz or metal ores.
@@ -59,7 +60,7 @@ public class BonusNuggetModifier extends LootModifier {
             JsonObject obj = this.makeConditions(instance.conditions);
             obj.addProperty("chance", instance.chance);
             
-            ResourceLocation nuggetLoc = instance.nugget.getRegistryName();
+            ResourceLocation nuggetLoc = ForgeRegistries.ITEMS.getKey(instance.nugget);
             if (nuggetLoc == null) {
                 throw new IllegalArgumentException("Invalid nugget " + instance.nugget);
             } else {

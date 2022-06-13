@@ -24,6 +24,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Primary access point for rune-related methods.  Also stores registered rune combinations in a
@@ -42,7 +43,7 @@ public class RuneManager {
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
         if (enchantment != null && verb != null && noun != null && source != null) {
             if (REGISTRY.containsKey(enchantment)) {
-                throw new IllegalArgumentException("Rune enchantment already registered for " + enchantment.getRegistryName().toString());
+                throw new IllegalArgumentException("Rune enchantment already registered for " + ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
             }
             REGISTRY.put(enchantment, Arrays.asList(verb, noun, source));
             VERB_ENCHANTMENTS.computeIfAbsent(verb, r -> new HashSet<>()).add(enchantment);

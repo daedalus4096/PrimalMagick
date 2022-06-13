@@ -106,7 +106,7 @@ public class ItemUtils {
      */
     @Nonnull
     public static String serializeItemStack(@Nonnull ItemStack stack) {
-        StringBuilder sb = new StringBuilder(stack.getItem().getRegistryName().toString());
+        StringBuilder sb = new StringBuilder(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
         if (stack.getCount() > 1 || stack.hasTag()) {
             sb.append(';');
             sb.append(stack.getCount());

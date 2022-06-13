@@ -79,7 +79,7 @@ public class ProjectBuilder {
     
     public ProjectBuilder aid(@Nullable Block block) {
         if (block != null) {
-            this.aidBlocks.add(block.getRegistryName());
+            this.aidBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
         }
         return this;
     }

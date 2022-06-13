@@ -80,13 +80,13 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     protected abstract void addTables();
     
     private void registerLootTableBuiler(Block block, LootTable.Builder builder) {
-        this.registeredBlocks.add(block.getRegistryName());
+        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
         this.lootTables.put(block, builder);
     }
     
     protected void registerEmptyTable(Block block) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredBlocks.add(block.getRegistryName());
+        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
     }
     
     protected void registerBasicTable(Block block) {

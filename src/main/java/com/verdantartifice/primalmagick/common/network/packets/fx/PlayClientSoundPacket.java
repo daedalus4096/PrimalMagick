@@ -31,7 +31,7 @@ public class PlayClientSoundPacket implements IMessageToClient {
     }
     
     public PlayClientSoundPacket(SoundEvent event, float volume, float pitch) {
-        this.eventLoc = event.getRegistryName().toString();
+        this.eventLoc = ForgeRegistries.SOUND_EVENTS.getKey(event).toString();
         this.volume = volume;
         this.pitch = pitch;
     }

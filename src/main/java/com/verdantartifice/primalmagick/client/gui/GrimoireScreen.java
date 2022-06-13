@@ -80,6 +80,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -751,7 +752,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
-        String rawText = (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", enchant.getRegistryName()))).getString();
+        String rawText = (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

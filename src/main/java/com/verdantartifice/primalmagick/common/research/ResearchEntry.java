@@ -278,7 +278,7 @@ public class ResearchEntry {
         }
         
         public static Icon of(ItemLike item) {
-            return new Icon(true, item.asItem().getRegistryName());
+            return new Icon(true, ForgeRegistries.ITEMS.getKey(item.asItem()));
         }
         
         public static Icon of(ResourceLocation loc) {
