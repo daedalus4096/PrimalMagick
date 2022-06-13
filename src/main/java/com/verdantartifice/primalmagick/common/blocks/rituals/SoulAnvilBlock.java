@@ -106,7 +106,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.SOUL_GEM.get() && !state.getValue(DIRTY)) {
             // If using a soul gem on a clean anvil, break it
-            worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 if (!player.getAbilities().instabuild) {
@@ -124,7 +124,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
             return InteractionResult.SUCCESS;
         } else if (player != null && player.getItemInHand(handIn).is(ItemTagsPM.MAGICKAL_CLOTH) && state.getValue(DIRTY)) {
             // If using a magickal cloth on a dirty anvil, clean it
-            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }

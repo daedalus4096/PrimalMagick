@@ -19,9 +19,12 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * @author Daedalus4096
  */
 public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
+    protected DataGenerator generator;
+    
     @SuppressWarnings("deprecation")
     public EntityTypeTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
         super(generatorIn, Registry.ENTITY_TYPE, PrimalMagick.MODID, existingFileHelper);
+        this.generator = generatorIn;
     }
 
     @Override

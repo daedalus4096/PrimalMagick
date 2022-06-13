@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -19,6 +18,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraftforge.network.NetworkEvent;
 
 /**
@@ -59,7 +59,7 @@ public class CompleteProjectPacket implements IMessageToServer {
                         researchMenu.getWorldPosCallable().execute((world, blockPos) -> {
                             // Determine if current project is a success
                             Project project = knowledge.getActiveResearchProject();
-                            Random rand = player.getRandom();
+                            RandomSource rand = player.getRandom();
                             if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
                                 if (rand.nextDouble() < project.getSuccessChance()) {
                                     ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());

@@ -26,7 +26,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a shaped arcane recipe.  Like a vanilla shaped recipe, but has research and optional mana requirements.
@@ -271,7 +270,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         }
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapedArcaneRecipe> {
+    public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
         @Override
         public ShapedArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

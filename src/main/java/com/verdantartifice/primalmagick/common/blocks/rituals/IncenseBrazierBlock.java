@@ -89,7 +89,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.INCENSE_STICK.get() && !state.getValue(LIT)) {
             // If using an incense stick on an unlit brazier, light it
-            worldIn.playSound(player, pos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.GRASS_PLACE, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(LIT, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 if (!player.getAbilities().instabuild) {

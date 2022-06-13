@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -33,7 +32,7 @@ public class IgnyxItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        Random random = level.getRandom();
+        RandomSource random = level.getRandom();
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FIRECHARGE_USE, SoundSource.NEUTRAL, 1.0F, (random.nextFloat() - random.nextFloat()) * 0.2F + 1.0F);
         if (!level.isClientSide) {
             IgnyxEntity projectile = new IgnyxEntity(level, player);

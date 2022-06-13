@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.fx;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.client.fx.particles.PotionExplosionParticleData;
@@ -18,6 +17,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -48,7 +48,7 @@ public class FxDispatcher {
         // Release a cluster of poof clouds when transforming a block with a wand
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        Random rng = world.random;
+        RandomSource rng = world.random;
         if (sound) {
             this.getWorld().playLocalSound(x, y, z, SoundsPM.POOF.get(), SoundSource.BLOCKS, 1.0F, 1.0F + (float)rng.nextGaussian() * 0.05F, false);
         }
@@ -118,7 +118,7 @@ public class FxDispatcher {
         // Show a cluster of particles at the impact point of a spell
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        Random rng = world.random;
+        RandomSource rng = world.random;
         int count = (15 + rng.nextInt(11)) * radius;
         for (int index = 0; index < count; index++) {
             double dx = (rng.nextFloat() * 0.035D * radius) * (rng.nextBoolean() ? 1 : -1);
@@ -134,7 +134,7 @@ public class FxDispatcher {
     public void ritualGlow(BlockPos pos, int color) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        Random rng = world.random;
+        RandomSource rng = world.random;
 
         Color c = new Color(color);
         float r = c.getRed() / 255.0F;
@@ -161,7 +161,7 @@ public class FxDispatcher {
     public void spellcraftingGlow(BlockPos pos, float r, float g, float b) {
         Minecraft mc = Minecraft.getInstance();
         Level world = this.getWorld();
-        Random rng = world.random;
+        RandomSource rng = world.random;
 
         int count = (3 + rng.nextInt(3));
         for (int index = 0; index < count; index++) {

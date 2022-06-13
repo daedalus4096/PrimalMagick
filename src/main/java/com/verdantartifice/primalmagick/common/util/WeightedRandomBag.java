@@ -2,10 +2,11 @@ package com.verdantartifice.primalmagick.common.util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import net.minecraft.util.RandomSource;
 
 /**
  * Collection of elements from which they can be pulled randomly, based on given weights.
@@ -42,7 +43,7 @@ public class WeightedRandomBag<T> {
      * @return a random element from the collection
      */
     @Nullable
-    public T getRandom(@Nonnull Random rng) {
+    public T getRandom(@Nonnull RandomSource rng) {
         double threshold = rng.nextDouble() * this.totalWeight;
         double accumulatedWeight = 0.0D;
         for (Item item : this.items) {

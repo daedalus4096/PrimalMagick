@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a dissolution recipe.  Similar to a smelting recipe, but used by the dissolution chamber
@@ -85,7 +84,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         return this.group;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<DissolutionRecipe> {
+    public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
         @Override
         public DissolutionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

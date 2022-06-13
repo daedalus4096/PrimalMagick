@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 
 import java.util.EnumSet;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nonnull;
@@ -23,6 +22,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -312,7 +312,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         public void tick() {
             if (--this.timeToRecalcPath <= 0) {
                 this.timeToRecalcPath = 40;
-                Random random = this.pixie.getRandom();
+                RandomSource random = this.pixie.getRandom();
                 double d0 = this.pixie.getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
                 double d1 = this.pixie.getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 2.0F);
                 double d2 = this.pixie.getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * this.wanderDistance);
