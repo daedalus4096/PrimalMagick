@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -116,5 +115,5 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     }
     
     @Override
-    public abstract void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand);
+    public abstract void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand);
 }

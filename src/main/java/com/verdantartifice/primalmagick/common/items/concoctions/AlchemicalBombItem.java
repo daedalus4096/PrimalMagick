@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBo
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
@@ -112,7 +111,7 @@ public class AlchemicalBombItem extends Item {
     @SuppressWarnings("deprecation")
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             items.add(this.getDefaultInstance());   // Add basic water bomb separately
             for (Potion potion : Registry.POTION) {
                 if (!potion.getEffects().isEmpty()) {

@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +33,7 @@ public class VoidTurbineBlock extends AbstractWindGeneratorBlock {
     }
 
     @Override
-    protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, Random random) {
+    protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, RandomSource random) {
         Vec3 startPoint = super.getParticleStartPoint(state, level, pos, random);
         
         // Shift the start point forward along the block's facing vector

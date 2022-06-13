@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -61,7 +60,7 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     
     @SuppressWarnings("deprecation")
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);
@@ -88,7 +87,7 @@ public abstract class AbstractPhasingLogBlock extends StrippableLogBlock {
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
         if (state.getValue(PULSING) && random.nextInt(4) == 0) {
             FxDispatcher.INSTANCE.spellImpact(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 2, this.getPulseColor());

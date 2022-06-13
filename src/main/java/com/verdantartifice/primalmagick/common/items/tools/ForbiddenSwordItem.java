@@ -31,7 +31,7 @@ public class ForbiddenSwordItem extends SwordItem {
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         // Populate the creative pane with a pre-enchanted sword
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             items.add(this.getDefaultInstance());
         }
     }

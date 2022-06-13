@@ -156,7 +156,7 @@ public class ConcoctionItem extends Item {
     @SuppressWarnings("deprecation")
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             items.add(this.getDefaultInstance());   // Add basic water concoction separately
             for (ConcoctionType concoctionType : ConcoctionType.values()) {
                 if (concoctionType.hasDrinkablePotion()) {

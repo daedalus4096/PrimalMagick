@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -101,6 +102,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected static final float MAX_STABILITY = 25.0F;
     protected static final int RITUAL_SOUND_LENGTH = 58;
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final Random RNG = new Random();
     
     protected final WeightedRandomBag<Mishap> mishaps;
     
@@ -449,8 +451,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         
         // Randomize the generated steps, trying to space props evenly between batches of offerings
-        Collections.shuffle(offeringSteps, this.level.random);
-        Collections.shuffle(propSteps, this.level.random);
+        Collections.shuffle(offeringSteps, RNG);
+        Collections.shuffle(propSteps, RNG);
         int numOfferings = offeringSteps.size();
         int numProps = propSteps.size();
         int[] offeringBuckets = new int[numProps + 1];
@@ -461,7 +463,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             for (int index = 0; index < numProps + 1; index++) {
                 leftoverBuckets.add(index < leftoverOfferings ? 1 : 0);
             }
-            Collections.shuffle(leftoverBuckets, this.level.random);
+            Collections.shuffle(leftoverBuckets, RNG);
             for (int index = 0; index < offeringBuckets.length; index++) {
                 offeringBuckets[index] += leftoverBuckets.get(index);
             }
@@ -528,8 +530,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         this.symmetryDelta = this.calculateSymmetryDelta();
         
-        Collections.shuffle(this.pedestalPositions, this.level.random);
-        Collections.shuffle(this.propPositions, this.level.random);
+        Collections.shuffle(this.pedestalPositions, RNG);
+        Collections.shuffle(this.propPositions, RNG);
     }
     
     protected void scanPosition(BlockPos pos, Queue<BlockPos> toScan, Set<BlockPos> history) {

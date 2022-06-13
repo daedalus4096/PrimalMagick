@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
 
@@ -11,6 +9,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -108,7 +107,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     public abstract ParticleOptions getParticleType();
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(POWERED)) {
             double lifetime = 20D;
             int power = level.getBestNeighborSignal(pos);
@@ -119,7 +118,7 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
         }
     }
     
-    protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, Random random) {
+    protected Vec3 getParticleStartPoint(BlockState state, Level level, BlockPos pos, RandomSource random) {
         Direction dir = state.getValue(FACING);
         Vec3 dirUnit = new Vec3(dir.getNormal().getX(), dir.getNormal().getY(), dir.getNormal().getZ());
         Vec3 center = Vec3.atCenterOf(pos);

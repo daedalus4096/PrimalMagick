@@ -29,16 +29,16 @@ public class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         // Add all of the mod's data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
-        generator.addProvider(new Recipes(generator));
-        generator.addProvider(new BlockLootTables(generator));
-        generator.addProvider(new EntityLootTables(generator));
-        generator.addProvider(new BlockTagsProvider(generator, event.getExistingFileHelper()));
-        generator.addProvider(new ItemTagsProvider(generator, event.getExistingFileHelper()));
-        generator.addProvider(new EntityTypeTagsProvider(generator, event.getExistingFileHelper()));
-        generator.addProvider(new BiomeTagsProvider(generator, event.getExistingFileHelper()));
-        generator.addProvider(new AffinityProvider(generator));
-        generator.addProvider(new ResearchProvider(generator));
-        generator.addProvider(new ProjectProvider(generator));
-        generator.addProvider(new LootModifierProvider(generator));
+        generator.addProvider(event.includeServer(), new Recipes(generator));
+        generator.addProvider(event.includeServer(), new BlockLootTables(generator));
+        generator.addProvider(event.includeServer(), new EntityLootTables(generator));
+        generator.addProvider(event.includeServer(), new BlockTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new ItemTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new EntityTypeTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new BiomeTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new AffinityProvider(generator));
+        generator.addProvider(event.includeServer(), new ResearchProvider(generator));
+        generator.addProvider(event.includeServer(), new ProjectProvider(generator));
+        generator.addProvider(event.includeServer(), new LootModifierProvider(generator));
     }
 }

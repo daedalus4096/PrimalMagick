@@ -199,7 +199,7 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         // Populate the creative pane with a NBT-complete modular wand(s)
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             ItemStack stack = new ItemStack(this);
             this.setWandCore(stack, WandCore.HEARTWOOD);
             this.setWandCap(stack, WandCap.IRON);

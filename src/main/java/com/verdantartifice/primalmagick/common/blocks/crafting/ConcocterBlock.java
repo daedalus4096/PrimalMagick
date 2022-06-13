@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import java.util.List;
-import java.util.Random;
 
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -15,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -162,7 +162,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         double d0 = (double)pos.getX() + 0.4D + (double)rand.nextFloat() * 0.2D;
         double d1 = (double)pos.getY() + 0.7D + (double)rand.nextFloat() * 0.3D;
         double d2 = (double)pos.getZ() + 0.4D + (double)rand.nextFloat() * 0.2D;

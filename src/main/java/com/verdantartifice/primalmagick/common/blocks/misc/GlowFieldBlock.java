@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -69,7 +68,7 @@ public class GlowFieldBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random rng) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng) {
         if (state.getValue(FADING)) {
             if (state.getValue(LIGHT) <= 1) {
                 level.removeBlock(pos, false);

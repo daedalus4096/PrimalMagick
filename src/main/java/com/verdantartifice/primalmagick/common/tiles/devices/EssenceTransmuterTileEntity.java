@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -39,6 +38,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -221,7 +221,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     }
     
     @Nonnull
-    protected Source getNextSource(Source inputSource, Random rng) {
+    protected Source getNextSource(Source inputSource, RandomSource rng) {
         if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
             // Generate a new random, known source different from the input
             WeightedRandomBag<Source> bag = new WeightedRandomBag<>();

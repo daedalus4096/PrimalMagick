@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.BlockPos;
@@ -9,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -67,7 +66,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
     }
     
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Remove the leaves if too far from a log
         if (!state.getValue(PERSISTENT) && state.getValue(DISTANCE) == 7) {
             dropResources(state, worldIn, pos);
@@ -82,7 +81,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
     }
     
     @Override
-    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
+    public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource rand) {
         worldIn.setBlock(pos, updateDistance(state, worldIn, pos), Block.UPDATE_ALL);
     }
     
@@ -131,7 +130,7 @@ public abstract class AbstractPhasingLeavesBlock extends Block implements IForge
     }
     
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         if (worldIn.isRainingAt(pos.above())) {
             if (rand.nextInt(15) == 1) {
                 BlockPos blockpos = pos.below();
