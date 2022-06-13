@@ -1,20 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.theorycrafting;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -23,9 +17,9 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +30,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 public class ProjectProvider implements DataProvider {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
     private static final Logger LOGGER = LogManager.getLogger();
     protected final DataGenerator generator;
     
@@ -45,7 +38,7 @@ public class ProjectProvider implements DataProvider {
     }
 
     @Override
-    public void run(HashCache cache) throws IOException {
+    public void run(CachedOutput cache) throws IOException {
         Path path = this.generator.getOutputFolder();
         Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
         this.registerProjects((project) -> {
@@ -58,17 +51,9 @@ public class ProjectProvider implements DataProvider {
         }
     }
 
-    private void saveProject(HashCache cache, JsonObject json, Path path) {
+    private void saveProject(CachedOutput cache, JsonObject json, Path path) {
         try {
-            String jsonStr = GSON.toJson((JsonElement)json);
-            String hash = SHA1.hashUnencodedChars(jsonStr).toString();
-            if (!Objects.equals(cache.getHash(path), hash) || !Files.exists(path)) {
-                Files.createDirectories(path.getParent());
-                try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-                    writer.write(jsonStr);
-                }
-            }
-            cache.putNew(path, hash);
+            DataProvider.saveStable(cache, json, path);
         } catch (IOException e) {
             LOGGER.error("Couldn't save theorycrafting project {}", path, e);
         }
