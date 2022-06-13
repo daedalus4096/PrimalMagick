@@ -48,7 +48,6 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -91,7 +90,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -100,7 +98,6 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
@@ -315,9 +312,10 @@ public class PlayerEvents {
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
         if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.level.isDay() &&
-                player.getBrightness() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
+                player.getLightLevelDependentMagicValue() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
         }
