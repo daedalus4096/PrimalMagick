@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Server data container for the grimoire GUI.
@@ -45,5 +46,10 @@ public class GrimoireContainer extends AbstractContainerMenu {
     public void setTopicHistory(List<AbstractResearchTopic> history) {
         this.history.clear();
         this.history.addAll(history);
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        return ItemStack.EMPTY;
     }
 }
