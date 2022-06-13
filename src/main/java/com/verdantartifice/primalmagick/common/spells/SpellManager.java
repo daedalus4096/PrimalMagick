@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.spells;
 
-import java.awt.TextComponent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,7 +26,6 @@ import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -198,9 +196,9 @@ public class SpellManager {
             if (player != null) {
                 SpellPackage spell = wand.getActiveSpell(wandStack);
                 if (spell == null) {
-                    player.sendMessage(Component.translatable("event.primalmagick.cycle_spell.none"), Util.NIL_UUID);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell.none"));
                 } else {
-                    player.sendMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getName()), Util.NIL_UUID);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.cycle_spell", spell.getName()));
                 }
             }
         }

@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.wands;
 
-import java.awt.TextComponent;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -29,7 +28,6 @@ import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -502,7 +500,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, hintKey);
-                    player.sendMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
                 }
             }

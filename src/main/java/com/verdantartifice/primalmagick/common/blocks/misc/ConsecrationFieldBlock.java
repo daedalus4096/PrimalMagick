@@ -42,7 +42,7 @@ public class ConsecrationFieldBlock extends Block implements SimpleWaterloggedBl
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     
     public ConsecrationFieldBlock() {
-        super(Block.Properties.of(Material.AIR).strength(-1, 3600000).lightLevel((state) -> { return 15; }).noDrops().noOcclusion());
+        super(Block.Properties.of(Material.AIR).strength(-1, 3600000).lightLevel((state) -> { return 15; }).noLootTable().noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
     }
 

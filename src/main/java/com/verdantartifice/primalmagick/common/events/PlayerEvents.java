@@ -543,7 +543,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.sendMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+        player.sendSystemMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN));
     }
     
     @SubscribeEvent
@@ -640,7 +640,7 @@ public class PlayerEvents {
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
             for (Player player : nearby) {
-                player.sendMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));
             }
         }
     }
