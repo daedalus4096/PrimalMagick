@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -67,7 +68,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
 
     @Override
-    protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
+    protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, RandomSource rand, BoundingBox sbb) {
         if ("font".equals(function)) {
             worldIn.setBlock(pos, this.getFont().defaultBlockState(), Block.UPDATE_ALL);
         }

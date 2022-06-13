@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
@@ -33,7 +32,7 @@ public class BonusNuggetModifier extends LootModifier {
     }
 
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         int count = 0;
         int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get(), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
