@@ -36,7 +36,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 
-import net.minecraft.Util;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;
@@ -46,7 +46,6 @@ import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -59,7 +58,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class PrimalMagickCommand {
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
         LiteralCommandNode<CommandSourceStack> node = dispatcher.register(Commands.literal("primalmagick")
             .requires((source) -> { return source.hasPermission(2); })
             .then(Commands.literal("reset")
@@ -115,7 +114,7 @@ public class PrimalMagickCommand {
                 .then(Commands.argument("target", EntityArgument.player())
                     .then(Commands.literal("grant")
                         // /pm scans <target> grant <item>
-                        .then(Commands.argument("item", ItemArgument.item()).executes((context) -> { return grantScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ItemArgument.getItem(context, "item")); }))
+                        .then(Commands.argument("item", ItemArgument.item(buildContext)).executes((context) -> { return grantScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target"), ItemArgument.getItem(context, "item")); }))
                     )
                     // /pm scans <target> grant_all
                     .then(Commands.literal("grant_all").executes((context) -> { return grantAllScanResearch(context.getSource(), EntityArgument.getPlayer(context, "target")); }))

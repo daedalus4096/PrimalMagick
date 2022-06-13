@@ -83,13 +83,14 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -589,11 +590,11 @@ public class PlayerEvents {
     }
     
     @SubscribeEvent
-    public static void onUseHoe(UseHoeEvent event) {
+    public static void onUseHoe(BlockEvent.BlockToolModificationEvent event) {
         UseOnContext context = event.getContext();
         ItemStack stack = context.getItemInHand();
         int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.VERDANT.get(), stack);
-        if (enchantLevel > 0) {
+        if (!event.isSimulated() && event.getToolAction().equals(ToolActions.HOE_TILL) && enchantLevel > 0) {
             Player player = event.getPlayer();
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
@@ -605,16 +606,12 @@ public class PlayerEvents {
                             mealBlock.performBonemeal(serverLevel, level.random, pos, state);
                         }
                         
-                        // Damage the stack; do one less damage here than needed, as setting the event result to ALLOW will cause
-                        // one damage to be applied automatically.
-                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1)) - 1;
+                        // Damage the stack and cancel the rest of the hoe functionality.
+                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1));
                         if (damage > 0) {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
-                        
-                        // Setting an ALLOW result causes the rest of the hoe functionality to be skipped, and one damage to be
-                        // applied to the stack.
-                        event.setResult(Event.Result.ALLOW);
+                        event.setCanceled(true);
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);

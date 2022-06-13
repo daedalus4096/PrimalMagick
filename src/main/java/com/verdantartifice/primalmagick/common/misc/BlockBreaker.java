@@ -182,7 +182,7 @@ public class BlockBreaker {
             
             // If the experience for the block was zero because the player is using a Break spell and thus the wrong tool type, recalculate
             if (exp == 0 && !ForgeHooks.isCorrectToolForDrops(state, this.player)) {
-                exp = state.getExpDrop(world, this.pos, this.getFortuneLevel(), this.getSilkTouchLevel());
+                exp = state.getExpDrop(world, world.random, this.pos, this.getFortuneLevel(), this.getSilkTouchLevel());
             }
             
             if ((block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !serverPlayer.canUseGameMasterBlocks()) {
