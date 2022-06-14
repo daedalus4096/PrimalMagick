@@ -51,7 +51,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
                     PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                         recipeBook.deserializeNBT(message.data, player.level.getRecipeManager());
                     });
-                    ArcaneSearchRegistry.getInstance().populate();
+                    ArcaneSearchRegistry.populate();
                 }
             });
             

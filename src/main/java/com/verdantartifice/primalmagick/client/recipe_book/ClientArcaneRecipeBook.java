@@ -84,6 +84,7 @@ public class ClientArcaneRecipeBook {
         return retVal;
     }
     
+    @SuppressWarnings("deprecation")
     protected static ArcaneRecipeBookCategories getCategory(Recipe<?> recipe) {
         RecipeType<?> type = recipe.getType();
         if (type == RecipeTypesPM.ARCANE_CRAFTING) {
