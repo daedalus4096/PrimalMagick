@@ -17,7 +17,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -66,7 +65,7 @@ public class BreakSpellPayload extends AbstractSpellPayload {
             BlockState state = world.getBlockState(pos);
             float durability = (float)Math.sqrt(100.0F * state.getDestroySpeed(world, pos));
             boolean silk = (this.getPropertyValue("silk_touch") == 1);
-            int treasure = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.TREASURE.get(), spellSource);
+            int treasure = spellSource.getEnchantmentLevel(EnchantmentsPM.TREASURE.get());
             BlockBreaker breaker = new BlockBreaker.Builder().power(this.getModdedPropertyValue("power", spell, spellSource)).target(pos, state).durability(durability).player((Player)caster).tool(spellSource).silkTouch(silk).fortune(treasure).alwaysDrop().build();
             BlockBreaker.schedule(world, 1, breaker);
         }

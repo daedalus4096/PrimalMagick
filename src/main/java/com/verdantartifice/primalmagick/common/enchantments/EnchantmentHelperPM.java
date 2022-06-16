@@ -15,6 +15,6 @@ public class EnchantmentHelperPM {
     }
     
     public static boolean hasRegrowth(ItemStack stack) {
-        return EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.REGROWTH.get(), stack) > 0;
+        return stack.getEnchantmentLevel(EnchantmentsPM.REGROWTH.get()) > 0;
     }
 }

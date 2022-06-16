@@ -114,7 +114,7 @@ public class EntityEvents {
         int currentDuration = event.getDuration();
         int maxDuration = stack.getUseDuration();
         int delta = maxDuration - currentDuration;
-        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BULWARK.get(), stack);
+        int enchantLevel = stack.getEnchantmentLevel(EnchantmentsPM.BULWARK.get());
         if (stack.getItem() instanceof ShieldItem && delta > 0 && delta % 5 == 0 && enchantLevel > 0) {
             MobEffectInstance effectInstance = entity.getEffect(MobEffects.DAMAGE_RESISTANCE);
             int amplifier = (effectInstance == null) ? 0 : Mth.clamp(1 + effectInstance.getAmplifier(), 0, enchantLevel - 1);

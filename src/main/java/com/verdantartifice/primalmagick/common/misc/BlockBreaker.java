@@ -217,9 +217,9 @@ public class BlockBreaker {
             return this.fortuneOverride.get();
         } else if (!this.tool.isEmpty()) {
             if (this.tool.getItem() instanceof IWand) {
-                return EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.TREASURE.get(), this.tool);
+                return this.tool.getEnchantmentLevel(EnchantmentsPM.TREASURE.get());
             } else {
-                return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, this.tool);
+                return this.tool.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE);
             }
         } else {
             return 0;
@@ -230,7 +230,7 @@ public class BlockBreaker {
         if (this.silkTouchOverride.isPresent()) {
             return this.silkTouchOverride.get() ? 1 : 0;
         } else if (!this.tool.isEmpty()) {
-            return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, this.tool);
+            return this.tool.getEnchantmentLevel(Enchantments.SILK_TOUCH);
         } else {
             return 0;
         }
