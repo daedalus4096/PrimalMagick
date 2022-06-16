@@ -52,7 +52,7 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
     @Nonnull
     public Component getName() {
         // Color spell names according to their rarity, like with items
-        return Component.literal(this.name).withStyle(this.getRarity().color);
+        return Component.literal(this.name).withStyle(this.getRarity().getStyleModifier());
     }
     
     public void setName(@Nullable String name) {

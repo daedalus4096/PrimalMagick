@@ -61,7 +61,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = this.getStackToDisplay();
         List<Component> textList = new ArrayList<>();
-        textList.add(stack.getHoverName().copy().withStyle(stack.getItem().getRarity(stack).color));
+        textList.add(stack.getHoverName().copy().withStyle(stack.getItem().getRarity(stack).getStyleModifier()));
         stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         return textList;
     }
