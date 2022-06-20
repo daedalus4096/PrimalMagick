@@ -131,7 +131,7 @@ public class ArcaneCraftingResultSlot extends Slot {
         
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         NonNullList<ItemStack> remainingList;
-        Optional<IArcaneRecipe> arcaneOptional = thePlayer.level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInventory, thePlayer.level);
+        Optional<IArcaneRecipe> arcaneOptional = thePlayer.level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, thePlayer.level);
         if (arcaneOptional.isPresent()) {
             remainingList = arcaneOptional.get().getRemainingItems(this.craftingInventory);
         } else {

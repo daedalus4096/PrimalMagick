@@ -408,7 +408,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);
         }
-        Optional<IRitualRecipe> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL, inv, this.level);
+        Optional<IRitualRecipe> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv, this.level);
         if (recipeOpt.isPresent()) {
             // Determine if the player has the research and mana to start this recipe
             IRitualRecipe recipe = recipeOpt.get();

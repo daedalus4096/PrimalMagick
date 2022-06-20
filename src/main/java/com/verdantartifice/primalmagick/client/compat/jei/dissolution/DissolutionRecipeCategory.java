@@ -6,7 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.compat.jei.RecipeTypesPM;
+import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -75,6 +75,6 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
 
     @Override
     public RecipeType<IDissolutionRecipe> getRecipeType() {
-        return RecipeTypesPM.DISSOLUTION;
+        return JeiRecipeTypesPM.DISSOLUTION;
     }
 }

@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 public interface IRunecarvingRecipe extends Recipe<Container>, IHasRequiredResearch {
     @Override
     default RecipeType<?> getType() {
-        return RecipeTypesPM.RUNECARVING;
+        return RecipeTypesPM.RUNECARVING.get();
     }
     
     @Override

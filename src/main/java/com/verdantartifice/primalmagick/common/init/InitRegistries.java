@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -28,6 +29,7 @@ public class InitRegistries {
         ContainersPM.init();
         EntityTypesPM.init();
         EffectsPM.init();
+        RecipeTypesPM.init();
         RecipeSerializersPM.init();
         SoundsPM.init();
         StructurePieceTypesPM.init();

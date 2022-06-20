@@ -14,7 +14,7 @@ import mezz.jei.api.recipe.RecipeType;
  * 
  * @author Daedalus4096
  */
-public class RecipeTypesPM {
+public class JeiRecipeTypesPM {
     public static final RecipeType<IArcaneRecipe> ARCANE_CRAFTING = RecipeType.create(PrimalMagick.MODID, "arcane_workbench", IArcaneRecipe.class);
     public static final RecipeType<IConcoctingRecipe> CONCOCTING = RecipeType.create(PrimalMagick.MODID, "concocter", IConcoctingRecipe.class);
     public static final RecipeType<IRunecarvingRecipe> RUNECARVING = RecipeType.create(PrimalMagick.MODID, "runecarving_table", IRunecarvingRecipe.class);

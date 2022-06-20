@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
-import com.verdantartifice.primalmagick.client.compat.jei.RecipeTypesPM;
+import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
@@ -38,6 +38,6 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
 
     @Override
     public RecipeType<IRunecarvingRecipe> getRecipeType() {
-        return RecipeTypesPM.RUNECARVING;
+        return JeiRecipeTypesPM.RUNECARVING;
     }
 }

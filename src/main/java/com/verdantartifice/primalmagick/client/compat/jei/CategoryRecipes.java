@@ -42,27 +42,27 @@ public class CategoryRecipes {
     
     public List<IArcaneRecipe> getArcaneRecipes(IRecipeCategory<IArcaneRecipe> category) {
         CategoryRecipeValidatorPM<IArcaneRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.ARCANE_CRAFTING, validator);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.ARCANE_CRAFTING.get(), validator);
     }
     
     public List<IConcoctingRecipe> getConcoctingRecipes(IRecipeCategory<IConcoctingRecipe> category) {
         CategoryRecipeValidatorPM<IConcoctingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.CONCOCTING, validator);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.CONCOCTING.get(), validator);
     }
     
     public List<IRunecarvingRecipe> getRunecarvingRecipes(IRecipeCategory<IRunecarvingRecipe> category) {
         CategoryRecipeValidatorPM<IRunecarvingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 2, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RUNECARVING, validator);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RUNECARVING.get(), validator);
     }
     
     public List<IDissolutionRecipe> getDissolutionRecipes(IRecipeCategory<IDissolutionRecipe> category) {
         CategoryRecipeValidatorPM<IDissolutionRecipe> validator = new CategoryRecipeValidatorPM<>(category, 1, true);
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.DISSOLUTION, validator);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.DISSOLUTION.get(), validator);
     }
     
     public List<IRitualRecipe> getRitualRecipes(IRecipeCategory<IRitualRecipe> category) {
         CategoryRecipeValidatorPM<IRitualRecipe> validator = new CategoryRecipeValidatorPM<>(category, 100, true);  // TODO Fix max inputs for JEI rituals
-        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RITUAL, validator);
+        return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RITUAL.get(), validator);
     }
     
     private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {

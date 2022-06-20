@@ -55,7 +55,6 @@ public class ModLifecycleEvents {
     public static void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
         
-        InitRecipes.initRecipeTypes();
         InitRecipes.initWandTransforms();
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();

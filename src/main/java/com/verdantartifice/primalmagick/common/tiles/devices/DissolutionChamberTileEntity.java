@@ -140,7 +140,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
             }
 
             SimpleContainer testInv = new SimpleContainer(entity.items.get(INPUT_SLOT_INDEX));
-            IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION, testInv, level).orElse(null);
+            IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
             if (entity.canDissolve(testInv, recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
