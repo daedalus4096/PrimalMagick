@@ -1,26 +1,26 @@
 {
-  "key": "MASTER_RITUAL",
-  "name": "primalmagick.research.master_ritual.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
+  "key": "MASTER_RITUAL",
+  "name": "primalmagick.research.master_ritual.title",
   "parents": [
     "RITUAL_LECTERN",
     "RITUAL_BELL"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.master_ritual.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "t_rituals_completed_master"
-      ]
+      ],
+      "text": "primalmagick.research.master_ritual.text.stage.1"
     },
     {
       "text": "primalmagick.research.master_ritual.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

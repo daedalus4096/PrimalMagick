@@ -1,18 +1,18 @@
 {
-  "key": "EARTHSHATTER_HAMMER",
-  "name": "primalmagick.research.earthshatter_hammer.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:earthshatter_hammer"
   },
+  "key": "EARTHSHATTER_HAMMER",
+  "name": "primalmagick.research.earthshatter_hammer.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.earthshatter_hammer.text.stage.1",
       "required_item": [
         "minecraft:raw_iron",
         "minecraft:raw_gold",
@@ -20,10 +20,10 @@
       ],
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.1"
     },
     {
-      "text": "primalmagick.research.earthshatter_hammer.text.stage.2",
       "attunements": {
         "earth": 2
       },
@@ -41,8 +41,8 @@
         "primalmagick:cobblestone_from_earthshatter_hammer",
         "primalmagick:gravel_from_earthshatter_hammer",
         "primalmagick:sand_from_earthshatter_hammer"
-      ]
+      ],
+      "text": "primalmagick.research.earthshatter_hammer.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

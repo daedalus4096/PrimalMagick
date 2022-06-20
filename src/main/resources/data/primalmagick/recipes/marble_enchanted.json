@@ -1,13 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
-  "research": "EXPERT_MANAWEAVING",
-  "mana": {
-    "earth": 1,
-    "sea": 1,
-    "sky": 1,
-    "sun": 1,
-    "moon": 1
-  },
   "ingredients": [
     {
       "item": "primalmagick:marble_raw"
@@ -37,8 +29,16 @@
       "item": "primalmagick:marble_raw"
     }
   ],
+  "mana": {
+    "earth": 1,
+    "moon": 1,
+    "sea": 1,
+    "sky": 1,
+    "sun": 1
+  },
+  "research": "EXPERT_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_enchanted",
-    "count": 9
+    "count": 9,
+    "item": "primalmagick:marble_enchanted"
   }
 }

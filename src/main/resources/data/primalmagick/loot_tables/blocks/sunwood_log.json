@@ -2,38 +2,38 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "primalmagick:sunwood_log"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "primalmagick:sunwood_log",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "pulsing": "true"
+          }
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "primalmagick:heartwood"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "primalmagick:sunwood_log",
-          "properties": {
-            "pulsing": "true"
-          }
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

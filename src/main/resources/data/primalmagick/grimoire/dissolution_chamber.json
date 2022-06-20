@@ -1,11 +1,12 @@
 {
-  "key": "DISSOLUTION_CHAMBER",
-  "name": "primalmagick.research.dissolution_chamber.title",
+  "addenda": [],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:dissolution_chamber"
   },
+  "key": "DISSOLUTION_CHAMBER",
+  "name": "primalmagick.research.dissolution_chamber.title",
   "parents": [
     "MASTER_MAGITECH",
     "MASTER_MANAWEAVING",
@@ -13,7 +14,6 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.dissolution_chamber.text.stage.1",
       "required_item": [
         "primalmagick:iron_grit;20",
         "primalmagick:copper_grit;20",
@@ -21,10 +21,10 @@
       ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.dissolution_chamber.text.stage.1"
     },
     {
-      "text": "primalmagick.research.dissolution_chamber.text.stage.2",
       "attunements": {
         "earth": 3
       },
@@ -43,8 +43,8 @@
         "primalmagick:blaze_powder_from_dissolving_blaze_rod",
         "primalmagick:string_from_dissolving_wool",
         "primalmagick:quartz_from_dissolving_quartz_block"
-      ]
+      ],
+      "text": "primalmagick.research.dissolution_chamber.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

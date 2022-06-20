@@ -1,29 +1,29 @@
 {
-  "key": "SUPREME_RUNEWORKING",
-  "name": "primalmagick.research.supreme_runeworking.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
+  "key": "SUPREME_RUNEWORKING",
+  "name": "primalmagick.research.supreme_runeworking.title",
   "parents": [
     "RUNE_POWER"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.supreme_runeworking.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_runeworking_supreme",
         "t_items_runescribed_supreme"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_runeworking.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_runeworking.text.stage.2",
       "recipes": [
         "primalmagick:runescribing_altar_heavenly"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_runeworking.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

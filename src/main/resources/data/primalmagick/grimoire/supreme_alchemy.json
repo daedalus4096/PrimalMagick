@@ -1,26 +1,26 @@
 {
-  "key": "SUPREME_ALCHEMY",
-  "name": "primalmagick.research.supreme_alchemy.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
+  "key": "SUPREME_ALCHEMY",
+  "name": "primalmagick.research.supreme_alchemy.title",
   "parents": [
     "CALCINATOR_FORBIDDEN",
     "HEXIUM"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.supreme_alchemy.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_alchemy_supreme"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_alchemy.text.stage.1"
     },
     {
       "text": "primalmagick.research.supreme_alchemy.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

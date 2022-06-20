@@ -1,30 +1,30 @@
 {
-  "key": "WAND_CHARGER",
-  "name": "primalmagick.research.wand_charger.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:wand_charger"
   },
+  "key": "WAND_CHARGER",
+  "name": "primalmagick.research.wand_charger.title",
   "parents": [
     "BASIC_MANAWEAVING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_charger.text.stage.1",
       "required_item": [
         "tag:primalmagick:essences/terrestrial_dusts"
       ],
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_charger.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_charger.text.stage.2",
       "recipes": [
         "primalmagick:wand_charger"
-      ]
+      ],
+      "text": "primalmagick.research.wand_charger.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

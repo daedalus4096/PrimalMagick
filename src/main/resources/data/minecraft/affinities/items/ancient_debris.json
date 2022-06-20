@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:ancient_debris",
-  "base": "minecraft:netherrack",
   "add": {
     "earth": 5,
     "infernal": 10
-  }
+  },
+  "base": "minecraft:netherrack",
+  "target": "minecraft:ancient_debris"
 }

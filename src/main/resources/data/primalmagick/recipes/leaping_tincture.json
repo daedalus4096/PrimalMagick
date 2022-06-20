@@ -1,15 +1,11 @@
 {
   "type": "primalmagick:concocting",
   "group": "leaping",
-  "research": "CONCOCTING_TINCTURES",
-  "mana": {
-    "infernal": 1
-  },
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagick:concoction",
       "count": 1,
+      "item": "primalmagick:concoction",
       "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
@@ -22,9 +18,13 @@
       "item": "minecraft:rabbit_foot"
     }
   ],
+  "mana": {
+    "infernal": 1
+  },
+  "research": "CONCOCTING_TINCTURES",
   "result": {
-    "item": "primalmagick:concoction",
     "count": 1,
+    "item": "primalmagick:concoction",
     "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:leaping\"}"
   }
 }

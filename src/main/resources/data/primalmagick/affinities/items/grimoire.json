@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagick:grimoire",
-  "base": "minecraft:enchanted_book"
+  "base": "minecraft:enchanted_book",
+  "target": "primalmagick:grimoire"
 }

@@ -1,35 +1,35 @@
 {
-  "key": "SPELL_PAYLOAD_DRAIN_SOUL",
-  "name": "primalmagick.research.spell_payload_drain_soul.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/infernal.png"
   },
+  "key": "SPELL_PAYLOAD_DRAIN_SOUL",
+  "name": "primalmagick.research.spell_payload_drain_soul.title",
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_FLAME"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.spell_payload_drain_soul.text.stage.1",
       "required_item": [
         "minecraft:soul_sand",
         "minecraft:soul_soil"
       ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_drain_soul.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_payload_drain_soul.text.stage.2",
       "attunements": {
         "infernal": 3
       },
       "recipes": [
         "primalmagick:soul_gem"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_drain_soul.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

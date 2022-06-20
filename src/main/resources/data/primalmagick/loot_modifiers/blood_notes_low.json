@@ -1,20 +1,20 @@
 {
+  "type": "primalmagick:blood_notes",
   "conditions": [
     {
       "condition": "minecraft:entity_properties",
+      "entity": "this",
       "predicate": {
         "type": "#primalmagick:drops_blood_notes_low"
-      },
-      "entity": "this"
+      }
     },
     {
       "condition": "minecraft:killed_by_player"
     },
     {
-      "condition": "minecraft:random_chance_with_looting",
       "chance": 0.25,
+      "condition": "minecraft:random_chance_with_looting",
       "looting_multiplier": 0.25
     }
-  ],
-  "type": "primalmagick:blood_notes"
+  ]
 }

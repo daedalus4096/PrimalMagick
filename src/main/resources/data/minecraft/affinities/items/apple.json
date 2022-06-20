@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:apple",
   "set": {
     "earth": 5,
     "sun": 5
-  }
+  },
+  "target": "minecraft:apple"
 }

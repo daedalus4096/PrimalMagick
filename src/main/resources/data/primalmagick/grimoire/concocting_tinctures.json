@@ -1,11 +1,36 @@
 {
-  "key": "CONCOCTING_TINCTURES",
-  "name": "primalmagick.research.concocting_tinctures.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:healing_tincture",
+        "primalmagick:strong_healing_tincture",
+        "primalmagick:regeneration_tincture",
+        "primalmagick:long_regeneration_tincture",
+        "primalmagick:strong_regeneration_tincture"
+      ],
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:fire_resistance_tincture",
+        "primalmagick:long_fire_resistance_tincture"
+      ],
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "text": "primalmagick.research.concocting_tinctures.text.addenda.2"
+    }
+  ],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:concocter"
   },
+  "key": "CONCOCTING_TINCTURES",
+  "name": "primalmagick.research.concocting_tinctures.title",
   "parents": [
     "EXPERT_MAGITECH",
     "SKYGLASS",
@@ -13,13 +38,12 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.concocting_tinctures.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.concocting_tinctures.text.stage.1"
     },
     {
-      "text": "primalmagick.research.concocting_tinctures.text.stage.2",
       "recipes": [
         "primalmagick:skyglass_flask",
         "primalmagick:concocter",
@@ -44,32 +68,8 @@
         "primalmagick:slow_falling_tincture",
         "primalmagick:long_slow_falling_tincture",
         "primalmagick:luck_tincture"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.concocting_tinctures.text.addenda.1",
-      "required_research": [
-        "t_discover_blood"
       ],
-      "recipes": [
-        "primalmagick:healing_tincture",
-        "primalmagick:strong_healing_tincture",
-        "primalmagick:regeneration_tincture",
-        "primalmagick:long_regeneration_tincture",
-        "primalmagick:strong_regeneration_tincture"
-      ]
-    },
-    {
-      "text": "primalmagick.research.concocting_tinctures.text.addenda.2",
-      "required_research": [
-        "t_discover_infernal"
-      ],
-      "recipes": [
-        "primalmagick:fire_resistance_tincture",
-        "primalmagick:long_fire_resistance_tincture"
-      ]
+      "text": "primalmagick.research.concocting_tinctures.text.stage.2"
     }
   ]
 }

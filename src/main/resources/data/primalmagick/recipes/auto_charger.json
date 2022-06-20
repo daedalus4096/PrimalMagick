@@ -1,19 +1,9 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "AUTO_CHARGER",
-  "mana": {
-    "earth": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20,
-    "moon": 20
-  },
-  "pattern": [
-    "EME",
-    "PCP",
-    "EME"
-  ],
   "key": {
+    "C": {
+      "item": "primalmagick:wand_charger"
+    },
     "E": {
       "tag": "forge:gems/emerald"
     },
@@ -22,11 +12,21 @@
     },
     "P": {
       "item": "primalmagick:magitech_parts_enchanted"
-    },
-    "C": {
-      "item": "primalmagick:wand_charger"
     }
   },
+  "mana": {
+    "earth": 20,
+    "moon": 20,
+    "sea": 20,
+    "sky": 20,
+    "sun": 20
+  },
+  "pattern": [
+    "EME",
+    "PCP",
+    "EME"
+  ],
+  "research": "AUTO_CHARGER",
   "result": {
     "item": "primalmagick:auto_charger"
   }

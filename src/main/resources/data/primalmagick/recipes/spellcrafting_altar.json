@@ -1,11 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "BASIC_SORCERY",
-  "pattern": [
-    "MMM",
-    "MSM",
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_raw"
@@ -14,6 +8,12 @@
       "item": "primalmagick:spell_scroll_blank"
     }
   },
+  "pattern": [
+    "MMM",
+    "MSM",
+    "MMM"
+  ],
+  "research": "BASIC_SORCERY",
   "result": {
     "item": "primalmagick:spellcrafting_altar"
   }

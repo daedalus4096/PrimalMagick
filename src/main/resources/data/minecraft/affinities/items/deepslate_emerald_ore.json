@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:deepslate_emerald_ore",
-  "base": "minecraft:deepslate",
   "add": {
     "earth": 20
-  }
+  },
+  "base": "minecraft:deepslate",
+  "target": "minecraft:deepslate_emerald_ore"
 }

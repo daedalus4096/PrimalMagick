@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:tropical_fish",
   "values": {
-    "sea": 10,
-    "blood": 5
+    "blood": 5,
+    "sea": 10
   }
 }

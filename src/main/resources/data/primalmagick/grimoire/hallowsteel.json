@@ -1,11 +1,12 @@
 {
-  "key": "HALLOWSTEEL",
-  "name": "primalmagick.research.hallowsteel.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:hallowsteel_ingot"
   },
+  "key": "HALLOWSTEEL",
+  "name": "primalmagick.research.hallowsteel.title",
   "parents": [
     "SUPREME_ALCHEMY",
     "HEXIUM",
@@ -14,19 +15,18 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.hallowsteel.text.stage.1",
-      "required_item": [
-        "primalmagick:essence_crystal_hallowed"
-      ],
       "required_craft": [
         "primalmagick:hexium_ingot"
       ],
+      "required_item": [
+        "primalmagick:essence_crystal_hallowed"
+      ],
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.hallowsteel.text.stage.1"
     },
     {
-      "text": "primalmagick.research.hallowsteel.text.stage.2",
       "attunements": {
         "hallowed": 3
       },
@@ -49,8 +49,8 @@
         "primalmagick:hallowsteel_legs",
         "primalmagick:hallowsteel_feet",
         "primalmagick:hallowsteel_shield"
-      ]
+      ],
+      "text": "primalmagick.research.hallowsteel.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

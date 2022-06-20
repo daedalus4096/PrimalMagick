@@ -1,18 +1,18 @@
 {
-  "key": "SOURCE_VOID",
-  "name": "primalmagick.research.source_void.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/void.png"
   },
+  "key": "SOURCE_VOID",
+  "name": "primalmagick.research.source_void.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_void"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_void.text.stage.1",
       "required_item": [
         "tag:forge:end_stones",
         "tag:forge:ender_pearls"
@@ -22,14 +22,14 @@
       ],
       "required_research": [
         "t_mana_spent_void_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_void.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_void.text.stage.2",
       "attunements": {
         "void": 5
-      }
+      },
+      "text": "primalmagick.research.source_void.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

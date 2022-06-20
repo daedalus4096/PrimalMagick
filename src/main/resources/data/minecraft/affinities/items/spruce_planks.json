@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:spruce_planks",
-  "base": "minecraft:oak_planks"
+  "base": "minecraft:oak_planks",
+  "target": "minecraft:spruce_planks"
 }

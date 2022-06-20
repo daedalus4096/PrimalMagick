@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "primalmagick:ore_rock_salt_lower",
+  "step": "underground_ores"
+}

@@ -1,27 +1,27 @@
 {
-  "key": "DOWSING_ROD",
-  "name": "primalmagick.research.dowsing_rod.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:dowsing_rod"
   },
+  "key": "DOWSING_ROD",
+  "name": "primalmagick.research.dowsing_rod.title",
   "parents": [
     "BASIC_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.dowsing_rod.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.dowsing_rod.text.stage.1"
     },
     {
-      "text": "primalmagick.research.dowsing_rod.text.stage.2",
       "recipes": [
         "primalmagick:dowsing_rod"
-      ]
+      ],
+      "text": "primalmagick.research.dowsing_rod.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

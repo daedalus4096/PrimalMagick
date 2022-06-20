@@ -1,18 +1,18 @@
 {
-  "key": "primalmagick:hit_the_books",
-  "required_material_count_override": 1,
-  "base_success_chance_override": 0.5,
-  "reward_multiplier": 0.5,
   "aid_blocks": [
     "minecraft:bookshelf"
   ],
+  "base_success_chance_override": 0.5,
+  "key": "primalmagick:hit_the_books",
   "material_options": [
     {
       "type": "item",
-      "stack": "minecraft:book",
       "consumed": false,
       "match_nbt": false,
+      "stack": "minecraft:book",
       "weight": 1.0
     }
-  ]
+  ],
+  "required_material_count_override": 1,
+  "reward_multiplier": 0.5
 }

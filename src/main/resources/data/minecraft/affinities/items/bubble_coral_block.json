@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:bubble_coral_block",
-  "base": "minecraft:dead_bubble_coral_block",
   "add": {
     "sun": 15
-  }
+  },
+  "base": "minecraft:dead_bubble_coral_block",
+  "target": "minecraft:bubble_coral_block"
 }

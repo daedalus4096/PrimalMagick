@@ -1,8 +1,8 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:strong_poison",
   "bonus": {
-    "earth": 2,
-    "blood": 2
-  }
+    "blood": 2,
+    "earth": 2
+  },
+  "target": "minecraft:strong_poison"
 }

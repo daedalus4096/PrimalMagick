@@ -1,12 +1,13 @@
 {
-  "key": "INNER_DEMON",
-  "name": "primalmagick.research.inner_demon.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "primalmagick:sanguine_core_blank"
   },
+  "key": "INNER_DEMON",
+  "name": "primalmagick.research.inner_demon.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -14,6 +15,5 @@
     {
       "text": "primalmagick.research.inner_demon.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

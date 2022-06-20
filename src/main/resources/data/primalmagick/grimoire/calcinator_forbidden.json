@@ -1,11 +1,12 @@
 {
-  "key": "CALCINATOR_FORBIDDEN",
-  "name": "primalmagick.research.calcinator_forbidden.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:calcinator_forbidden"
   },
+  "key": "CALCINATOR_FORBIDDEN",
+  "name": "primalmagick.research.calcinator_forbidden.title",
   "parents": [
     "MASTER_ALCHEMY",
     "MASTER_MANAWEAVING",
@@ -17,17 +18,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.calcinator_forbidden.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.1"
     },
     {
-      "text": "primalmagick.research.calcinator_forbidden.text.stage.2",
       "recipes": [
         "primalmagick:calcinator_forbidden"
-      ]
+      ],
+      "text": "primalmagick.research.calcinator_forbidden.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

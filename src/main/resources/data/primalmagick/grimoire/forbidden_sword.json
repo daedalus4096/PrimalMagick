@@ -1,11 +1,25 @@
 {
-  "key": "FORBIDDEN_SWORD",
-  "name": "primalmagick.research.forbidden_sword.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_ITEM",
+        "RUNE_VOID"
+      ],
+      "siblings": [
+        "&primalmagick:essence_thief"
+      ],
+      "text": "primalmagick.research.forbidden_sword.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:forbidden_sword"
   },
+  "key": "FORBIDDEN_SWORD",
+  "name": "primalmagick.research.forbidden_sword.title",
   "parents": [
     "t_discover_void",
     "MASTER_RITUAL",
@@ -18,30 +32,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.forbidden_sword.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.forbidden_sword.text.stage.1"
     },
     {
-      "text": "primalmagick.research.forbidden_sword.text.stage.2",
       "recipes": [
         "primalmagick:forbidden_sword"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.forbidden_sword.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_SUMMON",
-        "RUNE_ITEM",
-        "RUNE_VOID"
       ],
-      "siblings": [
-        "\u0026primalmagick:essence_thief"
-      ]
+      "text": "primalmagick.research.forbidden_sword.text.stage.2"
     }
   ]
 }

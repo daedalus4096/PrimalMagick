@@ -1,15 +1,15 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "HEXIUM",
-  "pattern": [
-    "III",
-    "I I"
-  ],
   "key": {
     "I": {
       "tag": "primalmagick:ingots/hexium"
     }
   },
+  "pattern": [
+    "III",
+    "I I"
+  ],
+  "research": "HEXIUM",
   "result": {
     "item": "primalmagick:hexium_head"
   }

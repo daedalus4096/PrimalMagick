@@ -1,17 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "STAVES\u0026\u0026WAND_CORE_DARK_PRIMAL",
-  "mana": {
-    "earth": 50,
-    "sea": 50,
-    "sky": 50,
-    "sun": 50,
-    "moon": 50,
-    "blood": 50,
-    "infernal": 50,
-    "void": 50
-  },
-  "instability": 6,
   "ingredients": [
     {
       "item": "primalmagick:primal_staff_core_item"
@@ -32,6 +20,17 @@
       "item": "primalmagick:mana_salts"
     }
   ],
+  "instability": 6,
+  "mana": {
+    "blood": 50,
+    "earth": 50,
+    "infernal": 50,
+    "moon": 50,
+    "sea": 50,
+    "sky": 50,
+    "sun": 50,
+    "void": 50
+  },
   "props": [
     {
       "block": "primalmagick:ritual_bell"
@@ -49,6 +48,7 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
+  "research": "STAVES&&WAND_CORE_DARK_PRIMAL",
   "result": {
     "item": "primalmagick:dark_primal_staff_core_item"
   }

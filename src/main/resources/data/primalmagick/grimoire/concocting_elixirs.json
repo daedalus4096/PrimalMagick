@@ -1,11 +1,36 @@
 {
-  "key": "CONCOCTING_ELIXIRS",
-  "name": "primalmagick.research.concocting_elixirs.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:healing_elixir",
+        "primalmagick:strong_healing_elixir",
+        "primalmagick:regeneration_elixir",
+        "primalmagick:long_regeneration_elixir",
+        "primalmagick:strong_regeneration_elixir"
+      ],
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "text": "primalmagick.research.concocting_elixirs.text.addenda.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:fire_resistance_elixir",
+        "primalmagick:long_fire_resistance_elixir"
+      ],
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "text": "primalmagick.research.concocting_elixirs.text.addenda.2"
+    }
+  ],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:concocter"
   },
+  "key": "CONCOCTING_ELIXIRS",
+  "name": "primalmagick.research.concocting_elixirs.title",
   "parents": [
     "SUPREME_MAGITECH",
     "CONCOCTING_PHILTERS",
@@ -13,13 +38,12 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.concocting_elixirs.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.concocting_elixirs.text.stage.1"
     },
     {
-      "text": "primalmagick.research.concocting_elixirs.text.stage.2",
       "recipes": [
         "primalmagick:night_vision_elixir",
         "primalmagick:long_night_vision_elixir",
@@ -42,32 +66,8 @@
         "primalmagick:slow_falling_elixir",
         "primalmagick:long_slow_falling_elixir",
         "primalmagick:luck_elixir"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.concocting_elixirs.text.addenda.1",
-      "required_research": [
-        "t_discover_blood"
       ],
-      "recipes": [
-        "primalmagick:healing_elixir",
-        "primalmagick:strong_healing_elixir",
-        "primalmagick:regeneration_elixir",
-        "primalmagick:long_regeneration_elixir",
-        "primalmagick:strong_regeneration_elixir"
-      ]
-    },
-    {
-      "text": "primalmagick.research.concocting_elixirs.text.addenda.2",
-      "required_research": [
-        "t_discover_infernal"
-      ],
-      "recipes": [
-        "primalmagick:fire_resistance_elixir",
-        "primalmagick:long_fire_resistance_elixir"
-      ]
+      "text": "primalmagick.research.concocting_elixirs.text.stage.2"
     }
   ]
 }

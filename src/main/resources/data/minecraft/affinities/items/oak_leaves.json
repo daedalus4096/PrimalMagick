@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:oak_leaves",
   "set": {
     "earth": 5,
     "sky": 5,
     "sun": 5
-  }
+  },
+  "target": "minecraft:oak_leaves"
 }

@@ -1,11 +1,25 @@
 {
-  "key": "PRIMAL_HOE",
-  "name": "primalmagick.research.primal_hoe.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_CREATURE",
+        "RUNE_SUN"
+      ],
+      "siblings": [
+        "&primalmagick:verdant"
+      ],
+      "text": "primalmagick.research.primal_hoe.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_hoe"
   },
+  "key": "PRIMAL_HOE",
+  "name": "primalmagick.research.primal_hoe.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.primal_hoe.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.primal_hoe.text.stage.1"
     },
     {
-      "text": "primalmagick.research.primal_hoe.text.stage.2",
       "recipes": [
         "primalmagick:primal_hoe"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.primal_hoe.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_SUMMON",
-        "RUNE_CREATURE",
-        "RUNE_SUN"
       ],
-      "siblings": [
-        "\u0026primalmagick:verdant"
-      ]
+      "text": "primalmagick.research.primal_hoe.text.stage.2"
     }
   ]
 }

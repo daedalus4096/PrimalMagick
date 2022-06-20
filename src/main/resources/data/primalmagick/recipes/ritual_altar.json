@@ -1,28 +1,28 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "BASIC_RITUAL",
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "M": {
+      "item": "primalmagick:marble_raw"
+    },
+    "R": {
+      "item": "primalmagick:marble_runed"
+    }
+  },
   "mana": {
     "earth": 10,
+    "moon": 10,
     "sea": 10,
     "sky": 10,
-    "sun": 10,
-    "moon": 10
+    "sun": 10
   },
   "pattern": [
     "GRG",
     "GMG"
   ],
-  "key": {
-    "G": {
-      "tag": "forge:ingots/gold"
-    },
-    "R": {
-      "item": "primalmagick:marble_runed"
-    },
-    "M": {
-      "item": "primalmagick:marble_raw"
-    }
-  },
+  "research": "BASIC_RITUAL",
   "result": {
     "item": "primalmagick:ritual_altar"
   }

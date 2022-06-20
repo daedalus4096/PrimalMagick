@@ -1,24 +1,24 @@
 {
-  "key": "QUARTZ",
-  "name": "primalmagick.research.quartz.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "minecraft:quartz"
   },
+  "key": "QUARTZ",
+  "name": "primalmagick.research.quartz.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.quartz.text.stage.1",
       "recipes": [
         "primalmagick:quartz_nugget",
         "primalmagick:quartz_from_nuggets",
         "primalmagick:quartz_from_smelting"
-      ]
+      ],
+      "text": "primalmagick.research.quartz.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

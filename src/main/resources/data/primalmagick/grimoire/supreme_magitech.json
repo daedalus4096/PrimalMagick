@@ -1,29 +1,29 @@
 {
-  "key": "SUPREME_MAGITECH",
-  "name": "primalmagick.research.supreme_magitech.title",
+  "addenda": [],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
+  "key": "SUPREME_MAGITECH",
+  "name": "primalmagick.research.supreme_magitech.title",
   "parents": [
     "HEXIUM_GOLEM"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.supreme_magitech.text.stage.1",
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_magitech_supreme",
         "b_scan_hallowsteel"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_magitech.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_magitech.text.stage.2",
       "recipes": [
         "primalmagick:magitech_parts_heavenly"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_magitech.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

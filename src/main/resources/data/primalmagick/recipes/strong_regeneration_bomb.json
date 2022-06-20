@@ -1,14 +1,10 @@
 {
   "type": "primalmagick:concocting",
-  "research": "CONCOCTING_BOMBS\u0026\u0026t_discover_blood",
-  "mana": {
-    "infernal": 3
-  },
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagick:alchemical_bomb",
       "count": 1,
+      "item": "primalmagick:alchemical_bomb",
       "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
     },
     {
@@ -27,9 +23,13 @@
       "tag": "forge:dusts/glowstone"
     }
   ],
+  "mana": {
+    "infernal": 3
+  },
+  "research": "CONCOCTING_BOMBS&&t_discover_blood",
   "result": {
-    "item": "primalmagick:alchemical_bomb",
     "count": 1,
+    "item": "primalmagick:alchemical_bomb",
     "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:strong_regeneration\"}"
   }
 }

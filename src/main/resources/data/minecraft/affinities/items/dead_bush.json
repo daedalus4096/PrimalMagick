@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:dead_bush",
-  "base": "minecraft:grass"
+  "base": "minecraft:grass",
+  "target": "minecraft:dead_bush"
 }

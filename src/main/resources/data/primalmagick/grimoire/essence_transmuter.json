@@ -1,28 +1,28 @@
 {
-  "key": "ESSENCE_TRANSMUTER",
-  "name": "primalmagick.research.essence_transmuter.title",
+  "addenda": [],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:essence_transmuter"
   },
+  "key": "ESSENCE_TRANSMUTER",
+  "name": "primalmagick.research.essence_transmuter.title",
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.essence_transmuter.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.essence_transmuter.text.stage.1"
     },
     {
-      "text": "primalmagick.research.essence_transmuter.text.stage.2",
       "recipes": [
         "primalmagick:essence_transmuter"
-      ]
+      ],
+      "text": "primalmagick.research.essence_transmuter.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

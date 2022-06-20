@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_warped_stem",
-  "base": "minecraft:warped_stem"
+  "base": "minecraft:warped_stem",
+  "target": "minecraft:stripped_warped_stem"
 }

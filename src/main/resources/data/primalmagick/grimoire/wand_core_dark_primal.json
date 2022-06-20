@@ -1,11 +1,22 @@
 {
-  "key": "WAND_CORE_DARK_PRIMAL",
-  "name": "primalmagick.research.wand_core_dark_primal.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:dark_primal_staff_core_item"
+      ],
+      "required_research": [
+        "STAVES"
+      ],
+      "text": "primalmagick.research.wand_core_dark_primal.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:dark_primal_wand_core_item"
   },
+  "key": "WAND_CORE_DARK_PRIMAL",
+  "name": "primalmagick.research.wand_core_dark_primal.title",
   "parents": [
     "MASTER_RITUAL",
     "WAND_CORE_PRIMAL",
@@ -17,16 +28,15 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_core_dark_primal.text.stage.1",
       "required_item": [
         "primalmagick:heartwood_wand_core_item"
       ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.wand_core_dark_primal.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_core_dark_primal.text.stage.2",
       "attunements": {
         "blood": 4,
         "infernal": 4,
@@ -34,18 +44,8 @@
       },
       "recipes": [
         "primalmagick:dark_primal_wand_core_item"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.wand_core_dark_primal.text.addenda.1",
-      "required_research": [
-        "STAVES"
       ],
-      "recipes": [
-        "primalmagick:dark_primal_staff_core_item"
-      ]
+      "text": "primalmagick.research.wand_core_dark_primal.text.stage.2"
     }
   ]
 }

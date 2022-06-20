@@ -1,14 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "SOUL_ANVIL",
-  "mana": {
-    "infernal": 50
-  },
-  "pattern": [
-    "BBB",
-    " I ",
-    "III"
-  ],
   "key": {
     "B": {
       "tag": "primalmagick:storage_blocks/hexium"
@@ -17,6 +8,15 @@
       "tag": "primalmagick:ingots/hexium"
     }
   },
+  "mana": {
+    "infernal": 50
+  },
+  "pattern": [
+    "BBB",
+    " I ",
+    "III"
+  ],
+  "research": "SOUL_ANVIL",
   "result": {
     "item": "primalmagick:soul_anvil"
   }

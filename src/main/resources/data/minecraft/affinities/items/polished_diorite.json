@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:polished_diorite",
-  "base": "minecraft:diorite"
+  "base": "minecraft:diorite",
+  "target": "minecraft:polished_diorite"
 }

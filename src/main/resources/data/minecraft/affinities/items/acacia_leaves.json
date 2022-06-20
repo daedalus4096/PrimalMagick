@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:acacia_leaves",
-  "base": "minecraft:oak_leaves"
+  "base": "minecraft:oak_leaves",
+  "target": "minecraft:acacia_leaves"
 }

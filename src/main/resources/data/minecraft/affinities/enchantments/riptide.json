@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
-  "target": "minecraft:riptide",
   "multiplier": {
     "sea": 1
-  }
+  },
+  "target": "minecraft:riptide"
 }

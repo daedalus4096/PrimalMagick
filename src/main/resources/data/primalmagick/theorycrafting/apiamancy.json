@@ -1,18 +1,18 @@
 {
-  "key": "primalmagick:apiamancy",
-  "required_material_count_override": 1,
-  "base_success_chance_override": 0.5,
-  "reward_multiplier": 0.5,
   "aid_blocks": [
     "minecraft:beehive"
   ],
+  "base_success_chance_override": 0.5,
+  "key": "primalmagick:apiamancy",
   "material_options": [
     {
       "type": "tag",
+      "consumed": true,
       "name": "minecraft:small_flowers",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     }
-  ]
+  ],
+  "required_material_count_override": 1,
+  "reward_multiplier": 0.5
 }

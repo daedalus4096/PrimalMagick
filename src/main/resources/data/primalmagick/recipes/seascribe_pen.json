@@ -1,6 +1,19 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "SEASCRIBE_PEN",
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "I": {
+      "item": "primalmagick:enchanted_ink"
+    },
+    "N": {
+      "tag": "forge:nuggets/iron"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_basic"
+    }
+  },
   "mana": {
     "sea": 10
   },
@@ -9,20 +22,7 @@
     "GIG",
     "NG "
   ],
-  "key": {
-    "G": {
-      "tag": "forge:ingots/gold"
-    },
-    "P": {
-      "item": "primalmagick:magitech_parts_basic"
-    },
-    "I": {
-      "item": "primalmagick:enchanted_ink"
-    },
-    "N": {
-      "tag": "forge:nuggets/iron"
-    }
-  },
+  "research": "SEASCRIBE_PEN",
   "result": {
     "item": "primalmagick:seascribe_pen"
   }

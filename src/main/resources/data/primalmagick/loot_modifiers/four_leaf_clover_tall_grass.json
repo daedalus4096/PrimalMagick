@@ -1,14 +1,14 @@
 {
+  "type": "primalmagick:four_leaf_clover",
   "conditions": [
     {
-      "condition": "minecraft:block_state_property",
-      "block": "minecraft:tall_grass"
+      "block": "minecraft:tall_grass",
+      "condition": "minecraft:block_state_property"
     },
     {
-      "condition": "minecraft:random_chance_with_looting",
       "chance": 0.004,
+      "condition": "minecraft:random_chance_with_looting",
       "looting_multiplier": 0.003
     }
-  ],
-  "type": "primalmagick:four_leaf_clover"
+  ]
 }

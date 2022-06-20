@@ -1,30 +1,30 @@
 {
-  "key": "SPELL_PAYLOAD_BREAK",
-  "name": "primalmagick.research.spell_payload_break.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/earth.png"
   },
+  "key": "SPELL_PAYLOAD_BREAK",
+  "name": "primalmagick.research.spell_payload_break.title",
   "parents": [
     "EXPERT_SORCERY"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.spell_payload_break.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ],
       "required_research": [
         "m_blocks_broken_barehanded_expert"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_break.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_payload_break.text.stage.2",
       "attunements": {
         "earth": 3
-      }
+      },
+      "text": "primalmagick.research.spell_payload_break.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

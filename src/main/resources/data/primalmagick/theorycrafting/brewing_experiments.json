@@ -1,129 +1,129 @@
 {
-  "key": "primalmagick:brewing_experiments",
-  "required_research": "t_discover_infernal",
-  "reward_multiplier": 0.25,
   "aid_blocks": [],
+  "key": "primalmagick:brewing_experiments",
   "material_options": [
     {
       "type": "item",
-      "stack": "minecraft:brewing_stand",
       "consumed": false,
       "match_nbt": false,
+      "stack": "minecraft:brewing_stand",
       "weight": 3.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:crops/nether_wart",
       "quantity": 1,
-      "consumed": true,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "minecraft:fermented_spider_eye",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:fermented_spider_eye",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:dusts/glowstone",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:dusts/redstone",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:sugar",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "bonus_reward": 0.125,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:rabbit_foot",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 0.5,
-      "bonus_reward": 0.125
+      "weight": 0.5
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:blaze_powder",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:glistering_melon_slice",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:spider_eye",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:ghast_tear",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:magma_cream",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:pufferfish",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:golden_carrot",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:turtle_helmet;1;{Damage:0}",
+      "bonus_reward": 0.125,
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5,
-      "bonus_reward": 0.125
+      "stack": "minecraft:turtle_helmet;1;{Damage:0}",
+      "weight": 0.5
     },
     {
       "type": "item",
-      "stack": "minecraft:phantom_membrane",
+      "bonus_reward": 0.125,
       "consumed": true,
       "match_nbt": false,
-      "weight": 0.5,
-      "bonus_reward": 0.125
+      "stack": "minecraft:phantom_membrane",
+      "weight": 0.5
     },
     {
       "type": "observation",
-      "count": 1,
       "consumed": true,
+      "count": 1,
       "weight": 3.0
     }
-  ]
+  ],
+  "required_research": "t_discover_infernal",
+  "reward_multiplier": 0.25
 }

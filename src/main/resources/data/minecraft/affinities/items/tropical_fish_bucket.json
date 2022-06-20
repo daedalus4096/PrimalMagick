@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:tropical_fish_bucket",
-  "base": "minecraft:bucket",
   "add": {
-    "sea": 5,
-    "blood": 5
-  }
+    "blood": 5,
+    "sea": 5
+  },
+  "base": "minecraft:bucket",
+  "target": "minecraft:tropical_fish_bucket"
 }

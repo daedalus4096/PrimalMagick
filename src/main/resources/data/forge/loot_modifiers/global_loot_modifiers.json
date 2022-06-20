@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "entries": [
     "primalmagick:bloody_flesh",
     "primalmagick:blood_notes_high",
@@ -13,5 +12,6 @@
     "primalmagick:bounty_farming",
     "primalmagick:bounty_fishing",
     "primalmagick:bonus_nugget_iron"
-  ]
+  ],
+  "replace": false
 }

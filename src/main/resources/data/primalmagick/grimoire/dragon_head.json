@@ -1,12 +1,13 @@
 {
-  "key": "DRAGON_HEAD",
-  "name": "primalmagick.research.dragon_head.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "minecraft:dragon_head"
   },
+  "key": "DRAGON_HEAD",
+  "name": "primalmagick.research.dragon_head.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -14,6 +15,5 @@
     {
       "text": "primalmagick.research.dragon_head.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

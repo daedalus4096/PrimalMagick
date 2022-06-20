@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:soul_lantern",
   "set": {
     "earth": 7,
-    "sun": 18,
-    "infernal": 3
-  }
+    "infernal": 3,
+    "sun": 18
+  },
+  "target": "minecraft:soul_lantern"
 }

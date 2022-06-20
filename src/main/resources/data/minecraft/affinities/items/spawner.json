@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:spawner",
   "set": {
     "blood": 20,
     "infernal": 10,
     "void": 10
-  }
+  },
+  "target": "minecraft:spawner"
 }

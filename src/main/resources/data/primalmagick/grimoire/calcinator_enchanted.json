@@ -1,11 +1,12 @@
 {
-  "key": "CALCINATOR_ENCHANTED",
-  "name": "primalmagick.research.calcinator_enchanted.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:calcinator_enchanted"
   },
+  "key": "CALCINATOR_ENCHANTED",
+  "name": "primalmagick.research.calcinator_enchanted.title",
   "parents": [
     "EXPERT_ALCHEMY",
     "EXPERT_MANAWEAVING",
@@ -14,17 +15,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.calcinator_enchanted.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.calcinator_enchanted.text.stage.1"
     },
     {
-      "text": "primalmagick.research.calcinator_enchanted.text.stage.2",
       "recipes": [
         "primalmagick:calcinator_enchanted"
-      ]
+      ],
+      "text": "primalmagick.research.calcinator_enchanted.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

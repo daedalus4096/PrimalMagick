@@ -1,6 +1,19 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "ESSENCE_TRANSMUTER",
+  "key": {
+    "C": {
+      "tag": "forge:ingots/copper"
+    },
+    "M": {
+      "item": "primalmagick:marble_enchanted_slab"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_enchanted"
+    },
+    "R": {
+      "item": "primalmagick:mana_prism"
+    }
+  },
   "mana": {
     "moon": 40
   },
@@ -9,20 +22,7 @@
     "CRC",
     "MPM"
   ],
-  "key": {
-    "C": {
-      "tag": "forge:ingots/copper"
-    },
-    "R": {
-      "item": "primalmagick:mana_prism"
-    },
-    "M": {
-      "item": "primalmagick:marble_enchanted_slab"
-    },
-    "P": {
-      "item": "primalmagick:magitech_parts_enchanted"
-    }
-  },
+  "research": "ESSENCE_TRANSMUTER",
   "result": {
     "item": "primalmagick:essence_transmuter"
   }

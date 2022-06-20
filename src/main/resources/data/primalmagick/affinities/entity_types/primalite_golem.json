@@ -3,9 +3,9 @@
   "target": "primalmagick:primalite_golem",
   "values": {
     "earth": 30,
+    "moon": 10,
     "sea": 10,
     "sky": 10,
-    "sun": 10,
-    "moon": 10
+    "sun": 10
   }
 }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:crying_obsidian",
-  "base": "minecraft:obsidian",
   "add": {
     "sun": 10
-  }
+  },
+  "base": "minecraft:obsidian",
+  "target": "minecraft:crying_obsidian"
 }

@@ -1,31 +1,31 @@
 {
-  "key": "BLOODLETTER",
-  "name": "primalmagick.research.bloodletter.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:bloodletter"
   },
+  "key": "BLOODLETTER",
+  "name": "primalmagick.research.bloodletter.title",
   "parents": [
     "MASTER_RITUAL",
     "t_discover_blood"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.bloodletter.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.bloodletter.text.stage.1"
     },
     {
-      "text": "primalmagick.research.bloodletter.text.stage.2",
       "attunements": {
         "blood": 1
       },
       "recipes": [
         "primalmagick:bloodletter"
-      ]
+      ],
+      "text": "primalmagick.research.bloodletter.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

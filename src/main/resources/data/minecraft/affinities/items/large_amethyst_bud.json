@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:large_amethyst_bud",
   "set": {
     "earth": 15
-  }
+  },
+  "target": "minecraft:large_amethyst_bud"
 }

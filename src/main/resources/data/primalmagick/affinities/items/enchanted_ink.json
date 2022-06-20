@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "primalmagick:enchanted_ink",
   "set": {
-    "sea": 3,
-    "moon": 3
-  }
+    "moon": 3,
+    "sea": 3
+  },
+  "target": "primalmagick:enchanted_ink"
 }

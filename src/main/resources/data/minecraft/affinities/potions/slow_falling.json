@@ -1,7 +1,7 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:slow_falling",
   "bonus": {
     "sky": 2
-  }
+  },
+  "target": "minecraft:slow_falling"
 }

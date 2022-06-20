@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_spruce_log",
-  "base": "minecraft:spruce_log"
+  "base": "minecraft:spruce_log",
+  "target": "minecraft:stripped_spruce_log"
 }

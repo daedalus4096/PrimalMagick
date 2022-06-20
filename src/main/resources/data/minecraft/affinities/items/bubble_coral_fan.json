@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:bubble_coral_fan",
-  "base": "minecraft:bubble_coral"
+  "base": "minecraft:bubble_coral",
+  "target": "minecraft:bubble_coral_fan"
 }

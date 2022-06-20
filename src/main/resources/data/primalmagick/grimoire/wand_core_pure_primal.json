@@ -1,11 +1,22 @@
 {
-  "key": "WAND_CORE_PURE_PRIMAL",
-  "name": "primalmagick.research.wand_core_pure_primal.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:pure_primal_staff_core_item"
+      ],
+      "required_research": [
+        "STAVES"
+      ],
+      "text": "primalmagick.research.wand_core_pure_primal.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:pure_primal_wand_core_item"
   },
+  "key": "WAND_CORE_PURE_PRIMAL",
+  "name": "primalmagick.research.wand_core_pure_primal.title",
   "parents": [
     "SUPREME_RITUAL",
     "WAND_CORE_DARK_PRIMAL",
@@ -13,33 +24,22 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_core_pure_primal.text.stage.1",
       "required_item": [
         "primalmagick:heartwood_wand_core_item"
       ],
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.wand_core_pure_primal.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_core_pure_primal.text.stage.2",
       "attunements": {
         "hallowed": 5
       },
       "recipes": [
         "primalmagick:pure_primal_wand_core_item"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.wand_core_pure_primal.text.addenda.1",
-      "required_research": [
-        "STAVES"
       ],
-      "recipes": [
-        "primalmagick:pure_primal_staff_core_item"
-      ]
+      "text": "primalmagick.research.wand_core_pure_primal.text.stage.2"
     }
   ]
 }

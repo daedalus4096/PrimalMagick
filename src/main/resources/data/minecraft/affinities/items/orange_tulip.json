@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:orange_tulip",
-  "base": "minecraft:dandelion"
+  "base": "minecraft:dandelion",
+  "target": "minecraft:orange_tulip"
 }

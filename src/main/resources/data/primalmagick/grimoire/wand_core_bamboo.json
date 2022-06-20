@@ -1,44 +1,44 @@
 {
-  "key": "WAND_CORE_BAMBOO",
-  "name": "primalmagick.research.wand_core_bamboo.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:bamboo_staff_core_item"
+      ],
+      "required_research": [
+        "STAVES"
+      ],
+      "text": "primalmagick.research.wand_core_bamboo.text.addenda.1"
+    }
+  ],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:bamboo_wand_core_item"
   },
+  "key": "WAND_CORE_BAMBOO",
+  "name": "primalmagick.research.wand_core_bamboo.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_CORE_OBSIDIAN"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_core_bamboo.text.stage.1",
       "required_item": [
         "minecraft:bamboo"
       ],
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_core_bamboo.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_core_bamboo.text.stage.2",
       "attunements": {
         "sky": 2
       },
       "recipes": [
         "primalmagick:bamboo_wand_core_item"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.wand_core_bamboo.text.addenda.1",
-      "required_research": [
-        "STAVES"
       ],
-      "recipes": [
-        "primalmagick:bamboo_staff_core_item"
-      ]
+      "text": "primalmagick.research.wand_core_bamboo.text.stage.2"
     }
   ]
 }

@@ -1,11 +1,12 @@
 {
-  "key": "HEXIUM",
-  "name": "primalmagick.research.hexium.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:hexium_ingot"
   },
+  "key": "HEXIUM",
+  "name": "primalmagick.research.hexium.title",
   "parents": [
     "MASTER_ALCHEMY",
     "PRIMALITE",
@@ -16,21 +17,20 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.hexium.text.stage.1",
+      "required_craft": [
+        "primalmagick:primalite_ingot"
+      ],
       "required_item": [
         "primalmagick:essence_shard_blood",
         "primalmagick:essence_shard_infernal",
         "primalmagick:essence_shard_void"
       ],
-      "required_craft": [
-        "primalmagick:primalite_ingot"
-      ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.hexium.text.stage.1"
     },
     {
-      "text": "primalmagick.research.hexium.text.stage.2",
       "attunements": {
         "blood": 2,
         "infernal": 2,
@@ -55,8 +55,8 @@
         "primalmagick:hexium_legs",
         "primalmagick:hexium_feet",
         "primalmagick:hexium_shield"
-      ]
+      ],
+      "text": "primalmagick.research.hexium.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

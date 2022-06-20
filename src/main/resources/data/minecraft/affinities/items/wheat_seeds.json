@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:wheat_seeds",
   "set": {
     "earth": 2,
     "sun": 2
-  }
+  },
+  "target": "minecraft:wheat_seeds"
 }

@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:porkchop",
   "set": {
     "blood": 5
-  }
+  },
+  "target": "minecraft:porkchop"
 }

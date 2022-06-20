@@ -1,17 +1,17 @@
 {
-  "key": "MANA_SALTS",
-  "name": "primalmagick.research.mana_salts.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:mana_salts"
   },
+  "key": "MANA_SALTS",
+  "name": "primalmagick.research.mana_salts.title",
   "parents": [
     "WAND_CHARGER"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.mana_salts.text.stage.1",
       "required_item": [
         "primalmagick:essence_dust_earth",
         "primalmagick:essence_dust_sea",
@@ -21,14 +21,14 @@
       ],
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.mana_salts.text.stage.1"
     },
     {
-      "text": "primalmagick.research.mana_salts.text.stage.2",
       "recipes": [
         "primalmagick:mana_salts"
-      ]
+      ],
+      "text": "primalmagick.research.mana_salts.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

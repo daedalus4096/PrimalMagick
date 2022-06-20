@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:rooted_dirt",
-  "base": "minecraft:dirt",
   "add": {
     "sun": 2
-  }
+  },
+  "base": "minecraft:dirt",
+  "target": "minecraft:rooted_dirt"
 }

@@ -1,6 +1,19 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "HONEY_EXTRACTOR",
+  "key": {
+    "B": {
+      "item": "minecraft:glass_bottle"
+    },
+    "H": {
+      "item": "minecraft:honeycomb"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_basic"
+    },
+    "W": {
+      "tag": "minecraft:planks"
+    }
+  },
   "mana": {
     "sky": 10
   },
@@ -9,20 +22,7 @@
     "WPW",
     "BWH"
   ],
-  "key": {
-    "H": {
-      "item": "minecraft:honeycomb"
-    },
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "B": {
-      "item": "minecraft:glass_bottle"
-    },
-    "P": {
-      "item": "primalmagick:magitech_parts_basic"
-    }
-  },
+  "research": "HONEY_EXTRACTOR",
   "result": {
     "item": "primalmagick:honey_extractor"
   }

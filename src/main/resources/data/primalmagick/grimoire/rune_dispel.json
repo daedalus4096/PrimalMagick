@@ -1,27 +1,27 @@
 {
-  "key": "RUNE_DISPEL",
-  "name": "primalmagick.research.rune_dispel.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_dispel"
   },
+  "key": "RUNE_DISPEL",
+  "name": "primalmagick.research.rune_dispel.title",
   "parents": [
     "RUNE_ABSORB"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rune_dispel.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.rune_dispel.text.stage.1"
     },
     {
-      "text": "primalmagick.research.rune_dispel.text.stage.2",
       "recipes": [
         "primalmagick:rune_dispel"
-      ]
+      ],
+      "text": "primalmagick.research.rune_dispel.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

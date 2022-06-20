@@ -1,12 +1,12 @@
 {
   "type": "primalmagick:runecarving",
-  "research": "RUNE_DISPEL",
   "ingredient1": {
     "item": "minecraft:stone_slab"
   },
   "ingredient2": {
     "tag": "forge:gems/lapis"
   },
+  "research": "RUNE_DISPEL",
   "result": {
     "item": "primalmagick:rune_dispel"
   }

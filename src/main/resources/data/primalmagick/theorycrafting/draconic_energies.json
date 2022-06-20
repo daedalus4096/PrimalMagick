@@ -1,18 +1,18 @@
 {
-  "key": "primalmagick:draconic_energies",
-  "required_material_count_override": 1,
-  "base_success_chance_override": 0.5,
-  "reward_multiplier": 1.0,
   "aid_blocks": [
     "minecraft:dragon_egg"
   ],
+  "base_success_chance_override": 0.5,
+  "key": "primalmagick:draconic_energies",
   "material_options": [
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ender_pearls",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     }
-  ]
+  ],
+  "required_material_count_override": 1,
+  "reward_multiplier": 1.0
 }

@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:birch_sapling",
-  "base": "minecraft:oak_sapling"
+  "base": "minecraft:oak_sapling",
+  "target": "minecraft:birch_sapling"
 }

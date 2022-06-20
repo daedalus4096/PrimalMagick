@@ -2,8 +2,8 @@
   "type": "entity_type",
   "target": "primalmagick:pixie_majestic_moon",
   "values": {
-    "sky": 10,
+    "blood": 5,
     "moon": 20,
-    "blood": 5
+    "sky": 10
   }
 }

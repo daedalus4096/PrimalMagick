@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagick:stained_skyglass_black",
-  "base": "primalmagick:skyglass"
+  "base": "primalmagick:skyglass",
+  "target": "primalmagick:stained_skyglass_black"
 }

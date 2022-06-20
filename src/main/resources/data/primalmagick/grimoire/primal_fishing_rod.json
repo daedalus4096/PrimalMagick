@@ -1,11 +1,25 @@
 {
-  "key": "PRIMAL_FISHING_ROD",
-  "name": "primalmagick.research.primal_fishing_rod.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_AREA",
+        "RUNE_SEA"
+      ],
+      "siblings": [
+        "&primalmagick:bounty"
+      ],
+      "text": "primalmagick.research.primal_fishing_rod.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_fishing_rod"
   },
+  "key": "PRIMAL_FISHING_ROD",
+  "name": "primalmagick.research.primal_fishing_rod.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.primal_fishing_rod.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.primal_fishing_rod.text.stage.1"
     },
     {
-      "text": "primalmagick.research.primal_fishing_rod.text.stage.2",
       "recipes": [
         "primalmagick:primal_fishing_rod"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.primal_fishing_rod.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_SUMMON",
-        "RUNE_AREA",
-        "RUNE_SEA"
       ],
-      "siblings": [
-        "\u0026primalmagick:bounty"
-      ]
+      "text": "primalmagick.research.primal_fishing_rod.text.stage.2"
     }
   ]
 }

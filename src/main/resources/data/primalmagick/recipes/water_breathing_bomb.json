@@ -1,14 +1,10 @@
 {
   "type": "primalmagick:concocting",
-  "research": "CONCOCTING_BOMBS",
-  "mana": {
-    "infernal": 3
-  },
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagick:alchemical_bomb",
       "count": 1,
+      "item": "primalmagick:alchemical_bomb",
       "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
     },
     {
@@ -24,9 +20,13 @@
       "item": "minecraft:pufferfish"
     }
   ],
+  "mana": {
+    "infernal": 3
+  },
+  "research": "CONCOCTING_BOMBS",
   "result": {
-    "item": "primalmagick:alchemical_bomb",
     "count": 1,
+    "item": "primalmagick:alchemical_bomb",
     "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water_breathing\"}"
   }
 }

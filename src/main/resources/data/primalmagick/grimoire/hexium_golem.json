@@ -1,11 +1,12 @@
 {
-  "key": "HEXIUM_GOLEM",
-  "name": "primalmagick.research.hexium_golem.title",
+  "addenda": [],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:hexium_golem_controller"
   },
+  "key": "HEXIUM_GOLEM",
+  "name": "primalmagick.research.hexium_golem.title",
   "parents": [
     "MASTER_MAGITECH",
     "PRIMALITE_GOLEM",
@@ -13,17 +14,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.hexium_golem.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.hexium_golem.text.stage.1"
     },
     {
-      "text": "primalmagick.research.hexium_golem.text.stage.2",
       "recipes": [
         "primalmagick:hexium_golem_controller"
-      ]
+      ],
+      "text": "primalmagick.research.hexium_golem.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

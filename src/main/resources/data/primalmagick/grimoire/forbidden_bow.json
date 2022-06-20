@@ -1,11 +1,25 @@
 {
-  "key": "FORBIDDEN_BOW",
-  "name": "primalmagick.research.forbidden_bow.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_ABSORB",
+        "RUNE_CREATURE",
+        "RUNE_INFERNAL"
+      ],
+      "siblings": [
+        "&primalmagick:soulpiercing"
+      ],
+      "text": "primalmagick.research.forbidden_bow.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:forbidden_bow"
   },
+  "key": "FORBIDDEN_BOW",
+  "name": "primalmagick.research.forbidden_bow.title",
   "parents": [
     "t_discover_infernal",
     "MASTER_RITUAL",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.forbidden_bow.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.forbidden_bow.text.stage.1"
     },
     {
-      "text": "primalmagick.research.forbidden_bow.text.stage.2",
       "recipes": [
         "primalmagick:forbidden_bow"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.forbidden_bow.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_ABSORB",
-        "RUNE_CREATURE",
-        "RUNE_INFERNAL"
       ],
-      "siblings": [
-        "\u0026primalmagick:soulpiercing"
-      ]
+      "text": "primalmagick.research.forbidden_bow.text.stage.2"
     }
   ]
 }

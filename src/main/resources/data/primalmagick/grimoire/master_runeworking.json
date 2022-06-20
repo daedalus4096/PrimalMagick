@@ -1,30 +1,30 @@
 {
-  "key": "MASTER_RUNEWORKING",
-  "name": "primalmagick.research.master_runeworking.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
+  "key": "MASTER_RUNEWORKING",
+  "name": "primalmagick.research.master_runeworking.title",
   "parents": [
     "RUNE_ABSORB",
     "RUNE_CREATURE"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.master_runeworking.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_runeworking_master",
         "t_items_runescribed_master"
-      ]
+      ],
+      "text": "primalmagick.research.master_runeworking.text.stage.1"
     },
     {
-      "text": "primalmagick.research.master_runeworking.text.stage.2",
       "recipes": [
         "primalmagick:runescribing_altar_forbidden"
-      ]
+      ],
+      "text": "primalmagick.research.master_runeworking.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

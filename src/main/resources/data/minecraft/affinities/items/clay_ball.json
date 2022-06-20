@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:clay_ball",
   "set": {
     "earth": 2,
     "sea": 2
-  }
+  },
+  "target": "minecraft:clay_ball"
 }

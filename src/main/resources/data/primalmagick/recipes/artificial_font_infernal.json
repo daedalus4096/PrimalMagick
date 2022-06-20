@@ -1,7 +1,17 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "artificial_mana_fonts",
-  "research": "ARTIFICIAL_MANA_FONTS\u0026\u0026t_discover_infernal",
+  "key": {
+    "E": {
+      "item": "primalmagick:essence_shard_infernal"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/primalite"
+    },
+    "M": {
+      "item": "primalmagick:marble_enchanted_slab"
+    }
+  },
   "mana": {
     "infernal": 250
   },
@@ -10,17 +20,7 @@
     " E ",
     "IMI"
   ],
-  "key": {
-    "I": {
-      "tag": "primalmagick:ingots/primalite"
-    },
-    "M": {
-      "item": "primalmagick:marble_enchanted_slab"
-    },
-    "E": {
-      "item": "primalmagick:essence_shard_infernal"
-    }
-  },
+  "research": "ARTIFICIAL_MANA_FONTS&&t_discover_infernal",
   "result": {
     "item": "primalmagick:artificial_font_infernal"
   }

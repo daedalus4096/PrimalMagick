@@ -1,170 +1,170 @@
 {
-  "key": "primalmagick:master_essence_analysis",
-  "required_research": "CLUSTER_SYNTHESIS",
-  "reward_multiplier": 1.0,
   "aid_blocks": [],
+  "key": "primalmagick:master_essence_analysis",
   "material_options": [
     {
       "type": "observation",
+      "consumed": true,
       "count": 1,
-      "consumed": true,
       "weight": 3.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_crystal_earth",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_crystal_sea",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_crystal_sky",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_crystal_sun",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_crystal_moon",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 3.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_blood",
       "stack": "primalmagick:essence_crystal_blood",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 3.0,
-      "after_crafting": 5,
-      "required_research": "t_discover_blood"
+      "weight": 3.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_infernal",
       "stack": "primalmagick:essence_crystal_infernal",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 3.0,
-      "after_crafting": 5,
-      "required_research": "t_discover_infernal"
+      "weight": 3.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_void",
       "stack": "primalmagick:essence_crystal_void",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 3.0,
-      "after_crafting": 5,
-      "required_research": "t_discover_void"
+      "weight": 3.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_hallowed",
       "stack": "primalmagick:essence_crystal_hallowed",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 3.0,
-      "after_crafting": 5,
-      "required_research": "t_discover_hallowed"
+      "weight": 3.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_cluster_earth",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_cluster_sea",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_cluster_sky",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_cluster_sun",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
       "stack": "primalmagick:essence_cluster_moon",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_blood",
       "stack": "primalmagick:essence_cluster_blood",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5,
-      "required_research": "t_discover_blood"
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_infernal",
       "stack": "primalmagick:essence_cluster_infernal",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5,
-      "required_research": "t_discover_infernal"
+      "weight": 1.0
     },
     {
       "type": "item",
+      "after_crafting": 5,
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_void",
       "stack": "primalmagick:essence_cluster_void",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
-      "after_crafting": 5,
-      "bonus_reward": 0.5,
-      "required_research": "t_discover_void"
+      "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "primalmagick:essence_cluster_hallowed",
-      "consumed": true,
-      "match_nbt": false,
-      "weight": 1.0,
       "after_crafting": 5,
       "bonus_reward": 0.5,
-      "required_research": "t_discover_hallowed"
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_hallowed",
+      "stack": "primalmagick:essence_cluster_hallowed",
+      "weight": 1.0
     }
-  ]
+  ],
+  "required_research": "CLUSTER_SYNTHESIS",
+  "reward_multiplier": 1.0
 }

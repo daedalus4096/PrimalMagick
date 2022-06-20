@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:sea_pickle",
   "set": {
     "earth": 5,
     "sea": 20,
     "sun": 10
-  }
+  },
+  "target": "minecraft:sea_pickle"
 }

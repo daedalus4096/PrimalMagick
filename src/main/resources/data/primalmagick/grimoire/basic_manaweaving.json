@@ -1,21 +1,21 @@
 {
-  "key": "BASIC_MANAWEAVING",
-  "name": "primalmagick.research.basic_manaweaving.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
+  "key": "BASIC_MANAWEAVING",
+  "name": "primalmagick.research.basic_manaweaving.title",
   "parents": [
     "UNLOCK_MANAWEAVING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.basic_manaweaving.text.stage.1",
       "recipes": [
         "primalmagick:mana_prism"
-      ]
+      ],
+      "text": "primalmagick.research.basic_manaweaving.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

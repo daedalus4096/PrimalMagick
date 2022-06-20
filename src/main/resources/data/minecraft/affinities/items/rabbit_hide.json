@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:rabbit_hide",
   "set": {
     "blood": 2
-  }
+  },
+  "target": "minecraft:rabbit_hide"
 }

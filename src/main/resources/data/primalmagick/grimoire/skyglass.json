@@ -1,29 +1,29 @@
 {
-  "key": "SKYGLASS",
-  "name": "primalmagick.research.skyglass.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:skyglass"
   },
+  "key": "SKYGLASS",
+  "name": "primalmagick.research.skyglass.title",
   "parents": [
     "STONEMELDING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.skyglass.text.stage.1",
-      "required_item": [
-        "primalmagick:essence_dust_sky"
-      ],
       "required_craft": [
         "minecraft:glass"
       ],
+      "required_item": [
+        "primalmagick:essence_dust_sky"
+      ],
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.skyglass.text.stage.1"
     },
     {
-      "text": "primalmagick.research.skyglass.text.stage.2",
       "attunements": {
         "sky": 1
       },
@@ -78,8 +78,8 @@
         "primalmagick:stained_skyglass_pane_white_from_panes",
         "primalmagick:stained_skyglass_pane_yellow_from_blocks",
         "primalmagick:stained_skyglass_pane_yellow_from_panes"
-      ]
+      ],
+      "text": "primalmagick.research.skyglass.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

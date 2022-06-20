@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:cobbled_deepslate",
-  "base": "minecraft:deepslate"
+  "base": "minecraft:deepslate",
+  "target": "minecraft:cobbled_deepslate"
 }

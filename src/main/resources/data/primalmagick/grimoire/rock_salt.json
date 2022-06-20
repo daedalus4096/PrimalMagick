@@ -1,18 +1,18 @@
 {
-  "key": "ROCK_SALT",
-  "name": "primalmagick.research.rock_salt.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "primalmagick:refined_salt"
   },
+  "key": "ROCK_SALT",
+  "name": "primalmagick.research.rock_salt.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rock_salt.text.stage.1",
       "recipes": [
         "primalmagick:refined_salt",
         "primalmagick:rock_salt_from_smelting",
@@ -29,8 +29,8 @@
         "primalmagick:salted_cooked_salmon",
         "primalmagick:salted_mushroom_stew",
         "primalmagick:salted_rabbit_stew"
-      ]
+      ],
+      "text": "primalmagick.research.rock_salt.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,24 +1,24 @@
 {
-  "key": "EXPERT_MANAWEAVING",
-  "name": "primalmagick.research.expert_manaweaving.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
+  "key": "EXPERT_MANAWEAVING",
+  "name": "primalmagick.research.expert_manaweaving.title",
   "parents": [
     "MANA_ARROWS",
     "WAND_CHARGER"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.expert_manaweaving.text.stage.1",
       "required_research": [
         "b_crafted_manaweaving_expert"
-      ]
+      ],
+      "text": "primalmagick.research.expert_manaweaving.text.stage.1"
     },
     {
-      "text": "primalmagick.research.expert_manaweaving.text.stage.2",
       "recipes": [
         "primalmagick:marble_enchanted",
         "primalmagick:marble_enchanted_brick_slab",
@@ -31,8 +31,8 @@
         "primalmagick:marble_enchanted_slab",
         "primalmagick:marble_enchanted_stairs",
         "primalmagick:marble_enchanted_wall"
-      ]
+      ],
+      "text": "primalmagick.research.expert_manaweaving.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,6 +1,16 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "RITUAL_BELL",
+  "key": {
+    "I": {
+      "tag": "forge:nuggets/iron"
+    },
+    "P": {
+      "tag": "primalmagick:ingots/primalite"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
   "mana": {
     "sea": 10
   },
@@ -9,17 +19,7 @@
     "PSP",
     "PIP"
   ],
-  "key": {
-    "P": {
-      "tag": "primalmagick:ingots/primalite"
-    },
-    "S": {
-      "tag": "forge:rods/wooden"
-    },
-    "I": {
-      "tag": "forge:nuggets/iron"
-    }
-  },
+  "research": "RITUAL_BELL",
   "result": {
     "item": "primalmagick:ritual_bell"
   }

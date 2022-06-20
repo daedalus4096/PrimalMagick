@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "primalmagick:marble_enchanted"
   },
-  "result": "primalmagick:marble_enchanted_pillar",
-  "count": 1
+  "result": "primalmagick:marble_enchanted_pillar"
 }

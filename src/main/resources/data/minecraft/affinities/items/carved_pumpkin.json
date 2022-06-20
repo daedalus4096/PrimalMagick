@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:carved_pumpkin",
-  "base": "minecraft:pumpkin"
+  "base": "minecraft:pumpkin",
+  "target": "minecraft:carved_pumpkin"
 }

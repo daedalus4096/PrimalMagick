@@ -1,16 +1,16 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "SUPREME_MANAWEAVING",
-  "pattern": [
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_hallowed"
     }
   },
+  "pattern": [
+    "MMM"
+  ],
+  "research": "SUPREME_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_hallowed_slab",
-    "count": 6
+    "count": 6,
+    "item": "primalmagick:marble_hallowed_slab"
   }
 }

@@ -1,7 +1,20 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "runescribing_altar",
-  "research": "MASTER_RUNEWORKING",
+  "key": {
+    "A": {
+      "item": "primalmagick:runescribing_altar_enchanted"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "M": {
+      "item": "primalmagick:marble_smoked"
+    },
+    "R": {
+      "item": "primalmagick:rune_unattuned"
+    }
+  },
   "mana": {
     "blood": 50,
     "infernal": 50,
@@ -12,20 +25,7 @@
     "DAD",
     "MMM"
   ],
-  "key": {
-    "R": {
-      "item": "primalmagick:rune_unattuned"
-    },
-    "D": {
-      "tag": "forge:gems/diamond"
-    },
-    "A": {
-      "item": "primalmagick:runescribing_altar_enchanted"
-    },
-    "M": {
-      "item": "primalmagick:marble_smoked"
-    }
-  },
+  "research": "MASTER_RUNEWORKING",
   "result": {
     "item": "primalmagick:runescribing_altar_forbidden"
   }

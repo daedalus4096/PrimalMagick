@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "primalmagick:refined_salt",
-  "base": "primalmagick:rock_salt"
+  "base": "primalmagick:rock_salt",
+  "target": "primalmagick:refined_salt"
 }

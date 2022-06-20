@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:gray_concrete",
-  "base": "minecraft:white_concrete"
+  "base": "minecraft:white_concrete",
+  "target": "minecraft:gray_concrete"
 }

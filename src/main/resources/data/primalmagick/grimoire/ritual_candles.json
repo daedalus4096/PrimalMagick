@@ -1,23 +1,33 @@
 {
-  "key": "RITUAL_CANDLES",
-  "name": "primalmagick.research.ritual_candles.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:ritual_candle_white_from_beeswax"
+      ],
+      "required_research": [
+        "HONEY_EXTRACTOR"
+      ],
+      "text": "primalmagick.research.ritual_candles.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:ritual_candle_white"
   },
+  "key": "RITUAL_CANDLES",
+  "name": "primalmagick.research.ritual_candles.title",
   "parents": [
     "BASIC_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.ritual_candles.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.ritual_candles.text.stage.1"
     },
     {
-      "text": "primalmagick.research.ritual_candles.text.stage.2",
       "attunements": {
         "sun": 1
       },
@@ -40,18 +50,8 @@
         "primalmagick:ritual_candle_red",
         "primalmagick:ritual_candle_white",
         "primalmagick:ritual_candle_yellow"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.ritual_candles.text.addenda.1",
-      "required_research": [
-        "HONEY_EXTRACTOR"
       ],
-      "recipes": [
-        "primalmagick:ritual_candle_white_from_beeswax"
-      ]
+      "text": "primalmagick.research.ritual_candles.text.stage.2"
     }
   ]
 }

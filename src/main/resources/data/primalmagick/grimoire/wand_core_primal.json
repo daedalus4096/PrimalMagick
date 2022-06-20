@@ -1,11 +1,22 @@
 {
-  "key": "WAND_CORE_PRIMAL",
-  "name": "primalmagick.research.wand_core_primal.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:primal_staff_core_item"
+      ],
+      "required_research": [
+        "STAVES"
+      ],
+      "text": "primalmagick.research.wand_core_primal.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_wand_core_item"
   },
+  "key": "WAND_CORE_PRIMAL",
+  "name": "primalmagick.research.wand_core_primal.title",
   "parents": [
     "EXPERT_RITUAL",
     "WAND_CORE_OBSIDIAN",
@@ -20,37 +31,26 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_core_primal.text.stage.1",
       "required_item": [
         "primalmagick:heartwood_wand_core_item"
       ],
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_core_primal.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_core_primal.text.stage.2",
       "attunements": {
         "earth": 3,
+        "moon": 3,
         "sea": 3,
         "sky": 3,
-        "sun": 3,
-        "moon": 3
+        "sun": 3
       },
       "recipes": [
         "primalmagick:primal_wand_core_item"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.wand_core_primal.text.addenda.1",
-      "required_research": [
-        "STAVES"
       ],
-      "recipes": [
-        "primalmagick:primal_staff_core_item"
-      ]
+      "text": "primalmagick.research.wand_core_primal.text.stage.2"
     }
   ]
 }

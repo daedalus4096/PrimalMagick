@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:magenta_candle",
-  "base": "minecraft:candle"
+  "base": "minecraft:candle",
+  "target": "minecraft:magenta_candle"
 }

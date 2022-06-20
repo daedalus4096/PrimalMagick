@@ -1,10 +1,10 @@
 {
   "type": "item",
-  "target": "minecraft:shroomlight",
   "set": {
     "earth": 5,
-    "sun": 15,
+    "infernal": 5,
     "moon": 10,
-    "infernal": 5
-  }
+    "sun": 15
+  },
+  "target": "minecraft:shroomlight"
 }

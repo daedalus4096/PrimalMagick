@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:mushroom_stem",
   "set": {
     "earth": 5,
     "moon": 10
-  }
+  },
+  "target": "minecraft:mushroom_stem"
 }

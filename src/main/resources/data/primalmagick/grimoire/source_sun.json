@@ -1,17 +1,17 @@
 {
-  "key": "SOURCE_SUN",
-  "name": "primalmagick.research.source_sun.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/sun.png"
   },
+  "key": "SOURCE_SUN",
+  "name": "primalmagick.research.source_sun.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_sun.text.stage.1",
       "required_item": [
         "tag:primalmagick:sunwood_logs",
         "tag:forge:sandstone"
@@ -23,14 +23,14 @@
         "m_found_shrine_sun",
         "m_env_sun",
         "t_mana_spent_sun_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_sun.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_sun.text.stage.2",
       "attunements": {
         "sun": 5
-      }
+      },
+      "text": "primalmagick.research.source_sun.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

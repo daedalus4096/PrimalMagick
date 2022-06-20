@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:acacia_wood",
-  "base": "minecraft:acacia_log"
+  "base": "minecraft:acacia_log",
+  "target": "minecraft:acacia_wood"
 }

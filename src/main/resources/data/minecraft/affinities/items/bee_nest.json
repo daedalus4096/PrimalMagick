@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:bee_nest",
-  "base": "minecraft:beehive"
+  "base": "minecraft:beehive",
+  "target": "minecraft:bee_nest"
 }

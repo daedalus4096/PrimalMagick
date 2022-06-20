@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:filled_map",
-  "base": "minecraft:map"
+  "base": "minecraft:map",
+  "target": "minecraft:filled_map"
 }

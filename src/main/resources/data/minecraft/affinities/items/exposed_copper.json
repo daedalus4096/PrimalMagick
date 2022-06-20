@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:exposed_copper",
-  "base": "minecraft:copper_block"
+  "base": "minecraft:copper_block",
+  "target": "minecraft:exposed_copper"
 }

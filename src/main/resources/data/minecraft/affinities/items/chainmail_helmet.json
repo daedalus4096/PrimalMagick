@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:chainmail_helmet",
-  "base": "minecraft:iron_helmet"
+  "base": "minecraft:iron_helmet",
+  "target": "minecraft:chainmail_helmet"
 }

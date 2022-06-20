@@ -1,86 +1,86 @@
 {
-  "key": "primalmagick:end_expedition",
-  "required_research": "t_discover_void",
-  "reward_multiplier": 1.0,
   "aid_blocks": [],
+  "key": "primalmagick:end_expedition",
   "material_options": [
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:netherite_sword;1;{Damage:0}",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:crossbow;1;{Damage:0}",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:arrow;32",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:netherite_chestplate;1;{Damage:0}",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:map",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:cartography_table",
       "consumed": false,
       "match_nbt": false,
+      "stack": "minecraft:cartography_table",
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:torch;32",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:bread;8",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:potion;1;{Potion:\u0027minecraft:slow_falling\u0027}",
+      "bonus_reward": 0.5,
       "consumed": true,
       "match_nbt": true,
-      "weight": 1.0,
-      "bonus_reward": 0.5
+      "stack": "minecraft:potion;1;{Potion:'minecraft:slow_falling'}",
+      "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ender_pearls",
       "quantity": 4,
-      "consumed": true,
       "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "minecraft:ender_eye",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:ender_eye",
       "weight": 1.0
     }
-  ]
+  ],
+  "required_research": "t_discover_void",
+  "reward_multiplier": 1.0
 }

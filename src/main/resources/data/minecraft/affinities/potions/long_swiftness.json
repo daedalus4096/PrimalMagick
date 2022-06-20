@@ -1,7 +1,7 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:long_swiftness",
   "bonus": {
     "sky": 5
-  }
+  },
+  "target": "minecraft:long_swiftness"
 }

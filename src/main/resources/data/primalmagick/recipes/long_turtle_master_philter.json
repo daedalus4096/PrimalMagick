@@ -1,15 +1,11 @@
 {
   "type": "primalmagick:concocting",
   "group": "long_turtle_master",
-  "research": "CONCOCTING_PHILTERS",
-  "mana": {
-    "infernal": 3
-  },
   "ingredients": [
     {
       "type": "forge:nbt",
-      "item": "primalmagick:concoction",
       "count": 1,
+      "item": "primalmagick:concoction",
       "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
@@ -25,9 +21,13 @@
       "tag": "forge:dusts/redstone"
     }
   ],
+  "mana": {
+    "infernal": 3
+  },
+  "research": "CONCOCTING_PHILTERS",
   "result": {
-    "item": "primalmagick:concoction",
     "count": 1,
+    "item": "primalmagick:concoction",
     "nbt": "{ConcoctionDoses:6,ConcoctionType:\"philter\",Potion:\"minecraft:long_turtle_master\"}"
   }
 }

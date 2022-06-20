@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:ender_pearl",
   "set": {
     "void": 20
-  }
+  },
+  "target": "minecraft:ender_pearl"
 }

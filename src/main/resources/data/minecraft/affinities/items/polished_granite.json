@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:polished_granite",
-  "base": "minecraft:granite"
+  "base": "minecraft:granite",
+  "target": "minecraft:polished_granite"
 }

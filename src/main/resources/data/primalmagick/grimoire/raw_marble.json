@@ -1,18 +1,18 @@
 {
-  "key": "RAW_MARBLE",
-  "name": "primalmagick.research.raw_marble.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "primalmagick:marble_raw"
   },
+  "key": "RAW_MARBLE",
+  "name": "primalmagick.research.raw_marble.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.raw_marble.text.stage.1",
       "recipes": [
         "primalmagick:marble_slab",
         "primalmagick:marble_stairs",
@@ -25,8 +25,8 @@
         "primalmagick:marble_chiseled",
         "primalmagick:marble_tiles",
         "primalmagick:marble_runed"
-      ]
+      ],
+      "text": "primalmagick.research.raw_marble.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

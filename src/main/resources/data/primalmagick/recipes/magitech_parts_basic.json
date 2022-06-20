@@ -1,30 +1,30 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "magitech_parts",
-  "research": "BASIC_MAGITECH",
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "item": "primalmagick:mana_salts"
+    }
+  },
   "mana": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 5,
-    "moon": 5
+    "sun": 5
   },
   "pattern": [
     "SIS",
     "IRI",
     "SIS"
   ],
-  "key": {
-    "S": {
-      "item": "primalmagick:mana_salts"
-    },
-    "I": {
-      "tag": "forge:ingots/iron"
-    },
-    "R": {
-      "tag": "forge:dusts/redstone"
-    }
-  },
+  "research": "BASIC_MAGITECH",
   "result": {
     "item": "primalmagick:magitech_parts_basic"
   }

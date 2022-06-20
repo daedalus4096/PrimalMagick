@@ -1,22 +1,22 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "BASIC_MANAWEAVING",
-  "pattern": [
-    " N ",
-    "QDQ",
-    " N "
-  ],
   "key": {
+    "D": {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    },
     "N": {
       "tag": "forge:nuggets/iron"
     },
     "Q": {
       "tag": "forge:nuggets/quartz"
-    },
-    "D": {
-      "tag": "primalmagick:essences/terrestrial_dusts"
     }
   },
+  "pattern": [
+    " N ",
+    "QDQ",
+    " N "
+  ],
+  "research": "BASIC_MANAWEAVING",
   "result": {
     "item": "primalmagick:mana_prism"
   }

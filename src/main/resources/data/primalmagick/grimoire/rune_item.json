@@ -1,27 +1,27 @@
 {
-  "key": "RUNE_ITEM",
-  "name": "primalmagick.research.rune_item.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_item"
   },
+  "key": "RUNE_ITEM",
+  "name": "primalmagick.research.rune_item.title",
   "parents": [
     "BASIC_RUNEWORKING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rune_item.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.rune_item.text.stage.1"
     },
     {
-      "text": "primalmagick.research.rune_item.text.stage.2",
       "recipes": [
         "primalmagick:rune_item"
-      ]
+      ],
+      "text": "primalmagick.research.rune_item.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

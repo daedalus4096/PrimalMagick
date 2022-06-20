@@ -1,17 +1,17 @@
 {
-  "key": "SOURCE_SEA",
-  "name": "primalmagick.research.source_sea.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/sea.png"
   },
+  "key": "SOURCE_SEA",
+  "name": "primalmagick.research.source_sea.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_sea.text.stage.1",
       "required_item": [
         "tag:primalmagick:coral_blocks",
         "minecraft:ice"
@@ -23,14 +23,14 @@
         "m_found_shrine_sea",
         "m_env_sea",
         "t_mana_spent_sea_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_sea.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_sea.text.stage.2",
       "attunements": {
         "sea": 5
-      }
+      },
+      "text": "primalmagick.research.source_sea.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

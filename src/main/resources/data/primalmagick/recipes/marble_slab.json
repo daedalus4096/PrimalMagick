@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_raw"
     }
   },
+  "pattern": [
+    "MMM"
+  ],
   "result": {
-    "item": "primalmagick:marble_slab",
-    "count": 6
+    "count": 6,
+    "item": "primalmagick:marble_slab"
   }
 }

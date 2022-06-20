@@ -1,26 +1,26 @@
 {
-  "key": "MASTER_ALCHEMY",
-  "name": "primalmagick.research.master_alchemy.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
+  "key": "MASTER_ALCHEMY",
+  "name": "primalmagick.research.master_alchemy.title",
   "parents": [
     "CALCINATOR_ENCHANTED",
     "PRIMALITE"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.master_alchemy.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_alchemy_master"
-      ]
+      ],
+      "text": "primalmagick.research.master_alchemy.text.stage.1"
     },
     {
       "text": "primalmagick.research.master_alchemy.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

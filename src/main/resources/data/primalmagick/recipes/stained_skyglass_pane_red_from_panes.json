@@ -1,22 +1,22 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "stained_skyglass_pane",
-  "research": "SKYGLASS",
+  "key": {
+    "D": {
+      "tag": "forge:dyes/red"
+    },
+    "G": {
+      "tag": "primalmagick:skyglass_panes"
+    }
+  },
   "pattern": [
     "GGG",
     "GDG",
     "GGG"
   ],
-  "key": {
-    "G": {
-      "tag": "primalmagick:skyglass_panes"
-    },
-    "D": {
-      "tag": "forge:dyes/red"
-    }
-  },
+  "research": "SKYGLASS",
   "result": {
-    "item": "primalmagick:stained_skyglass_pane_red",
-    "count": 8
+    "count": 8,
+    "item": "primalmagick:stained_skyglass_pane_red"
   }
 }

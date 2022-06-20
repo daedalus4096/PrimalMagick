@@ -1,30 +1,30 @@
 {
-  "key": "RITUAL_LECTERN",
-  "name": "primalmagick.research.ritual_lectern.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:ritual_lectern"
   },
+  "key": "RITUAL_LECTERN",
+  "name": "primalmagick.research.ritual_lectern.title",
   "parents": [
     "EXPERT_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.ritual_lectern.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.ritual_lectern.text.stage.1"
     },
     {
-      "text": "primalmagick.research.ritual_lectern.text.stage.2",
       "attunements": {
         "moon": 1
       },
       "recipes": [
         "primalmagick:ritual_lectern"
-      ]
+      ],
+      "text": "primalmagick.research.ritual_lectern.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

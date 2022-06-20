@@ -1,22 +1,22 @@
 {
-  "key": "BASIC_RITUAL",
-  "name": "primalmagick.research.basic_ritual.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
+  "key": "BASIC_RITUAL",
+  "name": "primalmagick.research.basic_ritual.title",
   "parents": [
     "UNLOCK_RITUAL"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.basic_ritual.text.stage.1",
       "recipes": [
         "primalmagick:ritual_altar",
         "primalmagick:offering_pedestal"
-      ]
+      ],
+      "text": "primalmagick.research.basic_ritual.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

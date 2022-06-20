@@ -1,11 +1,12 @@
 {
-  "key": "RUNE_POWER",
-  "name": "primalmagick.research.rune_power.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_power"
   },
+  "key": "RUNE_POWER",
+  "name": "primalmagick.research.rune_power.title",
   "parents": [
     "MASTER_RUNEWORKING",
     "CRYSTAL_SYNTHESIS",
@@ -15,17 +16,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rune_power.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.rune_power.text.stage.1"
     },
     {
-      "text": "primalmagick.research.rune_power.text.stage.2",
       "recipes": [
         "primalmagick:rune_power"
-      ]
+      ],
+      "text": "primalmagick.research.rune_power.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,12 +1,6 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "essence_shard",
-  "research": "SHARD_SYNTHESIS",
-  "pattern": [
-    "###",
-    "#Q#",
-    "###"
-  ],
   "key": {
     "#": {
       "item": "primalmagick:essence_dust_moon"
@@ -15,6 +9,12 @@
       "item": "primalmagick:quartz_nugget"
     }
   },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "research": "SHARD_SYNTHESIS",
   "result": {
     "item": "primalmagick:essence_shard_moon"
   }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:sandstone",
-  "base": "minecraft:stone",
   "add": {
     "sun": 5
-  }
+  },
+  "base": "minecraft:stone",
+  "target": "minecraft:sandstone"
 }

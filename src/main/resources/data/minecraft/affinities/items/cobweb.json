@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:cobweb",
   "set": {
     "blood": 2
-  }
+  },
+  "target": "minecraft:cobweb"
 }

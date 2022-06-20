@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:crimson_hyphae",
-  "base": "minecraft:crimson_stem"
+  "base": "minecraft:crimson_stem",
+  "target": "minecraft:crimson_hyphae"
 }

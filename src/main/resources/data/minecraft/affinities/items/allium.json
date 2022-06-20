@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:allium",
-  "base": "minecraft:dandelion"
+  "base": "minecraft:dandelion",
+  "target": "minecraft:allium"
 }

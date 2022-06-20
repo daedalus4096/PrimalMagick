@@ -1,10 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "MAJESTIC_PIXIES\u0026\u0026t_discover_blood",
-  "mana": {
-    "blood": 200
-  },
-  "instability": 7,
   "ingredients": [
     {
       "item": "primalmagick:mana_salts"
@@ -28,6 +23,10 @@
       "item": "primalmagick:rune_power"
     }
   ],
+  "instability": 7,
+  "mana": {
+    "blood": 200
+  },
   "props": [
     {
       "block": "primalmagick:incense_brazier"
@@ -42,6 +41,7 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
+  "research": "MAJESTIC_PIXIES&&t_discover_blood",
   "result": {
     "item": "primalmagick:pixie_majestic_blood"
   }

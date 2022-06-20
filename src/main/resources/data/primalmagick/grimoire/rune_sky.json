@@ -1,30 +1,30 @@
 {
-  "key": "RUNE_SKY",
-  "name": "primalmagick.research.rune_sky.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_sky"
   },
+  "key": "RUNE_SKY",
+  "name": "primalmagick.research.rune_sky.title",
   "parents": [
     "RUNE_EARTH"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rune_sky.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.rune_sky.text.stage.1"
     },
     {
-      "text": "primalmagick.research.rune_sky.text.stage.2",
       "attunements": {
         "sky": 1
       },
       "recipes": [
         "primalmagick:rune_sky"
-      ]
+      ],
+      "text": "primalmagick.research.rune_sky.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

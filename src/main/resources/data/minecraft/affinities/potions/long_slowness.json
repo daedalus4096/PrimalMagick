@@ -1,8 +1,8 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:long_slowness",
   "bonus": {
     "sky": 2,
     "void": 2
-  }
+  },
+  "target": "minecraft:long_slowness"
 }

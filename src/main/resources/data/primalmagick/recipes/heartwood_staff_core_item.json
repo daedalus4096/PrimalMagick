@@ -1,23 +1,23 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "STAVES\u0026\u0026WAND_CORE_HEARTWOOD",
+  "key": {
+    "H": {
+      "item": "primalmagick:heartwood"
+    }
+  },
   "mana": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 5,
-    "moon": 5
+    "sun": 5
   },
   "pattern": [
     "  H",
     " H ",
     "H  "
   ],
-  "key": {
-    "H": {
-      "item": "primalmagick:heartwood"
-    }
-  },
+  "research": "STAVES&&WAND_CORE_HEARTWOOD",
   "result": {
     "item": "primalmagick:heartwood_staff_core_item"
   }

@@ -1,24 +1,24 @@
 {
-  "key": "UNLOCK_MANAWEAVING",
-  "name": "primalmagick.research.unlock_manaweaving.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
+  "key": "UNLOCK_MANAWEAVING",
+  "name": "primalmagick.research.unlock_manaweaving.title",
   "parents": [
     "FIRST_STEPS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.unlock_manaweaving.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.unlock_manaweaving.text.stage.1"
     },
     {
       "text": "primalmagick.research.unlock_manaweaving.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

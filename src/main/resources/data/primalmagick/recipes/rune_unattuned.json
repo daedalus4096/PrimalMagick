@@ -1,12 +1,12 @@
 {
   "type": "primalmagick:runecarving",
-  "research": "BASIC_RUNEWORKING",
   "ingredient1": {
     "item": "minecraft:stone_slab"
   },
   "ingredient2": {
     "tag": "forge:gems/lapis"
   },
+  "research": "BASIC_RUNEWORKING",
   "result": {
     "item": "primalmagick:rune_unattuned"
   }
