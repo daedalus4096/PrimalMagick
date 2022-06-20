@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import com.verdantartifice.primalmagick.common.worldgen.features.TreeFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 
 import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
@@ -16,6 +16,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 public class HallowoodTree extends AbstractTreeGrower {
     @Override
     protected Holder<ConfiguredFeature<TreeConfiguration, ?>> getConfiguredFeature(RandomSource randomIn, boolean largeHive) {
-        return TreeFeaturesPM.TREE_HALLOWOOD;
+        return Holder.direct(ConfiguredFeaturesPM.TREE_HALLOWOOD.get());
     }
 }
