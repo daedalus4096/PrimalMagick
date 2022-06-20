@@ -1,10 +1,9 @@
 {
   "type": "primalmagick:shrine",
-  "config": {
-    "type": "sea"
-  },
+  "shrine_type": "sea",
   "biomes": "#primalmagick:has_structure/sea_shrine",
-  "adapt_noise": true,
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
   "spawn_overrides": {
   }
 }

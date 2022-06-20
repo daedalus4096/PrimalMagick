@@ -1,10 +1,9 @@
 {
   "type": "primalmagick:shrine",
-  "config": {
-    "type": "sky"
-  },
+  "shrine_type": "sky",
   "biomes": "#primalmagick:has_structure/sky_shrine",
-  "adapt_noise": true,
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
   "spawn_overrides": {
   }
 }
