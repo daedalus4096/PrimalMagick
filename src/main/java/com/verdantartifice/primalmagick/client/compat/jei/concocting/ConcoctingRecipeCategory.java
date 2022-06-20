@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -18,6 +19,7 @@ import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -32,8 +34,8 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     private final IDrawableStatic manaCostIcon;
 
     public ConcoctingRecipeCategory(IGuiHelper guiHelper) {
-        super(IConcoctingRecipe.class, guiHelper, UID, "block.primalmagick.concocter");
-        this.craftingGridHelper = guiHelper.createCraftingGridHelper(1);
+        super(guiHelper, UID, "block.primalmagick.concocter");
+        this.craftingGridHelper = guiHelper.createCraftingGridHelper();
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
         this.setIcon(new ItemStack(ItemsPM.CONCOCTER.get()));
@@ -42,15 +44,15 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IConcoctingRecipe recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, List.of(recipe.getResultItem()));
+        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
         
         // Initialize recipe inputs
         List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, inputs, 0, 0);
+        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM_STACK, inputs, 0, 0);
     }
 
     @Override
-    public void draw(IConcoctingRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IConcoctingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -71,5 +73,10 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
+    }
+
+    @Override
+    public RecipeType<IConcoctingRecipe> getRecipeType() {
+        return RecipeTypesPM.CONCOCTING;
     }
 }

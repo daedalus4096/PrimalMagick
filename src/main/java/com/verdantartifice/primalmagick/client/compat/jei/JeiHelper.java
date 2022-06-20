@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagick.common.containers.ConcocterContainer;
+import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.containers.DissolutionChamberContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
@@ -25,6 +26,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IGuiHandlerRegistration;
@@ -63,8 +65,8 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        registration.registerSubtypeInterpreter(ItemsPM.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
-        registration.registerSubtypeInterpreter(ItemsPM.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
     }
 
     @Override
@@ -115,9 +117,9 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, RecipeTypesPM.ARCANE_CRAFTING, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(ConcocterContainer.class, RecipeTypesPM.CONCOCTING, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(DissolutionChamberContainer.class, RecipeTypesPM.DISSOLUTION, 1, 1, 3, 36);
+        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ContainersPM.ARCANE_WORKBENCH.get(), RecipeTypesPM.ARCANE_CRAFTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(ConcocterContainer.class, ContainersPM.CONCOCTER.get(), RecipeTypesPM.CONCOCTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(DissolutionChamberContainer.class, ContainersPM.DISSOLUTION_CHAMBER.get(), RecipeTypesPM.DISSOLUTION, 1, 1, 3, 36);
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -18,6 +19,7 @@ import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -38,8 +40,8 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
     private final IDrawableStatic manaCostIcon;
 
     public ArcaneCraftingRecipeCategory(IGuiHelper guiHelper) {
-        super(IArcaneRecipe.class, guiHelper, UID, "block.primalmagick.arcane_workbench");
-        this.craftingGridHelper = guiHelper.createCraftingGridHelper(1);
+        super(guiHelper, UID, "block.primalmagick.arcane_workbench");
+        this.craftingGridHelper = guiHelper.createCraftingGridHelper();
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
         this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
@@ -48,17 +50,17 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IArcaneRecipe recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM, List.of(recipe.getResultItem()));
+        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
         
         // Initialize recipe inputs
         int width = (recipe instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeWidth() : 0;
         int height = (recipe instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeHeight() : 0;
         List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM, inputs, width, height);
+        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
     }
 
     @Override
-    public void draw(IArcaneRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IArcaneRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -79,5 +81,10 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
+    }
+
+    @Override
+    public RecipeType<IArcaneRecipe> getRecipeType() {
+        return RecipeTypesPM.ARCANE_CRAFTING;
     }
 }

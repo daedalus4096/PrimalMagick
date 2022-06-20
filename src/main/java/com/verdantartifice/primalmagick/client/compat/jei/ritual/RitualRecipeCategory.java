@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -17,6 +18,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
@@ -38,7 +40,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     private final IDrawableStatic manaCostIcon;
     
     public RitualRecipeCategory(IGuiHelper guiHelper) {
-        super(IRitualRecipe.class, guiHelper, UID, "block.primalmagick.ritual_altar");
+        super(guiHelper, UID, "block.primalmagick.ritual_altar");
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 170, 0, 16, 16);
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 170, 80));
         this.setIcon(new ItemStack(ItemsPM.RITUAL_ALTAR.get()));
@@ -61,7 +63,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public void draw(IRitualRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IRitualRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         mc.font.draw(stack, Component.translatable("gui.primalmagick.jei.ritual.offerings.header"), 0, 2, 0xFF808080);
         mc.font.draw(stack, Component.translatable("gui.primalmagick.jei.ritual.props.header"), 0, 51, 0xFF808080);
@@ -86,5 +88,10 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
+    }
+
+    @Override
+    public RecipeType<IRitualRecipe> getRecipeType() {
+        return RecipeTypesPM.RITUAL;
     }
 }
