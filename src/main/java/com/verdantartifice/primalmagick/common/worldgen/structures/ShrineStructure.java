@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.worldgen.features;
+package com.verdantartifice.primalmagick.common.worldgen.structures;
 
 import java.util.Arrays;
 import java.util.Map;

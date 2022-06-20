@@ -15,8 +15,8 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.StructureFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.StructurePieceTypesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
 /**
  * Point of initialization for mod deferred registries.

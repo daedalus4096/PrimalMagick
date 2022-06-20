@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.worldgen.features;
+package com.verdantartifice.primalmagick.common.worldgen.structures;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
