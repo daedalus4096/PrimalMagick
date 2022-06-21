@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions.CompanionType;
 
-import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -199,7 +198,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     @Override
     public void die(DamageSource cause) {
         if (!this.level.isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
-            this.getCompanionOwner().sendMessage(this.getCombatTracker().getDeathMessage(), Util.NIL_UUID);
+            this.getCompanionOwner().sendSystemMessage(this.getCombatTracker().getDeathMessage());
         }
         super.die(cause);
     }

@@ -1,11 +1,22 @@
 {
-  "key": "WAND_CORE_PURPUR",
-  "name": "primalmagick.research.wand_core_purpur.title",
+  "addenda": [
+    {
+      "recipes": [
+        "primalmagick:purpur_staff_core_item"
+      ],
+      "required_research": [
+        "STAVES"
+      ],
+      "text": "primalmagick.research.wand_core_purpur.text.addenda.1"
+    }
+  ],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:purpur_wand_core_item"
   },
+  "key": "WAND_CORE_PURPUR",
+  "name": "primalmagick.research.wand_core_purpur.title",
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",
@@ -13,33 +24,22 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_core_purpur.text.stage.1",
       "required_item": [
         "minecraft:purpur_block"
       ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.wand_core_purpur.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_core_purpur.text.stage.2",
       "attunements": {
         "void": 3
       },
       "recipes": [
         "primalmagick:purpur_wand_core_item"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.wand_core_purpur.text.addenda.1",
-      "required_research": [
-        "STAVES"
       ],
-      "recipes": [
-        "primalmagick:purpur_staff_core_item"
-      ]
+      "text": "primalmagick.research.wand_core_purpur.text.stage.2"
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:netherite_pickaxe",
   "set": {
     "earth": 68,
     "infernal": 22
-  }
+  },
+  "target": "minecraft:netherite_pickaxe"
 }

@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.awt.Color;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -19,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -177,7 +177,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
         return !this.items.get(0).isEmpty();
     }
     
-    public boolean showBubble(Random rand) {
+    public boolean showBubble(RandomSource rand) {
         return rand.nextBoolean() && this.counter % 5 == 0;
     }
     

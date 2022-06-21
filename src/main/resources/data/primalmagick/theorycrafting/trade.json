@@ -1,92 +1,92 @@
 {
-  "key": "primalmagick:trade",
-  "reward_multiplier": 0.25,
   "aid_blocks": [],
+  "key": "primalmagick:trade",
   "material_options": [
     {
       "type": "tag",
+      "bonus_reward": 0.125,
+      "consumed": true,
       "name": "forge:gems/emerald",
       "quantity": 1,
-      "consumed": true,
-      "weight": 10.0,
-      "bonus_reward": 0.125
+      "weight": 10.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:gems/diamond",
       "quantity": 1,
-      "consumed": true,
       "weight": 2.0
     },
     {
       "type": "item",
+      "consumed": true,
+      "match_nbt": false,
       "stack": "minecraft:coal",
-      "consumed": true,
-      "match_nbt": false,
       "weight": 2.0
     },
     {
       "type": "item",
-      "stack": "minecraft:compass",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:compass",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ingots/gold",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:pumpkin",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:pumpkin",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:string",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:leather",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:book",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:book",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:gems/quartz",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "minecraft:wool",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ingots/iron",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     }
-  ]
+  ],
+  "reward_multiplier": 0.25
 }

@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -33,14 +34,14 @@ public class BountyFarmingModifier extends LootModifier {
 
     @SuppressWarnings("deprecation")
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         LootTable table = context.getLevel().getServer().getLootTables().get(context.getParamOrNull(LootContextParams.BLOCK_STATE).getBlock().getLootTable());
         int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.BOUNTY.get(), context.getParamOrNull(LootContextParams.TOOL));
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 List<ItemStack> bonusList = new ArrayList<>();
                 table.getRandomItems(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
-                generatedLoot = ItemUtils.mergeItemStackLists(generatedLoot, bonusList);
+                generatedLoot = ItemUtils.mergeItemStackLists(generatedLoot, bonusList).stream().collect(ObjectArrayList.toList());
             }
         }
         return generatedLoot;

@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Nonnull;
 
@@ -14,7 +13,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 
@@ -70,7 +69,7 @@ public class ForkSpellMod extends AbstractSpellMod {
     }
     
     @Nonnull
-    public List<Vec3> getDirectionUnitVectors(@Nonnull Vec3 dir, @Nonnull Random rng) {
+    public List<Vec3> getDirectionUnitVectors(@Nonnull Vec3 dir, @Nonnull RandomSource rng) {
         // Determine the direction vectors on which to execute the spell forks
         List<Vec3> retVal = new ArrayList<>();
         Vec3 normDir = dir.normalize();
@@ -102,6 +101,6 @@ public class ForkSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getForkCount(), this.getSpreadDegreesText());
+        return Component.translatable("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getForkCount(), this.getSpreadDegreesText());
     }
 }

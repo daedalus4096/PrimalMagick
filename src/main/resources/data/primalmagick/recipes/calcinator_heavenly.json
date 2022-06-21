@@ -1,7 +1,17 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
-  "research": "CALCINATOR_HEAVENLY",
+  "key": {
+    "C": {
+      "item": "primalmagick:calcinator_forbidden"
+    },
+    "E": {
+      "item": "primalmagick:essence_cluster_hallowed"
+    },
+    "M": {
+      "item": "primalmagick:marble_hallowed"
+    }
+  },
   "mana": {
     "hallowed": 100
   },
@@ -10,17 +20,7 @@
     "MCM",
     "EEE"
   ],
-  "key": {
-    "M": {
-      "item": "primalmagick:marble_hallowed"
-    },
-    "C": {
-      "item": "primalmagick:calcinator_forbidden"
-    },
-    "E": {
-      "item": "primalmagick:essence_cluster_hallowed"
-    }
-  },
+  "research": "CALCINATOR_HEAVENLY",
   "result": {
     "item": "primalmagick:calcinator_heavenly"
   }

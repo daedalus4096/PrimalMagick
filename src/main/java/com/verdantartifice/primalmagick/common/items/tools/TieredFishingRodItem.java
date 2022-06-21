@@ -40,7 +40,7 @@ public class TieredFishingRodItem extends FishingRodItem {
                 });
             }
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1.0F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
-            level.gameEvent(player, GameEvent.FISHING_ROD_REEL_IN, player);
+            player.gameEvent(GameEvent.ITEM_INTERACT_FINISH);
         } else {
             level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
             if (!level.isClientSide) {
@@ -49,7 +49,7 @@ public class TieredFishingRodItem extends FishingRodItem {
                 level.addFreshEntity(new FishingHookEntity(player, level, luck, lure));
             }
             player.awardStat(Stats.ITEM_USED.get(this));
-            level.gameEvent(player, GameEvent.FISHING_ROD_CAST, player);
+            player.gameEvent(GameEvent.ITEM_INTERACT_START);
         }
         
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());

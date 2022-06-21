@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:cracked_stone_bricks",
-  "base": "minecraft:stone_bricks"
+  "base": "minecraft:stone_bricks",
+  "target": "minecraft:cracked_stone_bricks"
 }

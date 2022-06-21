@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:black_bed",
-  "base": "minecraft:white_bed"
+  "base": "minecraft:white_bed",
+  "target": "minecraft:black_bed"
 }

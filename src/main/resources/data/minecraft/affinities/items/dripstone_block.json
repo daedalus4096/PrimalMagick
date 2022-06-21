@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:dripstone_block",
-  "base": "minecraft:stone",
   "add": {
     "sea": 2
-  }
+  },
+  "base": "minecraft:stone",
+  "target": "minecraft:dripstone_block"
 }

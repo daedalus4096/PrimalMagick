@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:azure_bluet",
-  "base": "minecraft:dandelion"
+  "base": "minecraft:dandelion",
+  "target": "minecraft:azure_bluet"
 }

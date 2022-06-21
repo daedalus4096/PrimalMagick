@@ -1,17 +1,17 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "EXPERT_MANAWEAVING",
-  "pattern": [
-    "MMM",
-    "MMM"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_enchanted"
     }
   },
+  "pattern": [
+    "MMM",
+    "MMM"
+  ],
+  "research": "EXPERT_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_enchanted_wall",
-    "count": 6
+    "count": 6,
+    "item": "primalmagick:marble_enchanted_wall"
   }
 }

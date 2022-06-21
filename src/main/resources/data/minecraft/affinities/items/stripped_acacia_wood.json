@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_acacia_wood",
-  "base": "minecraft:acacia_wood"
+  "base": "minecraft:acacia_wood",
+  "target": "minecraft:stripped_acacia_wood"
 }

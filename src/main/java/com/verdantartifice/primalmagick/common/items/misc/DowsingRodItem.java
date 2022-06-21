@@ -8,9 +8,8 @@ import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.rituals.OfferingPedestalTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -68,32 +67,32 @@ public class DowsingRodItem extends Item {
     protected void doStabilityCheck(RitualAltarTileEntity altarEntity, Player player) {
         float delta = altarEntity.calculateStabilityDelta();
         if (delta >= THRESHOLD_HIGH) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.altar_stability.very_good"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_good"));
         } else if (delta >= THRESHOLD_LOW) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.altar_stability.good"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.good"));
         } else if (delta <= -THRESHOLD_HIGH) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.altar_stability.very_poor"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.very_poor"));
         } else if (delta <= -THRESHOLD_LOW) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.altar_stability.poor"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.poor"));
         } else {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.altar_stability.neutral"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.altar_stability.neutral"));
         }
     }
     
     protected void doPropSaltCheck(Level level, ISaltPowered block, BlockPos blockPos, Player player) {
         if (block.isBlockSaltPowered(level, blockPos)) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.salt_connection.active"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.active"));
         } else {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.salt_connection.inactive"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.salt_connection.inactive"));
         }
     }
     
     protected void doPropSymmetryCheck(Level level, IRitualStabilizer block, BlockPos blockPos, BlockPos altarPos, Player player) {
         BlockPos symPos = RitualAltarTileEntity.getSymmetricPosition(altarPos, blockPos);
         if (symPos == null || block.hasSymmetryPenalty(level, blockPos, symPos)) {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.symmetry.not_found"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"));
         } else {
-            player.sendMessage(new TranslatableComponent("event.primalmagick.dowsing_rod.symmetry.found"), Util.NIL_UUID);
+            player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"));
         }
     }
     

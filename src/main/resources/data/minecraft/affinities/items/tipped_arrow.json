@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:tipped_arrow",
-  "base": "minecraft:arrow"
+  "base": "minecraft:arrow",
+  "target": "minecraft:tipped_arrow"
 }

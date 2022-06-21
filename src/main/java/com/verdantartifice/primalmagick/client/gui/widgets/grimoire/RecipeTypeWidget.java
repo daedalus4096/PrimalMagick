@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.crafting.Recipe;
 
 /**
@@ -21,7 +20,7 @@ public class RecipeTypeWidget extends AbstractWidget {
     protected Component tooltip;
     
     public RecipeTypeWidget(Recipe<?> recipe, int x, int y, Component tooltip) {
-        super(x, y, 16, 16, TextComponent.EMPTY);
+        super(x, y, 16, 16, Component.empty());
         this.recipe = recipe;
         this.tooltip = tooltip;
     }

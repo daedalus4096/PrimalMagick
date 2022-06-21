@@ -28,12 +28,10 @@ import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -46,7 +44,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -84,14 +81,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
     }
     
-    protected TextComponent getManaText(ItemStack stack, Source source) {
+    protected MutableComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
-            return new TextComponent(Character.toString('\u221E'));
+            return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the current real mana for that source from the stack's NBT tag
-            return new TextComponent(MANA_FORMATTER.format(mana / 100.0D));
+            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
 
@@ -113,14 +110,14 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
-    protected TextComponent getMaxManaText(ItemStack stack) {
+    protected MutableComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
-            return new TextComponent(Character.toString('\u221E'));
+            return Component.literal(Character.toString('\u221E'));
         } else {
             // Otherwise show the max centimana for that source from the stack's NBT tag
-            return new TextComponent(MANA_FORMATTER.format(mana / 100.0D));
+            return Component.literal(MANA_FORMATTER.format(mana / 100.0D));
         }
     }
     
@@ -258,7 +255,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         double modifier = this.getBaseCostModifier(stack);
         
         // Subtract discounts from wand enchantments
-        int efficiencyLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get(), stack);
+        int efficiencyLevel = stack.getEnchantmentLevel(EnchantmentsPM.MANA_EFFICIENCY.get());
         if (efficiencyLevel > 0) {
             modifier -= (0.02D * efficiencyLevel);
         }
@@ -309,7 +306,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    Component line = new TranslatableComponent("primalmagick.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    Component line = Component.translatable("primalmagick.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -317,24 +314,24 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(new TranslatableComponent("primalmagick.spells.wand_header", this.getSpellCapacityText(stack)));
+            tooltip.add(Component.translatable("primalmagick.spells.wand_header", this.getSpellCapacityText(stack)));
             if (spells.isEmpty()) {
-                tooltip.add(new TranslatableComponent("primalmagick.spells.none"));
+                tooltip.add(Component.translatable("primalmagick.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        tooltip.add(new TranslatableComponent("primalmagick.spells.name_selected", spell.getName()));
+                        tooltip.add(Component.translatable("primalmagick.spells.name_selected", spell.getName()));
                         tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
                     } else {
-                        tooltip.add(new TranslatableComponent("primalmagick.spells.name_unselected", spell.getName()));
+                        tooltip.add(Component.translatable("primalmagick.spells.name_unselected", spell.getName()));
                     }
                 }
             }
         } else {
             // Add mana summary
             boolean first = true;
-            Component summaryText = new TextComponent("");
+            Component summaryText = Component.literal("");
             for (Source source : Source.SORTED_SOURCES) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
@@ -342,7 +339,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (first) {
                         summaryText = manaText;
                     } else {
-                        summaryText = new TranslatableComponent("primalmagick.source.mana_summary_fragment", summaryText, manaText);
+                        summaryText = Component.translatable("primalmagick.source.mana_summary_fragment", summaryText, manaText);
                     }
                     first = false;
                 }
@@ -352,12 +349,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add active spell
             SpellPackage activeSpell = this.getActiveSpell(stack);
             Component activeSpellName = (activeSpell == null) ?
-                    new TranslatableComponent("tooltip.primalmagick.none") :
+                    Component.translatable("tooltip.primalmagick.none") :
                     activeSpell.getName();
-            tooltip.add(new TranslatableComponent("primalmagick.spells.short_wand_header", activeSpellName));
+            tooltip.add(Component.translatable("primalmagick.spells.short_wand_header", activeSpellName));
             
             // Add more info tooltip
-            tooltip.add(new TranslatableComponent("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            tooltip.add(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     
@@ -502,7 +499,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
                     ResearchManager.completeResearch(player, hintKey);
-                    player.sendMessage(new TranslatableComponent("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+                    player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
                 }
             }

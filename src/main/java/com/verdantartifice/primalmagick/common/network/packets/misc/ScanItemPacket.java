@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
@@ -46,11 +46,11 @@ public class ScanItemPacket implements IMessageToServer {
                 if (message.stack != null && !message.stack.isEmpty()) {
                     ServerPlayer player = ctx.get().getSender();
                     if (ResearchManager.isScanned(message.stack, player)) {
-                        player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
                     } else if (ResearchManager.setScanned(message.stack, player)) {
-                        player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
                     } else {
-                        player.displayClientMessage(new TranslatableComponent("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
+                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
                     }
                 }
             });

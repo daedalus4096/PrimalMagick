@@ -14,12 +14,11 @@ import com.verdantartifice.primalmagick.common.entities.ai.goals.CompanionStayGo
 import com.verdantartifice.primalmagick.common.entities.ai.goals.FollowCompanionOwnerGoal;
 import com.verdantartifice.primalmagick.common.entities.companions.AbstractCompanionEntity;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -278,9 +277,9 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
                     if (this.isCompanionStaying()) {
-                        playerIn.sendMessage(new TranslatableComponent("event.primalmagick.golem.stay"), Util.NIL_UUID);
+                        playerIn.sendSystemMessage(Component.translatable("event.primalmagick.golem.stay"));
                     } else {
-                        playerIn.sendMessage(new TranslatableComponent("event.primalmagick.golem.follow"), Util.NIL_UUID);
+                        playerIn.sendSystemMessage(Component.translatable("event.primalmagick.golem.follow"));
                     }
                     this.lastStayChangeTime = time;
                 }

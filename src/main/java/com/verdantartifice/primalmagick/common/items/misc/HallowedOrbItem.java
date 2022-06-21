@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -26,7 +25,7 @@ public class HallowedOrbItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(new TranslatableComponent("tooltip.primalmagick.hallowed_orb.1").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
-        tooltip.add(new TranslatableComponent("tooltip.primalmagick.hallowed_orb.2").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tooltip.primalmagick.hallowed_orb.1").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tooltip.primalmagick.hallowed_orb.2").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
     }
 }

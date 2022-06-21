@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_spruce_wood",
-  "base": "minecraft:spruce_wood"
+  "base": "minecraft:spruce_wood",
+  "target": "minecraft:stripped_spruce_wood"
 }

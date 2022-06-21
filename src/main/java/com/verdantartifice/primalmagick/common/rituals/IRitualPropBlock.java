@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPack
 import com.verdantartifice.primalmagick.common.network.packets.fx.RemovePropMarkerPacket;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -54,7 +54,7 @@ public interface IRitualPropBlock extends ISaltPowered, IRitualStabilizer {
     }
     
     public default void sendPropStatusMessage(@Nonnull Player player) {
-        player.displayClientMessage(new TranslatableComponent(this.getPropTranslationKey()), false);
+        player.displayClientMessage(Component.translatable(this.getPropTranslationKey()), false);
     }
     
     public String getPropTranslationKey();

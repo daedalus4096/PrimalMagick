@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:acacia_slab",
-  "base": "minecraft:oak_slab"
+  "base": "minecraft:oak_slab",
+  "target": "minecraft:acacia_slab"
 }

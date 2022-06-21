@@ -1,7 +1,6 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
   "group": "source_runes",
-  "research": "RUNE_VOID",
   "ingredients": [
     {
       "item": "primalmagick:rune_unattuned"
@@ -10,6 +9,7 @@
       "item": "primalmagick:essence_dust_void"
     }
   ],
+  "research": "RUNE_VOID",
   "result": {
     "item": "primalmagick:rune_void"
   }

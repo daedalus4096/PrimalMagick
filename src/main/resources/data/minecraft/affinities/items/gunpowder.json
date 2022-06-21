@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:gunpowder",
   "set": {
     "earth": 5,
     "infernal": 15
-  }
+  },
+  "target": "minecraft:gunpowder"
 }

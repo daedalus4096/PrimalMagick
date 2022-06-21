@@ -14,9 +14,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Base class for a spell mod.  Handles property management and serialization.
@@ -95,7 +93,7 @@ public abstract class AbstractSpellMod implements ISpellMod {
                 retVal += ampMod.getPropertyValue("power");
             }
             if (spellSource != null) {
-                int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get(), spellSource);
+                int enchLevel = spellSource.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get());
                 if (enchLevel > 0) {
                     retVal += enchLevel;
                 }
@@ -106,11 +104,11 @@ public abstract class AbstractSpellMod implements ISpellMod {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagick.spell.mod.type." + this.getModType());
+        return Component.translatable("primalmagick.spell.mod.type." + this.getModType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagick.spell.mod.default_name." + this.getModType());
+        return Component.translatable("primalmagick.spell.mod.default_name." + this.getModType());
     }
 }

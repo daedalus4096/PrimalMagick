@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:scute",
   "set": {
-    "sea": 2,
-    "blood": 2
-  }
+    "blood": 2,
+    "sea": 2
+  },
+  "target": "minecraft:scute"
 }

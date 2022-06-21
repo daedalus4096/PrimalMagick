@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Primary access point for theorycraft-related methods.  Also stores defined research projects in a
@@ -99,7 +100,7 @@ public class TheorycraftManager {
     @Nonnull
     public static Set<Block> getNearbyAidBlocks(Level level, BlockPos pos) {
         Set<ResourceLocation> allAids = getAllAidBlockIds();
-        return getSurroundingsInner(level, pos, b -> allAids.contains(b.getRegistryName()));
+        return getSurroundingsInner(level, pos, b -> allAids.contains(ForgeRegistries.BLOCKS.getKey(b)));
     }
     
     @Nonnull

@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:red_sand",
-  "base": "minecraft:sand"
+  "base": "minecraft:sand",
+  "target": "minecraft:red_sand"
 }

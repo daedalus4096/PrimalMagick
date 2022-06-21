@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "MM",
-    "MM"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_bricks"
     }
   },
+  "pattern": [
+    "MM",
+    "MM"
+  ],
   "result": {
-    "item": "primalmagick:marble_tiles",
-    "count": 4
+    "count": 4,
+    "item": "primalmagick:marble_tiles"
   }
 }

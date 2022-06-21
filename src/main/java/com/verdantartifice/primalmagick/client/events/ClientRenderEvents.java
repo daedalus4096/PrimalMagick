@@ -16,7 +16,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawSelectionEvent;
@@ -39,12 +39,12 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item stack grants a mana discount
         if (event.getItemStack().getItem() instanceof IManaDiscountGear) {
             int discount = ((IManaDiscountGear)event.getItemStack().getItem()).getManaDiscount(event.getItemStack(), mc.player);
-            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA));
+            event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA));
         }
         
         // Show a tooltip entry if the item stack is runescribed
         if (RuneManager.hasRunes(event.getItemStack())) {
-            event.getToolTip().add(new TranslatableComponent("tooltip.primalmagick.runescribed").withStyle(ChatFormatting.DARK_AQUA));
+            event.getToolTip().add(Component.translatable("tooltip.primalmagick.runescribed").withStyle(ChatFormatting.DARK_AQUA));
         }
     }
     
@@ -57,11 +57,11 @@ public class ClientRenderEvents {
         if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.none")));
+                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.none")));
             } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.unknown")));
+                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.unknown")));
             } else {
-                event.getTooltipElements().add(Either.left(new TranslatableComponent("primalmagick.affinities.label")));
+                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.label")));
                 event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
             }
         }
@@ -75,7 +75,7 @@ public class ClientRenderEvents {
             SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
             boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
             if (isScanned && affinities != null && !affinities.isEmpty()) {
-                float partialTicks = event.getPartialTicks();
+                float partialTicks = event.getPartialTick();
                 double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
                 double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
                 double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));

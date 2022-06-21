@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:budding_amethyst",
-  "base": "minecraft:amethyst_block"
+  "base": "minecraft:amethyst_block",
+  "target": "minecraft:budding_amethyst"
 }

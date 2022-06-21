@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 public interface IDissolutionRecipe extends Recipe<Container>, IHasManaCost, IArcaneRecipeBookItem {
     @Override
     default RecipeType<?> getType() {
-        return RecipeTypesPM.DISSOLUTION;
+        return RecipeTypesPM.DISSOLUTION.get();
     }
     
     @Override

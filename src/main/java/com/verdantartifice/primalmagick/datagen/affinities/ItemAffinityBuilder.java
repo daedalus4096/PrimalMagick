@@ -23,7 +23,7 @@ public class ItemAffinityBuilder {
     protected SourceList removeValues;
 
     protected ItemAffinityBuilder(@Nonnull ItemLike item) {
-        this.targetId = item.asItem().getRegistryName();
+        this.targetId = ForgeRegistries.ITEMS.getKey(item.asItem());
     }
     
     public static ItemAffinityBuilder itemAffinity(@Nonnull ItemLike item) {
@@ -35,7 +35,7 @@ public class ItemAffinityBuilder {
     }
     
     public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
-        this.baseId = baseItem.asItem().getRegistryName();
+        this.baseId = ForgeRegistries.ITEMS.getKey(baseItem.asItem());
         return this;
     }
     

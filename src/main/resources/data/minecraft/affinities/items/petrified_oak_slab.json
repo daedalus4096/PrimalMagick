@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:petrified_oak_slab",
-  "base": "minecraft:oak_slab"
+  "base": "minecraft:oak_slab",
+  "target": "minecraft:petrified_oak_slab"
 }

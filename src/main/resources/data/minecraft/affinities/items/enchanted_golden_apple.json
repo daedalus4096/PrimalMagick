@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:enchanted_golden_apple",
-  "base": "minecraft:golden_apple",
   "add": {
     "hallowed": 5
-  }
+  },
+  "base": "minecraft:golden_apple",
+  "target": "minecraft:enchanted_golden_apple"
 }

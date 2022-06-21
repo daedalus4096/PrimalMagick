@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagick:rock_salt",
   "set": {
     "earth": 5
-  }
+  },
+  "target": "primalmagick:rock_salt"
 }

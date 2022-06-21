@@ -1,4 +1,6 @@
 {
+  "type": "primalmagick:bonus_nugget",
+  "chance": 0.5,
   "conditions": [
     {
       "condition": "primalmagick:match_block_tag",
@@ -18,7 +20,5 @@
       }
     }
   ],
-  "chance": 0.5,
-  "nugget": "minecraft:gold_nugget",
-  "type": "primalmagick:bonus_nugget"
+  "nugget": "minecraft:gold_nugget"
 }

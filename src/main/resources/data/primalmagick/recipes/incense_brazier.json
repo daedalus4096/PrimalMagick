@@ -1,22 +1,22 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "INCENSE_BRAZIER",
-  "pattern": [
-    "GCG",
-    "GGG",
-    " P "
-  ],
   "key": {
-    "G": {
-      "tag": "forge:ingots/gold"
-    },
     "C": {
       "tag": "minecraft:coals"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
     },
     "P": {
       "tag": "minecraft:planks"
     }
   },
+  "pattern": [
+    "GCG",
+    "GGG",
+    " P "
+  ],
+  "research": "INCENSE_BRAZIER",
   "result": {
     "item": "primalmagick:incense_brazier"
   }

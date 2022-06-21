@@ -5,59 +5,48 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.searchtree.MutableSearchTree;
-import net.minecraft.client.searchtree.ReloadableSearchTree;
+import net.minecraft.client.searchtree.FullTextSearchTree;
+import net.minecraft.client.searchtree.SearchRegistry;
+import net.minecraft.client.searchtree.SearchTree;
 import net.minecraft.core.Registry;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
 
-@SuppressWarnings("deprecation")
-public class ArcaneSearchRegistry implements ResourceManagerReloadListener {
-    protected static ArcaneSearchRegistry INSTANCE = null;
+/**
+ * Helper class for managing the mod's search tree for arcane recipes.
+ * 
+ * @author Daedalus4096
+ */
+public class ArcaneSearchRegistry {
+    protected static final SearchRegistry.Key<ArcaneRecipeCollection> ARCANE_RECIPE_COLLECTIONS = new SearchRegistry.Key<>();
     
-    protected final MutableSearchTree<ArcaneRecipeCollection> arcaneSearchTree;
-    
-    public static ArcaneSearchRegistry getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ArcaneSearchRegistry();
-        }
-        return INSTANCE;
-    }
-    
-    protected ArcaneSearchRegistry() {
-        this.arcaneSearchTree = new ReloadableSearchTree<>((arc) -> {
-            return arc.getRecipes().stream().flatMap((r) -> {
-                return r.getResultItem().getTooltipLines(null, TooltipFlag.Default.NORMAL).stream();
-            }).map((c) -> {
-                return ChatFormatting.stripFormatting(c.getString()).trim();
-            }).filter((s) -> {
-                return !s.isEmpty();
-            });
-        }, (arc) -> {
-            return arc.getRecipes().stream().map((r) -> {
-                return Registry.ITEM.getKey(r.getResultItem().getItem());
-            });
+    @SuppressWarnings("deprecation")
+    public static void registerSearchTree() {
+        Minecraft.getInstance().getSearchTreeManager().register(ArcaneSearchRegistry.ARCANE_RECIPE_COLLECTIONS, (contents) -> {
+            return new FullTextSearchTree<>((arc) -> {
+                return arc.getRecipes().stream().flatMap((r) -> {
+                    return r.getResultItem().getTooltipLines((Player)null, TooltipFlag.Default.NORMAL).stream();
+                }).map((c) -> {
+                    return ChatFormatting.stripFormatting(c.getString()).trim();
+                }).filter((s) -> {
+                    return !s.isEmpty();
+                });
+            }, (arc) -> {
+                return arc.getRecipes().stream().map((r) -> {
+                    return Registry.ITEM.getKey(r.getResultItem().getItem());
+                });
+            }, contents);
         });
     }
-
-    @Override
-    public void onResourceManagerReload(ResourceManager manager) {
-        if (this.arcaneSearchTree != null) {
-            this.arcaneSearchTree.refresh();
-        }
-    }
-
-    public MutableSearchTree<ArcaneRecipeCollection> getSearchTree() {
-        return this.arcaneSearchTree;
+    
+    public static SearchTree<ArcaneRecipeCollection> getSearchTree() {
+        return Minecraft.getInstance().getSearchTree(ARCANE_RECIPE_COLLECTIONS);
     }
     
-    public void populate() {
+    public static void populate() {
         Minecraft mc = Minecraft.getInstance();
         ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
-        this.arcaneSearchTree.clear();
         book.setupCollections(mc.level.getRecipeManager().getRecipes());
-        book.getCollections().forEach(this.arcaneSearchTree::add);
-        this.arcaneSearchTree.refresh();
+        mc.getSearchTreeManager().populate(ARCANE_RECIPE_COLLECTIONS, book.getCollections());
     }
 }

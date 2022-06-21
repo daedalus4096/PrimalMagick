@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:water_bucket",
-  "base": "minecraft:bucket",
   "add": {
     "sea": 20
-  }
+  },
+  "base": "minecraft:bucket",
+  "target": "minecraft:water_bucket"
 }

@@ -1,11 +1,12 @@
 {
-  "key": "MANAFRUIT",
-  "name": "primalmagick.research.manafruit.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:manafruit"
   },
+  "key": "MANAFRUIT",
+  "name": "primalmagick.research.manafruit.title",
   "parents": [
     "BASIC_RITUAL",
     "MANA_SALTS",
@@ -13,17 +14,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.manafruit.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.manafruit.text.stage.1"
     },
     {
-      "text": "primalmagick.research.manafruit.text.stage.2",
       "recipes": [
         "primalmagick:manafruit"
-      ]
+      ],
+      "text": "primalmagick.research.manafruit.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

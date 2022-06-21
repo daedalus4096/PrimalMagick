@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -21,9 +19,9 @@ import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -60,7 +58,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public abstract class AbstractBlockLootTableProvider implements DataProvider {
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
     
     protected static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
@@ -80,13 +77,13 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     protected abstract void addTables();
     
     private void registerLootTableBuiler(Block block, LootTable.Builder builder) {
-        this.registeredBlocks.add(block.getRegistryName());
+        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
         this.lootTables.put(block, builder);
     }
     
     protected void registerEmptyTable(Block block) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredBlocks.add(block.getRegistryName());
+        this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
     }
     
     protected void registerBasicTable(Block block) {
@@ -152,7 +149,7 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
     }
     
     @Override
-    public void run(HashCache cache) {
+    public void run(CachedOutput cache) {
         // Register all the loot tables with this provider
         this.addTables();
         
@@ -169,12 +166,12 @@ public abstract class AbstractBlockLootTableProvider implements DataProvider {
         this.checkExpectations();
     }
 
-    private void writeTables(HashCache cache, Map<ResourceLocation, LootTable> tables) {
+    private void writeTables(CachedOutput cache, Map<ResourceLocation, LootTable> tables) {
         Path outputFolder = this.generator.getOutputFolder();
         tables.forEach((key, lootTable) -> {
             Path path = outputFolder.resolve("data/" + key.getNamespace() + "/loot_tables/" + key.getPath() + ".json");
             try {
-                DataProvider.save(GSON, cache, LootTables.serialize(lootTable), path);
+                DataProvider.saveStable(cache, LootTables.serialize(lootTable), path);
             } catch (IOException e) {
                 LOGGER.error("Couldn't write loot table {}", path, e);
             }

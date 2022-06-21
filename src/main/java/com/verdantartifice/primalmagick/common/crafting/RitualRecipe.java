@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a ritual recipe.
@@ -129,7 +128,7 @@ public class RitualRecipe implements IRitualRecipe {
         return this.instability;
     }
     
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RitualRecipe> {
+    public static class Serializer implements RecipeSerializer<RitualRecipe> {
         @Override
         public RitualRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

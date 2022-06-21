@@ -1,31 +1,31 @@
 {
-  "key": "WAND_INSCRIPTION",
-  "name": "primalmagick.research.wand_inscription.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:wand_inscription_table"
   },
+  "key": "WAND_INSCRIPTION",
+  "name": "primalmagick.research.wand_inscription.title",
   "parents": [
     "BASIC_SORCERY",
     "ADVANCED_WANDMAKING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_inscription.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
       ],
       "required_research": [
         "t_spells_crafted_expert"
-      ]
+      ],
+      "text": "primalmagick.research.wand_inscription.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_inscription.text.stage.2",
       "recipes": [
         "primalmagick:wand_inscription_table"
-      ]
+      ],
+      "text": "primalmagick.research.wand_inscription.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

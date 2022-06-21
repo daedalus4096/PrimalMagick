@@ -19,7 +19,7 @@ public class PotionBonusAffinityBuilder {
     protected SourceList bonusValues;
     
     protected PotionBonusAffinityBuilder(@Nonnull Potion target) {
-        this.targetId = target.getRegistryName();
+        this.targetId = ForgeRegistries.POTIONS.getKey(target);
     }
     
     public static PotionBonusAffinityBuilder potionBonusAffinity(@Nonnull Potion target) {

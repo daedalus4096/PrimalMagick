@@ -23,8 +23,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -38,8 +36,8 @@ import net.minecraft.world.level.Level;
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
     private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = new TranslatableComponent("tooltip.primalmagick.analyze_button.1");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = new TranslatableComponent("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
+    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
     
     protected Level world;
 
@@ -69,11 +67,11 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         
         // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
-            text = new TranslatableComponent("primalmagick.analysis.no_item");
+            text = Component.translatable("primalmagick.analysis.no_item");
         } else {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (sources == null || sources.isEmpty()) {
-                text = new TranslatableComponent("primalmagick.analysis.no_affinities");
+                text = Component.translatable("primalmagick.analysis.no_affinities");
             }
         }
         
@@ -100,7 +98,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
             @Override
             public void narrateTooltip(Consumer<Component> consumer) {
             }
-        }, TextComponent.EMPTY));
+        }, Component.empty()));
         
         // Render observation tracker widget
         this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));

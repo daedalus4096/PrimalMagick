@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -56,12 +56,12 @@ public class AmbrosiaItem extends Item {
                             AttunementManager.incrementAttunement(player, source, AttunementType.INDUCED, PENALTY);
                         }
                     }
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.ambrosia.success").withStyle(ChatFormatting.GREEN), true);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.success").withStyle(ChatFormatting.GREEN), true);
                 } else {
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.ambrosia.failure").withStyle(ChatFormatting.RED), true);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.failure").withStyle(ChatFormatting.RED), true);
                 }
             } else {
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.ambrosia.not_wizard").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("event.primalmagick.ambrosia.not_wizard").withStyle(ChatFormatting.RED), true);
             }
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);

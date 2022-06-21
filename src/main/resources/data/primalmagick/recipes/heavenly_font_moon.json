@@ -1,7 +1,20 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "heavenly_mana_fonts",
-  "research": "HEAVENLY_MANA_FONTS",
+  "key": {
+    "E": {
+      "item": "primalmagick:essence_cluster_moon"
+    },
+    "F": {
+      "item": "primalmagick:forbidden_font_moon"
+    },
+    "I": {
+      "tag": "primalmagick:ingots/hallowsteel"
+    },
+    "M": {
+      "item": "primalmagick:marble_hallowed_slab"
+    }
+  },
   "mana": {
     "moon": 2500
   },
@@ -10,20 +23,7 @@
     "EFE",
     "IMI"
   ],
-  "key": {
-    "I": {
-      "tag": "primalmagick:ingots/hallowsteel"
-    },
-    "M": {
-      "item": "primalmagick:marble_hallowed_slab"
-    },
-    "E": {
-      "item": "primalmagick:essence_cluster_moon"
-    },
-    "F": {
-      "item": "primalmagick:forbidden_font_moon"
-    }
-  },
+  "research": "HEAVENLY_MANA_FONTS",
   "result": {
     "item": "primalmagick:heavenly_font_moon"
   }

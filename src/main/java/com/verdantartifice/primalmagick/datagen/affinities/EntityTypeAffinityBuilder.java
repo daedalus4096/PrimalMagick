@@ -19,7 +19,7 @@ public class EntityTypeAffinityBuilder {
     protected SourceList values;
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
-        this.targetId = target.getRegistryName();
+        this.targetId = ForgeRegistries.ENTITIES.getKey(target);
     }
     
     public static EntityTypeAffinityBuilder entityAffinity(@Nonnull EntityType<?> target) {

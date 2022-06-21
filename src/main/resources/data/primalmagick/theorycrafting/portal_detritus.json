@@ -1,18 +1,18 @@
 {
-  "key": "primalmagick:portal_detritus",
-  "required_material_count_override": 1,
-  "base_success_chance_override": 0.5,
-  "reward_multiplier": 0.5,
   "aid_blocks": [
     "minecraft:nether_portal"
   ],
+  "base_success_chance_override": 0.5,
+  "key": "primalmagick:portal_detritus",
   "material_options": [
     {
       "type": "item",
-      "stack": "primalmagick:magnifying_glass",
       "consumed": false,
       "match_nbt": false,
+      "stack": "primalmagick:magnifying_glass",
       "weight": 1.0
     }
-  ]
+  ],
+  "required_material_count_override": 1,
+  "reward_multiplier": 0.5
 }

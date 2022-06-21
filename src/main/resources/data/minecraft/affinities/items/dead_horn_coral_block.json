@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:dead_horn_coral_block",
-  "base": "minecraft:dead_horn_coral",
   "add": {
     "sea": 15
-  }
+  },
+  "base": "minecraft:dead_horn_coral",
+  "target": "minecraft:dead_horn_coral_block"
 }

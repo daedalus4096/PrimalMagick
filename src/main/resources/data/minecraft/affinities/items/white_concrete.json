@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:white_concrete",
-  "base": "minecraft:white_concrete_powder",
   "add": {
     "sea": 1
-  }
+  },
+  "base": "minecraft:white_concrete_powder",
+  "target": "minecraft:white_concrete"
 }

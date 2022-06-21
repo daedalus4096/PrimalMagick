@@ -2,8 +2,8 @@
   "type": "entity_type",
   "target": "primalmagick:pixie_majestic_hallowed",
   "values": {
-    "sky": 10,
     "blood": 5,
-    "hallowed": 20
+    "hallowed": 20,
+    "sky": 10
   }
 }

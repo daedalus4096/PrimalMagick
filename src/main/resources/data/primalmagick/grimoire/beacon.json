@@ -1,12 +1,13 @@
 {
-  "key": "BEACON",
-  "name": "primalmagick.research.beacon.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "minecraft:beacon"
   },
+  "key": "BEACON",
+  "name": "primalmagick.research.beacon.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -14,6 +15,5 @@
     {
       "text": "primalmagick.research.beacon.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

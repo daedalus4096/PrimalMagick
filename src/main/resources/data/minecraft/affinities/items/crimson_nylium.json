@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:crimson_nylium",
-  "base": "minecraft:netherrack",
   "add": {
     "moon": 2
-  }
+  },
+  "base": "minecraft:netherrack",
+  "target": "minecraft:crimson_nylium"
 }

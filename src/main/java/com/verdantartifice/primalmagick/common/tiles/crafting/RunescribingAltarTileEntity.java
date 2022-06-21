@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -51,6 +51,6 @@ public class RunescribingAltarTileEntity extends TilePM implements MenuProvider 
 
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
+        return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 }

@@ -1,10 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "AMBROSIA",
-  "mana": {
-    "earth": 40
-  },
-  "instability": 4,
   "ingredients": [
     {
       "item": "primalmagick:manafruit"
@@ -22,6 +17,10 @@
       "item": "primalmagick:rune_self"
     }
   ],
+  "instability": 4,
+  "mana": {
+    "earth": 40
+  },
   "props": [
     {
       "tag": "primalmagick:ritual_candles"
@@ -33,6 +32,7 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
+  "research": "AMBROSIA",
   "result": {
     "item": "primalmagick:ambrosia_basic_earth"
   }

@@ -1,7 +1,6 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
   "group": "attuned_sanguine_cores",
-  "research": "SANGUINE_CORE_LAND_ANIMALS",
   "ingredients": [
     {
       "item": "primalmagick:sanguine_core_blank"
@@ -13,6 +12,7 @@
       "item": "minecraft:sweet_berries"
     }
   ],
+  "research": "SANGUINE_CORE_LAND_ANIMALS",
   "result": {
     "item": "primalmagick:sanguine_core_fox"
   }

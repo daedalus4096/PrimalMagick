@@ -1,13 +1,13 @@
 {
   "type": "primalmagick:dissolution",
-  "mana": {
-    "earth": 1
-  },
   "ingredient": {
     "tag": "minecraft:wool"
   },
+  "mana": {
+    "earth": 1
+  },
   "result": {
-    "item": "minecraft:string",
-    "count": 9
+    "count": 9,
+    "item": "minecraft:string"
   }
 }

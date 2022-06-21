@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.OfferingPedestalTER;
@@ -76,6 +77,7 @@ public class ClientModLifecycleEvents {
         registerItemProperties(event);
         setRenderLayers();
         registerTooltipComponentFactories();
+        registerSearchTrees(event);
     }
 
     private static void registerKeybinds() {
@@ -285,5 +287,11 @@ public class ClientModLifecycleEvents {
 
     private static void registerTooltipComponentFactories() {
         MinecraftForgeClient.registerTooltipComponentFactory(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
+    }
+    
+    private static void registerSearchTrees(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            ArcaneSearchRegistry.registerSearchTree();
+        });
     }
 }

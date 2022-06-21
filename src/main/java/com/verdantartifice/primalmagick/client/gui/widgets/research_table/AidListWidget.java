@@ -11,8 +11,6 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -26,7 +24,7 @@ public class AidListWidget extends AbstractWidget {
     protected final List<Component> aidNames;
 
     public AidListWidget(int x, int y, List<Component> aidNames) {
-        super(x, y, 8, 8, TextComponent.EMPTY);
+        super(x, y, 8, 8, Component.empty());
         this.aidNames = aidNames;
     }
     
@@ -55,7 +53,7 @@ public class AidListWidget extends AbstractWidget {
         if (!this.aidNames.isEmpty()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagick.research_table.aid_header"));
+            tooltip.add(Component.translatable("primalmagick.research_table.aid_header"));
             tooltip.addAll(this.aidNames);
             GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
         }

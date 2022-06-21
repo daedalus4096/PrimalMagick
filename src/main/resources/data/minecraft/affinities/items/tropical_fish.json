@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:tropical_fish",
   "set": {
-    "sea": 5,
-    "blood": 5
-  }
+    "blood": 5,
+    "sea": 5
+  },
+  "target": "minecraft:tropical_fish"
 }

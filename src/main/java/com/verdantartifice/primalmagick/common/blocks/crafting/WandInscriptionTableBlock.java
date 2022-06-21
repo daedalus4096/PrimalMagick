@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.containers.WandInscriptionTableCo
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -86,7 +86,7 @@ public class WandInscriptionTableBlock extends Block {
 
                 @Override
                 public Component getDisplayName() {
-                    return new TranslatableComponent(WandInscriptionTableBlock.this.getDescriptionId());
+                    return Component.translatable(WandInscriptionTableBlock.this.getDescriptionId());
                 }
             });
         }

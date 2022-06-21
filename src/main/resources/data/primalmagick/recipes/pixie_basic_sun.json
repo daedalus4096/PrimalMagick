@@ -1,10 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "PIXIES",
-  "mana": {
-    "sun": 40
-  },
-  "instability": 3,
   "ingredients": [
     {
       "item": "primalmagick:mana_salts"
@@ -19,6 +14,10 @@
       "item": "primalmagick:rune_creature"
     }
   ],
+  "instability": 3,
+  "mana": {
+    "sun": 40
+  },
   "props": [
     {
       "block": "primalmagick:incense_brazier"
@@ -27,6 +26,7 @@
       "block": "primalmagick:ritual_bell"
     }
   ],
+  "research": "PIXIES",
   "result": {
     "item": "primalmagick:pixie_basic_sun"
   }

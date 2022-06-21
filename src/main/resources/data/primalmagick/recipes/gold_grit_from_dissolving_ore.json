@@ -1,14 +1,14 @@
 {
   "type": "primalmagick:dissolution",
   "group": "gold_grit_dissolution",
-  "mana": {
-    "earth": 1
-  },
   "ingredient": {
     "tag": "forge:ores/gold"
   },
+  "mana": {
+    "earth": 1
+  },
   "result": {
-    "item": "primalmagick:gold_grit",
-    "count": 3
+    "count": 3,
+    "item": "primalmagick:gold_grit"
   }
 }

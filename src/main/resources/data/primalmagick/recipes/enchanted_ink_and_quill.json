@@ -1,6 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
-  "research": "THEORYCRAFTING@2",
   "ingredients": [
     {
       "item": "primalmagick:enchanted_ink"
@@ -9,6 +8,7 @@
       "tag": "forge:feathers"
     }
   ],
+  "research": "THEORYCRAFTING@2",
   "result": {
     "item": "primalmagick:enchanted_ink_and_quill"
   }

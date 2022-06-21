@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:podzol",
-  "base": "minecraft:dirt"
+  "base": "minecraft:dirt",
+  "target": "minecraft:podzol"
 }

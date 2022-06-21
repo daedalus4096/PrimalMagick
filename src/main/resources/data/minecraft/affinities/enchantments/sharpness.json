@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
-  "target": "minecraft:sharpness",
   "multiplier": {
     "blood": 1
-  }
+  },
+  "target": "minecraft:sharpness"
 }

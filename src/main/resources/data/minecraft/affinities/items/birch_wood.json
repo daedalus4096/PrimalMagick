@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:birch_wood",
-  "base": "minecraft:birch_log"
+  "base": "minecraft:birch_log",
+  "target": "minecraft:birch_wood"
 }

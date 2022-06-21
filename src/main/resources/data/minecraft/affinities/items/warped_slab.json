@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:warped_slab",
-  "base": "minecraft:crimson_slab"
+  "base": "minecraft:crimson_slab",
+  "target": "minecraft:warped_slab"
 }

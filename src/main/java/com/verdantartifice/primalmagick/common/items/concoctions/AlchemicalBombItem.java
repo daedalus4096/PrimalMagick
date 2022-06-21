@@ -9,11 +9,9 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBo
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -53,8 +51,8 @@ public class AlchemicalBombItem extends Item {
             FuseType fuse = ConcoctionUtils.getFuseType(stack);
             if (!worldIn.isClientSide && fuse != null && fuse.getNext() != null) {
                 playerIn.setItemInHand(handIn, ConcoctionUtils.setFuseType(stack, fuse.getNext()));
-                Component fuseText = new TranslatableComponent(fuse.getNext().getTranslationKey());
-                playerIn.sendMessage(new TranslatableComponent("concoctions.primalmagick.fuse_set", fuseText), Util.NIL_UUID);
+                Component fuseText = Component.translatable(fuse.getNext().getTranslationKey());
+                playerIn.sendSystemMessage(Component.translatable("concoctions.primalmagick.fuse_set", fuseText));
             }
         } else {
             worldIn.playSound(null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.SPLASH_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (worldIn.getRandom().nextFloat() * 0.4F + 0.8F));
@@ -96,13 +94,13 @@ public class AlchemicalBombItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
-        tooltip.add(new TranslatableComponent("concoctions.primalmagick.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
+        tooltip.add(Component.translatable("concoctions.primalmagick.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
         FuseType fuse = ConcoctionUtils.getFuseType(stack);
         if (fuse == null) {
             fuse = FuseType.MEDIUM;
         }
-        Component fuseText = new TranslatableComponent(fuse.getTranslationKey()).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting());
-        tooltip.add(new TranslatableComponent("concoctions.primalmagick.fuse_length", fuseText).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
+        Component fuseText = Component.translatable(fuse.getTranslationKey()).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting());
+        tooltip.add(Component.translatable("concoctions.primalmagick.fuse_length", fuseText).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
     }
 
     @Override
@@ -113,7 +111,7 @@ public class AlchemicalBombItem extends Item {
     @SuppressWarnings("deprecation")
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             items.add(this.getDefaultInstance());   // Add basic water bomb separately
             for (Potion potion : Registry.POTION) {
                 if (!potion.getEffects().isEmpty()) {

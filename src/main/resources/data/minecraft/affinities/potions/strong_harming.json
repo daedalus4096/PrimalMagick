@@ -1,7 +1,7 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:strong_harming",
   "bonus": {
     "blood": 5
-  }
+  },
+  "target": "minecraft:strong_harming"
 }

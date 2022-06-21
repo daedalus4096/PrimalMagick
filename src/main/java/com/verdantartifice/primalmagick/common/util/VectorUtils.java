@@ -1,9 +1,8 @@
 package com.verdantartifice.primalmagick.common.util;
 
-import java.util.Random;
-
 import javax.annotation.Nonnull;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -18,7 +17,7 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector in 3D space
      */
-    public static Vec3 getRandomUnitVector(@Nonnull Random rng) {
+    public static Vec3 getRandomUnitVector(@Nonnull RandomSource rng) {
         return new Vec3(rng.nextGaussian(), rng.nextGaussian(), rng.nextGaussian()).normalize();
     }
     
@@ -29,7 +28,7 @@ public class VectorUtils {
      * @param rng the random number generator to use
      * @return a random unit vector that is orthogonal to the given 3D vector
      */
-    public static Vec3 getRandomOrthogonalUnitVector(@Nonnull Vec3 vec, @Nonnull Random rng) {
+    public static Vec3 getRandomOrthogonalUnitVector(@Nonnull Vec3 vec, @Nonnull RandomSource rng) {
         // Generate a random other vector
         Vec3 other = getRandomUnitVector(rng);
         

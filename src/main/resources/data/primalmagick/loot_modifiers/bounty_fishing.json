@@ -1,13 +1,16 @@
 {
+  "type": "primalmagick:bounty_fishing",
+  "chance": 0.25,
   "conditions": [
     {
       "condition": "minecraft:entity_properties",
+      "entity": "this",
       "predicate": {
-        "fishing_hook": {
-          "in_open_water": false
+        "type_specific": {
+          "type": "fishing_hook",
+          "in_open_water": true
         }
-      },
-      "entity": "this"
+      }
     },
     {
       "condition": "minecraft:match_tool",
@@ -22,7 +25,5 @@
         ]
       }
     }
-  ],
-  "chance": 0.25,
-  "type": "primalmagick:bounty_fishing"
+  ]
 }

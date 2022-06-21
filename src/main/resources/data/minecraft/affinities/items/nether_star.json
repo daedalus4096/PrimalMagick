@@ -1,15 +1,15 @@
 {
   "type": "item",
-  "target": "minecraft:nether_star",
   "set": {
+    "blood": 25,
     "earth": 25,
+    "hallowed": 25,
+    "infernal": 25,
+    "moon": 25,
     "sea": 25,
     "sky": 25,
     "sun": 25,
-    "moon": 25,
-    "blood": 25,
-    "infernal": 25,
-    "void": 25,
-    "hallowed": 25
-  }
+    "void": 25
+  },
+  "target": "minecraft:nether_star"
 }

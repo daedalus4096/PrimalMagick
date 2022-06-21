@@ -17,6 +17,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Icon to show an item stack texture on a grimoire topic button.
@@ -92,7 +93,7 @@ public class ItemIndexIcon extends AbstractIndexIcon {
             crashreportcategory.setDetail("Item Type", () -> {
                return String.valueOf((Object)this.stack.getItem());
             });
-            crashreportcategory.setDetail("Registry Name", () -> String.valueOf(this.stack.getItem().getRegistryName()));
+            crashreportcategory.setDetail("Registry Name", () -> String.valueOf(ForgeRegistries.ITEMS.getKey(this.stack.getItem())));
             crashreportcategory.setDetail("Item Damage", () -> {
                return String.valueOf(this.stack.getDamageValue());
             });

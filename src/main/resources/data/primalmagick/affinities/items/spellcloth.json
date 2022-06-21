@@ -1,12 +1,12 @@
 {
   "type": "item",
-  "target": "primalmagick:spellcloth",
   "set": {
+    "blood": 9,
     "earth": 4,
+    "moon": 4,
     "sea": 4,
     "sky": 19,
-    "sun": 4,
-    "moon": 4,
-    "blood": 9
-  }
+    "sun": 4
+  },
+  "target": "primalmagick:spellcloth"
 }

@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:nether_wart",
   "set": {
     "earth": 5,
-    "moon": 5,
-    "infernal": 5
-  }
+    "infernal": 5,
+    "moon": 5
+  },
+  "target": "minecraft:nether_wart"
 }

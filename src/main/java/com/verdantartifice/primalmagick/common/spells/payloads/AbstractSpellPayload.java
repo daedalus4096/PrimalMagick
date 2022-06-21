@@ -16,9 +16,7 @@ import com.verdantartifice.primalmagick.common.spells.mods.AmplifySpellMod;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 /**
  * Base class for a spell payload.  Handles property management and serialization.
@@ -94,7 +92,7 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
                 retVal += ampMod.getPropertyValue("power");
             }
             if (spellSource != null) {
-                int enchLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get(), spellSource);
+                int enchLevel = spellSource.getEnchantmentLevel(EnchantmentsPM.SPELL_POWER.get());
                 if (enchLevel > 0) {
                     retVal += enchLevel;
                 }
@@ -105,12 +103,12 @@ public abstract class AbstractSpellPayload implements ISpellPayload {
     
     @Override
     public Component getTypeName() {
-        return new TranslatableComponent("primalmagick.spell.payload.type." + this.getPayloadType());
+        return Component.translatable("primalmagick.spell.payload.type." + this.getPayloadType());
     }
     
     @Override
     public Component getDefaultNamePiece() {
-        return new TranslatableComponent("primalmagick.spell.payload.default_name." + this.getPayloadType());
+        return Component.translatable("primalmagick.spell.payload.default_name." + this.getPayloadType());
     }
     
     @Override

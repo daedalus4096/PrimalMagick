@@ -1,26 +1,26 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "WAND_CORE_PURPUR",
+  "key": {
+    "#": {
+      "item": "minecraft:purpur_block"
+    },
+    "D": {
+      "item": "primalmagick:essence_dust_void"
+    }
+  },
   "mana": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
     "sun": 5,
-    "moon": 5,
     "void": 15
   },
   "pattern": [
     "D#",
     "#D"
   ],
-  "key": {
-    "D": {
-      "item": "primalmagick:essence_dust_void"
-    },
-    "#": {
-      "item": "minecraft:purpur_block"
-    }
-  },
+  "research": "WAND_CORE_PURPUR",
   "result": {
     "item": "primalmagick:purpur_wand_core_item"
   }

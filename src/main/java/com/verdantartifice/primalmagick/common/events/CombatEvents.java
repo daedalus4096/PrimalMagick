@@ -39,7 +39,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
@@ -231,7 +230,7 @@ public class CombatEvents {
                     LivingEntity livingShooter = (LivingEntity)shooter;
                     
                     // If the target can have its soul pierced, spawn some soul slivers
-                    int soulpiercingLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get(), livingShooter.getMainHandItem());
+                    int soulpiercingLevel = livingShooter.getMainHandItem().getEnchantmentLevel(EnchantmentsPM.SOULPIERCING.get());
                     if (soulpiercingLevel > 0) {
                         MobEffectInstance soulpiercedInstance = new MobEffectInstance(EffectsPM.SOULPIERCED.get(), 12000, 0, false, false);
                         if (target.canBeAffected(soulpiercedInstance) && !target.hasEffect(soulpiercedInstance.getEffect())) {

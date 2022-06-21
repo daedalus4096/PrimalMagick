@@ -1,17 +1,17 @@
 {
-  "key": "SOURCE_SKY",
-  "name": "primalmagick.research.source_sky.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/sky.png"
   },
+  "key": "SOURCE_SKY",
+  "name": "primalmagick.research.source_sky.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_sky.text.stage.1",
       "required_item": [
         "minecraft:bamboo",
         "tag:minecraft:leaves"
@@ -23,14 +23,14 @@
         "m_found_shrine_sky",
         "m_env_sky",
         "t_mana_spent_sky_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_sky.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_sky.text.stage.2",
       "attunements": {
         "sky": 5
-      }
+      },
+      "text": "primalmagick.research.source_sky.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

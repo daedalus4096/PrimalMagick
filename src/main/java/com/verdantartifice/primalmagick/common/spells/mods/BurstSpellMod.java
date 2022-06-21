@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -148,6 +147,6 @@ public class BurstSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
+        return Component.translatable("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
     }
 }

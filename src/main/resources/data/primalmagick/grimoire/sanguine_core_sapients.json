@@ -1,23 +1,23 @@
 {
-  "key": "SANGUINE_CORE_SAPIENTS",
-  "name": "primalmagick.research.sanguine_core_sapients.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:sanguine_core_blank"
   },
+  "key": "SANGUINE_CORE_SAPIENTS",
+  "name": "primalmagick.research.sanguine_core_sapients.title",
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.sanguine_core_sapients.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_sapients.text.stage.1"
     },
     {
-      "text": "primalmagick.research.sanguine_core_sapients.text.stage.2",
       "attunements": {
         "blood": 2
       },
@@ -27,8 +27,8 @@
         "primalmagick:sanguine_core_villager",
         "primalmagick:sanguine_core_vindicator",
         "primalmagick:sanguine_core_witch"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_sapients.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

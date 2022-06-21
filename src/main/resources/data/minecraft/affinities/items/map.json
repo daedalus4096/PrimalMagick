@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:map",
   "set": {
     "earth": 42,
     "sky": 18,
     "sun": 18
-  }
+  },
+  "target": "minecraft:map"
 }

@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -90,6 +89,6 @@ public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
+        return Component.translatable("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getDurationSeconds(spell, spellSource)));
     }
 }

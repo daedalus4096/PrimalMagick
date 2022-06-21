@@ -1,14 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "STAVES\u0026\u0026WAND_CORE_PRIMAL",
-  "mana": {
-    "earth": 15,
-    "sea": 15,
-    "sky": 15,
-    "sun": 15,
-    "moon": 15
-  },
-  "instability": 4,
   "ingredients": [
     {
       "item": "primalmagick:obsidian_staff_core_item"
@@ -32,6 +23,14 @@
       "item": "primalmagick:mana_salts"
     }
   ],
+  "instability": 4,
+  "mana": {
+    "earth": 15,
+    "moon": 15,
+    "sea": 15,
+    "sky": 15,
+    "sun": 15
+  },
   "props": [
     {
       "block": "primalmagick:ritual_bell"
@@ -43,6 +42,7 @@
       "tag": "primalmagick:ritual_candles"
     }
   ],
+  "research": "STAVES&&WAND_CORE_PRIMAL",
   "result": {
     "item": "primalmagick:primal_staff_core_item"
   }

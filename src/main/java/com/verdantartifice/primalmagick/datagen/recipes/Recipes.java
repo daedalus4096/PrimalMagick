@@ -447,7 +447,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.FLYING_CARPET.get())
-            .addIngredient(ItemTags.CARPETS)
+            .addIngredient(ItemTags.WOOL_CARPETS)
             .addIngredient(Items.SADDLE)
             .addIngredient(Items.FEATHER)
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3813,7 +3813,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_LLAMA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.LEATHER)
-            .addIngredient(ItemTags.CARPETS)
+            .addIngredient(ItemTags.WOOL_CARPETS)
             .setGroup("attuned_sanguine_cores")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);

@@ -1,11 +1,61 @@
 {
-  "key": "GRAND_PIXIES",
-  "name": "primalmagick.research.grand_pixies.title",
+  "addenda": [
+    {
+      "attunements": {
+        "blood": 3
+      },
+      "recipes": [
+        "primalmagick:pixie_grand_blood"
+      ],
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "text": "primalmagick.research.grand_pixies.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "infernal": 3
+      },
+      "recipes": [
+        "primalmagick:pixie_grand_infernal"
+      ],
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "text": "primalmagick.research.grand_pixies.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "void": 3
+      },
+      "recipes": [
+        "primalmagick:pixie_grand_void"
+      ],
+      "required_research": [
+        "t_discover_void"
+      ],
+      "text": "primalmagick.research.grand_pixies.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "hallowed": 3
+      },
+      "recipes": [
+        "primalmagick:pixie_grand_hallowed"
+      ],
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "text": "primalmagick.research.grand_pixies.text.addenda.4"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:pixie_grand_earth"
   },
+  "key": "GRAND_PIXIES",
+  "name": "primalmagick.research.grand_pixies.title",
   "parents": [
     "MASTER_RITUAL",
     "PIXIES",
@@ -15,22 +65,21 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.grand_pixies.text.stage.1",
       "required_item": [
         "primalmagick:rune_power"
       ],
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.grand_pixies.text.stage.1"
     },
     {
-      "text": "primalmagick.research.grand_pixies.text.stage.2",
       "attunements": {
         "earth": 3,
+        "moon": 3,
         "sea": 3,
         "sky": 3,
-        "sun": 3,
-        "moon": 3
+        "sun": 3
       },
       "recipes": [
         "primalmagick:pixie_grand_earth",
@@ -38,57 +87,8 @@
         "primalmagick:pixie_grand_sky",
         "primalmagick:pixie_grand_sun",
         "primalmagick:pixie_grand_moon"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.grand_pixies.text.addenda.1",
-      "required_research": [
-        "t_discover_blood"
       ],
-      "attunements": {
-        "blood": 3
-      },
-      "recipes": [
-        "primalmagick:pixie_grand_blood"
-      ]
-    },
-    {
-      "text": "primalmagick.research.grand_pixies.text.addenda.2",
-      "required_research": [
-        "t_discover_infernal"
-      ],
-      "attunements": {
-        "infernal": 3
-      },
-      "recipes": [
-        "primalmagick:pixie_grand_infernal"
-      ]
-    },
-    {
-      "text": "primalmagick.research.grand_pixies.text.addenda.3",
-      "required_research": [
-        "t_discover_void"
-      ],
-      "attunements": {
-        "void": 3
-      },
-      "recipes": [
-        "primalmagick:pixie_grand_void"
-      ]
-    },
-    {
-      "text": "primalmagick.research.grand_pixies.text.addenda.4",
-      "required_research": [
-        "t_discover_hallowed"
-      ],
-      "attunements": {
-        "hallowed": 3
-      },
-      "recipes": [
-        "primalmagick:pixie_grand_hallowed"
-      ]
+      "text": "primalmagick.research.grand_pixies.text.stage.2"
     }
   ]
 }

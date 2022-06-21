@@ -23,9 +23,12 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * @author Daedalus4096
  */
 public class BlockTagsProvider extends TagsProvider<Block> {
+    protected DataGenerator generator;
+    
     @SuppressWarnings("deprecation")
     public BlockTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
         super(generator, Registry.BLOCK, PrimalMagick.MODID, helper);
+        this.generator = generator;
     }
 
     @Override

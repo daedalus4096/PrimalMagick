@@ -1,11 +1,12 @@
 {
-  "key": "WAND_CAP_HALLOWSTEEL",
-  "name": "primalmagick.research.wand_cap_hallowsteel.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:hallowsteel_wand_cap_item"
   },
+  "key": "WAND_CAP_HALLOWSTEEL",
+  "name": "primalmagick.research.wand_cap_hallowsteel.title",
   "parents": [
     "SUPREME_MANAWEAVING",
     "WAND_CAP_HEXIUM",
@@ -13,20 +14,19 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.1",
       "required_item": [
         "tag:primalmagick:ingots/hallowsteel"
       ],
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.2",
       "recipes": [
         "primalmagick:hallowsteel_wand_cap_item"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_hallowsteel.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,31 +1,31 @@
 {
-  "key": "SPELL_PAYLOAD_POLYMORPH",
-  "name": "primalmagick.research.spell_payload_polymorph.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/moon.png"
   },
+  "key": "SPELL_PAYLOAD_POLYMORPH",
+  "name": "primalmagick.research.spell_payload_polymorph.title",
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_LUNAR"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.spell_payload_polymorph.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
       ],
       "required_research": [
         "m_furry_friend"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_polymorph.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_payload_polymorph.text.stage.2",
       "attunements": {
         "moon": 3
-      }
+      },
+      "text": "primalmagick.research.spell_payload_polymorph.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

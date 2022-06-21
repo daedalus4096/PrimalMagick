@@ -1,20 +1,19 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Global loot modifier that gives a chance for bonus nuggets when mining quartz or metal ores.
@@ -32,9 +31,10 @@ public class BonusNuggetModifier extends LootModifier {
     }
 
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         int count = 0;
-        int enchantmentLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get(), context.getParamOrNull(LootContextParams.TOOL));
+        ItemStack tool = context.getParamOrNull(LootContextParams.TOOL);
+        int enchantmentLevel = tool == null ? 0 : tool.getEnchantmentLevel(EnchantmentsPM.LUCKY_STRIKE.get());
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 count++;
@@ -59,7 +59,7 @@ public class BonusNuggetModifier extends LootModifier {
             JsonObject obj = this.makeConditions(instance.conditions);
             obj.addProperty("chance", instance.chance);
             
-            ResourceLocation nuggetLoc = instance.nugget.getRegistryName();
+            ResourceLocation nuggetLoc = ForgeRegistries.ITEMS.getKey(instance.nugget);
             if (nuggetLoc == null) {
                 throw new IllegalArgumentException("Invalid nugget " + instance.nugget);
             } else {

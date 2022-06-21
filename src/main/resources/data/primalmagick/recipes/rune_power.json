@@ -1,6 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
-  "research": "RUNE_POWER",
   "ingredients": [
     {
       "item": "primalmagick:rune_unattuned"
@@ -30,6 +29,7 @@
       "item": "primalmagick:essence_crystal_void"
     }
   ],
+  "research": "RUNE_POWER",
   "result": {
     "item": "primalmagick:rune_power"
   }

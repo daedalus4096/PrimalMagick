@@ -1,17 +1,17 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "EXPERT_MANAWEAVING",
-  "pattern": [
-    "M",
-    "M"
-  ],
   "key": {
     "M": {
       "item": "primalmagick:marble_enchanted"
     }
   },
+  "pattern": [
+    "M",
+    "M"
+  ],
+  "research": "EXPERT_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_enchanted_pillar",
-    "count": 2
+    "count": 2,
+    "item": "primalmagick:marble_enchanted_pillar"
   }
 }

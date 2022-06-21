@@ -1,12 +1,6 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "essence_cluster",
-  "research": "CLUSTER_SYNTHESIS",
-  "pattern": [
-    "###",
-    "#Q#",
-    "###"
-  ],
   "key": {
     "#": {
       "item": "primalmagick:essence_crystal_sky"
@@ -15,6 +9,12 @@
       "item": "minecraft:quartz_block"
     }
   },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "research": "CLUSTER_SYNTHESIS",
   "result": {
     "item": "primalmagick:essence_cluster_sky"
   }

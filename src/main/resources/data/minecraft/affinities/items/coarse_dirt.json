@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:coarse_dirt",
-  "base": "minecraft:dirt"
+  "base": "minecraft:dirt",
+  "target": "minecraft:coarse_dirt"
 }

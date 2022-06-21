@@ -18,8 +18,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -261,13 +259,13 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     public Component getText() {
         List<Source> contents = this.getSourcesSorted();
-        MutableComponent output = new TextComponent("");
+        MutableComponent output = Component.literal("");
         for (int index = 0; index < contents.size(); index++) {
             Source source = contents.get(index);
             if (index != 0) {
-                output = output.append(new TextComponent(", "));
+                output = output.append(Component.literal(", "));
             }
-            output = output.append(new TranslatableComponent("primalmagick.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
+            output = output.append(Component.translatable("primalmagick.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
         }
         return output;
     }

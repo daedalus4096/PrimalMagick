@@ -1,11 +1,25 @@
 {
-  "key": "SACRED_SHIELD",
-  "name": "primalmagick.research.sacred_shield.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_PROTECT",
+        "RUNE_SELF",
+        "RUNE_HALLOWED"
+      ],
+      "siblings": [
+        "&primalmagick:bulwark"
+      ],
+      "text": "primalmagick.research.sacred_shield.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:sacred_shield"
   },
+  "key": "SACRED_SHIELD",
+  "name": "primalmagick.research.sacred_shield.title",
   "parents": [
     "t_discover_hallowed",
     "SUPREME_RITUAL",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.sacred_shield.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.sacred_shield.text.stage.1"
     },
     {
-      "text": "primalmagick.research.sacred_shield.text.stage.2",
       "recipes": [
         "primalmagick:sacred_shield"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.sacred_shield.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_PROTECT",
-        "RUNE_SELF",
-        "RUNE_HALLOWED"
       ],
-      "siblings": [
-        "\u0026primalmagick:bulwark"
-      ]
+      "text": "primalmagick.research.sacred_shield.text.stage.2"
     }
   ]
 }

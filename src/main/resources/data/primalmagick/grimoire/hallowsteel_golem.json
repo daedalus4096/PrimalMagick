@@ -1,11 +1,12 @@
 {
-  "key": "HALLOWSTEEL_GOLEM",
-  "name": "primalmagick.research.hallowsteel_golem.title",
+  "addenda": [],
   "discipline": "MAGITECH",
   "icon": {
     "isItem": true,
     "location": "primalmagick:hallowsteel_golem_controller"
   },
+  "key": "HALLOWSTEEL_GOLEM",
+  "name": "primalmagick.research.hallowsteel_golem.title",
   "parents": [
     "SUPREME_MAGITECH",
     "HEXIUM_GOLEM",
@@ -13,17 +14,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.hallowsteel_golem.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.hallowsteel_golem.text.stage.1"
     },
     {
-      "text": "primalmagick.research.hallowsteel_golem.text.stage.2",
       "recipes": [
         "primalmagick:hallowsteel_golem_controller"
-      ]
+      ],
+      "text": "primalmagick.research.hallowsteel_golem.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,23 +1,23 @@
 {
-  "key": "SANGUINE_CORE_PLANTS",
-  "name": "primalmagick.research.sanguine_core_plants.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:sanguine_core_blank"
   },
+  "key": "SANGUINE_CORE_PLANTS",
+  "name": "primalmagick.research.sanguine_core_plants.title",
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.sanguine_core_plants.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_plants.text.stage.1"
     },
     {
-      "text": "primalmagick.research.sanguine_core_plants.text.stage.2",
       "attunements": {
         "sun": 2
       },
@@ -25,8 +25,8 @@
         "primalmagick:sanguine_core_creeper",
         "primalmagick:sanguine_core_mooshroom",
         "primalmagick:sanguine_core_treefolk"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_plants.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -17,8 +18,8 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -36,7 +37,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
     private final IDrawableStatic manaCostIcon;
     
     public DissolutionRecipeCategory(IGuiHelper guiHelper) {
-        super(IDissolutionRecipe.class, guiHelper, UID, "block.primalmagick.dissolution_chamber");
+        super(guiHelper, UID, "block.primalmagick.dissolution_chamber");
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 82, 0, 16, 16);
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 82, 44));
         this.setIcon(new ItemStack(ItemsPM.DISSOLUTION_CHAMBER.get()));
@@ -49,7 +50,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
     }
 
     @Override
-    public void draw(IDissolutionRecipe recipe, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IDissolutionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -62,13 +63,18 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_cost_header"));
+            tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
             for (Source source : manaCosts.getSourcesSorted()) {
-                tooltip.add(new TranslatableComponent("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
+                tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
             }
             return tooltip;
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
+    }
+
+    @Override
+    public RecipeType<IDissolutionRecipe> getRecipeType() {
+        return JeiRecipeTypesPM.DISSOLUTION;
     }
 }

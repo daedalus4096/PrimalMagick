@@ -169,7 +169,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
         if (!slabStack.isEmpty() && !lapisStack.isEmpty()) {
-            this.recipes = this.world.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING, inventoryIn, this.world).stream()
+            this.recipes = this.world.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.world).stream()
                     .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
                     .collect(Collectors.toList());
         }

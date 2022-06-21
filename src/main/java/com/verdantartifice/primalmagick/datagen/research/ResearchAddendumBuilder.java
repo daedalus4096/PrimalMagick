@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ResearchAddendumBuilder {
     protected final String modId;
@@ -66,7 +67,7 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder recipe(@Nonnull ItemLike item) {
-        return recipe(item.asItem().getRegistryName());
+        return recipe(ForgeRegistries.ITEMS.getKey(item.asItem()));
     }
     
     public ResearchAddendumBuilder recipe(@Nonnull ResourceLocation loc) {

@@ -1,24 +1,24 @@
 {
+  "addenda": [],
+  "discipline": "MANAWEAVING",
   "key": "ADVANCED_WANDMAKING",
   "name": "primalmagick.research.advanced_wandmaking.title",
-  "discipline": "MANAWEAVING",
   "parents": [
     "WAND_CHARGER",
     "t_mana_spent_total_basics"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.advanced_wandmaking.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.advanced_wandmaking.text.stage.1"
     },
     {
-      "text": "primalmagick.research.advanced_wandmaking.text.stage.2",
       "recipes": [
         "primalmagick:wand_assembly_table"
-      ]
+      ],
+      "text": "primalmagick.research.advanced_wandmaking.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

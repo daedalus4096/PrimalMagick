@@ -1,13 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
-  "research": "WAND_GEM_WIZARD",
-  "mana": {
-    "earth": 100,
-    "sea": 100,
-    "sky": 100,
-    "sun": 100,
-    "moon": 100
-  },
   "ingredients": [
     {
       "tag": "forge:gems/diamond"
@@ -16,6 +8,14 @@
       "tag": "primalmagick:essences/terrestrial_crystals"
     }
   ],
+  "mana": {
+    "earth": 100,
+    "moon": 100,
+    "sea": 100,
+    "sky": 100,
+    "sun": 100
+  },
+  "research": "WAND_GEM_WIZARD",
   "result": {
     "item": "primalmagick:wizard_wand_gem_item"
   }

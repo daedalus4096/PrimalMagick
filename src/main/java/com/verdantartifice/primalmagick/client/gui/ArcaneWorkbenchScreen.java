@@ -22,7 +22,6 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
@@ -102,7 +101,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
-            Component text = new TranslatableComponent("primalmagick.crafting.no_mana");
+            Component text = Component.translatable("primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;

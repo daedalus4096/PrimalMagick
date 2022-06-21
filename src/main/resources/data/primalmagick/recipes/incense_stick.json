@@ -1,13 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "INCENSE_BRAZIER",
-  "mana": {
-    "sky": 1
-  },
-  "pattern": [
-    " F",
-    "S "
-  ],
   "key": {
     "F": {
       "tag": "minecraft:small_flowers"
@@ -16,6 +8,14 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "mana": {
+    "sky": 1
+  },
+  "pattern": [
+    " F",
+    "S "
+  ],
+  "research": "INCENSE_BRAZIER",
   "result": {
     "item": "primalmagick:incense_stick"
   }

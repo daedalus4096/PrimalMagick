@@ -1,92 +1,92 @@
 {
-  "key": "primalmagick:wand_tinkering",
-  "required_research": "BASIC_SORCERY",
-  "reward_multiplier": 0.25,
   "aid_blocks": [],
+  "key": "primalmagick:wand_tinkering",
   "material_options": [
     {
       "type": "item",
-      "stack": "primalmagick:wand_assembly_table",
       "consumed": false,
       "match_nbt": false,
-      "weight": 3.0,
-      "required_research": "ADVANCED_WANDMAKING"
+      "required_research": "ADVANCED_WANDMAKING",
+      "stack": "primalmagick:wand_assembly_table",
+      "weight": 3.0
     },
     {
       "type": "item",
-      "stack": "primalmagick:heartwood",
       "consumed": true,
       "match_nbt": false,
+      "stack": "primalmagick:heartwood",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:obsidian",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "primalmagick:coral_blocks",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:bamboo",
       "consumed": true,
       "match_nbt": false,
+      "stack": "minecraft:bamboo",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "primalmagick:sunwood_logs",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "primalmagick:moonwood_logs",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ingots/iron",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:ingots/gold",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "forge:gems/diamond",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": true,
       "name": "primalmagick:essences/terrestrial_dusts",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     },
     {
       "type": "observation",
-      "count": 1,
       "consumed": true,
+      "count": 1,
       "weight": 5.0
     }
-  ]
+  ],
+  "required_research": "BASIC_SORCERY",
+  "reward_multiplier": 0.25
 }

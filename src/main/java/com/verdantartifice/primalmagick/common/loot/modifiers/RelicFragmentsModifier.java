@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -30,7 +29,7 @@ public class RelicFragmentsModifier extends LootModifier {
     }
 
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         int lootingLevel = context.getLootingModifier();
         int count = context.getRandom().nextInt((this.maxCount - this.minCount + 1) + (this.lootingBonus * lootingLevel)) + this.minCount;
         if (count > 0) {

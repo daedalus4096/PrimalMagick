@@ -1,30 +1,30 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "calcinators",
-  "research": "CALCINATOR_BASIC",
+  "key": {
+    "E": {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    },
+    "F": {
+      "item": "primalmagick:essence_furnace"
+    },
+    "M": {
+      "item": "primalmagick:marble_raw"
+    }
+  },
   "mana": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 5,
-    "moon": 5
+    "sun": 5
   },
   "pattern": [
     "MMM",
     "MFM",
     "EEE"
   ],
-  "key": {
-    "M": {
-      "item": "primalmagick:marble_raw"
-    },
-    "F": {
-      "item": "primalmagick:essence_furnace"
-    },
-    "E": {
-      "tag": "primalmagick:essences/terrestrial_dusts"
-    }
-  },
+  "research": "CALCINATOR_BASIC",
   "result": {
     "item": "primalmagick:calcinator_basic"
   }

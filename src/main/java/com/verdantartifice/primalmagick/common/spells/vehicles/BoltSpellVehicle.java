@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -70,7 +69,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
 
     @Override
     public Component getDetailTooltip() {
-        return new TranslatableComponent("primalmagick.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
+        return Component.translatable("primalmagick.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
     }
 
     @Override

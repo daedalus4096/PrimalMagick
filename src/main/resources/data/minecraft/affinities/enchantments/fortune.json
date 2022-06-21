@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
-  "target": "minecraft:fortune",
   "multiplier": {
     "moon": 1
-  }
+  },
+  "target": "minecraft:fortune"
 }

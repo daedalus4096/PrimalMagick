@@ -84,13 +84,14 @@ public class ClientArcaneRecipeBook {
         return retVal;
     }
     
+    @SuppressWarnings("deprecation")
     protected static ArcaneRecipeBookCategories getCategory(Recipe<?> recipe) {
         RecipeType<?> type = recipe.getType();
-        if (type == RecipeTypesPM.ARCANE_CRAFTING) {
+        if (type == RecipeTypesPM.ARCANE_CRAFTING.get()) {
             return ArcaneRecipeBookCategories.CRAFTING_ARCANE;
-        } else if (type == RecipeTypesPM.CONCOCTING) {
+        } else if (type == RecipeTypesPM.CONCOCTING.get()) {
             return recipe.getResultItem().getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
-        } else if (type == RecipeTypesPM.DISSOLUTION) {
+        } else if (type == RecipeTypesPM.DISSOLUTION.get()) {
             return recipe.getResultItem().is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
         } else if (type == RecipeType.CRAFTING) {
             CreativeModeTab tab = recipe.getResultItem().getItem().getItemCategory();

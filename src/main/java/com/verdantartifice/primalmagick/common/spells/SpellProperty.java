@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells;
 import javax.annotation.Nonnull;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.util.Mth;
 
 /**
@@ -32,7 +32,7 @@ public class SpellProperty {
     }
     
     public Component getDescription() {
-        return new TranslatableComponent(this.translationKey);
+        return Component.translatable(this.translationKey);
     }
     
     public int getMin() {

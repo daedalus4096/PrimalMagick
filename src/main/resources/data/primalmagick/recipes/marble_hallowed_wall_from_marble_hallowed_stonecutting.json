@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "primalmagick:marble_hallowed"
   },
-  "result": "primalmagick:marble_hallowed_wall",
-  "count": 1
+  "result": "primalmagick:marble_hallowed_wall"
 }

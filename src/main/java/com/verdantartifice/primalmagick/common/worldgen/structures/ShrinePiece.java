@@ -1,6 +1,4 @@
-package com.verdantartifice.primalmagick.common.worldgen.features;
-
-import java.util.Random;
+package com.verdantartifice.primalmagick.common.worldgen.structures;
 
 import javax.annotation.Nonnull;
 
@@ -10,9 +8,10 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,8 +22,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
  * Definition of a piece of a primal shrine structure.
@@ -37,12 +36,12 @@ public class ShrinePiece extends TemplateStructurePiece {
     
     protected final ShrineStructure.Type type;
     
-    public ShrinePiece(StructureManager templateManager, ShrineStructure.Type type, BlockPos pos) {
+    public ShrinePiece(StructureTemplateManager templateManager, ShrineStructure.Type type, BlockPos pos) {
         super(StructurePieceTypesPM.SHRINE.get(), 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
         this.type = type;
     }
 
-    public ShrinePiece(StructureManager templateManager, CompoundTag nbt) {
+    public ShrinePiece(StructureTemplateManager templateManager, CompoundTag nbt) {
         super(StructurePieceTypesPM.SHRINE.get(), nbt, templateManager, (dummy) -> {
             return makePlaceSettings();
         });
@@ -50,7 +49,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
     
     public ShrinePiece(StructurePieceSerializationContext context, CompoundTag nbt) {
-        super(StructurePieceTypesPM.SHRINE.get(), nbt, context.structureManager(), (dummy) -> {
+        super(StructurePieceTypesPM.SHRINE.get(), nbt, context.structureTemplateManager(), (dummy) -> {
             return makePlaceSettings();
         });
         this.type = ShrineStructure.Type.byName(nbt.getString("Source"));
@@ -67,7 +66,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
 
     @Override
-    protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, Random rand, BoundingBox sbb) {
+    protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor worldIn, RandomSource rand, BoundingBox sbb) {
         if ("font".equals(function)) {
             worldIn.setBlock(pos, this.getFont().defaultBlockState(), Block.UPDATE_ALL);
         }
@@ -112,7 +111,7 @@ public class ShrinePiece extends TemplateStructurePiece {
     }
     
     @Override
-    public void postProcess(WorldGenLevel worldIn, StructureFeatureManager structureManager, ChunkGenerator generator, Random randomIn, BoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
+    public void postProcess(WorldGenLevel worldIn, StructureManager structureManager, ChunkGenerator generator, RandomSource randomIn, BoundingBox structureBoundingBoxIn, ChunkPos chunkPos, BlockPos blockPos) {
         int i = worldIn.getHeight(Heightmap.Types.WORLD_SURFACE_WG, this.templatePosition.getX(), this.templatePosition.getZ());
         this.templatePosition = new BlockPos(this.templatePosition.getX(), i, this.templatePosition.getZ());
         

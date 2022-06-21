@@ -1,10 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "GREATER_AMBROSIA",
-  "mana": {
-    "earth": 100
-  },
-  "instability": 6,
   "ingredients": [
     {
       "item": "primalmagick:manafruit"
@@ -25,6 +20,10 @@
       "item": "primalmagick:rune_power"
     }
   ],
+  "instability": 6,
+  "mana": {
+    "earth": 100
+  },
   "props": [
     {
       "tag": "primalmagick:ritual_candles"
@@ -39,6 +38,7 @@
       "block": "primalmagick:bloodletter"
     }
   ],
+  "research": "GREATER_AMBROSIA",
   "result": {
     "item": "primalmagick:ambrosia_greater_earth"
   }

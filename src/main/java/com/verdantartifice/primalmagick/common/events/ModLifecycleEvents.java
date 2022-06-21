@@ -4,14 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.commands.arguments.AttunementTypeArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.AttunementValueArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.DisciplineArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeAmountArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.ResearchArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument;
-import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
@@ -28,18 +20,10 @@ import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionType
 import com.verdantartifice.primalmagick.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
-import com.verdantartifice.primalmagick.common.worldgen.features.OreFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.OrePlacementsPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.TreeFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.TreePlacementsPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.VegetationPlacementsPM;
 
 import net.minecraft.Util;
-import net.minecraft.commands.synchronization.ArgumentTypes;
-import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.SpawnPlacements.Type;
@@ -66,7 +50,6 @@ public class ModLifecycleEvents {
     public static void commonSetup(FMLCommonSetupEvent event) {
         PacketHandler.registerMessages();
         
-        InitRecipes.initRecipeTypes();
         InitRecipes.initWandTransforms();
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
@@ -75,27 +58,10 @@ public class ModLifecycleEvents {
         InitRunes.initRuneEnchantments();
         InitCauldron.initCauldronInteractions();
         
-        OreFeaturesPM.setupOreFeatures();
-        OrePlacementsPM.setupOrePlacements();
-        TreeFeaturesPM.setupTreeFeatures();
-        TreePlacementsPM.setupTreePlacements();
-        VegetationPlacementsPM.setupTreePlacements();
         LootConditionTypesPM.register();
 
-        registerCommandArguments(event);
         registerEntityPlacements(event);
         registerDispenserBehaviors(event);
-    }
-    
-    private static void registerCommandArguments(FMLCommonSetupEvent event) {
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "research")).toString(), ResearchArgument.class, new EmptyArgumentSerializer<>(ResearchArgument::research));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "discipline")).toString(), DisciplineArgument.class, new EmptyArgumentSerializer<>(DisciplineArgument::discipline));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "knowledge_type")).toString(), KnowledgeTypeArgument.class, new EmptyArgumentSerializer<>(KnowledgeTypeArgument::knowledgeType));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "knowledge_amount").toString()), KnowledgeAmountArgument.class, new EmptyArgumentSerializer<>(KnowledgeAmountArgument::amount));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "source")).toString(), SourceArgument.class, new EmptyArgumentSerializer<>(SourceArgument::source));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "stat_value")).toString(), StatValueArgument.class, new EmptyArgumentSerializer<>(StatValueArgument::value));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "attunement_type")).toString(), AttunementTypeArgument.class, new EmptyArgumentSerializer<>(AttunementTypeArgument::attunementType));
-        ArgumentTypes.register((new ResourceLocation(PrimalMagick.MODID, "attunement_value")).toString(), AttunementValueArgument.class, new EmptyArgumentSerializer<>(AttunementValueArgument::value));
     }
     
     private static void registerEntityPlacements(FMLCommonSetupEvent event) {

@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:brown_dye",
-  "base": "minecraft:white_dye"
+  "base": "minecraft:white_dye",
+  "target": "minecraft:brown_dye"
 }

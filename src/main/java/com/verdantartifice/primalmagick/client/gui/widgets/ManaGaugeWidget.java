@@ -12,8 +12,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -29,7 +27,7 @@ public class ManaGaugeWidget extends AbstractWidget {
     protected int curAmount;
     
     public ManaGaugeWidget(int xPos, int yPos, Source source, int curAmount, int maxAmount) {
-        super(xPos, yPos, 12, 52, TextComponent.EMPTY);
+        super(xPos, yPos, 12, 52, Component.empty());
         this.source = source;
         this.curAmount = curAmount;
         this.maxAmount = maxAmount;
@@ -79,7 +77,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();
-            Component labelText = new TranslatableComponent("primalmagick.source.mana_gauge_tooltip", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
+            Component labelText = Component.translatable("primalmagick.source.mana_gauge_tooltip", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
     }

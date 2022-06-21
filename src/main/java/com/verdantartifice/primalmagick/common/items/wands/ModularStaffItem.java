@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -46,12 +46,12 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     public Component getName(ItemStack stack) {
         // A modular staff's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Staff")
         WandCore core = this.getWandCore(stack);
-        Component coreName = (core == null) ? new TranslatableComponent("primalmagick.wand_core.unknown.name") : new TranslatableComponent(core.getNameTranslationKey());
+        Component coreName = (core == null) ? Component.translatable("primalmagick.wand_core.unknown.name") : Component.translatable(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        Component capName = (cap == null) ? new TranslatableComponent("primalmagick.wand_cap.unknown.name") : new TranslatableComponent(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? Component.translatable("primalmagick.wand_cap.unknown.name") : Component.translatable(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        Component gemName = (gem == null) ? new TranslatableComponent("primalmagick.wand_gem.unknown.name") : new TranslatableComponent(gem.getNameTranslationKey());
-        return new TranslatableComponent("item.primalmagick.modular_staff", gemName, capName, coreName);
+        Component gemName = (gem == null) ? Component.translatable("primalmagick.wand_gem.unknown.name") : Component.translatable(gem.getNameTranslationKey());
+        return Component.translatable("item.primalmagick.modular_staff", gemName, capName, coreName);
     }
     
     @Override

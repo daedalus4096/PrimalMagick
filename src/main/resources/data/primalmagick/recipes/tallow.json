@@ -1,6 +1,5 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
-  "research": "RITUAL_CANDLES",
   "ingredients": [
     {
       "item": "minecraft:rotten_flesh"
@@ -9,6 +8,7 @@
       "item": "primalmagick:essence_dust_sun"
     }
   ],
+  "research": "RITUAL_CANDLES",
   "result": {
     "item": "primalmagick:tallow"
   }

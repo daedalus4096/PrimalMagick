@@ -7,7 +7,6 @@ import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,17 +18,15 @@ import net.minecraft.world.item.ItemStack;
 public abstract class RecipeCategoryPM<T> implements IRecipeCategory<T> {
     protected final ResourceLocation uid;
     protected final IGuiHelper guiHelper;
-    private final Class<? extends T> recipeClass;
     
     protected Component title;
     private IDrawable background;
     private IDrawable icon;
     
-    public RecipeCategoryPM(Class<? extends T> recipeClass, IGuiHelper guiHelper, ResourceLocation uid, String titleTranslationKey) {
-        this.recipeClass = recipeClass;
+    public RecipeCategoryPM(IGuiHelper guiHelper, ResourceLocation uid, String titleTranslationKey) {
         this.guiHelper = guiHelper;
         this.uid = uid;
-        this.title = new TranslatableComponent(titleTranslationKey);
+        this.title = Component.translatable(titleTranslationKey);
     }
 
     @Nullable
@@ -53,17 +50,7 @@ public abstract class RecipeCategoryPM<T> implements IRecipeCategory<T> {
     }
     
     protected void setIcon(ItemStack stack) {
-        this.setIcon(this.guiHelper.createDrawableIngredient(VanillaTypes.ITEM, stack));
-    }
-
-    @Override
-    public ResourceLocation getUid() {
-        return this.uid;
-    }
-
-    @Override
-    public Class<? extends T> getRecipeClass() {
-        return this.recipeClass;
+        this.setIcon(this.guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, stack));
     }
 
     @Override

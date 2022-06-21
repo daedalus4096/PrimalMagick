@@ -2,32 +2,32 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
               "function": "minecraft:copy_nbt",
-              "source": "block_entity",
               "ops": [
                 {
+                  "op": "replace",
                   "source": "ManaStorage.Mana.Sources",
-                  "target": "ManaContainerTag.Sources",
-                  "op": "replace"
+                  "target": "ManaContainerTag.Sources"
                 }
-              ]
+              ],
+              "source": "block_entity"
             }
           ],
           "name": "primalmagick:essence_transmuter"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "rolls": 1.0
     }
   ]
 }

@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a concocting recipe.  Similar to a shapeless arcane recipe, but used by the concocter
@@ -116,7 +115,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
         return this.group;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ConcoctingRecipe> {
+    public static class Serializer implements RecipeSerializer<ConcoctingRecipe> {
         @Override
         public ConcoctingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

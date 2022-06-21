@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:chainmail_chestplate",
-  "base": "minecraft:iron_chestplate"
+  "base": "minecraft:iron_chestplate",
+  "target": "minecraft:chainmail_chestplate"
 }

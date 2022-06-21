@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.containers.RunicGrindstoneContain
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -69,6 +69,6 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
         return new SimpleMenuProvider((windowId, playerInv, player) -> {
             return new RunicGrindstoneContainer(windowId, playerInv, ContainerLevelAccess.create(worldIn, pos));
-         }, new TranslatableComponent(this.getDescriptionId()));
+         }, Component.translatable(this.getDescriptionId()));
     }
 }

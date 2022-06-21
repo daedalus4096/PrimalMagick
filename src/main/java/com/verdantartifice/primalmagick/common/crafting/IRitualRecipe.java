@@ -31,7 +31,7 @@ public interface IRitualRecipe extends CraftingRecipe, IHasManaCost, IHasRequire
     
     @Override
     default RecipeType<?> getType() {
-        return RecipeTypesPM.RITUAL;
+        return RecipeTypesPM.RITUAL.get();
     }
     
     @Override

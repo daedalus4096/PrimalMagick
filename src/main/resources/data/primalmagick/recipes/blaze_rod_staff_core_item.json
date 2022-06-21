@@ -1,27 +1,27 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "STAVES\u0026\u0026WAND_CORE_BLAZE_ROD",
+  "key": {
+    "#": {
+      "tag": "forge:rods/blaze"
+    },
+    "D": {
+      "item": "primalmagick:essence_shard_infernal"
+    }
+  },
   "mana": {
     "earth": 5,
+    "infernal": 15,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 5,
-    "moon": 5,
-    "infernal": 15
+    "sun": 5
   },
   "pattern": [
     " D#",
     "D#D",
     "#D "
   ],
-  "key": {
-    "D": {
-      "item": "primalmagick:essence_shard_infernal"
-    },
-    "#": {
-      "tag": "forge:rods/blaze"
-    }
-  },
+  "research": "STAVES&&WAND_CORE_BLAZE_ROD",
   "result": {
     "item": "primalmagick:blaze_rod_staff_core_item"
   }

@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import java.util.List;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -23,7 +22,7 @@ public class BloodNotesModifier extends LootModifier {
     }
 
     @Override
-    protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+    protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         // Random chance is controlled by the RandomChanceWithLooting condition in the modifier JSON
         generatedLoot.add(new ItemStack(ItemsPM.BLOOD_NOTES.get()));
         return generatedLoot;

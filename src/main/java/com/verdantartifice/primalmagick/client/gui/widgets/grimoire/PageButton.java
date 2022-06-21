@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -26,7 +26,7 @@ public class PageButton extends Button {
     protected boolean isNext;
 
     public PageButton(int widthIn, int heightIn, GrimoireScreen screen, boolean isNext) {
-        super(widthIn, heightIn, 12, 5, TextComponent.EMPTY, new Handler());
+        super(widthIn, heightIn, 12, 5, Component.empty(), new Handler());
         this.screen = screen;
         this.isNext = isNext;
     }

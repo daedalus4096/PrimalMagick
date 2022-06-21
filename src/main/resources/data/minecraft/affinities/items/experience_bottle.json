@@ -1,11 +1,11 @@
 {
   "type": "item",
-  "target": "minecraft:experience_bottle",
   "set": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 5,
-    "moon": 5
-  }
+    "sun": 5
+  },
+  "target": "minecraft:experience_bottle"
 }

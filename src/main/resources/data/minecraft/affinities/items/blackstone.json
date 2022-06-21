@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:blackstone",
-  "base": "minecraft:cobblestone",
   "add": {
     "infernal": 5
-  }
+  },
+  "base": "minecraft:cobblestone",
+  "target": "minecraft:blackstone"
 }

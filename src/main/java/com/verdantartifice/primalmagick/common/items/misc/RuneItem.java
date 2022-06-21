@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.common.runes.Rune;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -51,7 +51,7 @@ public class RuneItem extends Item {
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem) {
             String key = ((RuneItem)stack.getItem()).rune.getTooltipTranslationKey();
-            tooltip.add(new TranslatableComponent(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
         }
     }
     

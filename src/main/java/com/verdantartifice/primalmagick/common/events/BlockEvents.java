@@ -16,7 +16,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -48,7 +47,7 @@ public class BlockEvents {
     
     private static void triggerReverberation(Level world, BlockPos pos, BlockState state, Player player, ItemStack tool) {
         // Trigger block breakers if the player has a Reverberation tool in the main hand
-        int level = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.REVERBERATION.get(), tool);
+        int level = tool.getEnchantmentLevel(EnchantmentsPM.REVERBERATION.get());
         if (level <= 0) {
             return;
         }
@@ -92,7 +91,7 @@ public class BlockEvents {
     
     private static void triggerDisintegration(Level world, BlockPos pos, BlockState state, Player player, ItemStack tool) {
         // Trigger block breakers if the player has a Reverberation tool in the main hand
-        int level = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.DISINTEGRATION.get(), tool);
+        int level = tool.getEnchantmentLevel(EnchantmentsPM.DISINTEGRATION.get());
         if (level <= 0) {
             return;
         }

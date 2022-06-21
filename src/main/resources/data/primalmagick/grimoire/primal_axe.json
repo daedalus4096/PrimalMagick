@@ -1,11 +1,25 @@
 {
-  "key": "PRIMAL_AXE",
-  "name": "primalmagick.research.primal_axe.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_PROJECT",
+        "RUNE_AREA",
+        "RUNE_SKY"
+      ],
+      "siblings": [
+        "&primalmagick:disintegration"
+      ],
+      "text": "primalmagick.research.primal_axe.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_axe"
   },
+  "key": "PRIMAL_AXE",
+  "name": "primalmagick.research.primal_axe.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.primal_axe.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.primal_axe.text.stage.1"
     },
     {
-      "text": "primalmagick.research.primal_axe.text.stage.2",
       "recipes": [
         "primalmagick:primal_axe"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.primal_axe.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_PROJECT",
-        "RUNE_AREA",
-        "RUNE_SKY"
       ],
-      "siblings": [
-        "\u0026primalmagick:disintegration"
-      ]
+      "text": "primalmagick.research.primal_axe.text.stage.2"
     }
   ]
 }

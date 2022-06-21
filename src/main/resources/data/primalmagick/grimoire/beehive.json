@@ -1,12 +1,13 @@
 {
-  "key": "BEEHIVE",
-  "name": "primalmagick.research.beehive.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "minecraft:beehive"
   },
+  "key": "BEEHIVE",
+  "name": "primalmagick.research.beehive.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -14,6 +15,5 @@
     {
       "text": "primalmagick.research.beehive.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

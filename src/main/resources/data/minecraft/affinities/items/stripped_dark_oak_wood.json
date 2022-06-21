@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_dark_oak_wood",
-  "base": "minecraft:dark_oak_wood"
+  "base": "minecraft:dark_oak_wood",
+  "target": "minecraft:stripped_dark_oak_wood"
 }

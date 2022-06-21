@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -123,6 +122,6 @@ public class HealingSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return new TranslatableComponent("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource)));
+        return Component.translatable("primalmagick.spell.payload.detail_tooltip." + this.getPayloadType(), DECIMAL_FORMATTER.format(this.getBaseAmount(spell, spellSource)));
     }
 }

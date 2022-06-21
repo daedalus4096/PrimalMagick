@@ -1,11 +1,25 @@
 {
-  "key": "PRIMAL_SHOVEL",
-  "name": "primalmagick.research.primal_shovel.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_PROJECT",
+        "RUNE_AREA",
+        "RUNE_EARTH"
+      ],
+      "siblings": [
+        "&primalmagick:reverberation"
+      ],
+      "text": "primalmagick.research.primal_shovel.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_shovel"
   },
+  "key": "PRIMAL_SHOVEL",
+  "name": "primalmagick.research.primal_shovel.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.primal_shovel.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.primal_shovel.text.stage.1"
     },
     {
-      "text": "primalmagick.research.primal_shovel.text.stage.2",
       "recipes": [
         "primalmagick:primal_shovel"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.primal_shovel.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_PROJECT",
-        "RUNE_AREA",
-        "RUNE_EARTH"
       ],
-      "siblings": [
-        "\u0026primalmagick:reverberation"
-      ]
+      "text": "primalmagick.research.primal_shovel.text.stage.2"
     }
   ]
 }

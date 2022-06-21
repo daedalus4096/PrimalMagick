@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -88,7 +87,7 @@ public class StatsManager {
     
     @Nonnull
     public static Component getFormattedValue(@Nullable Player player, @Nullable Stat stat) {
-        return new TextComponent(stat.getFormatter().format(getValue(player, stat)));
+        return Component.literal(stat.getFormatter().format(getValue(player, stat)));
     }
     
     public static void incrementValue(@Nullable Player player, @Nullable Stat stat) {

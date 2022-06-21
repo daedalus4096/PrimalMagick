@@ -1,7 +1,7 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:strong_leaping",
   "bonus": {
     "sky": 5
-  }
+  },
+  "target": "minecraft:strong_leaping"
 }

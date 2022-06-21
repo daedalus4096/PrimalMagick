@@ -1,6 +1,22 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "ZEPHYR_ENGINE",
+  "key": {
+    "I": {
+      "tag": "primalmagick:ingots/primalite"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_enchanted"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "item": "primalmagick:essence_shard_sky"
+    },
+    "W": {
+      "item": "minecraft:warped_planks"
+    }
+  },
   "mana": {
     "sky": 40
   },
@@ -9,23 +25,7 @@
     "WSW",
     "WRW"
   ],
-  "key": {
-    "I": {
-      "tag": "primalmagick:ingots/primalite"
-    },
-    "P": {
-      "item": "primalmagick:magitech_parts_enchanted"
-    },
-    "W": {
-      "item": "minecraft:warped_planks"
-    },
-    "S": {
-      "item": "primalmagick:essence_shard_sky"
-    },
-    "R": {
-      "tag": "forge:dusts/redstone"
-    }
-  },
+  "research": "ZEPHYR_ENGINE",
   "result": {
     "item": "primalmagick:zephyr_engine"
   }

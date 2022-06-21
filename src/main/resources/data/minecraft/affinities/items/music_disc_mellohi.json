@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:music_disc_mellohi",
-  "base": "minecraft:music_disc_11"
+  "base": "minecraft:music_disc_11",
+  "target": "minecraft:music_disc_mellohi"
 }

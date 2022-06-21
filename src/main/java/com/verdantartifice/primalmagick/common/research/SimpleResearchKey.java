@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Data object identifying a specific research entry, or a specific stage in that research entry.
@@ -69,7 +70,7 @@ public class SimpleResearchKey {
         if (type == null) {
             return null;
         } else {
-            return parse(ENTITY_SCAN_PREFIX + type.getRegistryName().toString());
+            return parse(ENTITY_SCAN_PREFIX + ForgeRegistries.ENTITIES.getKey(type).toString());
         }
     }
     
@@ -83,7 +84,7 @@ public class SimpleResearchKey {
         if (enchant == null) {
             return null;
         } else {
-            return parse(RUNE_ENCHANT_PREFIX + enchant.getRegistryName().toString());
+            return parse(RUNE_ENCHANT_PREFIX + ForgeRegistries.ENCHANTMENTS.getKey(enchant).toString());
         }
     }
     

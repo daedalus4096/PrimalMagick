@@ -236,6 +236,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
         // Do nothing
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void aiStep() {
         if (!this.level.isClientSide && this.isAlive()) {

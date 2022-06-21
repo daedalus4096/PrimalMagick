@@ -1,11 +1,12 @@
 {
-  "key": "FLYING_CARPET",
-  "name": "primalmagick.research.flying_carpet.title",
+  "addenda": [],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:flying_carpet"
   },
+  "key": "FLYING_CARPET",
+  "name": "primalmagick.research.flying_carpet.title",
   "parents": [
     "MASTER_RITUAL",
     "CRYSTAL_SYNTHESIS",
@@ -19,23 +20,22 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.flying_carpet.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
       ],
       "required_research": [
         "t_flying_creature"
-      ]
+      ],
+      "text": "primalmagick.research.flying_carpet.text.stage.1"
     },
     {
-      "text": "primalmagick.research.flying_carpet.text.stage.2",
       "attunements": {
         "sky": 3
       },
       "recipes": [
         "primalmagick:flying_carpet"
-      ]
+      ],
+      "text": "primalmagick.research.flying_carpet.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

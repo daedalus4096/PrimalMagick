@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:soul_sand",
-  "base": "minecraft:netherrack",
   "add": {
     "infernal": 5
-  }
+  },
+  "base": "minecraft:netherrack",
+  "target": "minecraft:soul_sand"
 }

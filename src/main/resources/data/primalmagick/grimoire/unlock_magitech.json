@@ -1,25 +1,25 @@
 {
-  "key": "UNLOCK_MAGITECH",
-  "name": "primalmagick.research.unlock_magitech.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
+  "key": "UNLOCK_MAGITECH",
+  "name": "primalmagick.research.unlock_magitech.title",
   "parents": [
     "MANAFRUIT",
     "MANA_SALTS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.unlock_magitech.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.unlock_magitech.text.stage.1"
     },
     {
       "text": "primalmagick.research.unlock_magitech.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

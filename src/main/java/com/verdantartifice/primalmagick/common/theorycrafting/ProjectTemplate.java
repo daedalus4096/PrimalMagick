@@ -70,7 +70,7 @@ public class ProjectTemplate {
         ResourceLocation foundAid = null;
         if (!this.aidBlocks.isEmpty()) {
             boolean found = false;
-            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> b.getRegistryName()).collect(Collectors.toUnmodifiableSet());
+            Set<ResourceLocation> nearbyIds = nearby.stream().map(b -> ForgeRegistries.BLOCKS.getKey(b)).collect(Collectors.toUnmodifiableSet());
             for (ResourceLocation aidBlock : this.aidBlocks) {
                 if (nearbyIds.contains(aidBlock)) {
                     found = true;

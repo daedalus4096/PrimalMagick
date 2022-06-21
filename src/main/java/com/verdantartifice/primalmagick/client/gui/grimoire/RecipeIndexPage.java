@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeEntryButton;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -63,7 +63,7 @@ public class RecipeIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         for (IndexItem item : this.getContents()) {
             // Render a recipe entry button for each recipe
-            screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, new TextComponent(item.name), screen, item.name, item.iconStack));
+            screen.addWidgetToScreen(new RecipeEntryButton(x + 12 + (side * 140), y, Component.literal(item.name), screen, item.name, item.iconStack));
             y += 12;
         }
     }

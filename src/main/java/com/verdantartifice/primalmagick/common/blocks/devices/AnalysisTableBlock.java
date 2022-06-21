@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -87,7 +86,7 @@ public class AnalysisTableBlock extends Block {
 
                 @Override
                 public Component getDisplayName() {
-                    return new TranslatableComponent(AnalysisTableBlock.this.getDescriptionId());
+                    return Component.translatable(AnalysisTableBlock.this.getDescriptionId());
                 }
             });
         }

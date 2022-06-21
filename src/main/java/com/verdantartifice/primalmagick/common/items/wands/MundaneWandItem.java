@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.IItemRenderProperties;
@@ -59,7 +58,7 @@ public class MundaneWandItem extends AbstractWandItem {
     @Override
     public Component getSpellCapacityText(ItemStack stack) {
         // Mundane wands can't carry spells
-        return new TextComponent("0");
+        return Component.literal("0");
     }
 
     @Override

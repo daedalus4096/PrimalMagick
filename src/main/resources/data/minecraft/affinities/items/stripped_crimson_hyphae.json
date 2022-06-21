@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_crimson_hyphae",
-  "base": "minecraft:crimson_hyphae"
+  "base": "minecraft:crimson_hyphae",
+  "target": "minecraft:stripped_crimson_hyphae"
 }

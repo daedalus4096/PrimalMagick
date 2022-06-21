@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "primalmagick:sunwood_log",
-  "base": "minecraft:oak_log",
   "add": {
     "sun": 10
-  }
+  },
+  "base": "minecraft:oak_log",
+  "target": "primalmagick:sunwood_log"
 }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:powder_snow_bucket",
-  "base": "minecraft:bucket",
   "add": {
     "sea": 20
-  }
+  },
+  "base": "minecraft:bucket",
+  "target": "minecraft:powder_snow_bucket"
 }

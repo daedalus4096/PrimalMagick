@@ -1,23 +1,23 @@
 {
-  "key": "SANGUINE_CORE_FLYING_CREATURES",
-  "name": "primalmagick.research.sanguine_core_flying_creatures.title",
+  "addenda": [],
   "discipline": "ALCHEMY",
   "icon": {
     "isItem": true,
     "location": "primalmagick:sanguine_core_blank"
   },
+  "key": "SANGUINE_CORE_FLYING_CREATURES",
+  "name": "primalmagick.research.sanguine_core_flying_creatures.title",
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.sanguine_core_flying_creatures.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_flying_creatures.text.stage.1"
     },
     {
-      "text": "primalmagick.research.sanguine_core_flying_creatures.text.stage.2",
       "attunements": {
         "sky": 2
       },
@@ -27,8 +27,8 @@
         "primalmagick:sanguine_core_chicken",
         "primalmagick:sanguine_core_parrot",
         "primalmagick:sanguine_core_vex"
-      ]
+      ],
+      "text": "primalmagick.research.sanguine_core_flying_creatures.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

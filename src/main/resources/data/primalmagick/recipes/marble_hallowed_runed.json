@@ -1,21 +1,21 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "SUPREME_MANAWEAVING",
+  "key": {
+    "C": {
+      "item": "primalmagick:marble_hallowed_chiseled"
+    },
+    "M": {
+      "item": "primalmagick:marble_hallowed"
+    }
+  },
   "pattern": [
     " M ",
     "MCM",
     " M "
   ],
-  "key": {
-    "M": {
-      "item": "primalmagick:marble_hallowed"
-    },
-    "C": {
-      "item": "primalmagick:marble_hallowed_chiseled"
-    }
-  },
+  "research": "SUPREME_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_hallowed_runed",
-    "count": 5
+    "count": 5,
+    "item": "primalmagick:marble_hallowed_runed"
   }
 }

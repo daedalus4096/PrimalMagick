@@ -1,17 +1,17 @@
 {
-  "key": "SOURCE_EARTH",
-  "name": "primalmagick.research.source_earth.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/earth.png"
   },
+  "key": "SOURCE_EARTH",
+  "name": "primalmagick.research.source_earth.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_earth.text.stage.1",
       "required_item": [
         "tag:forge:obsidian",
         "tag:forge:gems/diamond"
@@ -23,14 +23,14 @@
         "m_found_shrine_earth",
         "m_env_earth",
         "t_mana_spent_earth_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_earth.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_earth.text.stage.2",
       "attunements": {
         "earth": 5
-      }
+      },
+      "text": "primalmagick.research.source_earth.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

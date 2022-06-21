@@ -1,12 +1,12 @@
 {
   "type": "item",
-  "target": "primalmagick:marble_enchanted_chiseled",
-  "base": "primalmagick:marble_chiseled",
   "add": {
     "earth": 1,
+    "moon": 1,
     "sea": 1,
     "sky": 1,
-    "sun": 1,
-    "moon": 1
-  }
+    "sun": 1
+  },
+  "base": "primalmagick:marble_chiseled",
+  "target": "primalmagick:marble_enchanted_chiseled"
 }

@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -51,7 +50,7 @@ public abstract class AbstractPhasingPillarBlock extends PillarBlock {
     
     @SuppressWarnings("deprecation")
     @Override
-    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated
         super.randomTick(state, worldIn, pos, random);
         TimePhase newPhase = this.getCurrentPhase(worldIn);

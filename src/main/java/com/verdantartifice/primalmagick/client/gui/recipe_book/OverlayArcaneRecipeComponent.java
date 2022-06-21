@@ -18,7 +18,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -202,7 +202,7 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
         protected final List<OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos> ingredientPos = new ArrayList<>();
         
         public OverlayArcaneRecipeButton(int xPos, int yPos, Recipe<?> recipe, boolean isCraftable) {
-            super(xPos, yPos, 200, 20, TextComponent.EMPTY);
+            super(xPos, yPos, 200, 20, Component.empty());
             this.width = 24;
             this.height = 24;
             this.recipe = recipe;

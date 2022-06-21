@@ -1,31 +1,31 @@
 {
-  "key": "WAND_CAP_GOLD",
-  "name": "primalmagick.research.wand_cap_gold.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:gold_wand_cap_item"
   },
+  "key": "WAND_CAP_GOLD",
+  "name": "primalmagick.research.wand_cap_gold.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_CAP_IRON"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_cap_gold.text.stage.1",
       "required_item": [
         "tag:forge:ingots/gold"
       ],
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_gold.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_cap_gold.text.stage.2",
       "recipes": [
         "primalmagick:gold_wand_cap_item"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_gold.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

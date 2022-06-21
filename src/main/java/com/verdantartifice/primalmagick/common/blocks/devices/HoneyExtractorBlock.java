@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -128,7 +127,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
                 int amount = mana.getAmount(source);
                 if (amount > 0) {
                     Component nameComp = source.getNameText();
-                    Component line = new TranslatableComponent("primalmagick.source.mana_container_tooltip", nameComp, (amount / 100.0D));
+                    Component line = Component.translatable("primalmagick.source.mana_container_tooltip", nameComp, (amount / 100.0D));
                     tooltip.add(line);
                 }
             }

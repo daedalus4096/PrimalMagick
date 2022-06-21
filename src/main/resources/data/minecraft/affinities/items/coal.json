@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:coal",
   "set": {
     "earth": 5,
     "infernal": 5
-  }
+  },
+  "target": "minecraft:coal"
 }

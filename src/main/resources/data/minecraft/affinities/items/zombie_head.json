@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:zombie_head",
   "set": {
-    "moon": 5,
-    "blood": 20
-  }
+    "blood": 20,
+    "moon": 5
+  },
+  "target": "minecraft:zombie_head"
 }

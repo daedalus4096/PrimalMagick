@@ -1,27 +1,27 @@
 {
-  "key": "SPELL_PAYLOAD_FROST",
-  "name": "primalmagick.research.spell_payload_frost.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/sea.png"
   },
+  "key": "SPELL_PAYLOAD_FROST",
+  "name": "primalmagick.research.spell_payload_frost.title",
   "parents": [
     "BASIC_SORCERY"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.spell_payload_frost.text.stage.1",
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_frost.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_payload_frost.text.stage.2",
       "attunements": {
         "sea": 1
-      }
+      },
+      "text": "primalmagick.research.spell_payload_frost.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

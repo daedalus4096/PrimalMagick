@@ -1,17 +1,17 @@
 {
-  "key": "SOURCE_MOON",
-  "name": "primalmagick.research.source_moon.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/moon.png"
   },
+  "key": "SOURCE_MOON",
+  "name": "primalmagick.research.source_moon.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_moon.text.stage.1",
       "required_item": [
         "tag:primalmagick:moonwood_logs",
         "tag:forge:mushrooms"
@@ -23,14 +23,14 @@
         "m_found_shrine_moon",
         "m_env_moon",
         "t_mana_spent_moon_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_moon.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_moon.text.stage.2",
       "attunements": {
         "moon": 5
-      }
+      },
+      "text": "primalmagick.research.source_moon.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

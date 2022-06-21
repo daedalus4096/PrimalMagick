@@ -1,18 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "WAND_CORE_PURE_PRIMAL",
-  "mana": {
-    "earth": 100,
-    "sea": 100,
-    "sky": 100,
-    "sun": 100,
-    "moon": 100,
-    "blood": 100,
-    "infernal": 100,
-    "void": 100,
-    "hallowed": 100
-  },
-  "instability": 7,
   "ingredients": [
     {
       "item": "primalmagick:dark_primal_wand_core_item"
@@ -33,6 +20,18 @@
       "item": "primalmagick:mana_salts"
     }
   ],
+  "instability": 7,
+  "mana": {
+    "blood": 100,
+    "earth": 100,
+    "hallowed": 100,
+    "infernal": 100,
+    "moon": 100,
+    "sea": 100,
+    "sky": 100,
+    "sun": 100,
+    "void": 100
+  },
   "props": [
     {
       "block": "primalmagick:ritual_bell"
@@ -53,6 +52,7 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
+  "research": "WAND_CORE_PURE_PRIMAL",
   "result": {
     "item": "primalmagick:pure_primal_wand_core_item"
   }

@@ -1,11 +1,12 @@
 {
-  "key": "WAND_GEM_ADEPT",
-  "name": "primalmagick.research.wand_gem_adept.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:adept_wand_gem_item"
   },
+  "key": "WAND_GEM_ADEPT",
+  "name": "primalmagick.research.wand_gem_adept.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_GEM_APPRENTICE",
@@ -13,20 +14,19 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_gem_adept.text.stage.1",
       "required_item": [
         "tag:forge:gems/diamond"
       ],
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_gem_adept.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_gem_adept.text.stage.2",
       "recipes": [
         "primalmagick:adept_wand_gem_item"
-      ]
+      ],
+      "text": "primalmagick.research.wand_gem_adept.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

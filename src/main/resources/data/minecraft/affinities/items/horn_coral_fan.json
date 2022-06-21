@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:horn_coral_fan",
-  "base": "minecraft:horn_coral"
+  "base": "minecraft:horn_coral",
+  "target": "minecraft:horn_coral_fan"
 }

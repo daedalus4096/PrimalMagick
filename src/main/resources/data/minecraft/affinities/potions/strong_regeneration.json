@@ -1,8 +1,8 @@
 {
   "type": "potion_bonus",
-  "target": "minecraft:strong_regeneration",
   "bonus": {
-    "sun": 2,
-    "blood": 2
-  }
+    "blood": 2,
+    "sun": 2
+  },
+  "target": "minecraft:strong_regeneration"
 }

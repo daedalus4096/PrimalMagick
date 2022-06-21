@@ -1,11 +1,25 @@
 {
-  "key": "PRIMAL_PICKAXE",
-  "name": "primalmagick.research.primal_pickaxe.title",
+  "addenda": [
+    {
+      "required_research": [
+        "MASTER_RUNEWORKING",
+        "RUNE_SUMMON",
+        "RUNE_ITEM",
+        "RUNE_MOON"
+      ],
+      "siblings": [
+        "&primalmagick:lucky_strike"
+      ],
+      "text": "primalmagick.research.primal_pickaxe.text.addenda.1"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:primal_pickaxe"
   },
+  "key": "PRIMAL_PICKAXE",
+  "name": "primalmagick.research.primal_pickaxe.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -17,30 +31,16 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.primal_pickaxe.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.primal_pickaxe.text.stage.1"
     },
     {
-      "text": "primalmagick.research.primal_pickaxe.text.stage.2",
       "recipes": [
         "primalmagick:primal_pickaxe"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.primal_pickaxe.text.addenda.1",
-      "required_research": [
-        "MASTER_RUNEWORKING",
-        "RUNE_SUMMON",
-        "RUNE_ITEM",
-        "RUNE_MOON"
       ],
-      "siblings": [
-        "\u0026primalmagick:lucky_strike"
-      ]
+      "text": "primalmagick.research.primal_pickaxe.text.stage.2"
     }
   ]
 }

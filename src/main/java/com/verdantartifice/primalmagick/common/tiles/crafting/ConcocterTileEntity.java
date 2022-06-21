@@ -33,7 +33,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -188,13 +187,13 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     
     protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
         // Get a set of all the research keys used in any concocting recipe
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING).stream().map(r -> r.getRequiredResearch().getKeys())
+        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.getRequiredResearch().getKeys())
                 .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());
     }
     
     @Override
     public Component getDisplayName() {
-        return new TranslatableComponent(this.getBlockState().getBlock().getDescriptionId());
+        return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
 
     @Override
@@ -229,7 +228,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
                 // Don't consider fuse length when testing item inputs for recipe determination
                 testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
-            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING, testInv, level).orElse(null);
+            IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInv, level).orElse(null);
             if (entity.canConcoct(realInv, recipe)) {
                 entity.cookTime++;
                 if (entity.cookTime >= entity.cookTimeTotal) {

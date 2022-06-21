@@ -12,8 +12,6 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -28,7 +26,7 @@ public class AidUnlockWidget extends AbstractWidget {
     protected Block aidBlock;
 
     public AidUnlockWidget(int x, int y, @Nonnull Block aidBlock) {
-        super(x, y, 8, 8, TextComponent.EMPTY);
+        super(x, y, 8, 8, Component.empty());
         this.aidBlock = aidBlock;
     }
     
@@ -56,7 +54,7 @@ public class AidUnlockWidget extends AbstractWidget {
     public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
         if (this.aidBlock != null) {
             // Render tooltip
-            Component unlockText = new TranslatableComponent("primalmagick.research_table.unlock", this.aidBlock.getName());
+            Component unlockText = Component.translatable("primalmagick.research_table.unlock", this.aidBlock.getName());
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(unlockText), mouseX, mouseY);
         }
     }

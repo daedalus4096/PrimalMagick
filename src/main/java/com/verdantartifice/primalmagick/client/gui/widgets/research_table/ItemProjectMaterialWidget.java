@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.ItemProjectMateria
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
@@ -35,7 +34,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
         Minecraft mc = Minecraft.getInstance();
         GuiUtils.renderItemStack(matrixStack, this.material.getItemStack(), this.x, this.y, this.getMessage().getString(), false);
         if (this.material.getItemStack().getCount() > 1) {
-            Component amountText = new TextComponent(Integer.toString(this.material.getItemStack().getCount()));
+            Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.font.width(amountText);
             matrixStack.pushPose();
             matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
@@ -53,7 +52,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = this.material.getItemStack();
         List<Component> textList = new ArrayList<>();
-        textList.add(stack.getHoverName().copy().withStyle(stack.getItem().getRarity(stack).color));
+        textList.add(stack.getHoverName().copy().withStyle(stack.getItem().getRarity(stack).getStyleModifier()));
         stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
         return textList;
     }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:infested_stone_bricks",
-  "base": "minecraft:stone_bricks",
   "add": {
     "blood": 2
-  }
+  },
+  "base": "minecraft:stone_bricks",
+  "target": "minecraft:infested_stone_bricks"
 }

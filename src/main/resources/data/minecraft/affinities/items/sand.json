@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:sand",
   "set": {
     "earth": 5,
     "sun": 5
-  }
+  },
+  "target": "minecraft:sand"
 }

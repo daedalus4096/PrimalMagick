@@ -1,76 +1,76 @@
 {
-  "key": "primalmagick:mundane_tinkering",
-  "reward_multiplier": 0.25,
   "aid_blocks": [],
+  "key": "primalmagick:mundane_tinkering",
   "material_options": [
     {
       "type": "item",
-      "stack": "minecraft:crafting_table",
       "consumed": false,
       "match_nbt": false,
+      "stack": "minecraft:crafting_table",
       "weight": 1.0
     },
     {
       "type": "tag",
+      "consumed": false,
       "name": "minecraft:anvil",
       "quantity": 1,
-      "consumed": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:furnace",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:blast_furnace",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:loom",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:smoker",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:smithing_table",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
+      "consumed": false,
+      "match_nbt": false,
       "stack": "minecraft:stonecutter",
-      "consumed": false,
-      "match_nbt": false,
       "weight": 1.0
     },
     {
       "type": "item",
-      "stack": "minecraft:grindstone",
       "consumed": false,
       "match_nbt": false,
+      "stack": "minecraft:grindstone",
       "weight": 1.0
     },
     {
       "type": "observation",
-      "count": 1,
       "consumed": true,
+      "count": 1,
       "weight": 5.0
     }
-  ]
+  ],
+  "reward_multiplier": 0.25
 }

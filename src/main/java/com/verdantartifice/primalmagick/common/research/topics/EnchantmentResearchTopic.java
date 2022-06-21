@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class EnchantmentResearchTopic extends AbstractResearchTopic {
     public EnchantmentResearchTopic(Enchantment enchantment, int page) {
-        super(AbstractResearchTopic.Type.ENCHANTMENT, enchantment.getRegistryName().toString(), page);
+        super(AbstractResearchTopic.Type.ENCHANTMENT, ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString(), page);
     }
     
     @Nullable

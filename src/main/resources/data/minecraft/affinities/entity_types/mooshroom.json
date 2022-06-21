@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:mooshroom",
   "values": {
-    "moon": 5,
-    "blood": 10
+    "blood": 10,
+    "moon": 5
   }
 }

@@ -75,13 +75,12 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * GUI screen for the grimoire research browser.
@@ -284,7 +283,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
         // Gather a list of all research entries for the given discipline, sorted by their display names
         return discipline.getEntries().stream()
-                .sorted(Comparator.comparing(e -> (new TranslatableComponent(e.getNameTranslationKey())).getString()))
+                .sorted(Comparator.comparing(e -> (Component.translatable(e.getNameTranslationKey())).getString()))
                 .collect(Collectors.toList());
     }
     
@@ -385,7 +384,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void parseDisciplinePageSection(List<ResearchEntry> researchList, String headerName, ResearchDiscipline discipline, DisciplinePageProperties properties) {
         // Append the section header and spacer
-        Component headerText = new TranslatableComponent("primalmagick.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
+        Component headerText = Component.translatable("primalmagick.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
             properties.heightRemaining = 155;
@@ -394,7 +393,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             properties.page.addContent(headerText);
         } else {
             if (!properties.firstSection && !properties.page.getContents().isEmpty()) {
-                properties.page.addContent(new TextComponent(""));
+                properties.page.addContent(Component.literal(""));
                 properties.heightRemaining -= 12;
             }
             properties.page.addContent(headerText);
@@ -485,14 +484,14 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         ResearchStage stage = entry.getStages().get(this.currentStageIndex);
         List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
         
-        String rawText = (new TranslatableComponent(stage.getTextTranslationKey())).getString();
+        String rawText = (Component.translatable(stage.getTextTranslationKey())).getString();
         
         // Append unlocked addendum text
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
             if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
-                Component headerText = new TranslatableComponent("primalmagick.grimoire.addendum_header", ++addendumCount);
-                Component addendumText = new TranslatableComponent(addendum.getTextTranslationKey());
+                Component headerText = Component.translatable("primalmagick.grimoire.addendum_header", ++addendumCount);
+                Component addendumText = Component.translatable(addendum.getTextTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
             }
         }
@@ -627,7 +626,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             int statValue = StatsManager.getValue(mc.player, stat);
             if (!stat.isHidden() || statValue > 0) {
                 // Join the stat text and formatted value with periods in between for spacing
-                Component statText = new TranslatableComponent(stat.getTranslationKey());
+                Component statText = Component.translatable(stat.getTranslationKey());
                 List<FormattedText> statTextSegments = new ArrayList<>(this.font.getSplitter().splitLines(statText, 124, Style.EMPTY));
                 FormattedText lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
                 int lastStatTextSegmentWidth = this.font.width(lastStatTextSegment);
@@ -681,7 +680,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        String rawText = (new TranslatableComponent("primalmagick.attunement." + source.getTag() + ".text")).getString();
+        String rawText = (Component.translatable("primalmagick.attunement." + source.getTag() + ".text")).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
@@ -753,7 +752,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
-        String rawText = (new TranslatableComponent(Util.makeDescriptionId("rune_enchantment.text", enchant.getRegistryName()))).getString();
+        String rawText = (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

@@ -1,4 +1,6 @@
 {
+  "type": "primalmagick:bounty_farming",
+  "chance": 0.25,
   "conditions": [
     {
       "condition": "primalmagick:match_block_tag",
@@ -17,7 +19,5 @@
         ]
       }
     }
-  ],
-  "chance": 0.25,
-  "type": "primalmagick:bounty_farming"
+  ]
 }

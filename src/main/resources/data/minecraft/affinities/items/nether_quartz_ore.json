@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:nether_quartz_ore",
-  "base": "minecraft:netherrack",
   "add": {
     "earth": 10
-  }
+  },
+  "base": "minecraft:netherrack",
+  "target": "minecraft:nether_quartz_ore"
 }

@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of an item that grants observation or theory progress when used by a player.
@@ -42,7 +42,7 @@ public class KnowledgeGainItem extends Item {
         if (!level.isClientSide) {
             if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
                 ResearchManager.addKnowledge(player, this.knowledgeType, this.knowledgePoints);
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);
+                player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.success").withStyle(ChatFormatting.GREEN), true);
                 if (player instanceof ServerPlayer serverPlayer) {
                     PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                 }
@@ -51,7 +51,7 @@ public class KnowledgeGainItem extends Item {
                 }
             } else {
                 // Players who haven't started mod progression get no benefit
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
+                player.displayClientMessage(Component.translatable("event.primalmagick.knowledge_item.failure").withStyle(ChatFormatting.RED), true);
             }
         }
         return super.use(level, player, hand);
@@ -59,7 +59,7 @@ public class KnowledgeGainItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flag) {
-        String translationKey = "tooltip." + PrimalMagick.MODID + "." + this.getRegistryName().getPath();
-        tooltip.add(new TranslatableComponent(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        String translationKey = "tooltip." + PrimalMagick.MODID + "." + ForgeRegistries.ITEMS.getKey(this).getPath();
+        tooltip.add(Component.translatable(translationKey).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
     }
 }

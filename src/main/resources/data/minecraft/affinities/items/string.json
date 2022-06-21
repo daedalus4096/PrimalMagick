@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:string",
   "set": {
-    "sky": 5,
-    "blood": 2
-  }
+    "blood": 2,
+    "sky": 5
+  },
+  "target": "minecraft:string"
 }

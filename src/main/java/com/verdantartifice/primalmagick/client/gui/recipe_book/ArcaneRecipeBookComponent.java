@@ -41,7 +41,6 @@ import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -56,12 +55,12 @@ import net.minecraft.world.item.crafting.Recipe;
  */
 public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, GuiEventListener, NarratableEntry, RecipeShownListener, PlaceRecipe<Ingredient> {
     protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
-    protected static final Component SEARCH_HINT = (new TranslatableComponent("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
+    protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     public static final int IMAGE_WIDTH = 147;
     public static final int IMAGE_HEIGHT = 166;
     private static final int OFFSET_X_POSITION = 86;
-    private static final Component ONLY_CRAFTABLES_TOOLTIP = new TranslatableComponent("gui.recipebook.toggleRecipes.craftable");
-    private static final Component ALL_RECIPES_TOOLTIP = new TranslatableComponent("gui.recipebook.toggleRecipes.all");
+    private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
+    private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
     
     protected int xOffset;
     protected int width;
@@ -117,7 +116,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         this.mc.player.getInventory().fillStackedContents(this.stackedContents);
         this.menu.fillCraftSlotsStackedContents(this.stackedContents);
         String s = this.searchBox != null ? this.searchBox.getValue() : "";
-        this.searchBox = new EditBox(this.mc.font, xPos + 25, yPos + 14, 80, 9 + 5, new TranslatableComponent("itemGroup.search"));
+        this.searchBox = new EditBox(this.mc.font, xPos + 25, yPos + 14, 80, 9 + 5, Component.translatable("itemGroup.search"));
         this.searchBox.setMaxLength(50);
         this.searchBox.setBordered(false);
         this.searchBox.setVisible(true);
@@ -230,7 +229,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
         if (!searchStr.isEmpty()) {
             ObjectSet<ArcaneRecipeCollection> vanillaObjectSet = new ObjectLinkedOpenHashSet<>(this.mc.getSearchTree(SearchRegistry.RECIPE_COLLECTIONS)
                     .search(searchStr.toLowerCase(Locale.ROOT)).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
-            ObjectSet<ArcaneRecipeCollection> arcaneObjectSet = new ObjectLinkedOpenHashSet<>(ArcaneSearchRegistry.getInstance().getSearchTree().search(searchStr.toLowerCase(Locale.ROOT)));
+            ObjectSet<ArcaneRecipeCollection> arcaneObjectSet = new ObjectLinkedOpenHashSet<>(ArcaneSearchRegistry.getSearchTree().search(searchStr.toLowerCase(Locale.ROOT)));
             filteredCollections.removeIf(arc -> {
                 return !vanillaObjectSet.contains(arc) && !arcaneObjectSet.contains(arc);
             });

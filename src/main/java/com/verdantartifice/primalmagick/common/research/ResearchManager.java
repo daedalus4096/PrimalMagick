@@ -27,9 +27,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -436,8 +434,8 @@ public class ResearchManager {
                     for (ResearchAddendum addendum : searchEntry.getAddenda()) {
                         if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
                             // Announce completion of the addendum
-                            Component nameComp = new TranslatableComponent(searchEntry.getNameTranslationKey());
-                            player.sendMessage(new TranslatableComponent("event.primalmagick.add_addendum", nameComp), Util.NIL_UUID);
+                            Component nameComp = Component.translatable(searchEntry.getNameTranslationKey());
+                            player.sendSystemMessage(Component.translatable("event.primalmagick.add_addendum", nameComp));
                             knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             
                             // Process attunement grants

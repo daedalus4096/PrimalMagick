@@ -1,10 +1,5 @@
 {
   "type": "primalmagick:ritual",
-  "research": "SUPREME_AMBROSIA\u0026\u0026t_discover_infernal",
-  "mana": {
-    "infernal": 200
-  },
-  "instability": 8,
   "ingredients": [
     {
       "item": "primalmagick:manafruit"
@@ -28,6 +23,10 @@
       "item": "primalmagick:rune_power"
     }
   ],
+  "instability": 8,
+  "mana": {
+    "infernal": 200
+  },
   "props": [
     {
       "tag": "primalmagick:ritual_candles"
@@ -48,6 +47,7 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
+  "research": "SUPREME_AMBROSIA&&t_discover_infernal",
   "result": {
     "item": "primalmagick:ambrosia_supreme_infernal"
   }

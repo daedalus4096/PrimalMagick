@@ -163,7 +163,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
         if (world.isClientSide) {
             // Get the active recipe, if any, for client display of mana costs
             this.activeArcaneRecipe = null;
-            Optional<IArcaneRecipe> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInv, world);
+            Optional<IArcaneRecipe> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInv, world);
             if (arcaneOptional.isPresent()) {
                 IArcaneRecipe recipe = arcaneOptional.get();
                 if (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) {
@@ -174,7 +174,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
         if (!world.isClientSide && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING, this.craftingInv, world);
+            Optional<IArcaneRecipe> arcaneOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInv, world);
             if (arcaneOptional.isPresent()) {
                 // If the inputs match a defined arcane recipe, show the output if the player can use it
                 IArcaneRecipe recipe = arcaneOptional.get();

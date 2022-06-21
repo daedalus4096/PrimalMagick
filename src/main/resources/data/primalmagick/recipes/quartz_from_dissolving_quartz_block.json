@@ -1,13 +1,13 @@
 {
   "type": "primalmagick:dissolution",
-  "mana": {
-    "earth": 1
-  },
   "ingredient": {
     "item": "minecraft:quartz_block"
   },
+  "mana": {
+    "earth": 1
+  },
   "result": {
-    "item": "minecraft:quartz",
-    "count": 4
+    "count": 4,
+    "item": "minecraft:quartz"
   }
 }

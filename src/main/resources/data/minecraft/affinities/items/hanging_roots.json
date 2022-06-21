@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:hanging_roots",
   "set": {
     "earth": 2,
     "sun": 2
-  }
+  },
+  "target": "minecraft:hanging_roots"
 }

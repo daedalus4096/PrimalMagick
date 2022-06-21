@@ -12,7 +12,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantm
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
@@ -64,7 +64,7 @@ public class RuneEnchantmentIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each enchantment in the page's contents
         for (Enchantment enchant : this.getEnchantments()) {
-            Component text = new TranslatableComponent(enchant.getDescriptionId());
+            Component text = Component.translatable(enchant.getDescriptionId());
             screen.addWidgetToScreen(new RuneEnchantmentButton(x + 12 + (side * 140), y, text, screen, enchant));
             y += 12;
         }

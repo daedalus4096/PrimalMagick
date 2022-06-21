@@ -30,7 +30,7 @@ public class PrimalFishingRodItem extends TieredFishingRodItem {
     @Override
     public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         // Populate the creative pane with a pre-enchanted axe
-        if (this.allowdedIn(group)) {
+        if (this.allowedIn(group)) {
             items.add(this.getDefaultInstance());
         }
     }

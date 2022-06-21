@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 
 /**
@@ -42,10 +41,10 @@ public class AttunementGainPage extends AbstractPage {
         for (Source source : this.attunements.getSourcesSorted()) {
             int amount = Mth.clamp(this.attunements.getAmount(source), 0, 5);
             Component labelText = source.isDiscovered(mc.player) ?
-                    new TranslatableComponent(source.getNameTranslationKey()) :
-                    new TranslatableComponent(Source.getUnknownTranslationKey());
-            Component amountText = new TranslatableComponent("primalmagick.attunement_gain." + Integer.toString(amount));
-            Component fullText = new TranslatableComponent("primalmagick.attunement_gain.text", labelText, amountText);
+                    Component.translatable(source.getNameTranslationKey()) :
+                    Component.translatable(Source.getUnknownTranslationKey());
+            Component amountText = Component.translatable("primalmagick.attunement_gain." + Integer.toString(amount));
+            Component fullText = Component.translatable("primalmagick.attunement_gain.text", labelText, amountText);
             mc.font.draw(matrixStack, fullText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
         }

@@ -1,25 +1,25 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "WAND_CORE_SUNWOOD",
+  "key": {
+    "#": {
+      "item": "primalmagick:sunwood_log"
+    },
+    "D": {
+      "item": "primalmagick:essence_dust_sun"
+    }
+  },
   "mana": {
     "earth": 5,
+    "moon": 5,
     "sea": 5,
     "sky": 5,
-    "sun": 15,
-    "moon": 5
+    "sun": 15
   },
   "pattern": [
     "D#",
     "#D"
   ],
-  "key": {
-    "D": {
-      "item": "primalmagick:essence_dust_sun"
-    },
-    "#": {
-      "item": "primalmagick:sunwood_log"
-    }
-  },
+  "research": "WAND_CORE_SUNWOOD",
   "result": {
     "item": "primalmagick:sunwood_wand_core_item"
   }

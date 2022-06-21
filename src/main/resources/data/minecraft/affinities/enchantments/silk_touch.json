@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
-  "target": "minecraft:silk_touch",
   "multiplier": {
     "moon": 1
-  }
+  },
+  "target": "minecraft:silk_touch"
 }

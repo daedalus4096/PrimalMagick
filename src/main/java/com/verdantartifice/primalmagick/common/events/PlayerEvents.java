@@ -48,7 +48,6 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -56,7 +55,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -73,7 +72,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
@@ -83,14 +81,14 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -99,7 +97,6 @@ import net.minecraftforge.fml.common.Mod;
  * 
  * @author Daedalus4096
  */
-@SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
@@ -245,13 +242,13 @@ public class PlayerEvents {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
             if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTagsPM.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                player.displayClientMessage(new TranslatableComponent("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
+                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
@@ -259,7 +256,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
                 if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -268,7 +265,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
                 if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -277,7 +274,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
                 if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -286,7 +283,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
                 if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
@@ -295,7 +292,7 @@ public class PlayerEvents {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
                 if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
             }
         });
@@ -314,9 +311,10 @@ public class PlayerEvents {
         }
     }
 
+    @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
         if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.level.isDay() &&
-                player.getBrightness() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
+                player.getLightLevelDependentMagicValue() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
         }
@@ -513,7 +511,7 @@ public class PlayerEvents {
                 }
                 if (success) {
                     // Only show success effects once, regardless of how many talismans were triggered
-                    player.displayClientMessage(new TranslatableComponent("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
+                    player.displayClientMessage(Component.translatable("event.primalmagick.dream_vision_talisman.drained").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
                     }
@@ -530,12 +528,12 @@ public class PlayerEvents {
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag contents = new CompoundTag();
         contents.putInt("generation", 3);
-        contents.putString("title", new TranslatableComponent("primalmagick.dream_journal.title").getString());
+        contents.putString("title", Component.translatable("primalmagick.dream_journal.title").getString());
         contents.putString("author", player.getName().getString());
         ListTag pages = new ListTag();
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.1").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.2").getString()));
-        pages.add(StringTag.valueOf(new TranslatableComponent("primalmagick.dream_journal.text.3").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.1").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.2").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         
@@ -543,7 +541,7 @@ public class PlayerEvents {
         if (!player.addItem(journal)) {
             player.drop(journal, false);
         }
-        player.sendMessage(new TranslatableComponent("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN), Util.NIL_UUID);
+        player.sendSystemMessage(Component.translatable("event.primalmagick.got_dream").withStyle(ChatFormatting.GREEN));
     }
     
     @SubscribeEvent
@@ -589,11 +587,11 @@ public class PlayerEvents {
     }
     
     @SubscribeEvent
-    public static void onUseHoe(UseHoeEvent event) {
+    public static void onUseHoe(BlockEvent.BlockToolModificationEvent event) {
         UseOnContext context = event.getContext();
         ItemStack stack = context.getItemInHand();
-        int enchantLevel = EnchantmentHelper.getItemEnchantmentLevel(EnchantmentsPM.VERDANT.get(), stack);
-        if (enchantLevel > 0) {
+        int enchantLevel = stack.getEnchantmentLevel(EnchantmentsPM.VERDANT.get());
+        if (!event.isSimulated() && event.getToolAction().equals(ToolActions.HOE_TILL) && enchantLevel > 0) {
             Player player = event.getPlayer();
             Level level = context.getLevel();
             BlockPos pos = context.getClickedPos();
@@ -605,16 +603,14 @@ public class PlayerEvents {
                             mealBlock.performBonemeal(serverLevel, level.random, pos, state);
                         }
                         
-                        // Damage the stack; do one less damage here than needed, as setting the event result to ALLOW will cause
-                        // one damage to be applied automatically.
-                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1)) - 1;
+                        // Damage the stack and cancel the rest of the hoe functionality.
+                        int damage = (VerdantEnchantment.BASE_DAMAGE_PER_USE >> (enchantLevel - 1));
                         if (damage > 0) {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
-                        // Setting an ALLOW result causes the rest of the hoe functionality to be skipped, and one damage to be
-                        // applied to the stack.
-                        event.setResult(Event.Result.ALLOW);
+                        // FIXME Uncomment upon BTME becoming cancelable again
+                        //event.setCanceled(true);
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);
@@ -640,7 +636,7 @@ public class PlayerEvents {
             EntitySwapper.enqueue(level, new EntitySwapper(target.getUUID(), EntityTypesPM.FRIENDLY_WITCH.get(), originalData, Optional.empty(), 0));
             List<Player> nearby = EntityUtils.getEntitiesInRange(level, target.position(), null, Player.class, 32.0D);
             for (Player player : nearby) {
-                player.sendMessage(new TranslatableComponent("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME), Util.NIL_UUID);
+                player.sendSystemMessage(Component.translatable("event.primalmagick.friendly_witch.spawn", FriendlyWitchEntity.HONORED_NAME));
             }
         }
     }

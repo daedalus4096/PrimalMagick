@@ -1,13 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "primalmagick:marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"
-    ]
-  },
   "criteria": {
     "has_marble_enchanted": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -16,13 +10,14 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "primalmagick:marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"
-      }
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
@@ -30,5 +25,10 @@
       "has_marble_enchanted",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:marble_enchanted_brick_slab_from_marble_enchanted_bricks_stonecutting"
+    ]
+  }
 }

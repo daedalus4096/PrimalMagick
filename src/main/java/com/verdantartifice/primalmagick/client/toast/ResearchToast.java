@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -37,11 +37,11 @@ public class ResearchToast implements Toast {
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text
-        Component titleText = new TranslatableComponent("primalmagick.toast.title");
+        Component titleText = Component.translatable("primalmagick.toast.title");
         mc.font.draw(matrixStack, titleText, 6, 7, 0x551A8B);
         
         // Render the description of the completed research
-        Component descText = new TranslatableComponent(this.entry.getNameTranslationKey());
+        Component descText = Component.translatable(this.entry.getNameTranslationKey());
         float width = mc.font.width(descText.getString());
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed

@@ -13,8 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Base class for display widgets which show a source icon with amount.
@@ -26,7 +24,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     protected int amount;
 
     public AbstractSourceWidget(Source source, int amount, int xIn, int yIn) {
-        super(xIn, yIn, 16, 16, TextComponent.EMPTY);
+        super(xIn, yIn, 16, 16, Component.empty());
         this.source = source;
         this.amount = amount;
     }
@@ -64,7 +62,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         
         // Draw the amount string
         matrixStack.pushPose();
-        Component amountText = new TextComponent(Integer.toString(this.amount));
+        Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
         matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
@@ -75,8 +73,8 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         if (this.isHoveredOrFocused()) {
             Component sourceText = discovered ? 
                     this.source.getNameText() :
-                    new TranslatableComponent(Source.getUnknownTranslationKey());
-            Component labelText = new TranslatableComponent(this.getTooltipTranslationKey(), this.amount, sourceText);
+                    Component.translatable(Source.getUnknownTranslationKey());
+            Component labelText = Component.translatable(this.getTooltipTranslationKey(), this.amount, sourceText);
             GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
         }
     }

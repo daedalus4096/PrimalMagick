@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "primalmagick:sunwood_leaves",
-  "base": "minecraft:oak_leaves",
   "add": {
     "sun": 5
-  }
+  },
+  "base": "minecraft:oak_leaves",
+  "target": "primalmagick:sunwood_leaves"
 }

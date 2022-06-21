@@ -1,27 +1,27 @@
 {
-  "key": "RUNE_ABSORB",
-  "name": "primalmagick.research.rune_absorb.title",
+  "addenda": [],
   "discipline": "RUNEWORKING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:rune_absorb"
   },
+  "key": "RUNE_ABSORB",
+  "name": "primalmagick.research.rune_absorb.title",
   "parents": [
     "EXPERT_RUNEWORKING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.rune_absorb.text.stage.1",
       "required_knowledge": [
         "THEORY;1"
-      ]
+      ],
+      "text": "primalmagick.research.rune_absorb.text.stage.1"
     },
     {
-      "text": "primalmagick.research.rune_absorb.text.stage.2",
       "recipes": [
         "primalmagick:rune_absorb"
-      ]
+      ],
+      "text": "primalmagick.research.rune_absorb.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

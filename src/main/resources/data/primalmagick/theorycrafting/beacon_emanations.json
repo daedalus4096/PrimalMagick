@@ -1,18 +1,18 @@
 {
-  "key": "primalmagick:beacon_emanations",
-  "required_material_count_override": 1,
-  "base_success_chance_override": 0.5,
-  "reward_multiplier": 0.5,
   "aid_blocks": [
     "minecraft:beacon"
   ],
+  "base_success_chance_override": 0.5,
+  "key": "primalmagick:beacon_emanations",
   "material_options": [
     {
       "type": "tag",
+      "consumed": true,
       "name": "minecraft:beacon_payment_items",
       "quantity": 1,
-      "consumed": true,
       "weight": 1.0
     }
-  ]
+  ],
+  "required_material_count_override": 1,
+  "reward_multiplier": 0.5
 }

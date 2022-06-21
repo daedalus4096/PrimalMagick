@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a runecarving recipe.  Like a stonecutting recipe, but has two ingredients and a
@@ -87,7 +86,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
         return this.research;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<RunecarvingRecipe> {
+    public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
         @Override
         public RunecarvingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

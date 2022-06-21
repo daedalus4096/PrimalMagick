@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:golden_horse_armor",
   "set": {
     "earth": 52
-  }
+  },
+  "target": "minecraft:golden_horse_armor"
 }

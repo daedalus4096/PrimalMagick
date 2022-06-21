@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:music_disc_11",
   "set": {
-    "sky": 20,
+    "hallowed": 20,
     "moon": 20,
-    "hallowed": 20
-  }
+    "sky": 20
+  },
+  "target": "minecraft:music_disc_11"
 }

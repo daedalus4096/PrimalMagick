@@ -1,11 +1,61 @@
 {
-  "key": "SUPREME_AMBROSIA",
-  "name": "primalmagick.research.supreme_ambrosia.title",
+  "addenda": [
+    {
+      "attunements": {
+        "blood": 4
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_blood"
+      ],
+      "required_research": [
+        "t_discover_blood"
+      ],
+      "text": "primalmagick.research.supreme_ambrosia.text.addenda.1"
+    },
+    {
+      "attunements": {
+        "infernal": 4
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_infernal"
+      ],
+      "required_research": [
+        "t_discover_infernal"
+      ],
+      "text": "primalmagick.research.supreme_ambrosia.text.addenda.2"
+    },
+    {
+      "attunements": {
+        "void": 4
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_void"
+      ],
+      "required_research": [
+        "t_discover_void"
+      ],
+      "text": "primalmagick.research.supreme_ambrosia.text.addenda.3"
+    },
+    {
+      "attunements": {
+        "hallowed": 4
+      },
+      "recipes": [
+        "primalmagick:ambrosia_supreme_hallowed"
+      ],
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "text": "primalmagick.research.supreme_ambrosia.text.addenda.4"
+    }
+  ],
   "discipline": "RITUAL",
   "icon": {
     "isItem": true,
     "location": "primalmagick:ambrosia_supreme_earth"
   },
+  "key": "SUPREME_AMBROSIA",
+  "name": "primalmagick.research.supreme_ambrosia.title",
   "parents": [
     "SUPREME_RITUAL",
     "GREATER_AMBROSIA",
@@ -14,19 +64,18 @@
   ],
   "stages": [
     {
-      "text": "primalmagick.research.supreme_ambrosia.text.stage.1",
       "required_knowledge": [
         "THEORY;3"
-      ]
+      ],
+      "text": "primalmagick.research.supreme_ambrosia.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_ambrosia.text.stage.2",
       "attunements": {
         "earth": 4,
+        "moon": 4,
         "sea": 4,
         "sky": 4,
-        "sun": 4,
-        "moon": 4
+        "sun": 4
       },
       "recipes": [
         "primalmagick:ambrosia_supreme_earth",
@@ -34,57 +83,8 @@
         "primalmagick:ambrosia_supreme_sky",
         "primalmagick:ambrosia_supreme_sun",
         "primalmagick:ambrosia_supreme_moon"
-      ]
-    }
-  ],
-  "addenda": [
-    {
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.1",
-      "required_research": [
-        "t_discover_blood"
       ],
-      "attunements": {
-        "blood": 4
-      },
-      "recipes": [
-        "primalmagick:ambrosia_supreme_blood"
-      ]
-    },
-    {
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.2",
-      "required_research": [
-        "t_discover_infernal"
-      ],
-      "attunements": {
-        "infernal": 4
-      },
-      "recipes": [
-        "primalmagick:ambrosia_supreme_infernal"
-      ]
-    },
-    {
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.3",
-      "required_research": [
-        "t_discover_void"
-      ],
-      "attunements": {
-        "void": 4
-      },
-      "recipes": [
-        "primalmagick:ambrosia_supreme_void"
-      ]
-    },
-    {
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.4",
-      "required_research": [
-        "t_discover_hallowed"
-      ],
-      "attunements": {
-        "hallowed": 4
-      },
-      "recipes": [
-        "primalmagick:ambrosia_supreme_hallowed"
-      ]
+      "text": "primalmagick.research.supreme_ambrosia.text.stage.2"
     }
   ]
 }

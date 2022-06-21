@@ -1,22 +1,22 @@
 {
-  "key": "MYSTICAL_RELIC",
-  "name": "primalmagick.research.mystical_relic.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "primalmagick:mystical_relic"
   },
+  "key": "MYSTICAL_RELIC",
+  "name": "primalmagick.research.mystical_relic.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.mystical_relic.text.stage.1",
       "recipes": [
         "primalmagick:mystical_relic"
-      ]
+      ],
+      "text": "primalmagick.research.mystical_relic.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

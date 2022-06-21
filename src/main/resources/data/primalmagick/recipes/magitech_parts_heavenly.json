@@ -1,7 +1,17 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "magitech_parts",
-  "research": "SUPREME_MAGITECH",
+  "key": {
+    "I": {
+      "tag": "primalmagick:ingots/hallowsteel"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_forbidden"
+    },
+    "S": {
+      "item": "primalmagick:mana_salts"
+    }
+  },
   "mana": {
     "hallowed": 100
   },
@@ -10,17 +20,7 @@
     "IPI",
     "SIS"
   ],
-  "key": {
-    "S": {
-      "item": "primalmagick:mana_salts"
-    },
-    "I": {
-      "tag": "primalmagick:ingots/hallowsteel"
-    },
-    "P": {
-      "item": "primalmagick:magitech_parts_forbidden"
-    }
-  },
+  "research": "SUPREME_MAGITECH",
   "result": {
     "item": "primalmagick:magitech_parts_heavenly"
   }

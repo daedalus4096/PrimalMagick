@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import java.awt.Color;
 import java.util.Map;
-import java.util.Random;
 
 import com.google.common.collect.Maps;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -19,6 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -106,7 +106,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (player != null && player.getItemInHand(handIn).getItem() == ItemsPM.SOUL_GEM.get() && !state.getValue(DIRTY)) {
             // If using a soul gem on a clean anvil, break it
-            worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 if (!player.getAbilities().instabuild) {
@@ -124,7 +124,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
             return InteractionResult.SUCCESS;
         } else if (player != null && player.getItemInHand(handIn).is(ItemTagsPM.MAGICKAL_CLOTH) && state.getValue(DIRTY)) {
             // If using a magickal cloth on a dirty anvil, clean it
-            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (RANDOM.nextFloat() * 0.4F));
+            worldIn.playSound(player, pos, SoundEvents.ARMOR_EQUIP_LEATHER, SoundSource.BLOCKS, 1.0F, 0.8F + (worldIn.random.nextFloat() * 0.4F));
             if (!worldIn.isClientSide) {
                 worldIn.setBlock(pos, state.setValue(DIRTY, Boolean.FALSE), Block.UPDATE_ALL_IMMEDIATE);
             }
@@ -145,7 +145,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     }
     
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         // Show spell sparkles if receiving salt power
         if (this.isBlockSaltPowered(worldIn, pos)) {
             FxDispatcher.INSTANCE.spellTrail(pos.getX() + rand.nextDouble(), pos.getY() + rand.nextDouble(), pos.getZ() + rand.nextDouble(), Color.WHITE.getRGB());

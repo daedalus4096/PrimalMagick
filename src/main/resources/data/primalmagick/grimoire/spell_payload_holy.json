@@ -1,28 +1,28 @@
 {
-  "key": "SPELL_PAYLOAD_HOLY",
-  "name": "primalmagick.research.spell_payload_holy.title",
+  "addenda": [],
   "discipline": "SORCERY",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/hallowed.png"
   },
+  "key": "SPELL_PAYLOAD_HOLY",
+  "name": "primalmagick.research.spell_payload_holy.title",
   "parents": [
     "MASTER_SORCERY",
     "t_discover_hallowed"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.spell_payload_holy.text.stage.1",
       "required_knowledge": [
         "THEORY;2"
-      ]
+      ],
+      "text": "primalmagick.research.spell_payload_holy.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_payload_holy.text.stage.2",
       "attunements": {
         "hallowed": 1
-      }
+      },
+      "text": "primalmagick.research.spell_payload_holy.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

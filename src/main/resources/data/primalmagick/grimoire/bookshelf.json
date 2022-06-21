@@ -1,12 +1,13 @@
 {
-  "key": "BOOKSHELF",
-  "name": "primalmagick.research.bookshelf.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "minecraft:bookshelf"
   },
+  "key": "BOOKSHELF",
+  "name": "primalmagick.research.bookshelf.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -14,6 +15,5 @@
     {
       "text": "primalmagick.research.bookshelf.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:rotten_flesh",
   "set": {
-    "moon": 5,
-    "blood": 10
-  }
+    "blood": 10,
+    "moon": 5
+  },
+  "target": "minecraft:rotten_flesh"
 }

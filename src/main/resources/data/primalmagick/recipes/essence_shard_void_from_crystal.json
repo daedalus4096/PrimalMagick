@@ -1,14 +1,14 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
   "group": "essence_shard",
-  "research": "CRYSTAL_DESYNTHESIS\u0026\u0026t_discover_void",
   "ingredients": [
     {
       "item": "primalmagick:essence_crystal_void"
     }
   ],
+  "research": "CRYSTAL_DESYNTHESIS&&t_discover_void",
   "result": {
-    "item": "primalmagick:essence_shard_void",
-    "count": 4
+    "count": 4,
+    "item": "primalmagick:essence_shard_void"
   }
 }

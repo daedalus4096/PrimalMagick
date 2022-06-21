@@ -1,18 +1,18 @@
 {
-  "key": "SOURCE_INFERNAL",
-  "name": "primalmagick.research.source_infernal.title",
+  "addenda": [],
   "discipline": "BASICS",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/sources/infernal.png"
   },
+  "key": "SOURCE_INFERNAL",
+  "name": "primalmagick.research.source_infernal.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_infernal"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.source_infernal.text.stage.1",
       "required_item": [
         "tag:forge:rods/blaze",
         "minecraft:soul_sand"
@@ -22,14 +22,14 @@
       ],
       "required_research": [
         "t_mana_spent_infernal_expert"
-      ]
+      ],
+      "text": "primalmagick.research.source_infernal.text.stage.1"
     },
     {
-      "text": "primalmagick.research.source_infernal.text.stage.2",
       "attunements": {
         "infernal": 5
-      }
+      },
+      "text": "primalmagick.research.source_infernal.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

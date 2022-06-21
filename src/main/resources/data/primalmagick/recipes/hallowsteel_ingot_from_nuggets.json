@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "hallowsteel_ingot",
-  "pattern": [
-    "NNN",
-    "NNN",
-    "NNN"
-  ],
   "key": {
     "N": {
       "tag": "primalmagick:nuggets/hallowsteel"
     }
   },
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
   "result": {
     "item": "primalmagick:hallowsteel_ingot"
   }

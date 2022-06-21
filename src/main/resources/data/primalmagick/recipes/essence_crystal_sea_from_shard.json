@@ -1,12 +1,6 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
   "group": "essence_crystal",
-  "research": "CRYSTAL_SYNTHESIS",
-  "pattern": [
-    "###",
-    "#Q#",
-    "###"
-  ],
   "key": {
     "#": {
       "item": "primalmagick:essence_shard_sea"
@@ -15,6 +9,12 @@
       "item": "minecraft:quartz"
     }
   },
+  "pattern": [
+    "###",
+    "#Q#",
+    "###"
+  ],
+  "research": "CRYSTAL_SYNTHESIS",
   "result": {
     "item": "primalmagick:essence_crystal_sea"
   }

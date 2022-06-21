@@ -1,30 +1,30 @@
 {
-  "key": "WAND_CAP_IRON",
-  "name": "primalmagick.research.wand_cap_iron.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": true,
     "location": "primalmagick:iron_wand_cap_item"
   },
+  "key": "WAND_CAP_IRON",
+  "name": "primalmagick.research.wand_cap_iron.title",
   "parents": [
     "ADVANCED_WANDMAKING"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.wand_cap_iron.text.stage.1",
       "required_item": [
         "tag:forge:ingots/iron"
       ],
       "required_knowledge": [
         "OBSERVATION;1"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_iron.text.stage.1"
     },
     {
-      "text": "primalmagick.research.wand_cap_iron.text.stage.2",
       "recipes": [
         "primalmagick:iron_wand_cap_item"
-      ]
+      ],
+      "text": "primalmagick.research.wand_cap_iron.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

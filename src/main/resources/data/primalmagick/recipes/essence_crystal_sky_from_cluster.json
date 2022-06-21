@@ -1,14 +1,14 @@
 {
   "type": "primalmagick:arcane_crafting_shapeless",
   "group": "essence_crystal",
-  "research": "CLUSTER_DESYNTHESIS",
   "ingredients": [
     {
       "item": "primalmagick:essence_cluster_sky"
     }
   ],
+  "research": "CLUSTER_DESYNTHESIS",
   "result": {
-    "item": "primalmagick:essence_crystal_sky",
-    "count": 4
+    "count": 4,
+    "item": "primalmagick:essence_crystal_sky"
   }
 }

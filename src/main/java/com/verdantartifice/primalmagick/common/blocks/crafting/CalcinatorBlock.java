@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -12,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -47,7 +46,7 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         if (stateIn.getValue(LIT)) {
             double d0 = (double)pos.getX() + 0.5D;
             double d1 = (double)pos.getY();

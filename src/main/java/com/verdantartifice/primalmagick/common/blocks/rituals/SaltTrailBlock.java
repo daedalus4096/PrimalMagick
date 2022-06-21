@@ -5,7 +5,6 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -19,6 +18,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -343,7 +343,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     }
     
     @Override
-    public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
         int power = state.getValue(POWER);
         if (power > 0) {
             double x = (double)pos.getX() + 0.5D + ((double)rand.nextFloat() - 0.5D) * 0.2D;

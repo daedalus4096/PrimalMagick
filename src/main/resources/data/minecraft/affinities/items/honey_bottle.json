@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:honey_bottle",
-  "base": "minecraft:glass_bottle",
   "add": {
-    "sea": 5,
-    "blood": 1
-  }
+    "blood": 1,
+    "sea": 5
+  },
+  "base": "minecraft:glass_bottle",
+  "target": "minecraft:honey_bottle"
 }

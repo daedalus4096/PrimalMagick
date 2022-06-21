@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:stripped_crimson_stem",
-  "base": "minecraft:crimson_stem"
+  "base": "minecraft:crimson_stem",
+  "target": "minecraft:stripped_crimson_stem"
 }

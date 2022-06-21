@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "minecraft:gold_ingot",
   "set": {
     "earth": 10
-  }
+  },
+  "target": "minecraft:gold_ingot"
 }

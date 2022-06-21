@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import java.util.Random;
-
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
@@ -11,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -46,7 +45,7 @@ public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
     }
 
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         if (stateIn.getValue(LIT)) {
             double d0 = (double)pos.getX() + 0.5D;
             double d1 = (double)pos.getY();

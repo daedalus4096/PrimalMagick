@@ -49,6 +49,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class AffinityManager extends SimpleJsonResourceReloadListener {
@@ -184,7 +185,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     @Nullable
     public SourceList getAffinityValues(@Nullable EntityType<?> type) {
-        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, type.getRegistryName());
+        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITIES.getKey(type));
         if (entityAffinity == null) {
             return null;
         } else {
@@ -204,10 +205,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
 
         // First try looking up the affinity data from the registry
-        IAffinity itemAffinity = this.getAffinity(AffinityType.ITEM, stack.getItem().getRegistryName());
+        IAffinity itemAffinity = this.getAffinity(AffinityType.ITEM, ForgeRegistries.ITEMS.getKey(stack.getItem()));
         if (itemAffinity == null) {
             // If that doesn't work, generate affinities for the item and use those
-            itemAffinity = this.generateItemAffinity(stack.getItem().getRegistryName(), recipeManager, history);
+            itemAffinity = this.generateItemAffinity(ForgeRegistries.ITEMS.getKey(stack.getItem()), recipeManager, history);
             if (itemAffinity == null) {
                 // If that doesn't work either, return empty data
                 return null;
@@ -255,7 +256,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         int maxValue = Integer.MAX_VALUE;
         
         // Look up all recipes with the given item as an output
-        for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem() != null && r.getResultItem().getItem().getRegistryName().equals(id)).collect(Collectors.toList())) {
+        for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem() != null && ForgeRegistries.ITEMS.getKey(r.getResultItem().getItem()).equals(id)).collect(Collectors.toList())) {
             // Compute the affinities from the recipe's ingredients
             SourceList ingSources = this.generateItemAffinityValuesFromIngredients(recipe, recipeManager, history);
             if (recipe instanceof IHasManaCost) {
@@ -390,7 +391,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         // Determine bonus affinities from NBT-attached potion data
         Potion potion = PotionUtils.getPotion(stack);
         if (potion != null && potion != Potions.EMPTY) {
-            IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, potion.getRegistryName());
+            IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potion));
             if (bonus != null) {
                 retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()));
             }
@@ -400,7 +401,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         Map<Enchantment, Integer> enchants = EnchantmentHelper.getEnchantments(stack);
         if (enchants != null && !enchants.isEmpty()) {
             for (Enchantment enchant : enchants.keySet()) {
-                IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, enchant.getRegistryName());
+                IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, ForgeRegistries.ENCHANTMENTS.getKey(enchant));
                 if (bonus != null) {
                     retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()).multiply(enchants.get(enchant)));
                 }

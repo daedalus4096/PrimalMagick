@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:netherite_hoe",
   "set": {
     "earth": 57,
     "infernal": 22
-  }
+  },
+  "target": "minecraft:netherite_hoe"
 }

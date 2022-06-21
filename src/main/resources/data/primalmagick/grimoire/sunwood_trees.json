@@ -1,18 +1,18 @@
 {
-  "key": "SUNWOOD_TREES",
-  "name": "primalmagick.research.sunwood_trees.title",
+  "addenda": [],
   "discipline": "SCANS",
   "hidden": true,
   "icon": {
     "isItem": true,
     "location": "primalmagick:sunwood_sapling"
   },
+  "key": "SUNWOOD_TREES",
+  "name": "primalmagick.research.sunwood_trees.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.sunwood_trees.text.stage.1",
       "recipes": [
         "primalmagick:sunwood_wood",
         "primalmagick:stripped_sunwood_wood",
@@ -20,8 +20,8 @@
         "primalmagick:sunwood_slab",
         "primalmagick:sunwood_stairs",
         "primalmagick:sunwood_pillar"
-      ]
+      ],
+      "text": "primalmagick.research.sunwood_trees.text.stage.1"
     }
-  ],
-  "addenda": []
+  ]
 }

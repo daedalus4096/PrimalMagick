@@ -1,25 +1,25 @@
 {
-  "key": "MASTER_MANAWEAVING",
-  "name": "primalmagick.research.master_manaweaving.title",
+  "addenda": [],
   "discipline": "MANAWEAVING",
   "icon": {
     "isItem": false,
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
+  "key": "MASTER_MANAWEAVING",
+  "name": "primalmagick.research.master_manaweaving.title",
   "parents": [
     "WAND_CAP_GOLD",
     "WAND_GEM_ADEPT"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.master_manaweaving.text.stage.1",
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_manaweaving_master"
-      ]
+      ],
+      "text": "primalmagick.research.master_manaweaving.text.stage.1"
     },
     {
-      "text": "primalmagick.research.master_manaweaving.text.stage.2",
       "recipes": [
         "primalmagick:marble_smoked",
         "primalmagick:marble_smoked_brick_slab",
@@ -32,8 +32,8 @@
         "primalmagick:marble_smoked_slab",
         "primalmagick:marble_smoked_stairs",
         "primalmagick:marble_smoked_wall"
-      ]
+      ],
+      "text": "primalmagick.research.master_manaweaving.text.stage.2"
     }
-  ],
-  "addenda": []
+  ]
 }

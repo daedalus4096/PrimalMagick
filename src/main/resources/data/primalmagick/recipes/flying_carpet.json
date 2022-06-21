@@ -1,13 +1,8 @@
 {
   "type": "primalmagick:ritual",
-  "research": "FLYING_CARPET",
-  "mana": {
-    "sky": 100
-  },
-  "instability": 6,
   "ingredients": [
     {
-      "tag": "minecraft:carpets"
+      "tag": "minecraft:wool_carpets"
     },
     {
       "item": "minecraft:saddle"
@@ -34,6 +29,10 @@
       "item": "primalmagick:rune_power"
     }
   ],
+  "instability": 6,
+  "mana": {
+    "sky": 100
+  },
   "props": [
     {
       "block": "primalmagick:incense_brazier"
@@ -48,6 +47,7 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
+  "research": "FLYING_CARPET",
   "result": {
     "item": "primalmagick:flying_carpet"
   }

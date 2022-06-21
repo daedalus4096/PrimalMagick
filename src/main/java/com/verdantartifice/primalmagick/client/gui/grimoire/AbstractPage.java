@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -64,7 +63,7 @@ public abstract class AbstractPage extends GuiComponent {
             this.blit(matrixStack, x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
         }
         this.blit(matrixStack, x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
-        Component headerText = new TranslatableComponent(this.getTitleTranslationKey());
+        Component headerText = Component.translatable(this.getTitleTranslationKey());
         int width = mc.font.width(headerText.getString());
         int indent = 124;
         if (width <= 124) {

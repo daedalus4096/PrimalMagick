@@ -20,6 +20,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ResearchStageBuilder {
     protected final String modId;
@@ -115,7 +116,7 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder recipe(@Nonnull ItemLike item) {
-        return recipe(item.asItem().getRegistryName());
+        return recipe(ForgeRegistries.ITEMS.getKey(item.asItem()));
     }
     
     public ResearchStageBuilder recipe(@Nonnull ResourceLocation loc) {

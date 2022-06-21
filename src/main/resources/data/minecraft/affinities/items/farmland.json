@@ -1,9 +1,9 @@
 {
   "type": "item",
-  "target": "minecraft:farmland",
-  "base": "minecraft:dirt",
   "add": {
     "sea": 2,
     "sun": 5
-  }
+  },
+  "base": "minecraft:dirt",
+  "target": "minecraft:farmland"
 }

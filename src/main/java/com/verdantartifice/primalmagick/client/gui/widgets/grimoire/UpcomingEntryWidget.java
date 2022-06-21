@@ -19,8 +19,6 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * GUI widget to announce the presence of future grimoire entries and their requirements.
@@ -68,20 +66,20 @@ public class UpcomingEntryWidget extends AbstractWidget {
         // When hovering, show a tooltip with the missing requirements
         if (this.isHoveredOrFocused()) {
             List<Component> tooltip = new ArrayList<>();
-            tooltip.add(new TranslatableComponent("primalmagick.grimoire.upcoming_tooltip_header"));
+            tooltip.add(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
             
             for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
                 ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
                 if (parentEntry == null) {
-                    tooltip.add(new TranslatableComponent("primalmagick.research." + parent.getRootKey() + ".text"));
+                    tooltip.add(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
                 } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
-                    MutableComponent comp = new TranslatableComponent(parentEntry.getNameTranslationKey());
+                    MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
                     if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
                         ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
                         if (disc != null) {
-                            comp.append(new TextComponent(" ("));
-                            comp.append(new TranslatableComponent(disc.getNameTranslationKey()));
-                            comp.append(new TextComponent(")"));
+                            comp.append(Component.literal(" ("));
+                            comp.append(Component.translatable(disc.getNameTranslationKey()));
+                            comp.append(Component.literal(")"));
                         }
                     }
                     tooltip.add(comp);

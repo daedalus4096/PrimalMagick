@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:tuff",
-  "base": "minecraft:obsidian"
+  "base": "minecraft:obsidian",
+  "target": "minecraft:tuff"
 }

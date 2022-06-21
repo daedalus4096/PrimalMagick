@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
-  "target": "primalmagick:magick_protection",
   "multiplier": {
     "void": 1
-  }
+  },
+  "target": "primalmagick:magick_protection"
 }

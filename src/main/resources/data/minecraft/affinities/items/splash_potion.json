@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:splash_potion",
-  "base": "minecraft:potion"
+  "base": "minecraft:potion",
+  "target": "minecraft:splash_potion"
 }

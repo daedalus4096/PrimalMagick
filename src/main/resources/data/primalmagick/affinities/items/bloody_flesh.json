@@ -1,7 +1,7 @@
 {
   "type": "item",
-  "target": "primalmagick:bloody_flesh",
   "set": {
     "blood": 25
-  }
+  },
+  "target": "primalmagick:bloody_flesh"
 }

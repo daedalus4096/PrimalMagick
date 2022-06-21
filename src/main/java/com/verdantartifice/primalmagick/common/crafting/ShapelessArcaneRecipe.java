@@ -23,7 +23,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Definition for a shapeless arcane recipe.  Like a vanilla shapeless recipe, but has research and optional mana requirements.
@@ -116,7 +115,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         return this.group;
     }
 
-    public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapelessArcaneRecipe> {
+    public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
         @Override
         public ShapelessArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");

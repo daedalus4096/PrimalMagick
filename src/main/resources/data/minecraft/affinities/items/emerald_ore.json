@@ -1,8 +1,8 @@
 {
   "type": "item",
-  "target": "minecraft:emerald_ore",
-  "base": "minecraft:stone",
   "add": {
     "earth": 20
-  }
+  },
+  "base": "minecraft:stone",
+  "target": "minecraft:emerald_ore"
 }

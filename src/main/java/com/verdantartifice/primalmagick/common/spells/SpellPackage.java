@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -53,7 +52,7 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
     @Nonnull
     public Component getName() {
         // Color spell names according to their rarity, like with items
-        return new TextComponent(this.name).withStyle(this.getRarity().color);
+        return Component.literal(this.name).withStyle(this.getRarity().getStyleModifier());
     }
     
     public void setName(@Nullable String name) {

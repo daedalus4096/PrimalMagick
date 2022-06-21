@@ -1,5 +1,5 @@
 {
   "type": "item",
-  "target": "minecraft:magenta_shulker_box",
-  "base": "minecraft:shulker_box"
+  "base": "minecraft:shulker_box",
+  "target": "minecraft:magenta_shulker_box"
 }

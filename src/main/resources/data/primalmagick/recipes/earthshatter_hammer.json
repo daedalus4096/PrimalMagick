@@ -1,6 +1,16 @@
 {
   "type": "primalmagick:arcane_crafting_shaped",
-  "research": "EARTHSHATTER_HAMMER",
+  "key": {
+    "E": {
+      "item": "primalmagick:essence_shard_earth"
+    },
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
   "mana": {
     "earth": 20
   },
@@ -9,17 +19,7 @@
     "IEI",
     " S "
   ],
-  "key": {
-    "I": {
-      "tag": "forge:ingots/iron"
-    },
-    "E": {
-      "item": "primalmagick:essence_shard_earth"
-    },
-    "S": {
-      "tag": "forge:rods/wooden"
-    }
-  },
+  "research": "EARTHSHATTER_HAMMER",
   "result": {
     "item": "primalmagick:earthshatter_hammer"
   }
