@@ -8,7 +8,7 @@
       "predicate": {
         "type_specific": {
           "type": "fishing_hook",
-          "in_open_water": false
+          "in_open_water": true
         }
       }
     },

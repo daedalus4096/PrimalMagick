@@ -58,7 +58,7 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 }, 0.25F));
         this.add("bounty_fishing", LootModifierSerializersPM.BOUNTY_FISHING.get(), new BountyFishingModifier(
                 new LootItemCondition[] {
-                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(false))).build(),
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
         this.add("bonus_nugget_iron", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
