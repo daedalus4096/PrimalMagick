@@ -1,3 +1,7 @@
+v3.0.0-beta
+-----------
+* Updated to Minecraft 1.19
+
 v2.1.2
 ------
 * Add Zephyr Engine and Void Turbine, to generate wind tunnels
