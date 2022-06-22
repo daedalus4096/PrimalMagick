@@ -30,7 +30,6 @@ public class BiomeTagsProvider extends TagsProvider<Biome> {
     @Override
     protected void addTags() {
         // Create custom tags
-        this.tag(BiomeTagsPM.IS_END).add(Biomes.THE_END, Biomes.END_HIGHLANDS, Biomes.END_MIDLANDS, Biomes.SMALL_END_ISLANDS, Biomes.END_BARRENS);
         this.tag(BiomeTagsPM.HAS_EARTH_SHRINE).add(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA);
         this.tag(BiomeTagsPM.HAS_SEA_SHRINE).addTag(BiomeTags.IS_RIVER).addTag(BiomeTags.IS_BEACH).add(Biomes.SWAMP, Biomes.SNOWY_PLAINS, Biomes.ICE_SPIKES);
         this.tag(BiomeTagsPM.HAS_SKY_SHRINE).addTag(BiomeTags.IS_HILL).addTag(BiomeTags.IS_MOUNTAIN);

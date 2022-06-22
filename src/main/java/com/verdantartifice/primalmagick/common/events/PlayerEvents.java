@@ -244,7 +244,7 @@ public class PlayerEvents {
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTagsPM.IS_END)) {
+            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
                 ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));

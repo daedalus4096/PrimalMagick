@@ -14,8 +14,6 @@ import net.minecraft.world.level.biome.Biome;
  * @author Daedalus4096
  */
 public class BiomeTagsPM {
-    public static final TagKey<Biome> IS_END = tag("is_end");
-    
     public static final TagKey<Biome> HAS_EARTH_SHRINE = tag("has_structure/earth_shrine");
     public static final TagKey<Biome> HAS_SEA_SHRINE = tag("has_structure/sea_shrine");
     public static final TagKey<Biome> HAS_SKY_SHRINE = tag("has_structure/sky_shrine");
