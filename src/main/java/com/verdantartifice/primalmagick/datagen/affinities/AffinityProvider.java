@@ -90,6 +90,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.JUNGLE_PLANKS).base(Items.OAK_PLANKS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_PLANKS).base(Items.OAK_PLANKS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_PLANKS).base(Items.OAK_PLANKS).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_PLANKS).base(Items.OAK_PLANKS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CRIMSON_PLANKS).base(Items.OAK_PLANKS).add(Source.MOON, 2).add(Source.INFERNAL, 2).remove(Source.SUN, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WARPED_PLANKS).base(Items.CRIMSON_PLANKS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.OAK_SAPLING).set(Source.EARTH, 10).set(Source.SUN, 10).build(consumer);
@@ -98,6 +99,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.JUNGLE_SAPLING).base(Items.OAK_SAPLING).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_SAPLING).base(Items.OAK_SAPLING).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_SAPLING).base(Items.OAK_SAPLING).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_PROPAGULE).base(Items.OAK_SAPLING).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BEDROCK).set(Source.EARTH, 20).set(Source.VOID, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SAND).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.RED_SAND).base(Items.SAND).build(consumer);
@@ -131,6 +133,8 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.JUNGLE_LOG).base(Items.OAK_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_LOG).base(Items.OAK_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_LOG).base(Items.OAK_LOG).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_LOG).base(Items.OAK_LOG).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_ROOTS).base(Items.MANGROVE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CRIMSON_STEM).base(Items.OAK_LOG).add(Source.MOON, 10).add(Source.INFERNAL, 10).remove(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WARPED_STEM).base(Items.CRIMSON_STEM).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_OAK_LOG).base(Items.OAK_LOG).build(consumer);
@@ -139,6 +143,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_JUNGLE_LOG).base(Items.JUNGLE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_ACACIA_LOG).base(Items.ACACIA_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_DARK_OAK_LOG).base(Items.DARK_OAK_LOG).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.STRIPPED_MANGROVE_LOG).base(Items.MANGROVE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_CRIMSON_STEM).base(Items.CRIMSON_STEM).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_WARPED_STEM).base(Items.WARPED_STEM).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_OAK_WOOD).base(Items.OAK_WOOD).build(consumer);
@@ -147,6 +152,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_JUNGLE_WOOD).base(Items.JUNGLE_WOOD).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_ACACIA_WOOD).base(Items.ACACIA_WOOD).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_DARK_OAK_WOOD).base(Items.DARK_OAK_WOOD).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.STRIPPED_MANGROVE_WOOD).base(Items.MANGROVE_WOOD).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_CRIMSON_HYPHAE).base(Items.CRIMSON_HYPHAE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.STRIPPED_WARPED_HYPHAE).base(Items.WARPED_HYPHAE).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.OAK_WOOD).base(Items.OAK_LOG).build(consumer);
@@ -155,6 +161,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.JUNGLE_WOOD).base(Items.JUNGLE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_WOOD).base(Items.ACACIA_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_WOOD).base(Items.DARK_OAK_LOG).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_WOOD).base(Items.MANGROVE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CRIMSON_HYPHAE).base(Items.CRIMSON_STEM).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WARPED_HYPHAE).base(Items.WARPED_STEM).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.OAK_LEAVES).set(Source.EARTH, 5).set(Source.SKY, 5).set(Source.SUN, 5).build(consumer);
@@ -163,6 +170,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.JUNGLE_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ACACIA_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_LEAVES).base(Items.OAK_LEAVES).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MANGROVE_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.AZALEA_LEAVES).base(Items.OAK_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.FLOWERING_AZALEA_LEAVES).base(Items.AZALEA_LEAVES).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SPONGE).set(Source.SEA, 20).set(Source.VOID, 10).build(consumer);
