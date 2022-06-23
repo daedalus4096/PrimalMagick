@@ -3,6 +3,7 @@ v3.0.0-beta
 * Updated to Minecraft 1.19
 * Removed vestigial worldgen config options
     * NOTE: Generation of marble, salt, and quartz is now controlled via datapacks
+* Changed Sanguine Core recipe for Goats to use Goat Horns
 
 v2.1.2
 ------

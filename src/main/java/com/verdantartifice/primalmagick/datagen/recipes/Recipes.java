@@ -3778,7 +3778,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GOAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.MILK_BUCKET)
-            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .addIngredient(Items.GOAT_HORN)
             .setGroup("attuned_sanguine_cores")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
