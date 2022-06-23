@@ -359,7 +359,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.DEAD_FIRE_CORAL_FAN).base(Items.DEAD_FIRE_CORAL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.DEAD_HORN_CORAL_FAN).base(Items.DEAD_HORN_CORAL).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CONDUIT).set(Source.SEA, 78).set(Source.SUN, 15).set(Source.BLOOD, 12).build(consumer);  // Add lighting affinity
-        ItemAffinityBuilder.itemAffinity(Items.SCULK_SENSOR).set(Source.EARTH, 5).set(Source.VOID, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ELYTRA).set(Source.SKY, 25).set(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SCUTE).set(Source.SEA, 2).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.APPLE).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
@@ -412,6 +411,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.COD_BUCKET).base(Items.BUCKET).add(Source.SEA, 5).add(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.TROPICAL_FISH_BUCKET).base(Items.BUCKET).add(Source.SEA, 5).add(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.AXOLOTL_BUCKET).base(Items.BUCKET).add(Source.SEA, 5).add(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.TADPOLE_BUCKET).base(Items.BUCKET).add(Source.SEA, 5).add(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.BRICK).set(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CLAY_BALL).set(Source.EARTH, 2).set(Source.SEA, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SLIME_BALL).set(Source.SEA, 5).set(Source.BLOOD, 2).build(consumer);
@@ -523,6 +523,8 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_STRAD).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_WAIT).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_WARD).base(Items.MUSIC_DISC_11).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DISC_FRAGMENT_5).set(Source.SKY, 2).set(Source.MOON, 2).set(Source.HALLOWED, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_5).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.TRIDENT).set(Source.EARTH, 15).set(Source.SEA, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.PHANTOM_MEMBRANE).set(Source.SKY, 20).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NAUTILUS_SHELL).set(Source.SEA, 20).set(Source.BLOOD, 2).build(consumer);
@@ -563,6 +565,17 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.LARGE_AMETHYST_BUD).set(Source.EARTH, 15).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.AMETHYST_CLUSTER).set(Source.EARTH, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.POINTED_DRIPSTONE).set(Source.EARTH, 2).set(Source.SEA, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SCULK).set(Source.EARTH, 5).set(Source.INFERNAL, 5).set(Source.VOID, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SCULK_VEIN).set(Source.EARTH, 2).set(Source.INFERNAL, 2).set(Source.VOID, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SCULK_SENSOR).set(Source.EARTH, 5).set(Source.INFERNAL, 5).set(Source.VOID, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SCULK_CATALYST).set(Source.EARTH, 5).set(Source.INFERNAL, 20).set(Source.VOID, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SCULK_SHRIEKER).set(Source.EARTH, 5).set(Source.INFERNAL, 20).set(Source.VOID, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.MUD).set(Source.EARTH, 5).set(Source.SEA, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.OCHRE_FROGLIGHT).set(Source.EARTH, 20).set(Source.SEA, 50).set(Source.SUN, 15).set(Source.INFERNAL, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PEARLESCENT_FROGLIGHT).base(Items.OCHRE_FROGLIGHT).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.VERDANT_FROGLIGHT).base(Items.OCHRE_FROGLIGHT).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.ECHO_SHARD).set(Source.EARTH, 5).set(Source.INFERNAL, 5).set(Source.VOID, 5).set(Source.HALLOWED, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.GOAT_HORN).set(Source.EARTH, 5).set(Source.SKY, 20).set(Source.BLOOD, 5).build(consumer);
         
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
@@ -729,6 +742,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()).build(consumer);
         
         // Define vanilla entity type affinities
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.ALLAY).value(Source.SKY, 10).value(Source.HALLOWED, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.AXOLOTL).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BAT).value(Source.SKY, 10).value(Source.MOON, 10).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.BEE).value(Source.SKY, 10).value(Source.SUN, 5).value(Source.BLOOD, 5).build(consumer);
@@ -748,6 +762,7 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.ENDERMITE).value(Source.BLOOD, 5).value(Source.VOID, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.EVOKER).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).value(Source.VOID, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.FOX).value(Source.BLOOD, 5).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.FROG).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.GHAST).value(Source.SKY, 10).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.GLOW_SQUID).value(Source.SEA, 10).value(Source.SUN, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.GOAT).value(Source.SKY, 5).value(Source.BLOOD, 10).build(consumer);
@@ -785,6 +800,7 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.SQUID).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.STRAY).value(Source.SEA, 5).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.STRIDER).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.TADPOLE).value(Source.SEA, 5).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.TRADER_LLAMA).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.TROPICAL_FISH).value(Source.SEA, 10).value(Source.BLOOD, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.TURTLE).value(Source.SEA, 10).value(Source.BLOOD, 10).build(consumer);
@@ -792,6 +808,7 @@ public class AffinityProvider implements DataProvider {
         EntityTypeAffinityBuilder.entityAffinity(EntityType.VILLAGER).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.VINDICATOR).value(Source.BLOOD, 10).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.WANDERING_TRADER).value(Source.BLOOD, 10).build(consumer);
+        EntityTypeAffinityBuilder.entityAffinity(EntityType.WARDEN).value(Source.EARTH, 50).value(Source.INFERNAL, 20).value(Source.VOID, 20).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.WITCH).value(Source.BLOOD, 10).value(Source.INFERNAL, 5).value(Source.VOID, 5).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.WITHER).value(Source.SKY, 20).value(Source.INFERNAL, 50).value(Source.VOID, 50).build(consumer);
         EntityTypeAffinityBuilder.entityAffinity(EntityType.WITHER_SKELETON).value(Source.BLOOD, 10).value(Source.INFERNAL, 10).value(Source.VOID, 10).build(consumer);
