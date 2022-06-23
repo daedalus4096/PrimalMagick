@@ -3,7 +3,7 @@
   "set": {
     "earth": 5,
     "infernal": 5,
-    "void": 20
+    "void": 5
   },
-  "target": "minecraft:sculk_sensor"
+  "target": "minecraft:sculk"
 }

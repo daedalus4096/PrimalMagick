@@ -1,0 +1,10 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 20,
+    "infernal": 5,
+    "sea": 50,
+    "sun": 15
+  },
+  "target": "minecraft:ochre_froglight"
+}

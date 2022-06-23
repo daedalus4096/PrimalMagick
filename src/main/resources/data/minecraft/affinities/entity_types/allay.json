@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:allay",
+  "values": {
+    "hallowed": 10,
+    "sky": 10
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "hallowed": 2,
+    "moon": 2,
+    "sky": 2
+  },
+  "target": "minecraft:disc_fragment_5"
+}

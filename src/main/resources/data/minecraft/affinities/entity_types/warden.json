@@ -1,0 +1,9 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:warden",
+  "values": {
+    "earth": 50,
+    "infernal": 20,
+    "void": 20
+  }
+}

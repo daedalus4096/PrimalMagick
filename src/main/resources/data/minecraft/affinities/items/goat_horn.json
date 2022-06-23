@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "blood": 5,
+    "earth": 5,
+    "sky": 20
+  },
+  "target": "minecraft:goat_horn"
+}

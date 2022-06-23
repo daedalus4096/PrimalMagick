@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 5,
+    "infernal": 20,
+    "void": 5
+  },
+  "target": "minecraft:sculk_catalyst"
+}

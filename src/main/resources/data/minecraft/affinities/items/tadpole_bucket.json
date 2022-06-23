@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "add": {
+    "blood": 5,
+    "sea": 5
+  },
+  "base": "minecraft:bucket",
+  "target": "minecraft:tadpole_bucket"
+}

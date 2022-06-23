@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 5,
+    "sea": 10
+  },
+  "target": "minecraft:mud"
+}

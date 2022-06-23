@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 2,
+    "infernal": 2,
+    "void": 2
+  },
+  "target": "minecraft:sculk_vein"
+}
