@@ -99,6 +99,7 @@ public class ModLifecycleEvents {
         InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.WITHER);
         InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.WOLF);
         InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityTypesPM.INNER_DEMON.get());
+        InterModComms.sendTo(PrimalMagick.MODID, "polymorphBan", () -> EntityType.WARDEN);
     }
     
     @SubscribeEvent
