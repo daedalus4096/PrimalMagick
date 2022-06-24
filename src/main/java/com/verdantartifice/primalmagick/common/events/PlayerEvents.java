@@ -42,7 +42,6 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
-import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -67,6 +66,8 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -81,6 +82,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -101,16 +103,16 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerEvents {
     public static final Map<UUID, InteractionRecord> LAST_BLOCK_LEFT_CLICK = new HashMap<>();
     
-    private static final Map<UUID, Float> PREV_STEP_HEIGHTS = new HashMap<>();
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
     private static final SimpleResearchKey NDE_RESEARCH_KEY = SimpleResearchKey.parse("m_near_death_experience");
+    private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
+    private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingUpdateEvent event) {
-        if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer)) {
-            ServerPlayer player = (ServerPlayer)event.getEntity();
+        if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -137,10 +139,8 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (event.getEntity().level.isClientSide && (event.getEntity() instanceof Player)) {
-            // If this is a client-side player, handle any step-height changes and double jumps from attunement bonuses
-            Player player = (Player)event.getEntity();
-            handleStepHeightChange(player);
+        if (event.getEntity().level.isClientSide && (event.getEntity() instanceof Player player)) {
+            // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
     }
@@ -176,6 +176,13 @@ public class PlayerEvents {
         if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
             // Apply Night Vision for 30.5s if the player has greater moon attunement
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
+        }
+        
+        AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
+        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH);
+        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+            // If the player has greater earth attunement and is not sneaking, boost their step height
+            stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
         }
     }
 
@@ -331,21 +338,6 @@ public class PlayerEvents {
                 world.getBrightness(LightLayer.BLOCK, pos) < 11) {
             // If an attuned, non-sneaking player is in a dark area, they have a chance to drop a glow field
             world.setBlock(pos, BlocksPM.GLOW_FIELD.get().defaultBlockState(), Block.UPDATE_ALL);
-        }
-    }
-
-    protected static void handleStepHeightChange(Player player) {
-        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
-            // If the player has greater earth attunement and is not sneaking, boost their step height and save the old one
-            if (!PREV_STEP_HEIGHTS.containsKey(player.getUUID())) {
-                PREV_STEP_HEIGHTS.put(player.getUUID(), Float.valueOf(player.maxUpStep));
-            }
-            player.maxUpStep = Math.max(1.0F, player.maxUpStep);
-        } else {
-            // Otherwise, check to see if their step height needs to be reset
-            if (PREV_STEP_HEIGHTS.containsKey(player.getUUID())) {
-                player.maxUpStep = PREV_STEP_HEIGHTS.remove(player.getUUID());
-            }
         }
     }
 
