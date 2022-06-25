@@ -27,4 +27,5 @@ public class LootModifierSerializersPM {
     public static final RegistryObject<GlobalLootModifierSerializer<BloodNotesModifier>> BLOOD_NOTES = SERIALIZERS.register("blood_notes", BloodNotesModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<RelicFragmentsModifier>> RELIC_FRAGMENTS = SERIALIZERS.register("relic_fragments", RelicFragmentsModifier.Serializer::new);
     public static final RegistryObject<GlobalLootModifierSerializer<FourLeafCloverModifier>> FOUR_LEAF_CLOVER = SERIALIZERS.register("four_leaf_clover", FourLeafCloverModifier.Serializer::new);
+    public static final RegistryObject<GlobalLootModifierSerializer<HummingArtifactModifier>> HUMMING_ARTIFACT = SERIALIZERS.register("humming_artifact", HummingArtifactModifier.Serializer::new);
 }

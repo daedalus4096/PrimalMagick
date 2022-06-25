@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BonusNuggetModifie
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFarmingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.HummingArtifactModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
@@ -23,15 +24,18 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
 import net.minecraft.world.level.storage.loot.predicates.MatchTool;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.common.loot.LootTableIdCondition;
 
 /**
  * Data provider for all of the mod's loot modifiers.
@@ -107,6 +111,81 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.004F, 0.003F).build()
+                }));
+        this.add("humming_artifact_abandoned_mineshaft", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT).build(),
+                        LootItemRandomChanceCondition.randomChance(0.6F).build()
+                }));
+        this.add("humming_artifact_ancient_city", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY).build(),
+                        LootItemRandomChanceCondition.randomChance(1.0F).build()
+                }));
+        this.add("humming_artifact_bastion_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.BASTION_TREASURE).build(),
+                        LootItemRandomChanceCondition.randomChance(1.0F).build()
+                }));
+        this.add("humming_artifact_buried_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.BURIED_TREASURE).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }));
+        this.add("humming_artifact_desert_pyramid", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID).build(),
+                        LootItemRandomChanceCondition.randomChance(0.6F).build()
+                }));
+        this.add("humming_artifact_end_city_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.END_CITY_TREASURE).build(),
+                        LootItemRandomChanceCondition.randomChance(1.0F).build()
+                }));
+        this.add("humming_artifact_igloo_chest", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.IGLOO_CHEST).build(),
+                        LootItemRandomChanceCondition.randomChance(0.6F).build()
+                }));
+        this.add("humming_artifact_jungle_temple", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE).build(),
+                        LootItemRandomChanceCondition.randomChance(0.6F).build()
+                }));
+        this.add("humming_artifact_nether_fortress", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.NETHER_BRIDGE).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }));
+        this.add("humming_artifact_pillager_outpost", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }));
+        this.add("humming_artifact_shipwreck_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.SHIPWRECK_TREASURE).build(),
+                        LootItemRandomChanceCondition.randomChance(0.6F).build()
+                }));
+        this.add("humming_artifact_simple_dungeon", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON).build(),
+                        LootItemRandomChanceCondition.randomChance(0.4F).build()
+                }));
+        this.add("humming_artifact_stronghold_library", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.STRONGHOLD_LIBRARY).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }));
+        this.add("humming_artifact_underwater_ruin_big", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }));
+        this.add("humming_artifact_woodland_mansion", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION).build(),
+                        LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }));
     }
 }
