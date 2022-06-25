@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
+import com.verdantartifice.primalmagick.common.items.misc.AttunementGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.LazySpawnEggItem;
 
 import net.minecraft.world.item.BlockItem;
@@ -109,5 +110,13 @@ public class ColorEvents {
                 return arrow.getColor(tintIndex);
             }, arrow);
         }
+        
+        event.getItemColors().register((stack, tintIndex) -> {
+            if (stack.getItem() instanceof AttunementGainItem agi) {
+                return agi.getColor(tintIndex);
+            } else {
+                return -1;
+            }
+        }, ItemsPM.HUMMING_ARTIFACT_EARTH.get(), ItemsPM.HUMMING_ARTIFACT_SEA.get(), ItemsPM.HUMMING_ARTIFACT_SKY.get(), ItemsPM.HUMMING_ARTIFACT_SUN.get(), ItemsPM.HUMMING_ARTIFACT_MOON.get(), ItemsPM.HUMMING_ARTIFACT_BLOOD.get(), ItemsPM.HUMMING_ARTIFACT_INFERNAL.get(), ItemsPM.HUMMING_ARTIFACT_VOID.get(), ItemsPM.HUMMING_ARTIFACT_HALLOWED.get());
     }
 }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -18,6 +19,7 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagick.common.items.food.ManafruitItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
+import com.verdantartifice.primalmagick.common.items.misc.AttunementGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.DowsingRodItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
@@ -579,6 +581,18 @@ public class ItemsPM {
     public static final RegistryObject<AmbrosiaItem> SUPREME_INFERNAL_AMBROSIA = ITEMS.register("ambrosia_supreme_infernal", () -> new AmbrosiaItem(Source.INFERNAL, 50, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_VOID_AMBROSIA = ITEMS.register("ambrosia_supreme_void", () -> new AmbrosiaItem(Source.VOID, 50, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_HALLOWED_AMBROSIA = ITEMS.register("ambrosia_supreme_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, 50, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
+    
+    // Register humming artifact items
+    public static final RegistryObject<Item> HUMMING_ARTIFACT_UNATTUNED = ITEMS.register("humming_artifact_unattuned", () -> new Item(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_EARTH = ITEMS.register("humming_artifact_earth", () -> new AttunementGainItem(Source.EARTH, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SEA = ITEMS.register("humming_artifact_sea", () -> new AttunementGainItem(Source.SEA, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SKY = ITEMS.register("humming_artifact_sky", () -> new AttunementGainItem(Source.SKY, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SUN = ITEMS.register("humming_artifact_sun", () -> new AttunementGainItem(Source.SUN, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_MOON = ITEMS.register("humming_artifact_moon", () -> new AttunementGainItem(Source.MOON, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_BLOOD = ITEMS.register("humming_artifact_blood", () -> new AttunementGainItem(Source.BLOOD, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_INFERNAL = ITEMS.register("humming_artifact_infernal", () -> new AttunementGainItem(Source.INFERNAL, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_VOID = ITEMS.register("humming_artifact_void", () -> new AttunementGainItem(Source.VOID, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_HALLOWED = ITEMS.register("humming_artifact_hallowed", () -> new AttunementGainItem(Source.HALLOWED, AttunementType.PERMANENT, 1, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
     
     // Register sanguine core items
     public static final RegistryObject<Item> SANGUINE_CORE_BLANK = ITEMS.register("sanguine_core_blank", () -> new Item(new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));

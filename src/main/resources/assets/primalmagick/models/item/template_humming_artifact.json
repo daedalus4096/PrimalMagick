@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "primalmagick:item/humming_artifact_case",
+        "layer1": "primalmagick:item/humming_artifact_glow"
+    }
+}
