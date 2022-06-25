@@ -1339,6 +1339,14 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("MYSTICAL_RELIC", discipline).hidden().icon(ItemsPM.MYSTICAL_RELIC.get()).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MYSTICAL_RELIC.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("HUMMING_ARTIFACT", discipline).hidden().icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SEA.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
+                    .recipe(ItemsPM.HUMMING_ARTIFACT_SUN.get()).recipe(ItemsPM.HUMMING_ARTIFACT_MOON.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
+            .build(consumer);
     }
     
     @Override

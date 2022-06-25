@@ -106,5 +106,6 @@ public class InitResearch {
         SimpleResearchKey relic = SimpleResearchKey.parse("MYSTICAL_RELIC");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC.get(), relic));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), relic));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), SimpleResearchKey.parse("HUMMING_ARTIFACT")));
     }
 }

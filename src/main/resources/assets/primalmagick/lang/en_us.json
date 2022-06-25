@@ -1862,6 +1862,13 @@
     "primalmagick.research.mystical_relic.title": "Mystical Relics",
     "primalmagick.research.mystical_relic.text.stage.1": "It appears the ancients left more than just shrines behind.  They also left knowledge in the form of inscribed stone tablets.<BR>Of course, finding an intact one seems impossible.  I'll have to assemble these relics from fragments that I recover in the world.<BR>Studying a completed relic will reveal to me a new theory!  Or, if I need the emeralds, a Librarian villager might be interested in buying them from me.",
     
+    "primalmagick.research.humming_artifact.title": "Humming Artifact",
+    "primalmagick.research.humming_artifact.text.stage.1": "What a curious artifact.  Its magick makes my fingers tingle, but it feels somehow... incomplete.  Perhaps if I were to combine it with some magickal essence?",
+    "primalmagick.research.humming_artifact.text.addenda.1": "The artifact also responsds to Blood essence.",
+    "primalmagick.research.humming_artifact.text.addenda.2": "The artifact also responsds to Infernal essence.",
+    "primalmagick.research.humming_artifact.text.addenda.3": "The artifact also responsds to Void essence.",
+    "primalmagick.research.humming_artifact.text.addenda.4": "The artifact also responsds to Hallowed essence.",
+    
     "commands.primalmagick.research.list": "All research for %1$s: %2$s",
     "commands.primalmagick.research.reset": "Resetting all research for %1$s",
     "commands.primalmagick.research.reset.target": "%1$s has reset all of your research",

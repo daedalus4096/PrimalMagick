@@ -82,6 +82,7 @@ public class Recipes extends RecipeProvider {
         this.registerManaFontRecipes(consumer);
         this.registerManaArrowRecipes(consumer);
         this.registerDissolutionChamberRecipes(consumer);
+        this.registerHummingArtifactRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6046,5 +6047,71 @@ public class Recipes extends RecipeProvider {
             .ingredient(Items.QUARTZ_BLOCK)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "quartz_from_dissolving_quartz_block"));
+    }
+    
+    protected void registerHummingArtifactRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .manaCost(new SourceList().add(Source.EARTH, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SEA.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .manaCost(new SourceList().add(Source.SEA, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .manaCost(new SourceList().add(Source.SKY, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SUN.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .manaCost(new SourceList().add(Source.SUN, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_MOON.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.BLOOD.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.BLOOD, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.INFERNAL.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.INFERNAL, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_VOID.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.VOID.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.VOID, 40))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get())
+            .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .setGroup("humming_artifact")
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.HALLOWED.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.HALLOWED, 40))
+            .build(consumer);
     }
 }
