@@ -13,7 +13,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "primalmagick:essence_dust_sun"
+          "name": "primalmagick:drained_pixie_basic_sun"
         }
       ],
       "rolls": 1.0
