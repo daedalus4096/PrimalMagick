@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.payloads.FlameDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
 
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.Level;
 
@@ -60,10 +62,9 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     }
     
     public void explode() {
-        this.dead = true;
-        this.kill();
         if (!this.level.isClientSide) {
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, BlockInteraction.BREAK);
+            Explosion explosion = this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, BlockInteraction.BREAK);
+            this.hurt(DamageSource.explosion(explosion), Float.MAX_VALUE);
         }
     }
     
