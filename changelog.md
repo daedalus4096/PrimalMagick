@@ -1,3 +1,8 @@
+v3.0.1
+------
+* Added Humming Artifacts, as some arcane dungeon loot
+* Incremented to Forge version 41.0.45
+
 v3.0.0-beta
 -----------
 * Updated to Minecraft 1.19
