@@ -276,16 +276,19 @@ public class EntityTypesPM {
             .build(PrimalMagick.MODID + ":pixie_majestic_blood"));
     public static final RegistryObject<EntityType<AbstractPixieEntity>> BASIC_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_basic_infernal", () -> EntityType.Builder.<AbstractPixieEntity>of(BasicInfernalPixieEntity::new, MobCategory.CREATURE)
             .sized(0.5F, 0.5F)
+            .fireImmune()
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new BasicInfernalPixieEntity(EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), world))
             .build(PrimalMagick.MODID + ":pixie_basic_infernal"));
     public static final RegistryObject<EntityType<AbstractPixieEntity>> GRAND_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_grand_infernal", () -> EntityType.Builder.<AbstractPixieEntity>of(GrandInfernalPixieEntity::new, MobCategory.CREATURE)
             .sized(0.5F, 0.5F)
+            .fireImmune()
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new GrandInfernalPixieEntity(EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), world))
             .build(PrimalMagick.MODID + ":pixie_grand_infernal"));
     public static final RegistryObject<EntityType<AbstractPixieEntity>> MAJESTIC_INFERNAL_PIXIE = ENTITY_TYPES.register("pixie_majestic_infernal", () -> EntityType.Builder.<AbstractPixieEntity>of(MajesticInfernalPixieEntity::new, MobCategory.CREATURE)
             .sized(0.5F, 0.5F)
+            .fireImmune()
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new MajesticInfernalPixieEntity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), world))
             .build(PrimalMagick.MODID + ":pixie_majestic_blood"));
