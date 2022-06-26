@@ -75,8 +75,8 @@ public class ResearchStageBuilder {
         return this;
     }
     
-    public ResearchStageBuilder requiredCraftTag(@Nonnull ResourceLocation tagLoc) {
-        this.requiredCrafts.add("tag:" + tagLoc.toString());
+    public ResearchStageBuilder requiredCraftTag(@Nonnull TagKey<Item> tag) {
+        this.requiredCrafts.add("tag:" + tag.location().toString());
         return this;
     }
     

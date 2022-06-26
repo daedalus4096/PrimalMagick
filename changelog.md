@@ -1,6 +1,7 @@
 v3.0.1
 ------
 * Added Humming Artifacts, as some arcane dungeon loot
+* Added Recall Stones, to whisk you away home
 * Pixies are now drained instead of destroyed upon taking fatal damage, and can be revived with essence
 * Made Infernal Pixies immune to fire
 * Players must now travel lower to complete the research Source: The Earth

@@ -1,0 +1,32 @@
+{
+  "addenda": [],
+  "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:recall_stone"
+  },
+  "key": "RECALL_STONE",
+  "name": "primalmagick.research.recall_stone.title",
+  "parents": [
+    "EXPERT_RUNEWORKING",
+    "RUNE_SUMMON",
+    "RUNE_SELF"
+  ],
+  "stages": [
+    {
+      "required_craft": [
+        "tag:minecraft:beds"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "primalmagick.research.recall_stone.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:recall_stone"
+      ],
+      "text": "primalmagick.research.recall_stone.text.stage.2"
+    }
+  ]
+}

@@ -897,6 +897,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNIC_GRINDSTONE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("RECALL_STONE", discipline).icon(ItemsPM.RECALL_STONE.get()).parent("EXPERT_RUNEWORKING").parent("RUNE_SUMMON").parent("RUNE_SELF")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredCraftTag(ItemTags.BEDS).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RECALL_STONE.get()).build())
+            .build(consumer);
     }
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {

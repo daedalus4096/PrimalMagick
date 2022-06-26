@@ -1,0 +1,33 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "forge:gems/amethyst"
+    },
+    "E": {
+      "item": "primalmagick:rune_self"
+    },
+    "O": {
+      "tag": "forge:obsidian"
+    },
+    "U": {
+      "item": "primalmagick:rune_summon"
+    }
+  },
+  "mana": {
+    "earth": 40,
+    "moon": 40,
+    "sea": 40,
+    "sky": 40,
+    "sun": 40
+  },
+  "pattern": [
+    " A ",
+    "UOE",
+    " A "
+  ],
+  "research": "RECALL_STONE",
+  "result": {
+    "item": "primalmagick:recall_stone"
+  }
+}
