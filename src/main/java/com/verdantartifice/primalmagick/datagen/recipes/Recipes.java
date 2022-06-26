@@ -562,6 +562,17 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("VOID_TURBINE")))
             .manaCost(new SourceList().add(Source.VOID, 40))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RECALL_STONE.get())
+            .patternLine(" A ")
+            .patternLine("UOE")
+            .patternLine(" A ")
+            .key('A', Tags.Items.GEMS_AMETHYST)
+            .key('U', ItemsPM.RUNE_SUMMON.get())
+            .key('O', Tags.Items.OBSIDIAN)
+            .key('E', ItemsPM.RUNE_SELF.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RECALL_STONE")))
+            .manaCost(new SourceList().add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
