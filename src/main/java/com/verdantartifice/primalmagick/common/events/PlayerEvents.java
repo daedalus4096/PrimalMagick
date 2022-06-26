@@ -261,7 +261,7 @@ public class PlayerEvents {
             // If the player is working on the Earth Source research, check if they're far enough down
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
-                if (player.position().y < 10.0D && inOverworld && !knowledge.isResearchKnown(key)) {
+                if (player.position().y < -16.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -279,7 +279,7 @@ public class PlayerEvents {
             // If the player is working on the Sky Source research, check if they're high up enough
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
-                if (player.position().y > 100.0D && inOverworld && !knowledge.isResearchKnown(key)) {
+                if (player.position().y > 128.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }

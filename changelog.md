@@ -3,6 +3,8 @@ v3.0.1
 * Added Humming Artifacts, as some arcane dungeon loot
 * Pixies are now drained instead of destroyed upon taking fatal damage, and can be revived with essence
 * Made Infernal Pixies immune to fire
+* Players must now travel lower to complete the research Source: The Earth
+* Players must now travel higher to complete the research Source: The Sky
 * Incremented to Forge version 41.0.45
 
 v3.0.0-beta
