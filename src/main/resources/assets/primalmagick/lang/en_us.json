@@ -728,6 +728,7 @@
     "item.primalmagick.humming_artifact_infernal": "Infernal-Attuned Artifact",
     "item.primalmagick.humming_artifact_void": "Void-Attuned Artifact",
     "item.primalmagick.humming_artifact_hallowed": "Hallowed-Attuned Artifact",
+    "item.primalmagick.recall_stone": "Recall Stone",
     
     "entity.primalmagick.treefolk": "Treefolk",
     "entity.primalmagick.inner_demon": "Inner Demon",
@@ -2010,6 +2011,8 @@
     "event.primalmagick.research.gain": "You have learned a new arcane secret! Check your Grimoire!",
     "event.primalmagick.attunement_item.success": "You feel a tingling sensation as the magick courses through you",
     "event.primalmagick.attunement_item.failure": "This thing makes your fingers tingle. What is it?",
+    "event.primalmagick.recall_stone.failure": "No respawn location found",
+    "event.primalmagick.recall_stone.cannot_cross_dimensions": "The stone cannot take you across dimensional boundaries",
     
     "primalmagick.dream_journal.title": "Dream Journal",
     "primalmagick.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
