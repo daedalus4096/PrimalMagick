@@ -5,7 +5,8 @@
         "blood": 2
       },
       "recipes": [
-        "primalmagick:pixie_basic_blood"
+        "primalmagick:pixie_basic_blood",
+        "primalmagick:pixie_basic_blood_revive"
       ],
       "required_research": [
         "t_discover_blood"
@@ -17,7 +18,8 @@
         "infernal": 2
       },
       "recipes": [
-        "primalmagick:pixie_basic_infernal"
+        "primalmagick:pixie_basic_infernal",
+        "primalmagick:pixie_basic_infernal_revive"
       ],
       "required_research": [
         "t_discover_infernal"
@@ -29,7 +31,8 @@
         "void": 2
       },
       "recipes": [
-        "primalmagick:pixie_basic_void"
+        "primalmagick:pixie_basic_void",
+        "primalmagick:pixie_basic_void_revive"
       ],
       "required_research": [
         "t_discover_void"
@@ -41,7 +44,8 @@
         "hallowed": 2
       },
       "recipes": [
-        "primalmagick:pixie_basic_hallowed"
+        "primalmagick:pixie_basic_hallowed",
+        "primalmagick:pixie_basic_hallowed_revive"
       ],
       "required_research": [
         "t_discover_hallowed"
@@ -86,10 +90,15 @@
       },
       "recipes": [
         "primalmagick:pixie_basic_earth",
+        "primalmagick:pixie_basic_earth_revive",
         "primalmagick:pixie_basic_sea",
+        "primalmagick:pixie_basic_sea_revive",
         "primalmagick:pixie_basic_sky",
+        "primalmagick:pixie_basic_sky_revive",
         "primalmagick:pixie_basic_sun",
-        "primalmagick:pixie_basic_moon"
+        "primalmagick:pixie_basic_sun_revive",
+        "primalmagick:pixie_basic_moon",
+        "primalmagick:pixie_basic_moon_revive"
       ],
       "text": "primalmagick.research.pixies.text.stage.2"
     }

@@ -5,7 +5,8 @@
         "blood": 3
       },
       "recipes": [
-        "primalmagick:pixie_grand_blood"
+        "primalmagick:pixie_grand_blood",
+        "primalmagick:pixie_grand_blood_revive"
       ],
       "required_research": [
         "t_discover_blood"
@@ -17,7 +18,8 @@
         "infernal": 3
       },
       "recipes": [
-        "primalmagick:pixie_grand_infernal"
+        "primalmagick:pixie_grand_infernal",
+        "primalmagick:pixie_grand_infernal_revive"
       ],
       "required_research": [
         "t_discover_infernal"
@@ -29,7 +31,8 @@
         "void": 3
       },
       "recipes": [
-        "primalmagick:pixie_grand_void"
+        "primalmagick:pixie_grand_void",
+        "primalmagick:pixie_grand_void_revive"
       ],
       "required_research": [
         "t_discover_void"
@@ -41,7 +44,8 @@
         "hallowed": 3
       },
       "recipes": [
-        "primalmagick:pixie_grand_hallowed"
+        "primalmagick:pixie_grand_hallowed",
+        "primalmagick:pixie_grand_hallowed_revive"
       ],
       "required_research": [
         "t_discover_hallowed"
@@ -83,10 +87,15 @@
       },
       "recipes": [
         "primalmagick:pixie_grand_earth",
+        "primalmagick:pixie_grand_earth_revive",
         "primalmagick:pixie_grand_sea",
+        "primalmagick:pixie_grand_sea_revive",
         "primalmagick:pixie_grand_sky",
+        "primalmagick:pixie_grand_sky_revive",
         "primalmagick:pixie_grand_sun",
-        "primalmagick:pixie_grand_moon"
+        "primalmagick:pixie_grand_sun_revive",
+        "primalmagick:pixie_grand_moon",
+        "primalmagick:pixie_grand_moon_revive"
       ],
       "text": "primalmagick.research.grand_pixies.text.stage.2"
     }

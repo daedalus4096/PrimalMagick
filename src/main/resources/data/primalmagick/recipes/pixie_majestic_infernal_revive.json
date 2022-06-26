@@ -1,0 +1,15 @@
+{
+  "type": "primalmagick:arcane_crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "primalmagick:drained_pixie_majestic_infernal"
+    },
+    {
+      "item": "primalmagick:essence_dust_infernal"
+    }
+  ],
+  "research": "MAJESTIC_PIXIES&&t_discover_infernal",
+  "result": {
+    "item": "primalmagick:pixie_majestic_infernal"
+  }
+}

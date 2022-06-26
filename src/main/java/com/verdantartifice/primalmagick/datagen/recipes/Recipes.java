@@ -2892,6 +2892,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
@@ -2903,6 +2908,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SEA, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
@@ -2914,6 +2924,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
@@ -2925,6 +2940,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SUN, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
@@ -2936,6 +2956,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.MOON, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -2947,6 +2972,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.BLOOD, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
@@ -2958,6 +2988,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.INFERNAL, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
@@ -2969,6 +3004,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.VOID, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.VOID.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get())
@@ -2980,6 +3020,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.HALLOWED, 40))
             .instability(3)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_BASIC_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_basic_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
@@ -2994,6 +3039,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
@@ -3008,6 +3058,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SEA, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
@@ -3022,6 +3077,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
@@ -3036,6 +3096,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SUN, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
@@ -3050,6 +3115,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.MOON, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
@@ -3064,6 +3134,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.BLOOD, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
@@ -3078,6 +3153,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.INFERNAL, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
@@ -3092,6 +3172,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.VOID, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.VOID.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
@@ -3106,6 +3191,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.HALLOWED, 100))
             .instability(5)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_GRAND_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_grand_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_EARTH.get())
@@ -3121,6 +3211,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.EARTH, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_EARTH_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SEA.get())
@@ -3136,6 +3231,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SEA, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_SEA_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SKY.get())
@@ -3151,6 +3251,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SKY, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_SKY_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_SUN.get())
@@ -3166,6 +3271,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.SUN, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_SUN_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_MOON.get())
@@ -3181,6 +3291,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.MOON, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_MOON_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_BLOOD.get())
@@ -3196,6 +3311,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.BLOOD, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_BLOOD_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
@@ -3211,6 +3331,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.INFERNAL, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_INFERNAL_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_VOID.get())
@@ -3226,6 +3351,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.VOID, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_VOID_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.VOID.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
@@ -3241,6 +3371,11 @@ public class Recipes extends RecipeProvider {
             .manaCost(new SourceList().add(Source.HALLOWED, 200))
             .instability(7)
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.DRAINED_MAJESTIC_HALLOWED_PIXIE.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_hallowed_revive"));
     }
 
     protected void registerAmbrosiaRecipes(Consumer<FinishedRecipe> consumer) {
