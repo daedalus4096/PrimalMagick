@@ -473,8 +473,8 @@ public class PlayerEvents {
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
-            stack.getTags().filter(tag -> tag != null).forEach(tag -> {
-                int tagHash = ("tag:" + tag.toString()).hashCode();
+            stack.getTags().filter(tag -> tag != null).forEach(tagKey -> {
+                int tagHash = ("tag:" + tagKey.location().toString()).hashCode();
                 if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
                     ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
                 }
