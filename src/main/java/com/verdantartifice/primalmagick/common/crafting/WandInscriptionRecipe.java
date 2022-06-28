@@ -48,7 +48,7 @@ public class WandInscriptionRecipe extends CustomRecipe {
             if (!scrollStack.isEmpty() && scrollStack.getItem() instanceof SpellScrollItem scroll) {
                 // If a filled spell scroll is also present, create a copy of the given wand and add the scroll's spell to it
                 ItemStack retVal = wandStack.copy();
-                if (wand.addSpell(retVal, scroll.getSpell(scrollStack))) {
+                if (wand.addSpell(retVal, scroll.getSpell(scrollStack)) && wand.setActiveSpellIndex(retVal, wand.getSpellCount(retVal) - 1)) {
                     return retVal;
                 } else {
                     return ItemStack.EMPTY;

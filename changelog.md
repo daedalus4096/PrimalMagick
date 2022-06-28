@@ -8,6 +8,7 @@ v3.0.1
 * Players must now travel higher to complete the research Source: The Sky
 * Earthshatter Hammers may no longer be combined at a workbench for repairs
 * Dissolution Chamber recipe changed to use an Earth Crystal instead of an Earthshatter Hammer
+* Inscribing a spell onto a wand will now make that spell active on the wand as well
 * Incremented to Forge version 41.0.45
 
 v3.0.0-beta
