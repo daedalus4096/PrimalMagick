@@ -42,7 +42,7 @@ public class Source {
     // List of sources in the order in which they should be displayed
     public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
     
-    protected static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
+    public static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
     protected static final ResourceLocation UNKNOWN_ATLAS_LOC = new ResourceLocation(PrimalMagick.MODID, "research/research_unknown");
 
     protected final String tag; // Unique identifier for the source

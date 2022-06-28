@@ -17,6 +17,9 @@
         "t_discover_hallowed",
         "b_crafted_manaweaving_supreme"
       ],
+      "siblings": [
+        "SECRETS_OF_THE_UNIVERSE"
+      ],
       "text": "primalmagick.research.supreme_manaweaving.text.stage.1"
     },
     {

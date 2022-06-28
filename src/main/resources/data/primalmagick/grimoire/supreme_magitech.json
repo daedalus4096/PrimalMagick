@@ -17,6 +17,9 @@
         "b_crafted_magitech_supreme",
         "b_scan_hallowsteel"
       ],
+      "siblings": [
+        "SECRETS_OF_THE_UNIVERSE"
+      ],
       "text": "primalmagick.research.supreme_magitech.text.stage.1"
     },
     {

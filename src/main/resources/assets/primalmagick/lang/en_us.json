@@ -1901,6 +1901,9 @@
     "primalmagick.research.humming_artifact.text.addenda.3": "The artifact also responsds to Void essence.",
     "primalmagick.research.humming_artifact.text.addenda.4": "The artifact also responsds to Hallowed essence.",
     
+    "primalmagick.research.secrets_of_the_universe.title": "Secrets of the Universe?",
+    "primalmagick.research.secrets_of_the_universe.text.stage.1": "The secrets of the universe?  Seriously?  I swear, sometimes I think this Grimoire is alive, if only because it likes to taunt me so.  But no matter, if anyone can make such a lofty discovery, it is I.<BR>The only question is... where to begin?<BR>Such secrets will undoubtedly require a great deal of research across a breadth of disciplines.  The Grimoire seems to hint that I will need to pay special attention to ritual magick, alchemy, and runeworking in order to achieve my goals.  It's also strongly implied that I will need to explore worlds beyond my home in the Overworld.  Finally, I could swear I saw an oblique reference to some kind of... decontamination?  The translation was unclear, and the reference vanished almost as soon as I saw it.  Most curious.<BR>Regardless, this will be a long road to walk.  I had best be patient and discover what I can along the way.",
+    
     "commands.primalmagick.research.list": "All research for %1$s: %2$s",
     "commands.primalmagick.research.reset": "Resetting all research for %1$s",
     "commands.primalmagick.research.reset.target": "%1$s has reset all of your research",

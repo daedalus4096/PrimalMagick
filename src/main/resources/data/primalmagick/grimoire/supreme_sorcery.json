@@ -18,6 +18,9 @@
         "t_spells_cast_supreme",
         "t_spell_cost_supreme"
       ],
+      "siblings": [
+        "SECRETS_OF_THE_UNIVERSE"
+      ],
       "text": "primalmagick.research.supreme_sorcery.text.stage.1"
     },
     {
