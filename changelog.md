@@ -6,6 +6,8 @@ v3.0.1
 * Made Infernal Pixies immune to fire
 * Players must now travel lower to complete the research Source: The Earth
 * Players must now travel higher to complete the research Source: The Sky
+* Earthshatter Hammers may no longer be combined at a workbench for repairs
+* Dissolution Chamber recipe changed to use an Earth Crystal instead of an Earthshatter Hammer
 * Incremented to Forge version 41.0.45
 
 v3.0.0-beta

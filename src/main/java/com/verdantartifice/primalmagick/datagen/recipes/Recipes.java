@@ -6126,10 +6126,10 @@ public class Recipes extends RecipeProvider {
     protected void registerDissolutionChamberRecipes(Consumer<FinishedRecipe> consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DISSOLUTION_CHAMBER.get())
             .patternLine("DDD")
-            .patternLine("DHD")
+            .patternLine("DCD")
             .patternLine("MPM")
             .key('D', Tags.Items.GEMS_DIAMOND)
-            .key('H', ItemsPM.EARTHSHATTER_HAMMER.get())
+            .key('C', ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .key('M', ItemsPM.MARBLE_SMOKED_SLAB.get())
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("DISSOLUTION_CHAMBER")))
