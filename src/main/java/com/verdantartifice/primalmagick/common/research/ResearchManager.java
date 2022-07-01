@@ -394,6 +394,13 @@ public class ResearchManager {
                 for (SimpleResearchKey sibling : currentStage.getSiblings()) {
                     completeResearch(player, sibling, sync);
                 }
+                
+                // Open any research to be revealed by the current stage
+                for (SimpleResearchKey revelation : currentStage.getRevelations()) {
+                    if (!knowledge.isResearchKnown(revelation)) {
+                        knowledge.addResearch(revelation);
+                    }
+                }
             }
             
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {

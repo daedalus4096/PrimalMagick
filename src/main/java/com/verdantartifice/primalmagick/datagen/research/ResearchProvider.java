@@ -195,7 +195,8 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE)
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 4).build())
             .build(consumer);
     }
     
@@ -219,7 +220,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("WAND_CAP_HEXIUM").parent("WAND_GEM_WIZARD")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
@@ -418,7 +419,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).icon(Items.STONE).parent("BASIC_ALCHEMY")
@@ -683,7 +684,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_VEHICLE_BOLT").parent("SPELL_MOD_QUICKEN")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).icon(ItemsPM.WAND_INSCRIPTION_TABLE.get()).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
@@ -818,7 +819,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_POWER")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).icon(ItemsPM.RUNE_EARTH.get()).parent("BASIC_RUNEWORKING")
@@ -922,7 +923,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("BLOODLETTER").parent("SOUL_ANVIL")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANAFRUIT", discipline).icon(ItemsPM.MANAFRUIT.get()).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
@@ -1169,7 +1170,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HEXIUM_GOLEM")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent("BASIC_MAGITECH")

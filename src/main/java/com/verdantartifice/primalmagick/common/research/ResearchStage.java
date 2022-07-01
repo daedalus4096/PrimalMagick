@@ -42,6 +42,7 @@ public class ResearchStage {
     protected List<Integer> craftReference = new ArrayList<>();
     protected List<Knowledge> requiredKnowledge = new ArrayList<>();
     protected List<SimpleResearchKey> siblings = new ArrayList<>();
+    protected List<SimpleResearchKey> revelations = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
     protected SourceList attunements = new SourceList();
     
@@ -91,6 +92,9 @@ public class ResearchStage {
         if (obj.has("siblings")) {
             stage.siblings = JsonUtils.toSimpleResearchKeys(obj.get("siblings").getAsJsonArray());
         }
+        if (obj.has("revelations")) {
+            stage.revelations = JsonUtils.toSimpleResearchKeys(obj.get("revelations").getAsJsonArray());
+        }
         if (obj.has("required_research")) {
             stage.requiredResearch = CompoundResearchKey.parse(obj.get("required_research").getAsJsonArray());
         }
@@ -127,6 +131,10 @@ public class ResearchStage {
         int siblingSize = buf.readVarInt();
         for (int index = 0; index < siblingSize; index++) {
             stage.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
+        }
+        int revelationsSize = buf.readVarInt();
+        for (int index = 0; index < revelationsSize; index++) {
+            stage.revelations.add(SimpleResearchKey.parse(buf.readUtf()));
         }
         stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
         for (Source source : Source.SORTED_SOURCES) {
@@ -173,6 +181,10 @@ public class ResearchStage {
         for (SimpleResearchKey key : stage.siblings) {
             buf.writeUtf(key.toString());
         }
+        buf.writeVarInt(stage.revelations.size());
+        for (SimpleResearchKey key : stage.revelations) {
+            buf.writeUtf(key.toString());
+        }
         buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
         for (Source source : Source.SORTED_SOURCES) {
             buf.writeVarInt(stage.attunements.getAmount(source));
@@ -217,6 +229,11 @@ public class ResearchStage {
     @Nonnull
     public List<SimpleResearchKey> getSiblings() {
         return Collections.unmodifiableList(this.siblings);
+    }
+    
+    @Nonnull
+    public List<SimpleResearchKey> getRevelations() {
+        return Collections.unmodifiableList(this.revelations);
     }
     
     @Nullable
