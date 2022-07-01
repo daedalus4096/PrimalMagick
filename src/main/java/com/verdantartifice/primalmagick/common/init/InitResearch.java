@@ -46,6 +46,7 @@ public class InitResearch {
     
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.parse("b_scan_hallowed_orb")));
         SimpleResearchKey rawMarble = SimpleResearchKey.parse("RAW_MARBLE");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_SLAB.get(), rawMarble));

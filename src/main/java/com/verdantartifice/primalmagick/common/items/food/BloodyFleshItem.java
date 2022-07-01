@@ -38,6 +38,7 @@ public class BloodyFleshItem extends Item {
                     // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                     ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
                     ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
+                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_sotu_discover_blood"));
                     player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
                 }
             });

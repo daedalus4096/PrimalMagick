@@ -30,6 +30,9 @@
       "recipes": [
         "primalmagick:sanguine_core_inner_demon"
       ],
+      "siblings": [
+        "t_sotu_research_cleansing_rite"
+      ],
       "text": "primalmagick.research.cleansing_rite.text.stage.2"
     }
   ]
