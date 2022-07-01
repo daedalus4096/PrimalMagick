@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
  * @author Daedalus4096
  */
 public class ToastManager {
-    public static void showResearchToast(ResearchEntry entry) {
-        Minecraft.getInstance().getToasts().addToast(new ResearchToast(entry));
+    public static void showResearchToast(ResearchEntry entry, boolean isComplete) {
+        Minecraft.getInstance().getToasts().addToast(new ResearchToast(entry, isComplete));
     }
 }

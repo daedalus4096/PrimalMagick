@@ -2234,7 +2234,8 @@
     "primalmagick.research_table.unlock": "Unlocked by: %1$s",
     "primalmagick.research_table.aid_header": "Active research aids:",
     
-    "primalmagick.toast.title": "Research Complete!",
+    "primalmagick.toast.completed.title": "Research Complete!",
+    "primalmagick.toast.revealed.title": "Research Revealed!",
     
     "primalmagick.research.m_dummy.text": "Location Discovery",
     "primalmagick.research.t_dummy.text": "Research Discovery",

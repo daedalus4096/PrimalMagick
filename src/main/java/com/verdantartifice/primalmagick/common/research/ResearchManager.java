@@ -399,6 +399,7 @@ public class ResearchManager {
                 for (SimpleResearchKey revelation : currentStage.getRevelations()) {
                     if (!knowledge.isResearchKnown(revelation)) {
                         knowledge.addResearch(revelation);
+                        knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -22,10 +23,12 @@ import net.minecraft.resources.ResourceLocation;
 public class ResearchToast implements Toast {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/hud.png");
     
-    protected ResearchEntry entry;
+    protected final ResearchEntry entry;
+    protected final boolean isComplete;
     
-    public ResearchToast(ResearchEntry entry) {
+    public ResearchToast(ResearchEntry entry, boolean isComplete) {
         this.entry = entry;
+        this.isComplete = isComplete;
     }
     
     @Override
@@ -37,8 +40,8 @@ public class ResearchToast implements Toast {
         toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text
-        Component titleText = Component.translatable("primalmagick.toast.title");
-        mc.font.draw(matrixStack, titleText, 6, 7, 0x551A8B);
+        Component titleText = this.isComplete ? Component.translatable("primalmagick.toast.completed.title") : Component.translatable("primalmagick.toast.revealed.title");
+        mc.font.draw(matrixStack, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor());
         
         // Render the description of the completed research
         Component descText = Component.translatable(this.entry.getNameTranslationKey());
