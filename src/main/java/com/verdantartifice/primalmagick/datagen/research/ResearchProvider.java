@@ -194,6 +194,9 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE)
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
     
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
@@ -1374,9 +1377,6 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
     }
     
