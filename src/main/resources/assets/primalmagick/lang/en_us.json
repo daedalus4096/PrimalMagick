@@ -2317,6 +2317,8 @@
     "primalmagick.research.m_sotu_discover_infernal.hint": "Discover the Infernal source by visiting the Nether",
     "primalmagick.research.m_sotu_discover_void.text": "Discover a source of eldritch power",
     "primalmagick.research.m_sotu_discover_void.hint": "Discover the Void source by visiting the End",
+    "primalmagick.research.t_sotu_research_arcanometer.text": "Learn to analyze items non-destructively",
+    "primalmagick.research.t_sotu_research_arcanometer.hint": "Complete the Magitech research entry for the Arcanometer",
     "primalmagick.research.t_sotu_research_hexium.text": "Learn to give form to the forbidden",
     "primalmagick.research.t_sotu_research_hexium.hint": "Complete the Alchemy research entry for Hexium",
     "primalmagick.research.t_sotu_research_power_rune.text": "Learn to empower your runecrafting",

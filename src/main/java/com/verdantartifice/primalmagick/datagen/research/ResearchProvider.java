@@ -196,8 +196,8 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE)
             .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood", true).requiredResearch("m_sotu_discover_infernal", true).requiredResearch("m_sotu_discover_void", true)
-                    .requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true).requiredResearch("t_sotu_research_sanguine_crucible", true)
-                    .requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
+                    .requiredResearch("t_sotu_research_arcanometer", true).requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true)
+                    .requiredResearch("t_sotu_research_sanguine_crucible", true).requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 4).build())
             .build(consumer);
     }
@@ -1186,7 +1186,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("ARCANOMETER", discipline).icon(ItemsPM.ARCANOMETER.get()).parent("EXPERT_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_items_analyzed").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCANOMETER.get()).build())
+            .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_arcanometer").recipe(ItemsPM.ARCANOMETER.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMALITE_GOLEM", discipline).icon(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).parent("EXPERT_MAGITECH").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_golem").requiredKnowledge(KnowledgeType.THEORY, 1).build())
