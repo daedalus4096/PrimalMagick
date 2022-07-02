@@ -248,15 +248,11 @@ public class PlayerEvents {
             if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
-                ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_sotu_discover_infernal"));
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
             if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
-                ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_sotu_discover_void"));
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             

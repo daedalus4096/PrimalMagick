@@ -37,8 +37,6 @@ public class BloodyFleshItem extends Item {
                 if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
                     // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                     ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_sotu_discover_blood"));
                     player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
                 }
             });
@@ -48,7 +46,7 @@ public class BloodyFleshItem extends Item {
     
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("tooltip.primalmagick.bloody_flesh.1").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("tooltip.primalmagick.bloody_flesh.2").withStyle(ChatFormatting.DARK_RED, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tooltip.primalmagick.bloody_flesh.1").withStyle(Source.BLOOD.getChatColor(), ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("tooltip.primalmagick.bloody_flesh.2").withStyle(Source.BLOOD.getChatColor(), ChatFormatting.ITALIC));
     }
 }

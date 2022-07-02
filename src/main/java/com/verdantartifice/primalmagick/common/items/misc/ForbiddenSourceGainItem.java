@@ -40,8 +40,6 @@ public class ForbiddenSourceGainItem extends Item {
                 if (!this.source.getDiscoverKey().isKnownByStrict(player)) {
                     // FIXME Refactor this to either be blood-specific or fully generic, stop splitting the difference
                     ResearchManager.completeResearch(player, this.source.getDiscoverKey());
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_discover_forbidden"));
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_sotu_discover_blood"));
                     player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getTag() + ".alternate").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);
