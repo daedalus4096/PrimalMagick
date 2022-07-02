@@ -131,7 +131,7 @@ public class RequirementsPage extends AbstractPage {
                     y += 18;
                 }
                 SimpleResearchKey key = this.stage.getRequiredResearch().getKeys().get(index);
-                screen.addWidgetToScreen(new ResearchWidget(key, x + 8 + (side * 144), y, completion.get(index).booleanValue()));
+                screen.addWidgetToScreen(new ResearchWidget(key, x + 8 + (side * 144), y, completion.get(index).booleanValue(), this.stage.getHints().contains(key)));
                 x += 18;
             }
             x = startX;

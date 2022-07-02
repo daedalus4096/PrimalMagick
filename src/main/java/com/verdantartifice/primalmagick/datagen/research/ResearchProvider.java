@@ -195,9 +195,9 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE)
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood").requiredResearch("m_sotu_discover_infernal").requiredResearch("m_sotu_discover_void")
-                    .requiredResearch("t_sotu_research_hexium").requiredResearch("t_sotu_research_power_rune").requiredResearch("t_sotu_research_sanguine_crucible")
-                    .requiredResearch("t_sotu_research_cleansing_rite").requiredResearch("b_sotu_scan_hallowed_orb").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood", true).requiredResearch("m_sotu_discover_infernal", true).requiredResearch("m_sotu_discover_void", true)
+                    .requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true).requiredResearch("t_sotu_research_sanguine_crucible", true)
+                    .requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 4).build())
             .build(consumer);
     }
