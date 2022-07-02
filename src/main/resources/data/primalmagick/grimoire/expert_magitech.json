@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "b_scan_primalite"
+      ],
       "required_research": [
         "b_crafted_magitech_expert",
         "b_scan_primalite"

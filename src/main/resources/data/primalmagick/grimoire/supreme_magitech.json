@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "b_scan_hallowsteel"
+      ],
       "required_research": [
         "t_discover_hallowed",
         "b_crafted_magitech_supreme",

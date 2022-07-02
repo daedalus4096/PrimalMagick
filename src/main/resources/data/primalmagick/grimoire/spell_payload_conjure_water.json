@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "m_drown_a_little"
+      ],
       "required_knowledge": [
         "THEORY;1"
       ],

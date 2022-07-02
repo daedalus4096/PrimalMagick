@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "m_near_death_experience"
+      ],
       "required_knowledge": [
         "THEORY;1"
       ],

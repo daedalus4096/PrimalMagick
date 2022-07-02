@@ -743,7 +743,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", discipline).icon(Source.SEA.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_drown_a_little").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_drown_a_little", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLIGHT", discipline).icon(Source.SKY.getImage()).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING")
@@ -755,22 +755,22 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", discipline).icon(Source.SUN.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_near_death_experience").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_near_death_experience", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH", discipline).icon(Source.MOON.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LUNAR")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_furry_friend").requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_furry_friend", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().icon(Source.MOON.getImage())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", discipline).icon(Source.BLOOD.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_breed_animal").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_breed_animal", true).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LAVA", discipline).icon(Source.INFERNAL.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_CONJURE_WATER").parent("SPELL_PAYLOAD_FLAME")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_feel_the_burn").requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_feel_the_burn", true).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", discipline).icon(Source.INFERNAL.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
@@ -782,7 +782,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONSECRATE", discipline).icon(Source.HALLOWED.getImage()).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_HOLY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_scan_nether_star").requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_scan_nether_star", true).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_MOD_AMPLIFY", discipline).parent("EXPERT_SORCERY")
@@ -1164,15 +1164,15 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HONEY_EXTRACTOR").parent("SEASCRIBE_PEN")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").requiredResearch("b_scan_primalite").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").requiredResearch("b_scan_primalite", true).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("ARCANOMETER").parent("PRIMALITE_GOLEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium", true).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HEXIUM_GOLEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel")
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel", true)
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);

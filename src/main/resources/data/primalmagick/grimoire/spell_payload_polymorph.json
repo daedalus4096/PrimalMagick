@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "m_furry_friend"
+      ],
       "required_knowledge": [
         "THEORY;1"
       ],

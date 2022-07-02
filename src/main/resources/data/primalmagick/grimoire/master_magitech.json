@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "b_scan_hexium"
+      ],
       "required_research": [
         "t_discover_forbidden",
         "b_crafted_magitech_master",

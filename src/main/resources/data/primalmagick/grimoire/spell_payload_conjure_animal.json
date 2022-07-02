@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "m_breed_animal"
+      ],
       "required_knowledge": [
         "THEORY;2"
       ],

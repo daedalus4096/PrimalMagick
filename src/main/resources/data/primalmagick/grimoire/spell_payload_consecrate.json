@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "b_scan_nether_star"
+      ],
       "required_knowledge": [
         "THEORY;3"
       ],
