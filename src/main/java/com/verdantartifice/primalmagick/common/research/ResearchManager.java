@@ -436,7 +436,7 @@ public class ResearchManager {
             // If unlocking a source, also unlock that source's sibling research, if any
             Source source = Source.getSource(key);
             if (source != null) {
-                LOGGER.info("Unlocking sibling research for source {}", source.getTag());
+                LOGGER.debug("Unlocking sibling research for source {}", source.getTag());
                 for (SimpleResearchKey sibling : source.getSiblings()) {
                     completeResearch(player, sibling, sync);
                 }
