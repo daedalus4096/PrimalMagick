@@ -70,6 +70,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -143,6 +144,12 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
+        
+        for (Widget w : this.renderables) {
+            if (w instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
+                widget.renderToolTip(matrixStack, mouseX, mouseY);
+            }
+        }
     }
     
     public boolean isProgressing() {

@@ -77,25 +77,6 @@ public class ResearchWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }
-        
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            List<Component> textLines;
-            if (this.hasHint) {
-                if (Screen.hasShiftDown()) {
-                    Component hintText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint");
-                    textLines = Collections.singletonList(hintText);
-                } else {
-                    Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
-                    Component shiftText = Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
-                    textLines = Arrays.asList(baseText, shiftText);
-                }
-            } else {
-                Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
-                textLines = Collections.singletonList(baseText);
-            }
-            GuiUtils.renderCustomTooltip(matrixStack, textLines, this.x, this.y);
-        }
     }
     
     @Override
@@ -106,5 +87,30 @@ public class ResearchWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        List<Component> textLines;
+        if (this.hasHint) {
+            if (Screen.hasShiftDown()) {
+                Component hintText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint");
+                textLines = Collections.singletonList(hintText);
+            } else {
+                Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
+                Component shiftText = Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+                textLines = Arrays.asList(baseText, shiftText);
+            }
+        } else {
+            Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
+            textLines = Collections.singletonList(baseText);
+        }
+        GuiUtils.renderCustomTooltip(matrixStack, textLines, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

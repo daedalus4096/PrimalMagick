@@ -35,7 +35,6 @@ public class ManaCostSummaryWidget extends AbstractWidget {
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render the base widget
-        Minecraft mc = Minecraft.getInstance();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         matrixStack.pushPose();
@@ -44,24 +43,6 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         matrixStack.popPose();
-
-        // Render tooltip if hovered over
-        if (this.isHoveredOrFocused()) {
-            List<Component> tooltip = new ArrayList<>();
-            if (this.manaCosts.isEmpty()) {
-                tooltip.add(Component.translatable("primalmagick.crafting.no_mana"));
-            } else {
-                tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
-                for (Source source : this.manaCosts.getSourcesSorted()) {
-                    boolean discovered = source.isDiscovered(mc.player);
-                    Component sourceText = discovered ? 
-                            source.getNameText() :
-                            Component.translatable(Source.getUnknownTranslationKey());
-                    tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
-                }
-            }
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
-        }
     }
     
     @Override
@@ -72,5 +53,30 @@ public class ManaCostSummaryWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip if hovered over
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        Minecraft mc = Minecraft.getInstance();
+        List<Component> tooltip = new ArrayList<>();
+        if (this.manaCosts.isEmpty()) {
+            tooltip.add(Component.translatable("primalmagick.crafting.no_mana"));
+        } else {
+            tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
+            for (Source source : this.manaCosts.getSourcesSorted()) {
+                boolean discovered = source.isDiscovered(mc.player);
+                Component sourceText = discovered ? 
+                        source.getNameText() :
+                        Component.translatable(Source.getUnknownTranslationKey());
+                tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+            }
+        }
+        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

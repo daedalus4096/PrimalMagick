@@ -41,13 +41,23 @@ public class IngredientWidget extends Button {
         ItemStack toDisplay = this.getDisplayStack();
         if (!toDisplay.isEmpty()) {
             GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
-            if (this.isHoveredOrFocused()) {
-                // If hovered, show a tooltip with the display name of the current matching itemstack
-                GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
-            }
         }
     }
     
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        ItemStack toDisplay = this.getDisplayStack();
+        if (!toDisplay.isEmpty()) {
+            // If hovered, show a tooltip with the display name of the current matching itemstack
+            matrixStack.pushPose();
+            matrixStack.translate(0, 0, 200);
+            
+            GuiUtils.renderItemTooltip(matrixStack, toDisplay, mouseX, mouseY);
+            
+            matrixStack.popPose();
+        }
+    }
+
     @Override
     protected boolean isValidClickButton(int p_93652_) {
         ItemStack displayStack = this.getDisplayStack();

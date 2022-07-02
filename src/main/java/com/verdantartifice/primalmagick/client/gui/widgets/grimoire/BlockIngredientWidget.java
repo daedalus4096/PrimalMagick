@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class BlockIngredientWidget extends AbstractWidget {
     protected final BlockIngredient ingredient;
+    protected ItemStack toDisplay = ItemStack.EMPTY;
     
     public BlockIngredientWidget(@Nullable BlockIngredient ingredient, int xIn, int yIn) {
         super(xIn, yIn, 16, 16, Component.empty());
@@ -35,14 +36,12 @@ public class BlockIngredientWidget extends AbstractWidget {
                 // Cycle through each matching stack of the ingredient and display them one at a time
                 int index = (int)((System.currentTimeMillis() / 1000L) % matching.length);
                 Block block = matching[index];
-                ItemStack toDisplay = (block != null) ? 
+                this.toDisplay = (block != null) ? 
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("primalmagick.grimoire.missing_block"));
-                GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
-                if (this.isHoveredOrFocused()) {
-                    // If hovered, show a tooltip with the display name of the current matching itemstack
-                    GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
-                }
+                GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            } else {
+                this.toDisplay = ItemStack.EMPTY;
             }
         }
     }
@@ -55,5 +54,18 @@ public class BlockIngredientWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        if (!this.toDisplay.isEmpty()) {
+            // If hovered, show a tooltip with the display name of the current matching itemstack
+            matrixStack.pushPose();
+            matrixStack.translate(0, 0, 200);
+            
+            GuiUtils.renderItemTooltip(matrixStack, this.toDisplay, mouseX, mouseY);
+            
+            matrixStack.popPose();
+        }
     }
 }

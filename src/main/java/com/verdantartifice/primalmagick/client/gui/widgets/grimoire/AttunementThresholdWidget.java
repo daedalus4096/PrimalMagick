@@ -64,11 +64,6 @@ public class AttunementThresholdWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
             matrixStack.popPose();
         }
-        
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), this.x, this.y);
-        }
     }
     
     @Override
@@ -79,5 +74,16 @@ public class AttunementThresholdWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

@@ -66,18 +66,6 @@ public class AttunementMeterWidget extends AbstractWidget {
         // Render meter foreground
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         this.blit(matrixStack, this.x, this.y, 29, 9, 12, 102);
-        
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
-            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
-            if (i > 0) {
-                tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
-            }
-            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
-        }
     }
 
     @Override
@@ -88,5 +76,28 @@ public class AttunementMeterWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        Minecraft mc = Minecraft.getInstance();
+        int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
+        int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
+        int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
+
+        // Render tooltip
+        List<Component> tooltip = new ArrayList<>();
+        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
+        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
+        if (i > 0) {
+            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
+        }
+        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
+        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

@@ -62,31 +62,6 @@ public class UpcomingEntryWidget extends AbstractWidget {
             }
         }
         matrixStack.popPose();
-
-        // When hovering, show a tooltip with the missing requirements
-        if (this.isHoveredOrFocused()) {
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
-            
-            for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
-                ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
-                if (parentEntry == null) {
-                    tooltip.add(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
-                } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
-                    MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
-                    if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
-                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
-                        if (disc != null) {
-                            comp.append(Component.literal(" ("));
-                            comp.append(Component.translatable(disc.getNameTranslationKey()));
-                            comp.append(Component.literal(")"));
-                        }
-                    }
-                    tooltip.add(comp);
-                }
-            }
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, this.x, this.y);
-        }
     }
 
     @Override
@@ -97,5 +72,37 @@ public class UpcomingEntryWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // When hovering, show a tooltip with the missing requirements
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        Minecraft mc = Minecraft.getInstance();
+        List<Component> tooltip = new ArrayList<>();
+        tooltip.add(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
+        
+        for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
+            ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
+            if (parentEntry == null) {
+                tooltip.add(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
+            } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
+                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
+                if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
+                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
+                    if (disc != null) {
+                        comp.append(Component.literal(" ("));
+                        comp.append(Component.translatable(disc.getNameTranslationKey()));
+                        comp.append(Component.literal(")"));
+                    }
+                }
+                tooltip.add(comp);
+            }
+        }
+        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }
