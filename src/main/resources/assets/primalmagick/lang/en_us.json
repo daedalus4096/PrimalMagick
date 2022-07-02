@@ -1047,6 +1047,10 @@
     "primalmagick.research.source_hallowed.text.stage.1": "Through sacrifice and study, I investigate the secrets of hallowed magick.",
     "primalmagick.research.source_hallowed.text.stage.2": "Purity, harmony, enlightenment: this is the truth of the Hallowed.  There are no words to describe the lightness I now feel, the understanding I bear.  To you, reading this Grimoire after I'm gone, know that peace is within you, and that you are loved.",
     
+    "primalmagick.research.secrets_of_the_universe.title": "Secrets of the Universe?",
+    "primalmagick.research.secrets_of_the_universe.text.stage.1": "The secrets of the universe?  Seriously?  I swear, sometimes I think this Grimoire is alive, if only because it likes to taunt me so.  But no matter, if anyone can make such a lofty discovery, it is I.<BR>The only question is... where to begin?<BR>Such secrets will undoubtedly require a great deal of research across a breadth of disciplines.  The Grimoire seems to hint that I will need to pay special attention to ritual magick, alchemy, and runeworking in order to achieve my goals.  It's also strongly implied that I will need to explore worlds beyond my home in the Overworld.  Finally, I could swear I saw an oblique reference to some kind of... decontamination?  The translation was unclear, and the reference vanished almost as soon as I saw it.  Most curious.<BR>Regardless, this will be a long road to walk.  I had best be patient and discover what I can along the way.",
+    "primalmagick.research.secrets_of_the_universe.text.stage.2": "Ah, so these are the secrets of the universe, then.  Its underlying rhythm and melody.  I feel more in tune with the cosmos already.",
+    
     "primalmagick.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagick.research.basic_alchemy.text.stage.1": "I think I'm getting the hang of the basics of alchemy.  Combine dust with like-affinity materials for interesting results.  Be careful handling it.  *Definitely* don't eat it again, ugh.<BR>But how to make more of it?  There are only so many shrines in the world, and I can't very well dig underneath all of them.<BR>My Grimoire hints at something called an Essence Furnace, but doesn't say how to make one.  Maybe if I wave my wand at a regular furnace, like I did for the Arcane Workbench?",
     "primalmagick.research.basic_alchemy.text.stage.2": "That did the trick!<BR>This essence furnace will consume any item, but instead of a smelted result, will produce a small amount of essence dust based on the item's affinities.<BR>It's not very efficient, as it only produces a single handful of dust for each type of affinity that the item has, no matter how strong that affinity.  But it's a lot better than nothing.<BR>I should note, however, that items with particularly weak affinities, less than five points, only have a chance to generate a dust.  They might not generate anything at all.",
@@ -1901,9 +1905,6 @@
     "primalmagick.research.humming_artifact.text.addenda.3": "The artifact also responsds to Void essence.",
     "primalmagick.research.humming_artifact.text.addenda.4": "The artifact also responsds to Hallowed essence.",
     
-    "primalmagick.research.secrets_of_the_universe.title": "Secrets of the Universe?",
-    "primalmagick.research.secrets_of_the_universe.text.stage.1": "The secrets of the universe?  Seriously?  I swear, sometimes I think this Grimoire is alive, if only because it likes to taunt me so.  But no matter, if anyone can make such a lofty discovery, it is I.<BR>The only question is... where to begin?<BR>Such secrets will undoubtedly require a great deal of research across a breadth of disciplines.  The Grimoire seems to hint that I will need to pay special attention to ritual magick, alchemy, and runeworking in order to achieve my goals.  It's also strongly implied that I will need to explore worlds beyond my home in the Overworld.  Finally, I could swear I saw an oblique reference to some kind of... decontamination?  The translation was unclear, and the reference vanished almost as soon as I saw it.  Most curious.<BR>Regardless, this will be a long road to walk.  I had best be patient and discover what I can along the way.",
-    
     "commands.primalmagick.research.list": "All research for %1$s: %2$s",
     "commands.primalmagick.research.reset": "Resetting all research for %1$s",
     "commands.primalmagick.research.reset.target": "%1$s has reset all of your research",
@@ -2233,7 +2234,8 @@
     "primalmagick.research_table.unlock": "Unlocked by: %1$s",
     "primalmagick.research_table.aid_header": "Active research aids:",
     
-    "primalmagick.toast.title": "Research Complete!",
+    "primalmagick.toast.completed.title": "Research Complete!",
+    "primalmagick.toast.revealed.title": "Research Revealed!",
     
     "primalmagick.research.m_dummy.text": "Location Discovery",
     "primalmagick.research.t_dummy.text": "Research Discovery",
@@ -2309,6 +2311,24 @@
     "primalmagick.research.t_mana_siphoned_basics.text": "Siphon 10 mana from a mana font with your wand",
     "primalmagick.research.t_mana_siphoned_expert.text": "Siphon 1000 mana from mana fonts with your wand",
     "primalmagick.research.t_mana_spent_total_basics.text": "Spend 20 mana of any source (before modifiers)",
+    "primalmagick.research.m_sotu_discover_blood.text": "Discover a source of sanguine power",
+    "primalmagick.research.m_sotu_discover_blood.hint": "Discover the Blood source by either eating Bloody Flesh, dropped by sentient humanoids, or reading Blood-Scrawled Ravings, dropped by magic users such as Witches",
+    "primalmagick.research.m_sotu_discover_infernal.text": "Discover a source of hellish power",
+    "primalmagick.research.m_sotu_discover_infernal.hint": "Discover the Infernal source by visiting the Nether",
+    "primalmagick.research.m_sotu_discover_void.text": "Discover a source of eldritch power",
+    "primalmagick.research.m_sotu_discover_void.hint": "Discover the Void source by visiting the End",
+    "primalmagick.research.t_sotu_research_arcanometer.text": "Learn to analyze items non-destructively",
+    "primalmagick.research.t_sotu_research_arcanometer.hint": "Complete the Magitech research entry for the Arcanometer",
+    "primalmagick.research.t_sotu_research_hexium.text": "Learn to give form to the forbidden",
+    "primalmagick.research.t_sotu_research_hexium.hint": "Complete the Alchemy research entry for Hexium",
+    "primalmagick.research.t_sotu_research_power_rune.text": "Learn to empower your runecrafting",
+    "primalmagick.research.t_sotu_research_power_rune.hint": "Complete the Runeworking research entry for Power Runes",
+    "primalmagick.research.t_sotu_research_sanguine_crucible.text": "Learn to create alchemical life",
+    "primalmagick.research.t_sotu_research_sanguine_crucible.hint": "Complete the Alchemy research entry for the Sanguine Crucible",
+    "primalmagick.research.t_sotu_research_cleansing_rite.text": "Learn to summon your inner demons",
+    "primalmagick.research.t_sotu_research_cleansing_rite.hint": "Complete the Ritual Magick research entry for the Cleansing Rite",
+    "primalmagick.research.b_sotu_scan_hallowed_orb.text": "Study the remains of your inner demons, but gently",
+    "primalmagick.research.b_sotu_scan_hallowed_orb.hint": "Scan the Hallowed Orb dropped by your Inner Demon using the Arcanometer",
         
     "key.categories.primalmagick": "Primal Magick",
     "key.primalmagick.change_spell": "Cycle Active Spell",

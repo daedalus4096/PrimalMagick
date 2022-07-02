@@ -27,8 +27,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemTagWidget extends AbstractWidget {
     protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
 
-    protected ResourceLocation tag;
-    protected boolean isComplete;
+    protected final ResourceLocation tag;
+    protected final boolean isComplete;
+    protected ItemStack toDisplay = ItemStack.EMPTY;
     
     public ItemTagWidget(ResourceLocation tag, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, Component.empty());
@@ -45,8 +46,8 @@ public class ItemTagWidget extends AbstractWidget {
             // Cycle through each matching stack of the tag and display them one at a time
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
-            ItemStack toDisplay = new ItemStack(tagContentsArray[index], 1);
-            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            this.toDisplay = new ItemStack(tagContentsArray[index], 1);
+            GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.x, this.y, this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 matrixStack.pushPose();
@@ -55,10 +56,8 @@ public class ItemTagWidget extends AbstractWidget {
                 this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
                 matrixStack.popPose();
             }
-            if (this.isHoveredOrFocused()) {
-                // If hovered, show a tooltip with the display name of the current matching itemstack
-                GuiUtils.renderItemTooltip(matrixStack, toDisplay, this.x, this.y);
-            }
+        } else {
+            this.toDisplay = ItemStack.EMPTY;
         }
     }
     
@@ -70,5 +69,16 @@ public class ItemTagWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // If hovered, show a tooltip with the display name of the current matching itemstack
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        GuiUtils.renderItemTooltip(matrixStack, this.toDisplay, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

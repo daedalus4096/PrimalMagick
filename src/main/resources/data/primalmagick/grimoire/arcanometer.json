@@ -24,6 +24,9 @@
       "recipes": [
         "primalmagick:arcanometer"
       ],
+      "siblings": [
+        "t_sotu_research_arcanometer"
+      ],
       "text": "primalmagick.research.arcanometer.text.stage.2"
     }
   ]

@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -9,8 +11,10 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -26,13 +30,19 @@ public class ResearchWidget extends AbstractWidget {
     protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
     protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
     
-    protected SimpleResearchKey key;
-    protected boolean isComplete;
+    protected final SimpleResearchKey key;
+    protected final boolean isComplete;
+    protected final boolean hasHint;
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
+        this(key, x, y, isComplete, false);
+    }
+    
+    public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete, boolean hasHint) {
         super(x, y, 16, 16, Component.empty());
         this.key = key;
         this.isComplete = isComplete;
+        this.hasHint = hasHint;
     }
     
     @Override
@@ -67,12 +77,6 @@ public class ResearchWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }
-        
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            Component text = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(text), this.x, this.y);
-        }
     }
     
     @Override
@@ -83,5 +87,30 @@ public class ResearchWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        List<Component> textLines;
+        if (this.hasHint) {
+            if (Screen.hasShiftDown()) {
+                Component hintText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint");
+                textLines = Collections.singletonList(hintText);
+            } else {
+                Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
+                Component shiftText = Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
+                textLines = Arrays.asList(baseText, shiftText);
+            }
+        } else {
+            Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
+            textLines = Collections.singletonList(baseText);
+        }
+        GuiUtils.renderCustomTooltip(matrixStack, textLines, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

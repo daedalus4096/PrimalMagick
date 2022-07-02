@@ -25,6 +25,9 @@
       "recipes": [
         "primalmagick:rune_power"
       ],
+      "siblings": [
+        "t_sotu_research_power_rune"
+      ],
       "text": "primalmagick.research.rune_power.text.stage.2"
     }
   ]

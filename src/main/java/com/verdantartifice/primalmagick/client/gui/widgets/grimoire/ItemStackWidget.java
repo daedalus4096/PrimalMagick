@@ -57,10 +57,6 @@ public class ItemStackWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            GuiUtils.renderItemTooltip(matrixStack, this.stack, this.x, this.y);
-        }
     }
     
     @Override
@@ -71,5 +67,16 @@ public class ItemStackWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        GuiUtils.renderItemTooltip(matrixStack, this.stack, mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

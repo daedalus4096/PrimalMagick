@@ -59,7 +59,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
                         if (knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
                             ResearchEntry entry = ResearchEntries.getEntry(key);
                             if (entry != null && FMLEnvironment.dist == Dist.CLIENT) {
-                                ToastManager.showResearchToast(entry);
+                                ToastManager.showResearchToast(entry, knowledge.isResearchComplete(entry.getKey()));
                             }
                             knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
                         }

@@ -195,7 +195,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.UNKNOWN_IMAGE)
-            .stage(ResearchStageBuilder.stage().build())
+            .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood", true).requiredResearch("m_sotu_discover_infernal", true).requiredResearch("m_sotu_discover_void", true)
+                    .requiredResearch("t_sotu_research_arcanometer", true).requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true)
+                    .requiredResearch("t_sotu_research_sanguine_crucible", true).requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 4).build())
             .build(consumer);
     }
     
@@ -219,7 +222,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("WAND_CAP_HEXIUM").parent("WAND_GEM_WIZARD")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
@@ -418,7 +421,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).icon(Items.STONE).parent("BASIC_ALCHEMY")
@@ -531,7 +534,7 @@ public class ResearchProvider implements DataProvider {
             .parent(Source.BLOOD.getDiscoverKey()).parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_SHARD_BLOOD.get()).requiredItemStack(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
                     .requiredItemStack(ItemsPM.ESSENCE_SHARD_VOID.get()).requiredCraftStack(ItemsPM.PRIMALITE_INGOT.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 2).attunement(Source.INFERNAL, 2).attunement(Source.VOID, 2)
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 2).attunement(Source.INFERNAL, 2).attunement(Source.VOID, 2).sibling("t_sotu_research_hexium")
                     .recipe(ItemsPM.HEXIUM_INGOT.get()).recipe(ItemsPM.HEXIUM_NUGGET.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "hexium_ingot_from_nuggets"))
                     .recipe(ItemsPM.HEXIUM_BLOCK.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "hexium_ingots_from_block"))
                     .recipe(ItemsPM.HEXIUM_SWORD.get()).recipe(ItemsPM.HEXIUM_TRIDENT.get()).recipe(ItemsPM.HEXIUM_BOW.get()).recipe(ItemsPM.HEXIUM_SHOVEL.get())
@@ -609,7 +612,8 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("SANGUINE_CRUCIBLE", discipline).icon(ItemsPM.SANGUINE_CRUCIBLE.get()).parent("MASTER_ALCHEMY").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS")
             .parent("SPELL_PAYLOAD_CONJURE_ANIMAL").parent("SPELL_PAYLOAD_DRAIN_SOUL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).attunement(Source.INFERNAL, 3).recipe(ItemsPM.SANGUINE_CRUCIBLE.get()).recipe(ItemsPM.SANGUINE_CORE_BLANK.get()).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 3).attunement(Source.INFERNAL, 3).sibling("t_sotu_research_sanguine_crucible")
+                    .recipe(ItemsPM.SANGUINE_CRUCIBLE.get()).recipe(ItemsPM.SANGUINE_CORE_BLANK.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CORE_LAND_ANIMALS", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("SANGUINE_CRUCIBLE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
@@ -683,7 +687,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_VEHICLE_BOLT").parent("SPELL_MOD_QUICKEN")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).icon(ItemsPM.WAND_INSCRIPTION_TABLE.get()).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
@@ -818,7 +822,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_POWER")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).icon(ItemsPM.RUNE_EARTH.get()).parent("BASIC_RUNEWORKING")
@@ -896,7 +900,7 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("RUNE_POWER", discipline).icon(ItemsPM.RUNE_POWER.get()).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent(Source.BLOOD.getDiscoverKey())
             .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_POWER.get()).build())
+            .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_power_rune").recipe(ItemsPM.RUNE_POWER.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNIC_GRINDSTONE", discipline).icon(ItemsPM.RUNIC_GRINDSTONE.get()).parent("RUNE_DISPEL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
@@ -922,7 +926,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("BLOODLETTER").parent("SOUL_ANVIL")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").sibling("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANAFRUIT", discipline).icon(ItemsPM.MANAFRUIT.get()).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
@@ -1078,7 +1082,7 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("CLEANSING_RITE", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("MASTER_RITUAL").parent("SANGUINE_CRUCIBLE").parent("RUNE_SUMMON")
             .parent("RUNE_SELF").parent("RUNE_POWER").parent("RITUAL_CANDLES").parent("RITUAL_BELL").parent("RITUAL_LECTERN").parent("BLOODLETTER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).sibling("t_sotu_research_cleansing_rite").build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMAL_SHOVEL", discipline).icon(ItemsPM.PRIMAL_SHOVEL.get()).parent("EXPERT_RITUAL").parent("PRIMALITE").parent("SHARD_SYNTHESIS").parent("MANA_SALTS")
             .parent("RUNE_EARTH").parent("RITUAL_CANDLES").parent("RITUAL_BELL")
@@ -1169,7 +1173,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HEXIUM_GOLEM")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel")
-                    .sibling("SECRETS_OF_THE_UNIVERSE").build())
+                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent("BASIC_MAGITECH")
@@ -1182,7 +1186,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("ARCANOMETER", discipline).icon(ItemsPM.ARCANOMETER.get()).parent("EXPERT_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_items_analyzed").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARCANOMETER.get()).build())
+            .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_arcanometer").recipe(ItemsPM.ARCANOMETER.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("PRIMALITE_GOLEM", discipline).icon(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).parent("EXPERT_MAGITECH").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_golem").requiredKnowledge(KnowledgeType.THEORY, 1).build())

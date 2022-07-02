@@ -17,7 +17,7 @@
         "b_crafted_runeworking_supreme",
         "t_items_runescribed_supreme"
       ],
-      "siblings": [
+      "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
       "text": "primalmagick.research.supreme_runeworking.text.stage.1"

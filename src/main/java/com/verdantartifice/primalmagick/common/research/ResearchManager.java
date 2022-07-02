@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
@@ -47,6 +50,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchManager {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
@@ -394,6 +399,14 @@ public class ResearchManager {
                 for (SimpleResearchKey sibling : currentStage.getSiblings()) {
                     completeResearch(player, sibling, sync);
                 }
+                
+                // Open any research to be revealed by the current stage
+                for (SimpleResearchKey revelation : currentStage.getRevelations()) {
+                    if (!knowledge.isResearchKnown(revelation)) {
+                        knowledge.addResearch(revelation);
+                        knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
+                    }
+                }
             }
             
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
@@ -416,6 +429,17 @@ public class ResearchManager {
             // Give the player experience for advancing their research
             if (!added) {
                 player.giveExperiencePoints(5);
+            }
+        }
+        
+        if (Source.isSourceDiscoverKey(key)) {
+            // If unlocking a source, also unlock that source's sibling research, if any
+            Source source = Source.getSource(key);
+            if (source != null) {
+                LOGGER.debug("Unlocking sibling research for source {}", source.getTag());
+                for (SimpleResearchKey sibling : source.getSiblings()) {
+                    completeResearch(player, sibling, sync);
+                }
             }
         }
         

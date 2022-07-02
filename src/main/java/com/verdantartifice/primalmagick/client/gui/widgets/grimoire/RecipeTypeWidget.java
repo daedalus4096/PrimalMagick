@@ -29,11 +29,6 @@ public class RecipeTypeWidget extends AbstractWidget {
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw recipe station icon
         GuiUtils.renderItemStack(matrixStack, this.recipe.getToastSymbol(), this.x, this.y, this.getMessage().getString(), false);
-        
-        // Draw tooltip if hovered
-        if (this.isHoveredOrFocused()) {
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltip), this.x, this.y);
-        }
     }
 
     @Override
@@ -44,5 +39,16 @@ public class RecipeTypeWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput p_169152_) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Draw tooltip if hovered
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltip), mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

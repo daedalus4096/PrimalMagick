@@ -17,7 +17,7 @@
         "t_discover_hallowed",
         "t_rituals_completed_supreme"
       ],
-      "siblings": [
+      "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
       "text": "primalmagick.research.supreme_ritual.text.stage.1"

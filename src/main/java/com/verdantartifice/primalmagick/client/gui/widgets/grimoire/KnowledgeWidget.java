@@ -63,12 +63,6 @@ public class KnowledgeWidget extends AbstractWidget {
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();
         }
-        
-        if (this.isHoveredOrFocused()) {
-            // Render tooltip
-            Component knowledgeText = Component.translatable(this.knowledge.getType().getNameTranslationKey());
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), this.x, this.y);
-        }
     }
     
     @Override
@@ -79,5 +73,17 @@ public class KnowledgeWidget extends AbstractWidget {
 
     @Override
     public void updateNarration(NarrationElementOutput output) {
+    }
+
+    @Override
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        
+        Component knowledgeText = Component.translatable(this.knowledge.getType().getNameTranslationKey());
+        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
+        
+        matrixStack.popPose();
     }
 }

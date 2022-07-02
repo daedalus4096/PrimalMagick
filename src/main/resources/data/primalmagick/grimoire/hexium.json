@@ -56,6 +56,9 @@
         "primalmagick:hexium_feet",
         "primalmagick:hexium_shield"
       ],
+      "siblings": [
+        "t_sotu_research_hexium"
+      ],
       "text": "primalmagick.research.hexium.text.stage.2"
     }
   ]
