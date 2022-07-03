@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -42,41 +44,46 @@ public class WandHudOverlay implements IIngameOverlay {
         poseStack.pushPose();
         
         int posY = 0;
+        int index = 0;
         int maxMana = wand.getMaxMana(stack);
         Component maxText = wand.getMaxManaText(stack);
-        for (Source source : Source.SORTED_SOURCES) {
-            if (source.isDiscovered(mc.player)) {
-                int curMana = wand.getMana(stack, source);
-                Component curText = wand.getManaText(stack, source);
-                
-                double ratio = (double)curMana / (double)maxMana;
-                Component ratioText = Component.translatable("primalmagick.source.mana_summary_fragment", curText, maxText);
-                
-                posY += this.renderManaGauge(poseStack, 0, posY, ratioText, ratio, source.getColor(), partialTick, mc.font);
-            }
+        List<Source> discoveredSources = Source.SORTED_SOURCES.stream().filter(s -> s.isDiscovered(mc.player)).collect(Collectors.toList());
+        for (Source source : discoveredSources) {
+            int curMana = wand.getMana(stack, source);
+            Component curText = wand.getManaText(stack, source);
+            
+            double ratio = (double)curMana / (double)maxMana;
+            Component ratioText = Component.translatable("primalmagick.source.mana_summary_fragment", curText, maxText);
+            
+            posY += this.renderManaGauge(poseStack, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
         }
         
         poseStack.popPose();
     }
 
-    private int renderManaGauge(PoseStack poseStack, int x, int y, Component text, double ratio, int color, float partialTick, Font font) {
+    private int renderManaGauge(PoseStack poseStack, int x, int y, Component text, double ratio, int color, boolean isLast, float partialTick, Font font) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderTexture(0, HUD_TEXTURE);
         
         // Render the gauge background
         RenderSystem.setShaderColor(1, 1, 1, 1);
-        GuiComponent.blit(poseStack, x, y, 0, 0, 50, 12, 256, 256);
+        GuiComponent.blit(poseStack, x, y, 0, 0, 59, 12, 256, 256);
+        
+        // If not the last gauge in the list, render trailing salt connector
+        if (!isLast) {
+            GuiComponent.blit(poseStack, x + 4, y + 8, 4, 12, 2, 4, 256, 256);
+        }
         
         // Render the gauge mana bar
         RenderSystem.setShaderColor(getRed(color), getGreen(color), getBlue(color), 1);
-        GuiComponent.blit(poseStack, x + 5, y + 2, 5, 12, (int)(40 * ratio), 8, 256, 256);
+        GuiComponent.blit(poseStack, x + 14, y + 2, 14, 12, (int)(40 * ratio), 8, 256, 256);
         
         // Render the mana text by the gauge if holding shift
         RenderSystem.setShaderColor(1, 1, 1, 1);
         if (Screen.hasShiftDown()) {
             poseStack.pushPose();
-            poseStack.translate(52, 2, 0);
+            poseStack.translate(61, 2, 0);
             font.drawShadow(poseStack, text, x, y, Color.WHITE.getRGB());
             poseStack.popPose();
         }
