@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -32,7 +33,7 @@ public class WandHudOverlay implements IIngameOverlay {
     @Override
     public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
-        if (!mc.options.hideGui && !mc.player.isSpectator()) {
+        if (!mc.options.hideGui && !mc.player.isSpectator() && Config.SHOW_WAND_HUD.get()) {
             ItemStack stack = mc.player.getItemBySlot(EquipmentSlot.MAINHAND);
             if (stack.getItem() instanceof IWand wand) {
                 this.renderHud(mc, poseStack, stack, wand, partialTick);

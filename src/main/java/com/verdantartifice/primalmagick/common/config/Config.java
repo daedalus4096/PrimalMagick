@@ -26,6 +26,7 @@ public class Config {
     protected static boolean IS_REGISTERED = false;
     
     public static ForgeConfigSpec.BooleanValue SHOW_AFFINITIES;
+    public static ForgeConfigSpec.BooleanValue SHOW_WAND_HUD;
     public static ForgeConfigSpec.BooleanValue SHOW_UNSCANNED_AFFINITIES;
     public static ForgeConfigSpec.EnumValue<TheorycraftSpeed> THEORYCRAFT_SPEED;
     
@@ -52,6 +53,7 @@ public class Config {
         
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_AFFINITIES = builder.comment("Item affinities are hidden by default and pressing shift reveals them.", "Setting this to 'true' will reverse this behavior.").define("showAffinities", false);
+        SHOW_WAND_HUD = builder.comment("Whether to show the wand HUD while a wand or staff is held in the main hand.").define("showWandHud", true);
         builder.pop();
         
         CLIENT_CONFIG_SPEC = builder.build();
