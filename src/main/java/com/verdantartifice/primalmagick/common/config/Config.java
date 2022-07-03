@@ -20,6 +20,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 @Mod.EventBusSubscriber
 public class Config {
     protected static final String CATEGORY_MISC = "misc";
+    protected static final String CATEGORY_RADIAL = "radial";
     
     protected static ForgeConfigSpec COMMON_CONFIG_SPEC;
     protected static ForgeConfigSpec CLIENT_CONFIG_SPEC;
@@ -27,6 +28,10 @@ public class Config {
     
     public static ForgeConfigSpec.BooleanValue SHOW_AFFINITIES;
     public static ForgeConfigSpec.BooleanValue SHOW_WAND_HUD;
+    public static ForgeConfigSpec.BooleanValue RADIAL_RELEASE_TO_SWITCH;
+    public static ForgeConfigSpec.BooleanValue RADIAL_CLIP_MOUSE;
+    public static ForgeConfigSpec.BooleanValue RADIAL_ALLOW_CLICK_OUTSIDE_BOUNDS;
+    
     public static ForgeConfigSpec.BooleanValue SHOW_UNSCANNED_AFFINITIES;
     public static ForgeConfigSpec.EnumValue<TheorycraftSpeed> THEORYCRAFT_SPEED;
     
@@ -54,6 +59,12 @@ public class Config {
         builder.comment("Misc settings").push(CATEGORY_MISC);
         SHOW_AFFINITIES = builder.comment("Item affinities are hidden by default and pressing shift reveals them.", "Setting this to 'true' will reverse this behavior.").define("showAffinities", false);
         SHOW_WAND_HUD = builder.comment("Whether to show the wand HUD while a wand or staff is held in the main hand.").define("showWandHud", true);
+        builder.pop();
+        
+        builder.comment("Radial menu settings").push(CATEGORY_RADIAL);
+        RADIAL_RELEASE_TO_SWITCH = builder.comment("If true, releasing the menu key will activate the highlighted item; otherwise requires a click").define("releaseToSwitch", true);
+        RADIAL_CLIP_MOUSE = builder.comment("If true, the radial menu will try to prevent the mouse from leaving the outer circle").define("clipMouse", false);
+        RADIAL_ALLOW_CLICK_OUTSIDE_BOUNDS = builder.comment("If true, the radial menu will allow clicking outside the outer circle to activate the highlighted item").define("allowClickOutsideBounds", false);
         builder.pop();
         
         CLIENT_CONFIG_SPEC = builder.build();
