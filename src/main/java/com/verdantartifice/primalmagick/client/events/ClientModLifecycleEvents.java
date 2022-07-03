@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
@@ -57,6 +58,8 @@ import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -78,6 +81,7 @@ public class ClientModLifecycleEvents {
         setRenderLayers();
         registerTooltipComponentFactories();
         registerSearchTrees(event);
+        registerHudOverlays();
     }
 
     private static void registerKeybinds() {
@@ -293,5 +297,9 @@ public class ClientModLifecycleEvents {
         event.enqueueWork(() -> {
             ArcaneSearchRegistry.registerSearchTree();
         });
+    }
+
+    private static void registerHudOverlays() {
+        OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "Wand HUD", new WandHudOverlay());
     }
 }

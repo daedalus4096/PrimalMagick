@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.gui.hud.WandHudManager;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
@@ -22,7 +21,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawSelectionEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -83,14 +81,6 @@ public class ClientRenderEvents {
                 double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
                 GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
             }
-        }
-    }
-    
-    @SubscribeEvent
-    public static void onRenderTick(TickEvent.RenderTickEvent event) {
-        if (event.phase != TickEvent.Phase.START) {
-            Minecraft mc = Minecraft.getInstance();
-            WandHudManager.INSTANCE.renderHud(mc, event.renderTickTime, mc.player);
         }
     }
 }
