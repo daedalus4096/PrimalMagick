@@ -45,13 +45,15 @@ public class WandHudOverlay implements IIngameOverlay {
         int maxMana = wand.getMaxMana(stack);
         Component maxText = wand.getMaxManaText(stack);
         for (Source source : Source.SORTED_SOURCES) {
-            int curMana = wand.getMana(stack, source);
-            Component curText = wand.getManaText(stack, source);
-            
-            double ratio = (double)curMana / (double)maxMana;
-            Component ratioText = Component.translatable("primalmagick.source.mana_summary_fragment", curText, maxText);
-            
-            posY += this.renderManaGauge(poseStack, 0, posY, ratioText, ratio, source.getColor(), partialTick, mc.font);
+            if (source.isDiscovered(mc.player)) {
+                int curMana = wand.getMana(stack, source);
+                Component curText = wand.getManaText(stack, source);
+                
+                double ratio = (double)curMana / (double)maxMana;
+                Component ratioText = Component.translatable("primalmagick.source.mana_summary_fragment", curText, maxText);
+                
+                posY += this.renderManaGauge(poseStack, 0, posY, ratioText, ratio, source.getColor(), partialTick, mc.font);
+            }
         }
         
         poseStack.popPose();
@@ -68,7 +70,7 @@ public class WandHudOverlay implements IIngameOverlay {
         
         // Render the gauge mana bar
         RenderSystem.setShaderColor(getRed(color), getGreen(color), getBlue(color), 1);
-        GuiComponent.blit(poseStack, x + 5, y + 2, 5, 12, 40, 8, 256, 256);
+        GuiComponent.blit(poseStack, x + 5, y + 2, 5, 12, (int)(40 * ratio), 8, 256, 256);
         
         // Render the mana text by the gauge if holding shift
         RenderSystem.setShaderColor(1, 1, 1, 1);
