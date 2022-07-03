@@ -44,6 +44,9 @@ public class WandHudOverlay implements IIngameOverlay {
         poseStack.pushPose();
         
         int posY = 0;
+        ResourceLocation spellIcon = wand.getActiveSpell(stack) == null ? null : wand.getActiveSpell(stack).getIcon();
+        posY += this.renderSpellDisplay(poseStack, 0, posY, spellIcon, partialTick);
+        
         int index = 0;
         int maxMana = wand.getMaxMana(stack);
         Component maxText = wand.getMaxManaText(stack);
@@ -59,6 +62,27 @@ public class WandHudOverlay implements IIngameOverlay {
         }
         
         poseStack.popPose();
+    }
+
+    private int renderSpellDisplay(PoseStack poseStack, int x, int y, ResourceLocation spellIcon, float partialTick) {
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        
+        // Render the spell display background
+        RenderSystem.setShaderTexture(0, HUD_TEXTURE);
+        GuiComponent.blit(poseStack, x, y, 60, 0, 26, 26, 256, 256);
+        
+        // Render the spell icon, if present
+        if (spellIcon != null) {
+            RenderSystem.setShaderTexture(0, spellIcon);
+            poseStack.pushPose();
+            poseStack.scale(0.5F, 0.5F, 1F);
+            GuiComponent.blit(poseStack, x + 10, y + 10, 0, 0, 32, 32, 32, 32);
+            poseStack.popPose();
+        }
+
+        return 26;
     }
 
     private int renderManaGauge(PoseStack poseStack, int x, int y, Component text, double ratio, int color, boolean isLast, float partialTick, Font font) {
