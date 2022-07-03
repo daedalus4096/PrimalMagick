@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -33,6 +34,15 @@ public interface IWand {
     public int getMana(@Nullable ItemStack stack, @Nullable Source source);
     
     /**
+     * Get the text representation of centimana for the given source which is contained in the given wand stack.
+     * 
+     * @param stack the wand stack to be queried
+     * @param source the type of mana to be queried
+     * @return the text representation of the amount of centimana contained
+     */
+    public MutableComponent getManaText(@Nullable ItemStack stack, @Nullable Source source);
+    
+    /**
      * Get the centimana amounts of all types of mana contained in the given wand stack.
      * 
      * @param stack the wand stack to be queried
@@ -48,6 +58,14 @@ public interface IWand {
      * @return the maximum amount of centimana that can be held by the given wand stack
      */
     public int getMaxMana(@Nullable ItemStack stack);
+    
+    /**
+     * Get the text representation of the maximum amount of centimana that can be held by the given wand stack.
+     * 
+     * @param stack the wand stack whose maximum mana to return
+     * @return the text representation of the maximum amount of centimana that can be held by the given wand stack
+     */
+    public MutableComponent getMaxManaText(@Nullable ItemStack stack);
     
     /**
      * Add the given amount of the given type of mana to the given wand stack, up to its maximum.

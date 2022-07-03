@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -229,5 +230,13 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
         } else {
             return secondary;
         }
+    }
+    
+    @Nullable
+    public ResourceLocation getIcon() {
+        if (this.payload != null) {
+            return this.payload.getSource().getImage();
+        }
+        return null;
     }
 }

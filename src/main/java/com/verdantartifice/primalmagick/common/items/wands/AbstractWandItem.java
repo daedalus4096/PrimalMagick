@@ -81,7 +81,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
     }
     
-    protected MutableComponent getManaText(ItemStack stack, Source source) {
+    public MutableComponent getManaText(ItemStack stack, Source source) {
         int mana = this.getMana(stack, source);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
@@ -110,7 +110,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return retVal;
     }
 
-    protected MutableComponent getMaxManaText(ItemStack stack) {
+    public MutableComponent getMaxManaText(ItemStack stack) {
         int mana = this.getMaxMana(stack);
         if (mana == -1) {
             // If the given wand stack has infinte mana, show the infinity symbol
