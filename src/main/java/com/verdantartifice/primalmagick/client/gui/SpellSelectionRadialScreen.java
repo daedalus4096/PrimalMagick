@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,11 @@ import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.events.InputEvents;
 import com.verdantartifice.primalmagick.client.gui.radial.GenericRadialMenu;
 import com.verdantartifice.primalmagick.client.gui.radial.IRadialMenuHost;
+import com.verdantartifice.primalmagick.client.gui.radial.ItemStackRadialMenuItem;
+import com.verdantartifice.primalmagick.client.gui.radial.RadialMenuItem;
+import com.verdantartifice.primalmagick.client.gui.radial.SpellPackageRadialMenuItem;
 import com.verdantartifice.primalmagick.common.config.Config;
+import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.client.Minecraft;
@@ -20,6 +25,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class SpellSelectionRadialScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -28,6 +34,8 @@ public class SpellSelectionRadialScreen extends Screen {
     private boolean needsRecheckSpells = true;
     
     private final GenericRadialMenu menu;
+    private final List<RadialMenuItem> cachedMenuItems = new ArrayList<>();
+    private final ItemStackRadialMenuItem noSpellMenuItem;
 
     public SpellSelectionRadialScreen() {
         super(Component.empty());
@@ -69,6 +77,12 @@ public class SpellSelectionRadialScreen extends Screen {
             public void onClickOutside()
             {
                 close();
+            }
+        };
+        this.noSpellMenuItem = new ItemStackRadialMenuItem(this.menu, -1, new ItemStack(Items.BARRIER).setHoverName(Component.literal("herp")), Component.literal("derp")) {    // FIXME text components
+            @Override
+            public boolean onClick() {
+                return SpellSelectionRadialScreen.this.trySwitch(-1);
             }
         };
     }
@@ -148,8 +162,28 @@ public class SpellSelectionRadialScreen extends Screen {
             return;
         }
         
+        IWand wand = (IWand)this.stackEquipped.getItem();
         if (this.needsRecheckSpells) {
-            // TODO Create and add radial menu items
+            // Create and add radial menu items
+            this.cachedMenuItems.clear();
+            List<SpellPackage> spells = wand.getSpells(this.stackEquipped);
+            for (int index = 0; index < spells.size(); index++) {
+                SpellPackage spell = spells.get(index);
+                SpellPackageRadialMenuItem item = new SpellPackageRadialMenuItem(menu, index, spell, spell.getName()) {
+                    @Override
+                    public boolean onClick() {
+                        return SpellSelectionRadialScreen.this.trySwitch(getSlot());
+                    }
+                };
+                item.setVisible(true);
+                item.setCentralText(Component.literal("CENTER!"));  // FIXME text component
+                this.cachedMenuItems.add(item);
+            }
+            
+            this.menu.clear();
+            this.menu.addAll(this.cachedMenuItems);
+            this.menu.add(this.noSpellMenuItem);
+            
             this.needsRecheckSpells = false;
         }
         
