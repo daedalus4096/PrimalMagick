@@ -178,7 +178,6 @@ public class SpellSelectionRadialScreen extends Screen {
                     }
                 };
                 item.setVisible(true);
-                item.setCentralText(Component.literal("CENTER!"));  // FIXME text component
                 this.cachedMenuItems.add(item);
             }
             
