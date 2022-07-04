@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
@@ -20,7 +21,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.DrawSelectionEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -81,6 +84,14 @@ public class ClientRenderEvents {
                 double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
                 GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
             }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onRenderGameOverlayPreLayer(RenderGameOverlayEvent.PreLayer event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (event.getOverlay() == ForgeIngameGui.CROSSHAIR_ELEMENT && mc.screen instanceof SpellSelectionRadialScreen) {
+            event.setCanceled(true);
         }
     }
 }
