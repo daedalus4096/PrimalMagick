@@ -33,17 +33,17 @@ public class SpellPackageRadialMenuItem extends TextRadialMenuItem {
         if (this.spellPackage == null) {
             super.draw(context);
         } else {
-            PoseStack viewModelPose = RenderSystem.getModelViewStack();
-            viewModelPose.pushPose();
-            viewModelPose.mulPoseMatrix(context.matrixStack.last().pose());
-            viewModelPose.translate(-8, -8, context.z);
-            RenderSystem.applyModelViewMatrix();
+            PoseStack newStack = new PoseStack();
+            newStack.pushPose();
+            newStack.mulPoseMatrix(context.matrixStack.last().pose());
+            newStack.translate(-8, -8, context.z + 200);
+            newStack.scale(0.5F, 0.5F, 1F);
             RenderSystem.enableBlend();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.setShaderTexture(0, this.spellPackage.getIcon());
-            GuiComponent.blit(viewModelPose, 0, 0, 0, 0, 32, 32, 32, 32);
-            viewModelPose.popPose();
-            RenderSystem.applyModelViewMatrix();
+            GuiComponent.blit(newStack, 2 * (int)context.x, 2 * (int)context.y, 0, 0, 32, 32, 32, 32);
+            newStack.popPose();
         }
     }
 
