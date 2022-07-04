@@ -3,103 +3,76 @@ package com.verdantartifice.primalmagick.client.gui;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.verdantartifice.primalmagick.client.config.KeyBindings;
+import com.verdantartifice.primalmagick.client.events.InputEvents;
+import com.verdantartifice.primalmagick.client.gui.radial.GenericRadialMenu;
+import com.verdantartifice.primalmagick.client.gui.radial.IRadialMenuHost;
+import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellSelectionRadialScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final float RADIUS_INNER = 30F;
-    private static final int BG_COLOR = 0x3F000000;
-    private static final int BG_COLOR_HOVER = 0x3FFFFFFF;
-    private static final float ARC_PRECISION = 2.5F / 360F;
+    
+    private ItemStack stackEquipped = ItemStack.EMPTY;
+    private boolean needsRecheckSpells = true;
+    
+    private final GenericRadialMenu menu;
 
     public SpellSelectionRadialScreen() {
         super(Component.empty());
+        Minecraft mc = Minecraft.getInstance();
+        this.stackEquipped = mc.player.getMainHandItem();
+        this.menu = new GenericRadialMenu(mc, new IRadialMenuHost() {
+            @Override
+            public void renderTooltip(PoseStack matrixStack, ItemStack stack, int mouseX, int mouseY)
+            {
+                SpellSelectionRadialScreen.this.renderTooltip(matrixStack, stack, mouseX, mouseY);
+            }
+
+            @Override
+            public Screen getScreen()
+            {
+                return SpellSelectionRadialScreen.this;
+            }
+
+            @Override
+            public Font getFontRenderer()
+            {
+                return font;
+            }
+
+            @Override
+            public ItemRenderer getItemRenderer()
+            {
+                return SpellSelectionRadialScreen.this.getItemRenderer();
+            }
+        })
+        {
+            @Override
+            public void onClickOutside()
+            {
+                close();
+            }
+        };
+    }
+
+    protected ItemRenderer getItemRenderer() {
+        return this.itemRenderer;
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTick) {
-        super.render(matrixStack, mouseX, mouseY, partialTick);
-        
-        Minecraft mc = Minecraft.getInstance();
-        ItemStack stack = mc.player.getMainHandItem();
-        if (stack.getItem() instanceof IWand wand) {
-            float radiusInner = RADIUS_INNER;
-            float radiusOuter = radiusInner * 2;
-            float radiusItem = (radiusInner + radiusOuter) * 0.5F;
-            int centerX = this.width / 2;
-            int centerY = this.height / 2;
-            int numSlices = wand.getSpellCount(stack) + 1;
-            
-            double mouseAngle = Math.toDegrees(Math.atan2(mouseY - centerY, mouseX - centerX));
-            double mouseDistance = Math.sqrt(Math.pow(mouseX - centerX, 2) + Math.pow(mouseY - centerY, 2));
-            if (mouseAngle < ((-0.5f / (float)numSlices) + 0.25F) * 360) {
-                mouseAngle += 360D;
-            }
-            
-            matrixStack.pushPose();
-            this.drawBackground(matrixStack, centerX, centerY, radiusInner, radiusOuter, stack, wand);
-            matrixStack.popPose();
-        }
-    }
-
-    private void drawBackground(PoseStack matrixStack, float mouseX, float mouseY, float radiusInner, float radiusOuter, ItemStack wandStack, IWand wand) {
-        RenderSystem.enableBlend();
-        RenderSystem.disableTexture();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.setShaderColor(1, 1, 1, 1);
-        
-        Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder buffer = tesselator.getBuilder();
-        buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-        
-        int numSlices = wand.getSpellCount(wandStack) + 1;
-        for (int index = 0; index < numSlices; index++) {
-            float startAngle = (float)this.getAngle(index - 0.5D, numSlices);
-            float endAngle = (float)this.getAngle(index + 0.5D, numSlices);
-            this.drawMenuArc(buffer, mouseX, mouseY, 0, radiusInner, radiusOuter, startAngle, endAngle, BG_COLOR);
-        }
-
-        tesselator.end();
-        RenderSystem.enableTexture();
-        RenderSystem.disableBlend();
-    }
-    
-    private void drawMenuArc(BufferBuilder buffer, float x, float y, float z, float radiusInner, float radiusOuter, float startAngle, float endAngle, int color) {
-        float angle = endAngle - startAngle;
-        int sections = Math.max(1, Mth.ceil(angle / ARC_PRECISION));
-        float slice = angle / sections;
-        
-        for (int index = 0; index < sections; index++) {
-            float angle1 = startAngle + (index * slice);
-            float angle2 = startAngle + ((index + 1) * slice);
-            
-            buffer.vertex(x + (radiusOuter * Mth.cos(angle1)), y + (radiusOuter * Mth.sin(angle1)), z).color(color).endVertex();
-            buffer.vertex(x + (radiusInner * Mth.cos(angle1)), y + (radiusInner * Mth.sin(angle1)), z).color(color).endVertex();
-            buffer.vertex(x + (radiusInner * Mth.cos(angle2)), y + (radiusInner * Mth.sin(angle2)), z).color(color).endVertex();
-            buffer.vertex(x + (radiusOuter * Mth.cos(angle2)), y + (radiusOuter * Mth.sin(angle2)), z).color(color).endVertex();
-        }
-    }
-
-    private double getAngle(double index, int numItems) {
-        if (numItems == 0) {
-            return 0;
-        } else {
-            return ((index / numItems) + 0.25D) * (2 * Math.PI) + Math.PI;
-        }
+    public void removed() {
+        super.removed();
+        LOGGER.info("Removed spell selection radial screen");
+        InputEvents.wipeOpen();
     }
 
     @Override
@@ -107,6 +80,87 @@ public class SpellSelectionRadialScreen extends Screen {
         // TODO Auto-generated method stub
         super.onClose();
         LOGGER.info("Closing spell selection radial screen");
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.menu.tick();
+        
+        if (this.menu.isClosed()) {
+            this.minecraft.setScreen(null);
+            InputEvents.wipeOpen();
+        }
+        if (!this.menu.isReady()) {
+            return;
+        }
+        
+        ItemStack inHand = this.minecraft.player.getMainHandItem();
+        if (inHand.getItem() instanceof IWand wand) {
+            if (this.stackEquipped != inHand) {     // Reference comparison intended
+                this.stackEquipped = inHand;
+                this.needsRecheckSpells = true;
+            }
+        } else {
+            this.stackEquipped = ItemStack.EMPTY;
+        }
+        
+        if (this.stackEquipped.isEmpty()) {
+            this.minecraft.setScreen(null);
+        } else if (!KeyBindings.changeSpellKey.isDown()) {
+            if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
+                this.processClick(false);
+            } else {
+                this.menu.close();
+            }
+        }
+    }
+
+    @Override
+    public boolean mouseReleased(double p_94722_, double p_94723_, int p_94724_) {
+        this.processClick(true);
+        return super.mouseReleased(p_94722_, p_94723_, p_94724_);
+    }
+    
+    protected void processClick(boolean triggeredByMouse) {
+        this.menu.clickItem();
+    }
+
+    @Override
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTick) {
+        matrixStack.pushPose();
+        super.render(matrixStack, mouseX, mouseY, partialTick);
+        matrixStack.popPose();
+        
+        if (this.stackEquipped.isEmpty()) {
+            return;
+        }
+        
+        if (this.needsRecheckSpells) {
+            // TODO Create and add radial menu items
+            this.needsRecheckSpells = false;
+        }
+        
+        // TODO Set central text
+        
+        this.menu.draw(matrixStack, partialTick, mouseX, mouseY);
+    }
+    
+    private boolean trySwitch(int slotNumber) {
+        ItemStack inHand = this.minecraft.player.getMainHandItem();
+        if (!(inHand.getItem() instanceof IWand)) {
+            return false;
+        }
+        
+        // TODO Send packet to server signaling a spell switch
+        
+        this.menu.close();
+        return true;
+    }
+
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
 }
 
