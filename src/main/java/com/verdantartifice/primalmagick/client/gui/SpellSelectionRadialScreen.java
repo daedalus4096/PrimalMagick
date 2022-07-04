@@ -184,6 +184,7 @@ public class SpellSelectionRadialScreen extends Screen {
             
             this.menu.clear();
             this.menu.addAll(this.cachedMenuItems);
+            this.noSpellMenuItem.setVisible(true);
             this.menu.add(this.noSpellMenuItem);
             
             this.needsRecheckSpells = false;
