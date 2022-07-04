@@ -949,6 +949,7 @@
     
     "primalmagick.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
     "primalmagick.spells.none": "   None",
+    "primalmagick.spells.no_spell_selection": "No spell",
     "primalmagick.spells.name_unselected": "   %1$s",
     "primalmagick.spells.name_selected": "  *%1$s",
     "primalmagick.spells.short_wand_header": "Active Spell: %1$s",
