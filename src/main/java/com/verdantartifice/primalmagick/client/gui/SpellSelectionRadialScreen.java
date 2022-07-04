@@ -76,6 +76,7 @@ public class SpellSelectionRadialScreen extends Screen {
             @Override
             public void onClickOutside()
             {
+                LOGGER.info("Clicked outside, closing underlying radial menu");
                 close();
             }
         };
@@ -132,11 +133,12 @@ public class SpellSelectionRadialScreen extends Screen {
         if (this.stackEquipped.isEmpty()) {
             LOGGER.info("Closing radial screen because equipped item stack is empty");
             this.minecraft.setScreen(null);
-        } else if (!KeyBindings.changeSpellKey.isDown()) {
+        } else if (!InputEvents.isKeyDown(KeyBindings.changeSpellKey)) {
             if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
+                LOGGER.info("Menu key release detected, processing click");
                 this.processClick(false);
             } else {
-                LOGGER.info("Closing underlying radial menu");
+                LOGGER.info("Closing underlying radial menu because key is no longer down");
                 this.menu.close();
             }
         }
@@ -200,6 +202,7 @@ public class SpellSelectionRadialScreen extends Screen {
         
         // TODO Send packet to server signaling a spell switch
         
+        LOGGER.info("Switching to {} and closing underlying radial menu", slotNumber);
         this.menu.close();
         return true;
     }
