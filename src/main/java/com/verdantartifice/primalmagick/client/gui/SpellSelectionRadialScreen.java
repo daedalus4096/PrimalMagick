@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.events.InputEvents;
@@ -30,8 +27,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class SpellSelectionRadialScreen extends Screen {
-    private static final Logger LOGGER = LogManager.getLogger();
-    
     private ItemStack stackEquipped = ItemStack.EMPTY;
     private boolean needsRecheckSpells = true;
     
@@ -78,7 +73,6 @@ public class SpellSelectionRadialScreen extends Screen {
             @Override
             public void onClickOutside()
             {
-                LOGGER.info("Clicked outside, closing underlying radial menu");
                 close();
             }
         };
@@ -97,7 +91,6 @@ public class SpellSelectionRadialScreen extends Screen {
     @Override
     public void removed() {
         super.removed();
-        LOGGER.info("Removed spell selection radial screen");
         InputEvents.wipeOpen();
     }
 
@@ -107,7 +100,6 @@ public class SpellSelectionRadialScreen extends Screen {
         this.menu.tick();
         
         if (this.menu.isClosed()) {
-            LOGGER.info("Closing radial screen because underlying menu is closed");
             this.minecraft.setScreen(null);
             InputEvents.wipeOpen();
         }
@@ -126,14 +118,11 @@ public class SpellSelectionRadialScreen extends Screen {
         }
         
         if (this.stackEquipped.isEmpty()) {
-            LOGGER.info("Closing radial screen because equipped item stack is empty");
             this.minecraft.setScreen(null);
         } else if (!InputEvents.isKeyDown(KeyBindings.changeSpellKey)) {
             if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
-                LOGGER.info("Menu key release detected, processing click");
                 this.processClick(false);
             } else {
-                LOGGER.info("Closing underlying radial menu because key is no longer down");
                 this.menu.close();
             }
         }
@@ -194,7 +183,6 @@ public class SpellSelectionRadialScreen extends Screen {
         }
         
         // Send packet to server signaling a spell switch
-        LOGGER.info("Switching to {} and closing underlying radial menu", slotNumber);
         PacketHandler.sendToServer(new SetActiveSpellPacket(slotNumber));
         
         this.menu.close();
