@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,6 +38,12 @@ public class SpellSelectionRadialScreen extends Screen {
             public void renderTooltip(PoseStack matrixStack, ItemStack stack, int mouseX, int mouseY)
             {
                 SpellSelectionRadialScreen.this.renderTooltip(matrixStack, stack, mouseX, mouseY);
+            }
+
+            @Override
+            public void renderTooltip(PoseStack matrixStack, List<Component> textComponents, int mouseX, int mouseY)
+            {
+                SpellSelectionRadialScreen.this.renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
             }
 
             @Override
@@ -88,6 +97,7 @@ public class SpellSelectionRadialScreen extends Screen {
         this.menu.tick();
         
         if (this.menu.isClosed()) {
+            LOGGER.info("Closing radial screen because underlying menu is closed");
             this.minecraft.setScreen(null);
             InputEvents.wipeOpen();
         }
@@ -106,11 +116,13 @@ public class SpellSelectionRadialScreen extends Screen {
         }
         
         if (this.stackEquipped.isEmpty()) {
+            LOGGER.info("Closing radial screen because equipped item stack is empty");
             this.minecraft.setScreen(null);
         } else if (!KeyBindings.changeSpellKey.isDown()) {
             if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
                 this.processClick(false);
             } else {
+                LOGGER.info("Closing underlying radial menu");
                 this.menu.close();
             }
         }

@@ -1,11 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
+import java.util.List;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
 public interface IDrawingHelper {
     void renderTooltip(PoseStack matrixStack, ItemStack stack, int mouseX, int mouseY);
+    void renderTooltip(PoseStack matrixStack, List<Component> textComponents, int mouseX, int mouseY);
 }
 
 /*
