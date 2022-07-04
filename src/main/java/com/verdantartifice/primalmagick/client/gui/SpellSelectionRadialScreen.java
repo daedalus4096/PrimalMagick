@@ -16,6 +16,8 @@ import com.verdantartifice.primalmagick.client.gui.radial.ItemStackRadialMenuIte
 import com.verdantartifice.primalmagick.client.gui.radial.RadialMenuItem;
 import com.verdantartifice.primalmagick.client.gui.radial.SpellPackageRadialMenuItem;
 import com.verdantartifice.primalmagick.common.config.Config;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -189,8 +191,6 @@ public class SpellSelectionRadialScreen extends Screen {
             this.needsRecheckSpells = false;
         }
         
-        // TODO Set central text
-        
         this.menu.draw(matrixStack, partialTick, mouseX, mouseY);
     }
     
@@ -200,9 +200,10 @@ public class SpellSelectionRadialScreen extends Screen {
             return false;
         }
         
-        // TODO Send packet to server signaling a spell switch
-        
+        // Send packet to server signaling a spell switch
         LOGGER.info("Switching to {} and closing underlying radial menu", slotNumber);
+        PacketHandler.sendToServer(new SetActiveSpellPacket(slotNumber));
+        
         this.menu.close();
         return true;
     }
