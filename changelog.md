@@ -12,6 +12,7 @@ v3.0.1
 * Added more guidance for uncovering the secrets of the universe
 * Added hints to some of the more oblique research requirements
 * Added wand HUD
+* Added radial menu for wand spell selection
 * Incremented to Forge version 41.0.45
 
 v3.0.0-beta

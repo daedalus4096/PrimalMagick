@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -188,6 +189,16 @@ public class SpellManager {
             if (newIndex < -1) {
                 newIndex = wand.getSpellCount(wandStack) - 1;
             }
+            
+            setActiveSpell(player, wandStack, newIndex);
+        }
+    }
+    
+    public static void setActiveSpell(@Nullable Player player, @Nullable ItemStack wandStack, int spellIndex) {
+        // Set the active spell for the given wand stack to the given index, clamped
+        if (wandStack != null && wandStack.getItem() instanceof IWand wand) {
+            // Clamp the given index to safe bounds
+            int newIndex = Mth.clamp(spellIndex, -1, wand.getSpellCount(wandStack) - 1);
             
             // Set the new active spell index
             wand.setActiveSpellIndex(wandStack, newIndex);
