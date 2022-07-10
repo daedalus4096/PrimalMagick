@@ -200,6 +200,17 @@ public class ResearchProvider implements DataProvider {
                     .requiredResearch("t_sotu_research_sanguine_crucible", true).requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 4).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_BASICS", discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("THEORY_OF_EVERYTHING", discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale("BASICS").finale("ALCHEMY").finale("MAGITECH").finale("MANAWEAVING")
+            .finale("RITUAL").finale("RUNEWORKING").finale("SORCERY")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).attunement(Source.SEA, 2).attunement(Source.SKY, 2).attunement(Source.SUN, 2).attunement(Source.MOON, 2)
+                    .attunement(Source.BLOOD, 2).attunement(Source.INFERNAL, 2).attunement(Source.VOID, 2).attunement(Source.HALLOWED, 2).build())
+            .build(consumer);
     }
     
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
@@ -227,6 +238,11 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_MANAWEAVING", discipline).hidden().icon("textures/research/discipline_manaweaving.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CHARGER", discipline).icon(ItemsPM.WAND_CHARGER.get()).parent("BASIC_MANAWEAVING")
             .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
@@ -423,6 +439,11 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_ALCHEMY", discipline).hidden().icon("textures/research/discipline_alchemy.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).icon(Items.STONE).parent("BASIC_ALCHEMY")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraftStack(Items.STONE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
@@ -690,6 +711,11 @@ public class ResearchProvider implements DataProvider {
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_SORCERY", discipline).hidden().icon("textures/research/discipline_sorcery.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).icon(ItemsPM.WAND_INSCRIPTION_TABLE.get()).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_crafted_expert").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_INSCRIPTION_TABLE.get()).build())
@@ -762,7 +788,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("m_furry_friend", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 3).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().icon(Source.MOON.getImage())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().finaleExempt().icon(Source.MOON.getImage())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", discipline).icon(Source.BLOOD.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")
@@ -824,6 +850,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_RUNEWORKING", discipline).hidden().icon("textures/research/discipline_runeworking.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).icon(ItemsPM.RUNE_EARTH.get()).parent("BASIC_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
@@ -928,6 +959,11 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("BLOODLETTER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_RITUAL", discipline).hidden().icon("textures/research/discipline_ritual.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANAFRUIT", discipline).icon(ItemsPM.MANAFRUIT.get()).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
@@ -1175,6 +1211,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch(Source.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel", true)
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("COMPLETE_MAGITECH", discipline).hidden().icon("textures/research/discipline_magitech.png").finale(discipline)
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).attunement(Source.SEA, 1).attunement(Source.SKY, 1).attunement(Source.SUN, 1).attunement(Source.MOON, 1)
+                    .attunement(Source.BLOOD, 1).attunement(Source.INFERNAL, 1).attunement(Source.VOID, 1).attunement(Source.HALLOWED, 1).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent("BASIC_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.HONEYCOMB).requiredItemStack(Items.HONEY_BOTTLE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())

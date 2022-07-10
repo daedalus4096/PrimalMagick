@@ -20,10 +20,12 @@ public class ResearchEntryBuilder {
     protected final SimpleResearchKey key;
     protected final String nameTranslationKey;
     protected final String disciplineName;
+    protected final List<String> finales = new ArrayList<>();
     protected final List<SimpleResearchKey> parents = new ArrayList<>();
     protected final List<IFinishedResearchStage> stages = new ArrayList<>();
     protected final List<IFinishedResearchAddendum> addenda = new ArrayList<>();
     protected boolean hidden;
+    protected boolean finaleExempt;
     protected ResearchEntry.Icon icon;
     
     protected ResearchEntryBuilder(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
@@ -31,6 +33,7 @@ public class ResearchEntryBuilder {
         this.nameTranslationKey = modId.toLowerCase() + ".research." + this.key.getRootKey().toLowerCase() + ".title";
         this.disciplineName = discipline;
         this.hidden = false;
+        this.finaleExempt = false;
     }
     
     public static ResearchEntryBuilder entry(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
@@ -60,6 +63,11 @@ public class ResearchEntryBuilder {
         return this;
     }
     
+    public ResearchEntryBuilder finaleExempt() {
+        this.finaleExempt = true;
+        return this;
+    }
+    
     public ResearchEntryBuilder icon(ItemLike item) {
         this.icon = ResearchEntry.Icon.of(item);
         return this;
@@ -72,6 +80,11 @@ public class ResearchEntryBuilder {
     
     public ResearchEntryBuilder icon(String path) {
         return icon(new ResourceLocation(PrimalMagick.MODID, path));
+    }
+    
+    public ResearchEntryBuilder finale(String discipline) {
+        this.finales.add(discipline);
+        return this;
     }
     
     public ResearchEntryBuilder stage(IFinishedResearchStage stage) {
@@ -111,7 +124,8 @@ public class ResearchEntryBuilder {
     
     public void build(Consumer<IFinishedResearchEntry> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.hidden, this.icon, this.parents, this.stages, this.addenda));
+        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.hidden, this.finaleExempt, this.icon, this.finales, 
+                this.parents, this.stages, this.addenda));
     }
     
     public static class Result implements IFinishedResearchEntry {
@@ -120,18 +134,23 @@ public class ResearchEntryBuilder {
         protected final String name;
         protected final String discipline;
         protected final boolean hidden;
+        protected final boolean finaleExempt;
         protected final ResearchEntry.Icon icon;
+        protected final List<String> finales;
         protected final List<SimpleResearchKey> parents;
         protected final List<IFinishedResearchStage> stages;
         protected final List<IFinishedResearchAddendum> addenda;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, boolean hidden, @Nullable ResearchEntry.Icon icon, @Nonnull List<SimpleResearchKey> parents, @Nonnull List<IFinishedResearchStage> stages, @Nonnull List<IFinishedResearchAddendum> addenda) {
+        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, boolean hidden, boolean finaleExempt, @Nullable ResearchEntry.Icon icon, 
+                @Nonnull List<String> finales, @Nonnull List<SimpleResearchKey> parents, @Nonnull List<IFinishedResearchStage> stages, @Nonnull List<IFinishedResearchAddendum> addenda) {
             this.id = id;
             this.key = key;
             this.name = name;
             this.discipline = discipline;
             this.hidden = hidden;
+            this.finaleExempt = finaleExempt;
             this.icon = icon;
+            this.finales = finales;
             this.parents = parents;
             this.stages = stages;
             this.addenda = addenda;
@@ -152,8 +171,20 @@ public class ResearchEntryBuilder {
                 json.addProperty("hidden", this.hidden);
             }
             
+            if (this.finaleExempt) {
+                json.addProperty("finaleExempt", this.finaleExempt);
+            }
+            
             if (this.icon != null) {
                 json.add("icon", this.icon.toJson());
+            }
+            
+            if (!this.finales.isEmpty()) {
+                JsonArray finalesArray = new JsonArray();
+                for (String discipline : this.finales) {
+                    finalesArray.add(discipline);
+                }
+                json.add("finales", finalesArray);
             }
             
             JsonArray parentsArray = new JsonArray();

@@ -1,0 +1,37 @@
+{
+  "addenda": [],
+  "discipline": "MANAWEAVING",
+  "finales": [
+    "MANAWEAVING"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_manaweaving.png"
+  },
+  "key": "COMPLETE_MANAWEAVING",
+  "name": "primalmagick.research.complete_manaweaving.title",
+  "parents": [],
+  "stages": [
+    {
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
+      "text": "primalmagick.research.complete_manaweaving.text.stage.1"
+    },
+    {
+      "attunements": {
+        "blood": 1,
+        "earth": 1,
+        "hallowed": 1,
+        "infernal": 1,
+        "moon": 1,
+        "sea": 1,
+        "sky": 1,
+        "sun": 1,
+        "void": 1
+      },
+      "text": "primalmagick.research.complete_manaweaving.text.stage.2"
+    }
+  ]
+}

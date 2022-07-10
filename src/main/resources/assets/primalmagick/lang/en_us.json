@@ -1052,6 +1052,14 @@
     "primalmagick.research.secrets_of_the_universe.text.stage.1": "The secrets of the universe?  Seriously?  I swear, sometimes I think this Grimoire is alive, if only because it likes to taunt me so.  But no matter, if anyone can make such a lofty discovery, it is I.<BR>The only question is... where to begin?<BR>Such secrets will undoubtedly require a great deal of research across a breadth of disciplines.  The Grimoire seems to hint that I will need to pay special attention to ritual magick, alchemy, and runeworking in order to achieve my goals.  It's also strongly implied that I will need to explore worlds beyond my home in the Overworld.  Finally, I could swear I saw an oblique reference to some kind of... decontamination?  The translation was unclear, and the reference vanished almost as soon as I saw it.  Most curious.<BR>Regardless, this will be a long road to walk.  I had best be patient and discover what I can along the way.",
     "primalmagick.research.secrets_of_the_universe.text.stage.2": "Ah, so these are the secrets of the universe, then.  Its underlying rhythm and melody.  I feel more in tune with the cosmos already.",
     
+    "primalmagick.research.complete_basics.title": "Completion of Fundamentals",
+    "primalmagick.research.complete_basics.text.stage.1": "I believe I've finally learned all that there is to know of the fundamentals of magick.",
+    "primalmagick.research.complete_basics.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
+    
+    "primalmagick.research.theory_of_everything.title": "Theory of Everything",
+    "primalmagick.research.theory_of_everything.text.stage.1": "Could it be?  Have I really discovered all there is to know of magick?",
+    "primalmagick.research.theory_of_everything.text.stage.2": "And so my journey reaches its end.  I have learned all there is to know of the ways of magick.  All that remains is to leave the universe a better place than I found it.<BR>Author's note: Congratulations, you have completed all the currently available content in Primal Magick.  Thank you so much for playing!  I truly hope you've enjoyed your magickal journey.  Stay tuned for future updates!",
+    
     "primalmagick.research.basic_alchemy.title": "Basic Alchemy",
     "primalmagick.research.basic_alchemy.text.stage.1": "I think I'm getting the hang of the basics of alchemy.  Combine dust with like-affinity materials for interesting results.  Be careful handling it.  *Definitely* don't eat it again, ugh.<BR>But how to make more of it?  There are only so many shrines in the world, and I can't very well dig underneath all of them.<BR>My Grimoire hints at something called an Essence Furnace, but doesn't say how to make one.  Maybe if I wave my wand at a regular furnace, like I did for the Arcane Workbench?",
     "primalmagick.research.basic_alchemy.text.stage.2": "That did the trick!<BR>This essence furnace will consume any item, but instead of a smelted result, will produce a small amount of essence dust based on the item's affinities.<BR>It's not very efficient, as it only produces a single handful of dust for each type of affinity that the item has, no matter how strong that affinity.  But it's a lot better than nothing.<BR>I should note, however, that items with particularly weak affinities, less than five points, only have a chance to generate a dust.  They might not generate anything at all.",
@@ -1067,6 +1075,10 @@
     "primalmagick.research.supreme_alchemy.title": "Supreme Alchemy",
     "primalmagick.research.supreme_alchemy.text.stage.1": "The top of the hill is in sight.  My skills with alchemy are almost without peer...  Almost.",
     "primalmagick.research.supreme_alchemy.text.stage.2": "The most advanced topics in the discipline of alchemy are now at my fingertips.",
+    
+    "primalmagick.research.complete_alchemy.title": "Completion of Alchemy",
+    "primalmagick.research.complete_alchemy.text.stage.1": "I believe I've finally learned all that there is to know of alchemy.",
+    "primalmagick.research.complete_alchemy.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
     
     "primalmagick.research.stonemelding.title": "Stonemelding",
     "primalmagick.research.stonemelding.text.stage.1": "Stone is an excellent material to build with because it's so unyielding.  But that same inflexibility also makes it a pain to work with.  Cobblestone is frequently an acceptable substitute, but sometimes you need a single, solid block, not a mass of small boulders.<BR>I should study the mundane process of making stone from cobble to see if a more alchemical solution presents itself.",
@@ -1211,6 +1223,10 @@
     "primalmagick.research.supreme_sorcery.text.stage.1": "The top of the hill is in sight.  My skills with sorcery are almost without peer...  Almost.",
     "primalmagick.research.supreme_sorcery.text.stage.2": "The most advanced topics in the discipline of sorcery are now at my fingertips.",
     
+    "primalmagick.research.complete_sorcery.title": "Completion of Sorcery",
+    "primalmagick.research.complete_sorcery.text.stage.1": "I believe I've finally learned all that there is to know of sorcery.",
+    "primalmagick.research.complete_sorcery.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
+    
     "primalmagick.research.wand_inscription.title": "Wand Inscription",
     "primalmagick.research.wand_inscription.text.stage.1": "Now that I know how to make better wands, I think it's time to leave scrolls behind.  I mean, they work, but it would be nice to be able to cast a spell mutliple times without having the scroll burn up.",
     "primalmagick.research.wand_inscription.text.stage.2": "I've devised a technique for inscribing a written spell onto the core of a wand.  This will consume the scroll, but allow me to cast the spell as many times as I can afford the mana cost.<BR>A wand can only have so many spells inscribed onto it, determined by the wand's core.  I can cycle through the wand's active spell list by pressing R, by default, or in reverse by holding SHIFT at the same time.<BR>Should I become dissatisfied with my wand's spells, I can clear it of all of them by placing it onto the Wand Inscription Table without a scroll.",
@@ -1340,6 +1356,10 @@
     "primalmagick.research.supreme_manaweaving.title": "Supreme Manaweaving",
     "primalmagick.research.supreme_manaweaving.text.stage.1": "The top of the hill is in sight.  My skills with manaweaving are almost without peer...  Almost.",
     "primalmagick.research.supreme_manaweaving.text.stage.2": "The most advanced topics in the discipline of manaweaving are now at my fingertips.",
+    
+    "primalmagick.research.complete_manaweaving.title": "Completion of Manaweaving",
+    "primalmagick.research.complete_manaweaving.text.stage.1": "I believe I've finally learned all that there is to know of manaweaving.",
+    "primalmagick.research.complete_manaweaving.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
     
     "primalmagick.research.wand_charger.title": "Wand Charger",
     "primalmagick.research.wand_charger.text.stage.1": "Running back and forth between shrines to charge my wand at the ancient fonts is getting really old, really fast.  There has to be a better way to do this.",
@@ -1510,6 +1530,10 @@
     "primalmagick.research.supreme_runeworking.text.stage.1": "The top of the hill is in sight.  My skills with runeworking are almost without peer...  Almost.",
     "primalmagick.research.supreme_runeworking.text.stage.2": "The most advanced topics in the discipline of runeworking are now at my fingertips.<BR>And at last, I have perfected my runescribing altar.  It will allow me to scribe the most possible runes onto an item at once, allowing for easy combinations to be made.",
     
+    "primalmagick.research.complete_runeworking.title": "Completion of Runeworking",
+    "primalmagick.research.complete_runeworking.text.stage.1": "I believe I've finally learned all that there is to know of runeworking.",
+    "primalmagick.research.complete_runeworking.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
+    
     "primalmagick.research.rune_earth.title": "Rune: Earth",
     "primalmagick.research.rune_earth.text.stage.1": "Source runes are a critical component of forming rune combinations.  I should figure out how to attune a rune to the Earth.",
     "primalmagick.research.rune_earth.text.stage.2": "A little Earth dust and an unattuned rune, and presto!  One Earth rune.",
@@ -1608,6 +1632,10 @@
     "primalmagick.research.supreme_ritual.title": "Supreme Ritual Magick",
     "primalmagick.research.supreme_ritual.text.stage.1": "The top of the hill is in sight.  My skills with ritual magick are almost without peer...  Almost.",
     "primalmagick.research.supreme_ritual.text.stage.2": "The most advanced topics in the discipline of ritual magick are now at my fingertips.",
+    
+    "primalmagick.research.complete_ritual.title": "Completion of Ritual Magick",
+    "primalmagick.research.complete_ritual.text.stage.1": "I believe I've finally learned all that there is to know of ritual magick.",
+    "primalmagick.research.complete_ritual.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
     
     "primalmagick.research.ritual_candles.title": "Ritual Candles",
     "primalmagick.research.ritual_candles.text.stage.1": "I'm going to need special props in order to conduct my rituals.  According to my Grimoire, ritual candles are a classic.  I should figure out what makes them special, compared to ordinary candles.",
@@ -1780,6 +1808,10 @@
     "primalmagick.research.supreme_magitech.title": "Supreme Magitech",
     "primalmagick.research.supreme_magitech.text.stage.1": "The top of the hill is in sight.  My skills with magitech are almost without peer...  Almost.",
     "primalmagick.research.supreme_magitech.text.stage.2": "The most advanced topics in the discipline of magitech are now at my fingertips.",
+    
+    "primalmagick.research.complete_magitech.title": "Completion of Magitech",
+    "primalmagick.research.complete_magitech.text.stage.1": "I believe I've finally learned all that there is to know of magitech.",
+    "primalmagick.research.complete_magitech.text.stage.2": "My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.",
     
     "primalmagick.research.honey_extractor.title": "Honey Extractor",
     "primalmagick.research.honey_extractor.text.stage.1": "Honey is delicious and sweet, and I wish there was a way to get it more efficiently from hives.  There's more of it in honeycombs than I can get from a bottle, but it's trapped inside the wax.  Can magick help?",

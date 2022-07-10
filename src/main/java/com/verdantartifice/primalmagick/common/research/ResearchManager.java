@@ -405,6 +405,7 @@ public class ResearchManager {
                     if (!knowledge.isResearchKnown(revelation)) {
                         knowledge.addResearch(revelation);
                         knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
+                        knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.NEW);
                     }
                 }
             }
@@ -482,6 +483,24 @@ public class ResearchManager {
                             // Grant any unlocked sibling research
                             for (SimpleResearchKey sibling : addendum.getSiblings()) {
                                 completeResearch(player, sibling, sync);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // If completing this entry finished its discipline, reveal any appropriate finale research
+            if (entry != null) {
+                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
+                if (discipline != null) {
+                    for (ResearchEntry finaleEntry : discipline.getFinaleEntries()) {
+                        SimpleResearchKey finaleKey = finaleEntry.getKey();
+                        if (!knowledge.isResearchKnown(finaleKey)) {
+                            boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty() && !e.isFinaleExempt()).allMatch(e -> e.isComplete(player));
+                            if (shouldUnlock) {
+                                knowledge.addResearch(finaleKey);
+                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
                             }
                         }
                     }
