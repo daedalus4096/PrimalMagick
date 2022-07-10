@@ -39,6 +39,7 @@ public class ResearchEntry {
     protected ResearchEntry.Icon icon;
     protected CompoundResearchKey parentResearch;
     protected boolean hidden;
+    protected boolean finaleExempt;
     protected List<String> finales = new ArrayList<>();
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
@@ -48,6 +49,7 @@ public class ResearchEntry {
         this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
         this.hidden = false;
+        this.finaleExempt = false;
         this.icon = icon;
     }
     
@@ -76,6 +78,10 @@ public class ResearchEntry {
         
         if (obj.has("hidden")) {
             entry.hidden = obj.getAsJsonPrimitive("hidden").getAsBoolean();
+        }
+        
+        if (obj.has("finaleExempt")) {
+            entry.finaleExempt = obj.getAsJsonPrimitive("finaleExempt").getAsBoolean();
         }
         
         if (obj.has("parents")) {
@@ -109,6 +115,7 @@ public class ResearchEntry {
         ResearchEntry.Icon icon = ResearchEntry.Icon.fromNetwork(buf);
         ResearchEntry entry = create(key, discipline, name, icon);
         entry.hidden = buf.readBoolean();
+        entry.finaleExempt = buf.readBoolean();
         entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
         int finaleCount = buf.readVarInt();
         for (int index = 0; index < finaleCount; index++) {
@@ -131,6 +138,7 @@ public class ResearchEntry {
         buf.writeUtf(entry.nameTranslationKey);
         ResearchEntry.Icon.toNetwork(buf, entry.icon);
         buf.writeBoolean(entry.hidden);
+        buf.writeBoolean(entry.finaleExempt);
         buf.writeUtf(entry.parentResearch == null ? "" : entry.parentResearch.toString());
         buf.writeVarInt(entry.finales.size());
         for (String discipline : entry.finales) {
@@ -176,6 +184,15 @@ public class ResearchEntry {
     }
     
     /**
+     * Get whether this research entry is exempt from counting towards discipline completion for unlocking finale research.
+     * 
+     * @return whether this entry is finale exempt
+     */
+    public boolean isFinaleExempt() {
+        return this.finaleExempt;
+    }
+    
+    /**
      * Get a list of all discipline keys for which this entry is a finale.  For this entry to be unlocked,
      * all listed disciplines must be completed.
      * 
@@ -186,6 +203,12 @@ public class ResearchEntry {
         return Collections.unmodifiableList(this.finales);
     }
     
+    /**
+     * Get whether this research entry is a finale for the given discipline key.
+     * 
+     * @param discipline the discipline to be tested
+     * @return whether this research is a finale for the given discipline key
+     */
     public boolean isFinaleFor(String discipline) {
         return this.finales.contains(discipline);
     }

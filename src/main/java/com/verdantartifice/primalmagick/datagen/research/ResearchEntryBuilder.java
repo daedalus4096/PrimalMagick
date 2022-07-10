@@ -25,6 +25,7 @@ public class ResearchEntryBuilder {
     protected final List<IFinishedResearchStage> stages = new ArrayList<>();
     protected final List<IFinishedResearchAddendum> addenda = new ArrayList<>();
     protected boolean hidden;
+    protected boolean finaleExempt;
     protected ResearchEntry.Icon icon;
     
     protected ResearchEntryBuilder(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
@@ -32,6 +33,7 @@ public class ResearchEntryBuilder {
         this.nameTranslationKey = modId.toLowerCase() + ".research." + this.key.getRootKey().toLowerCase() + ".title";
         this.disciplineName = discipline;
         this.hidden = false;
+        this.finaleExempt = false;
     }
     
     public static ResearchEntryBuilder entry(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
@@ -58,6 +60,11 @@ public class ResearchEntryBuilder {
     
     public ResearchEntryBuilder hidden() {
         this.hidden = true;
+        return this;
+    }
+    
+    public ResearchEntryBuilder finaleExempt() {
+        this.finaleExempt = true;
         return this;
     }
     
@@ -117,7 +124,8 @@ public class ResearchEntryBuilder {
     
     public void build(Consumer<IFinishedResearchEntry> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.hidden, this.icon, this.finales, this.parents, this.stages, this.addenda));
+        consumer.accept(new ResearchEntryBuilder.Result(id, this.key, this.nameTranslationKey, this.disciplineName, this.hidden, this.finaleExempt, this.icon, this.finales, 
+                this.parents, this.stages, this.addenda));
     }
     
     public static class Result implements IFinishedResearchEntry {
@@ -126,19 +134,21 @@ public class ResearchEntryBuilder {
         protected final String name;
         protected final String discipline;
         protected final boolean hidden;
+        protected final boolean finaleExempt;
         protected final ResearchEntry.Icon icon;
         protected final List<String> finales;
         protected final List<SimpleResearchKey> parents;
         protected final List<IFinishedResearchStage> stages;
         protected final List<IFinishedResearchAddendum> addenda;
         
-        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, boolean hidden, @Nullable ResearchEntry.Icon icon, 
+        public Result(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey key, @Nonnull String name, @Nonnull String discipline, boolean hidden, boolean finaleExempt, @Nullable ResearchEntry.Icon icon, 
                 @Nonnull List<String> finales, @Nonnull List<SimpleResearchKey> parents, @Nonnull List<IFinishedResearchStage> stages, @Nonnull List<IFinishedResearchAddendum> addenda) {
             this.id = id;
             this.key = key;
             this.name = name;
             this.discipline = discipline;
             this.hidden = hidden;
+            this.finaleExempt = finaleExempt;
             this.icon = icon;
             this.finales = finales;
             this.parents = parents;
@@ -159,6 +169,10 @@ public class ResearchEntryBuilder {
             
             if (this.hidden) {
                 json.addProperty("hidden", this.hidden);
+            }
+            
+            if (this.finaleExempt) {
+                json.addProperty("finaleExempt", this.finaleExempt);
             }
             
             if (this.icon != null) {

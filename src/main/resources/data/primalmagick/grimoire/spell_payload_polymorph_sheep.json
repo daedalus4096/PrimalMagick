@@ -1,6 +1,7 @@
 {
   "addenda": [],
   "discipline": "SORCERY",
+  "finaleExempt": true,
   "hidden": true,
   "icon": {
     "isItem": false,

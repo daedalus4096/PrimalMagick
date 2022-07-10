@@ -788,7 +788,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredResearch("m_furry_friend", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 3).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().icon(Source.MOON.getImage())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().finaleExempt().icon(Source.MOON.getImage())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", discipline).icon(Source.BLOOD.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")

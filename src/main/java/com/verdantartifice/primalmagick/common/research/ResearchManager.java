@@ -498,7 +498,7 @@ public class ResearchManager {
 //                        LOGGER.info("Testing whether to unlock finale entry {}", finaleKey);
                         if (!knowledge.isResearchKnown(finaleKey)) {
 //                            LOGGER.info("Testing whether all entries for disciplines {} are complete", String.join(", ", finaleEntry.getFinaleDisciplines()));
-                            boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty()).allMatch(e -> e.isComplete(player));
+                            boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty() && !e.isFinaleExempt()).allMatch(e -> e.isComplete(player));
                             if (shouldUnlock) {
 //                                LOGGER.info("All entries are complete, unlocking research for {}", finaleKey);
                                 knowledge.addResearch(finaleKey);
