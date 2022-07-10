@@ -14,7 +14,24 @@
   "parents": [],
   "stages": [
     {
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
       "text": "primalmagick.research.complete_sorcery.text.stage.1"
+    },
+    {
+      "attunements": {
+        "blood": 1,
+        "earth": 1,
+        "hallowed": 1,
+        "infernal": 1,
+        "moon": 1,
+        "sea": 1,
+        "sky": 1,
+        "sun": 1,
+        "void": 1
+      },
+      "text": "primalmagick.research.complete_sorcery.text.stage.2"
     }
   ]
 }

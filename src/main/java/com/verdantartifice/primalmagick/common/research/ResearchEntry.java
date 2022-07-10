@@ -175,9 +175,19 @@ public class ResearchEntry {
         return this.hidden;
     }
     
+    /**
+     * Get a list of all discipline keys for which this entry is a finale.  For this entry to be unlocked,
+     * all listed disciplines must be completed.
+     * 
+     * @return all discipline keys for which this entry is a finale
+     */
     @Nonnull
     public List<String> getFinaleDisciplines() {
         return Collections.unmodifiableList(this.finales);
+    }
+    
+    public boolean isFinaleFor(String discipline) {
+        return this.finales.contains(discipline);
     }
     
     @Nonnull

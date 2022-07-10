@@ -405,6 +405,7 @@ public class ResearchManager {
                     if (!knowledge.isResearchKnown(revelation)) {
                         knowledge.addResearch(revelation);
                         knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
+                        knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.NEW);
                     }
                 }
             }
@@ -483,6 +484,32 @@ public class ResearchManager {
                             for (SimpleResearchKey sibling : addendum.getSiblings()) {
                                 completeResearch(player, sibling, sync);
                             }
+                        }
+                    }
+                }
+            }
+            
+            // If completing this entry finished its discipline, reveal any appropriate finale research
+            if (entry != null) {
+                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
+                if (discipline != null) {
+                    for (ResearchEntry finaleEntry : discipline.getFinaleEntries()) {
+                        SimpleResearchKey finaleKey = finaleEntry.getKey();
+//                        LOGGER.info("Testing whether to unlock finale entry {}", finaleKey);
+                        if (!knowledge.isResearchKnown(finaleKey)) {
+//                            LOGGER.info("Testing whether all entries for disciplines {} are complete", String.join(", ", finaleEntry.getFinaleDisciplines()));
+                            boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty()).allMatch(e -> e.isComplete(player));
+                            if (shouldUnlock) {
+//                                LOGGER.info("All entries are complete, unlocking research for {}", finaleKey);
+                                knowledge.addResearch(finaleKey);
+                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
+//                            } else {
+//                                List<String> unfinished = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty()).filter(e -> !e.isComplete(player)).map(e -> e.getKey().toString()).collect(Collectors.toList());
+//                                LOGGER.info("Unfinished entries for {} found: {}", finaleKey, String.join(", ", unfinished));
+                            }
+//                        } else {
+//                            LOGGER.info("Finale entry {} already known!", finaleKey);
                         }
                     }
                 }

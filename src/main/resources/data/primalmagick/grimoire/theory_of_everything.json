@@ -20,7 +20,24 @@
   "parents": [],
   "stages": [
     {
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
       "text": "primalmagick.research.theory_of_everything.text.stage.1"
+    },
+    {
+      "attunements": {
+        "blood": 2,
+        "earth": 2,
+        "hallowed": 2,
+        "infernal": 2,
+        "moon": 2,
+        "sea": 2,
+        "sky": 2,
+        "sun": 2,
+        "void": 2
+      },
+      "text": "primalmagick.research.theory_of_everything.text.stage.2"
     }
   ]
 }
