@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "RUNEWORKING",
+  "finales": [
+    "RUNEWORKING"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_runeworking.png"
+  },
+  "key": "COMPLETE_RUNEWORKING",
+  "name": "primalmagick.research.complete_runeworking.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_runeworking.text.stage.1"
+    }
+  ]
+}

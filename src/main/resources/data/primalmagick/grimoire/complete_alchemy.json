@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "ALCHEMY",
+  "finales": [
+    "ALCHEMY"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_alchemy.png"
+  },
+  "key": "COMPLETE_ALCHEMY",
+  "name": "primalmagick.research.complete_alchemy.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_alchemy.text.stage.1"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "SORCERY",
+  "finales": [
+    "SORCERY"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": "COMPLETE_SORCERY",
+  "name": "primalmagick.research.complete_sorcery.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_sorcery.text.stage.1"
+    }
+  ]
+}

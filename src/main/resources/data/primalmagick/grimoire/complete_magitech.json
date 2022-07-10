@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "finales": [
+    "MAGITECH"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
+  "key": "COMPLETE_MAGITECH",
+  "name": "primalmagick.research.complete_magitech.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_magitech.text.stage.1"
+    }
+  ]
+}

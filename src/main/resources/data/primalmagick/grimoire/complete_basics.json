@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "BASICS",
+  "finales": [
+    "BASICS"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:grimoire"
+  },
+  "key": "COMPLETE_BASICS",
+  "name": "primalmagick.research.complete_basics.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_basics.text.stage.1"
+    }
+  ]
+}

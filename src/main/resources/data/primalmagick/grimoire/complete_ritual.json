@@ -1,0 +1,20 @@
+{
+  "addenda": [],
+  "discipline": "RITUAL",
+  "finales": [
+    "RITUAL"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": "COMPLETE_RITUAL",
+  "name": "primalmagick.research.complete_ritual.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.complete_ritual.text.stage.1"
+    }
+  ]
+}

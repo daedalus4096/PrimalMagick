@@ -1,0 +1,26 @@
+{
+  "addenda": [],
+  "discipline": "BASICS",
+  "finales": [
+    "BASICS",
+    "ALCHEMY",
+    "MAGITECH",
+    "MANAWEAVING",
+    "RITUAL",
+    "RUNEWORKING",
+    "SORCERY"
+  ],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:grimoire"
+  },
+  "key": "THEORY_OF_EVERYTHING",
+  "name": "primalmagick.research.theory_of_everything.title",
+  "parents": [],
+  "stages": [
+    {
+      "text": "primalmagick.research.theory_of_everything.text.stage.1"
+    }
+  ]
+}
