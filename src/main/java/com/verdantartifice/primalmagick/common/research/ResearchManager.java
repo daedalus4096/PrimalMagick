@@ -495,21 +495,13 @@ public class ResearchManager {
                 if (discipline != null) {
                     for (ResearchEntry finaleEntry : discipline.getFinaleEntries()) {
                         SimpleResearchKey finaleKey = finaleEntry.getKey();
-//                        LOGGER.info("Testing whether to unlock finale entry {}", finaleKey);
                         if (!knowledge.isResearchKnown(finaleKey)) {
-//                            LOGGER.info("Testing whether all entries for disciplines {} are complete", String.join(", ", finaleEntry.getFinaleDisciplines()));
                             boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty() && !e.isFinaleExempt()).allMatch(e -> e.isComplete(player));
                             if (shouldUnlock) {
-//                                LOGGER.info("All entries are complete, unlocking research for {}", finaleKey);
                                 knowledge.addResearch(finaleKey);
                                 knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
                                 knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
-//                            } else {
-//                                List<String> unfinished = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty()).filter(e -> !e.isComplete(player)).map(e -> e.getKey().toString()).collect(Collectors.toList());
-//                                LOGGER.info("Unfinished entries for {} found: {}", finaleKey, String.join(", ", unfinished));
                             }
-//                        } else {
-//                            LOGGER.info("Finale entry {} already known!", finaleKey);
                         }
                     }
                 }
