@@ -34,9 +34,10 @@ public class WandHudOverlay implements IIngameOverlay {
     public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         if (!mc.options.hideGui && !mc.player.isSpectator() && Config.SHOW_WAND_HUD.get()) {
-            ItemStack stack = mc.player.getItemBySlot(EquipmentSlot.MAINHAND);
-            if (stack.getItem() instanceof IWand wand) {
-                this.renderHud(mc, poseStack, stack, wand, partialTick);
+            if (mc.player.getMainHandItem().getItem() instanceof IWand wand) {
+                this.renderHud(mc, poseStack, mc.player.getMainHandItem(), wand, partialTick);
+            } else if (mc.player.getOffhandItem().getItem() instanceof IWand wand) {
+                this.renderHud(mc, poseStack, mc.player.getOffhandItem(), wand, partialTick);
             }
         }
     }

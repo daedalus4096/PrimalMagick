@@ -13,6 +13,7 @@ v3.0.1
 * Added hints to some of the more oblique research requirements
 * Added wand HUD
 * Added radial menu for wand spell selection
+* Made wand GUIs offhand friendly
 * Incremented to Forge version 41.0.45
 
 v3.0.0-beta

@@ -37,7 +37,11 @@ public class SpellSelectionRadialScreen extends Screen {
     public SpellSelectionRadialScreen() {
         super(Component.empty());
         Minecraft mc = Minecraft.getInstance();
-        this.stackEquipped = mc.player.getMainHandItem();
+        if (mc.player.getMainHandItem().getItem() instanceof IWand) {
+            this.stackEquipped = mc.player.getMainHandItem();
+        } else if (mc.player.getOffhandItem().getItem() instanceof IWand) {
+            this.stackEquipped = mc.player.getOffhandItem();
+        }
         this.menu = new GenericRadialMenu(mc, new IRadialMenuHost() {
             @Override
             public void renderTooltip(PoseStack matrixStack, ItemStack stack, int mouseX, int mouseY)
@@ -107,10 +111,16 @@ public class SpellSelectionRadialScreen extends Screen {
             return;
         }
         
-        ItemStack inHand = this.minecraft.player.getMainHandItem();
-        if (inHand.getItem() instanceof IWand wand) {
-            if (this.stackEquipped != inHand) {     // Reference comparison intended
-                this.stackEquipped = inHand;
+        ItemStack inMainHand = this.minecraft.player.getMainHandItem();
+        ItemStack inOffHand = this.minecraft.player.getOffhandItem();
+        if (inMainHand.getItem() instanceof IWand) {
+            if (this.stackEquipped != inMainHand) {     // Reference comparison intended
+                this.stackEquipped = inMainHand;
+                this.needsRecheckSpells = true;
+            }
+        } else if (inOffHand.getItem() instanceof IWand) {
+            if (this.stackEquipped != inOffHand) {      // Reference comparison intended
+                this.stackEquipped = inOffHand;
                 this.needsRecheckSpells = true;
             }
         } else {
@@ -177,8 +187,9 @@ public class SpellSelectionRadialScreen extends Screen {
     }
     
     private boolean trySwitch(int slotNumber) {
-        ItemStack inHand = this.minecraft.player.getMainHandItem();
-        if (!(inHand.getItem() instanceof IWand)) {
+        ItemStack inMainHand = this.minecraft.player.getMainHandItem();
+        ItemStack inOffHand = this.minecraft.player.getOffhandItem();
+        if (!(inMainHand.getItem() instanceof IWand) && !(inOffHand.getItem() instanceof IWand)) {
             return false;
         }
         

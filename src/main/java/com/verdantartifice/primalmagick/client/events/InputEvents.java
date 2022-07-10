@@ -13,7 +13,6 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent;
@@ -60,11 +59,8 @@ public class InputEvents {
             boolean spellSelectKeyIsDown = KeyBindings.changeSpellKey.isDown();
             if (spellSelectKeyIsDown && !SPELL_SELECT_KEY_WAS_DOWN) {
                 while (KeyBindings.changeSpellKey.consumeClick()) {
-                    if (mc.screen == null) {
-                        ItemStack stack = mc.player.getMainHandItem();
-                        if (stack.getItem() instanceof IWand) {
-                            mc.setScreen(new SpellSelectionRadialScreen());
-                        }
+                    if (mc.screen == null && (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand)) {
+                        mc.setScreen(new SpellSelectionRadialScreen());
                     }
                 }
             }
