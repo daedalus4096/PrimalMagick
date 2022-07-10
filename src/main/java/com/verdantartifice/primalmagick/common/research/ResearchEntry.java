@@ -39,6 +39,7 @@ public class ResearchEntry {
     protected ResearchEntry.Icon icon;
     protected CompoundResearchKey parentResearch;
     protected boolean hidden;
+    protected List<String> finales = new ArrayList<>();
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
@@ -81,6 +82,12 @@ public class ResearchEntry {
             entry.parentResearch = CompoundResearchKey.parse(obj.get("parents").getAsJsonArray());
         }
         
+        if (obj.has("finales")) {
+            for (JsonElement element : obj.get("finales").getAsJsonArray()) {
+                entry.finales.add(element.getAsString());
+            }
+        }
+        
         for (JsonElement element : obj.get("stages").getAsJsonArray()) {
             entry.stages.add(ResearchStage.parse(entry, element.getAsJsonObject()));
         }
@@ -103,6 +110,10 @@ public class ResearchEntry {
         ResearchEntry entry = create(key, discipline, name, icon);
         entry.hidden = buf.readBoolean();
         entry.parentResearch = CompoundResearchKey.parse(buf.readUtf());
+        int finaleCount = buf.readVarInt();
+        for (int index = 0; index < finaleCount; index++) {
+            entry.finales.add(buf.readUtf());
+        }
         int stageCount = buf.readVarInt();
         for (int index = 0; index < stageCount; index++) {
             entry.stages.add(ResearchStage.fromNetwork(buf, entry));
@@ -121,6 +132,10 @@ public class ResearchEntry {
         ResearchEntry.Icon.toNetwork(buf, entry.icon);
         buf.writeBoolean(entry.hidden);
         buf.writeUtf(entry.parentResearch == null ? "" : entry.parentResearch.toString());
+        buf.writeVarInt(entry.finales.size());
+        for (String discipline : entry.finales) {
+            buf.writeUtf(discipline);
+        }
         buf.writeVarInt(entry.stages.size());
         for (ResearchStage stage : entry.stages) {
             ResearchStage.toNetwork(buf, stage);
@@ -158,6 +173,11 @@ public class ResearchEntry {
     
     public boolean isHidden() {
         return this.hidden;
+    }
+    
+    @Nonnull
+    public List<String> getFinaleDisciplines() {
+        return Collections.unmodifiableList(this.finales);
     }
     
     @Nonnull
