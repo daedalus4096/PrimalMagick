@@ -95,7 +95,7 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
             } else if (state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
                 newState = newState.setValue(BlockStateProperties.HORIZONTAL_FACING, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
             }
-            if (fluidState.isSourceOfType(Fluids.WATER)) {
+            if (fluidState.isSourceOfType(Fluids.WATER) && newState.hasProperty(BlockStateProperties.WATERLOGGED)) {
                 newState = newState.setValue(BlockStateProperties.WATERLOGGED, Boolean.TRUE);
             }
             world.setBlock(pos, newState, Block.UPDATE_ALL);
