@@ -81,7 +81,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (AbstractCalcinatorTileEntity)tile);
+                NetworkHooks.openScreen((ServerPlayer)player, (AbstractCalcinatorTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

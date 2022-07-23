@@ -109,7 +109,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onLivingEntityUseItemTick(LivingEntityUseItemEvent.Tick event) {
         // Stack up resistance on the wielders of shields with the Bulwark enchantment
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
         ItemStack stack = event.getItem();
         int currentDuration = event.getDuration();
         int maxDuration = stack.getUseDuration();

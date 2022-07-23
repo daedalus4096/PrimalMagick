@@ -32,12 +32,12 @@ public class ScanEntityPacket implements IMessageToServer {
     }
     
     public static void encode(ScanEntityPacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(ForgeRegistries.ENTITIES.getKey(message.type).toString());
+        buf.writeUtf(ForgeRegistries.ENTITY_TYPES.getKey(message.type).toString());
     }
     
     public static ScanEntityPacket decode(FriendlyByteBuf buf) {
         ScanEntityPacket message = new ScanEntityPacket();
-        message.type = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(buf.readUtf()));
+        message.type = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(buf.readUtf()));
         return message;
     }
     

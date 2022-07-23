@@ -21,8 +21,8 @@ public class EarthshatterHammerItem extends Item {
     }
     
     @Override
-    public ItemStack getContainerItem(ItemStack stack) {
-        if (this.hasContainerItem(stack)) {
+    public ItemStack getCraftingRemainingItem(ItemStack stack) {
+        if (this.hasCraftingRemainingItem(stack)) {
             ItemStack newStack = stack.copy();
             newStack.hurt(1, RNG, null);
             return newStack;
@@ -32,7 +32,7 @@ public class EarthshatterHammerItem extends Item {
     }
     
     @Override
-    public boolean hasContainerItem(ItemStack stack) {
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
         return stack.getItem() instanceof EarthshatterHammerItem && stack.getDamageValue() < stack.getMaxDamage();
     }
 }

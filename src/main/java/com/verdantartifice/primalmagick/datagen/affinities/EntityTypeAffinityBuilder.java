@@ -19,7 +19,7 @@ public class EntityTypeAffinityBuilder {
     protected SourceList values;
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
-        this.targetId = ForgeRegistries.ENTITIES.getKey(target);
+        this.targetId = ForgeRegistries.ENTITY_TYPES.getKey(target);
     }
     
     public static EntityTypeAffinityBuilder entityAffinity(@Nonnull EntityType<?> target) {
@@ -43,7 +43,7 @@ public class EntityTypeAffinityBuilder {
         if (this.targetId == null) {
             throw new IllegalStateException("No target entity type for affinity " + id.toString());
         }
-        if (!ForgeRegistries.ENTITIES.containsKey(this.targetId)) {
+        if (!ForgeRegistries.ENTITY_TYPES.containsKey(this.targetId)) {
             throw new IllegalStateException("Unknown target entity type " + this.targetId.toString() + " for affinity " + id.toString());
         }
     }

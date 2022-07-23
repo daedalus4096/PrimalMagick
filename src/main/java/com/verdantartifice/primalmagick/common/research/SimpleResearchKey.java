@@ -70,7 +70,7 @@ public class SimpleResearchKey {
         if (type == null) {
             return null;
         } else {
-            return parse(ENTITY_SCAN_PREFIX + ForgeRegistries.ENTITIES.getKey(type).toString());
+            return parse(ENTITY_SCAN_PREFIX + ForgeRegistries.ENTITY_TYPES.getKey(type).toString());
         }
     }
     

@@ -16,7 +16,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class ContainersPM {
-    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, PrimalMagick.MODID);
+    private static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PrimalMagick.MODID);
     
     public static void init() {
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());

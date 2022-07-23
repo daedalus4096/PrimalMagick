@@ -86,7 +86,7 @@ public class EntityLootTables implements DataProvider {
     
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> entityTypes = ForgeRegistries.ENTITIES.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).collect(Collectors.toSet());
+        Set<ResourceLocation> entityTypes = ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(loc -> loc.getNamespace().equals(PrimalMagick.MODID)).collect(Collectors.toSet());
         
         // Warn for each mod entity that didn't have a loot table registered
         entityTypes.removeAll(this.registeredEntities);
@@ -100,12 +100,12 @@ public class EntityLootTables implements DataProvider {
     
     private void registerEmptyLootTable(EntityType<?> type) {
         // Just mark that it's been registered without creating a table builder, to track expectations
-        this.registeredEntities.add(ForgeRegistries.ENTITIES.getKey(type));
+        this.registeredEntities.add(ForgeRegistries.ENTITY_TYPES.getKey(type));
     }
     
     private void registerLootTable(EntityType<?> type, LootTable.Builder builder) {
         this.lootTables.put(type, builder);
-        this.registeredEntities.add(ForgeRegistries.ENTITIES.getKey(type));
+        this.registeredEntities.add(ForgeRegistries.ENTITY_TYPES.getKey(type));
     }
     
     protected void addTables() {

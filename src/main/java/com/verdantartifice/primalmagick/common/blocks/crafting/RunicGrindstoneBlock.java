@@ -60,7 +60,7 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer) {
-            NetworkHooks.openGui((ServerPlayer)player, state.getMenuProvider(worldIn, pos));
+            NetworkHooks.openScreen((ServerPlayer)player, state.getMenuProvider(worldIn, pos));
         }
         return InteractionResult.SUCCESS;
     }

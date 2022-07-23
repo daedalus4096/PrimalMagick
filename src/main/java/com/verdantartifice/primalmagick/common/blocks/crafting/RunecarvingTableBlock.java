@@ -74,7 +74,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunecarvingTableTileEntity tableTile) {
-                NetworkHooks.openGui(serverPlayer, tableTile, tile.getBlockPos());
+                NetworkHooks.openScreen(serverPlayer, tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

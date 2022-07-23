@@ -84,13 +84,13 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -111,7 +111,7 @@ public class PlayerEvents {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
-    public static void livingTick(LivingEvent.LivingUpdateEvent event) {
+    public static void livingTick(LivingEvent.LivingTickEvent event) {
         if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
@@ -390,8 +390,8 @@ public class PlayerEvents {
     }
     
     @SubscribeEvent
-    public static void playerJoinEvent(EntityJoinWorldEvent event) {
-        Level world = event.getWorld();
+    public static void playerJoinEvent(EntityJoinLevelEvent event) {
+        Level world = event.getLevel();
         if (!world.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             // When a player first joins a world, sync that player's capabilities to their client
             doScheduledSyncs(player, true);
@@ -408,42 +408,42 @@ public class PlayerEvents {
         
         try {
             CompoundTag nbtKnowledge = PrimalMagickCapabilities.getKnowledge(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getKnowledge(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
+            PrimalMagickCapabilities.getKnowledge(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtKnowledge);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} knowledge", event.getOriginal().getName().getString());
         }
         
         try {
             CompoundTag nbtCooldowns = PrimalMagickCapabilities.getCooldowns(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCooldowns(event.getPlayer()).deserializeNBT(nbtCooldowns);
+            PrimalMagickCapabilities.getCooldowns(event.getEntity()).deserializeNBT(nbtCooldowns);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} cooldowns", event.getOriginal().getName().getString());
         }
         
         try {
             CompoundTag nbtStats = PrimalMagickCapabilities.getStats(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getStats(event.getPlayer()).deserializeNBT(nbtStats);
+            PrimalMagickCapabilities.getStats(event.getEntity()).deserializeNBT(nbtStats);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} stats", event.getOriginal().getName().getString());
         }
         
         try {
             CompoundTag nbtAttunements = PrimalMagickCapabilities.getAttunements(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getAttunements(event.getPlayer()).deserializeNBT(nbtAttunements);
+            PrimalMagickCapabilities.getAttunements(event.getEntity()).deserializeNBT(nbtAttunements);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} attunements", event.getOriginal().getName().getString());
         }
         
         try {
             CompoundTag nbtCompanions = PrimalMagickCapabilities.getCompanions(event.getOriginal()).serializeNBT();
-            PrimalMagickCapabilities.getCompanions(event.getPlayer()).deserializeNBT(nbtCompanions);
+            PrimalMagickCapabilities.getCompanions(event.getEntity()).deserializeNBT(nbtCompanions);
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} companions", event.getOriginal().getName().getString());
         }
         
         try {
             CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getArcaneRecipeBook(event.getPlayer()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getPlayer().level.getRecipeManager());
+            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level.getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }
@@ -453,12 +453,12 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onCrafting(PlayerEvent.ItemCraftedEvent event) {
-        registerItemCrafted(event.getPlayer(), event.getCrafting().copy());
+        registerItemCrafted(event.getEntity(), event.getCrafting().copy());
     }
     
     @SubscribeEvent
     public static void onSmelting(PlayerEvent.ItemSmeltedEvent event) {
-        registerItemCrafted(event.getPlayer(), event.getSmelting().copy());
+        registerItemCrafted(event.getEntity(), event.getSmelting().copy());
     }
     
     protected static void registerItemCrafted(Player player, ItemStack stack) {
@@ -482,7 +482,7 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onWakeUp(PlayerWakeUpEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (player != null && !player.level.isClientSide) {
             if ( ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_found_shrine")) &&
                  !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
@@ -536,8 +536,8 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onJump(LivingEvent.LivingJumpEvent event) {
-        if (event.getEntityLiving() instanceof Player) {
-            Player player = (Player)event.getEntityLiving();
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player)event.getEntity();
             if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
                 Vec3 motion = player.getDeltaMovement();
@@ -549,12 +549,12 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onPlayerInteractLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-        LAST_BLOCK_LEFT_CLICK.put(event.getPlayer().getUUID(), new InteractionRecord(event.getPlayer(), event.getHand(), event.getPos(), event.getFace()));
+        LAST_BLOCK_LEFT_CLICK.put(event.getEntity().getUUID(), new InteractionRecord(event.getEntity(), event.getHand(), event.getPos(), event.getFace()));
     }
     
     @SubscribeEvent
     public static void onPickupExperience(PlayerXpEvent.PickupXp event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         if (player != null && !player.level.isClientSide) {
             NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
@@ -612,7 +612,7 @@ public class PlayerEvents {
     
     @SubscribeEvent
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        ItemStack stack = event.getPlayer().getItemInHand(event.getHand());
+        ItemStack stack = event.getEntity().getItemInHand(event.getHand());
         Entity target = event.getTarget();
         Level level = target.getLevel();
         

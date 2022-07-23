@@ -23,7 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -38,7 +38,7 @@ public class BlockEvents {
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
-        Level world = (event.getWorld() instanceof Level) ? (Level)event.getWorld() : null;
+        Level world = (event.getLevel() instanceof Level) ? (Level)event.getLevel() : null;
         if (!event.isCanceled() && world != null && !world.isClientSide && !player.isSecondaryUseActive() && !BlockBreaker.hasBreakerQueued(world, event.getPos())) {
             triggerReverberation(world, event.getPos(), event.getState(), player, player.getMainHandItem());
             triggerDisintegration(world, event.getPos(), event.getState(), player, player.getMainHandItem());
@@ -132,7 +132,7 @@ public class BlockEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onBlockBreakLowest(BlockEvent.BreakEvent event) {
         // Record the block break statistic
-        if (!event.isCanceled() && event.getState().getDestroySpeed(event.getWorld(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty() && 
+        if (!event.isCanceled() && event.getState().getDestroySpeed(event.getLevel(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty() && 
                 event.getPlayer().getOffhandItem().isEmpty()) {
             StatsManager.incrementValue(event.getPlayer(), StatsPM.BLOCKS_BROKEN_BAREHANDED);
         }

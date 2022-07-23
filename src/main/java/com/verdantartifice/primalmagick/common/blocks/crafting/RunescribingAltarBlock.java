@@ -69,7 +69,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
             // Open the GUI for the altar
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunescribingAltarTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (RunescribingAltarTileEntity)tile);
+                NetworkHooks.openScreen((ServerPlayer)player, (RunescribingAltarTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;
