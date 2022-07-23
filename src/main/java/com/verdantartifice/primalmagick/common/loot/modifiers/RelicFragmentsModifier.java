@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 /**
@@ -17,6 +17,12 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class RelicFragmentsModifier extends LootModifier {
+    public static final Codec<RelicFragmentsModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).and(inst.group(
+            Codec.INT.fieldOf("minCount").forGetter(m -> m.minCount),
+            Codec.INT.fieldOf("maxCount").forGetter(m -> m.maxCount),
+            Codec.INT.fieldOf("lootingBonus").forGetter(m -> m.lootingBonus)
+        )).apply(inst, RelicFragmentsModifier::new));
+
     protected final int minCount;
     protected final int maxCount;
     protected final int lootingBonus;
@@ -38,22 +44,8 @@ public class RelicFragmentsModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<RelicFragmentsModifier> {
-        @Override
-        public RelicFragmentsModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
-            int minCount = object.getAsJsonPrimitive("minCount").getAsInt();
-            int maxCount = object.getAsJsonPrimitive("maxCount").getAsInt();
-            int lootingBonus = object.getAsJsonPrimitive("lootingBonus").getAsInt();
-            return new RelicFragmentsModifier(ailootcondition, minCount, maxCount, lootingBonus);
-        }
-
-        @Override
-        public JsonObject write(RelicFragmentsModifier instance) {
-            JsonObject obj = this.makeConditions(instance.conditions);
-            obj.addProperty("minCount", instance.minCount);
-            obj.addProperty("maxCount", instance.maxCount);
-            obj.addProperty("lootingBonus", instance.lootingBonus);
-            return obj;
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
     }
 }

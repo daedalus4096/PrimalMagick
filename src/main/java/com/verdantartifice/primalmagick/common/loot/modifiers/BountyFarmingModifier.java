@@ -3,19 +3,19 @@ package com.verdantartifice.primalmagick.common.loot.modifiers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 /**
@@ -25,13 +25,15 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class BountyFarmingModifier extends LootModifier {
+    public static final Codec<BountyFarmingModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).and(Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance)).apply(inst, BountyFarmingModifier::new));
+
     protected final float chance;
 
     public BountyFarmingModifier(LootItemCondition[] conditionsIn, float chance) {
         super(conditionsIn);
         this.chance = chance;
     }
-
+    
     @SuppressWarnings("deprecation")
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
@@ -47,18 +49,8 @@ public class BountyFarmingModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<BountyFarmingModifier> {
-        @Override
-        public BountyFarmingModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
-            float chance = object.getAsJsonPrimitive("chance").getAsFloat();
-            return new BountyFarmingModifier(ailootcondition, chance);
-        }
-
-        @Override
-        public JsonObject write(BountyFarmingModifier instance) {
-            JsonObject obj = this.makeConditions(instance.conditions);
-            obj.addProperty("chance", instance.chance);
-            return obj;
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
     }
 }
