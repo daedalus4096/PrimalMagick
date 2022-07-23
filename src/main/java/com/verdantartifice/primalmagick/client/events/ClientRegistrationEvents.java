@@ -97,7 +97,7 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "Wand HUD", new WandHudOverlay());
+        event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "wand_hud", new WandHudOverlay());
     }
     
     @SubscribeEvent

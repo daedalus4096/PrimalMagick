@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -25,6 +26,7 @@ public class KeyBindings {
     
     private static final String KEY_CATEGORY = "key.categories." + PrimalMagick.MODID;
     
+    @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         changeSpellKey = new KeyMapping("key.primalmagick.change_spell", GLFW.GLFW_KEY_R, KEY_CATEGORY);
         event.register(changeSpellKey);
