@@ -1,5 +1,6 @@
 {
     "parent": "block/slab",
+    "render_type": "translucent",
     "textures": {
         "bottom": "primalmagick:block/moonwood_planks_waxing",
         "top": "primalmagick:block/moonwood_planks_waxing",

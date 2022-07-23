@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+    "render_type": "cutout",
 	"textures": {
 		"0": "primalmagick:block/void_turbine_side",
 		"1": "primalmagick:block/void_turbine_bottom",

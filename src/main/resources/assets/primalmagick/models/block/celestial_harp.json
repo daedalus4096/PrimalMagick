@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+    "render_type": "cutout",
 	"textures": {
 		"0": "primalmagick:block/stripped_hallowood_log",
 		"1": "primalmagick:block/celestial_harp_strings",

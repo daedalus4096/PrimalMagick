@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+    "render_type": "cutout",
 	"textures": {
 		"0": "primalmagick:block/wood_table_top",
 		"1": "primalmagick:block/runecarving_table_side",

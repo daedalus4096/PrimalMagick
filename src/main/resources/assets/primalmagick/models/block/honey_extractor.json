@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+    "render_type": "translucent",
 	"textures": {
 		"0": "primalmagick:block/honey_extractor_side",
 		"1": "primalmagick:block/honey_extractor_bottom",

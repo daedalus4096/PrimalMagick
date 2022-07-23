@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
+    "render_type": "cutout",
 	"textures": {
 		"particle": "primalmagick:block/sunlamp",
 		"all": "primalmagick:block/sunlamp"

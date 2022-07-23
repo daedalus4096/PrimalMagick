@@ -1,5 +1,6 @@
 {
     "parent": "primalmagick:block/salt_trail_side",
+    "render_type": "cutout",
     "textures": {
         "line": "primalmagick:block/salt_trail_line1"
     }

@@ -1,5 +1,6 @@
 {
     "ambientocclusion": false,
+    "render_type": "cutout",
     "textures": {
         "particle": "primalmagick:block/salt_trail_dot",
         "overlay": "primalmagick:block/salt_trail_overlay"

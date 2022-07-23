@@ -1,5 +1,6 @@
 {
     "parent": "block/leaves",
+    "render_type": "translucent",
     "textures": {
         "all": "primalmagick:block/sunwood_leaves_faded"
     }

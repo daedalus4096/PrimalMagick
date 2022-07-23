@@ -31,7 +31,6 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
@@ -41,8 +40,6 @@ import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
@@ -70,7 +67,6 @@ public class ClientModLifecycleEvents {
         registerScreens();
         registerTERs();
         registerItemProperties(event);
-        setRenderLayers();
         registerSearchTrees(event);
     }
 
@@ -201,80 +197,6 @@ public class ClientModLifecycleEvents {
         });
     }
     
-    private static void setRenderLayers() {
-        // Set the render layers for any blocks that don't use the default
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_LEAVES.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_LOG.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_PILLAR.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_PLANKS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_SLAB.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_STAIRS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.MOONWOOD_WOOD.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), RenderType.translucent());
-
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_SAPLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_LEAVES.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_LOG.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_PILLAR.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_PLANKS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_SLAB.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_STAIRS.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNWOOD_WOOD.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), RenderType.translucent());
-        
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.HALLOWOOD_SAPLING.get(), RenderType.cutout());
-        
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SALT_TRAIL.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SUNLAMP.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SPIRIT_LANTERN.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.BLOODLETTER.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.CONCOCTER.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.CELESTIAL_HARP.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.HONEY_EXTRACTOR.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.RUNECARVING_TABLE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.ZEPHYR_ENGINE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.VOID_TURBINE.get(), RenderType.cutout());
-
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SKYGLASS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_BLACK.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_BLUE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_BROWN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_CYAN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_GRAY.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_GREEN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_LIME.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_MAGENTA.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_ORANGE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PINK.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PURPLE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_RED.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_WHITE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_YELLOW.get(), RenderType.translucent());
-        
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.SKYGLASS_PANE.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BLACK.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BLUE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_BROWN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_CYAN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_GRAY.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_GREEN.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_LIME.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_ORANGE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_PINK.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_PURPLE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_RED.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_WHITE.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), RenderType.translucent());
-    }
-
     private static void registerSearchTrees(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ArcaneSearchRegistry.registerSearchTree();
