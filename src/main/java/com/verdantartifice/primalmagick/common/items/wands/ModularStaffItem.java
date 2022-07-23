@@ -13,13 +13,12 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 /**
  * Item definition for a modular staff.  Modular staves are made up of cores, caps, and gems, and their
@@ -67,12 +66,12 @@ public class ModularStaffItem extends ModularWandItem implements IStaff {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-        consumer.accept(new IItemRenderProperties() {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
             final BlockEntityWithoutLevelRenderer renderer = new ModularStaffISTER();
 
             @Override
-            public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
             }
         });

@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 /**
  * Definition of a block item for a spellcrafting altar.
@@ -16,24 +16,24 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarBlockItem extends BlockItem {
-    protected IItemRenderProperties renderProps;
+    protected IClientItemExtensions renderProps;
     
     public SpellcraftingAltarBlockItem(Block block, Item.Properties properties) {
         super(block, properties);
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(this.getRenderProperties());
     }
     
-    public IItemRenderProperties getRenderProperties() {
+    public IClientItemExtensions getRenderProperties() {
         if (this.renderProps == null) {
-            this.renderProps = new IItemRenderProperties() {
+            this.renderProps = new IClientItemExtensions() {
                 final BlockEntityWithoutLevelRenderer renderer = new SpellcraftingAltarISTER();
 
                 @Override
-                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     return renderer;
                 }
             };

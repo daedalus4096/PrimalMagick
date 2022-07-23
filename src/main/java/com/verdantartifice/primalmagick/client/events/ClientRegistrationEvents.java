@@ -82,13 +82,13 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onClientReloadListenerRegister(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getItemStackRenderer());
-        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getItemStackRenderer());
+        event.registerReloadListener(ItemsPM.PRIMALITE_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.HEXIUM_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.HALLOWSTEEL_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.FORBIDDEN_TRIDENT.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.PRIMALITE_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
     }
 }

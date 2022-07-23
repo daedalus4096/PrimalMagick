@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 /**
  * Definition for a trident made of the magickal metal hexium which comes pre-enchanted with Rending.
@@ -24,7 +24,7 @@ import net.minecraftforge.client.IItemRenderProperties;
  * @author Daedalus4096
  */
 public class ForbiddenTridentItem extends AbstractTieredTridentItem {
-    protected IItemRenderProperties renderProps;
+    protected IClientItemExtensions renderProps;
     
     public ForbiddenTridentItem(Item.Properties properties) {
         super(ItemTierPM.HEXIUM, properties);
@@ -51,17 +51,17 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
     }
 
     @Override
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(this.getRenderProperties());
     }
     
-    public IItemRenderProperties getRenderProperties() {
+    public IClientItemExtensions getRenderProperties() {
         if (this.renderProps == null) {
-            this.renderProps = new IItemRenderProperties() {
+            this.renderProps = new IClientItemExtensions() {
                 final BlockEntityWithoutLevelRenderer renderer = new ForbiddenTridentISTER();
 
                 @Override
-                public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                     return renderer;
                 }
             };
