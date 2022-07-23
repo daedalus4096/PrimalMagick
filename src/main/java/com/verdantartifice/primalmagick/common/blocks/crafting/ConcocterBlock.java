@@ -137,7 +137,7 @@ public class ConcocterBlock extends BaseEntityBlock {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ConcocterTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (ConcocterTileEntity)tile);
+                NetworkHooks.openScreen((ServerPlayer)player, (ConcocterTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

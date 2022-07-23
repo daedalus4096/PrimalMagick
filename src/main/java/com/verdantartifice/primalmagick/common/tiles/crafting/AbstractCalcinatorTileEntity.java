@@ -178,14 +178,14 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
                     entity.burnTimeTotal = entity.burnTime;
                     if (entity.isBurning()) {
                         shouldMarkDirty = true;
-                        if (fuelStack.hasContainerItem()) {
+                        if (fuelStack.hasCraftingRemainingItem()) {
                             // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
-                            entity.items.set(1, fuelStack.getContainerItem());
+                            entity.items.set(1, fuelStack.getCraftingRemainingItem());
                         } else if (!fuelStack.isEmpty()) {
                             // Otherwise, shrink the fuel stack
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
-                                entity.items.set(1, fuelStack.getContainerItem());
+                                entity.items.set(1, fuelStack.getCraftingRemainingItem());
                             }
                         }
                     }

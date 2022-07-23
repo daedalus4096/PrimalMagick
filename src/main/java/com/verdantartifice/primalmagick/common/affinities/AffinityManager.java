@@ -185,7 +185,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     @Nullable
     public SourceList getAffinityValues(@Nullable EntityType<?> type) {
-        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITIES.getKey(type));
+        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
         if (entityAffinity == null) {
             return null;
         } else {

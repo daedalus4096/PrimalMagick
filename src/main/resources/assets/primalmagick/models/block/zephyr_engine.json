@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+    "render_type": "cutout",
 	"textures": {
 		"0": "primalmagick:block/zephyr_engine_side",
 		"1": "primalmagick:block/zephyr_engine_bottom",

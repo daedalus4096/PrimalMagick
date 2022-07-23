@@ -45,7 +45,7 @@ public class ArcaneWorkbenchBlock extends Block {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the arcane workbench
-            NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
+            NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
                     return new ArcaneWorkbenchContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));

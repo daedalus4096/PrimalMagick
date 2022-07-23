@@ -1,5 +1,6 @@
 {
     "ambientocclusion": false,
+    "render_type": "translucent",
     "textures": {
         "particle": "primalmagick:block/stained_skyglass_unconnected",
         "edge": "primalmagick:block/skyglass_pane_edge"

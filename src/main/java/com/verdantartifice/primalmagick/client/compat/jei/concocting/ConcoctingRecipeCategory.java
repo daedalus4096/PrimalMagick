@@ -44,11 +44,11 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IConcoctingRecipe recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
+        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
         
         // Initialize recipe inputs
         List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM_STACK, inputs, 0, 0);
+        this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, 0, 0);
     }
 
     @Override

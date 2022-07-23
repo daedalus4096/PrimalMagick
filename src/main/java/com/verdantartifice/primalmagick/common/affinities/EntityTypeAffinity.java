@@ -52,7 +52,7 @@ public class EntityTypeAffinity extends AbstractAffinity {
             }
             
             ResourceLocation targetId = new ResourceLocation(target);
-            if (!ForgeRegistries.ENTITIES.containsKey(targetId)) {
+            if (!ForgeRegistries.ENTITY_TYPES.containsKey(targetId)) {
                 throw new JsonSyntaxException("Unknown target entity type " + target + " in affinity JSON for " + affinityId.toString());
             }
             

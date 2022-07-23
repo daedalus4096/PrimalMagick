@@ -1,5 +1,6 @@
 {
     "parent": "block/cube_column",
+    "render_type": "translucent",
     "textures": {
         "end": "primalmagick:block/stripped_sunwood_log_top_faded",
         "side": "primalmagick:block/stripped_sunwood_log_faded"

@@ -1,5 +1,6 @@
 {
 	"parent": "primalmagick:block/pillar",
+    "render_type": "translucent",
 	"textures": {
 		"side": "primalmagick:block/sunwood_pillar_faded",
 		"inner": "primalmagick:block/sunwood_pillar_inner_faded"

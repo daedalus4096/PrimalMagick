@@ -78,7 +78,7 @@ public class ResearchTableBlock extends BaseEntityBlock {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ResearchTableTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (ResearchTableTileEntity)tile, tile.getBlockPos());
+                NetworkHooks.openScreen((ServerPlayer)player, (ResearchTableTileEntity)tile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

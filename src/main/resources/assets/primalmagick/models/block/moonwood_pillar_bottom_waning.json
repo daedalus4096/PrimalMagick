@@ -1,5 +1,6 @@
 {
 	"parent": "primalmagick:block/pillar_bottom",
+    "render_type": "translucent",
 	"textures": {
 		"inner": "primalmagick:block/moonwood_pillar_inner_waning",
 		"side": "primalmagick:block/moonwood_pillar_bottom_waning",

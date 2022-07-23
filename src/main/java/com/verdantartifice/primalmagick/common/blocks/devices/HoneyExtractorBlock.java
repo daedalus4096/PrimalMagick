@@ -96,7 +96,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
             // Open the GUI for the honey extractor
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof HoneyExtractorTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (HoneyExtractorTileEntity)tile);
+                NetworkHooks.openScreen((ServerPlayer)player, (HoneyExtractorTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

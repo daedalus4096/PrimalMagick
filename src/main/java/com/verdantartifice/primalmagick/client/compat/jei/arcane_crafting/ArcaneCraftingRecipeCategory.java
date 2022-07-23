@@ -50,13 +50,13 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IArcaneRecipe recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.setOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
+        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
         
         // Initialize recipe inputs
         int width = (recipe instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeWidth() : 0;
         int height = (recipe instanceof IShapedRecipe<?> shapedRecipe) ? shapedRecipe.getRecipeHeight() : 0;
         List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
-        this.craftingGridHelper.setInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
+        this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, width, height);
     }
 
     @Override

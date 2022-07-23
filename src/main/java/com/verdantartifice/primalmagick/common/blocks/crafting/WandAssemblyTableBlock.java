@@ -37,7 +37,7 @@ public class WandAssemblyTableBlock extends Block {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer) {
             // Open the GUI for the wand assembly table
-            NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
+            NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
                     return new WandAssemblyTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));

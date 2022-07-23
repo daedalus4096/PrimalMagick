@@ -46,7 +46,7 @@ public class GrimoireItem extends Item implements MenuProvider {
             AbstractResearchTopic lastTopic = knowledge == null || knowledge.getLastResearchTopic() == null ? MainIndexResearchTopic.INSTANCE : knowledge.getLastResearchTopic();
             List<AbstractResearchTopic> topicHistory = knowledge == null ? ImmutableList.of() : knowledge.getResearchTopicHistory();
             StatsManager.incrementValue(playerIn, StatsPM.GRIMOIRE_READ);
-            NetworkHooks.openGui(serverPlayer, this, buf -> {
+            NetworkHooks.openScreen(serverPlayer, this, buf -> {
                 lastTopic.encode(buf);
                 buf.writeVarInt(topicHistory.size());
                 for (int index = 0; index < topicHistory.size(); index++) {

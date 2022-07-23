@@ -1,14 +1,14 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 /**
@@ -17,6 +17,8 @@ import net.minecraftforge.common.loot.LootModifier;
  * @author Daedalus4096
  */
 public class FourLeafCloverModifier extends LootModifier {
+    public static final Codec<FourLeafCloverModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).apply(inst, FourLeafCloverModifier::new));
+
     public FourLeafCloverModifier(LootItemCondition[] conditions) {
         super(conditions);
     }
@@ -28,15 +30,8 @@ public class FourLeafCloverModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<FourLeafCloverModifier> {
-        @Override
-        public FourLeafCloverModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
-            return new FourLeafCloverModifier(ailootcondition);
-        }
-
-        @Override
-        public JsonObject write(FourLeafCloverModifier instance) {
-            return this.makeConditions(instance.conditions);
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
     }
 }

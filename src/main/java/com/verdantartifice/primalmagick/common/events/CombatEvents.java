@@ -45,7 +45,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -60,7 +60,7 @@ public class CombatEvents {
     @SubscribeEvent
     public static void onAttack(LivingAttackEvent event) {
         // Handle effects caused by damage target
-        if (event.getEntityLiving() instanceof Player target) {
+        if (event.getEntity() instanceof Player target) {
             // Players with greater infernal attunement are immune to all fire damage
             if (event.getSource().isFire() && AttunementManager.meetsThreshold(target, Source.INFERNAL, AttunementThreshold.GREATER)) {
                 event.setCanceled(true);
@@ -84,14 +84,14 @@ public class CombatEvents {
                     event.getAmount() > 0.0F && 
                     !attacker.level.isClientSide && 
                     AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
-                List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntityLiving().position(), 
-                        Arrays.asList(event.getEntityLiving(), attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
+                List<LivingEntity> targets = EntityUtils.getEntitiesInRangeSorted(attacker.level, event.getEntity().position(), 
+                        Arrays.asList(event.getEntity(), attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);
                     target.hurt(DamageSourcesPM.causeHellishChainDamage(attacker), event.getAmount() / 2.0F);
-                    PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntityLiving().getEyePosition(1.0F), target.getEyePosition(1.0F), Source.INFERNAL.getColor()), 
-                            attacker.level.dimension(), event.getEntityLiving().blockPosition(), 64.0D);
-                    attacker.level.playSound(null, event.getEntityLiving().blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attacker.level.random.nextGaussian() * 0.05D));
+                    PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntity().getEyePosition(1.0F), target.getEyePosition(1.0F), Source.INFERNAL.getColor()), 
+                            attacker.level.dimension(), event.getEntity().blockPosition(), 64.0D);
+                    attacker.level.playSound(null, event.getEntity().blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attacker.level.random.nextGaussian() * 0.05D));
                 }
             }
         }
@@ -100,9 +100,7 @@ public class CombatEvents {
     @SubscribeEvent
     public static void onEntityHurt(LivingHurtEvent event) {
         // Handle effects triggered by damage target
-        if (event.getEntityLiving() instanceof Player) {
-            Player target = (Player)event.getEntityLiving();
-            
+        if (event.getEntity() instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
             if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
                 if (event.getSource() == DamageSource.DROWN && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
@@ -143,13 +141,13 @@ public class CombatEvents {
             }
             
             // Increase damage to undead targets by players with lesser hallowed attunement
-            if (event.getEntityLiving().isInvertedHealAndHarm() && AttunementManager.meetsThreshold(attacker, Source.HALLOWED, AttunementThreshold.LESSER)) {
+            if (event.getEntity().isInvertedHealAndHarm() && AttunementManager.meetsThreshold(attacker, Source.HALLOWED, AttunementThreshold.LESSER)) {
                 event.setAmount(2.0F * event.getAmount());
             }
 
             // If at least one point of damage was done by a player with the lesser blood attunement, cause bleeding
             if (event.getAmount() >= 1.0F && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.LESSER)) {
-                event.getEntityLiving().addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 200));
+                event.getEntity().addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 200));
             }
             
             // Players with greater blood attunement can steal health, with a chance based on damage done
@@ -161,11 +159,10 @@ public class CombatEvents {
     
     @SubscribeEvent
     public static void onDeath(LivingDeathEvent event) {
-        LivingEntity entity = event.getEntityLiving();
+        LivingEntity entity = event.getEntity();
         
         // If the player has greater hallowed attunement and it's not on cooldown, cancel death as if using a totem of undying
-        if (entity instanceof Player) {
-            Player player = (Player)event.getEntityLiving();
+        if (entity instanceof Player player) {
             IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (AttunementManager.meetsThreshold(player, Source.HALLOWED, AttunementThreshold.GREATER) &&
                     cooldowns != null &&
@@ -244,8 +241,8 @@ public class CombatEvents {
     }
     
     @SubscribeEvent
-    public static void onPotionApplicable(PotionEvent.PotionApplicableEvent event) {
-        if (event.getPotionEffect().getEffect() == EffectsPM.BLEEDING.get() && event.getEntityLiving().isInvertedHealAndHarm()) {
+    public static void onPotionApplicable(MobEffectEvent.Applicable event) {
+        if (event.getEffectInstance().getEffect() == EffectsPM.BLEEDING.get() && event.getEntity().isInvertedHealAndHarm()) {
             // The undead can't bleed
             event.setResult(Result.DENY);
         }

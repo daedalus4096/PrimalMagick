@@ -1,17 +1,16 @@
 package com.verdantartifice.primalmagick.common.loot.modifiers;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -21,6 +20,11 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BonusNuggetModifier extends LootModifier {
+    public static final Codec<BonusNuggetModifier> CODEC = RecordCodecBuilder.create(inst -> LootModifier.codecStart(inst).and(inst.group(
+                Codec.FLOAT.fieldOf("chance").forGetter(m -> m.chance),
+                ForgeRegistries.ITEMS.getCodec().fieldOf("nugget").forGetter(m -> m.nugget)
+            )).apply(inst, BonusNuggetModifier::new));
+
     protected final float chance;
     protected final Item nugget;
     
@@ -46,27 +50,8 @@ public class BonusNuggetModifier extends LootModifier {
         return generatedLoot;
     }
 
-    public static class Serializer extends GlobalLootModifierSerializer<BonusNuggetModifier> {
-        @Override
-        public BonusNuggetModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
-            float chance = object.getAsJsonPrimitive("chance").getAsFloat();
-            Item nugget = GsonHelper.getAsItem(object, "nugget");
-            return new BonusNuggetModifier(ailootcondition, chance, nugget);
-        }
-
-        @Override
-        public JsonObject write(BonusNuggetModifier instance) {
-            JsonObject obj = this.makeConditions(instance.conditions);
-            obj.addProperty("chance", instance.chance);
-            
-            ResourceLocation nuggetLoc = ForgeRegistries.ITEMS.getKey(instance.nugget);
-            if (nuggetLoc == null) {
-                throw new IllegalArgumentException("Invalid nugget " + instance.nugget);
-            } else {
-                obj.addProperty("nugget", nuggetLoc.toString());
-            }
-            
-            return obj;
-        }
+    @Override
+    public Codec<? extends IGlobalLootModifier> codec() {
+        return CODEC;
     }
 }

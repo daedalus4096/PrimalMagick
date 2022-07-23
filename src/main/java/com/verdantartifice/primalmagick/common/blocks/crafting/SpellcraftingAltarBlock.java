@@ -89,7 +89,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
                 // Open the GUI for the spellcrafting altar
-                NetworkHooks.openGui(serverPlayer, altarTile);
+                NetworkHooks.openScreen(serverPlayer, altarTile);
             }
         }
         return InteractionResult.SUCCESS;

@@ -1,5 +1,5 @@
 {
-    "parent": "primalmagick:block/skyglass_base",
+    "parent": "primalmagick:block/stained_skyglass_base",
     "textures": {
         "particle": "primalmagick:block/stained_skyglass_unconnected",
         "down": "primalmagick:block/stained_skyglass_udlr",

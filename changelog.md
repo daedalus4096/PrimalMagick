@@ -1,5 +1,5 @@
-v3.0.1
-------
+v3.0.1-beta
+-----------
 * Added Humming Artifacts, as some arcane dungeon loot
 * Added Recall Stones, to whisk you away home
 * Pixies are now drained instead of destroyed upon taking fatal damage, and can be revived with essence
@@ -16,7 +16,8 @@ v3.0.1
 * Made wand GUIs offhand friendly
 * Added finale research, to let you know when you've finished
 * Fixed crash when conjuring stone underwater
-* Incremented to Forge version 41.0.45
+* Incremented to Forge version 41.0.109
+* Set minimum required Forge version to 41.0.109 for loading
 
 v3.0.0-beta
 -----------

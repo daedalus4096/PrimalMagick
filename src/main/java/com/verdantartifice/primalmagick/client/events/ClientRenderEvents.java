@@ -20,10 +20,10 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.DrawSelectionEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -71,7 +71,7 @@ public class ClientRenderEvents {
     }
     
     @SubscribeEvent
-    public static void onHighlightEntity(DrawSelectionEvent.HighlightEntity event) {
+    public static void onHighlightEntity(RenderHighlightEvent.Entity event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
@@ -88,9 +88,9 @@ public class ClientRenderEvents {
     }
     
     @SubscribeEvent
-    public static void onRenderGameOverlayPreLayer(RenderGameOverlayEvent.PreLayer event) {
+    public static void onRenderGameOverlayPreLayer(RenderGuiOverlayEvent.Pre event) {
         Minecraft mc = Minecraft.getInstance();
-        if (event.getOverlay() == ForgeIngameGui.CROSSHAIR_ELEMENT && mc.screen instanceof SpellSelectionRadialScreen) {
+        if (event.getOverlay() == VanillaGuiOverlay.CROSSHAIR.type() && mc.screen instanceof SpellSelectionRadialScreen) {
             event.setCanceled(true);
         }
     }

@@ -56,7 +56,7 @@ public class WandChargerBlock extends BaseEntityBlock {
             // Open the GUI for the wand charger
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof WandChargerTileEntity) {
-                NetworkHooks.openGui((ServerPlayer)player, (WandChargerTileEntity)tile);
+                NetworkHooks.openScreen((ServerPlayer)player, (WandChargerTileEntity)tile);
             }
         }
         return InteractionResult.SUCCESS;

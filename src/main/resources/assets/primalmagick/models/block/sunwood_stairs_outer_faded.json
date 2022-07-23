@@ -1,5 +1,6 @@
 {
     "parent": "block/outer_stairs",
+    "render_type": "translucent",
     "textures": {
         "bottom": "primalmagick:block/sunwood_planks_faded",
         "top": "primalmagick:block/sunwood_planks_faded",

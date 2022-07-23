@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFarmingModif
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.HummingArtifactModifier;
-import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
@@ -49,140 +48,140 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        this.add("bloody_flesh", LootModifierSerializersPM.BLOODY_FLESH.get(), new BloodyFleshModifier(
+        this.add("bloody_flesh", new BloodyFleshModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOODY_FLESH)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.5F, 0.1F).build()
                 }));
-        this.add("bounty_farming", LootModifierSerializersPM.BOUNTY_FARMING.get(), new BountyFarmingModifier(
+        this.add("bounty_farming", new BountyFarmingModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(BlockTagsPM.BOUNTY_CROPS).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
-        this.add("bounty_fishing", LootModifierSerializersPM.BOUNTY_FISHING.get(), new BountyFishingModifier(
+        this.add("bounty_fishing", new BountyFishingModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
-        this.add("bonus_nugget_iron", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
+        this.add("bonus_nugget_iron", new BonusNuggetModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_IRON).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, Items.IRON_NUGGET));
-        this.add("bonus_nugget_gold", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
+        this.add("bonus_nugget_gold", new BonusNuggetModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_GOLD).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, Items.GOLD_NUGGET));
-        this.add("bonus_nugget_quartz", LootModifierSerializersPM.BONUS_NUGGET.get(), new BonusNuggetModifier(
+        this.add("bonus_nugget_quartz", new BonusNuggetModifier(
                 new LootItemCondition[] {
                         MatchBlockTag.builder(Tags.Blocks.ORES_QUARTZ).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.5F, ItemsPM.QUARTZ_NUGGET.get()));
-        this.add("blood_notes_high", LootModifierSerializersPM.BLOOD_NOTES.get(), new BloodNotesModifier(
+        this.add("blood_notes_high", new BloodNotesModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }));
-        this.add("blood_notes_low", LootModifierSerializersPM.BLOOD_NOTES.get(), new BloodNotesModifier(
+        this.add("blood_notes_low", new BloodNotesModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_LOW)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.25F, 0.25F).build()
                 }));
-        this.add("relic_fragments_high", LootModifierSerializersPM.RELIC_FRAGMENTS.get(), new RelicFragmentsModifier(
+        this.add("relic_fragments_high", new RelicFragmentsModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_HIGH)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }, 3, 5, 1));
-        this.add("relic_fragments_low", LootModifierSerializersPM.RELIC_FRAGMENTS.get(), new RelicFragmentsModifier(
+        this.add("relic_fragments_low", new RelicFragmentsModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.1F, 0.05F).build()
                 }, 1, 1, 0));
-        this.add("four_leaf_clover_short_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
+        this.add("four_leaf_clover_short_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS).build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.004F, 0.003F).build()
                 }));
-        this.add("four_leaf_clover_tall_grass", LootModifierSerializersPM.FOUR_LEAF_CLOVER.get(), new FourLeafCloverModifier(
+        this.add("four_leaf_clover_tall_grass", new FourLeafCloverModifier(
                 new LootItemCondition[] {
                         LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.TALL_GRASS).build(),
                         LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.004F, 0.003F).build()
                 }));
-        this.add("humming_artifact_abandoned_mineshaft", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_abandoned_mineshaft", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }));
-        this.add("humming_artifact_ancient_city", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_ancient_city", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }));
-        this.add("humming_artifact_bastion_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_bastion_treasure", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.BASTION_TREASURE).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }));
-        this.add("humming_artifact_buried_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_buried_treasure", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.BURIED_TREASURE).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }));
-        this.add("humming_artifact_desert_pyramid", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_desert_pyramid", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }));
-        this.add("humming_artifact_end_city_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_end_city_treasure", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.END_CITY_TREASURE).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
                 }));
-        this.add("humming_artifact_igloo_chest", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_igloo_chest", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.IGLOO_CHEST).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }));
-        this.add("humming_artifact_jungle_temple", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_jungle_temple", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }));
-        this.add("humming_artifact_nether_fortress", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_nether_fortress", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.NETHER_BRIDGE).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }));
-        this.add("humming_artifact_pillager_outpost", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_pillager_outpost", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.PILLAGER_OUTPOST).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }));
-        this.add("humming_artifact_shipwreck_treasure", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_shipwreck_treasure", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.SHIPWRECK_TREASURE).build(),
                         LootItemRandomChanceCondition.randomChance(0.6F).build()
                 }));
-        this.add("humming_artifact_simple_dungeon", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_simple_dungeon", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON).build(),
                         LootItemRandomChanceCondition.randomChance(0.4F).build()
                 }));
-        this.add("humming_artifact_stronghold_library", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_stronghold_library", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.STRONGHOLD_LIBRARY).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }));
-        this.add("humming_artifact_underwater_ruin_big", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_underwater_ruin_big", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG).build(),
                         LootItemRandomChanceCondition.randomChance(0.8F).build()
                 }));
-        this.add("humming_artifact_woodland_mansion", LootModifierSerializersPM.HUMMING_ARTIFACT.get(), new HummingArtifactModifier(
+        this.add("humming_artifact_woodland_mansion", new HummingArtifactModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()

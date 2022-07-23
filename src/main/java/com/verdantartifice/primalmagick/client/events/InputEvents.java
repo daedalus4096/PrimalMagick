@@ -37,7 +37,7 @@ public class InputEvents {
     }
 
     @SubscribeEvent
-    public static void onKeyInput(InputEvent.KeyInputEvent event) {
+    public static void onKeyInput(InputEvent.Key event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         if (player != null) {

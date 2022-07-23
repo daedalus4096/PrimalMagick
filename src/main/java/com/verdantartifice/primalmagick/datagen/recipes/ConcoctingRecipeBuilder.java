@@ -9,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
-import com.verdantartifice.primalmagick.common.crafting.NBTIngredientPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -26,6 +25,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -71,7 +71,7 @@ public class ConcoctingRecipeBuilder {
     public ConcoctingRecipeBuilder addIngredient(ItemStack stack) {
         ItemStack copy = stack.copy();
         copy.setCount(1);
-        return this.addIngredient(NBTIngredientPM.fromStack(stack));
+        return this.addIngredient(StrictNBTIngredient.of(stack));
     }
     
     public ConcoctingRecipeBuilder addIngredient(TagKey<Item> tag) {

@@ -22,15 +22,15 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
 public class ServerEvents {
     @SubscribeEvent
-    public static void serverWorldTick(TickEvent.WorldTickEvent event) {
+    public static void serverWorldTick(TickEvent.LevelTickEvent event) {
         if (event.side == LogicalSide.CLIENT) {
             return;
         }
         if (event.phase != TickEvent.Phase.START) {
             // Process any pending world modifiers
-            tickBlockSwappers(event.world);
-            tickBlockBreakers(event.world);
-            tickEntitySwappers(event.world);
+            tickBlockSwappers(event.level);
+            tickBlockBreakers(event.level);
+            tickEntitySwappers(event.level);
         }
     }
     

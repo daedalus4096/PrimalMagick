@@ -1,0 +1,4 @@
+{
+    "parent": "primalmagick:block/skyglass_base",
+    "render_type": "translucent"
+}
