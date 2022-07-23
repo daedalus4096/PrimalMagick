@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.AnalysisTableScreen;
 import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
@@ -20,7 +19,6 @@ import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
-import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
@@ -33,8 +31,6 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
-import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -57,9 +53,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -74,20 +67,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 public class ClientModLifecycleEvents {
     @SubscribeEvent
     public static void clientSetup(FMLClientSetupEvent event) {
-        registerKeybinds();
         registerScreens();
         registerTERs();
         registerItemProperties(event);
         setRenderLayers();
-        registerTooltipComponentFactories();
         registerSearchTrees(event);
-        registerHudOverlays();
     }
 
-    private static void registerKeybinds() {
-        KeyBindings.init();
-    }
-    
     private static void registerScreens() {
         // Register screen factories for each container
         MenuScreens.register(ContainersPM.GRIMOIRE.get(), GrimoireScreen::new);
@@ -289,17 +275,9 @@ public class ClientModLifecycleEvents {
         ItemBlockRenderTypes.setRenderLayer(BlocksPM.STAINED_SKYGLASS_PANE_YELLOW.get(), RenderType.translucent());
     }
 
-    private static void registerTooltipComponentFactories() {
-        MinecraftForgeClient.registerTooltipComponentFactory(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
-    }
-    
     private static void registerSearchTrees(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ArcaneSearchRegistry.registerSearchTree();
         });
-    }
-
-    private static void registerHudOverlays() {
-        OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HOTBAR_ELEMENT, "Wand HUD", new WandHudOverlay());
     }
 }

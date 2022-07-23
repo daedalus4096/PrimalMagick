@@ -18,19 +18,19 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 
 /**
  * HUD overlay to show wand mana levels.
  * 
  * @author Daedalus4096
  */
-public class WandHudOverlay implements IIngameOverlay {
+public class WandHudOverlay implements IGuiOverlay {
     private static final ResourceLocation HUD_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/hud.png");
     
     @Override
-    public void render(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+    public void render(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
         if (!mc.options.hideGui && !mc.player.isSpectator() && Config.SHOW_WAND_HUD.get()) {
             if (mc.player.getMainHandItem().getItem() instanceof IWand wand) {
