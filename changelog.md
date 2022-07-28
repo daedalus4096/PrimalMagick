@@ -1,3 +1,8 @@
+v3.1.0
+------
+* Incremented to Forge version 41.1.0
+* Set minimum required Forge version to 41.1.0 for loading
+
 v3.0.1-beta
 -----------
 * Added Humming Artifacts, as some arcane dungeon loot
