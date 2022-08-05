@@ -331,6 +331,9 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> DISSOLUTION_CHAMBER = ITEMS.register("dissolution_chamber", () -> new BlockItem(BlocksPM.DISSOLUTION_CHAMBER.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> ZEPHYR_ENGINE = ITEMS.register("zephyr_engine", () -> new BlockItem(BlocksPM.ZEPHYR_ENGINE.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<BlockItem> VOID_TURBINE = ITEMS.register("void_turbine", () -> new BlockItem(BlocksPM.VOID_TURBINE.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_ENCHANTED = ITEMS.register("essence_cask_enchanted", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = ITEMS.register("essence_cask_forbidden", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
+    public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_HEAVENLY = ITEMS.register("essence_cask_heavenly", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC)));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
