@@ -19,6 +19,7 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
@@ -106,14 +107,31 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
 
     @Override
     public void load(CompoundTag compound) {
-        // TODO Auto-generated method stub
         super.load(compound);
+        CONTENTS.clear();
+        CompoundTag contents = compound.getCompound("CaskContents");
+        for (EssenceType type : EssenceType.values()) {
+            CompoundTag typeContents = contents.getCompound(type.getSerializedName());
+            for (Source source : Source.SORTED_SOURCES) {
+                int count = typeContents.getInt(source.getTag());
+                CONTENTS.put(type, source, count);
+            }
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag compound) {
-        // TODO Auto-generated method stub
         super.saveAdditional(compound);
+        CompoundTag contents = new CompoundTag();
+        for (EssenceType type : EssenceType.values()) {
+            CompoundTag typeContents = new CompoundTag();
+            for (Source source : Source.SORTED_SOURCES) {
+                int count = CONTENTS.contains(type, source) ? CONTENTS.get(type, source) : 0;
+                typeContents.put(source.getTag(), IntTag.valueOf(count));
+            }
+            contents.put(type.getSerializedName(), typeContents);
+        }
+        compound.put("CaskContents", contents);
     }
 
     @Override
