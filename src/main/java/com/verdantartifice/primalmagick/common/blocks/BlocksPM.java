@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.WandAssemblyTable
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.AnalysisTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock;
@@ -326,6 +327,9 @@ public class BlocksPM {
     public static final RegistryObject<DissolutionChamberBlock> DISSOLUTION_CHAMBER = BLOCKS.register("dissolution_chamber", DissolutionChamberBlock::new);
     public static final RegistryObject<ZephyrEngineBlock> ZEPHYR_ENGINE = BLOCKS.register("zephyr_engine", ZephyrEngineBlock::new);
     public static final RegistryObject<VoidTurbineBlock> VOID_TURBINE = BLOCKS.register("void_turbine", VoidTurbineBlock::new);
+    public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_ENCHANTED = BLOCKS.register("essence_cask_enchanted", () -> new EssenceCaskBlock(DeviceTier.ENCHANTED));
+    public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_FORBIDDEN = BLOCKS.register("essence_cask_forbidden", () -> new EssenceCaskBlock(DeviceTier.FORBIDDEN));
+    public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_HEAVENLY = BLOCKS.register("essence_cask_heavenly", () -> new EssenceCaskBlock(DeviceTier.HEAVENLY));
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

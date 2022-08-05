@@ -212,6 +212,9 @@
     "block.primalmagick.dissolution_chamber": "Dissolution Chamber",
     "block.primalmagick.zephyr_engine": "Zephyr Engine",
     "block.primalmagick.void_turbine": "Void Turbine",
+    "block.primalmagick.essence_cask_enchanted": "Enchanted Essence Cask",
+    "block.primalmagick.essence_cask_forbidden": "Forbidden Essence Cask",
+    "block.primalmagick.essence_cask_heavenly": "Heavenly Essence Cask",
     
     "item.primalmagick.grimoire": "Grimoire",
     "item.primalmagick.arcanometer": "Arcanometer",

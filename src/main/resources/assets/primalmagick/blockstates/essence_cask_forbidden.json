@@ -1,0 +1,56 @@
+{
+  "variants": {
+    "facing=down,open=false": {
+      "x": 180,
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=down,open=true": {
+      "x": 180,
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    },
+    "facing=east,open=false": {
+      "x": 90,
+      "y": 90,
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=east,open=true": {
+      "x": 90,
+      "y": 90,
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    },
+    "facing=north,open=false": {
+      "x": 90,
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=north,open=true": {
+      "x": 90,
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    },
+    "facing=south,open=false": {
+      "x": 90,
+      "y": 180,
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=south,open=true": {
+      "x": 90,
+      "y": 180,
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    },
+    "facing=up,open=false": {
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=up,open=true": {
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    },
+    "facing=west,open=false": {
+      "x": 90,
+      "y": 270,
+      "model": "primalmagick:block/essence_cask_forbidden"
+    },
+    "facing=west,open=true": {
+      "x": 90,
+      "y": 270,
+      "model": "primalmagick:block/essence_cask_forbidden_open"
+    }
+  }
+}
