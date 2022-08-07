@@ -44,13 +44,14 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
         map.put(DeviceTier.FORBIDDEN, 16384);
         map.put(DeviceTier.HEAVENLY, 65536);
     });
-    protected static final Table<EssenceType, Source, Integer> CONTENTS = HashBasedTable.create(NUM_ROWS, NUM_COLS);
+    
+    protected final Table<EssenceType, Source, Integer> contents = HashBasedTable.create(NUM_ROWS, NUM_COLS);
     
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state);
         for (EssenceType row : EssenceType.values()) {
             for (Source col : Source.SORTED_SOURCES) {
-                CONTENTS.put(row, col, 0);
+                this.contents.put(row, col, 0);
             }
         }
     }
@@ -76,7 +77,15 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
     }
     
     public int getTotalEssenceCount() {
-        return CONTENTS.values().stream().mapToInt(i -> i).sum();
+        return this.contents.values().stream().mapToInt(i -> i).sum();
+    }
+    
+    public int getEssenceCountForType(EssenceType type) {
+        return this.contents.row(type).entrySet().stream().mapToInt(e -> e.getValue()).sum();
+    }
+    
+    public int getEssenceCountForSource(Source source) {
+        return this.contents.column(source).entrySet().stream().mapToInt(e -> e.getValue()).sum();
     }
     
     protected EssenceType getEssenceTypeForIndex(int index) {
@@ -93,7 +102,7 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
         }
         EssenceType row = this.getEssenceTypeForIndex(index);
         Source col = this.getEssenceSourceForIndex(index);
-        return CONTENTS.contains(row, col) ? CONTENTS.get(row, col) : 0;
+        return this.contents.contains(row, col) ? this.contents.get(row, col) : 0;
     }
     
     public void setEssenceCountAtSlot(int index, int count) {
@@ -102,19 +111,19 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
         }
         EssenceType row = this.getEssenceTypeForIndex(index);
         Source col = this.getEssenceSourceForIndex(index);
-        CONTENTS.put(row, col, count);
+        this.contents.put(row, col, count);
     }
 
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        CONTENTS.clear();
-        CompoundTag contents = compound.getCompound("CaskContents");
+        this.contents.clear();
+        CompoundTag contentsTag = compound.getCompound("CaskContents");
         for (EssenceType type : EssenceType.values()) {
-            CompoundTag typeContents = contents.getCompound(type.getSerializedName());
+            CompoundTag typeContents = contentsTag.getCompound(type.getSerializedName());
             for (Source source : Source.SORTED_SOURCES) {
                 int count = typeContents.getInt(source.getTag());
-                CONTENTS.put(type, source, count);
+                this.contents.put(type, source, count);
             }
         }
     }
@@ -122,16 +131,16 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
     @Override
     protected void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
-        CompoundTag contents = new CompoundTag();
+        CompoundTag contentsTag = new CompoundTag();
         for (EssenceType type : EssenceType.values()) {
             CompoundTag typeContents = new CompoundTag();
             for (Source source : Source.SORTED_SOURCES) {
-                int count = CONTENTS.contains(type, source) ? CONTENTS.get(type, source) : 0;
+                int count = this.contents.contains(type, source) ? this.contents.get(type, source) : 0;
                 typeContents.put(source.getTag(), IntTag.valueOf(count));
             }
-            contents.put(type.getSerializedName(), typeContents);
+            contentsTag.put(type.getSerializedName(), typeContents);
         }
-        compound.put("CaskContents", contents);
+        compound.put("CaskContents", contentsTag);
     }
 
     @Override
@@ -194,7 +203,7 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
 
     @Override
     public void clearContent() {
-        CONTENTS.clear();
+        this.contents.clear();
     }
 
     @Override
