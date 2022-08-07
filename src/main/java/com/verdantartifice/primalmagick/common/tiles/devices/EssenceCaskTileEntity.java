@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
@@ -58,8 +59,7 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        // TODO Auto-generated method stub
-        return null;
+        return new EssenceCaskContainer(windowId, playerInv, this);
     }
 
     @Override

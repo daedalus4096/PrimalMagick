@@ -20,6 +20,9 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
 
     public EssenceCaskScreen(EssenceCaskContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
+        this.imageWidth = 176;
+        this.imageHeight = 222;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
     
     @Override
