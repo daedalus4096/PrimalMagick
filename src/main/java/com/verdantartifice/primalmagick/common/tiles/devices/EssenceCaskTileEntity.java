@@ -35,9 +35,9 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class EssenceCaskTileEntity extends TilePM implements MenuProvider, WorldlyContainer {
-    protected static final int NUM_ROWS = EssenceType.values().length;
-    protected static final int NUM_COLS = Source.SORTED_SOURCES.size();
-    protected static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
+    public static final int NUM_ROWS = EssenceType.values().length;
+    public static final int NUM_COLS = Source.SORTED_SOURCES.size();
+    public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
     
     protected static final Map<DeviceTier, Integer> CAPACITY = Util.make(new HashMap<>(), map -> {
         map.put(DeviceTier.ENCHANTED, 4096);
