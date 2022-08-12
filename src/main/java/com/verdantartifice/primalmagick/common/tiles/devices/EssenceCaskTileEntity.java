@@ -22,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -74,6 +75,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
                     entity.contents.put(essenceType, essenceSource, capacity);
                     stack.shrink(capacity - currentCount);
                 }
+                entity.syncSlots(null);
             }
         }
     }
@@ -133,11 +135,16 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         EssenceType row = this.getEssenceTypeForIndex(index);
         Source col = this.getEssenceSourceForIndex(index);
         this.contents.put(row, col, count);
+        this.syncSlots(null);
     }
 
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
+        this.loadContentsNbt(compound);
+    }
+    
+    protected void loadContentsNbt(CompoundTag compound) {
         this.contents.clear();
         CompoundTag contentsTag = compound.getCompound("CaskContents");
         for (EssenceType type : EssenceType.values()) {
@@ -152,6 +159,10 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     @Override
     protected void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
+        compound.put("CaskContents", this.getContentsNbt());
+    }
+    
+    protected CompoundTag getContentsNbt() {
         CompoundTag contentsTag = new CompoundTag();
         for (EssenceType type : EssenceType.values()) {
             CompoundTag typeContents = new CompoundTag();
@@ -161,7 +172,30 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
             }
             contentsTag.put(type.getSerializedName(), typeContents);
         }
-        compound.put("CaskContents", contentsTag);
+        return contentsTag;
+    }
+
+    @Override
+    protected void syncSlots(ServerPlayer player) {
+        super.syncSlots(player);
+        CompoundTag nbt = new CompoundTag();
+        nbt.put("CaskContents", this.getContentsNbt());
+        this.sendMessageToClient(nbt, player);
+    }
+
+    @Override
+    public void onMessageFromServer(CompoundTag nbt) {
+        super.onMessageFromServer(nbt);
+        if (nbt.contains("CaskContents")) {
+            this.loadContentsNbt(nbt);
+        }
+    }
+
+    @Override
+    public void clearContent() {
+        this.items.clear();
+        this.contents.clear();
+        this.syncSlots(null);
     }
 
     public void dropContents() {
