@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
+import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,8 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -71,6 +74,25 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new EssenceCaskTileEntity(pos, state);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+        return createTickerHelper(type, TileEntityTypesPM.ESSENCE_CASK.get(), EssenceCaskTileEntity::tick);
+    }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (state.getBlock() != newState.getBlock()) {
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof EssenceCaskTileEntity caskTile) {
+                caskTile.dropContents();
+                worldIn.updateNeighbourForOutputSignal(pos, this);
+            }
+            super.onRemove(state, worldIn, pos, newState, isMoving);
+        }
     }
 
     @Override

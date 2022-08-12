@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -22,12 +22,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -35,7 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class EssenceCaskTileEntity extends TilePM implements MenuProvider, WorldlyContainer {
+public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvider {
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Source.SORTED_SOURCES.size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
@@ -49,10 +50,30 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
     protected final Table<EssenceType, Source, Integer> contents = HashBasedTable.create(NUM_ROWS, NUM_COLS);
     
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state);
+        super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state, 1);
         for (EssenceType row : EssenceType.values()) {
             for (Source col : Source.SORTED_SOURCES) {
                 this.contents.put(row, col, 0);
+            }
+        }
+    }
+    
+    public static void tick(Level level, BlockPos pos, BlockState state, EssenceCaskTileEntity entity) {
+        if (!level.isClientSide && !entity.items.isEmpty()) {
+            ItemStack stack = entity.items.get(0);
+            if (stack.getItem() instanceof EssenceItem essenceItem) {
+                EssenceType essenceType = essenceItem.getEssenceType();
+                Source essenceSource = essenceItem.getSource();
+                int inputCount = stack.getCount();
+                int currentCount = entity.contents.contains(essenceType, essenceSource) ? entity.contents.get(essenceType, essenceSource) : 0;
+                int capacity = entity.getTotalEssenceCapacity();
+                if (currentCount + inputCount <= capacity) {
+                    entity.contents.put(essenceType, essenceSource, currentCount + inputCount);
+                    entity.items.set(0, ItemStack.EMPTY);
+                } else {
+                    entity.contents.put(essenceType, essenceSource, capacity);
+                    stack.shrink(capacity - currentCount);
+                }
             }
         }
     }
@@ -143,67 +164,13 @@ public class EssenceCaskTileEntity extends TilePM implements MenuProvider, World
         compound.put("CaskContents", contentsTag);
     }
 
-    @Override
-    public int getContainerSize() {
-        return NUM_SLOTS;
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return 65536;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.getTotalEssenceCount() <= 0;
-    }
-
-    @Override
-    public ItemStack getItem(int index) {
-        int count = this.getEssenceCountAtSlot(index);
-        return count > 0 ? EssenceItem.getEssence(this.getEssenceTypeForIndex(index), this.getEssenceSourceForIndex(index), count) : ItemStack.EMPTY;
-    }
-
-    @Override
-    public ItemStack removeItem(int index, int count) {
-        int currentCount = this.getEssenceCountAtSlot(index);
-        int numToRemove = Math.min(count, currentCount);
-        this.setEssenceCountAtSlot(index, currentCount - numToRemove);
-        this.setChanged();
-        return numToRemove > 0 ? EssenceItem.getEssence(this.getEssenceTypeForIndex(index), this.getEssenceSourceForIndex(index), numToRemove) : ItemStack.EMPTY;
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int index) {
-        int count = this.getEssenceCountAtSlot(index);
-        this.setEssenceCountAtSlot(index, 0);
-        this.setChanged();
-        return count > 0 ? EssenceItem.getEssence(this.getEssenceTypeForIndex(index), this.getEssenceSourceForIndex(index), count) : ItemStack.EMPTY;
-    }
-
-    @Override
-    public void setItem(int index, ItemStack stack) {
-        if ( stack.getItem() instanceof EssenceItem essenceItem && 
-             essenceItem.getEssenceType().equals(this.getEssenceTypeForIndex(index)) && 
-             essenceItem.getSource().equals(this.getEssenceSourceForIndex(index)) ) {
-            int numToSet = Math.min(stack.getCount(), this.getMaxStackSize());
-            this.setEssenceCountAtSlot(index, numToSet);
-            this.setChanged();
+    public void dropContents() {
+        Containers.dropContents(this.level, this.worldPosition, this);
+        for (Table.Cell<EssenceType, Source, Integer> cell : this.contents.cellSet()) {
+            ItemStack tempStack = EssenceItem.getEssence(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
+            this.contents.put(cell.getRowKey(), cell.getColumnKey(), 0);
+            Containers.dropItemStack(this.level, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), tempStack);
         }
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
-            return false;
-        } else {
-            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
-        }
-    }
-
-    @Override
-    public void clearContent() {
-        this.contents.clear();
     }
 
     @Override
