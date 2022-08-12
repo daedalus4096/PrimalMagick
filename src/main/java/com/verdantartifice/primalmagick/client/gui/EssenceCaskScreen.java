@@ -3,7 +3,10 @@ package com.verdantartifice.primalmagick.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -25,6 +28,19 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         this.inventoryLabelY = this.imageHeight - 94;
     }
     
+    @Override
+    protected void init() {
+        super.init();
+        for (int row = 0; row < EssenceType.values().length; row++) {
+            for (int col = 0; col < Source.SORTED_SOURCES.size(); col++) {
+                EssenceType cellType = EssenceType.values()[row];
+                Source cellSource = Source.SORTED_SOURCES.get(col);
+                // TODO Show correct amounts
+                this.addRenderableWidget(new EssenceCaskWidget(cellType, cellSource, 0, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18));
+            }
+        }
+    }
+
     @Override
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
