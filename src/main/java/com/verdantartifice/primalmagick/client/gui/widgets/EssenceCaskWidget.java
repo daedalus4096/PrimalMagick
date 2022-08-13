@@ -21,19 +21,25 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class EssenceCaskWidget extends AbstractWidget {
-    protected EssenceType essenceType;
-    protected Source source;
+    protected final int index;
+    protected final EssenceType essenceType;
+    protected final Source source;
     protected int amount;
     
-    public EssenceCaskWidget(EssenceType type, Source source, int xIn, int yIn) {
-        this(type, source, 0, xIn, yIn);
+    public EssenceCaskWidget(int index, EssenceType type, Source source, int xIn, int yIn) {
+        this(index, type, source, 0, xIn, yIn);
     }
 
-    public EssenceCaskWidget(EssenceType type, Source source, int amount, int xIn, int yIn) {
+    public EssenceCaskWidget(int index, EssenceType type, Source source, int amount, int xIn, int yIn) {
         super(xIn, yIn, 16, 16, Component.empty());
+        this.index = index;
         this.essenceType = type;
         this.source = source;
         this.amount = amount;
+    }
+    
+    public int getIndex() {
+        return this.index;
     }
     
     public EssenceType getEssenceType() {

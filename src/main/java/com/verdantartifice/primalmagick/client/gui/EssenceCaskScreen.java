@@ -36,12 +36,14 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     protected void initWidgets() {
         this.clearWidgets();
         this.caskWidgets.clear();
+        int index = 0;
         for (int row = 0; row < EssenceType.values().length; row++) {
             for (int col = 0; col < Source.SORTED_SOURCES.size(); col++) {
                 EssenceType cellType = EssenceType.values()[row];
                 Source cellSource = Source.SORTED_SOURCES.get(col);
-                int count = this.menu.getEssenceCount(cellType, cellSource);
-                this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18)));
+                int count = this.menu.getEssenceCount(index);
+                this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18)));
+                index++;
             }
         }
     }

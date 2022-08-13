@@ -1,8 +1,6 @@
 package com.verdantartifice.primalmagick.common.containers;
 
 import com.verdantartifice.primalmagick.common.containers.slots.EssenceSlot;
-import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -11,25 +9,29 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class EssenceCaskContainer extends AbstractContainerMenu {
     protected final Container caskInv;
+    protected final ContainerData caskData;
     protected final Level level;
     protected final Slot inputSlot;
     protected final BlockPos tilePos;
 
     public EssenceCaskContainer(int id, Inventory playerInv, BlockPos pos) {
-        this(id, playerInv, new SimpleContainer(1), pos);
+        this(id, playerInv, new SimpleContainer(1), new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS), pos);
     }
     
-    public EssenceCaskContainer(int id, Inventory playerInv, Container caskInv, BlockPos pos) {
+    public EssenceCaskContainer(int id, Inventory playerInv, Container caskInv, ContainerData caskData, BlockPos pos) {
         super(ContainersPM.ESSENCE_CASK.get(), id);
         checkContainerSize(caskInv, 1);
+        checkContainerDataCount(caskData, EssenceCaskTileEntity.NUM_SLOTS);
         this.caskInv = caskInv;
+        this.caskData = caskData;
         this.level = playerInv.player.level;
         this.tilePos = pos;
         
@@ -47,6 +49,8 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         for (int k = 0; k < 9; k++) {
             this.addSlot(new Slot(playerInv, k, 8 + k * 18, 198));
         }
+        
+        this.addDataSlots(this.caskData);
     }
 
     @Override
@@ -99,12 +103,13 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         return this.caskInv.stillValid(player);
     }
 
-    public int getEssenceCount(EssenceType essenceType, Source source) {
-        BlockEntity entity = this.level.getBlockEntity(this.tilePos);
-        if (entity instanceof EssenceCaskTileEntity caskEntity) {
-            return caskEntity.getEssenceCount(essenceType, source);
-        } else {
-            return 0;
-        }
+    @Override
+    public void setData(int index, int value) {
+        super.setData(index, value);
+        this.broadcastChanges();
+    }
+    
+    public int getEssenceCount(int index) {
+        return this.caskData.get(index);
     }
 }

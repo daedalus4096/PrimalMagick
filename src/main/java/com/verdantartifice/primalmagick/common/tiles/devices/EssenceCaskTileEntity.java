@@ -28,6 +28,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -49,6 +50,23 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     });
     
     protected final Table<EssenceType, Source, Integer> contents = HashBasedTable.create(NUM_ROWS, NUM_COLS);
+    
+    protected final ContainerData caskData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return EssenceCaskTileEntity.this.getEssenceCountAtSlot(index);
+        }
+
+        @Override
+        public void set(int index, int value) {
+            EssenceCaskTileEntity.this.setEssenceCountAtSlot(index, value);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_SLOTS;
+        }
+    };
     
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state, 1);
@@ -75,14 +93,13 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
                     entity.contents.put(essenceType, essenceSource, capacity);
                     stack.shrink(capacity - currentCount);
                 }
-                entity.syncSlots(null);
             }
         }
     }
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceCaskContainer(windowId, playerInv, this, this.worldPosition);
+        return new EssenceCaskContainer(windowId, playerInv, this, this.caskData, this.worldPosition);
     }
 
     @Override
@@ -139,7 +156,6 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         EssenceType row = this.getEssenceTypeForIndex(index);
         Source col = this.getEssenceSourceForIndex(index);
         this.contents.put(row, col, count);
-        this.syncSlots(null);
     }
 
     @Override
@@ -177,22 +193,6 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
             contentsTag.put(type.getSerializedName(), typeContents);
         }
         return contentsTag;
-    }
-
-    @Override
-    protected void syncSlots(ServerPlayer player) {
-        super.syncSlots(player);
-        CompoundTag nbt = new CompoundTag();
-        nbt.put("CaskContents", this.getContentsNbt());
-        this.sendMessageToClient(nbt, player);
-    }
-
-    @Override
-    public void onMessageFromServer(CompoundTag nbt) {
-        super.onMessageFromServer(nbt);
-        if (nbt.contains("CaskContents")) {
-            this.loadContentsNbt(nbt);
-        }
     }
 
     @Override
