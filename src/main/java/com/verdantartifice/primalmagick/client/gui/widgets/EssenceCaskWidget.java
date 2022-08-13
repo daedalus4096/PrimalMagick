@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import java.awt.Color;
+import java.util.function.BiConsumer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
@@ -25,17 +26,15 @@ public class EssenceCaskWidget extends AbstractWidget {
     protected final EssenceType essenceType;
     protected final Source source;
     protected int amount;
+    protected final BiConsumer<EssenceCaskWidget, Integer> onClick;
     
-    public EssenceCaskWidget(int index, EssenceType type, Source source, int xIn, int yIn) {
-        this(index, type, source, 0, xIn, yIn);
-    }
-
-    public EssenceCaskWidget(int index, EssenceType type, Source source, int amount, int xIn, int yIn) {
+    public EssenceCaskWidget(int index, EssenceType type, Source source, int amount, int xIn, int yIn, BiConsumer<EssenceCaskWidget, Integer> onClick) {
         super(xIn, yIn, 16, 16, Component.empty());
         this.index = index;
         this.essenceType = type;
         this.source = source;
         this.amount = amount;
+        this.onClick = onClick;
     }
     
     public int getIndex() {
@@ -77,9 +76,13 @@ public class EssenceCaskWidget extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseClicked(double p_93641_, double p_93642_, int p_93643_) {
-        // TODO Auto-generated method stub
-        return super.mouseClicked(p_93641_, p_93642_, p_93643_);
+    public boolean mouseClicked(double mouseX, double mouseY, int clickButton) {
+        if (this.active && this.visible && this.clicked(mouseX, mouseY)) {
+            this.onClick.accept(this, clickButton);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

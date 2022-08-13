@@ -103,12 +103,6 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         return this.caskInv.stillValid(player);
     }
 
-    @Override
-    public void setData(int index, int value) {
-        super.setData(index, value);
-        this.broadcastChanges();
-    }
-    
     public int getEssenceCount(int index) {
         return this.caskData.get(index);
     }

@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -42,7 +43,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
                 EssenceType cellType = EssenceType.values()[row];
                 Source cellSource = Source.SORTED_SOURCES.get(col);
                 int count = this.menu.getEssenceCount(index);
-                this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18)));
+                this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18, this::onWidgetClicked)));
                 index++;
             }
         }
@@ -69,5 +70,17 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         // Render background texture
         RenderSystem.setShaderTexture(0, TEXTURE);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+    }
+    
+    protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {
+        int count = this.menu.getEssenceCount(widget.getIndex());
+        int maxRemove = clickButton == 1 ? 1 : 64;
+        int toRemove = Math.min(maxRemove, count);
+        if (toRemove > 0 && this.menu.getCarried().isEmpty()) {
+            int newCount = Math.max(0, count - toRemove);
+            this.menu.setCarried(EssenceItem.getEssence(widget.getEssenceType(), widget.getSource(), toRemove));
+            this.menu.setData(widget.getIndex(), newCount);
+            this.menu.broadcastChanges();
+        }
     }
 }
