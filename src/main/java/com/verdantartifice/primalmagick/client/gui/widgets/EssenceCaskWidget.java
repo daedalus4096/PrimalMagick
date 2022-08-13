@@ -69,7 +69,7 @@ public class EssenceCaskWidget extends AbstractWidget {
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText);
         matrixStack.pushPose();
-        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
+        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 200.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, this.amount > 0 ? Color.WHITE.getRGB() : Color.RED.getRGB());
         matrixStack.popPose();
