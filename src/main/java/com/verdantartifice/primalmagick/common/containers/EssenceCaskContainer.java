@@ -14,6 +14,7 @@ import net.minecraft.world.level.Level;
 public class EssenceCaskContainer extends AbstractContainerMenu {
     protected final Container caskInv;
     protected final Level level;
+    protected final Slot inputSlot;
     
     public EssenceCaskContainer(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(1));
@@ -25,8 +26,8 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         this.caskInv = caskInv;
         this.level = playerInv.player.level;
         
-        // Slots 0: Cask input
-        this.addSlot(new EssenceSlot(this.caskInv, 0, 80, 108));
+        // Slot 0: Cask input
+        this.inputSlot = this.addSlot(new EssenceSlot(this.caskInv, 0, 80, 108));
         
         // Slots 1-27: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -43,8 +44,47 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        // TODO Auto-generated method stub
-        return null;
+        ItemStack stack = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack slotStack = slot.getItem();
+            stack = slotStack.copy();
+            if (index == 0) {
+                // If transferring an item in the input slot, move it into the player's backpack or hotbar
+                if (!this.moveItemStackTo(slotStack, 1, 37, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (this.inputSlot.mayPlace(slotStack)) {
+                // If transferring a valid essence, move it into the appropriate slot
+                if (!this.moveItemStackTo(slotStack, 0, 1, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 1 && index < 28) {
+                // If transferring from the backpack and not a valid fit, move to the hotbar
+                if (!this.moveItemStackTo(slotStack, 28, 37, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index >= 28 && index < 37) {
+                // If transferring from the hotbar and not a valid fit, move to the backpack
+                if (!this.moveItemStackTo(slotStack, 1, 28, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+            
+            if (slotStack.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            }
+            
+            slot.setChanged();
+            if (slotStack.getCount() == stack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            
+            slot.onTake(player, slotStack);
+            this.broadcastChanges();
+        }
+        
+        return stack;
     }
 
     @Override
