@@ -111,7 +111,7 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the essence cask
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof EssenceCaskTileEntity caskTile) {
-                NetworkHooks.openScreen(serverPlayer, caskTile);
+                NetworkHooks.openScreen(serverPlayer, caskTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

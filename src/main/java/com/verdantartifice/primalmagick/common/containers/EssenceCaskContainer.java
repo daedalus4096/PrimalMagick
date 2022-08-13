@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagick.common.containers;
 
 import com.verdantartifice.primalmagick.common.containers.slots.EssenceSlot;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,21 +14,24 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class EssenceCaskContainer extends AbstractContainerMenu {
     protected final Container caskInv;
     protected final Level level;
     protected final Slot inputSlot;
-    
-    public EssenceCaskContainer(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(1));
+    protected final BlockPos tilePos;
+
+    public EssenceCaskContainer(int id, Inventory playerInv, BlockPos pos) {
+        this(id, playerInv, new SimpleContainer(1), pos);
     }
     
-    public EssenceCaskContainer(int id, Inventory playerInv, Container caskInv) {
+    public EssenceCaskContainer(int id, Inventory playerInv, Container caskInv, BlockPos pos) {
         super(ContainersPM.ESSENCE_CASK.get(), id);
         checkContainerSize(caskInv, 1);
         this.caskInv = caskInv;
         this.level = playerInv.player.level;
+        this.tilePos = pos;
         
         // Slot 0: Cask input
         this.inputSlot = this.addSlot(new EssenceSlot(this.caskInv, 0, 80, 108));
@@ -92,4 +99,12 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         return this.caskInv.stillValid(player);
     }
 
+    public int getEssenceCount(EssenceType essenceType, Source source) {
+        BlockEntity entity = this.level.getBlockEntity(this.tilePos);
+        if (entity instanceof EssenceCaskTileEntity caskEntity) {
+            return caskEntity.getEssenceCount(essenceType, source);
+        } else {
+            return 0;
+        }
+    }
 }

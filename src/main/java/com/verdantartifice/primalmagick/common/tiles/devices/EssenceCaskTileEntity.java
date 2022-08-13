@@ -82,7 +82,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceCaskContainer(windowId, playerInv, this);
+        return new EssenceCaskContainer(windowId, playerInv, this, this.worldPosition);
     }
 
     @Override
@@ -117,6 +117,10 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     
     protected Source getEssenceSourceForIndex(int index) {
         return (index < 0 || index >= NUM_SLOTS) ? null : Source.SORTED_SOURCES.get(index % NUM_COLS);
+    }
+    
+    public int getEssenceCount(EssenceType essenceType, Source source) {
+        return this.contents.contains(essenceType, source) ? this.contents.get(essenceType, source) : 0;
     }
     
     public int getEssenceCountAtSlot(int index) {
