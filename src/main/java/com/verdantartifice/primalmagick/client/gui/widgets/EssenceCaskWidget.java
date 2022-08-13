@@ -77,9 +77,13 @@ public class EssenceCaskWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack p_93653_, int p_93654_, int p_93655_) {
-        // TODO Auto-generated method stub
-        super.renderToolTip(p_93653_, p_93654_, p_93655_);
+    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+        // Render tooltip
+        matrixStack.pushPose();
+        matrixStack.translate(0, 0, 200);
+        ItemStack tempStack = EssenceItem.getEssence(this.essenceType, this.source);
+        GuiUtils.renderItemTooltip(matrixStack, tempStack, mouseX, mouseY);
+        matrixStack.popPose();
     }
 
     @Override
