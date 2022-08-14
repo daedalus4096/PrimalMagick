@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +37,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     }
     
     protected void initWidgets() {
+        Minecraft mc = Minecraft.getInstance();
         this.clearWidgets();
         this.caskWidgets.clear();
         int index = 0;
@@ -43,8 +45,10 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
             for (int col = 0; col < Source.SORTED_SOURCES.size(); col++) {
                 EssenceType cellType = EssenceType.values()[row];
                 Source cellSource = Source.SORTED_SOURCES.get(col);
-                int count = this.menu.getEssenceCount(index);
-                this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18, this::onWidgetClicked)));
+                if (this.menu.isEssenceTypeVisible(cellType, mc.player) && this.menu.isEssenceSourceVisible(cellSource, mc.player)) {
+                    int count = this.menu.getEssenceCount(index);
+                    this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18, this::onWidgetClicked)));
+                }
                 index++;
             }
         }

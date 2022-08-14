@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.containers;
 
 import com.verdantartifice.primalmagick.common.containers.slots.EssenceSlot;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -127,5 +129,51 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         } else {
             return 0;
         }
+    }
+    
+    public boolean isEssenceTypeVisible(EssenceType type, Player player) {
+        if (type == null) {
+            return false;
+        }
+        
+        // If the essence type's synthesis research has been discovered, then it's visible
+        if (type.isDiscovered(player)) {
+            return true;
+        }
+        
+        // If the research has not been discovered, but there's an essence of that type in the cask, then it's visible
+        int typeIndex = type.ordinal();
+        int rowSize = Source.SORTED_SOURCES.size();
+        for (int index = 0; index < this.caskData.getCount(); index++) {
+            if (index / rowSize == typeIndex && this.caskData.get(index) > 0) {
+                return true;
+            }
+        }
+        
+        // Otherwise, it's not visible
+        return false;
+    }
+    
+    public boolean isEssenceSourceVisible(Source source, Player player) {
+        if (source == null) {
+            return false;
+        }
+        
+        // If the essence source has been discovered, then it's visible
+        if (source.isDiscovered(player)) {
+            return true;
+        }
+        
+        // If the source has not been discovered, but there's an essence of that source in the cask, then it's visible
+        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        int rowSize = Source.SORTED_SOURCES.size();
+        for (int index = 0; index < this.caskData.getCount(); index++) {
+            if (index % rowSize == sourceIndex && this.caskData.get(index) > 0) {
+                return true;
+            }
+        }
+        
+        // Otherwise, it's not visible
+        return false;
     }
 }

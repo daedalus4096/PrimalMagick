@@ -4,8 +4,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -20,6 +22,10 @@ public enum EssenceType implements StringRepresentable {
     SHARD("shard", Rarity.UNCOMMON, 20),
     CRYSTAL("crystal", Rarity.RARE, 50),
     CLUSTER("cluster", Rarity.EPIC, 100);
+    
+    private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.parse("SHARD_SYNTHESIS");
+    private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.parse("CRYSTAL_SYNTHESIS");
+    private static final SimpleResearchKey CLUSTER_RESEARCH = SimpleResearchKey.parse("CLUSTER_SYNTHESIS");
     
     private final String name;
     private final Rarity rarity;
@@ -91,6 +97,25 @@ public enum EssenceType implements StringRepresentable {
         case DUST:
         default:
             return null;
+        }
+    }
+    
+    public boolean isDiscovered(@Nullable Player player) {
+        if (player == null) {
+            return false;
+        } else {
+            switch (this) {
+            case DUST:
+                return true;
+            case SHARD:
+                return SHARD_RESEARCH.isKnownByStrict(player);
+            case CRYSTAL:
+                return CRYSTAL_RESEARCH.isKnownByStrict(player);
+            case CLUSTER:
+                return CLUSTER_RESEARCH.isKnownByStrict(player);
+            default:
+                return false;
+            }
         }
     }
 }
