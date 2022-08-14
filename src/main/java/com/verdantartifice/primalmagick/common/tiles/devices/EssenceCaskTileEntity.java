@@ -44,8 +44,8 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     
     protected static final Map<DeviceTier, Integer> CAPACITY = Util.make(new HashMap<>(), map -> {
         map.put(DeviceTier.ENCHANTED, 4096);
-        map.put(DeviceTier.FORBIDDEN, 16384);
-        map.put(DeviceTier.HEAVENLY, 65536);
+        map.put(DeviceTier.FORBIDDEN, 8192);
+        map.put(DeviceTier.HEAVENLY, 16384);
     });
     
     protected final Table<EssenceType, Source, Integer> contents = HashBasedTable.create(NUM_ROWS, NUM_COLS);
