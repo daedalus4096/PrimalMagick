@@ -2269,6 +2269,10 @@
     "primalmagick.research_table.complete": "Complete Project (%1$s%%)",
     "primalmagick.research_table.unlock": "Unlocked by: %1$s",
     "primalmagick.research_table.aid_header": "Active research aids:",
+
+    "primalmagick.essence_cask.contents": "Contents: %1$d / %2$d",
+    "primalmagick.essence_cask.left_click": "Left-click to withdraw one stack",
+    "primalmagick.essence_cask.right_click": "Right-click to withdraw one item",
     
     "primalmagick.toast.completed.title": "Research Complete!",
     "primalmagick.toast.revealed.title": "Research Revealed!",

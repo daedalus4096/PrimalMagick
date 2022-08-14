@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 public class EssenceCaskContainer extends AbstractContainerMenu {
     protected final Container caskInv;
@@ -109,5 +110,22 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
     
     public BlockPos getTilePos() {
         return this.tilePos;
+    }
+    
+    public int getTotalEssenceCount() {
+        int retVal = 0;
+        for (int index = 0; index < this.caskData.getCount(); index++) {
+            retVal += this.caskData.get(index);
+        }
+        return retVal;
+    }
+    
+    public int getTotalEssenceCapacity() {
+        BlockEntity tile = this.level.getBlockEntity(this.tilePos);
+        if (tile instanceof EssenceCaskTileEntity caskTile) {
+            return caskTile.getTotalEssenceCapacity();
+        } else {
+            return 0;
+        }
     }
 }

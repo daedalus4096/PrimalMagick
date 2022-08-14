@@ -73,6 +73,13 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
+    @Override
+    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+        super.renderLabels(matrixStack, mouseX, mouseY);
+        Component contentsLabel = Component.translatable("primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
+        this.font.draw(matrixStack, contentsLabel, 8, 92, 4210752);
+    }
+
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {
         int toRemove = clickButton == 1 ? 1 : 64;
         PacketHandler.sendToServer(new WithdrawCaskEssencePacket(widget.getEssenceType(), widget.getSource(), toRemove, this.menu.getTilePos()));
