@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -9,11 +11,13 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 /**
  * Class for interactable display widgets which show how much of a type of essence is in an
@@ -88,10 +92,15 @@ public class EssenceCaskWidget extends AbstractWidget {
     @Override
     public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
         // Render tooltip
+        Minecraft mc = Minecraft.getInstance();
         matrixStack.pushPose();
         matrixStack.translate(0, 0, 200);
-        ItemStack tempStack = EssenceItem.getEssence(this.essenceType, this.source);
-        GuiUtils.renderItemTooltip(matrixStack, tempStack, mouseX, mouseY);
+        ItemStack stack = EssenceItem.getEssence(this.essenceType, this.source);
+        List<Component> textList = new ArrayList<>();
+        textList.addAll(stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL));
+        textList.add(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        textList.add(Component.translatable("primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        GuiUtils.renderCustomTooltip(matrixStack, textList, mouseX, mouseY);
         matrixStack.popPose();
     }
 
