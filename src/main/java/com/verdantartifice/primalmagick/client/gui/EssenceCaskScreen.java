@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -40,16 +41,31 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         Minecraft mc = Minecraft.getInstance();
         this.clearWidgets();
         this.caskWidgets.clear();
+        
+        int visibleRows = Arrays.stream(EssenceType.values()).mapToInt(t -> this.menu.isEssenceTypeVisible(t, mc.player) ? 1 : 0).sum();
+        int visibleCols = Source.SORTED_SOURCES.stream().mapToInt(s -> this.menu.isEssenceSourceVisible(s, mc.player) ? 1 : 0).sum();
+        int startX = this.leftPos + 8 + (((Source.SORTED_SOURCES.size() - visibleCols) * 18) / 2);
+        int startY = this.topPos + 18 + (((EssenceType.values().length - visibleRows) * 18) / 2);
+        
         int index = 0;
+        int xPos = startX;
+        int yPos = startY;
         for (int row = 0; row < EssenceType.values().length; row++) {
+            boolean rowPopulated = false;
             for (int col = 0; col < Source.SORTED_SOURCES.size(); col++) {
                 EssenceType cellType = EssenceType.values()[row];
                 Source cellSource = Source.SORTED_SOURCES.get(col);
                 if (this.menu.isEssenceTypeVisible(cellType, mc.player) && this.menu.isEssenceSourceVisible(cellSource, mc.player)) {
                     int count = this.menu.getEssenceCount(index);
-                    this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, this.leftPos + 8 + col * 18, this.topPos + 18 + row * 18, this::onWidgetClicked)));
+                    this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, xPos, yPos, this::onWidgetClicked)));
+                    xPos += 18;
+                    rowPopulated = true;
                 }
                 index++;
+            }
+            xPos = startX;
+            if (rowPopulated) {
+                yPos += 18;
             }
         }
     }
