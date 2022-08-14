@@ -8,8 +8,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
-import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -73,14 +74,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     }
     
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {
-        int count = this.menu.getEssenceCount(widget.getIndex());
-        int maxRemove = clickButton == 1 ? 1 : 64;
-        int toRemove = Math.min(maxRemove, count);
-        if (toRemove > 0 && this.menu.getCarried().isEmpty()) {
-            int newCount = Math.max(0, count - toRemove);
-            this.menu.setCarried(EssenceItem.getEssence(widget.getEssenceType(), widget.getSource(), toRemove));
-            this.menu.setData(widget.getIndex(), newCount);
-            this.menu.broadcastChanges();
-        }
+        int toRemove = clickButton == 1 ? 1 : 64;
+        PacketHandler.sendToServer(new WithdrawCaskEssencePacket(widget.getEssenceType(), widget.getSource(), toRemove, this.menu.getTilePos()));
     }
 }

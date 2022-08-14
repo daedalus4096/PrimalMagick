@@ -36,6 +36,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPa
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanPositionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.SetActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
@@ -118,6 +119,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode, SetResearchTopicHistoryPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellcraftingRunePacket.class, SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode, SpellcraftingRunePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetActiveSpellPacket.class, SetActiveSpellPacket::encode, SetActiveSpellPacket::decode, SetActiveSpellPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode, WithdrawCaskEssencePacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

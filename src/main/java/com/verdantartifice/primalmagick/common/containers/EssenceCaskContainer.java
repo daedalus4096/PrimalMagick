@@ -106,4 +106,8 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
     public int getEssenceCount(int index) {
         return this.caskData.get(index);
     }
+    
+    public BlockPos getTilePos() {
+        return this.tilePos;
+    }
 }

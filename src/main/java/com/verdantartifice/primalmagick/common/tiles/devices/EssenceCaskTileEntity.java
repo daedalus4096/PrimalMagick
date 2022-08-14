@@ -139,6 +139,20 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         return this.contents.contains(essenceType, source) ? this.contents.get(essenceType, source) : 0;
     }
     
+    public int setEssenceCount(EssenceType type, Source source, int amount) {
+        if (amount < 0) {
+            return 0;
+        }
+        int capacity = this.getTotalEssenceCapacity();
+        if (amount < capacity) {
+            this.contents.put(type, source, amount);
+            return 0;
+        } else {
+            this.contents.put(type, source, capacity);
+            return amount - capacity;
+        }
+    }
+    
     public int getEssenceCountAtSlot(int index) {
         if (index < 0 || index >= NUM_SLOTS) {
             return 0;
