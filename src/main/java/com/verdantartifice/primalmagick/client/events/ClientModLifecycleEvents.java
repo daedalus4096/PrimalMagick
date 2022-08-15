@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.CalcinatorScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
+import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.HoneyExtractorScreen;
@@ -90,6 +91,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(ContainersPM.CONCOCTER.get(), ConcocterScreen::new);
         MenuScreens.register(ContainersPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterScreen::new);
         MenuScreens.register(ContainersPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberScreen::new);
+        MenuScreens.register(ContainersPM.ESSENCE_CASK.get(), EssenceCaskScreen::new);
     }
     
     private static void registerTERs() {

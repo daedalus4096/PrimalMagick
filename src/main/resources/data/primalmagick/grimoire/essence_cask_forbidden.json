@@ -1,0 +1,30 @@
+{
+  "addenda": [],
+  "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cask_forbidden"
+  },
+  "key": "ESSENCE_CASK_FORBIDDEN",
+  "name": "primalmagick.research.essence_cask_forbidden.title",
+  "parents": [
+    "MASTER_MANAWEAVING",
+    "ESSENCE_CASK_ENCHANTED",
+    "CRYSTAL_SYNTHESIS",
+    "HEXIUM"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "primalmagick.research.essence_cask_forbidden.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:essence_cask_forbidden"
+      ],
+      "text": "primalmagick.research.essence_cask_forbidden.text.stage.2"
+    }
+  ]
+}

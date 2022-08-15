@@ -76,4 +76,7 @@ public class ContainersPM {
     public static final RegistryObject<MenuType<DissolutionChamberContainer>> DISSOLUTION_CHAMBER = CONTAINERS.register("dissolution_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new DissolutionChamberContainer(windowId, inv);
     }));
+    public static final RegistryObject<MenuType<EssenceCaskContainer>> ESSENCE_CASK = CONTAINERS.register("essence_cask", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new EssenceCaskContainer(windowId, inv, data.readBlockPos());
+    }));
 }

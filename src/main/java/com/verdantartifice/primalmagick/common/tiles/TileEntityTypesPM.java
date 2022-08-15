@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTi
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
@@ -75,4 +76,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<DissolutionChamberTileEntity>> DISSOLUTION_CHAMBER = TILE_ENTITIES.register("dissolution_chamber", () -> BlockEntityType.Builder.of(DissolutionChamberTileEntity::new, BlocksPM.DISSOLUTION_CHAMBER.get()).build(null));
     public static final RegistryObject<BlockEntityType<SpellcraftingAltarTileEntity>> SPELLCRAFTING_ALTAR = TILE_ENTITIES.register("spellcrafting_altar", () -> BlockEntityType.Builder.of(SpellcraftingAltarTileEntity::new, BlocksPM.SPELLCRAFTING_ALTAR.get()).build(null));
     public static final RegistryObject<BlockEntityType<WindGeneratorTileEntity>> WIND_GENERATOR = TILE_ENTITIES.register("wind_generator", () -> BlockEntityType.Builder.of(WindGeneratorTileEntity::new, BlocksPM.ZEPHYR_ENGINE.get(), BlocksPM.VOID_TURBINE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<EssenceCaskTileEntity>> ESSENCE_CASK = TILE_ENTITIES.register("essence_cask", () -> BlockEntityType.Builder.of(EssenceCaskTileEntity::new, BlocksPM.ESSENCE_CASK_ENCHANTED.get(), BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), BlocksPM.ESSENCE_CASK_HEAVENLY.get()).build(null));
 }

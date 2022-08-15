@@ -420,6 +420,21 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("ESSENCE_CASK_ENCHANTED", discipline).icon(ItemsPM.ESSENCE_CASK_ENCHANTED.get()).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .parent("SHARD_SYNTHESIS").parent("PRIMALITE")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ESSENCE_CASK_ENCHANTED.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ESSENCE_CASK_FORBIDDEN", discipline).icon(ItemsPM.ESSENCE_CASK_FORBIDDEN.get()).parent("MASTER_MANAWEAVING").parent("ESSENCE_CASK_ENCHANTED")
+            .parent("CRYSTAL_SYNTHESIS").parent("HEXIUM")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ESSENCE_CASK_FORBIDDEN.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("ESSENCE_CASK_HEAVENLY", discipline).icon(ItemsPM.ESSENCE_CASK_HEAVENLY.get()).parent("SUPREME_MANAWEAVING").parent("ESSENCE_CASK_FORBIDDEN")
+            .parent("CLUSTER_SYNTHESIS").parent("HALLOWSTEEL")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ESSENCE_CASK_HEAVENLY.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
