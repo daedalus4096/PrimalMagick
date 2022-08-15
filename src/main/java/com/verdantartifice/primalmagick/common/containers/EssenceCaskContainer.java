@@ -38,6 +38,8 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         this.level = playerInv.player.level;
         this.tilePos = pos;
         
+        this.caskInv.startOpen(playerInv.player);
+        
         // Slot 0: Cask input
         this.inputSlot = this.addSlot(new EssenceSlot(this.caskInv, 0, 80, 108));
         
@@ -106,12 +108,22 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         return this.caskInv.stillValid(player);
     }
 
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.caskInv.stopOpen(player);
+    }
+
     public int getEssenceCount(int index) {
         return this.caskData.get(index);
     }
     
     public BlockPos getTilePos() {
         return this.tilePos;
+    }
+    
+    public Container getContainer() {
+        return this.caskInv;
     }
     
     public int getTotalEssenceCount() {

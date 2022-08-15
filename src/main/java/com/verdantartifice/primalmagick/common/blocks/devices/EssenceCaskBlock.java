@@ -7,7 +7,9 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -115,5 +117,13 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
             }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel serverLevel, BlockPos pos, RandomSource randomSource) {
+        BlockEntity tile = serverLevel.getBlockEntity(pos);
+        if (tile instanceof EssenceCaskTileEntity caskTile) {
+            caskTile.recheckOpen();
+        }
     }
 }
