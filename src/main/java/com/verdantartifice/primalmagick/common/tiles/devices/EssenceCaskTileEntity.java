@@ -46,7 +46,10 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Source.SORTED_SOURCES.size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
-    
+    protected static final int INPUT_SLOT_INDEX = 0;
+    protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
+    protected static final int[] SLOTS_FOR_OTHER = new int[] {};
+
     protected static final Map<DeviceTier, Integer> CAPACITY = Util.make(new HashMap<>(), map -> {
         map.put(DeviceTier.ENCHANTED, 4096);
         map.put(DeviceTier.FORBIDDEN, 8192);
@@ -274,19 +277,16 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public int[] getSlotsForFace(Direction direction) {
-        // TODO Auto-generated method stub
-        return null;
+        return direction == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_OTHER;
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
-        // TODO Auto-generated method stub
-        return false;
+        return index == INPUT_SLOT_INDEX && stack.getItem() instanceof EssenceItem && direction == Direction.UP;
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        // TODO Auto-generated method stub
         return false;
     }
 }
