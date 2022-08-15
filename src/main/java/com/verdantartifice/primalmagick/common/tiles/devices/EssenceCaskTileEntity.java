@@ -115,13 +115,15 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
                 Source essenceSource = essenceItem.getSource();
                 int inputCount = stack.getCount();
                 int currentCount = entity.contents.contains(essenceType, essenceSource) ? entity.contents.get(essenceType, essenceSource) : 0;
+                int totalCount = entity.getTotalEssenceCount();
                 int capacity = entity.getTotalEssenceCapacity();
-                if (currentCount + inputCount <= capacity) {
+                if (totalCount + inputCount <= capacity) {
                     entity.contents.put(essenceType, essenceSource, currentCount + inputCount);
                     entity.items.set(0, ItemStack.EMPTY);
                 } else {
-                    entity.contents.put(essenceType, essenceSource, capacity);
-                    stack.shrink(capacity - currentCount);
+                    int addable = capacity - totalCount;
+                    entity.contents.put(essenceType, essenceSource, currentCount + addable);
+                    stack.shrink(addable);
                 }
             }
         }
