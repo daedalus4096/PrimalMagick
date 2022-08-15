@@ -1,3 +1,7 @@
+v3.1.1
+------
+* Added Essence Casks, to keep your essence stocks tidier
+
 v3.1.0
 ------
 * Incremented to Forge version 41.1.0
