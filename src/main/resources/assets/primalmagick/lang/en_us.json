@@ -1518,6 +1518,18 @@
     "primalmagick.research.mana_arrows.text.addenda.3": "Void arrows inflict a withering effect on the target briefly, doing further damage.",
     "primalmagick.research.mana_arrows.text.addenda.4": "Hallowed arrows simply do more damage on impact than normal arrows.  They also cause the undead to combust briefly.",
     
+    "primalmagick.research.essence_cask_enchanted.title": "Enchanted Essence Cask",
+    "primalmagick.research.essence_cask_enchanted.text.stage.1": "With all the magical essence I'm accumulating, I foresee storage of it all becoming a problem.  I should find a solution to that.",
+    "primalmagick.research.essence_cask_enchanted.text.stage.2": "I've reinforced a barrel with magickal materials and enchanted it with the strongest compression enchantments I know.  This should allow me to store essence more efficiently.<BR>The resulting cask holds a little more than an ordinary double-wide chest, but only magickal essence can be placed inside.  It can hold any type of essence in varying amounts, but there's a cap on its total capacity.<BR>I should be very careful not to break one of these when it's full; just thinking about the mess it would cause makes me shudder.",
+    
+    "primalmagick.research.essence_cask_forbidden.title": "Forbidden Essence Cask",
+    "primalmagick.research.essence_cask_forbidden.text.stage.1": "My storage system is no longer able to keep up with my demands!  I must invent a more spacious essence cask to meet my needs.",
+    "primalmagick.research.essence_cask_forbidden.text.stage.2": "That should do it.  By layering the compression enchantments with a little spatial warping, this new cask can hold double what the old version could.  Of course, it requires more exotic materials to craft, but that's a small price to pay.",
+    
+    "primalmagick.research.essence_cask_heavenly.title": "Heavenly Essence Cask",
+    "primalmagick.research.essence_cask_heavenly.text.stage.1": "All is as one.  This fundamental principle of unity will hopefully allow me to keep my essence stocks tidier.",
+    "primalmagick.research.essence_cask_heavenly.text.stage.2": "By using the purest of materials and enchantments of harmony, I have forged the ultimate essence storage device.  It will hold double again what the previous iteration was capable of.",
+    
     "primalmagick.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagick.research.basic_runeworking.text.stage.1": "I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magickal power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magick that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.",
     

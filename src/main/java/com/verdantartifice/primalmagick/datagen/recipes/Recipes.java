@@ -83,6 +83,7 @@ public class Recipes extends RecipeProvider {
         this.registerManaArrowRecipes(consumer);
         this.registerDissolutionChamberRecipes(consumer);
         this.registerHummingArtifactRecipes(consumer);
+        this.registerEssenceCaskRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6258,6 +6259,42 @@ public class Recipes extends RecipeProvider {
             .setGroup("humming_artifact")
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.HALLOWED, 40))
+            .build(consumer);
+    }
+    
+    protected void registerEssenceCaskRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_ENCHANTED.get())
+            .patternLine("WEW")
+            .patternLine("MBM")
+            .patternLine("WWW")
+            .key('W', ItemsPM.HEARTWOOD.get())
+            .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
+            .key('M', ItemTagsPM.INGOTS_PRIMALITE)
+            .key('B', Items.BARREL)
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_ENCHANTED")))
+            .manaCost(new SourceList().add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_FORBIDDEN.get())
+            .patternLine("WEW")
+            .patternLine("MBM")
+            .patternLine("WWW")
+            .key('W', Items.POPPED_CHORUS_FRUIT)
+            .key('E', ItemTagsPM.ESSENCES_FORBIDDEN_CRYSTALS)
+            .key('M', ItemTagsPM.INGOTS_HEXIUM)
+            .key('B', ItemsPM.ESSENCE_CASK_ENCHANTED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_FORBIDDEN")))
+            .manaCost(new SourceList().add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_HEAVENLY.get())
+            .patternLine("WEW")
+            .patternLine("MBM")
+            .patternLine("WWW")
+            .key('W', ItemsPM.HALLOWOOD_PLANKS.get())
+            .key('E', ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
+            .key('M', ItemTagsPM.INGOTS_HALLOWSTEEL)
+            .key('B', ItemsPM.ESSENCE_CASK_FORBIDDEN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_HEAVENLY")))
+            .manaCost(new SourceList().add(Source.HALLOWED, 400))
             .build(consumer);
     }
 }
