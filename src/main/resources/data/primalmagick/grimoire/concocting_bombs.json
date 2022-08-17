@@ -63,6 +63,7 @@
     },
     {
       "recipes": [
+        "primalmagick:bomb_casing",
         "primalmagick:night_vision_bomb",
         "primalmagick:long_night_vision_bomb",
         "primalmagick:invisibility_bomb",

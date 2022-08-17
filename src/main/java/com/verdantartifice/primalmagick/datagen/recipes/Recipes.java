@@ -5116,6 +5116,15 @@ public class Recipes extends RecipeProvider {
     }
     
     protected void registerAlchemicalBombRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BOMB_CASING.get())
+            .patternLine(" S ")
+            .patternLine("IFI")
+            .patternLine(" I ")
+            .key('S', Tags.Items.STRING)
+            .key('I', Tags.Items.INGOTS_IRON)
+            .key('F', ItemsPM.SKYGLASS_FLASK.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.NIGHT_VISION, FuseType.MEDIUM))
             .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())

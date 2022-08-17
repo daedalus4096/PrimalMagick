@@ -1,6 +1,7 @@
 v3.1.1
 ------
 * Added Essence Casks, to keep your essence stocks tidier
+* Added missing recipe for Bomb Casings
 
 v3.1.0
 ------

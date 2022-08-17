@@ -1315,7 +1315,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_BOMBS", discipline).icon(ItemsPM.CONCOCTER.get()).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().recipe(new ResourceLocation(PrimalMagick.MODID, "night_vision_bomb"))
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.BOMB_CASING.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "night_vision_bomb"))
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "long_night_vision_bomb")).recipe(new ResourceLocation(PrimalMagick.MODID, "invisibility_bomb"))
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "long_invisibility_bomb")).recipe(new ResourceLocation(PrimalMagick.MODID, "leaping_bomb"))
                     .recipe(new ResourceLocation(PrimalMagick.MODID, "long_leaping_bomb")).recipe(new ResourceLocation(PrimalMagick.MODID, "strong_leaping_bomb"))
