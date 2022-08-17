@@ -6203,6 +6203,10 @@ public class Recipes extends RecipeProvider {
             .ingredient(Items.QUARTZ_BLOCK)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "quartz_from_dissolving_quartz_block"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.GLOWSTONE_DUST, 4)
+            .ingredient(Items.GLOWSTONE)
+            .manaCost(new SourceList().add(Source.EARTH, 1))
+            .build(consumer, new ResourceLocation(PrimalMagick.MODID, "glowstone_dust_from_dissolving_glowstone_block"));
     }
     
     protected void registerHummingArtifactRecipes(Consumer<FinishedRecipe> consumer) {

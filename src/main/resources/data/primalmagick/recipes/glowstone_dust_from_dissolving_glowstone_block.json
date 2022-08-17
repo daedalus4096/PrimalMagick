@@ -1,0 +1,13 @@
+{
+  "type": "primalmagick:dissolution",
+  "ingredient": {
+    "item": "minecraft:glowstone"
+  },
+  "mana": {
+    "earth": 1
+  },
+  "result": {
+    "count": 4,
+    "item": "minecraft:glowstone_dust"
+  }
+}

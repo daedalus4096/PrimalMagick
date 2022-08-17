@@ -2,6 +2,7 @@ v3.1.1
 ------
 * Added Essence Casks, to keep your essence stocks tidier
 * Added missing recipe for Bomb Casings
+* Added Dissolution Chamber recipe for Glowstone Dust
 
 v3.1.0
 ------
