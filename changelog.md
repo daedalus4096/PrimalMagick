@@ -3,6 +3,7 @@ v3.1.1
 * Added Essence Casks, to keep your essence stocks tidier
 * Added missing recipe for Bomb Casings
 * Added Dissolution Chamber recipe for Glowstone Dust
+* Gave attunement-dropped glow fields a minor particle effect
 
 v3.1.0
 ------
