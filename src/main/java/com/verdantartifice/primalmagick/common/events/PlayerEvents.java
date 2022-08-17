@@ -166,10 +166,6 @@ public class PlayerEvents {
     }
 
     protected static void applyAttunementBuffs(ServerPlayer player) {
-        if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.LESSER)) {
-            // Apply Dolphin's Grace for 30.5s if the player has lesser sea attunement
-            player.addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 610, 0, true, false, true));
-        }
         if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.GREATER)) {
             // Apply Water Breathing for 30.5s if the player has greater sea attunement
             player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 610, 0, true, false, true));

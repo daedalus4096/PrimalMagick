@@ -4,6 +4,7 @@ v3.1.1
 * Added missing recipe for Bomb Casings
 * Added Dissolution Chamber recipe for Glowstone Dust
 * Gave attunement-dropped glow fields a minor particle effect
+* Replaced lesser Sea attunement bonus with flat swim speed buff
 
 v3.1.0
 ------
