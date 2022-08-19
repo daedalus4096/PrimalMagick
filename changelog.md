@@ -5,6 +5,7 @@ v3.1.1
 * Added Dissolution Chamber recipe for Glowstone Dust
 * Gave attunement-dropped glow fields a minor particle effect
 * Replaced lesser Sea attunement bonus with flat swim speed buff
+* Fixed a bug causing spells to cast when using a wand on an interactable object such as a mana font
 
 v3.1.0
 ------

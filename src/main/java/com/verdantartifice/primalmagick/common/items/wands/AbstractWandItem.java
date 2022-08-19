@@ -44,9 +44,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -395,6 +398,18 @@ public abstract class AbstractWandItem extends Item implements IWand {
         }
     }
     
+    protected static boolean isTargetWandInteractable(Level level, Player player, HitResult hit) {
+        if (hit != null && hit.getType() == HitResult.Type.BLOCK && hit instanceof BlockHitResult blockHit) {
+            BlockPos pos = blockHit.getBlockPos();
+            if (level.getBlockState(pos).getBlock() instanceof IInteractWithWand || level.getBlockEntity(pos) instanceof IInteractWithWand) {
+                return true;
+            }
+            return WandTransforms.getAll().stream().anyMatch(t -> t.isValid(level, player, pos));
+        } else {
+            return false;
+        }
+    }
+    
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack stack = playerIn.getItemInHand(handIn);
@@ -404,17 +419,23 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the wand has an active spell and spells are off the player's cooldown, attempt to cast the spell on right-click
             SpellManager.setCooldown(playerIn, activeSpell.getCooldownTicks());
             if (worldIn.isClientSide) {
-                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-            } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
-                // If the wand contains enough mana, consume it and cast the spell
-                activeSpell.cast(worldIn, playerIn, stack);
-                playerIn.swing(handIn);
-                return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+                return InteractionResultHolder.success(stack);
             } else {
-                return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+                HitResult hit = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.SOURCE_ONLY);
+                if (isTargetWandInteractable(worldIn, playerIn, hit)) {
+                    // If the current mouseover target in range has special interaction with wands, then suppress the spell cast
+                    return InteractionResultHolder.pass(stack);
+                } else if (this.consumeRealMana(stack, playerIn, activeSpell.getManaCost())) {
+                    // If the wand contains enough mana, consume it and cast the spell
+                    activeSpell.cast(worldIn, playerIn, stack);
+                    playerIn.swing(handIn);
+                    return InteractionResultHolder.success(stack);
+                } else {
+                    return InteractionResultHolder.fail(stack);
+                }
             }
         } else {
-            return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+            return InteractionResultHolder.pass(stack);
         }
     }
     
