@@ -435,6 +435,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ESSENCE_CASK_HEAVENLY.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("WAND_GLAMOUR_TABLE", discipline).icon(ItemsPM.WAND_GLAMOUR_TABLE.get()).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 2).recipe(ItemsPM.WAND_GLAMOUR_TABLE.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
