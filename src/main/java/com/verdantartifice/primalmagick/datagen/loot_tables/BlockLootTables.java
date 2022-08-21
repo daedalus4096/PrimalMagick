@@ -76,6 +76,9 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerManaBearingDeviceTable(BlocksPM.DISSOLUTION_CHAMBER.get());
         this.registerBasicTable(BlocksPM.ZEPHYR_ENGINE.get());
         this.registerBasicTable(BlocksPM.VOID_TURBINE.get());
+        this.registerBasicTable(BlocksPM.ESSENCE_CASK_ENCHANTED.get());
+        this.registerBasicTable(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
+        this.registerBasicTable(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
         this.registerBasicTable(BlocksPM.WAND_GLAMOUR_TABLE.get());
 
         // Register misc loot tables
