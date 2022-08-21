@@ -40,7 +40,7 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
 public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "arcane_workbench");
     private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/arcane_workbench.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation("textures/item/book.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;
@@ -54,7 +54,7 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
         super(guiHelper, UID, "block.primalmagick.arcane_workbench");
         this.craftingGridHelper = guiHelper.createCraftingGridHelper();
         this.manaCostIcon = guiHelper.createDrawable(BACKGROUND_TEXTURE, 116, 0, 16, 16);
-        this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 16, 16).setTextureSize(16, 16).build();
+        this.researchIcon = guiHelper.drawableBuilder(RESEARCH_TEXTURE, 0, 0, 32, 32).setTextureSize(32, 32).build();
         this.setBackground(guiHelper.createDrawable(BACKGROUND_TEXTURE, 0, 0, 116, 54));
         this.setIcon(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get()));
     }
@@ -77,7 +77,10 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
             this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
-            this.researchIcon.draw(stack, RESEARCH_X_OFFSET, RESEARCH_Y_OFFSET);
+            stack.pushPose();
+            stack.scale(0.5F, 0.5F, 0.5F);
+            this.researchIcon.draw(stack, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
+            stack.popPose();
         }
     }
 
