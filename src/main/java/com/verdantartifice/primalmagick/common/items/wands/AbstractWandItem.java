@@ -302,9 +302,6 @@ public abstract class AbstractWandItem extends Item implements IWand {
         
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
-        if (this.isGlamoured(stack)) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.glamoured").withStyle(ChatFormatting.DARK_AQUA));
-        }
         if (showDetails) {
             // Add detailed mana information
             for (Source source : Source.SORTED_SOURCES) {

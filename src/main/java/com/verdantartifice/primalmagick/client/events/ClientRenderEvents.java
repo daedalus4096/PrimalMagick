@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -48,6 +49,11 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item stack is runescribed
         if (RuneManager.hasRunes(event.getItemStack())) {
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.runescribed").withStyle(ChatFormatting.DARK_AQUA));
+        }
+        
+        // Show a tooltip entry if the item is a glamoured wand (this code is here instead of in AbstractWandItem for tooltip ordering reasons)
+        if (event.getItemStack().getItem() instanceof IWand wand && wand.isGlamoured(event.getItemStack())) {
+            event.getToolTip().add(Component.translatable("tooltip.primalmagick.glamoured").withStyle(ChatFormatting.DARK_AQUA));
         }
     }
     
