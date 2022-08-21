@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltar
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunicGrindstoneBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandAssemblyTableBlock;
+import com.verdantartifice.primalmagick.common.blocks.crafting.WandGlamourTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandInscriptionTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.AnalysisTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock;
@@ -330,6 +331,7 @@ public class BlocksPM {
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_ENCHANTED = BLOCKS.register("essence_cask_enchanted", () -> new EssenceCaskBlock(DeviceTier.ENCHANTED));
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_FORBIDDEN = BLOCKS.register("essence_cask_forbidden", () -> new EssenceCaskBlock(DeviceTier.FORBIDDEN));
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_HEAVENLY = BLOCKS.register("essence_cask_heavenly", () -> new EssenceCaskBlock(DeviceTier.HEAVENLY));
+    public static final RegistryObject<WandGlamourTableBlock> WAND_GLAMOUR_TABLE = BLOCKS.register("wand_glamour_table", WandGlamourTableBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
