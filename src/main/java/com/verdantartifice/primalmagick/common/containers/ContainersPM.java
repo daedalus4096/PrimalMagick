@@ -79,4 +79,7 @@ public class ContainersPM {
     public static final RegistryObject<MenuType<EssenceCaskContainer>> ESSENCE_CASK = CONTAINERS.register("essence_cask", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new EssenceCaskContainer(windowId, inv, data.readBlockPos());
     }));
+    public static final RegistryObject<MenuType<WandGlamourTableContainer>> WAND_GLAMOUR_TABLE = CONTAINERS.register("wand_glamour_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new WandGlamourTableContainer(windowId, inv);
+    }));
 }
