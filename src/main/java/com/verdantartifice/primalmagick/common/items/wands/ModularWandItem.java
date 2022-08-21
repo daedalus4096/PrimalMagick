@@ -121,8 +121,12 @@ public class ModularWandItem extends AbstractWandItem {
         }
     }
     
-    public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nonnull WandCore core) {
-        stack.addTagElement("coreAppearance", StringTag.valueOf(core.getTag()));
+    public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nullable WandCore core) {
+        if (core == null) {
+            stack.removeTagKey("coreAppearance");
+        } else {
+            stack.addTagElement("coreAppearance", StringTag.valueOf(core.getTag()));
+        }
     }
     
     @Nullable 
@@ -147,8 +151,12 @@ public class ModularWandItem extends AbstractWandItem {
         }
     }
     
-    public void setWandCapAppearance(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
-        stack.addTagElement("capAppearance", StringTag.valueOf(cap.getTag()));
+    public void setWandCapAppearance(@Nonnull ItemStack stack, @Nullable WandCap cap) {
+        if (cap == null) {
+            stack.removeTagKey("capAppearance");
+        } else {
+            stack.addTagElement("capAppearance", StringTag.valueOf(cap.getTag()));
+        }
     }
     
     @Nullable
@@ -173,8 +181,12 @@ public class ModularWandItem extends AbstractWandItem {
         }
     }
     
-    public void setWandGemAppearance(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
-        stack.addTagElement("gemAppearance", StringTag.valueOf(gem.getTag()));
+    public void setWandGemAppearance(@Nonnull ItemStack stack, @Nullable WandGem gem) {
+        if (gem == null) {
+            stack.removeTagKey("gemAppearance");
+        } else {
+            stack.addTagElement("gemAppearance", StringTag.valueOf(gem.getTag()));
+        }
     }
     
     @Nonnull
