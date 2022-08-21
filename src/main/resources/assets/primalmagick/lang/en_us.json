@@ -776,6 +776,7 @@
     "tooltip.primalmagick.sanguine_core.1": "Durability: %1$d",
     "tooltip.primalmagick.sanguine_core.2": "Souls per spawn: %1$d",
     "tooltip.primalmagick.mana_discount": "Mana discount: %1$d%%",
+    "tooltip.primalmagick.glamoured": "Glamoured",
     "tooltip.primalmagick.runescribed": "Runescribed",
     "tooltip.primalmagick.rune.earth": "\"Teq\"",
     "tooltip.primalmagick.rune.sea": "\"Ald\"",

@@ -294,4 +294,13 @@ public interface IWand {
      * @param stack the wand stack to be modified
      */
     public void clearSpells(@Nullable ItemStack stack);
+    
+    /**
+     * Determine if the given wand stack has a glamour applied (i.e. if its appearance differs from that 
+     * of its construction).
+     * 
+     * @param stack the wand stack to be queried
+     * @return true if the wand has a glamour applied, false otherwise
+     */
+    public boolean isGlamoured(@Nullable ItemStack stack);
 }

@@ -93,6 +93,11 @@ public class ModularWandItem extends AbstractWandItem {
         
         return mod;
     }
+    
+    @Override
+    public boolean isGlamoured(ItemStack stack) {
+        return stack.hasTag() && (stack.getTag().contains("coreAppearance") || stack.getTag().contains("capAppearance") || stack.getTag().contains("gemAppearance"));
+    }
 
     @Nullable
     public WandCore getWandCore(@Nonnull ItemStack stack) {
@@ -105,6 +110,19 @@ public class ModularWandItem extends AbstractWandItem {
     
     public void setWandCore(@Nonnull ItemStack stack, @Nonnull WandCore core) {
         stack.addTagElement("core", StringTag.valueOf(core.getTag()));
+    }
+    
+    @Nullable
+    public WandCore getWandCoreAppearance(@Nonnull ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("coreAppearance")) {
+            return WandCore.getWandCore(stack.getTag().getString("coreAppearance"));
+        } else {
+            return this.getWandCore(stack);
+        }
+    }
+    
+    public void setWandCoreAppearance(@Nonnull ItemStack stack, @Nonnull WandCore core) {
+        stack.addTagElement("coreAppearance", StringTag.valueOf(core.getTag()));
     }
     
     @Nullable 
@@ -120,6 +138,19 @@ public class ModularWandItem extends AbstractWandItem {
         stack.addTagElement("cap", StringTag.valueOf(cap.getTag()));
     }
     
+    @Nullable 
+    public WandCap getWandCapAppearance(@Nonnull ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("capAppearance")) {
+            return WandCap.getWandCap(stack.getTag().getString("capAppearance"));
+        } else {
+            return this.getWandCap(stack);
+        }
+    }
+    
+    public void setWandCapAppearance(@Nonnull ItemStack stack, @Nonnull WandCap cap) {
+        stack.addTagElement("capAppearance", StringTag.valueOf(cap.getTag()));
+    }
+    
     @Nullable
     public WandGem getWandGem(@Nonnull ItemStack stack) {
         if (stack.hasTag() && stack.getTag().contains("gem")) {
@@ -131,6 +162,19 @@ public class ModularWandItem extends AbstractWandItem {
     
     public void setWandGem(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
         stack.addTagElement("gem", StringTag.valueOf(gem.getTag()));
+    }
+    
+    @Nullable
+    public WandGem getWandGemAppearance(@Nonnull ItemStack stack) {
+        if (stack.hasTag() && stack.getTag().contains("gemAppearance")) {
+            return WandGem.getWandGem(stack.getTag().getString("gemAppearance"));
+        } else {
+            return this.getWandGem(stack);
+        }
+    }
+    
+    public void setWandGemAppearance(@Nonnull ItemStack stack, @Nonnull WandGem gem) {
+        stack.addTagElement("gemAppearance", StringTag.valueOf(gem.getTag()));
     }
     
     @Nonnull
