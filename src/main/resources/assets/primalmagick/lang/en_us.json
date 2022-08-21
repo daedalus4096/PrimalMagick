@@ -215,6 +215,7 @@
     "block.primalmagick.essence_cask_enchanted": "Enchanted Essence Cask",
     "block.primalmagick.essence_cask_forbidden": "Forbidden Essence Cask",
     "block.primalmagick.essence_cask_heavenly": "Heavenly Essence Cask",
+    "block.primalmagick.wand_glamour_table": "Wand Glamour Table",
     
     "item.primalmagick.grimoire": "Grimoire",
     "item.primalmagick.arcanometer": "Arcanometer",
@@ -776,6 +777,7 @@
     "tooltip.primalmagick.sanguine_core.1": "Durability: %1$d",
     "tooltip.primalmagick.sanguine_core.2": "Souls per spawn: %1$d",
     "tooltip.primalmagick.mana_discount": "Mana discount: %1$d%%",
+    "tooltip.primalmagick.glamoured": "Glamoured",
     "tooltip.primalmagick.runescribed": "Runescribed",
     "tooltip.primalmagick.rune.earth": "\"Teq\"",
     "tooltip.primalmagick.rune.sea": "\"Ald\"",
@@ -1529,6 +1531,10 @@
     "primalmagick.research.essence_cask_heavenly.title": "Heavenly Essence Cask",
     "primalmagick.research.essence_cask_heavenly.text.stage.1": "All is as one.  This fundamental principle of unity will hopefully allow me to keep my essence stocks tidier.",
     "primalmagick.research.essence_cask_heavenly.text.stage.2": "By using the purest of materials and enchantments of harmony, I have forged the ultimate essence storage device.  It will hold double again what the previous iteration was capable of.",
+    
+    "primalmagick.research.wand_glamour_table.title": "Wand Glamour Table",
+    "primalmagick.research.wand_glamour_table.text.stage.1": "These new advanced wands are really cool, but what if I want my wand to look different from its construction?  I bet there's a magickal way to solve that!",
+    "primalmagick.research.wand_glamour_table.text.stage.2": "With the help of some light-bending quartz and the shifting magick of the moon, I can now apply simple glamour enchantments to my wands.<BR>These glamours will let me make my wands look like they're made of whatever I want, so long as I have the components.  I just place the wand on the table, along with the new components whose appearance I want the wand to assume, and presto!  The wand components are consumed in the process, but that's just the price to pay for fashion, I guess.<BR>It's worth noting that mundane wands cannot be glamoured in this way; they're just too primitive.  All the more reason to upgrade!",
     
     "primalmagick.research.basic_runeworking.title": "Basic Runeworking",
     "primalmagick.research.basic_runeworking.text.stage.1": "I think I'm starting to get the hang of Runeworking.  Certain symbols carry inherent magickal power.  By carving them into stone, then inscribing the right combination of them onto an item, I can imbue that item with an effect much like an enchantment.<BR>While somewhat invovled, there appear to be a number of benefits to this process over using an enchanting table.<BR>First, it doesn't cost me any of my hard-won experience.  That alone makes it worth studying.<BR>Second, I have full control of the enchantment that gets applied.  No more praying for the right random result at the enchanting table.<BR>And third, I can actually apply runes to an item that I've already enchanted for further effect.<BR>This process has its drawbacks, though.  These runes are very complicated; I'm going to have to research each of them individually to make sure I get them right.  And an item can only have one set of runes applied to it at a time.  Finally, and most strangely, while a standard grindstone will remove the magick that the runes impart, it won't remove the runes themselves, so I can't apply new ones.<BR>Still, this is a discipline that seems well worth my time to pursue, if I want to give myself the arms and armor I need to survive.",

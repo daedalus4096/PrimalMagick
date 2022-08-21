@@ -1,0 +1,31 @@
+{
+  "addenda": [],
+  "discipline": "MANAWEAVING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:wand_glamour_table"
+  },
+  "key": "WAND_GLAMOUR_TABLE",
+  "name": "primalmagick.research.wand_glamour_table.title",
+  "parents": [
+    "EXPERT_MANAWEAVING",
+    "WAND_CORE_HEARTWOOD"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "primalmagick.research.wand_glamour_table.text.stage.1"
+    },
+    {
+      "attunements": {
+        "moon": 2
+      },
+      "recipes": [
+        "primalmagick:wand_glamour_table"
+      ],
+      "text": "primalmagick.research.wand_glamour_table.text.stage.2"
+    }
+  ]
+}

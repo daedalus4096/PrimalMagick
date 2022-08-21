@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.client.gui.RunescribingAltarHeavenlyScre
 import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
+import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
@@ -92,6 +93,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(ContainersPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterScreen::new);
         MenuScreens.register(ContainersPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberScreen::new);
         MenuScreens.register(ContainersPM.ESSENCE_CASK.get(), EssenceCaskScreen::new);
+        MenuScreens.register(ContainersPM.WAND_GLAMOUR_TABLE.get(), WandGlamourTableScreen::new);
     }
     
     private static void registerTERs() {

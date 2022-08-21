@@ -30,15 +30,14 @@ public class ModularWandISTER extends BlockEntityWithoutLevelRenderer {
 
     @Override
     public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        if (itemStack.getItem() instanceof ModularWandItem) {
+        if (itemStack.getItem() instanceof ModularWandItem wand) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
             
-            // Get the wand components so we can extract their model resource locations
-            ModularWandItem wand = (ModularWandItem)itemStack.getItem();
-            WandCore core = wand.getWandCore(itemStack);
-            WandCap cap = wand.getWandCap(itemStack);
-            WandGem gem = wand.getWandGem(itemStack);
+            // Get the wand appearance components so we can extract their model resource locations
+            WandCore core = wand.getWandCoreAppearance(itemStack);
+            WandCap cap = wand.getWandCapAppearance(itemStack);
+            WandGem gem = wand.getWandGemAppearance(itemStack);
             
             VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             if (core != null) {

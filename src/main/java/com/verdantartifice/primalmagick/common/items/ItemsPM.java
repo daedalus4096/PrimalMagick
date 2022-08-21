@@ -334,6 +334,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_ENCHANTED = ITEMS.register("essence_cask_enchanted", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = ITEMS.register("essence_cask_forbidden", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE)));
     public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_HEAVENLY = ITEMS.register("essence_cask_heavenly", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.EPIC)));
+    public static final RegistryObject<BurnableBlockItem> WAND_GLAMOUR_TABLE = ITEMS.register("wand_glamour_table", () -> new BurnableBlockItem(BlocksPM.WAND_GLAMOUR_TABLE.get(), 300, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = ITEMS.register("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));

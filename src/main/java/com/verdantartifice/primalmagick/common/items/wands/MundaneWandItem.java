@@ -97,6 +97,12 @@ public class MundaneWandItem extends AbstractWandItem {
     }
 
     @Override
+    public boolean isGlamoured(ItemStack stack) {
+        // Mundane wands can't have glamours applied
+        return false;
+    }
+
+    @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
             final BlockEntityWithoutLevelRenderer renderer = new MundaneWandISTER();

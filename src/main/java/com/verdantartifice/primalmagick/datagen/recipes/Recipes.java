@@ -574,6 +574,13 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RECALL_STONE")))
             .manaCost(new SourceList().add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WAND_GLAMOUR_TABLE.get())
+            .addIngredient(ItemsPM.WOOD_TABLE.get())
+            .addIngredient(Tags.Items.STORAGE_BLOCKS_QUARTZ)
+            .addIngredient(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GLAMOUR_TABLE")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.cooking(Ingredient.of(ItemsPM.HEARTWOOD.get()), Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
@@ -589,6 +596,8 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.MODID + ":flying_carpet_dye");
         SpecialRecipeBuilder.special(RecipeSerializersPM.TIERED_SHIELD_DECORATION.get())
             .save(consumer, PrimalMagick.MODID + ":tiered_shield_decoration");
+        SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_GLAMOUR_SPECIAL.get())
+            .save(consumer, PrimalMagick.MODID + ":wand_glamour");
     }
 
     protected void registerMarbleRecipes(Consumer<FinishedRecipe> consumer) {
