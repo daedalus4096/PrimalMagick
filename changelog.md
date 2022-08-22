@@ -7,6 +7,7 @@ v3.1.1
 * Gave attunement-dropped glow fields a minor particle effect
 * Replaced lesser Sea attunement bonus with flat swim speed buff
 * Fixed a bug causing spells to cast when using a wand on an interactable object such as a mana font
+* Added required research to JEI recipes
 
 v3.1.0
 ------
