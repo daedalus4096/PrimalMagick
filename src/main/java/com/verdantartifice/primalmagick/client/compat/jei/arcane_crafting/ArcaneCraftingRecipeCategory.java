@@ -1,21 +1,15 @@
 package com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
+import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -27,7 +21,6 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.crafting.IShapedRecipe;
@@ -91,33 +84,11 @@ public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
-            for (Source source : manaCosts.getSourcesSorted()) {
-                tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
-            }
-            return tooltip;
+            return JeiHelper.getManaCostTooltipStrings(manaCosts);
         } else if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
                     mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.crafting.research_header"));
-            for (SimpleResearchKey key : compoundResearch.getKeys()) {
-                ResearchEntry entry = ResearchEntries.getEntry(key);
-                if (entry == null) {
-                    tooltip.add(Component.translatable("primalmagick.research." + key.getRootKey() + ".text"));
-                } else {
-                    MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
-                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                    if (disc != null) {
-                        comp.append(Component.literal(" ("));
-                        comp.append(Component.translatable(disc.getNameTranslationKey()));
-                        comp.append(Component.literal(")"));
-                    }
-                    tooltip.add(comp);
-                }
-            }
-            return tooltip;
+            return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }

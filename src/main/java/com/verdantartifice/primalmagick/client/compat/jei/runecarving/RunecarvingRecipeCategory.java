@@ -1,20 +1,15 @@
 package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -24,7 +19,6 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -72,24 +66,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
         if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
              mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
              mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.crafting.research_header"));
-            for (SimpleResearchKey key : compoundResearch.getKeys()) {
-                ResearchEntry entry = ResearchEntries.getEntry(key);
-                if (entry == null) {
-                    tooltip.add(Component.translatable("primalmagick.research." + key.getRootKey() + ".text"));
-                } else {
-                    MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
-                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                    if (disc != null) {
-                        comp.append(Component.literal(" ("));
-                        comp.append(Component.translatable(disc.getNameTranslationKey()));
-                        comp.append(Component.literal(")"));
-                    }
-                    tooltip.add(comp);
-                }
-            }
-            return tooltip;
+            return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }
