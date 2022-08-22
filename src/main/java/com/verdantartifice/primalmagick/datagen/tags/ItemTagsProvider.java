@@ -54,7 +54,11 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER);
         this.tag(Tags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.tag(Tags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
+        this.tag(Tags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
+        this.tag(Tags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
+        this.tag(Tags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT);
         this.tag(Tags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
+        this.tag(Tags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
         this.tag(Tags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.tag(Tags.Items.GLASS_COLORLESS).add(ItemsPM.SKYGLASS.get());
@@ -100,6 +104,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
         this.tag(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
         this.tag(ItemTagsForgeExt.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());
+        this.tag(ItemTagsForgeExt.ORES_ROCK_SALT).add(ItemsPM.ROCK_SALT_ORE.get());
 
         // Create custom tags
         this.tag(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.BLACK_SHULKER_BOX, Items.BLUE_SHULKER_BOX, Items.BROWN_SHULKER_BOX, Items.CYAN_SHULKER_BOX, Items.GRAY_SHULKER_BOX, Items.GREEN_SHULKER_BOX, Items.LIGHT_BLUE_SHULKER_BOX, Items.LIGHT_GRAY_SHULKER_BOX, Items.LIME_SHULKER_BOX, Items.MAGENTA_SHULKER_BOX, Items.ORANGE_SHULKER_BOX, Items.PINK_SHULKER_BOX, Items.PURPLE_SHULKER_BOX, Items.RED_SHULKER_BOX, Items.WHITE_SHULKER_BOX, Items.YELLOW_SHULKER_BOX);

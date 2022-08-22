@@ -8,6 +8,7 @@ v3.1.1
 * Replaced lesser Sea attunement bonus with flat swim speed buff
 * Fixed a bug causing spells to cast when using a wand on an interactable object such as a mana font
 * Added required research to JEI recipes
+* Updated ores tag data for mod ores
 
 v3.1.0
 ------

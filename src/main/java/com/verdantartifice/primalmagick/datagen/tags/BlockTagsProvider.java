@@ -55,7 +55,11 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.tag(BlockTags.NEEDS_DIAMOND_TOOL).add(BlocksPM.HALLOWSTEEL_BLOCK.get());
         
         // Add entries to Forge tags
+        this.tag(Tags.Blocks.ORE_RATES_DENSE).add(BlocksPM.ROCK_SALT_ORE.get());
+        this.tag(Tags.Blocks.ORE_RATES_SINGULAR).add(BlocksPM.QUARTZ_ORE.get());
+        this.tag(Tags.Blocks.ORES).addTag(BlockTagsForgeExt.ORES_ROCK_SALT);
         this.tag(Tags.Blocks.ORES_QUARTZ).add(BlocksPM.QUARTZ_ORE.get());
+        this.tag(Tags.Blocks.ORES_IN_GROUND_STONE).add(BlocksPM.QUARTZ_ORE.get(), BlocksPM.ROCK_SALT_ORE.get());
         this.tag(Tags.Blocks.STORAGE_BLOCKS).add(BlocksPM.IGNYX_BLOCK.get(), BlocksPM.SALT_BLOCK.get()).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         
         this.tag(Tags.Blocks.GLASS_COLORLESS).add(BlocksPM.SKYGLASS.get());
@@ -98,6 +102,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         
         // Add entries to Forge extension tags
         this.tag(BlockTagsForgeExt.BOOKSHELVES).add(Blocks.BOOKSHELF);
+        this.tag(BlockTagsForgeExt.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
         
         // Create custom tags
         this.tag(BlockTagsPM.BOUNTY_CROPS).add(Blocks.BEETROOTS, Blocks.CARROTS, Blocks.NETHER_WART, Blocks.POTATOES, Blocks.WHEAT);
