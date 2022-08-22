@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.client.compat.jei;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -23,6 +26,14 @@ import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -35,6 +46,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
@@ -127,5 +140,35 @@ public class JeiHelper implements IModPlugin {
         registration.addRecipeClickArea(ArcaneWorkbenchScreen.class, 104, 52, 22, 15, JeiRecipeTypesPM.ARCANE_CRAFTING);
         registration.addRecipeClickArea(ConcocterScreen.class, 104, 35, 22, 15, JeiRecipeTypesPM.CONCOCTING);
         registration.addRecipeClickArea(DissolutionChamberScreen.class, 79, 35, 22, 15, JeiRecipeTypesPM.DISSOLUTION);
+    }
+    
+    public static List<Component> getManaCostTooltipStrings(SourceList manaCosts) {
+        List<Component> tooltip = new ArrayList<>();
+        tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
+        for (Source source : manaCosts.getSourcesSorted()) {
+            tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
+        }
+        return tooltip;
+    }
+    
+    public static List<Component> getRequiredResearchTooltipStrings(CompoundResearchKey compoundResearch) {
+        List<Component> tooltip = new ArrayList<>();
+        tooltip.add(Component.translatable("primalmagick.crafting.research_header"));
+        for (SimpleResearchKey key : compoundResearch.getKeys()) {
+            ResearchEntry entry = ResearchEntries.getEntry(key);
+            if (entry == null) {
+                tooltip.add(Component.translatable("primalmagick.research." + key.getRootKey() + ".text"));
+            } else {
+                MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
+                ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
+                if (disc != null) {
+                    comp.append(Component.literal(" ("));
+                    comp.append(Component.translatable(disc.getNameTranslationKey()));
+                    comp.append(Component.literal(")"));
+                }
+                tooltip.add(comp);
+            }
+        }
+        return tooltip;
     }
 }
