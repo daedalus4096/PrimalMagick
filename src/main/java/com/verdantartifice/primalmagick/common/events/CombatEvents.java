@@ -194,7 +194,7 @@ public class CombatEvents {
         if (entity.hasEffect(EffectsPM.STOLEN_ESSENCE.get()) && !event.isCanceled()) {
             MobEffectInstance instance = entity.getEffect(EffectsPM.STOLEN_ESSENCE.get());
             SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
-            if (!affinities.isEmpty()) {
+            if (affinities != null && !affinities.isEmpty()) {
                 WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
                 for (Source source : affinities.getSources()) {
                     int amount = affinities.getAmount(source);

@@ -1,4 +1,4 @@
-v3.1.1
+v3.2.0
 ------
 * Added Essence Casks, to keep your essence stocks tidier
 * Added Wand Glamour Tables, to change the appearance of your wands
@@ -9,6 +9,7 @@ v3.1.1
 * Fixed a bug causing spells to cast when using a wand on an interactable object such as a mana font
 * Added required research to JEI recipes
 * Updated ores tag data for mod ores
+* Fixed crash when using Essence Thief enchantment on mobs without affinities
 
 v3.1.0
 ------
