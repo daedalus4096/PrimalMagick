@@ -1,5 +1,6 @@
 v3.2.0
 ------
+* Updated to Minecraft 1.19.2
 * Added Essence Casks, to keep your essence stocks tidier
 * Added Wand Glamour Tables, to change the appearance of your wands
 * Added missing recipe for Bomb Casings
@@ -10,6 +11,8 @@ v3.2.0
 * Added required research to JEI recipes
 * Updated ores tag data for mod ores
 * Fixed crash when using Essence Thief enchantment on mobs without affinities
+* Incremented to Forge version 43.1.1
+* Set minimum required Forge version to 43.1.1 for loading
 
 v3.1.0
 ------
