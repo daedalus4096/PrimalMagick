@@ -238,17 +238,16 @@ public class EntityUtils {
         EntityTeleportEvent.EnderEntity event = new EntityTeleportEvent.EnderEntity(player, destination.x, destination.y, destination.z);
         if (!MinecraftForge.EVENT_BUS.post(event)) {
             // Show a teleport particle effect at the destination
-            PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
-            
-            if (!world.isClientSide && player instanceof ServerPlayer) {
-                boolean isPlayer = (player instanceof ServerPlayer);
-                if ((!isPlayer || ((ServerPlayer)player).connection.getConnection().isConnected()) && player.level == world && !player.isSleeping()) {
+            if (!world.isClientSide) {
+                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
+
+                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.getConnection().isConnected() && player.level == world && !player.isSleeping()) {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }
                     
                     // Record teleport distance statistic
-                    StatsManager.incrementValue((ServerPlayer)player, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * event.getPrev().distanceTo(event.getTarget())));
+                    StatsManager.incrementValue(serverPlayer, StatsPM.DISTANCE_TELEPORTED_CM, (int)(100 * event.getPrev().distanceTo(event.getTarget())));
                     
                     // Do the teleportation
                     player.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());

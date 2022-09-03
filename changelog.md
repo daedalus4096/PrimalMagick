@@ -1,3 +1,7 @@
+v3.2.1
+------
+* Fixed client crash with Enderport enchantments on multiplayer servers
+
 v3.2.0
 ------
 * Updated to Minecraft 1.19.2
