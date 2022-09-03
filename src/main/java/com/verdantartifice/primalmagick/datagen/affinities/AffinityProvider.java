@@ -387,10 +387,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.GUNPOWDER).set(Source.EARTH, 5).set(Source.INFERNAL, 15).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WHEAT_SEEDS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WHEAT).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_HELMET).base(Items.IRON_HELMET).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_CHESTPLATE).base(Items.IRON_CHESTPLATE).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_LEGGINGS).base(Items.IRON_LEGGINGS).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.CHAINMAIL_BOOTS).base(Items.IRON_BOOTS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NETHERITE_HELMET).set(Source.EARTH, 90).set(Source.INFERNAL, 22).build(consumer);        // Smithing recipes can't be auto-scanned
         ItemAffinityBuilder.itemAffinity(Items.NETHERITE_CHESTPLATE).set(Source.EARTH, 123).set(Source.INFERNAL, 22).build(consumer);   // Smithing recipes can't be auto-scanned
         ItemAffinityBuilder.itemAffinity(Items.NETHERITE_LEGGINGS).set(Source.EARTH, 112).set(Source.INFERNAL, 22).build(consumer);     // Smithing recipes can't be auto-scanned
