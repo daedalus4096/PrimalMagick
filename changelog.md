@@ -1,6 +1,7 @@
 v3.2.1
 ------
 * Fixed client crash with Enderport enchantments on multiplayer servers
+* Fixed Runic Grindstone to remove runes even from unenchanted items
 
 v3.2.0
 ------

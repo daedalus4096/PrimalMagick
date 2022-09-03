@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Server data container for the runic grindstone GUI.
@@ -39,10 +40,60 @@ public class RunicGrindstoneContainer extends GrindstoneMenu {
     
     @Override
     public void createResult() {
-        super.createResult();
+        ItemStack itemstack = this.repairSlots.getItem(0);
+        ItemStack itemstack1 = this.repairSlots.getItem(1);
+        boolean flag = !itemstack.isEmpty() || !itemstack1.isEmpty();
+        boolean flag1 = !itemstack.isEmpty() && !itemstack1.isEmpty();
+        
+        if (!flag) {
+            this.resultSlots.setItem(0, ItemStack.EMPTY);
+        } else {
+            // This flag is the whole reason we're re-implementing the entire method, instead of delegating to super, so that we can remove runes from unenchanted items; ugh
+            boolean flag2 = !itemstack.isEmpty() && !itemstack.is(Items.ENCHANTED_BOOK) && !itemstack.isEnchanted() && !RuneManager.hasRunes(itemstack) || 
+                            !itemstack1.isEmpty() && !itemstack1.is(Items.ENCHANTED_BOOK) && !itemstack1.isEnchanted() && !RuneManager.hasRunes(itemstack1);
+            if (itemstack.getCount() > 1 || itemstack1.getCount() > 1 || !flag1 && flag2) {
+                this.resultSlots.setItem(0, ItemStack.EMPTY);
+                this.broadcastChanges();
+                return;
+            }
+
+            int j = 1;
+            int i;
+            ItemStack itemstack2;
+            if (flag1) {
+                if (!itemstack.is(itemstack1.getItem())) {
+                    this.resultSlots.setItem(0, ItemStack.EMPTY);
+                    this.broadcastChanges();
+                    return;
+                }
+
+                int k = itemstack.getMaxDamage() - itemstack.getDamageValue();
+                int l = itemstack.getMaxDamage() - itemstack1.getDamageValue();
+                int i1 = k + l + itemstack.getMaxDamage() * 5 / 100;
+                i = Math.max(itemstack.getMaxDamage() - i1, 0);
+                itemstack2 = this.mergeEnchants(itemstack, itemstack1);
+                if (!itemstack2.isRepairable()) i = itemstack.getDamageValue();
+                if (!itemstack2.isDamageableItem() || !itemstack2.isRepairable()) {
+                    if (!ItemStack.matches(itemstack, itemstack1)) {
+                        this.resultSlots.setItem(0, ItemStack.EMPTY);
+                        this.broadcastChanges();
+                        return;
+                    }
+                    j = 2;
+                }
+            } else {
+                boolean flag3 = !itemstack.isEmpty();
+                i = flag3 ? itemstack.getDamageValue() : itemstack1.getDamageValue();
+                itemstack2 = flag3 ? itemstack : itemstack1;
+            }
+
+            this.resultSlots.setItem(0, this.removeNonCurses(itemstack2, i, j));
+        }
+
+        this.broadcastChanges();
+        
         this.worldPosCallable.execute((world, pos) -> {
-            if (!world.isClientSide && this.player instanceof ServerPlayer) {
-                ServerPlayer spe = (ServerPlayer)this.player;
+            if (!world.isClientSide && this.player instanceof ServerPlayer spe) {
                 ItemStack stack = this.resultSlots.getItem(0);
                 spe.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, this.incrementStateId(), 2, stack));
             }
