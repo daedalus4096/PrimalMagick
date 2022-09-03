@@ -48,6 +48,9 @@ public class InitRunes {
         RuneManager.registerRuneEnchantment(Enchantments.QUICK_CHARGE, Rune.PROJECT, Rune.ITEM, Rune.SKY);
         RuneManager.registerRuneEnchantment(Enchantments.PIERCING, Rune.PROJECT, Rune.ITEM, Rune.EARTH);
         RuneManager.registerRuneEnchantment(Enchantments.MENDING, Rune.ABSORB, Rune.ITEM, Rune.SUN);
+        RuneManager.registerRuneEnchantment(Enchantments.BANE_OF_ARTHROPODS, Rune.PROJECT, Rune.ITEM, Rune.BLOOD);
+        RuneManager.registerRuneEnchantment(Enchantments.SMITE, Rune.PROJECT, Rune.CREATURE, Rune.SUN);
+        RuneManager.registerRuneEnchantment(Enchantments.SOUL_SPEED, Rune.PROJECT, Rune.SELF, Rune.INFERNAL);
         
         // Register rune combinations for mod enchantments
         RuneManager.registerRuneEnchantment(EnchantmentsPM.LIFESTEAL.get(), Rune.ABSORB, Rune.SELF, Rune.BLOOD);
