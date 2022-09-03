@@ -27,6 +27,8 @@ public class ItemTagsPM {
     public static final TagKey<Item> MAGICKAL_CLOTH = tag("magickal_cloth");
     public static final TagKey<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final TagKey<Item> RITUAL_CANDLES = tag("ritual_candles");
+    public static final TagKey<Item> RUNE_BASES = tag("rune_bases");
+    public static final TagKey<Item> RUNE_ETCHINGS = tag("rune_etchings");
     public static final TagKey<Item> SHULKER_BOXES = tag("shulker_boxes");
     public static final TagKey<Item> SKYGLASS = tag("skyglass");
     public static final TagKey<Item> SKYGLASS_PANES = tag("skyglass_panes");

@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.LapisLazuliSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.StoneSlabSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneBaseSlot;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -72,10 +72,10 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         this.tableInv = tableInv;
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(new StoneSlabSlot(this.tableInv, 0, 20, 21));
+        this.inputSlabSlot = this.addSlot(new RuneBaseSlot(this.tableInv, 0, 20, 21));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(new LapisLazuliSlot(this.tableInv, 1, 20, 46));
+        this.inputLapisSlot = this.addSlot(new RuneEtchingSlot(this.tableInv, 1, 20, 46));
         
         // Slot 2: runecarving output
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, this.outputInventory, 0, 143, 33) {

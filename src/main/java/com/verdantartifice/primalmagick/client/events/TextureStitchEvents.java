@@ -9,10 +9,10 @@ import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.containers.slots.BottleSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.HoneycombSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.LapisLazuliSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.PaperSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.RuneSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.StoneSlabSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneBaseSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandCapSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandCoreSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandGemSlot;
@@ -45,8 +45,8 @@ public class TextureStitchEvents {
             event.addSprite(PaperSlot.TEXTURE);
             event.addSprite(WritingImplementSlot.TEXTURE);
             event.addSprite(RuneSlot.TEXTURE);
-            event.addSprite(StoneSlabSlot.TEXTURE);
-            event.addSprite(LapisLazuliSlot.TEXTURE);
+            event.addSprite(RuneBaseSlot.TEXTURE);
+            event.addSprite(RuneEtchingSlot.TEXTURE);
             event.addSprite(HoneycombSlot.TEXTURE);
             event.addSprite(BottleSlot.TEXTURE);
 
