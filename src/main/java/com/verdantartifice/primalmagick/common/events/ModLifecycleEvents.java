@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
 import com.verdantartifice.primalmagick.common.init.InitResearch;
-import com.verdantartifice.primalmagick.common.init.InitRunes;
 import com.verdantartifice.primalmagick.common.init.InitSpells;
 import com.verdantartifice.primalmagick.common.init.InitStats;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -55,7 +54,6 @@ public class ModLifecycleEvents {
         InitResearch.initResearch();
         InitSpells.initSpells();
         InitStats.initStats();
-//        InitRunes.initRuneEnchantments();
         InitCauldron.initCauldronInteractions();
         
         LootConditionTypesPM.register();
