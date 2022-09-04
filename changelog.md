@@ -5,6 +5,7 @@ v3.2.1
 * Removed default affinity definitions from chainmail armor
 * Changed Runecarving Table slots to be filtered by tags instead of hard-coded items
 * Added rune combinations for some previously missing enchantments
+* Changed rune combination definitions to be modifiable by datapacks
 
 v3.2.0
 ------
