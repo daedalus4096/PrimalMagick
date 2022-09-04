@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:creature",
+  "required_research": "MASTER_RUNEWORKING&&FORBIDDEN_TRIDENT&&RUNE_PROJECT&&RUNE_CREATURE&&RUNE_BLOOD",
+  "result": "primalmagick:rending",
+  "source": "primalmagick:blood",
+  "verb": "primalmagick:project"
+}

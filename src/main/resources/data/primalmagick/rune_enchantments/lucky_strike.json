@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:item",
+  "required_research": "MASTER_RUNEWORKING&&PRIMAL_PICKAXE&&RUNE_SUMMON&&RUNE_ITEM&&RUNE_MOON",
+  "result": "primalmagick:lucky_strike",
+  "source": "primalmagick:moon",
+  "verb": "primalmagick:summon"
+}

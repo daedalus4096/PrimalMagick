@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "minecraft:mending",
+  "source": "primalmagick:sun",
+  "verb": "primalmagick:absorb"
+}

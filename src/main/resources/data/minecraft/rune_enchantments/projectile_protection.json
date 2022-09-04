@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:self",
+  "result": "minecraft:projectile_protection",
+  "source": "primalmagick:sky",
+  "verb": "primalmagick:protect"
+}

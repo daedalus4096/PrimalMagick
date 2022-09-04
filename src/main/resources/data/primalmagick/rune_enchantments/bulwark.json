@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:self",
+  "required_research": "MASTER_RUNEWORKING&&SACRED_SHIELD&&RUNE_PROTECT&&RUNE_SELF&&RUNE_HALLOWED",
+  "result": "primalmagick:bulwark",
+  "source": "primalmagick:hallowed",
+  "verb": "primalmagick:protect"
+}

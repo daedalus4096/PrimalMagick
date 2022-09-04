@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:creature",
+  "required_research": "MASTER_RUNEWORKING&&PRIMAL_HOE&&RUNE_SUMMON&&RUNE_CREATURE&&RUNE_SUN",
+  "result": "primalmagick:verdant",
+  "source": "primalmagick:sun",
+  "verb": "primalmagick:summon"
+}

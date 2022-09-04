@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:area",
+  "required_research": "MASTER_RUNEWORKING&&PRIMAL_AXE&&RUNE_PROJECT&&RUNE_AREA&&RUNE_SKY",
+  "result": "primalmagick:disintegration",
+  "source": "primalmagick:sky",
+  "verb": "primalmagick:project"
+}

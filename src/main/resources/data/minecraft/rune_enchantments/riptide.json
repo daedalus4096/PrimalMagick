@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:self",
+  "result": "minecraft:riptide",
+  "source": "primalmagick:sea",
+  "verb": "primalmagick:summon"
+}
