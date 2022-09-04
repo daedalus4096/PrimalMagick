@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
-import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
+import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;

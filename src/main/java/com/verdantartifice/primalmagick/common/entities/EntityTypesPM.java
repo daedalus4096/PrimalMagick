@@ -36,7 +36,6 @@ import com.verdantartifice.primalmagick.common.entities.misc.FlyingCarpetEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
-import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
@@ -50,6 +49,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.PrimaliteTri
 import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
+import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

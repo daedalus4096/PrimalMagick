@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.entities.misc;
+package com.verdantartifice.primalmagick.common.entities.treefolk;
 
 import java.util.List;
 import java.util.UUID;

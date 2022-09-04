@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
-import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
+import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
