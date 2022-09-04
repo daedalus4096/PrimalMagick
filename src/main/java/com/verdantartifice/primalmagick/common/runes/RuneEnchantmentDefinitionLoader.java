@@ -62,27 +62,23 @@ public class RuneEnchantmentDefinitionLoader extends SimpleJsonResourceReloadLis
 
             try {
                 RuneEnchantmentDefinition def = RuneManager.DEFINITION_SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
-                if (def == null) {
+                if (def == null || !RuneManager.registerRuneEnchantment(def)) {
                     LOGGER.error("Failed loading rune enchantment definition {}", location);
-                } else {
-                    RuneManager.registerRuneEnchantment(def);
                 }
             } catch (Exception e) {
                 LOGGER.error("Parsing failure loading rune enchantment definition {}", location, e);
             }
         }
-        LOGGER.info("Loaded {} rune enchantment definitions", RuneManager.getRuneEnchantmentCount());
+        LOGGER.info("Loaded {} rune enchantment definitions", RuneManager.getAllDefinitions().size());
     }
 
     public void replaceRuneEnchantments(Map<ResourceLocation, RuneEnchantmentDefinition> definitions) {
         RuneManager.clearAllRuneEnchantments();
         for (Map.Entry<ResourceLocation, RuneEnchantmentDefinition> entry : definitions.entrySet()) {
-            if (entry.getValue() == null) {
+            if (entry.getValue() == null || !RuneManager.registerRuneEnchantment(entry.getValue())) {
                 LOGGER.error("Failed to update rune enchantment definition {}", entry.getKey());
-            } else {
-                RuneManager.registerRuneEnchantment(entry.getValue());
             }
         }
-        LOGGER.info("Updated {} rune enchantment definitions", RuneManager.getRuneEnchantmentCount());
+        LOGGER.info("Updated {} rune enchantment definitions", RuneManager.getAllDefinitions().size());
     }
 }

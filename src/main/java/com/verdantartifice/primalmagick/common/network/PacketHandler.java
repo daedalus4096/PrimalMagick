@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.TileToClient
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateResearchPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
@@ -120,6 +121,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SpellcraftingRunePacket.class, SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode, SpellcraftingRunePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetActiveSpellPacket.class, SetActiveSpellPacket::encode, SetActiveSpellPacket::decode, SetActiveSpellPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode, WithdrawCaskEssencePacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket::encode, UpdateRuneEnchantmentsPacket::decode, UpdateRuneEnchantmentsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

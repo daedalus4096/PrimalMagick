@@ -55,7 +55,7 @@ public class ModLifecycleEvents {
         InitResearch.initResearch();
         InitSpells.initSpells();
         InitStats.initStats();
-        InitRunes.initRuneEnchantments();
+//        InitRunes.initRuneEnchantments();
         InitCauldron.initCauldronInteractions();
         
         LootConditionTypesPM.register();
