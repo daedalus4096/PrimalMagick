@@ -33,6 +33,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RuneManager {
+    public static final IRuneEnchantmentDefinitionSerializer DEFINITION_SERIALIZER = new RuneEnchantmentDefinition.Serializer();
     protected static final Map<Enchantment, List<Rune>> REGISTRY = new HashMap<>();
     protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
@@ -57,6 +58,22 @@ public class RuneManager {
         if (enchantment != null && research != null) {
             ENCHANTMENT_RESEARCH.put(enchantment, research);
         }
+    }
+    
+    public static void registerRuneEnchantment(@Nonnull RuneEnchantmentDefinition def) {
+        registerRuneEnchantment(def.getResult(), def.getVerb(), def.getNoun(), def.getSource(), def.getRequiredResearch());
+    }
+    
+    public static void clearAllRuneEnchantments() {
+        REGISTRY.clear();
+        VERB_ENCHANTMENTS.clear();
+        NOUN_ENCHANTMENTS.clear();
+        SOURCE_ENCHANTMENTS.clear();
+        ENCHANTMENT_RESEARCH.clear();
+    }
+    
+    public static int getRuneEnchantmentCount() {
+        return REGISTRY.size();
     }
     
     /**
