@@ -162,8 +162,7 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
 
     @Override
     protected Brain<?> makeBrain(Dynamic<?> pDynamic) {
-        // TODO Auto-generated method stub
-        return super.makeBrain(pDynamic);
+        return TreefolkAi.makeBrain(this, this.brainProvider().makeBrain(pDynamic));
     }
 
     @SuppressWarnings("unchecked")

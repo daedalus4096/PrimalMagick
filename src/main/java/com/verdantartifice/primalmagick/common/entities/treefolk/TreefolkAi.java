@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.entities.treefolk;
 import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 
@@ -35,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class TreefolkAi {
+    private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
@@ -45,15 +47,17 @@ public class TreefolkAi {
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
 
     protected static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
-        // TODO Initialize activities
         initCoreActivity(brain);
         initIdleActivity(brain);
         initAdmireItemActivity(brain);
+        brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
+        brain.setDefaultActivity(Activity.IDLE);
+        brain.useDefaultActivity();
         return brain;
     }
     
     private static void initCoreActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopBeingAngryIfTargetDead<>()));
+        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopHoldingItemIfNoLongerAdmiring<>(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new StopBeingAngryIfTargetDead<>()));
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
@@ -76,7 +80,7 @@ public class TreefolkAi {
         return entity.getType() == EntityType.PLAYER && entity.isHolding(TreefolkAi::isLovedItem);
     }
     
-    protected static boolean isLovedItem(ItemStack stack) {
+    public static boolean isLovedItem(ItemStack stack) {
         // TODO Check tag membership
         return false;
     }
@@ -107,5 +111,10 @@ public class TreefolkAi {
     
     protected static boolean isNotHoldingLovedItemInOffHand(TreefolkEntity entity) {
         return entity.getOffhandItem().isEmpty() || !isLovedItem(entity.getOffhandItem());
+    }
+
+    public static void stopHoldingOffHandItem(TreefolkEntity entity, boolean shouldBarter) {
+        // TODO Auto-generated method stub
+        
     }
 }
