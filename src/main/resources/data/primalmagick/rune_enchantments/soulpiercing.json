@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:creature",
+  "required_research": "MASTER_RUNEWORKING&&FORBIDDEN_BOW&&RUNE_ABSORB&&RUNE_CREATURE&&RUNE_INFERNAL",
+  "result": "primalmagick:soulpiercing",
+  "source": "primalmagick:infernal",
+  "verb": "primalmagick:absorb"
+}

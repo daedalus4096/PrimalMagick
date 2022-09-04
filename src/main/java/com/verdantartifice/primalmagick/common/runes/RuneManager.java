@@ -33,6 +33,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RuneManager {
+    public static final IRuneEnchantmentDefinitionSerializer DEFINITION_SERIALIZER = new RuneEnchantmentDefinition.Serializer();
+    protected static final Map<ResourceLocation, RuneEnchantmentDefinition> DEFINITIONS = new HashMap<>();
     protected static final Map<Enchantment, List<Rune>> REGISTRY = new HashMap<>();
     protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
@@ -40,6 +42,7 @@ public class RuneManager {
     protected static final Map<Enchantment, CompoundResearchKey> ENCHANTMENT_RESEARCH = new HashMap<>();
     protected static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
     
+    // FIXME Make private
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
         if (enchantment != null && verb != null && noun != null && source != null) {
             if (REGISTRY.containsKey(enchantment)) {
@@ -52,11 +55,35 @@ public class RuneManager {
         }
     }
     
+    // FIXME Make private
     public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source, @Nullable CompoundResearchKey research) {
         registerRuneEnchantment(enchantment, verb, noun, source);
         if (enchantment != null && research != null) {
             ENCHANTMENT_RESEARCH.put(enchantment, research);
         }
+    }
+    
+    public static boolean registerRuneEnchantment(@Nonnull RuneEnchantmentDefinition def) {
+        if (DEFINITIONS.containsKey(def.getId())) {
+            return false;
+        } else {
+            registerRuneEnchantment(def.getResult(), def.getVerb(), def.getNoun(), def.getSource(), def.getRequiredResearch());
+            DEFINITIONS.put(def.getId(), def);
+            return true;
+        }
+    }
+    
+    public static void clearAllRuneEnchantments() {
+        DEFINITIONS.clear();
+        REGISTRY.clear();
+        VERB_ENCHANTMENTS.clear();
+        NOUN_ENCHANTMENTS.clear();
+        SOURCE_ENCHANTMENTS.clear();
+        ENCHANTMENT_RESEARCH.clear();
+    }
+    
+    public static Map<ResourceLocation, RuneEnchantmentDefinition> getAllDefinitions() {
+        return DEFINITIONS;
     }
     
     /**

@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:item",
+  "required_research": "MASTER_RUNEWORKING&&FORBIDDEN_SWORD&&RUNE_SUMMON&&RUNE_ITEM&&RUNE_VOID",
+  "result": "primalmagick:essence_thief",
+  "source": "primalmagick:void",
+  "verb": "primalmagick:summon"
+}

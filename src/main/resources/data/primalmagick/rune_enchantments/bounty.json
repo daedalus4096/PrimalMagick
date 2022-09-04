@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:area",
+  "required_research": "MASTER_RUNEWORKING&&PRIMAL_FISHING_ROD&&RUNE_SUMMON&&RUNE_AREA&&RUNE_SEA",
+  "result": "primalmagick:bounty",
+  "source": "primalmagick:sea",
+  "verb": "primalmagick:summon"
+}

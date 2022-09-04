@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:creature",
+  "result": "minecraft:punch",
+  "source": "primalmagick:earth",
+  "verb": "primalmagick:project"
+}

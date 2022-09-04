@@ -1,0 +1,6 @@
+{
+  "noun": "primalmagick:item",
+  "result": "primalmagick:mana_efficiency",
+  "source": "primalmagick:void",
+  "verb": "primalmagick:dispel"
+}

@@ -1,0 +1,7 @@
+{
+  "noun": "primalmagick:area",
+  "required_research": "MASTER_RUNEWORKING&&PRIMAL_SHOVEL&&RUNE_PROJECT&&RUNE_AREA&&RUNE_EARTH",
+  "result": "primalmagick:reverberation",
+  "source": "primalmagick:earth",
+  "verb": "primalmagick:project"
+}

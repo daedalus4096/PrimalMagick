@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
 import com.verdantartifice.primalmagick.datagen.research.ResearchProvider;
+import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProvider;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProvider;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProvider;
@@ -42,5 +43,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator));
         generator.addProvider(event.includeServer(), new BiomeModifierProvider(generator));
+        generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator));
     }
 }
