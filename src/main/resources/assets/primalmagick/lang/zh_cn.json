@@ -1320,7 +1320,7 @@
     "primalmagick.research.spell_payload_drain_soul.text.stage.2": "经过一些努力，我现在可以使用这个咒语提取一个生物的一部分灵魂。<br>首先，我向目标抛出咒语。在几秒钟之后，它的灵魂将被魔法*钉*在这个世界上。如果我杀了那个生物，灵魂能量就会以我能收集到的宝石的形式显现出来。<br>我所获得的宝石或宝石片的数量将与该生物死亡前的最大生命值成比例。和平的生物产生的灵魂碎片比危险的要少得多。",
     
     "primalmagick.research.spell_payload_teleport.title": "咒语负荷：传送",
-    "primalmagick.research.spell_payload_teleport.text.stage.1": "我见过末地的生物在点之间折叠空间，我渴望这种能力。让我用魔法让它成真！",
+    "primalmagick.research.spell_payload_teleport.text.stage.1": "我见过末地的生物在点与点之间折叠空间，我渴望拥有这种能力。让我用魔法让它成真！",
     "primalmagick.research.spell_payload_teleport.text.stage.2": "通过虚空的力量，我现在可以像末地的生物一样传送。<br> 铸造这个咒语后，我将立即出现在它影响的任何点。而且似乎对我的生理也没有持久的影响！<br> 这个咒语只意味着传送我自己到一个单一的点，我已经使它与破坏咒语模式不兼容。试图结合这两个将安全失败。另一种选择是……混乱。",
     
     "primalmagick.research.spell_payload_consecrate.title": "咒语负荷：神圣",
@@ -2290,7 +2290,7 @@
     "primalmagick.research_table.aid_header": "积极的研究辅助工具：",
 
     "primalmagick.essence_cask.contents": "内容：%1$d / %2$d",
-    "primalmagick.essence_cask.left_click": "左键单击可取回一叠",
+    "primalmagick.essence_cask.left_click": "左键单击可取回一组物品",
     "primalmagick.essence_cask.right_click": "右键单击以收回一个物品",
     
     "primalmagick.toast.completed.title": "研究完成了！",
