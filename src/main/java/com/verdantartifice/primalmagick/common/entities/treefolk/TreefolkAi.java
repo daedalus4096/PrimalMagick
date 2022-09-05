@@ -24,14 +24,17 @@ import net.minecraft.world.entity.ai.behavior.DoNothing;
 import net.minecraft.world.entity.ai.behavior.GoToWantedItem;
 import net.minecraft.world.entity.ai.behavior.InteractWith;
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
+import net.minecraft.world.entity.ai.behavior.MeleeAttack;
 import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
 import net.minecraft.world.entity.ai.behavior.RandomStroll;
 import net.minecraft.world.entity.ai.behavior.RunIf;
 import net.minecraft.world.entity.ai.behavior.RunOne;
 import net.minecraft.world.entity.ai.behavior.SetEntityLookTarget;
 import net.minecraft.world.entity.ai.behavior.SetLookAndInteract;
+import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
 import net.minecraft.world.entity.ai.behavior.StartAttacking;
+import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.behavior.StopBeingAngryIfTargetDead;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -57,16 +60,19 @@ public class TreefolkAi {
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
     private static final int HIT_BY_PLAYER_MEMORY_TIMEOUT = 400;
+    private static final int MELEE_ATTACK_COOLDOWN = 20;
     private static final int MAX_LOOK_DIST = 8;
     private static final int MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM = 14;
     private static final int INTERACTION_RANGE = 8;
     private static final float SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM = 1.0F;
+    private static final float SPEED_MULTIPLIER_WHEN_FIGHTING = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
 
     protected static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
         initCoreActivity(brain);
         initIdleActivity(brain);
         initAdmireItemActivity(brain);
+        initFightActivity(entity, brain);
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         brain.setDefaultActivity(Activity.IDLE);
         brain.useDefaultActivity();
@@ -82,7 +88,13 @@ public class TreefolkAi {
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.ADMIRE_ITEM, 10, ImmutableList.of(new GoToWantedItem<>(TreefolkAi::isNotHoldingLovedItemInOffHand, SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM, true, MAX_DISTANCE_TO_WALK_TO_ITEM), new StopAdmiringIfItemTooFarAway<>(MAX_DISTANCE_TO_WALK_TO_ITEM), new StopAdmiringIfTiredOfTryingToReachItem<>(MAX_TIME_TO_WALK_TO_ITEM, HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM)), MemoryModuleType.ADMIRING_ITEM);
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.ADMIRE_ITEM, 10, ImmutableList.of(new GoToWantedItem<>(TreefolkAi::isNotHoldingLovedItemInOffhand, SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM, true, MAX_DISTANCE_TO_WALK_TO_ITEM), new StopAdmiringIfItemTooFarAway<>(MAX_DISTANCE_TO_WALK_TO_ITEM), new StopAdmiringIfTiredOfTryingToReachItem<>(MAX_TIME_TO_WALK_TO_ITEM, HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM)), MemoryModuleType.ADMIRING_ITEM);
+    }
+    
+    private static void initFightActivity(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10, ImmutableList.of(new StopAttackingIfTargetInvalid<TreefolkEntity>(living -> {
+            return !isNearestValidAttackTarget(entity, living);
+        }), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING), new MeleeAttack(MELEE_ATTACK_COOLDOWN)), MemoryModuleType.ATTACK_TARGET);
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {
@@ -116,6 +128,12 @@ public class TreefolkAi {
             return Optional.empty();
         }
     }
+    
+    private static boolean isNearestValidAttackTarget(TreefolkEntity entity, LivingEntity target) {
+        return findNearestValidAttackTarget(entity).filter(e -> {
+            return e == target;
+        }).isPresent();
+    }
 
     private static boolean seesPlayerHoldingLovedItem(LivingEntity entity) {
        return entity.getBrain().hasMemoryValue(MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM);
@@ -123,10 +141,6 @@ public class TreefolkAi {
 
     private static boolean doesntSeeAnyPlayerHoldingLovedItem(LivingEntity entity) {
        return !seesPlayerHoldingLovedItem(entity);
-    }
-    
-    protected static boolean isNotHoldingLovedItemInOffHand(TreefolkEntity entity) {
-        return entity.getOffhandItem().isEmpty() || !isLovedItem(entity.getOffhandItem());
     }
     
     public static boolean wantsToPickup(TreefolkEntity entity, ItemStack stack) {
@@ -238,7 +252,7 @@ public class TreefolkAi {
     public static void updateActivity(TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
         Activity activityBefore = brain.getActiveNonCoreActivity().orElse(null);
-        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.IDLE));
+        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.IDLE));
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound
