@@ -52,6 +52,7 @@ import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -77,6 +78,7 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
             MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.PATH, MemoryModuleType.ANGRY_AT, MemoryModuleType.UNIVERSAL_ANGER, MemoryModuleType.ADMIRING_ITEM, 
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
             MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM);
+    private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
 //    protected UUID angerTarget;
 
@@ -123,6 +125,7 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        this.entityData.define(DATA_IS_DANCING, false);
 //        this.entityData.define(ANGER_TIME, 0);
     }
     
@@ -186,6 +189,15 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
     }
 
     @Override
+    protected void customServerAiStep() {
+        this.level.getProfiler().push("treefolkBrain");
+        this.getBrain().tick((ServerLevel)this.level, this);
+        this.level.getProfiler().pop();
+        TreefolkAi.updateActivity(this);
+        super.customServerAiStep();
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
         
@@ -230,6 +242,7 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        // TODO Implement AI interaction with loved items
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
             this.level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
@@ -263,6 +276,37 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
             this.setGuaranteedDrop(EquipmentSlot.OFFHAND);
         } else {
             this.setItemSlotAndDropWhenKilled(EquipmentSlot.OFFHAND, stack);
+        }
+    }
+    
+    public TreefolkArmPose getArmPose() {
+        if (this.isDancing()) {
+            return TreefolkArmPose.DANCING;
+        } else if (TreefolkAi.isLovedItem(this.getOffhandItem())) {
+            return TreefolkArmPose.ADMIRING_ITEM;
+        } else {
+            return TreefolkArmPose.DEFAULT;
+        }
+    }
+
+    public boolean isDancing() {
+        return this.entityData.get(DATA_IS_DANCING);
+    }
+
+    public void setDancing(boolean pDancing) {
+        this.entityData.set(DATA_IS_DANCING, pDancing);
+    }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        boolean flag = super.hurt(pSource, pAmount);
+        if (this.level.isClientSide) {
+            return false;
+        } else {
+            if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {
+                TreefolkAi.wasHurtBy(this, livingSource);
+            }
+            return flag;
         }
     }
 }

@@ -32,10 +32,12 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -48,6 +50,7 @@ public class TreefolkAi {
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
+    private static final int HIT_BY_PLAYER_MEMORY_TIMEOUT = 400;
     private static final int MAX_LOOK_DIST = 8;
     private static final int MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM = 14;
     private static final int INTERACTION_RANGE = 8;
@@ -224,5 +227,87 @@ public class TreefolkAi {
 
     private static void admireLovedItem(TreefolkEntity entity) {
         entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ADMIRING_ITEM, true, ADMIRE_DURATION);
+    }
+
+    public static void updateActivity(TreefolkEntity entity) {
+        Brain<TreefolkEntity> brain = entity.getBrain();
+        Activity activityBefore = brain.getActiveNonCoreActivity().orElse(null);
+        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.IDLE));
+        Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
+        if (activityBefore != activityAfter) {
+            // TODO Play activity transition sound
+        }
+        
+        entity.setAggressive(brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET));
+
+        if (!brain.hasMemoryValue(MemoryModuleType.CELEBRATE_LOCATION)) {
+            brain.eraseMemory(MemoryModuleType.DANCING);
+        }
+
+        entity.setDancing(brain.hasMemoryValue(MemoryModuleType.DANCING));
+    }
+
+    public static void wasHurtBy(TreefolkEntity entity, LivingEntity target) {
+        if (!(target instanceof TreefolkEntity)) {
+            if (isHoldingItemInOffHand(entity)) {
+                stopHoldingOffHandItem(entity, false);
+            }
+            
+            Brain<TreefolkEntity> brain = entity.getBrain();
+            brain.eraseMemory(MemoryModuleType.CELEBRATE_LOCATION);
+            brain.eraseMemory(MemoryModuleType.DANCING);
+            brain.eraseMemory(MemoryModuleType.ADMIRING_ITEM);
+            if (target instanceof Player) {
+                brain.setMemoryWithExpiry(MemoryModuleType.ADMIRING_DISABLED, true, HIT_BY_PLAYER_MEMORY_TIMEOUT);
+            }
+            
+            maybeRetaliate(entity, target);
+        }
+    }
+
+    private static void maybeRetaliate(TreefolkEntity entity, LivingEntity target) {
+        if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+            if (!BehaviorUtils.isOtherTargetMuchFurtherAwayThanCurrentAttackTarget(entity, target, 4D)) {
+                if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+                    setAngerTargetToNearestTargetablePlayerIfFound(entity, target);
+                    broadcastUniversalAnger(entity);
+                } else {
+                    setAngerTarget(entity, target);
+                    broadcastAngerTarget(entity, target);
+                }
+            }
+        }
+    }
+
+    private static void setAngerTargetToNearestTargetablePlayerIfFound(TreefolkEntity entity, LivingEntity currentTarget) {
+        getNearestVisibleTargetablePlayer(entity).ifPresentOrElse(player -> {
+            setAngerTarget(entity, player);
+        }, () -> {
+            setAngerTarget(entity, currentTarget);
+        });
+    }
+
+    public static Optional<Player> getNearestVisibleTargetablePlayer(TreefolkEntity entity) {
+        return entity.getBrain().hasMemoryValue(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) ? entity.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER) : Optional.empty();
+    }
+
+    private static void setAngerTarget(TreefolkEntity entity, LivingEntity target) {
+        if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+            entity.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
+            entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), 600L);   // TODO Adjust anger time?
+            if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+                entity.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, 600L);    // TODO Adjust anger time?
+            }
+        }
+    }
+
+    private static void broadcastUniversalAnger(TreefolkEntity entity) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private static void broadcastAngerTarget(TreefolkEntity entity, LivingEntity target) {
+        // TODO Auto-generated method stub
+        
     }
 }
