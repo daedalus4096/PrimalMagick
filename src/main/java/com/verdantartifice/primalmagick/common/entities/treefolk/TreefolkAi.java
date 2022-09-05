@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
@@ -8,6 +10,7 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
@@ -27,9 +30,13 @@ import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.behavior.StopBeingAngryIfTargetDead;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Collection of static methods to help with Treefolk entity AI behaviors.
@@ -112,9 +119,110 @@ public class TreefolkAi {
     protected static boolean isNotHoldingLovedItemInOffHand(TreefolkEntity entity) {
         return entity.getOffhandItem().isEmpty() || !isLovedItem(entity.getOffhandItem());
     }
+    
+    public static boolean wantsToPickup(TreefolkEntity entity, ItemStack stack) {
+        if (isAdmiringDisabled(entity) && entity.getBrain().hasMemoryValue(MemoryModuleType.ATTACK_TARGET)) {
+            return false;
+        } else {
+            return isLovedItem(stack) && isNotHoldingLovedItemInOffhand(entity);
+        }
+    }
+
+    private static boolean isNotHoldingLovedItemInOffhand(TreefolkEntity entity) {
+        return entity.getOffhandItem().isEmpty() || !isLovedItem(entity.getOffhandItem());
+    }
+
+    private static boolean isAdmiringDisabled(TreefolkEntity entity) {
+        return entity.getBrain().hasMemoryValue(MemoryModuleType.ADMIRING_DISABLED);
+    }
 
     public static void stopHoldingOffHandItem(TreefolkEntity entity, boolean shouldBarter) {
-        // TODO Auto-generated method stub
+        ItemStack stack = entity.getItemInHand(InteractionHand.OFF_HAND);
+        entity.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
+        if (shouldBarter && isLovedItem(stack)) {
+            throwItems(entity, getBarterResponseItems(entity));
+        } else {
+            throwItems(entity, Collections.singletonList(stack));
+        }
+    }
+
+    private static void throwItems(TreefolkEntity entity, List<ItemStack> stacks) {
+        entity.getBrain().getMemory(MemoryModuleType.NEAREST_VISIBLE_PLAYER).ifPresentOrElse(player -> {
+            throwItemsTowardPlayer(entity, player, stacks);
+        }, () -> {
+            throwItemsTowardRandomPos(entity, stacks);
+        });
+    }
+
+    private static void throwItemsTowardPlayer(TreefolkEntity entity, Player player, List<ItemStack> stacks) {
+        throwItemsTowardsPos(entity, stacks, player.position());
+    }
+
+    private static void throwItemsTowardRandomPos(TreefolkEntity entity, List<ItemStack> stacks) {
+        throwItemsTowardsPos(entity, stacks, getRandomNearbyPos(entity));
+    }
+
+    private static void throwItemsTowardsPos(TreefolkEntity entity, List<ItemStack> stacks, Vec3 position) {
+        if (!stacks.isEmpty()) {
+            entity.swing(InteractionHand.OFF_HAND);
+            for (ItemStack stack : stacks) {
+                BehaviorUtils.throwItem(entity, stack, position.add(0D, 1D, 0D));
+            }
+        }
+    }
+    
+    private static Vec3 getRandomNearbyPos(TreefolkEntity entity) {
+        Vec3 vec3 = LandRandomPos.getPos(entity, 4, 2);
+        return vec3 == null ? entity.position() : vec3;
+    }
+
+    private static List<ItemStack> getBarterResponseItems(TreefolkEntity entity) {
+        // TODO Stub
+        return Collections.singletonList(new ItemStack(Items.MANGROVE_PROPAGULE));
+    }
+
+    public static void pickUpItem(TreefolkEntity entity, ItemEntity itemEntity) {
+        stopWalking(entity);
+        entity.take(itemEntity, 1);
+        ItemStack stack = removeOneItemFromItemEntity(itemEntity);
         
+        if (isLovedItem(stack)) {
+            entity.getBrain().eraseMemory(MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM);
+            holdInOffhand(entity, stack);
+            admireLovedItem(entity);
+        } else {
+            throwItemsTowardRandomPos(entity, Collections.singletonList(stack));
+        }
+    }
+
+    private static void stopWalking(TreefolkEntity entity) {
+        entity.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
+        entity.getNavigation().stop();
+    }
+
+    private static ItemStack removeOneItemFromItemEntity(ItemEntity itemEntity) {
+        ItemStack stack = itemEntity.getItem();
+        ItemStack splitStack = stack.split(1);
+        if (stack.isEmpty()) {
+            itemEntity.discard();
+        } else {
+            itemEntity.setItem(stack);
+        }
+        return splitStack;
+    }
+
+    private static void holdInOffhand(TreefolkEntity entity, ItemStack stack) {
+        if (isHoldingItemInOffHand(entity)) {
+            entity.spawnAtLocation(entity.getItemInHand(InteractionHand.OFF_HAND));
+        }
+        entity.holdInOffHand(stack);
+    }
+
+    private static boolean isHoldingItemInOffHand(TreefolkEntity entity) {
+        return !entity.getOffhandItem().isEmpty();
+    }
+
+    private static void admireLovedItem(TreefolkEntity entity) {
+        entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ADMIRING_ITEM, true, ADMIRE_DURATION);
     }
 }
