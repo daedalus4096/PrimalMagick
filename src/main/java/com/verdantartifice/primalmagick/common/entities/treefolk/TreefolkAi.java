@@ -70,7 +70,7 @@ public class TreefolkAi {
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
     private static final float SWIM_CHANCE = 0.8F;
 
-    protected static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
+    public static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
         initCoreActivity(brain);
         initIdleActivity(brain);
         initAdmireItemActivity(brain);
