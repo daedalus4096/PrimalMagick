@@ -36,6 +36,7 @@ import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
 import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.behavior.StopBeingAngryIfTargetDead;
+import net.minecraft.world.entity.ai.behavior.Swim;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
@@ -67,6 +68,7 @@ public class TreefolkAi {
     private static final float SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_FIGHTING = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
+    private static final float SWIM_CHANCE = 0.8F;
 
     protected static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
         initCoreActivity(brain);
@@ -80,7 +82,7 @@ public class TreefolkAi {
     }
     
     private static void initCoreActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopHoldingItemIfNoLongerAdmiring<>(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new StopBeingAngryIfTargetDead<>()));
+        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopHoldingItemIfNoLongerAdmiring<>(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new StopBeingAngryIfTargetDead<>()));
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
