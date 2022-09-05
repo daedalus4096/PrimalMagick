@@ -10,6 +10,8 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,7 +34,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
@@ -46,6 +47,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class TreefolkAi {
+    private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
     private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
@@ -293,10 +295,11 @@ public class TreefolkAi {
 
     private static void setAngerTarget(TreefolkEntity entity, LivingEntity target) {
         if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+            int angerDuration = ANGER_DURATION.sample(entity.level.random);
             entity.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
-            entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), 600L);   // TODO Adjust anger time?
+            entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), angerDuration);
             if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
-                entity.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, 600L);    // TODO Adjust anger time?
+                entity.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, angerDuration);
             }
         }
     }
