@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.DebugPackets;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -84,6 +85,7 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
         super(entityType, world);
+        this.setCanPickUpLoot(true);
         this.xpReward = 5;
     }
     
@@ -308,5 +310,16 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
             }
             return flag;
         }
+    }
+
+    @Override
+    protected void sendDebugPackets() {
+        super.sendDebugPackets();
+        DebugPackets.sendEntityBrain(this);
+    }
+
+    @Override
+    public LivingEntity getTarget() {
+        return this.brain.getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
     }
 }

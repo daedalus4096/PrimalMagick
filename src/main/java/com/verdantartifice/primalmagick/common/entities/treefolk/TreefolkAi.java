@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -47,6 +50,7 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class TreefolkAi {
+    public static final Logger LOGGER = LogManager.getLogger();
     private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
     private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
@@ -238,6 +242,7 @@ public class TreefolkAi {
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound
+            LOGGER.debug("Treefolk {} switching from activity {} to activity {}", entity.getStringUUID(), activityBefore.getName(), activityAfter.getName());
         }
         
         entity.setAggressive(brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET));
