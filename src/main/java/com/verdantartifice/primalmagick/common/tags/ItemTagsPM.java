@@ -35,6 +35,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> STAINED_SKYGLASS = tag("stained_skyglass");
     public static final TagKey<Item> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
+    public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
     
     public static final TagKey<Item> ESSENCES_DUSTS = tag("essences/dusts");
     public static final TagKey<Item> ESSENCES_TERRESTRIAL_DUSTS = tag("essences/terrestrial_dusts");

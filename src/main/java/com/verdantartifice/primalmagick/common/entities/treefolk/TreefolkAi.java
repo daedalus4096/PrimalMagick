@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -81,8 +82,7 @@ public class TreefolkAi {
     }
     
     public static boolean isLovedItem(ItemStack stack) {
-        // TODO Check tag membership
-        return false;
+        return stack.is(ItemTagsPM.TREEFOLK_LOVED);
     }
     
     private static Optional<? extends LivingEntity> findNearestValidAttackTarget(TreefolkEntity entity) {
