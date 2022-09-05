@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.LongDistanceRangedAttackGoal;
@@ -68,6 +71,7 @@ import net.minecraftforge.event.ForgeEventFactory;
  * @author Daedalus4096
  */
 public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ RangedAttackMob {
+    public static final Logger LOGGER = LogManager.getLogger();
 //    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.INT);
 //    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final String DREADED_NAME = "Verdus";
@@ -132,7 +136,8 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
     }
     
     public boolean isAngry() {
-        return this.getBrain().hasMemoryValue(MemoryModuleType.ANGRY_AT);
+//        return this.getBrain().hasMemoryValue(MemoryModuleType.ANGRY_AT);
+        return this.isAggressive();
     }
     
     public boolean isAdult() {
