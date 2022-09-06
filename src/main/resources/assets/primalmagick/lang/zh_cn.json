@@ -492,7 +492,7 @@
     "item.primalmagick.primal_staff_core_item": "原初权杖杖芯",
     "item.primalmagick.dark_primal_staff_core_item": "黑暗原初权杖杖芯",
     "item.primalmagick.pure_primal_staff_core_item": "纯净原初权杖杖芯",
-    "item.primalmagick.treefolk_spawn_egg": "树妖刷怪蛋",
+    "item.primalmagick.treefolk_spawn_egg": "树精刷怪蛋",
     "item.primalmagick.primalite_golem_spawn_egg": "原初合金傀儡刷怪蛋",
     "item.primalmagick.hexium_golem_spawn_egg": "蕴魔铁傀儡刷怪蛋",
     "item.primalmagick.hallowsteel_golem_spawn_egg": "神圣钢傀儡刷怪蛋",
@@ -615,7 +615,7 @@
     "item.primalmagick.sanguine_core_zombie_horse": "血腥杖芯: 僵尸马",
     "item.primalmagick.sanguine_core_zombie_villager": "血腥杖芯: 僵尸村民",
     "item.primalmagick.sanguine_core_zombified_piglin": "血腥杖芯: 僵尸猪灵",
-    "item.primalmagick.sanguine_core_treefolk": "血腥杖芯: 树妖",
+    "item.primalmagick.sanguine_core_treefolk": "血腥杖芯: 树精",
     "item.primalmagick.sanguine_core_inner_demon": "血腥杖芯: 心魔",
     "item.primalmagick.skyglass_flask": "天空玻璃烧瓶",
     "item.primalmagick.concoction.water.effect.empty": "未加工的调和物",
@@ -1383,8 +1383,8 @@
     "primalmagick.research.staves.text.stage.2": "所以事实证明，权杖和魔杖没有太大的区别，组装的方式也差不多。主要的区别是它使用的是杖芯而不是魔杖芯。这有一些副作用。",
     
     "primalmagick.research.wand_core_heartwood.title": "魔杖杖芯：心材",
-    "primalmagick.research.wand_core_heartwood.text.stage.1": "在研究我的魔导书时，我发现了一种叫做心材的材料。显然，这是一种特别能接受魔力的活木头。我想这将成为我下一根魔杖杖芯的绝佳材料。我应该弄些心材来研究一下。不幸的是，心材只有通过砍伐太阳木或月亮木才能找到。如果我不喜欢这种几率，那就只有另一个办法了杀了树妖，把它从他们的胸口扯下来。他们不会喜欢的……",
-    "primalmagick.research.wand_core_heartwood.text.stage.2": "是的，心材确实可以用来做魔杖的芯。雕刻并连接两块就足够了。心材杖芯只能保存一个镌刻的咒语，不能再多了。它没有特殊的原初队列会影响任何东西的魔力消耗。我不能说我喜欢使用这种材料。在树上找到它是一个巨大的麻烦，我为那些可怜的树妖感到难过。他们没有打扰任何人。我想知道是否还有其他东西可以用来做魔杖杖芯，效果会更好。",
+    "primalmagick.research.wand_core_heartwood.text.stage.1": "在研究我的魔导书时，我发现了一种叫做心材的材料。显然，这是一种特别能接受魔力的活木头。我想这将成为我下一根魔杖杖芯的绝佳材料。我应该弄些心材来研究一下。不幸的是，心材只有通过砍伐太阳木或月亮木才能找到。如果我不喜欢这种几率，那就只有另一个办法了杀了树精，把它从他们的胸口扯下来。他们不会喜欢的……",
+    "primalmagick.research.wand_core_heartwood.text.stage.2": "是的，心材确实可以用来做魔杖的芯。雕刻并连接两块就足够了。心材杖芯只能保存一个镌刻的咒语，不能再多了。它没有特殊的原初队列会影响任何东西的魔力消耗。我不能说我喜欢使用这种材料。在树上找到它是一个巨大的麻烦，我为那些可怜的树精感到难过。他们没有打扰任何人。我想知道是否还有其他东西可以用来做魔杖杖芯，效果会更好。",
     "primalmagick.research.wand_core_heartwood.text.addenda.1": "心材也可以用来做杖芯。与所有的魔杖一样，它可以刻上相对正常杖芯两倍数量的咒语。所以是两块。",
     
     "primalmagick.research.wand_cap_iron.title": "魔杖杖端：铁",
@@ -2446,7 +2446,7 @@
     "stat.primalmagick.shrine_found_sun": "发现太阳神殿",
     "stat.primalmagick.shrine_found_moon": "发现月亮神殿",
     "stat.primalmagick.blocks_broken_barehanded": "徒手打碎了坚硬的石块",
-    "stat.primalmagick.treants_named": "树妖被迫自我牺牲",
+    "stat.primalmagick.treants_named": "树精被迫自我牺牲",
     
     "primalmagick.research_project.name.trade": "交易",
     "primalmagick.research_project.name.mundane_tinkering": "平凡修补",
