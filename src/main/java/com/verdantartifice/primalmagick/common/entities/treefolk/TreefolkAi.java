@@ -11,6 +11,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.entities.ai.behavior.LongDistanceRangedAttack;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.util.TimeUtil;
@@ -62,6 +63,9 @@ public class TreefolkAi {
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
     private static final int HIT_BY_PLAYER_MEMORY_TIMEOUT = 400;
     private static final int MELEE_ATTACK_COOLDOWN = 20;
+    private static final int RANGED_ATTACK_COOLDOWN = 30;
+    private static final float MIN_RANGED_ATTACK_RANGE = 4F;
+    private static final float MAX_RANGED_ATTACK_RANGE = 16F;
     private static final int MAX_LOOK_DIST = 8;
     private static final int MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM = 14;
     private static final int INTERACTION_RANGE = 8;
@@ -96,7 +100,7 @@ public class TreefolkAi {
     private static void initFightActivity(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
         brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10, ImmutableList.of(new StopAttackingIfTargetInvalid<TreefolkEntity>(living -> {
             return !isNearestValidAttackTarget(entity, living);
-        }), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING), new MeleeAttack(MELEE_ATTACK_COOLDOWN)), MemoryModuleType.ATTACK_TARGET);
+        }), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING), new MeleeAttack(MELEE_ATTACK_COOLDOWN), new LongDistanceRangedAttack<>(RANGED_ATTACK_COOLDOWN, MIN_RANGED_ATTACK_RANGE, MAX_RANGED_ATTACK_RANGE)), MemoryModuleType.ATTACK_TARGET);
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {
