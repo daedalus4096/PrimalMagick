@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:apple",
+          "weight": 20
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

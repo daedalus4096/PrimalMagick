@@ -1,0 +1,20 @@
+{
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:mangrove_propagule",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cocoa_beans",
+          "weight": 10
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}
