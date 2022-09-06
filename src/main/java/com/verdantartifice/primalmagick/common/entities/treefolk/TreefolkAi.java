@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.behavior.LongDistanceRangedAttack;
+import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.util.TimeUtil;
@@ -121,7 +122,7 @@ public class TreefolkAi {
     
     private static Optional<? extends LivingEntity> findNearestValidAttackTarget(TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
-        Optional<LivingEntity> angryAtOptional = BehaviorUtils.getLivingEntityFromUUIDMemory(entity, MemoryModuleType.ANGRY_AT);
+        Optional<LivingEntity> angryAtOptional = getAngerTarget(entity);
         if (angryAtOptional.isPresent() && Sensor.isEntityAttackableIgnoringLineOfSight(entity, angryAtOptional.get())) {
             return angryAtOptional;
         } else {
@@ -330,12 +331,32 @@ public class TreefolkAi {
     }
 
     private static void broadcastUniversalAnger(TreefolkEntity entity) {
-        // TODO Auto-generated method stub
-        
+        getAdultTreefolk(entity).forEach(t -> {
+            getNearestVisibleTargetablePlayer(t).ifPresent(p -> {
+                setAngerTarget(t, p);
+            });
+        });
     }
 
     private static void broadcastAngerTarget(TreefolkEntity entity, LivingEntity target) {
-        // TODO Auto-generated method stub
-        
+        getAdultTreefolk(entity).forEach(t -> {
+            setAngerTargetIfCloserThanCurrent(t, target);
+        });
+    }
+
+    private static List<TreefolkEntity> getAdultTreefolk(TreefolkEntity entity) {
+        return entity.getBrain().getMemory(MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get()).orElse(ImmutableList.of());
+    }
+    
+    private static void setAngerTargetIfCloserThanCurrent(TreefolkEntity entity, LivingEntity currentTarget) {
+        Optional<LivingEntity> livingOpt = getAngerTarget(entity);
+        LivingEntity nearestTarget = BehaviorUtils.getNearestTarget(entity, livingOpt, currentTarget);
+        if (!livingOpt.isPresent() || livingOpt.get() != nearestTarget) {
+            setAngerTarget(entity, nearestTarget);
+        }
+    }
+
+    private static Optional<LivingEntity> getAngerTarget(TreefolkEntity entity) {
+        return BehaviorUtils.getLivingEntityFromUUIDMemory(entity, MemoryModuleType.ANGRY_AT);
     }
 }
