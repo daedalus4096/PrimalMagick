@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
 import com.verdantartifice.primalmagick.common.entities.ai.goals.LongDistanceRangedAttackGoal;
+import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
+import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -76,13 +78,13 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
 //    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final String DREADED_NAME = "Verdus";
     protected static final ImmutableList<SensorType<? extends Sensor<? super TreefolkEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, 
-            SensorType.NEAREST_ITEMS, SensorType.HURT_BY);
+            SensorType.NEAREST_ITEMS, SensorType.HURT_BY, SensorTypesPM.TREEFOLK_SPECIFIC_SENSOR.get());
     protected static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(MemoryModuleType.LOOK_TARGET, MemoryModuleType.NEAREST_LIVING_ENTITIES, 
             MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, 
             MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.WALK_TARGET, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.ATTACK_TARGET, 
             MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.PATH, MemoryModuleType.ANGRY_AT, MemoryModuleType.UNIVERSAL_ANGER, MemoryModuleType.ADMIRING_ITEM, 
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
-            MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM);
+            MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
 //    protected UUID angerTarget;
