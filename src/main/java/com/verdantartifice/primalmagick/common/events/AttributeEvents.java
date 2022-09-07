@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.pixies.IGrand
 import com.verdantartifice.primalmagick.common.entities.companions.pixies.IMajesticPixie;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.entities.misc.InnerDemonEntity;
-import com.verdantartifice.primalmagick.common.entities.misc.TreefolkEntity;
+import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

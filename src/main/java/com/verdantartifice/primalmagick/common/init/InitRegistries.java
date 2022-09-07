@@ -9,6 +9,8 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
+import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -42,5 +44,7 @@ public class InitRegistries {
         ArgumentTypesPM.init();
         ConfiguredFeaturesPM.init();
         PlacedFeaturesPM.init();
+        SensorTypesPM.init();
+        MemoryModuleTypesPM.init();
     }
 }
