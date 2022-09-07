@@ -1,15 +1,12 @@
 package com.verdantartifice.primalmagick.common.entities.treefolk;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
-import com.verdantartifice.primalmagick.common.entities.ai.goals.LongDistanceRangedAttackGoal;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
@@ -29,8 +26,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.TimeUtil;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -39,27 +34,16 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.Brain.Provider;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.piglin.Piglin;
-import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -74,8 +58,6 @@ import net.minecraftforge.event.ForgeEventFactory;
  */
 public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ RangedAttackMob {
     public static final Logger LOGGER = LogManager.getLogger();
-//    protected static final EntityDataAccessor<Integer> ANGER_TIME = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.INT);
-//    protected static final UniformInt ANGER_TIME_RANGE = TimeUtil.rangeOfSeconds(20, 39);
     protected static final String DREADED_NAME = "Verdus";
     protected static final ImmutableList<SensorType<? extends Sensor<? super TreefolkEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, 
             SensorType.NEAREST_ITEMS, SensorType.HURT_BY, SensorTypesPM.TREEFOLK_SPECIFIC_SENSOR.get());
@@ -86,8 +68,6 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
             MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
-
-//    protected UUID angerTarget;
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
         super(entityType, world);
@@ -104,72 +84,18 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-//        this.addPersistentAngerSaveData(compound);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-//        if (!this.level.isClientSide) {
-//            this.readPersistentAngerSaveData((ServerLevel)this.level, compound);
-//        }
-    }
-
-//    @Override
-//    protected void registerGoals() {
-//        this.goalSelector.addGoal(1, new FloatGoal(this));
-//        this.goalSelector.addGoal(3, new LongDistanceRangedAttackGoal<>(this, 1.0D, 30, 4.0F, 16.0F, true));
-//        this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0D, true));
-//        this.goalSelector.addGoal(8, new WaterAvoidingRandomStrollGoal(this, 1.0D));
-//        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Player.class, 8.0F));
-//        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-//        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-//        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Player.class, 10, true, false, this::isAngryAt));
-//        this.targetSelector.addGoal(8, new ResetUniversalAngerTargetGoal<>(this, true));
-//    }
-
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_IS_DANCING, false);
-//        this.entityData.define(ANGER_TIME, 0);
     }
     
     public boolean isAngry() {
-//        return this.getBrain().hasMemoryValue(MemoryModuleType.ANGRY_AT);
         return this.isAggressive();
     }
     
     public boolean isAdult() {
         return true;
     }
-
-//    @Override
-//    public int getRemainingPersistentAngerTime() {
-//        return this.entityData.get(ANGER_TIME);
-//    }
-//
-//    @Override
-//    public void setRemainingPersistentAngerTime(int time) {
-//        this.entityData.set(ANGER_TIME, time);
-//    }
-//
-//    @Override
-//    public UUID getPersistentAngerTarget() {
-//        return this.angerTarget;
-//    }
-//
-//    @Override
-//    public void setPersistentAngerTarget(UUID target) {
-//        this.angerTarget = target;
-//    }
-//
-//    @Override
-//    public void startPersistentAngerTimer() {
-//        this.setRemainingPersistentAngerTime(ANGER_TIME_RANGE.sample(this.random));
-//    }
 
     @Override
     protected Provider<TreefolkEntity> brainProvider() {
@@ -209,14 +135,9 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
     @Override
     public void aiStep() {
         super.aiStep();
-        
         if (this.hasCustomName() && DREADED_NAME.equals(this.getCustomName().getString())) {
             this.setSecondsOnFire(8);
         }
-        
-//        if (!this.level.isClientSide) {
-//            this.updatePersistentAnger((ServerLevel)this.level, true);
-//        }
     }
 
     @Override
