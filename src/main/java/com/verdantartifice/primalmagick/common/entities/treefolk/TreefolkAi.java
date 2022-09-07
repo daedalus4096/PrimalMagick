@@ -13,8 +13,10 @@ import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.behavior.LongDistanceRangedAttack;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
+import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
@@ -46,8 +48,11 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -207,8 +212,12 @@ public class TreefolkAi {
     }
 
     private static List<ItemStack> getBarterResponseItems(TreefolkEntity entity) {
-        // TODO Stub
-        return Collections.singletonList(new ItemStack(Items.MANGROVE_PROPAGULE));
+        if (entity.level instanceof ServerLevel serverLevel) {
+            LootTable table = entity.level.getServer().getLootTables().get(LootTablesPM.TREEFOLK_BARTERING);
+            return table.getRandomItems(new LootContext.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).withRandom(entity.level.random).create(LootContextParamSets.PIGLIN_BARTER));
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public static void pickUpItem(TreefolkEntity entity, ItemEntity itemEntity) {
