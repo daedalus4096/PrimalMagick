@@ -5,7 +5,22 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:mangrove_propagule",
+          "name": "minecraft:wheat_seeds",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pumpkin_seeds",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:melon_seeds",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:beetroot_seeds",
           "weight": 10
         },
         {

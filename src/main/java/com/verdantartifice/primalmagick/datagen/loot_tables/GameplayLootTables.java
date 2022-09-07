@@ -99,19 +99,41 @@ public class GameplayLootTables implements DataProvider {
     
     protected void addTables() {
         this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_FOOD).setWeight(40))
-                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SEEDS).setWeight(40))
+                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_FOOD).setWeight(30))
+                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SAPLINGS).setWeight(25))
+                .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_SEEDS).setWeight(25))
                 .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_JUNK).setWeight(15))
                 .add(LootTableReference.lootTableReference(LootTablesPM.TREEFOLK_BARTERING_TREASURE).setWeight(5))));
         this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_FOOD, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.CARROT).setWeight(10))
+                .add(LootItem.lootTableItem(Items.POTATO).setWeight(10))
+                .add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(10))
+                .add(LootItem.lootTableItem(Items.GLOW_BERRIES).setWeight(5))
+                .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(10))
                 .add(LootItem.lootTableItem(Items.APPLE).setWeight(20))));
-        this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_SEEDS, LootTable.lootTable().withPool(LootPool.lootPool()
+        this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_SAPLINGS, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.OAK_SAPLING).setWeight(10))
+                .add(LootItem.lootTableItem(Items.SPRUCE_SAPLING).setWeight(10))
+                .add(LootItem.lootTableItem(Items.BIRCH_SAPLING).setWeight(10))
+                .add(LootItem.lootTableItem(Items.JUNGLE_SAPLING).setWeight(10))
+                .add(LootItem.lootTableItem(Items.ACACIA_SAPLING).setWeight(10))
+                .add(LootItem.lootTableItem(Items.DARK_OAK_SAPLING).setWeight(10))
                 .add(LootItem.lootTableItem(Items.MANGROVE_PROPAGULE).setWeight(10))
+                .add(LootItem.lootTableItem(Items.BAMBOO).setWeight(10))));
+        this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_SEEDS, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(10))
+                .add(LootItem.lootTableItem(Items.PUMPKIN_SEEDS).setWeight(10))
+                .add(LootItem.lootTableItem(Items.MELON_SEEDS).setWeight(10))
+                .add(LootItem.lootTableItem(Items.BEETROOT_SEEDS).setWeight(10))
                 .add(LootItem.lootTableItem(Items.COCOA_BEANS).setWeight(10))));
         this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_JUNK, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.AZALEA).setWeight(10))
+                .add(LootItem.lootTableItem(Items.FLOWERING_AZALEA).setWeight(10))
                 .add(LootItem.lootTableItem(Items.LILY_PAD).setWeight(10))));
         this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(10))
+                .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(5))
+                .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(1))
                 .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply(new EnchantRandomlyFunction.Builder().withEnchantment(EnchantmentsPM.VERDANT.get())))
                 .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply((new EnchantRandomlyFunction.Builder()).withEnchantment(EnchantmentsPM.BOUNTY.get())))));
     }

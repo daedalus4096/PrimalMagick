@@ -6,12 +6,17 @@
         {
           "type": "minecraft:loot_table",
           "name": "primalmagick:gameplay/treefolk_bartering/food",
-          "weight": 40
+          "weight": 30
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/saplings",
+          "weight": 25
         },
         {
           "type": "minecraft:loot_table",
           "name": "primalmagick:gameplay/treefolk_bartering/seeds",
-          "weight": 40
+          "weight": 25
         },
         {
           "type": "minecraft:loot_table",

@@ -19,6 +19,7 @@ public class LootTablesPM {
 
     public static final ResourceLocation TREEFOLK_BARTERING = register("gameplay/treefolk_bartering");
     public static final ResourceLocation TREEFOLK_BARTERING_FOOD = register("gameplay/treefolk_bartering/food");
+    public static final ResourceLocation TREEFOLK_BARTERING_SAPLINGS = register("gameplay/treefolk_bartering/saplings");
     public static final ResourceLocation TREEFOLK_BARTERING_SEEDS = register("gameplay/treefolk_bartering/seeds");
     public static final ResourceLocation TREEFOLK_BARTERING_JUNK = register("gameplay/treefolk_bartering/junk");
     public static final ResourceLocation TREEFOLK_BARTERING_TREASURE = register("gameplay/treefolk_bartering/treasure");
