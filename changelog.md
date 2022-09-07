@@ -6,6 +6,7 @@ v3.2.1
 * Changed Runecarving Table slots to be filtered by tags instead of hard-coded items
 * Added rune combinations for some previously missing enchantments
 * Changed rune combination definitions to be modifiable by datapacks
+* Treefolk will now barter with players in exchange for bone meal
 
 v3.2.0
 ------
