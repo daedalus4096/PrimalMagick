@@ -33,6 +33,7 @@ import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
 import net.minecraft.world.entity.ai.behavior.RandomStroll;
 import net.minecraft.world.entity.ai.behavior.RunIf;
 import net.minecraft.world.entity.ai.behavior.RunOne;
+import net.minecraft.world.entity.ai.behavior.RunSometimes;
 import net.minecraft.world.entity.ai.behavior.SetEntityLookTarget;
 import net.minecraft.world.entity.ai.behavior.SetLookAndInteract;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
@@ -63,6 +64,8 @@ import net.minecraft.world.phys.Vec3;
 public class TreefolkAi {
     public static final Logger LOGGER = LogManager.getLogger();
     private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
+    private static final UniformInt DANCE_COOLDOWN = TimeUtil.rangeOfSeconds(20, 30);
+    private static final int DANCE_DURATION = 100;
     private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
@@ -96,7 +99,7 @@ public class TreefolkAi {
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunSometimes<>(new StartDancing<>(DANCE_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
