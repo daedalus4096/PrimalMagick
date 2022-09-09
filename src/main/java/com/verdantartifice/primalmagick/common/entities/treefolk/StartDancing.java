@@ -20,9 +20,6 @@ public class StartDancing<E extends TreefolkEntity> extends Behavior<E> {
 
     @Override
     protected void start(ServerLevel pLevel, E pEntity, long pGameTime) {
-        pEntity.getBrain().setMemoryWithExpiry(MemoryModuleType.DANCING, true, this.danceDuration);
-        pEntity.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pEntity.blockPosition(), this.danceDuration);
-        pEntity.getBrain().setMemoryWithExpiry(MemoryModuleTypesPM.DANCED_RECENTLY.get(), true, this.danceCooldown);
-        TreefolkAi.broadcastCelebrateLocation(pEntity, this.danceDuration);
+        TreefolkAi.startDanceParty(pEntity, this.danceDuration, this.danceCooldown);
     }
 }

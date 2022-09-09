@@ -20,6 +20,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
@@ -381,11 +382,37 @@ public class TreefolkAi {
         return BehaviorUtils.getLivingEntityFromUUIDMemory(entity, MemoryModuleType.ANGRY_AT);
     }
     
+    public static void startDanceParty(TreefolkEntity entity, int duration, int cooldown) {
+        entity.getBrain().setMemoryWithExpiry(MemoryModuleType.DANCING, true, duration);
+        entity.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, entity.blockPosition(), duration);
+        entity.getBrain().setMemoryWithExpiry(MemoryModuleTypesPM.DANCED_RECENTLY.get(), true, cooldown);
+        TreefolkAi.broadcastCelebrateLocation(entity, duration);
+    }
+    
     public static void broadcastCelebrateLocation(TreefolkEntity entity, int danceDuration) {
         entity.getBrain().getMemory(MemoryModuleType.CELEBRATE_LOCATION).ifPresent(pos -> {
             getNearbyAdultTreefolk(entity).forEach(t -> {
                 t.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pos, danceDuration);
             });
         });
+    }
+    
+    public static InteractionResult mobInteract(TreefolkEntity entity, Player player, InteractionHand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (isLovedItem(stack)) {
+            // TODO Trigger bartering instead of dancing
+            startDanceParty(entity, DANCE_DURATION, RECENTLY_DANCED_DURATION);
+            return InteractionResult.CONSUME;
+        } else {
+            return InteractionResult.PASS;
+        }
+    }
+    
+    public static boolean canAdmire(TreefolkEntity entity, ItemStack stack) {
+        return !isAdmiringDisabled(entity) && !isAdmiringItem(entity) && entity.isAdult() && isLovedItem(stack);
+    }
+
+    private static boolean isAdmiringItem(TreefolkEntity entity) {
+        return entity.getBrain().hasMemoryValue(MemoryModuleType.ADMIRING_ITEM);
     }
 }

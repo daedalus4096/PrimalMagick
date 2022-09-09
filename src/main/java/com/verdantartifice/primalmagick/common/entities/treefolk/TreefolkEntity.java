@@ -172,7 +172,6 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        // TODO Implement AI interaction with loved items
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
             this.level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
@@ -184,8 +183,11 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
                 });
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);
+        } else if (!this.level.isClientSide) {
+            return TreefolkAi.mobInteract(this, player, hand);
         } else {
-            return super.mobInteract(player, hand);
+            boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
+            return flag ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
     }
 
