@@ -47,7 +47,9 @@ public class TreefolkModel<T extends Mob> extends HumanoidModel<T> {
                 float ageModVal = pAgeInTicks / 60.0F;
                 this.head.x = Mth.sin(ageModVal * 10.0F);
                 this.head.y = Mth.sin(ageModVal * 40.0F) + 0.4F;
-                this.rightArm.zRot = ((float)Math.PI / 180F) * (70.0F + Mth.cos(ageModVal * 40.0F) * 10.0F);
+                this.rightArm.xRot = ((float)Math.PI / 180F) * (Mth.sin(ageModVal * 40.0F) * 30.0F);
+                this.rightArm.zRot = ((float)Math.PI / 180F) * (40.0F + Mth.cos(ageModVal * 40.0F) * 10.0F);
+                this.leftArm.xRot = this.rightArm.xRot * -1.0F;
                 this.leftArm.zRot = this.rightArm.zRot * -1.0F;
                 this.rightArm.y = Mth.sin(ageModVal * 40.0F) * 0.5F + 1.5F;
                 this.leftArm.y = Mth.sin(ageModVal * 40.0F) * 0.5F + 1.5F;
