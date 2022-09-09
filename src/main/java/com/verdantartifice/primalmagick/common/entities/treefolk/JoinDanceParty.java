@@ -8,12 +8,12 @@ import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
-public class StartDancing<E extends TreefolkEntity> extends Behavior<E> {
+public class JoinDanceParty<E extends TreefolkEntity> extends Behavior<E> {
     private final int danceDuration;
     private final int danceCooldown;
     
-    public StartDancing(int danceDuration, int danceCooldown) {
-        super(ImmutableMap.of(MemoryModuleType.CELEBRATE_LOCATION, MemoryStatus.VALUE_ABSENT, MemoryModuleType.DANCING, MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryStatus.REGISTERED));
+    public JoinDanceParty(int danceDuration, int danceCooldown) {
+        super(ImmutableMap.of(MemoryModuleType.CELEBRATE_LOCATION, MemoryStatus.VALUE_PRESENT, MemoryModuleType.DANCING, MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryStatus.REGISTERED));
         this.danceDuration = danceDuration;
         this.danceCooldown = danceCooldown;
     }
@@ -21,8 +21,6 @@ public class StartDancing<E extends TreefolkEntity> extends Behavior<E> {
     @Override
     protected void start(ServerLevel pLevel, E pEntity, long pGameTime) {
         pEntity.getBrain().setMemoryWithExpiry(MemoryModuleType.DANCING, true, this.danceDuration);
-        pEntity.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pEntity.blockPosition(), this.danceDuration);
         pEntity.getBrain().setMemoryWithExpiry(MemoryModuleTypesPM.DANCED_RECENTLY.get(), true, this.danceCooldown);
-        TreefolkAi.broadcastCelebrateLocation(pEntity, this.danceDuration);
     }
 }

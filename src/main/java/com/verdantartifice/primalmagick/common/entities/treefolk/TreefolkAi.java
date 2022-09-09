@@ -25,6 +25,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.behavior.DoNothing;
+import net.minecraft.world.entity.ai.behavior.GoToTargetLocation;
 import net.minecraft.world.entity.ai.behavior.GoToWantedItem;
 import net.minecraft.world.entity.ai.behavior.InteractWith;
 import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
@@ -65,6 +66,7 @@ public class TreefolkAi {
     public static final Logger LOGGER = LogManager.getLogger();
     private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
     private static final UniformInt DANCE_COOLDOWN = TimeUtil.rangeOfSeconds(20, 30);
+    private static final int RECENTLY_DANCED_DURATION = 200;
     private static final int DANCE_DURATION = 100;
     private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
@@ -88,6 +90,7 @@ public class TreefolkAi {
         initIdleActivity(brain);
         initAdmireItemActivity(brain);
         initFightActivity(entity, brain);
+        initCelebrateActivity(brain);
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         brain.setDefaultActivity(Activity.IDLE);
         brain.useDefaultActivity();
@@ -95,11 +98,11 @@ public class TreefolkAi {
     }
     
     private static void initCoreActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopHoldingItemIfNoLongerAdmiring<>(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new StopBeingAngryIfTargetDead<>()));
+        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), new StopHoldingItemIfNoLongerAdmiring<>(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new JoinDanceParty<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), new StopBeingAngryIfTargetDead<>()));
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunSometimes<>(new StartDancing<>(DANCE_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunSometimes<>(new StartDancing<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
@@ -110,6 +113,12 @@ public class TreefolkAi {
         brain.addActivityAndRemoveMemoryWhenStopped(Activity.FIGHT, 10, ImmutableList.of(new StopAttackingIfTargetInvalid<TreefolkEntity>(living -> {
             return !isNearestValidAttackTarget(entity, living);
         }), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING), new MeleeAttack(MELEE_ATTACK_COOLDOWN), new LongDistanceRangedAttack<>(RANGED_ATTACK_COOLDOWN, MIN_RANGED_ATTACK_RANGE, MAX_RANGED_ATTACK_RANGE)), MemoryModuleType.ATTACK_TARGET);
+    }
+    
+    private static void initCelebrateActivity(Brain<TreefolkEntity> brain) {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, 14F), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunIf<TreefolkEntity>(t -> {
+            return !t.isDancing();
+        }, new GoToTargetLocation<>(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), new RunIf<TreefolkEntity>(TreefolkEntity::isDancing, new GoToTargetLocation<>(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(new SetEntityLookTarget(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {
@@ -271,10 +280,11 @@ public class TreefolkAi {
     public static void updateActivity(TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
         Activity activityBefore = brain.getActiveNonCoreActivity().orElse(null);
-        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.IDLE));
+        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.CELEBRATE, Activity.IDLE));
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound
+            LOGGER.debug("Treefolk {} switching from activity {} to activity {}", entity.getStringUUID(), activityBefore.getName(), activityAfter.getName());
         }
         
         entity.setAggressive(brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET));
@@ -342,7 +352,7 @@ public class TreefolkAi {
     }
 
     private static void broadcastUniversalAnger(TreefolkEntity entity) {
-        getAdultTreefolk(entity).forEach(t -> {
+        getNearbyAdultTreefolk(entity).forEach(t -> {
             getNearestVisibleTargetablePlayer(t).ifPresent(p -> {
                 setAngerTarget(t, p);
             });
@@ -350,12 +360,12 @@ public class TreefolkAi {
     }
 
     private static void broadcastAngerTarget(TreefolkEntity entity, LivingEntity target) {
-        getAdultTreefolk(entity).forEach(t -> {
+        getNearbyAdultTreefolk(entity).forEach(t -> {
             setAngerTargetIfCloserThanCurrent(t, target);
         });
     }
 
-    private static List<TreefolkEntity> getAdultTreefolk(TreefolkEntity entity) {
+    private static List<TreefolkEntity> getNearbyAdultTreefolk(TreefolkEntity entity) {
         return entity.getBrain().getMemory(MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get()).orElse(ImmutableList.of());
     }
     
@@ -369,5 +379,13 @@ public class TreefolkAi {
 
     private static Optional<LivingEntity> getAngerTarget(TreefolkEntity entity) {
         return BehaviorUtils.getLivingEntityFromUUIDMemory(entity, MemoryModuleType.ANGRY_AT);
+    }
+    
+    public static void broadcastCelebrateLocation(TreefolkEntity entity, int danceDuration) {
+        entity.getBrain().getMemory(MemoryModuleType.CELEBRATE_LOCATION).ifPresent(pos -> {
+            getNearbyAdultTreefolk(entity).forEach(t -> {
+                t.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pos, danceDuration);
+            });
+        });
     }
 }
