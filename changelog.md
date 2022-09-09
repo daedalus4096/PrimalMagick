@@ -7,6 +7,7 @@ v3.2.1
 * Added rune combinations for some previously missing enchantments
 * Changed rune combination definitions to be modifiable by datapacks
 * Treefolk will now barter with players in exchange for bone meal
+* Treefolk will now occasionally throw spontaneous dance parties when idle
 
 v3.2.0
 ------

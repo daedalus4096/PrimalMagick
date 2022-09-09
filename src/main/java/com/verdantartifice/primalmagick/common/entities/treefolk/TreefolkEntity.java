@@ -55,7 +55,7 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ RangedAttackMob {
+public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
     public static final Logger LOGGER = LogManager.getLogger();
     protected static final String DREADED_NAME = "Verdus";
     protected static final ImmutableList<SensorType<? extends Sensor<? super TreefolkEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, 
@@ -65,7 +65,8 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
             MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.WALK_TARGET, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.ATTACK_TARGET, 
             MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.PATH, MemoryModuleType.ANGRY_AT, MemoryModuleType.UNIVERSAL_ANGER, MemoryModuleType.ADMIRING_ITEM, 
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
-            MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get());
+            MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(),
+            MemoryModuleTypesPM.DANCED_RECENTLY.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
@@ -171,7 +172,6 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-        // TODO Implement AI interaction with loved items
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
             this.level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
@@ -183,8 +183,11 @@ public class TreefolkEntity extends PathfinderMob implements /* NeutralMob, */ R
                 });
             }
             return InteractionResult.sidedSuccess(this.level.isClientSide);
+        } else if (!this.level.isClientSide) {
+            return TreefolkAi.mobInteract(this, player, hand);
         } else {
-            return super.mobInteract(player, hand);
+            boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
+            return flag ? InteractionResult.SUCCESS : InteractionResult.PASS;
         }
     }
 
