@@ -400,8 +400,10 @@ public class TreefolkAi {
     public static InteractionResult mobInteract(TreefolkEntity entity, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (isLovedItem(stack)) {
-            // TODO Trigger bartering instead of dancing
-            startDanceParty(entity, DANCE_DURATION, RECENTLY_DANCED_DURATION);
+            ItemStack splitStack = stack.split(1);
+            holdInOffhand(entity, splitStack);
+            admireLovedItem(entity);
+            stopWalking(entity);
             return InteractionResult.CONSUME;
         } else {
             return InteractionResult.PASS;
