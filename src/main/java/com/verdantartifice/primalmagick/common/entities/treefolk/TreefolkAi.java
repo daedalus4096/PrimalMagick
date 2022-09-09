@@ -66,9 +66,9 @@ import net.minecraft.world.phys.Vec3;
 public class TreefolkAi {
     public static final Logger LOGGER = LogManager.getLogger();
     private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
-    private static final UniformInt DANCE_COOLDOWN = TimeUtil.rangeOfSeconds(20, 30);
-    private static final int RECENTLY_DANCED_DURATION = 200;
-    private static final int DANCE_DURATION = 100;
+    private static final UniformInt DANCE_COOLDOWN = TimeUtil.rangeOfSeconds(300, 900);
+    private static final int RECENTLY_DANCED_DURATION = 1200;
+    private static final int DANCE_DURATION = 600;
     private static final int ADMIRE_DURATION = 120;
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
