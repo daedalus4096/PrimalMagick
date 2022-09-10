@@ -8,6 +8,7 @@ v3.2.1
 * Changed rune combination definitions to be modifiable by datapacks
 * Treefolk will now barter with players in exchange for bone meal
 * Treefolk will now occasionally throw spontaneous dance parties when idle
+* Treefolk will now fertilize most nearby bonemealable plant life when idle
 
 v3.2.0
 ------

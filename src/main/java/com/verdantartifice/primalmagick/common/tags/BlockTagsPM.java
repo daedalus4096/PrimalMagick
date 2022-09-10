@@ -34,6 +34,7 @@ public class BlockTagsPM {
     public static final TagKey<Block> STORAGE_BLOCKS_HEXIUM = tag("storage_blocks/hexium");
     public static final TagKey<Block> STORAGE_BLOCKS_HALLOWSTEEL = tag("storage_blocks/hallowsteel");
     public static final TagKey<Block> SUNWOOD_LOGS = tag("sunwood_logs");
+    public static final TagKey<Block> TREEFOLK_FERTILIZE_EXEMPT = tag("treefolk_fertilize_exempt");
     
     private static TagKey<Block> tag(String name) {
         return BlockTags.create(new ResourceLocation(PrimalMagick.MODID, name));

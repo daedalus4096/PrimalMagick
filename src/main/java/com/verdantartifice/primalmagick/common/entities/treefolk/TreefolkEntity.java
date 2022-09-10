@@ -59,14 +59,15 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
     public static final Logger LOGGER = LogManager.getLogger();
     protected static final String DREADED_NAME = "Verdus";
     protected static final ImmutableList<SensorType<? extends Sensor<? super TreefolkEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, 
-            SensorType.NEAREST_ITEMS, SensorType.HURT_BY, SensorTypesPM.TREEFOLK_SPECIFIC_SENSOR.get());
+            SensorType.NEAREST_ITEMS, SensorType.HURT_BY, SensorTypesPM.TREEFOLK_SPECIFIC_SENSOR.get(), SensorTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get());
     protected static final ImmutableList<MemoryModuleType<?>> MEMORY_TYPES = ImmutableList.of(MemoryModuleType.LOOK_TARGET, MemoryModuleType.NEAREST_LIVING_ENTITIES, 
             MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.NEAREST_VISIBLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER, MemoryModuleType.NEAREST_VISIBLE_WANTED_ITEM, 
             MemoryModuleType.HURT_BY, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleType.WALK_TARGET, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryModuleType.ATTACK_TARGET, 
             MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.PATH, MemoryModuleType.ANGRY_AT, MemoryModuleType.UNIVERSAL_ANGER, MemoryModuleType.ADMIRING_ITEM, 
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
             MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(),
-            MemoryModuleTypesPM.DANCED_RECENTLY.get());
+            MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(),
+            MemoryModuleTypesPM.TIME_TRYING_TO_REACH_FERTILIZE_BLOCK.get(), MemoryModuleTypesPM.DISABLE_WALK_TO_FERTILIZE_BLOCK.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
