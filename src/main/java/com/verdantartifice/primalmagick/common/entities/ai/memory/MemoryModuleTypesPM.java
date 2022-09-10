@@ -28,7 +28,7 @@ public class MemoryModuleTypesPM {
     public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEARBY_ADULT_TREEFOLK = MEMORY_MODULE_TYPES.register("nearby_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEAREST_VISIBLE_ADULT_TREEFOLK = MEMORY_MODULE_TYPES.register("nearest_visible_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<Boolean>> DANCED_RECENTLY = MEMORY_MODULE_TYPES.register("danced_recently", () -> new MemoryModuleType<>(Optional.empty()));
-    public static final RegistryObject<MemoryModuleType<List<BlockPos>>> NEAREST_VALID_BONEMEALABLE_BLOCKS = MEMORY_MODULE_TYPES.register("nearest_valid_bonemealable_blocks", () -> new MemoryModuleType<>(Optional.empty()));
+    public static final RegistryObject<MemoryModuleType<List<BlockPos>>> NEAREST_VALID_FERTILIZABLE_BLOCKS = MEMORY_MODULE_TYPES.register("nearest_valid_fertilizable_blocks", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<BlockPos>> FERTILIZE_LOCATION = MEMORY_MODULE_TYPES.register("fertilize_location", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<Boolean>> FERTILIZED_RECENTLY = MEMORY_MODULE_TYPES.register("fertilized_recently", () -> new MemoryModuleType<>(Optional.empty()));
 }

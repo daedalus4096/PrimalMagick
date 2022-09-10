@@ -18,19 +18,19 @@ public class StartFertilizing<E extends TreefolkEntity> extends Behavior<E> {
     }
     
     public StartFertilizing(Predicate<E> canWorkPredicate, int duration) {
-        super(ImmutableMap.of(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get(), MemoryStatus.VALUE_PRESENT, MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT), duration);
+        super(ImmutableMap.of(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryStatus.VALUE_PRESENT, MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT), duration);
         this.canWorkPredicate = canWorkPredicate;
     }
 
     @Override
     protected void start(ServerLevel pLevel, E pEntity, long pGameTime) {
-        pEntity.getBrain().getMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get()).ifPresent(list -> {
+        pEntity.getBrain().getMemory(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get()).ifPresent(list -> {
             pEntity.getBrain().setMemory(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), list.get(0));
         });
     }
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel pLevel, E pOwner) {
-        return this.canWorkPredicate.test(pOwner) && !pOwner.getBrain().getMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get()).orElse(Collections.emptyList()).isEmpty();
+        return this.canWorkPredicate.test(pOwner) && !pOwner.getBrain().getMemory(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get()).orElse(Collections.emptyList()).isEmpty();
     }
 }

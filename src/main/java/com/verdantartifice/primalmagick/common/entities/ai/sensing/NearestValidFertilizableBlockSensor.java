@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
+import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -22,12 +23,12 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class NearestValidBonemealableBlockSensor extends Sensor<PathfinderMob> {
+public class NearestValidFertilizableBlockSensor extends Sensor<PathfinderMob> {
     private static final int SCAN_RATE = 40;
     private static final int SCAN_XZ_RADIUS = 4;
     private static final int SCAN_Y_RADIUS = 2;
 
-    public NearestValidBonemealableBlockSensor() {
+    public NearestValidFertilizableBlockSensor() {
         super(SCAN_RATE);
     }
 
@@ -41,7 +42,9 @@ public class NearestValidBonemealableBlockSensor extends Sensor<PathfinderMob> {
                 for (int z = -SCAN_XZ_RADIUS; z <= SCAN_XZ_RADIUS; z++) {
                     BlockPos scanPos = blockPos.offset(x, y, z);
                     BlockState scanState = pLevel.getBlockState(scanPos);
-                    if (scanState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, scanPos, scanState, pLevel.isClientSide)) {
+                    if (scanState.getBlock() instanceof BonemealableBlock bonemealable && 
+                            bonemealable.isValidBonemealTarget(pLevel, scanPos, scanState, pLevel.isClientSide) &&
+                            !scanState.is(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT)) {
                         nearby.add(scanPos);
                     }
                 }
@@ -51,14 +54,14 @@ public class NearestValidBonemealableBlockSensor extends Sensor<PathfinderMob> {
         
         Brain<?> brain = pEntity.getBrain();
         if (!nearby.isEmpty()) {
-            brain.setMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get(), nearby);
+            brain.setMemory(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), nearby);
         } else {
-            brain.eraseMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get());
+            brain.eraseMemory(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get());
         }
     }
 
     @Override
     public Set<MemoryModuleType<?>> requires() {
-        return ImmutableSet.of(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get());
+        return ImmutableSet.of(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get());
     }
 }
