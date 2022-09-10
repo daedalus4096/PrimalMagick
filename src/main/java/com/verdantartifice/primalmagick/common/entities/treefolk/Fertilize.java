@@ -35,6 +35,7 @@ public class Fertilize<E extends TreefolkEntity> extends Behavior<E> {
         if (state.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, targetPos, state, pLevel.isClientSide)) {
             if (bonemealable.isBonemealSuccess(pLevel, pLevel.random, targetPos, state)) {
                 bonemealable.performBonemeal(pLevel, pLevel.random, targetPos, state);
+                pLevel.levelEvent(1505, targetPos, 0);
             }
             brain.setMemoryWithExpiry(MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), true, this.cooldownRange.sample(pLevel.random));
             brain.eraseMemory(MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
