@@ -18,7 +18,7 @@ public class StartFertilizing<E extends TreefolkEntity> extends Behavior<E> {
     }
     
     public StartFertilizing(Predicate<E> canWorkPredicate, int duration) {
-        super(ImmutableMap.of(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryStatus.VALUE_PRESENT, MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT), duration);
+        super(ImmutableMap.of(MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryStatus.VALUE_PRESENT, MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.DISABLE_WALK_TO_FERTILIZE_BLOCK.get(), MemoryStatus.VALUE_ABSENT), duration);
         this.canWorkPredicate = canWorkPredicate;
     }
 

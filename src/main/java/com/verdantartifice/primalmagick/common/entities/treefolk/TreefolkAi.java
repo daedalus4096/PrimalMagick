@@ -74,6 +74,7 @@ public class TreefolkAi {
     private static final int MAX_DISTANCE_TO_WALK_TO_ITEM = 9;
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
+    private static final int HOW_LONG_TIME_TO_DISABLE_FERTILIZING_IF_CANT_REACH_BLOCK = 200;
     private static final int HIT_BY_PLAYER_MEMORY_TIMEOUT = 400;
     private static final int MELEE_ATTACK_COOLDOWN = 20;
     private static final int RANGED_ATTACK_COOLDOWN = 30;
@@ -127,7 +128,7 @@ public class TreefolkAi {
     }
     
     private static void initWorkActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.WORK, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new GoToTargetLocation<>(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), 2, SPEED_MULTIPLIER_WHEN_WORKING), new Fertilize<>(MAX_FERTILIZE_RANGE, FERTILIZE_COOLDOWN), new RunOne<>(ImmutableList.of(Pair.of(new SetEntityLookTarget(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.WORK, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new GoToTargetLocation<>(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), 2, SPEED_MULTIPLIER_WHEN_WORKING), new StopFertilizingIfTiredOfTryingToReachBlock<>(MAX_TIME_TO_WALK_TO_ITEM, HOW_LONG_TIME_TO_DISABLE_FERTILIZING_IF_CANT_REACH_BLOCK), new Fertilize<>(MAX_FERTILIZE_RANGE, FERTILIZE_COOLDOWN), new RunOne<>(ImmutableList.of(Pair.of(new SetEntityLookTarget(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {

@@ -31,4 +31,6 @@ public class MemoryModuleTypesPM {
     public static final RegistryObject<MemoryModuleType<List<BlockPos>>> NEAREST_VALID_FERTILIZABLE_BLOCKS = MEMORY_MODULE_TYPES.register("nearest_valid_fertilizable_blocks", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<BlockPos>> FERTILIZE_LOCATION = MEMORY_MODULE_TYPES.register("fertilize_location", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<Boolean>> FERTILIZED_RECENTLY = MEMORY_MODULE_TYPES.register("fertilized_recently", () -> new MemoryModuleType<>(Optional.empty()));
+    public static final RegistryObject<MemoryModuleType<Integer>> TIME_TRYING_TO_REACH_FERTILIZE_BLOCK = MEMORY_MODULE_TYPES.register("time_trying_to_reach_fertilize_block", () -> new MemoryModuleType<>(Optional.empty()));
+    public static final RegistryObject<MemoryModuleType<Boolean>> DISABLE_WALK_TO_FERTILIZE_BLOCK = MEMORY_MODULE_TYPES.register("disable_walk_to_fertilize_block", () -> new MemoryModuleType<>(Optional.empty()));
 }

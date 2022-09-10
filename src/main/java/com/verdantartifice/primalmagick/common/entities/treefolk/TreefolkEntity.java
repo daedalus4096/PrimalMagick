@@ -66,7 +66,8 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
             MemoryModuleType.ATTACK_COOLING_DOWN, MemoryModuleType.INTERACTION_TARGET, MemoryModuleType.PATH, MemoryModuleType.ANGRY_AT, MemoryModuleType.UNIVERSAL_ANGER, MemoryModuleType.ADMIRING_ITEM, 
             MemoryModuleType.TIME_TRYING_TO_REACH_ADMIRE_ITEM, MemoryModuleType.ADMIRING_DISABLED, MemoryModuleType.DISABLE_WALK_TO_ADMIRE_ITEM, MemoryModuleType.CELEBRATE_LOCATION, MemoryModuleType.DANCING, 
             MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(),
-            MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryModuleTypesPM.FERTILIZED_RECENTLY.get());
+            MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryModuleTypesPM.NEAREST_VALID_FERTILIZABLE_BLOCKS.get(), MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), MemoryModuleTypesPM.FERTILIZED_RECENTLY.get(),
+            MemoryModuleTypesPM.TIME_TRYING_TO_REACH_FERTILIZE_BLOCK.get(), MemoryModuleTypesPM.DISABLE_WALK_TO_FERTILIZE_BLOCK.get());
     private static final EntityDataAccessor<Boolean> DATA_IS_DANCING = SynchedEntityData.defineId(TreefolkEntity.class, EntityDataSerializers.BOOLEAN);
 
     public TreefolkEntity(EntityType<? extends TreefolkEntity> entityType, Level world) {
