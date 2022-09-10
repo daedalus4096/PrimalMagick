@@ -21,5 +21,5 @@ public class SensorTypesPM {
     }
 
     public static final RegistryObject<SensorType<TreefolkSpecificSensor>> TREEFOLK_SPECIFIC_SENSOR = SENSOR_TYPES.register("treefolk_specific_sensor", () -> new SensorType<>(TreefolkSpecificSensor::new));
-    public static final RegistryObject<SensorType<NearestValidBonemealableBlockSensor>> NEAREST_VALID_BONEMEALABLE_BLOCK_SENSOR = SENSOR_TYPES.register("nearest_valid_bonemealable_block_sensor", () -> new SensorType<>(NearestValidBonemealableBlockSensor::new));
+    public static final RegistryObject<SensorType<NearestValidBonemealableBlockSensor>> NEAREST_VALID_BONEMEALABLE_BLOCKS = SENSOR_TYPES.register("nearest_valid_bonemealable_block_sensor", () -> new SensorType<>(NearestValidBonemealableBlockSensor::new));
 }

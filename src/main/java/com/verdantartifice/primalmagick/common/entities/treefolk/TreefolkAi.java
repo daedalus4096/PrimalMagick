@@ -67,6 +67,7 @@ public class TreefolkAi {
     public static final Logger LOGGER = LogManager.getLogger();
     private static final UniformInt ANGER_DURATION = TimeUtil.rangeOfSeconds(20, 39);
     private static final UniformInt DANCE_COOLDOWN = TimeUtil.rangeOfSeconds(300, 900);
+    private static final UniformInt FERTILIZE_COOLDOWN = TimeUtil.rangeOfSeconds(5, 10);
     private static final int RECENTLY_DANCED_DURATION = 1200;
     private static final int DANCE_DURATION = 600;
     private static final int ADMIRE_DURATION = 120;
@@ -78,12 +79,14 @@ public class TreefolkAi {
     private static final int RANGED_ATTACK_COOLDOWN = 30;
     private static final float MIN_RANGED_ATTACK_RANGE = 4F;
     private static final float MAX_RANGED_ATTACK_RANGE = 16F;
+    private static final float MAX_FERTILIZE_RANGE = 2F;
     private static final int MAX_LOOK_DIST = 8;
     private static final int MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM = 14;
     private static final int INTERACTION_RANGE = 8;
     private static final float SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_FIGHTING = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
+    private static final float SPEED_MULTIPLIER_WHEN_WORKING = 0.6F;
     private static final float SWIM_CHANCE = 0.8F;
 
     public static Brain<?> makeBrain(TreefolkEntity entity, Brain<TreefolkEntity> brain) {
@@ -92,6 +95,7 @@ public class TreefolkAi {
         initAdmireItemActivity(brain);
         initFightActivity(entity, brain);
         initCelebrateActivity(brain);
+        initWorkActivity(brain);
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         brain.setDefaultActivity(Activity.IDLE);
         brain.useDefaultActivity();
@@ -103,7 +107,7 @@ public class TreefolkAi {
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunSometimes<>(new StartDancing<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), new RunSometimes<>(new StartDancing<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), new SetLookAndInteract(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
@@ -117,9 +121,13 @@ public class TreefolkAi {
     }
     
     private static void initCelebrateActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, 14F), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunIf<TreefolkEntity>(t -> {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunIf<TreefolkEntity>(t -> {
             return !t.isDancing();
         }, new GoToTargetLocation<>(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), new RunIf<TreefolkEntity>(TreefolkEntity::isDancing, new GoToTargetLocation<>(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(new SetEntityLookTarget(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
+    }
+    
+    private static void initWorkActivity(Brain<TreefolkEntity> brain) {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.WORK, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new GoToTargetLocation<>(MemoryModuleTypesPM.FERTILIZE_LOCATION.get(), 2, SPEED_MULTIPLIER_WHEN_WORKING), new Fertilize<>(MAX_FERTILIZE_RANGE, FERTILIZE_COOLDOWN), new RunOne<>(ImmutableList.of(Pair.of(new SetEntityLookTarget(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(new RandomStroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleTypesPM.FERTILIZE_LOCATION.get());
     }
     
     private static RunOne<TreefolkEntity> createIdleLookBehaviors() {
@@ -281,7 +289,7 @@ public class TreefolkAi {
     public static void updateActivity(TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
         Activity activityBefore = brain.getActiveNonCoreActivity().orElse(null);
-        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.CELEBRATE, Activity.IDLE));
+        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.CELEBRATE, Activity.WORK, Activity.IDLE));
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound

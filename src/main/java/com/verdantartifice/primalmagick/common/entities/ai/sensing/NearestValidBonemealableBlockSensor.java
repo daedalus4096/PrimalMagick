@@ -9,14 +9,11 @@ import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -36,7 +33,6 @@ public class NearestValidBonemealableBlockSensor extends Sensor<PathfinderMob> {
 
     @Override
     protected void doTick(ServerLevel pLevel, PathfinderMob pEntity) {
-        ResourceKey<Level> resourceKey = pLevel.dimension();
         BlockPos blockPos = pEntity.blockPosition();
         List<BlockPos> nearby = new ArrayList<>();
         
@@ -53,9 +49,12 @@ public class NearestValidBonemealableBlockSensor extends Sensor<PathfinderMob> {
         }
         nearby.sort(Comparator.comparingDouble(blockPos::distSqr));
         
-        List<GlobalPos> result = nearby.stream().map(p -> GlobalPos.of(resourceKey, p)).toList();
         Brain<?> brain = pEntity.getBrain();
-        brain.setMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get(), result);
+        if (!nearby.isEmpty()) {
+            brain.setMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get(), nearby);
+        } else {
+            brain.eraseMemory(MemoryModuleTypesPM.NEAREST_VALID_BONEMEALABLE_BLOCKS.get());
+        }
     }
 
     @Override
