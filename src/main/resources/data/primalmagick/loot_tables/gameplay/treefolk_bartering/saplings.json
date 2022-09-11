@@ -40,6 +40,16 @@
         },
         {
           "type": "minecraft:item",
+          "name": "primalmagick:sunwood_sapling",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "primalmagick:moonwood_sapling",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:bamboo",
           "weight": 10
         }

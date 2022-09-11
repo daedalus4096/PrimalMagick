@@ -10,6 +10,11 @@
         },
         {
           "type": "minecraft:item",
+          "name": "primalmagick:four_leaf_clover",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:golden_apple",
           "weight": 5
         },
