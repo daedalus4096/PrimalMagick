@@ -1,0 +1,19 @@
+{
+  "addenda": [],
+  "discipline": "SCANS",
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:heartwood"
+  },
+  "key": "TREEFOLK",
+  "name": "primalmagick.research.treefolk.title",
+  "parents": [
+    "UNLOCK_SCANS"
+  ],
+  "stages": [
+    {
+      "text": "primalmagick.research.treefolk.text.stage.1"
+    }
+  ]
+}
