@@ -14,9 +14,7 @@ import com.verdantartifice.primalmagick.common.init.InitResearch;
 import com.verdantartifice.primalmagick.common.init.InitSpells;
 import com.verdantartifice.primalmagick.common.init.InitStats;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagick.common.loot.conditions.LootConditionTypesPM;
-import com.verdantartifice.primalmagick.common.misc.DispenseLazySpawnEggBehavior;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 
@@ -70,10 +68,6 @@ public class ModLifecycleEvents {
     
     private static void registerDispenserBehaviors(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            DispenseLazySpawnEggBehavior eggBehavior = new DispenseLazySpawnEggBehavior();
-            for (LazySpawnEggItem egg : LazySpawnEggItem.getEggs()) {
-                DispenserBlock.registerBehavior(egg, eggBehavior);
-            }
             DispenserBlock.registerBehavior(ItemsPM.IGNYX.get(), new AbstractProjectileDispenseBehavior() {
                 @Override
                 protected Projectile getProjectile(Level level, Position pos, ItemStack stack) {

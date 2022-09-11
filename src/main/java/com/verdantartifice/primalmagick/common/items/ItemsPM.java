@@ -30,7 +30,6 @@ import com.verdantartifice.primalmagick.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagick.common.items.misc.HallowedOrbItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
-import com.verdantartifice.primalmagick.common.items.misc.LazySpawnEggItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RecallStoneItem;
@@ -86,6 +85,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -717,10 +717,10 @@ public class ItemsPM {
     public static final RegistryObject<StaffCoreItem> PURE_PRIMAL_STAFF_CORE_ITEM = ITEMS.register("pure_primal_staff_core_item", () -> new StaffCoreItem(WandCore.PURE_PRIMAL, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     
     // Register spawn egg items
-    public static final RegistryObject<LazySpawnEggItem> TREEFOLK_SPAWN_EGG = ITEMS.register("treefolk_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.TREEFOLK.get(), 0x76440F, 0x007302, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
-    public static final RegistryObject<LazySpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
-    public static final RegistryObject<LazySpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = ITEMS.register("hexium_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
-    public static final RegistryObject<LazySpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = ITEMS.register("hallowsteel_golem_spawn_egg", () -> new LazySpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<ForgeSpawnEggItem> TREEFOLK_SPAWN_EGG = ITEMS.register("treefolk_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.TREEFOLK.get(), 0x76440F, 0x007302, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<ForgeSpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = ITEMS.register("primalite_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<ForgeSpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = ITEMS.register("hexium_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
+    public static final RegistryObject<ForgeSpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = ITEMS.register("hallowsteel_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties().tab(PrimalMagick.ITEM_GROUP)));
     public static final RegistryObject<PixieItem> BASIC_EARTH_PIXIE = ITEMS.register("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(16).rarity(Rarity.COMMON)));
     public static final RegistryObject<PixieItem> GRAND_EARTH_PIXIE = ITEMS.register("pixie_grand_earth", () -> new PixieItem(() -> EntityTypesPM.GRAND_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<PixieItem> MAJESTIC_EARTH_PIXIE = ITEMS.register("pixie_majestic_earth", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(16).rarity(Rarity.RARE)));
