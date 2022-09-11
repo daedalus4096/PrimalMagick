@@ -90,6 +90,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.HALLOWSTEEL_BLOCK.get());
         this.registerBasicTable(BlocksPM.IGNYX_BLOCK.get());
         this.registerBasicTable(BlocksPM.SALT_BLOCK.get());
+        this.registerBasicTable(BlocksPM.TREEFOLK_SPROUT.get());
     }
 
     private void registerEmptyLootTables() {
