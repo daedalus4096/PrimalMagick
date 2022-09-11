@@ -382,6 +382,10 @@ public class TreefolkAi {
             setAngerTargetIfCloserThanCurrent(t, target);
         });
     }
+    
+    private static List<TreefolkEntity> getNearbyTreefolk(TreefolkEntity entity) {
+        return entity.getBrain().getMemory(MemoryModuleTypesPM.NEARBY_TREEFOLK.get()).orElse(ImmutableList.of());
+    }
 
     private static List<TreefolkEntity> getNearbyAdultTreefolk(TreefolkEntity entity) {
         return entity.getBrain().getMemory(MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get()).orElse(ImmutableList.of());
@@ -408,7 +412,7 @@ public class TreefolkAi {
     
     public static void broadcastCelebrateLocation(TreefolkEntity entity, int danceDuration) {
         entity.getBrain().getMemory(MemoryModuleType.CELEBRATE_LOCATION).ifPresent(pos -> {
-            getNearbyAdultTreefolk(entity).forEach(t -> {
+            getNearbyTreefolk(entity).forEach(t -> {
                 t.getBrain().setMemoryWithExpiry(MemoryModuleType.CELEBRATE_LOCATION, pos, danceDuration);
             });
         });

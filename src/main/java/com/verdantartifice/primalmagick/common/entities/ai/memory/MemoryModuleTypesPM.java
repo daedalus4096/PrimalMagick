@@ -25,6 +25,7 @@ public class MemoryModuleTypesPM {
         MEMORY_MODULE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
+    public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEARBY_TREEFOLK = MEMORY_MODULE_TYPES.register("nearby_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEARBY_ADULT_TREEFOLK = MEMORY_MODULE_TYPES.register("nearby_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<List<TreefolkEntity>>> NEAREST_VISIBLE_ADULT_TREEFOLK = MEMORY_MODULE_TYPES.register("nearest_visible_adult_treefolk", () -> new MemoryModuleType<>(Optional.empty()));
     public static final RegistryObject<MemoryModuleType<Boolean>> DANCED_RECENTLY = MEMORY_MODULE_TYPES.register("danced_recently", () -> new MemoryModuleType<>(Optional.empty()));

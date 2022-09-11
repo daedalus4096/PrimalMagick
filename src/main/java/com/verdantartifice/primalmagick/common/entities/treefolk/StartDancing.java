@@ -13,7 +13,7 @@ public class StartDancing<E extends TreefolkEntity> extends Behavior<E> {
     private final int danceCooldown;
     
     public StartDancing(int danceDuration, int danceCooldown) {
-        super(ImmutableMap.of(MemoryModuleType.CELEBRATE_LOCATION, MemoryStatus.VALUE_ABSENT, MemoryModuleType.DANCING, MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryStatus.REGISTERED));
+        super(ImmutableMap.of(MemoryModuleType.CELEBRATE_LOCATION, MemoryStatus.VALUE_ABSENT, MemoryModuleType.DANCING, MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.DANCED_RECENTLY.get(), MemoryStatus.VALUE_ABSENT, MemoryModuleTypesPM.NEARBY_TREEFOLK.get(), MemoryStatus.REGISTERED));
         this.danceDuration = danceDuration;
         this.danceCooldown = danceCooldown;
     }
