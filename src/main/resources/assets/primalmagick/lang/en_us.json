@@ -216,6 +216,7 @@
     "block.primalmagick.essence_cask_forbidden": "Forbidden Essence Cask",
     "block.primalmagick.essence_cask_heavenly": "Heavenly Essence Cask",
     "block.primalmagick.wand_glamour_table": "Wand Glamour Table",
+    "block.primalmagick.treefolk_sprout": "Treefolk Sprout",
     
     "item.primalmagick.grimoire": "Grimoire",
     "item.primalmagick.arcanometer": "Arcanometer",
@@ -733,6 +734,7 @@
     "item.primalmagick.humming_artifact_void": "Void-Attuned Artifact",
     "item.primalmagick.humming_artifact_hallowed": "Hallowed-Attuned Artifact",
     "item.primalmagick.recall_stone": "Recall Stone",
+    "item.primalmagick.treefolk_seed": "Treefolk Seed",
     
     "entity.primalmagick.treefolk": "Treefolk",
     "entity.primalmagick.inner_demon": "Inner Demon",
