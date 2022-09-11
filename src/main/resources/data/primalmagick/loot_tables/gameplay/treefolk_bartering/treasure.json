@@ -15,6 +15,11 @@
         },
         {
           "type": "minecraft:item",
+          "name": "primalmagick:treefolk_seed",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:golden_apple",
           "weight": 5
         },
