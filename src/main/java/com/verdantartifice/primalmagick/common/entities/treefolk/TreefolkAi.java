@@ -38,6 +38,7 @@ import net.minecraft.world.entity.ai.behavior.RunOne;
 import net.minecraft.world.entity.ai.behavior.RunSometimes;
 import net.minecraft.world.entity.ai.behavior.SetEntityLookTarget;
 import net.minecraft.world.entity.ai.behavior.SetLookAndInteract;
+import net.minecraft.world.entity.ai.behavior.SetWalkTargetAwayFrom;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromAttackTargetIfTargetOutOfReach;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
 import net.minecraft.world.entity.ai.behavior.StartAttacking;
@@ -75,17 +76,20 @@ public class TreefolkAi {
     private static final int MAX_TIME_TO_WALK_TO_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_ADMIRE_WALKING_IF_CANT_REACH_ITEM = 200;
     private static final int HOW_LONG_TIME_TO_DISABLE_FERTILIZING_IF_CANT_REACH_BLOCK = 200;
+    private static final int BABY_FLEE_DURATION_AFTER_GETTING_HIT = 100;
     private static final int HIT_BY_PLAYER_MEMORY_TIMEOUT = 400;
     private static final int MELEE_ATTACK_COOLDOWN = 20;
     private static final int RANGED_ATTACK_COOLDOWN = 30;
     private static final float MIN_RANGED_ATTACK_RANGE = 4F;
     private static final float MAX_RANGED_ATTACK_RANGE = 16F;
     private static final float MAX_FERTILIZE_RANGE = 2F;
+    private static final int DESIRED_DISTANCE_FROM_ENTITY_WHEN_AVOIDING = 12;
     private static final int MAX_LOOK_DIST = 8;
     private static final int MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM = 14;
     private static final int INTERACTION_RANGE = 8;
     private static final float SPEED_MULTIPLIER_WHEN_GOING_TO_WANTED_ITEM = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_FIGHTING = 1.0F;
+    private static final float SPEED_MULTIPLIER_WHEN_FLEEING = 1.0F;
     private static final float SPEED_MULTIPLIER_WHEN_IDLING = 0.6F;
     private static final float SPEED_MULTIPLIER_WHEN_WORKING = 0.6F;
     private static final float SWIM_CHANCE = 0.8F;
@@ -95,6 +99,7 @@ public class TreefolkAi {
         initIdleActivity(brain);
         initAdmireItemActivity(brain);
         initFightActivity(entity, brain);
+        initAvoidActivity(brain);
         initCelebrateActivity(brain);
         initWorkActivity(brain);
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
@@ -121,6 +126,10 @@ public class TreefolkAi {
         }), new SetWalkTargetFromAttackTargetIfTargetOutOfReach(SPEED_MULTIPLIER_WHEN_FIGHTING), new MeleeAttack(MELEE_ATTACK_COOLDOWN), new LongDistanceRangedAttack<>(RANGED_ATTACK_COOLDOWN, MIN_RANGED_ATTACK_RANGE, MAX_RANGED_ATTACK_RANGE)), MemoryModuleType.ATTACK_TARGET);
     }
     
+    private static void initAvoidActivity(Brain<TreefolkEntity> brain) {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.AVOID, 10, ImmutableList.of(SetWalkTargetAwayFrom.entity(MemoryModuleType.AVOID_TARGET, SPEED_MULTIPLIER_WHEN_FLEEING, DESIRED_DISTANCE_FROM_ENTITY_WHEN_AVOIDING, true), createIdleLookBehaviors(), createIdleMovementBehaviors()), MemoryModuleType.AVOID_TARGET);
+    }
+
     private static void initCelebrateActivity(Brain<TreefolkEntity> brain) {
         brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(new SetEntityLookTarget(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), new StartAttacking<TreefolkEntity>(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunIf<TreefolkEntity>(t -> {
             return !t.isDancing();
@@ -298,7 +307,7 @@ public class TreefolkAi {
     public static void updateActivity(TreefolkEntity entity) {
         Brain<TreefolkEntity> brain = entity.getBrain();
         Activity activityBefore = brain.getActiveNonCoreActivity().orElse(null);
-        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.CELEBRATE, Activity.WORK, Activity.IDLE));
+        brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.ADMIRE_ITEM, Activity.FIGHT, Activity.AVOID, Activity.CELEBRATE, Activity.WORK, Activity.IDLE));
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound
@@ -328,19 +337,37 @@ public class TreefolkAi {
                 brain.setMemoryWithExpiry(MemoryModuleType.ADMIRING_DISABLED, true, HIT_BY_PLAYER_MEMORY_TIMEOUT);
             }
             
-            maybeRetaliate(entity, target);
+            getAvoidTarget(entity).ifPresent(avoid -> {
+                if (avoid.getType() != target.getType()) {
+                    brain.eraseMemory(MemoryModuleType.AVOID_TARGET);
+                }
+            });
+            if (entity.isBaby()) {
+                brain.setMemoryWithExpiry(MemoryModuleType.AVOID_TARGET, target, BABY_FLEE_DURATION_AFTER_GETTING_HIT);
+                if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+                    broadcastAngerTarget(entity, target);
+                }
+            } else {
+                maybeRetaliate(entity, target);
+            }
         }
     }
 
+    private static Optional<LivingEntity> getAvoidTarget(TreefolkEntity entity) {
+        return entity.getBrain().hasMemoryValue(MemoryModuleType.AVOID_TARGET) ? entity.getBrain().getMemory(MemoryModuleType.AVOID_TARGET) : Optional.empty();
+    }
+
     private static void maybeRetaliate(TreefolkEntity entity, LivingEntity target) {
-        if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
-            if (!BehaviorUtils.isOtherTargetMuchFurtherAwayThanCurrentAttackTarget(entity, target, 4D)) {
-                if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
-                    setAngerTargetToNearestTargetablePlayerIfFound(entity, target);
-                    broadcastUniversalAnger(entity);
-                } else {
-                    setAngerTarget(entity, target);
-                    broadcastAngerTarget(entity, target);
+        if (!entity.getBrain().isActive(Activity.AVOID)) {
+            if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
+                if (!BehaviorUtils.isOtherTargetMuchFurtherAwayThanCurrentAttackTarget(entity, target, 4D)) {
+                    if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+                        setAngerTargetToNearestTargetablePlayerIfFound(entity, target);
+                        broadcastUniversalAnger(entity);
+                    } else {
+                        setAngerTarget(entity, target);
+                        broadcastAngerTarget(entity, target);
+                    }
                 }
             }
         }
