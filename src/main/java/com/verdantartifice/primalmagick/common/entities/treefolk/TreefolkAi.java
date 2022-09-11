@@ -196,10 +196,18 @@ public class TreefolkAi {
     public static void stopHoldingOffHandItem(TreefolkEntity entity, boolean shouldBarter) {
         ItemStack stack = entity.getItemInHand(InteractionHand.OFF_HAND);
         entity.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
-        if (shouldBarter && isLovedItem(stack)) {
-            throwItems(entity, getBarterResponseItems(entity));
+        if (entity.isAdult()) {
+            // Adult treefolk barter for bone meal and throw back other stuff
+            if (shouldBarter && isLovedItem(stack)) {
+                throwItems(entity, getBarterResponseItems(entity));
+            } else {
+                throwItems(entity, Collections.singletonList(stack));
+            }
         } else {
-            throwItems(entity, Collections.singletonList(stack));
+            // Baby treefolk just keep bone meal and throw back other stuff
+            if (!isLovedItem(stack)) {
+                throwItems(entity, Collections.singletonList(stack));
+            }
         }
     }
 
