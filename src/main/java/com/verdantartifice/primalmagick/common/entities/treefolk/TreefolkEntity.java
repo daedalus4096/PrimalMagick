@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Dynamic;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTypesPM;
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
@@ -28,12 +29,12 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.Brain.Provider;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -55,7 +56,7 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
+public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     public static final Logger LOGGER = LogManager.getLogger();
     protected static final String DREADED_NAME = "Verdus";
     protected static final ImmutableList<SensorType<? extends Sensor<? super TreefolkEntity>>> SENSOR_TYPES = ImmutableList.of(SensorType.NEAREST_LIVING_ENTITIES, SensorType.NEAREST_PLAYERS, 
@@ -95,7 +96,7 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
     }
     
     public boolean isAdult() {
-        return true;
+        return !this.isBaby();
     }
 
     @Override
@@ -252,5 +253,10 @@ public class TreefolkEntity extends PathfinderMob implements RangedAttackMob {
     @Override
     public LivingEntity getTarget() {
         return this.brain.getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
+    }
+
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        return EntityTypesPM.TREEFOLK.get().create(pLevel);
     }
 }
