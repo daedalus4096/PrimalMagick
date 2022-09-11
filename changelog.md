@@ -9,6 +9,7 @@ v3.2.1
 * Treefolk will now barter with players in exchange for bone meal
 * Treefolk will now occasionally throw spontaneous dance parties when idle
 * Treefolk will now fertilize most nearby bonemealable plant life when idle
+* Added Chinese (Simplified) translations; thanks ArgonCrystal!
 
 v3.2.0
 ------
