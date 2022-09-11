@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
@@ -34,14 +33,14 @@ public class WandCap implements IWandComponent {
     protected final Rarity rarity;                  // The cap's rarity, used to color its name and determine completed wand rarity
     protected final double baseCostModifier;        // The base discount or penalty to apply to mana usage, modified by other factors later
     protected final int siphonAmount;               // The amount of mana to siphon from mana fonts when channeling 
-    protected final ModelResourceLocation wandMrl;  // Resource location of the wand cap's model, stored in a blockstate file
-    protected final ModelResourceLocation staffMrl; // Resource location of the staff cap's model, stored in a blockstate file
+    protected final ResourceLocation wandMrlNamespace;  // Resource location of the wand cap's model, stored in a blockstate file
+    protected final ResourceLocation staffMrlNamespace; // Resource location of the staff cap's model, stored in a blockstate file
     
     public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon) {
-        this(tag, rarity, costModifier, siphon, new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_wand_cap"), ""), new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, tag + "_staff_cap"), ""));
+        this(tag, rarity, costModifier, siphon, new ResourceLocation(PrimalMagick.MODID, tag + "_wand_cap"), new ResourceLocation(PrimalMagick.MODID, tag + "_staff_cap"));
     }
     
-    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon, @Nonnull ModelResourceLocation wmrl, @Nonnull ModelResourceLocation smrl) {
+    public WandCap(@Nonnull String tag, @Nonnull Rarity rarity, double costModifier, int siphon, @Nonnull ResourceLocation wmrln, @Nonnull ResourceLocation smrln) {
         if (REGISTRY.containsKey(tag)) {
             // Don't allow a given cap to be registered more than once
             throw new IllegalArgumentException("Wand cap " + tag + " already registered!");
@@ -50,8 +49,8 @@ public class WandCap implements IWandComponent {
         this.rarity = rarity;
         this.baseCostModifier = costModifier;
         this.siphonAmount = siphon;
-        this.wandMrl = wmrl;
-        this.staffMrl = smrl;
+        this.wandMrlNamespace = wmrln;
+        this.staffMrlNamespace = smrln;
         REGISTRY.put(tag, this);
     }
     
@@ -74,13 +73,13 @@ public class WandCap implements IWandComponent {
     }
     
     @Nonnull
-    public ModelResourceLocation getWandModelResourceLocation() {
-        return this.wandMrl;
+    public ResourceLocation getWandModelResourceLocationNamespace() {
+        return this.wandMrlNamespace;
     }
     
     @Nonnull
-    public ModelResourceLocation getStaffModelResourceLocation() {
-        return this.staffMrl;
+    public ResourceLocation getStaffModelResourceLocationNamespace() {
+        return this.staffMrlNamespace;
     }
     
     @Override

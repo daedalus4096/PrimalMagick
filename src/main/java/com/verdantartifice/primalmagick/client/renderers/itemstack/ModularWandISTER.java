@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -42,17 +43,17 @@ public class ModularWandISTER extends BlockEntityWithoutLevelRenderer {
             VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             if (core != null) {
                 // Render the wand core
-                BakedModel model = mc.getModelManager().getModel(core.getWandModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (cap != null) {
                 // Render the wand cap
-                BakedModel model = mc.getModelManager().getModel(cap.getWandModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (gem != null) {
                 // Render the wand gem
-                BakedModel model = mc.getModelManager().getModel(gem.getModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
         }

@@ -68,15 +68,15 @@ public class ClientRegistrationEvents {
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
         event.register(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
-            event.register(core.getWandModelResourceLocation());
-            event.register(core.getStaffModelResourceLocation());
+            event.register(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
+            event.register(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
         }
         for (WandCap cap : WandCap.getAllWandCaps()) {
-            event.register(cap.getWandModelResourceLocation());
-            event.register(cap.getStaffModelResourceLocation());
+            event.register(new ModelResourceLocation(cap.getWandModelResourceLocationNamespace(), ""));
+            event.register(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
         }
         for (WandGem gem : WandGem.getAllWandGems()) {
-            event.register(gem.getModelResourceLocation());
+            event.register(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
         }
         for (int index = 0; index <= 4; index++) {
             event.register(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_" + index), ""));

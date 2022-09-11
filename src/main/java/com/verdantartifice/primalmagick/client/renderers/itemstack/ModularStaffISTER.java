@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -42,17 +43,17 @@ public class ModularStaffISTER extends BlockEntityWithoutLevelRenderer {
             VertexConsumer builder = ItemRenderer.getFoilBufferDirect(buffer, RenderType.solid(), false, itemStack.hasFoil());
             if (core != null) {
                 // Render the staff core
-                BakedModel model = mc.getModelManager().getModel(core.getStaffModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (cap != null) {
                 // Render the staff cap
-                BakedModel model = mc.getModelManager().getModel(cap.getStaffModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(cap.getStaffModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
             if (gem != null) {
                 // Render the staff gem
-                BakedModel model = mc.getModelManager().getModel(gem.getModelResourceLocation());
+                BakedModel model = mc.getModelManager().getModel(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
                 itemRenderer.renderModelLists(model, itemStack, combinedLight, combinedOverlay, matrixStack, builder);
             }
         }
