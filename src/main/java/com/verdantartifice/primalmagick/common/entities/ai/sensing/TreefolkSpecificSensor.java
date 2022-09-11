@@ -27,13 +27,14 @@ import net.minecraft.world.entity.player.Player;
 public class TreefolkSpecificSensor extends Sensor<LivingEntity> {
     @Override
     public Set<MemoryModuleType<?>> requires() {
-        return ImmutableSet.of(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get());
+        return ImmutableSet.of(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES, MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), MemoryModuleTypesPM.NEARBY_TREEFOLK.get());
     }
 
     @Override
     protected void doTick(ServerLevel pLevel, LivingEntity pEntity) {
         Brain<?> brain = pEntity.getBrain();
         Optional<Player> playerHoldingWantedItemOpt = Optional.empty();
+        List<TreefolkEntity> nearbyTreefolkList = new ArrayList<>();
         List<TreefolkEntity> nearbyAdultTreefolkList = new ArrayList<>();
         List<TreefolkEntity> nearestVisibleAdultTreefolkList = new ArrayList<>();
         
@@ -41,6 +42,7 @@ public class TreefolkSpecificSensor extends Sensor<LivingEntity> {
 
         for (LivingEntity living : visibleEntities.findAll(e -> true)) {
             if (living instanceof TreefolkEntity treefolk) {
+                nearbyTreefolkList.add(treefolk);
                 if (treefolk.isAdult()) {
                     nearestVisibleAdultTreefolkList.add(treefolk);
                 }
@@ -57,6 +59,7 @@ public class TreefolkSpecificSensor extends Sensor<LivingEntity> {
         }
         
         brain.setMemory(MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, playerHoldingWantedItemOpt);
+        brain.setMemory(MemoryModuleTypesPM.NEARBY_TREEFOLK.get(), nearbyTreefolkList);
         brain.setMemory(MemoryModuleTypesPM.NEARBY_ADULT_TREEFOLK.get(), nearbyAdultTreefolkList);
         brain.setMemory(MemoryModuleTypesPM.NEAREST_VISIBLE_ADULT_TREEFOLK.get(), nearestVisibleAdultTreefolkList);
     }

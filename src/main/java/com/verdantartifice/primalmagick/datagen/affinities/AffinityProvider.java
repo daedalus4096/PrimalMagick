@@ -706,6 +706,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).base(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HUMMING_ARTIFACT_VOID.get()).base(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).base(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.TREEFOLK_SEED.get()).set(Source.EARTH, 20).set(Source.SUN, 20).set(Source.HALLOWED, 20).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).base(Items.DIAMOND).add(auraUnit.copy().multiply(2)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).base(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).base(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).add(auraUnit.copy().multiply(2)).build(consumer);

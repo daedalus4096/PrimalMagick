@@ -108,5 +108,6 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC.get(), relic));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), relic));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), SimpleResearchKey.parse("HUMMING_ARTIFACT")));
+        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.TREEFOLK.get(), SimpleResearchKey.parse("TREEFOLK")));
     }
 }

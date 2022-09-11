@@ -66,6 +66,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodPlanksBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodTree;
+import com.verdantartifice.primalmagick.common.blocks.trees.TreefolkSproutBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -345,6 +346,7 @@ public class BlocksPM {
     public static final RegistryObject<Block> HALLOWSTEEL_BLOCK = BLOCKS.register("hallowsteel_block", () -> new Block(Block.Properties.of(Material.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<Block> IGNYX_BLOCK = BLOCKS.register("ignyx_block", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(5.0F, 6.0F)));
     public static final RegistryObject<Block> SALT_BLOCK = BLOCKS.register("salt_block", () -> new Block(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 3.0F)));
+    public static final RegistryObject<TreefolkSproutBlock> TREEFOLK_SPROUT = BLOCKS.register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
 
     // Helper functions for block properties
     protected static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {

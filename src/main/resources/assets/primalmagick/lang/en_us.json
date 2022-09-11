@@ -216,6 +216,7 @@
     "block.primalmagick.essence_cask_forbidden": "Forbidden Essence Cask",
     "block.primalmagick.essence_cask_heavenly": "Heavenly Essence Cask",
     "block.primalmagick.wand_glamour_table": "Wand Glamour Table",
+    "block.primalmagick.treefolk_sprout": "Treefolk Sprout",
     
     "item.primalmagick.grimoire": "Grimoire",
     "item.primalmagick.arcanometer": "Arcanometer",
@@ -733,6 +734,7 @@
     "item.primalmagick.humming_artifact_void": "Void-Attuned Artifact",
     "item.primalmagick.humming_artifact_hallowed": "Hallowed-Attuned Artifact",
     "item.primalmagick.recall_stone": "Recall Stone",
+    "item.primalmagick.treefolk_seed": "Treefolk Seed",
     
     "entity.primalmagick.treefolk": "Treefolk",
     "entity.primalmagick.inner_demon": "Inner Demon",
@@ -1958,6 +1960,9 @@
     "primalmagick.research.humming_artifact.text.addenda.2": "The artifact also responsds to Infernal essence.",
     "primalmagick.research.humming_artifact.text.addenda.3": "The artifact also responsds to Void essence.",
     "primalmagick.research.humming_artifact.text.addenda.4": "The artifact also responsds to Hallowed essence.",
+    
+    "primalmagick.research.treefolk.title": "Treefolk",
+    "primalmagick.research.treefolk.text.stage.1": "What fascinating creatures!  These treefolk appear to be ambulatory plant life.  Not only that, but they seem intelligent!<BR>For the most part, these creatures seem peaceful, or at least content to live and let live.  They will defend themselves if attacked, but will otherwise go about their business and leave me to mine.<BR>Treefolk appear to have a special love of bone meal, which I suppose shouldn't be too surprising given its nutritive properties for plants.  They seem willing to barter various plants they've collected in exchange for the material.  I can either hand the bone meal to them, or just drop it on the ground nearby.  I wonder what they do with the stuff, though; they don't have visible mouths to eat it.  Just one of those mysteries, I guess.<BR>Perhaps most exciting, however, is that treefolk appear to be innately magickal.  They appear to be able to speed the growth of most plant life with a touch!  If only I could convince them to follow me home...  They'd do wonders for my farm.",
     
     "commands.primalmagick.research.list": "All research for %1$s: %2$s",
     "commands.primalmagick.research.reset": "Resetting all research for %1$s",

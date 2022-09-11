@@ -1443,6 +1443,9 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("TREEFOLK", discipline).hidden().icon(ItemsPM.HEARTWOOD.get()).parent("UNLOCK_SCANS")
+            .stage(ResearchStageBuilder.stage().build())
+            .build(consumer);
     }
     
     @Override
