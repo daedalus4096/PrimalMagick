@@ -311,7 +311,6 @@ public class TreefolkAi {
         Activity activityAfter = brain.getActiveNonCoreActivity().orElse(null);
         if (activityBefore != activityAfter) {
             // TODO Play activity transition sound
-            LOGGER.debug("Treefolk {} switching from activity {} to activity {}", entity.getStringUUID(), activityBefore.getName(), activityAfter.getName());
         }
         
         entity.setAggressive(brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET));
