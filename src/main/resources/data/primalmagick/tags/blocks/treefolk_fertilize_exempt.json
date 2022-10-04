@@ -1,6 +1,8 @@
 {
   "values": [
     "minecraft:grass_block",
-    "minecraft:rooted_dirt"
+    "minecraft:rooted_dirt",
+    "minecraft:grass",
+    "minecraft:fern"
   ]
 }
