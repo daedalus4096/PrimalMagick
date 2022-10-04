@@ -48,6 +48,7 @@ public class ModLifecycleEvents {
         PacketHandler.registerMessages();
         
         InitRecipes.initWandTransforms();
+        InitRecipes.initCompostables();
         InitAttunements.initAttunementAttributeModifiers();
         InitResearch.initResearch();
         InitSpells.initSpells();

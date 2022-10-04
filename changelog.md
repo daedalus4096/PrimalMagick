@@ -1,5 +1,6 @@
 v3.2.2
 ------
+* Made mod saplings and leaves compostable
 * Removed duplicate wheat seed reward from treefolk bartering loot table
 
 v3.2.1
