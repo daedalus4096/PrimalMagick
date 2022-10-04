@@ -25,11 +25,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:wheat_seeds",
-          "weight": 10
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:apple",
           "weight": 20
         }

@@ -110,7 +110,6 @@ public class GameplayLootTables implements DataProvider {
                 .add(LootItem.lootTableItem(Items.POTATO).setWeight(10))
                 .add(LootItem.lootTableItem(Items.SWEET_BERRIES).setWeight(10))
                 .add(LootItem.lootTableItem(Items.GLOW_BERRIES).setWeight(5))
-                .add(LootItem.lootTableItem(Items.WHEAT_SEEDS).setWeight(10))
                 .add(LootItem.lootTableItem(Items.APPLE).setWeight(20))));
         this.registerLootTable(LootTablesPM.TREEFOLK_BARTERING_SAPLINGS, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(LootItem.lootTableItem(Items.OAK_SAPLING).setWeight(10))

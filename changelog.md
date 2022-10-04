@@ -1,3 +1,7 @@
+v3.2.2
+------
+* Removed duplicate wheat seed reward from treefolk bartering loot table
+
 v3.2.1
 ------
 * Fixed client crash with Enderport enchantments on multiplayer servers
