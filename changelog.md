@@ -3,6 +3,7 @@ v3.2.2
 * Made mod saplings and leaves compostable
 * Removed duplicate wheat seed reward from treefolk bartering loot table
 * Exempted tall grass and ferns from treefolk fertilization
+* Fixed bug preventing conversion of mod logs into charcoal
 
 v3.2.1
 ------

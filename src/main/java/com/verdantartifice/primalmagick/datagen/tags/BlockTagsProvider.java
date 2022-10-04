@@ -40,7 +40,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     protected void addTags() {
         // Add entries to vanilla tags
         this.tag(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
-        this.tag(BlockTags.LOGS).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS).addTag(BlockTagsPM.HALLOWOOD_LOGS);
+        this.tag(BlockTags.LOGS_THAT_BURN).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS).addTag(BlockTagsPM.HALLOWOOD_LOGS);
         this.tag(BlockTags.LEAVES).add(BlocksPM.MOONWOOD_LEAVES.get(), BlocksPM.SUNWOOD_LEAVES.get(), BlocksPM.HALLOWOOD_LEAVES.get());
         this.tag(BlockTags.PIGLIN_REPELLENTS).add(BlocksPM.SPIRIT_LANTERN.get(), BlocksPM.SOUL_GLOW_FIELD.get());
         this.tag(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get(), BlocksPM.HALLOWOOD_PLANKS.get());
