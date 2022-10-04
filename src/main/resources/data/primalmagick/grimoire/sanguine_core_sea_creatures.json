@@ -33,7 +33,8 @@
         "primalmagick:sanguine_core_salmon",
         "primalmagick:sanguine_core_squid",
         "primalmagick:sanguine_core_tropical_fish",
-        "primalmagick:sanguine_core_turtle"
+        "primalmagick:sanguine_core_turtle",
+        "primalmagick:sanguine_core_frog"
       ],
       "text": "primalmagick.research.sanguine_core_sea_creatures.text.stage.2"
     }

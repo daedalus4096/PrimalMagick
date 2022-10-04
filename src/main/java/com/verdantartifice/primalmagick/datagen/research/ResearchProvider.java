@@ -668,12 +668,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get()).recipe(ItemsPM.SANGUINE_CORE_COD.get()).recipe(ItemsPM.SANGUINE_CORE_DOLPHIN.get())
                     .recipe(ItemsPM.SANGUINE_CORE_ELDER_GUARDIAN.get()).recipe(ItemsPM.SANGUINE_CORE_GLOW_SQUID.get()).recipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get()).recipe(ItemsPM.SANGUINE_CORE_POLAR_BEAR.get())
                     .recipe(ItemsPM.SANGUINE_CORE_PUFFERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SALMON.get()).recipe(ItemsPM.SANGUINE_CORE_SQUID.get()).recipe(ItemsPM.SANGUINE_CORE_TROPICAL_FISH.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_TURTLE.get()).build())
+                    .recipe(ItemsPM.SANGUINE_CORE_TURTLE.get()).recipe(ItemsPM.SANGUINE_CORE_FROG.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CORE_FLYING_CREATURES", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("SANGUINE_CRUCIBLE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 2).recipe(ItemsPM.SANGUINE_CORE_BAT.get()).recipe(ItemsPM.SANGUINE_CORE_BEE.get()).recipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_PARROT.get()).recipe(ItemsPM.SANGUINE_CORE_VEX.get()).build())
+                    .recipe(ItemsPM.SANGUINE_CORE_PARROT.get()).recipe(ItemsPM.SANGUINE_CORE_VEX.get()).recipe(ItemsPM.SANGUINE_CORE_ALLAY.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CORE_PLANTS", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("SANGUINE_CRUCIBLE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())

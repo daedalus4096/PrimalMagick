@@ -1,5 +1,6 @@
 v3.2.2
 ------
+* Added Sanguine Core types for allays and frogs
 * Made mod saplings and leaves compostable
 * Removed duplicate wheat seed reward from treefolk bartering loot table
 * Exempted tall grass and ferns from treefolk fertilization

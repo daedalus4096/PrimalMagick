@@ -3792,6 +3792,13 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
             .manaCost(new SourceList().add(Source.BLOOD, 50).add(Source.INFERNAL, 50))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ALLAY.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Tags.Items.FEATHERS)
+            .addIngredient(Items.NOTE_BLOCK)
+            .setGroup("attuned_sanguine_cores")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.TROPICAL_FISH_BUCKET)
@@ -3917,6 +3924,13 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SWEET_BERRIES)
             .setGroup("attuned_sanguine_cores")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FROG.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.TADPOLE_BUCKET)
+            .addIngredient(Items.SLIME_BALL)
+            .setGroup("attuned_sanguine_cores")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GHAST.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())

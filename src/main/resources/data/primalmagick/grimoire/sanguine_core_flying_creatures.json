@@ -26,7 +26,8 @@
         "primalmagick:sanguine_core_bee",
         "primalmagick:sanguine_core_chicken",
         "primalmagick:sanguine_core_parrot",
-        "primalmagick:sanguine_core_vex"
+        "primalmagick:sanguine_core_vex",
+        "primalmagick:sanguine_core_allay"
       ],
       "text": "primalmagick.research.sanguine_core_flying_creatures.text.stage.2"
     }
