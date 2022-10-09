@@ -49,6 +49,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.PrimaliteTri
 import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
+import com.verdantartifice.primalmagick.common.entities.projectiles.SpellSeekerEntity;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
 import net.minecraft.world.entity.EntityType;
@@ -74,6 +75,10 @@ public class EntityTypesPM {
             .sized(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellProjectileEntity(EntityTypesPM.SPELL_PROJECTILE.get(), world))
             .build(PrimalMagick.MODID + ":spell_projectile"));
+    public static final RegistryObject<EntityType<SpellSeekerEntity>> SPELL_SEEKER = ENTITY_TYPES.register("spell_seeker", () -> EntityType.Builder.<SpellSeekerEntity>of(SpellSeekerEntity::new, MobCategory.MISC)
+            .sized(0.25F, 0.25F)
+            .setCustomClientFactory((spawnEntity, world) -> new SpellSeekerEntity(EntityTypesPM.SPELL_SEEKER.get(), world))
+            .build(PrimalMagick.MODID + ":spell_seeker"));
     public static final RegistryObject<EntityType<SpellMineEntity>> SPELL_MINE = ENTITY_TYPES.register("spell_mine", () -> EntityType.Builder.<SpellMineEntity>of(SpellMineEntity::new, MobCategory.MISC)
             .sized(0.25F, 0.25F)
             .setCustomClientFactory((spawnEntity, world) -> new SpellMineEntity(EntityTypesPM.SPELL_MINE.get(), world))

@@ -41,4 +41,23 @@ public class VectorUtils {
         // Return the normalized cross-product of the given vector and the other vector
         return other.cross(normVec).normalize();
     }
+    
+    /**
+     * Compute the angle between two vectors in 3D space.
+     * 
+     * @param vec1 The first vector
+     * @param vec2 The second vector
+     * @return The angle, in degrees, between the two vectors
+     */
+    public static double getAngleBetween(@Nonnull Vec3 vec1, @Nonnull Vec3 vec2) {
+        double length1 = vec1.length();
+        double length2 = vec2.length();
+        if (length1 == 0 || length2 == 0) {
+            return 0D;
+        } else {
+            double dot = vec1.dot(vec2);
+            double cosTheta = dot / (length1 * length2);
+            return Math.acos(cosTheta);
+        }
+    }
 }
