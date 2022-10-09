@@ -6218,7 +6218,7 @@ public class Recipes extends RecipeProvider {
             .ingredient(Tags.Items.RODS_BLAZE)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "blaze_powder_from_dissolving_blaze_rod"));
-        DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 9)
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.STRING, 4)
             .ingredient(ItemTags.WOOL)
             .manaCost(new SourceList().add(Source.EARTH, 1))
             .build(consumer, new ResourceLocation(PrimalMagick.MODID, "string_from_dissolving_wool"));
