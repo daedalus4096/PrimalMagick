@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -27,7 +30,9 @@ import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -35,6 +40,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -132,6 +138,41 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<AffinityType, Map<ResourceLocation, IAffinity>> entry : this.affinities.entrySet()) {
             LOGGER.info("Updated {} {} affinity definitions", entry.getValue().size(), entry.getKey().getSerializedName());
         }
+        // Now that we've accepted the upstream set of static affinities, populate the derived affinities.
+        // This is here to handle modpack QoL, where the expense of individual recipe derivation becomes noticeable
+        // client lag, particularly visible in JEI.
+        this.deriveAffinities();
+    }
+
+    // Derives all current affinities proactively based on current AffinityManager state.
+    // In degenerate cases (400 mods! 30000 items!) takes 600ms or more to complete.
+    private void deriveAffinities() {
+
+        Minecraft mc  = Minecraft.getInstance();
+        Level world = mc.level;
+
+        if (world == null) {
+            LOGGER.atWarn().log("Unable to derive affinities - no world available");
+            return;
+        }
+
+        Set<Entry<ResourceKey<Item>, Item>> itemEntries = ForgeRegistries.ITEMS.getEntries();
+        if (itemEntries == null ) {
+            LOGGER.atWarn().log("Unable to derive affinities - got null ItemRegistry from ForgeRegistries");
+            return;
+        }
+        Iterator<Entry<ResourceKey<Item>, Item>> itr = itemEntries.iterator();
+
+        LOGGER.atInfo().log("Starting affinity derivation for "+itemEntries.size()+" item entries");
+
+        while (itr.hasNext()) {
+            Entry<ResourceKey<Item>, Item> entry = itr.next();
+            this.getAffinityValues(
+              entry.getValue().getDefaultInstance(),
+              world);
+        }
+
+        LOGGER.atInfo().log("Completed affinity derivation with "+ this.getAllAffinities().size() + " entries");
     }
     
     protected IAffinity deserializeAffinity(ResourceLocation id, JsonObject json) {
