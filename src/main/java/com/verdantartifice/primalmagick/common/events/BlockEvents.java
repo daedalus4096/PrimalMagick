@@ -132,8 +132,7 @@ public class BlockEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onBlockBreakLowest(BlockEvent.BreakEvent event) {
         // Record the block break statistic
-        if (!event.isCanceled() && event.getState().getDestroySpeed(event.getLevel(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty() && 
-                event.getPlayer().getOffhandItem().isEmpty()) {
+        if (!event.isCanceled() && event.getState().getDestroySpeed(event.getLevel(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty()) {
             StatsManager.incrementValue(event.getPlayer(), StatsPM.BLOCKS_BROKEN_BAREHANDED);
         }
     }

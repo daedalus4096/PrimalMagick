@@ -2,6 +2,7 @@ v3.2.3
 ------
 * Improved lag when reading affinities from items in large modpacks; thanks Issaferret!
 * Fixed pixies' recognition of their owner upon spawn
+* Breaking blocks bare-handed for the Break spell payload no longer requires an empty offhand
 
 v3.2.2
 ------
