@@ -1,3 +1,8 @@
+v3.2.3
+------
+* Improved lag when reading affinities from items in large modpacks; thanks Issaferret!
+* Fixed pixies' recognition of their owner upon spawn
+
 v3.2.2
 ------
 * Added Sanguine Core types for allays and frogs
