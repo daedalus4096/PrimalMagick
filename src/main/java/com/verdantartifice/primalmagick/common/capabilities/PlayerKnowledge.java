@@ -50,6 +50,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     private Project project = null;     // Currently active research project
     private AbstractResearchTopic topic = null; // Last active grimoire research topic
+    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     @Nonnull
@@ -109,15 +110,18 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
         rootTag.put("topicHistory", historyList);
         
+        rootTag.putLong("syncTimestamp", System.currentTimeMillis());
+        
         return rootTag;
     }
 
     @Override
-    public void deserializeNBT(@Nullable CompoundTag nbt) {
-        if (nbt == null) {
+    public synchronized void deserializeNBT(@Nullable CompoundTag nbt) {
+        if (nbt == null || nbt.getLong("syncTimestamp") <= this.syncTimestamp) {
             return;
         }
         
+        this.syncTimestamp = nbt.getLong("syncTimestamp");
         this.clearResearch();
         this.clearKnowledge();
         this.project = null;

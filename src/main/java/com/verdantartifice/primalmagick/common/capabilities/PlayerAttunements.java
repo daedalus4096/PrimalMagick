@@ -29,6 +29,8 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerAttunements implements IPlayerAttunements {
     // Nested map of sources to attunement types to values
     private final Map<Source, Map<AttunementType, Integer>> attunements = new ConcurrentHashMap<>();
+    
+    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     public CompoundTag serializeNBT() {
@@ -51,12 +53,14 @@ public class PlayerAttunements implements IPlayerAttunements {
         }
         rootTag.put("Attunements", attunementList);
         
+        rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
+        
         return rootTag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if (nbt == null) {
+        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
         

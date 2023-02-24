@@ -21,6 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
  */
 public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
     private final ArcaneRecipeBook book = new ArcaneRecipeBook();
+    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     public ArcaneRecipeBook get() {
@@ -38,11 +39,15 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
     public CompoundTag serializeNBT() {
         CompoundTag retVal = new CompoundTag();
         retVal.put("Book", this.book.toNbt());
+        retVal.putLong("SyncTimestamp", System.currentTimeMillis());
         return retVal;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt, RecipeManager recipeManager) {
+        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
+            return;
+        }
         this.book.fromNbt(nbt.getCompound("Book"), recipeManager);
     }
 

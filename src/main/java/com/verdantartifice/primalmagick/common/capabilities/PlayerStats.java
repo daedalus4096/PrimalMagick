@@ -29,6 +29,7 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerStats implements IPlayerStats {
     private final Map<ResourceLocation, Integer> stats = new ConcurrentHashMap<>(); // Map of stat locations to values
     private final Set<Long> discoveredShrines = ConcurrentHashMap.newKeySet();      // Set of long-encoded block positions of shrine locations
+    private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     public CompoundTag serializeNBT() {
@@ -54,12 +55,14 @@ public class PlayerStats implements IPlayerStats {
         }
         rootTag.put("ShrineLocations", new LongArrayTag(locs));
         
+        rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
+        
         return rootTag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        if (nbt == null) {
+        if (nbt == null || nbt.getLong("SyncTimestamp") <= this.syncTimestamp) {
             return;
         }
         
