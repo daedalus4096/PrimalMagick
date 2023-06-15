@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.GrindstoneBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -32,7 +32,7 @@ import net.minecraftforge.network.NetworkHooks;
  */
 public class RunicGrindstoneBlock extends GrindstoneBlock {
     public RunicGrindstoneBlock() {
-        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.METAL).strength(2.0F, 6.0F).sound(SoundType.STONE));
+        super(Block.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.BLOCK).strength(2.0F, 6.0F).sound(SoundType.STONE));
     }
     
     @Override

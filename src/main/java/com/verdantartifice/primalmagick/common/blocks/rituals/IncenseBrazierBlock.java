@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -46,7 +46,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/incense_brazier"));
 
     public IncenseBrazierBlock() {
-        super(Block.Properties.of(Material.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel((state) -> { 
+        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel((state) -> { 
             return state.getValue(BlockStateProperties.LIT) ? 7 : 0; 
         }));
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));

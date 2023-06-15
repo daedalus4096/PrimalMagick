@@ -48,8 +48,7 @@ import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
@@ -100,7 +99,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     });
     
     public RitualBellBlock() {
-        super(Block.Properties.of(Material.METAL, MaterialColor.COLOR_CYAN).strength(5.0F).sound(SoundType.ANVIL));
+        super(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).pushReaction(PushReaction.DESTROY).strength(5.0F).sound(SoundType.ANVIL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ATTACHMENT, BellAttachType.FLOOR));
     }
     
@@ -185,11 +184,6 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
             }
             return super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
         }
-    }
-    
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
     
     @Override

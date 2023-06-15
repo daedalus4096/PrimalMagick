@@ -21,8 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -33,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
  */
 public class AutoChargerBlock extends BaseEntityBlock {
     public AutoChargerBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion());
+        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion());
     }
 
     @Override

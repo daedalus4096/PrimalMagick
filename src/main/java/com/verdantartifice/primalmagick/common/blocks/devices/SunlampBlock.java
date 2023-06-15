@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -53,7 +53,7 @@ public class SunlampBlock extends BaseEntityBlock {
     protected final Supplier<GlowFieldBlock> glowSupplier;
     
     public SunlampBlock(Supplier<GlowFieldBlock> glowSupplier) {
-        super(Block.Properties.of(Material.METAL).strength(3.5F).sound(SoundType.LANTERN).lightLevel((state) -> { return 15; }).noOcclusion());
+        super(Block.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(3.5F).sound(SoundType.LANTERN).lightLevel((state) -> { return 15; }).noOcclusion());
         this.registerDefaultState(this.defaultBlockState().setValue(ATTACHMENT, Direction.DOWN));
         this.glowSupplier = glowSupplier;
     }
@@ -84,11 +84,6 @@ public class SunlampBlock extends BaseEntityBlock {
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         Direction dir = state.getValue(ATTACHMENT);
         return Block.canSupportCenter(worldIn, pos.relative(dir), dir.getOpposite());
-    }
-    
-    @Override
-    public PushReaction getPistonPushReaction(BlockState state) {
-        return PushReaction.DESTROY;
     }
     
     @SuppressWarnings("deprecation")

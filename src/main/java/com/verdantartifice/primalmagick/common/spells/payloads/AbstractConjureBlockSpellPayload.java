@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -67,24 +66,24 @@ public abstract class AbstractConjureBlockSpellPayload extends AbstractSpellPayl
         }
     }
     
+    @SuppressWarnings("deprecation")
     protected boolean canPlaceBlockState(Player player, Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        Material material = state.getMaterial();
-        boolean isSolid = material.isSolid();
-        boolean isReplaceable = material.isReplaceable();
+        boolean isSolid = state.isSolid();
+        boolean isReplaceable = state.canBeReplaced();
         return world.mayInteract(player, pos) && !ForgeEventFactory.onBlockPlace(player, BlockSnapshot.create(world.dimension(), world, pos), Direction.UP) && 
                 world.isEmptyBlock(pos) || !isSolid || isReplaceable;
     }
     
+    @SuppressWarnings("deprecation")
     protected void placeBlockState(Level world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
         FluidState fluidState = world.getFluidState(pos);
-        Material material = state.getMaterial();
-        boolean isSolid = material.isSolid();
-        boolean isReplaceable = material.isReplaceable();
+        boolean isSolid = state.isSolid();
+        boolean isReplaceable = state.canBeReplaced();
         if (world.isEmptyBlock(pos) || !isSolid || isReplaceable) {
             // Destroy the existing block at the target location if the new block would replace it
-            if (!world.isClientSide && (!isSolid || isReplaceable) && !material.isLiquid()) {
+            if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
                 world.destroyBlock(pos, true);
             }
             

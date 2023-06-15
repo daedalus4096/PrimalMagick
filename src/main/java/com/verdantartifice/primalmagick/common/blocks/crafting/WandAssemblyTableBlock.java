@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.containers.WandAssemblyTableConta
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,8 +22,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -38,7 +37,7 @@ public class WandAssemblyTableBlock extends Block {
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public WandAssemblyTableBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.QUARTZ).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion());
+        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion());
     }
     
     @Override

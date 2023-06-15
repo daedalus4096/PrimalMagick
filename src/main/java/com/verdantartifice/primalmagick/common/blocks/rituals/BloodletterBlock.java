@@ -29,8 +29,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -46,7 +46,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/bloodletter"));
     
     public BloodletterBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.PODZOL).strength(1.5F, 6.0F).sound(SoundType.STONE));
+        super(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE));
         this.registerDefaultState(this.defaultBlockState().setValue(FILLED, Boolean.FALSE));
     }
     
