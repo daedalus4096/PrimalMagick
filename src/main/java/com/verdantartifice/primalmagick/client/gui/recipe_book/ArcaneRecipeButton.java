@@ -143,7 +143,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
         ItemStack stack = this.getRecipe().getResultItem();
         output.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", stack.getHoverName()));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {

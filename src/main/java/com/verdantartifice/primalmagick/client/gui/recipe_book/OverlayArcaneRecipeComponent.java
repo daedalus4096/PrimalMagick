@@ -215,7 +215,7 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
         }
         
         @Override
-        public void updateNarration(NarrationElementOutput output) {
+        public void updateWidgetNarration(NarrationElementOutput output) {
             this.defaultButtonNarrationText(output);
         }
 

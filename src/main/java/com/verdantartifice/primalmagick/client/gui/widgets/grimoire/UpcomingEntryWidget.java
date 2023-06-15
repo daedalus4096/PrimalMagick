@@ -71,7 +71,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 
     @Override

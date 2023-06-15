@@ -72,7 +72,7 @@ public class KnowledgeWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 
     @Override

@@ -522,7 +522,7 @@ public class ArcaneRecipeBookComponent extends GuiComponent implements Widget, G
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
         List<NarratableEntry> entryList = new ArrayList<>();
         this.recipeBookPage.listButtons(widget -> {
             if (widget.isActive()) {

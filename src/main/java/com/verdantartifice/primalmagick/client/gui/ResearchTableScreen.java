@@ -246,7 +246,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         }
 
         @Override
-        public void updateNarration(NarrationElementOutput output) {
+        public void updateWidgetNarration(NarrationElementOutput output) {
         }
     }
     
