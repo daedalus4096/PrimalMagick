@@ -34,11 +34,12 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide && this.isAlive() && this.tickCount % 2 == 0) {
+        Level level = this.level();
+        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
                     new SpellTrailPacket(this.position(), Source.VOID.getColor()), 
-                    this.level.dimension(), 
+                    level.dimension(), 
                     this.blockPosition(), 
                     64.0D);
         }
@@ -48,9 +49,10 @@ public class SinCrashEntity extends AbstractHurtingProjectile {
     protected void onHitBlock(BlockHitResult result) {
         // Only impact when hitting a block
         super.onHitBlock(result);
-        if (!this.level.isClientSide) {
-            SinCrystalEntity crystal = new SinCrystalEntity(this.level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
-            this.level.addFreshEntity(crystal);
+        Level level = this.level();
+        if (!level.isClientSide) {
+            SinCrystalEntity crystal = new SinCrystalEntity(level, result.getLocation().x, result.getLocation().y, result.getLocation().z);
+            level.addFreshEntity(crystal);
             this.discard();
         }
     }

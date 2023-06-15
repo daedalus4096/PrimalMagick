@@ -19,6 +19,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -64,19 +65,19 @@ public class SinCrystalEntity extends Entity {
         this.innerRotation++;
         
         // Create or extend damage cloud
-        if (!this.level.isClientSide && this.level instanceof ServerLevel) {
+        Level level = this.level();
+        if (!level.isClientSide && level instanceof ServerLevel serverWorld) {
             UUID cloudId = this.getDamageCloud();
             if (cloudId == null) {
-                AreaEffectCloud cloud = new AreaEffectCloud(this.level, this.getX(), this.getY(), this.getZ());
+                AreaEffectCloud cloud = new AreaEffectCloud(level, this.getX(), this.getY(), this.getZ());
                 cloud.setParticle(ParticleTypes.DRAGON_BREATH);
                 cloud.setRadius(3.0F);
                 cloud.setDuration(5);
                 cloud.setWaitTime(0);
                 cloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 1));
-                this.level.addFreshEntity(cloud);
+                level.addFreshEntity(cloud);
                 this.setDamageCloud(cloud.getUUID());
             } else {
-                ServerLevel serverWorld = (ServerLevel)this.level;
                 Entity entity = serverWorld.getEntity(cloudId);
                 if (entity instanceof AreaEffectCloud) {
                     AreaEffectCloud cloud = (AreaEffectCloud)entity;
@@ -120,20 +121,21 @@ public class SinCrystalEntity extends Entity {
         } else if (source.getEntity() instanceof InnerDemonEntity) {
             return false;
         } else {
-            if (this.isAlive() && !this.level.isClientSide) {
+            Level level = this.level();
+            if (this.isAlive() && !level.isClientSide) {
                 // Cause backlash to any inner demons being healed by this crystal
-                List<InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(this.level, this.position(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
+                List<InnerDemonEntity> demonsInRange = EntityUtils.getEntitiesInRange(level, this.position(), null, InnerDemonEntity.class, InnerDemonEntity.HEAL_RANGE);
                 if (!demonsInRange.isEmpty()) {
                     LivingEntity trueSource = source.getEntity() instanceof LivingEntity ? (LivingEntity)source.getEntity() : null;
                     for (InnerDemonEntity demon : demonsInRange) {
-                        demon.hurt(this.level().damageSources().explosion(trueSource), 10.0F);
+                        demon.hurt(level.damageSources().explosion(trueSource, null), 10.0F);
                     }
                 }
                 
                 // Detonate when attacked
                 this.discard();
-                if (!source.isExplosion()) {
-                    this.level.explode(null, this.getX(), this.getY(), this.getZ(), 4.0F, Explosion.BlockInteraction.DESTROY);
+                if (!source.is(DamageTypeTags.IS_EXPLOSION)) {
+                    level.explode(null, this.getX(), this.getY(), this.getZ(), 4.0F, Level.ExplosionInteraction.BLOCK);
                 }
             }
             return true;

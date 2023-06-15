@@ -128,9 +128,10 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     protected void customServerAiStep() {
-        this.level.getProfiler().push("treefolkBrain");
-        this.getBrain().tick((ServerLevel)this.level, this);
-        this.level.getProfiler().pop();
+        Level level = this.level();
+        level.getProfiler().push("treefolkBrain");
+        this.getBrain().tick((ServerLevel)level, this);
+        level.getProfiler().pop();
         TreefolkAi.updateActivity(this);
         super.customServerAiStep();
     }
@@ -146,8 +147,9 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     @Override
     public void setCustomName(Component name) {
         super.setCustomName(name);
-        if (!this.level.isClientSide && DREADED_NAME.equals(name.getString())) {
-            List<Player> nearby = EntityUtils.getEntitiesInRange(this.level, this.position(), null, Player.class, 6.0D);
+        Level level = this.level();
+        if (!level.isClientSide && DREADED_NAME.equals(name.getString())) {
+            List<Player> nearby = EntityUtils.getEntitiesInRange(level, this.position(), null, Player.class, 6.0D);
             for (Player player : nearby) {
                 StatsManager.incrementValue(player, StatsPM.TREANTS_NAMED);
             }
@@ -156,16 +158,17 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        AppleEntity missile = new AppleEntity(this.level, this);
+        Level level = this.level();
+        AppleEntity missile = new AppleEntity(level, this);
         missile.setItem(new ItemStack(Items.APPLE));
         double d0 = target.getEyeY() - (double)1.1F;
         double d1 = target.getX() - this.getX();
         double d2 = d0 - missile.getY();
         double d3 = target.getZ() - this.getZ();
         float f = (float)Math.sqrt(d1 * d1 + d3 * d3) * 0.2F;
-        missile.shoot(d1, d2 + (double)f, d3, 1.6F, (float)(14 - this.level.getDifficulty().getId() * 4));
+        missile.shoot(d1, d2 + (double)f, d3, 1.6F, (float)(14 - level.getDifficulty().getId() * 4));
         this.playSound(SoundEvents.SNOWBALL_THROW, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-        this.level.addFreshEntity(missile);
+        level.addFreshEntity(missile);
     }
 
     @Override
@@ -175,18 +178,19 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        Level level = this.level();
         ItemStack stack = player.getItemInHand(hand);
         if (stack.is(Items.FLINT_AND_STEEL)) {
-            this.level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-            if (!this.level.isClientSide) {
+            level.playSound(player, this.getX(), this.getY(), this.getZ(), SoundEvents.FLINTANDSTEEL_USE, this.getSoundSource(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
+            if (!level.isClientSide) {
                 this.setSecondsOnFire(10);
                 this.setLastHurtByMob(player);
                 stack.hurtAndBreak(1, player, p -> {
                     p.broadcastBreakEvent(hand);
                 });
             }
-            return InteractionResult.sidedSuccess(this.level.isClientSide);
-        } else if (!this.level.isClientSide) {
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else if (!level.isClientSide) {
             return TreefolkAi.mobInteract(this, player, hand);
         } else {
             boolean flag = TreefolkAi.canAdmire(this, stack) && this.getArmPose() != TreefolkArmPose.ADMIRING_ITEM;
@@ -196,7 +200,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     public boolean wantsToPickUp(ItemStack pStack) {
-        return ForgeEventFactory.getMobGriefingEvent(this.level, this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
+        return ForgeEventFactory.getMobGriefingEvent(this.level(), this) && this.canPickUpLoot() && TreefolkAi.wantsToPickup(this, pStack);
     }
 
     @Override
@@ -235,7 +239,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
         boolean flag = super.hurt(pSource, pAmount);
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             return false;
         } else {
             if (flag && pSource.getEntity() instanceof LivingEntity livingSource) {

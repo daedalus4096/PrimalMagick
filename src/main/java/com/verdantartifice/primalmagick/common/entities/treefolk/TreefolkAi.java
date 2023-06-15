@@ -53,6 +53,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -251,9 +252,9 @@ public class TreefolkAi {
     }
 
     private static List<ItemStack> getBarterResponseItems(TreefolkEntity entity) {
-        if (entity.level instanceof ServerLevel serverLevel) {
-            LootTable table = entity.level.getServer().getLootTables().get(LootTablesPM.TREEFOLK_BARTERING);
-            return table.getRandomItems(new LootContext.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).withRandom(entity.level.random).create(LootContextParamSets.PIGLIN_BARTER));
+        if (entity.level() instanceof ServerLevel serverLevel) {
+            LootTable table = serverLevel.getServer().getLootTables().get(LootTablesPM.TREEFOLK_BARTERING);
+            return table.getRandomItems(new LootContext.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).withRandom(serverLevel.random).create(LootContextParamSets.PIGLIN_BARTER));
         } else {
             return Collections.emptyList();
         }
@@ -360,7 +361,7 @@ public class TreefolkAi {
         if (!entity.getBrain().isActive(Activity.AVOID)) {
             if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
                 if (!BehaviorUtils.isOtherTargetMuchFurtherAwayThanCurrentAttackTarget(entity, target, 4D)) {
-                    if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+                    if (target.getType() == EntityType.PLAYER && entity.level().getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
                         setAngerTargetToNearestTargetablePlayerIfFound(entity, target);
                         broadcastUniversalAnger(entity);
                     } else {
@@ -385,11 +386,12 @@ public class TreefolkAi {
     }
 
     private static void setAngerTarget(TreefolkEntity entity, LivingEntity target) {
+        Level level = entity.level();
         if (Sensor.isEntityAttackableIgnoringLineOfSight(entity, target)) {
-            int angerDuration = ANGER_DURATION.sample(entity.level.random);
+            int angerDuration = ANGER_DURATION.sample(level.random);
             entity.getBrain().eraseMemory(MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
             entity.getBrain().setMemoryWithExpiry(MemoryModuleType.ANGRY_AT, target.getUUID(), angerDuration);
-            if (target.getType() == EntityType.PLAYER && entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
+            if (target.getType() == EntityType.PLAYER && level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER)) {
                 entity.getBrain().setMemoryWithExpiry(MemoryModuleType.UNIVERSAL_ANGER, true, angerDuration);
             }
         }

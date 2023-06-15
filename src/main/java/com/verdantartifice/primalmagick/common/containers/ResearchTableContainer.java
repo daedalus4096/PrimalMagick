@@ -41,7 +41,7 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     protected final DataSlot writingReady = DataSlot.standalone();
 
     public ResearchTableContainer(int windowId, Inventory inv, BlockPos pos) {
-        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level, pos));
+        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
     }
 
     public ResearchTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
@@ -182,7 +182,7 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     @Nonnull
     public List<Component> getNearbyAidBlockNames() {
         Set<Block> nearby = this.worldPosCallable.evaluate((level, pos) -> {
-            return TheorycraftManager.getNearbyAidBlocks(this.player.level, pos);
+            return TheorycraftManager.getNearbyAidBlocks(this.player.level(), pos);
         }, Collections.emptySet());
         return nearby.stream().map(b -> b.getName()).distinct().sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());
     }

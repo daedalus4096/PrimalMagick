@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
 /**
  * Custom GUI slot for runescribing results.
@@ -41,7 +42,8 @@ public class RunescribingResultSlot extends Slot {
     protected void checkTakeAchievements(ItemStack stack) {
         super.checkTakeAchievements(stack);
         
-        if (!this.player.level.isClientSide) {
+        Level level = this.player.level();
+        if (!level.isClientSide) {
             // Increment the player's runescribing stat
             if (this.player instanceof ServerPlayer) {
                 StatsManager.incrementValue((ServerPlayer)this.player, StatsPM.ITEMS_RUNESCRIBED, stack.getCount());

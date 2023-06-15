@@ -75,11 +75,12 @@ public class SpellProjectileEntity extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
+        Level level = this.level();
+        if (!level.isClientSide && this.isAlive() && this.tickCount % 2 == 0 && this.spell != null && this.spell.getPayload() != null) {
             // Leave a trail of particles in this entity's wake
             PacketHandler.sendToAllAround(
                     new SpellTrailPacket(this.position(), this.spell.getPayload().getSource().getColor()), 
-                    this.level.dimension(), 
+                    level.dimension(), 
                     this.blockPosition(), 
                     64.0D);
         }
@@ -87,14 +88,15 @@ public class SpellProjectileEntity extends AbstractArrow {
 
     @Override
     protected void onHit(HitResult result) {
-        if (!this.level.isClientSide) {
+        Level level = this.level();
+        if (!level.isClientSide) {
             if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult)result).getEntity() instanceof SpellProjectileEntity) {
                 // Don't collide with other spell projectiles
                 return;
             }
             if (this.spell != null && this.spell.getPayload() != null) {
                 LivingEntity shooter = (this.getOwner() instanceof LivingEntity) ? (LivingEntity)this.getOwner() : null;
-                SpellManager.executeSpellPayload(this.spell, result, this.level, shooter, this.spellSource, true, this);
+                SpellManager.executeSpellPayload(this.spell, result, level, shooter, this.spellSource, true, this);
             }
             this.discard();
         }

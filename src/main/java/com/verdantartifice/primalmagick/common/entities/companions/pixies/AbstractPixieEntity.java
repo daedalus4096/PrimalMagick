@@ -114,7 +114,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
 
     @Override
     public boolean isFlying() {
-        return !this.onGround;
+        return !this.onGround();
     }
 
     @Override
