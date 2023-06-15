@@ -152,10 +152,10 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.DROWN || source.getEntity() instanceof InnerDemonEntity) {
+        if (source == this.level().damageSources().drown() || source.getEntity() instanceof InnerDemonEntity) {
             return false;
         } else {
-            if (source == DamageSource.IN_WALL) {
+            if (source == this.level().damageSources().inWall()) {
                 this.isSuffocating = true;
             }
             return super.hurt(source, amount);

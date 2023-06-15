@@ -228,7 +228,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
         this.level.broadcastEntityEvent(this, (byte)4);
         float rawDamage = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         float damage = ((int)rawDamage > 0) ? (rawDamage / 2.0F) + (float)this.random.nextInt((int)rawDamage) : rawDamage;
-        boolean flag = entityIn.hurt(DamageSource.mobAttack(this), damage);
+        boolean flag = entityIn.hurt(this.level().damageSources().mobAttack(this), damage);
         if (flag) {
             entityIn.setDeltaMovement(entityIn.getDeltaMovement().add(0.0D, 0.4D, 0.0D));
             this.doEnchantDamageEffects(this, entityIn);

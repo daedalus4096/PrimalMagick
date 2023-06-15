@@ -64,7 +64,7 @@ public abstract class AbstractInfernalPixieEntity extends AbstractPixieEntity {
     public void explode() {
         if (!this.level.isClientSide) {
             Explosion explosion = this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)this.getSpellPower(), true, BlockInteraction.BREAK);
-            this.hurt(DamageSource.explosion(explosion), Float.MAX_VALUE);
+            this.hurt(this.level().damageSources().explosion(explosion), Float.MAX_VALUE);
         }
     }
     

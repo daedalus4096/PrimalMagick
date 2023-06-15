@@ -60,7 +60,7 @@ public class AppleEntity extends ThrowableItemProjectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        result.getEntity().hurt(DamageSource.thrown(this, this.getOwner()), 2.0F);
+        result.getEntity().hurt(this.level().damageSources().thrown(this, this.getOwner()), 2.0F);
     }
 
     @Override

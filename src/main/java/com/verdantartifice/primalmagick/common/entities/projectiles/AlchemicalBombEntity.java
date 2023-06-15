@@ -129,7 +129,7 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
         for (LivingEntity entity : entities) {
             double distanceSq = this.distanceToSqr(entity);
             if (distanceSq < 16.0D && entity.isSensitiveToWater()) {
-                entity.hurt(DamageSource.indirectMagic(entity, this.getOwner()), 1.0F);
+                entity.hurt(this.level().damageSources().indirectMagic(entity, this.getOwner()), 1.0F);
             }
         }
         

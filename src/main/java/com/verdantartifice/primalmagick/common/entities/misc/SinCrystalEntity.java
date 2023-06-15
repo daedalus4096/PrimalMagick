@@ -126,7 +126,7 @@ public class SinCrystalEntity extends Entity {
                 if (!demonsInRange.isEmpty()) {
                     LivingEntity trueSource = source.getEntity() instanceof LivingEntity ? (LivingEntity)source.getEntity() : null;
                     for (InnerDemonEntity demon : demonsInRange) {
-                        demon.hurt(DamageSource.explosion(trueSource), 10.0F);
+                        demon.hurt(this.level().damageSources().explosion(trueSource), 10.0F);
                     }
                 }
                 

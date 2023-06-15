@@ -103,16 +103,16 @@ public class CombatEvents {
         if (event.getEntity() instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
             if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
-                if (event.getSource() == DamageSource.DROWN && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
+                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
                     ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_drown_a_little"));
                 }
-                if (event.getSource() == DamageSource.LAVA && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_feel_the_burn"))) {
+                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_feel_the_burn"))) {
                     ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_feel_the_burn"));
                 }
             }
 
             // Reduce fall damage if the recipient has lesser sky attunement
-            if (event.getSource() == DamageSource.FALL && AttunementManager.meetsThreshold(target, Source.SKY, AttunementThreshold.LESSER)) {
+            if (event.getSource() == target.damageSources().fall() && AttunementManager.meetsThreshold(target, Source.SKY, AttunementThreshold.LESSER)) {
                 float newDamage = Math.max(0.0F, event.getAmount() / 3.0F - 2.0F);
                 if (newDamage < event.getAmount()) {
                     event.setAmount(newDamage);

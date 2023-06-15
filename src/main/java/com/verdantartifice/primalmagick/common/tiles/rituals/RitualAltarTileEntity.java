@@ -974,7 +974,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 LivingEntity target = targets.get(index);
                 int damage = 5 + Mth.floor(Math.sqrt(Math.abs(Math.min(0.0F, this.stability))) / 2.0D);
                 int amp = Math.max(0, damage - 6);
-                target.hurt(DamageSource.MAGIC, damage);
+                target.hurt(target.damageSources().magic(), damage);
                 target.addEffect(new MobEffectInstance(EffectsPM.MANA_IMPEDANCE.get(), 12000, amp));
                 this.doMishapEffects(target.blockPosition(), index == 0); // Only play sounds once
                 if (!allTargets) {
