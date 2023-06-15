@@ -55,7 +55,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         } else {
             RenderSystem.setShaderTexture(0, Source.getUnknownImage());
         }
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         matrixStack.popPose();
@@ -64,7 +64,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         matrixStack.pushPose();
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
-        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
         matrixStack.popPose();
@@ -75,7 +75,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
                     this.source.getNameText() :
                     Component.translatable(Source.getUnknownTranslationKey());
             Component labelText = Component.translatable(this.getTooltipTranslationKey(), this.amount, sourceText);
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }
     

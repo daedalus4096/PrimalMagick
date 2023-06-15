@@ -53,19 +53,19 @@ public class AttunementMeterWidget extends AbstractWidget {
 
         // Render permanent meter bar
         RenderSystem.setShaderColor(this.permanentColor.getRed() / 255.0F, this.permanentColor.getGreen() / 255.0F, this.permanentColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.x + 1, this.y + 1 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
+        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
         
         // Render induced meter bar
         RenderSystem.setShaderColor(this.inducedColor.getRed() / 255.0F, this.inducedColor.getGreen() / 255.0F, this.inducedColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.x + 1, this.y + 1 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
+        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
         
         // Render temporary meter bar
         RenderSystem.setShaderColor(this.temporaryColor.getRed() / 255.0F, this.temporaryColor.getGreen() / 255.0F, this.temporaryColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.x + 1, this.y + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
+        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
 
         // Render meter foreground
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(matrixStack, this.x, this.y, 29, 9, 12, 102);
+        this.blit(matrixStack, this.getX(), this.getY(), 29, 9, 12, 102);
     }
 
     @Override

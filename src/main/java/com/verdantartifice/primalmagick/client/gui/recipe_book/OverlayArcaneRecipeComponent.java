@@ -241,10 +241,10 @@ public class OverlayArcaneRecipeComponent extends GuiComponent implements Widget
                 texY += 26;
             }
             
-            this.blit(poseStack, this.x, this.y, texX, texY, this.width, this.height);
+            this.blit(poseStack, this.getX(), this.getY(), texX, texY, this.width, this.height);
             PoseStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushPose();
-            modelViewStack.translate((double)(this.x + 2), (double)(this.y + 2), 125.0D);
+            modelViewStack.translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos pos : this.ingredientPos) {
                 modelViewStack.pushPose();

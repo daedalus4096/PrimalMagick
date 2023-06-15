@@ -131,7 +131,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
                 widget.visible = (amount > 0);
                 if (widget.visible) {
                     widget.setAmount(amount);
-                    widget.x = this.leftPos + 1 + dx + (this.getXSize() - widgetSetWidth) / 2;
+                    widget.setX(this.leftPos + 1 + dx + (this.getXSize() - widgetSetWidth) / 2);
                     dx += 18;
                 }
             }

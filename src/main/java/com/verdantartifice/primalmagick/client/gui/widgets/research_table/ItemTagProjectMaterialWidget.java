@@ -40,12 +40,12 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget 
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(matrixStack, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             if (this.material.getQuantity() > 1) {
                 Component amountText = Component.literal(Integer.toString(this.material.getQuantity()));
                 int width = mc.font.width(amountText);
                 matrixStack.pushPose();
-                matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
+                matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 500.0F);
                 matrixStack.scale(0.5F, 0.5F, 0.5F);
                 mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
                 matrixStack.popPose();

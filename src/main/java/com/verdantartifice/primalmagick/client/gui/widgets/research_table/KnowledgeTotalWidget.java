@@ -42,7 +42,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         // Draw knowledge type icon
         matrixStack.pushPose();
         RenderSystem.setShaderTexture(0, this.type.getIconLocation());
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);        
         matrixStack.popPose();
@@ -50,7 +50,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         // Draw progress bar background
         matrixStack.pushPose();
         RenderSystem.setShaderTexture(0, TEXTURE);
-        matrixStack.translate(this.x, this.y + 17, 0.0F);
+        matrixStack.translate(this.getX(), this.getY() + 17, 0.0F);
         this.blit(matrixStack, 0, 0, 182, 2, 16, 2);
         matrixStack.popPose();
         
@@ -60,7 +60,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             Component amountText = Component.literal(Integer.toString(levels));
             int width = mc.font.width(amountText);
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+            matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
             matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             matrixStack.popPose();
@@ -71,7 +71,7 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             int px = (int)(16.0D * ((double)levelPoints / (double)this.type.getProgression()));
             matrixStack.pushPose();
             RenderSystem.setShaderTexture(0, TEXTURE);
-            matrixStack.translate(this.x, this.y + 17, 1.0F);
+            matrixStack.translate(this.getX(), this.getY() + 17, 1.0F);
             this.blit(matrixStack, 0, 0, 182, 0, px, 2);
             matrixStack.popPose();
         });

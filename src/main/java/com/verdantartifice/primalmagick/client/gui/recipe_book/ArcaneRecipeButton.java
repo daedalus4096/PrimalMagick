@@ -64,8 +64,8 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
     
     public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
     }
 
     @Override
@@ -93,23 +93,23 @@ public class ArcaneRecipeButton extends AbstractWidget {
         if (animating) {
             float scale = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
             modelViewStack.pushPose();
-            modelViewStack.translate((double)(this.x + 8), (double)(this.y + 12), 0.0D);
+            modelViewStack.translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
             modelViewStack.scale(scale, scale, 1.0F);
-            modelViewStack.translate((double)(-(this.x + 8)), (double)(-(this.y + 12)), 0.0D);
+            modelViewStack.translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
             RenderSystem.applyModelViewMatrix();
             this.animationTime -= p_93679_;
         }
         
-        this.blit(poseStack, this.x, this.y, texX, texY, this.width, this.height);
+        this.blit(poseStack, this.getX(), this.getY(), texX, texY, this.width, this.height);
         List<Recipe<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();
         ItemStack stack = recipeList.get(this.currentIndex).getResultItem();
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
-            mc.getItemRenderer().renderAndDecorateItem(stack, this.x + k + 1, this.y + k + 1, 0, 10);
+            mc.getItemRenderer().renderAndDecorateItem(stack, this.getX() + k + 1, this.getY() + k + 1, 0, 10);
             k--;
         }
-        mc.getItemRenderer().renderAndDecorateFakeItem(stack, this.x + k, this.y + k);
+        mc.getItemRenderer().renderAndDecorateFakeItem(stack, this.getX() + k, this.getY() + k);
         
         if (animating) {
             modelViewStack.popPose();

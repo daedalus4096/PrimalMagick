@@ -40,7 +40,7 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.x, this.y, this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height);
+        this.blit(matrixStack, this.getX(), this.getY(), this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height);
     }
     
     protected static class Handler implements OnPress {

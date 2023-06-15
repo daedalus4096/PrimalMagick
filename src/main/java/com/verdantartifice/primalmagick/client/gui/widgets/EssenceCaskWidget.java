@@ -67,13 +67,13 @@ public class EssenceCaskWidget extends AbstractWidget {
 
         // Draw the essence item
         ItemStack tempStack = EssenceItem.getEssence(this.essenceType, this.source);
-        GuiUtils.renderItemStack(matrixStack, tempStack, this.x, this.y, this.getMessage().getString(), true);
+        GuiUtils.renderItemStack(matrixStack, tempStack, this.getX(), this.getY(), this.getMessage().getString(), true);
 
         // Draw the amount string
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText);
         matrixStack.pushPose();
-        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 200.0F);
+        matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, this.amount > 0 ? Color.WHITE.getRGB() : Color.RED.getRGB());
         matrixStack.popPose();
@@ -105,6 +105,6 @@ public class EssenceCaskWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput p_169152_) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }

@@ -47,11 +47,11 @@ public class ItemTagWidget extends AbstractWidget {
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
             this.toDisplay = new ItemStack(tagContentsArray[index], 1);
-            GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 matrixStack.pushPose();
-                matrixStack.translate(this.x + 8, this.y, 200.0F);
+                matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
                 RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
                 this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
                 matrixStack.popPose();

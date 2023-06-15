@@ -32,12 +32,12 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
-        GuiUtils.renderItemStack(matrixStack, this.material.getItemStack(), this.x, this.y, this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(matrixStack, this.material.getItemStack(), this.getX(), this.getY(), this.getMessage().getString(), false);
         if (this.material.getItemStack().getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.font.width(amountText);
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
+            matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 500.0F);
             matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             matrixStack.popPose();

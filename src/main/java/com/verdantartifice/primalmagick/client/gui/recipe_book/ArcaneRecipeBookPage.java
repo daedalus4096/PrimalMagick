@@ -165,7 +165,7 @@ public class ArcaneRecipeBookPage {
                         this.lastClickedRecipe = recipeButton.getRecipe();
                         this.lastClickedRecipeCollection = recipeButton.getCollection();
                     } else if (button == 1 && !this.overlay.isVisible() && !recipeButton.isOnlyOption()) {
-                        this.overlay.init(this.mc, recipeButton.getCollection(), this.arcaneBook, recipeButton.x, recipeButton.y, xPos + width / 2, yPos + 13 + height / 2, (float)recipeButton.getWidth());
+                        this.overlay.init(this.mc, recipeButton.getCollection(), this.arcaneBook, recipeButton.getX(), recipeButton.getY(), xPos + width / 2, yPos + 13 + height / 2, (float)recipeButton.getWidth());
                     }
                     return true;
                 }

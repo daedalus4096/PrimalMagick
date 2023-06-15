@@ -28,7 +28,7 @@ public class RecipeTypeWidget extends AbstractWidget {
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw recipe station icon
-        GuiUtils.renderItemStack(matrixStack, this.recipe.getToastSymbol(), this.x, this.y, this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(matrixStack, this.recipe.getToastSymbol(), this.getX(), this.getY(), this.getMessage().getString(), false);
     }
 
     @Override

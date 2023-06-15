@@ -40,7 +40,7 @@ public class KnowledgeWidget extends AbstractWidget {
         
         // Draw knowledge type icon
         RenderSystem.setShaderTexture(0, this.knowledge.getType().getIconLocation());
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         
@@ -50,7 +50,7 @@ public class KnowledgeWidget extends AbstractWidget {
         Component amountText = Component.literal(Integer.toString(this.knowledge.getAmount()));
         int width = mc.font.width(amountText.getString());
         matrixStack.pushPose();
-        matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 5.0F);
+        matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
         matrixStack.scale(0.5F, 0.5F, 0.5F);
         mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
         matrixStack.popPose();
@@ -58,7 +58,7 @@ public class KnowledgeWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 8, this.y, 100.0F);
+            matrixStack.translate(this.getX() + 8, this.getY(), 100.0F);
             RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();

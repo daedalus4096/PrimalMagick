@@ -45,20 +45,20 @@ public class UpcomingEntryWidget extends AbstractWidget {
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            mc.font.draw(matrixStack, this.getMessage(), this.x + dx, this.y + dy, Color.GRAY.getRGB());
+            mc.font.draw(matrixStack, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB());
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.x - 2, this.y + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
             matrixStack.pushPose();
-            matrixStack.translate(this.x + dx, this.y + dy + (1.0F * scale), 0.0F);
+            matrixStack.translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
             matrixStack.scale(scale, scale, scale);
             mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.GRAY.getRGB());
             matrixStack.popPose();
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.x - 2, this.y + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         }
         matrixStack.popPose();

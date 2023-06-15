@@ -34,8 +34,8 @@ public class ManaGaugeWidget extends AbstractWidget {
     }
     
     public void setPosition(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+        this.setX(newX);
+        this.setY(newY);
     }
     
     public void setCurrentMana(int amount) {
@@ -57,7 +57,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         RenderSystem.setShaderTexture(0, TEXTURE);
         
         matrixStack.pushPose();
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
 
         // Render gauge background texture
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -78,7 +78,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();
             Component labelText = Component.translatable("primalmagick.source.mana_gauge_tooltip", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.x, this.y);
+            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }
     

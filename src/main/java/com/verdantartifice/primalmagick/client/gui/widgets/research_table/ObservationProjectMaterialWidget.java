@@ -31,7 +31,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
         // Draw observation icon
         RenderSystem.setShaderTexture(0, IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation());
         matrixStack.pushPose();
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
         this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
         matrixStack.popPose();

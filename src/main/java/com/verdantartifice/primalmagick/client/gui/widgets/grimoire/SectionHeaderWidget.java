@@ -31,12 +31,12 @@ public class SectionHeaderWidget extends AbstractWidget {
         int strWidth = mc.font.width(this.getMessage().getString());
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= this.width) {
-            mc.font.draw(matrixStack, this.getMessage(), this.x + this.width / 2 - strWidth / 2, this.y + (this.height - 8) / 2, Color.BLACK.getRGB());
+            mc.font.draw(matrixStack, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, Color.BLACK.getRGB());
         } else {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
             matrixStack.pushPose();
-            matrixStack.translate(this.x, this.y + dy + (1.0F * scale), 0.0F);
+            matrixStack.translate(this.getX(), this.getY() + dy + (1.0F * scale), 0.0F);
             matrixStack.scale(scale, scale, scale);
             mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
             matrixStack.popPose();

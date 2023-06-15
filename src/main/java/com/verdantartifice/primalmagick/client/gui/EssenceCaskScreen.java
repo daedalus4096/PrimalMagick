@@ -80,7 +80,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
             if (widget.isHoveredOrFocused()) {
-                renderSlotHighlight(matrixStack, widget.x, widget.y, this.getBlitOffset(), this.slotColor);
+                renderSlotHighlight(matrixStack, widget.getX(), widget.getY(), this.getBlitOffset(), this.slotColor);
                 widget.renderToolTip(matrixStack, mouseX, mouseY);
             }
         }

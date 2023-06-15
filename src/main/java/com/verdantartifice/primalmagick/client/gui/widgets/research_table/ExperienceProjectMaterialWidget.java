@@ -44,7 +44,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         float a = 0.5F;
         RenderSystem.setShaderTexture(0, EXPERIENCE_ORB_TEXTURES);
         matrixStack.pushPose();
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         matrixStack.scale(0.25F, 0.25F, 0.25F);
         RenderSystem.setShaderColor(r, g, b, a);
         this.blit(matrixStack, 0, 0, uMin, vMin, 63, 63);
@@ -56,7 +56,7 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
             int width = mc.font.width(amountText);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
+            matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 500.0F);
             matrixStack.scale(0.5F, 0.5F, 0.5F);
             mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             matrixStack.popPose();

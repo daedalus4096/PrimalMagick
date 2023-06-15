@@ -36,14 +36,14 @@ public class ItemStackWidget extends AbstractWidget {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
-        GuiUtils.renderItemStack(matrixStack, this.stack, this.x, this.y, this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(matrixStack, this.stack, this.getX(), this.getY(), this.getMessage().getString(), false);
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 900.0F);
+            matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 900.0F);
             matrixStack.scale(0.5F, 0.5F, 1.0F);
             mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
             matrixStack.popPose();
@@ -52,7 +52,7 @@ public class ItemStackWidget extends AbstractWidget {
         if (this.isComplete) {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 8, this.y, 200.0F);
+            matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
             RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
             this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
             matrixStack.popPose();

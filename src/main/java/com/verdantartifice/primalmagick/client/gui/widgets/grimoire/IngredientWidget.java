@@ -40,7 +40,7 @@ public class IngredientWidget extends Button {
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         ItemStack toDisplay = this.getDisplayStack();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(matrixStack, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
         }
     }
     

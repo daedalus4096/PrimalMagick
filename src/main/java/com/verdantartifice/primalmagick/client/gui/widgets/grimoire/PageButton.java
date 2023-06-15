@@ -49,7 +49,7 @@ public class PageButton extends Button {
         float scaleMod = this.isHoveredOrFocused() ? Mth.sin(mc.player.tickCount / 3.0F) * 0.2F + 0.1F : 0.0F;
         int dx = this.width / 2;
         int dy = this.height / 2;
-        matrixStack.translate(this.x + dx, this.y + dy, 0.0F);
+        matrixStack.translate(this.getX() + dx, this.getY() + dy, 0.0F);
         matrixStack.scale(1.5F + scaleMod, 1.5F + scaleMod, 1.0F);
         this.blit(matrixStack, -dx, -dy, this.isNext ? 12 : 0, 185, this.width, this.height);
 

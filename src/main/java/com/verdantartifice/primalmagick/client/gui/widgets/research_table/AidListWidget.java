@@ -33,7 +33,7 @@ public class AidListWidget extends AbstractWidget {
         // Draw padlock icon
         matrixStack.pushPose();
         RenderSystem.setShaderTexture(0, TEXTURE);
-        matrixStack.translate(this.x, this.y, 0.0F);
+        matrixStack.translate(this.getX(), this.getY(), 0.0F);
         this.blit(matrixStack, 0, 0, 206, 0, 8, 8);
         matrixStack.popPose();
     }

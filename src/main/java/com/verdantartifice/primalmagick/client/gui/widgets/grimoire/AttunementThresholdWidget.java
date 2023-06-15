@@ -54,12 +54,12 @@ public class AttunementThresholdWidget extends AbstractWidget {
         
         if (this.threshold == AttunementThreshold.MINOR) {
             // Render casting wand into GUI
-            mc.getItemRenderer().renderGuiItem(WAND_STACK, this.x + 1, this.y + 1);
+            mc.getItemRenderer().renderGuiItem(WAND_STACK, this.getX() + 1, this.getY() + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
             matrixStack.pushPose();
             RenderSystem.setShaderTexture(0, this.texture);
-            matrixStack.translate(this.x, this.y, 0.0F);
+            matrixStack.translate(this.getX(), this.getY(), 0.0F);
             matrixStack.scale(0.0703125F, 0.0703125F, 0.0703125F);
             this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
             matrixStack.popPose();

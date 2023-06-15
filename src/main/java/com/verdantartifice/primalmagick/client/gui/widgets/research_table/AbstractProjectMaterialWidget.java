@@ -45,21 +45,21 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         if (this.complete) {
             // Render completion checkmark if appropriate
             matrixStack.pushPose();
-            matrixStack.translate(this.x + 8, this.y, 200.0F);
+            matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
             this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
             matrixStack.popPose();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
             matrixStack.pushPose();
-            matrixStack.translate(this.x - 3, this.y - 2, 200.0F);
+            matrixStack.translate(this.getX() - 3, this.getY() - 2, 200.0F);
             this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
             matrixStack.popPose();
         }
         if (this.hasBonus) {
             // Render bonus indicator if appropriate
             matrixStack.pushPose();
-            matrixStack.translate(this.x - 1, this.y + 10, 200.0F);
+            matrixStack.translate(this.getX() - 1, this.getY() + 10, 200.0F);
             this.blit(matrixStack, 0, 0, 215, 0, 6, 5);
             matrixStack.popPose();
         }
