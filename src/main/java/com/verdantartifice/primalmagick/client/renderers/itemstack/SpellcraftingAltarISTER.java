@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
@@ -64,7 +64,7 @@ public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0D, 0.5D);
             matrixStack.translate(0D, 2.4D, 0D);    // Model position correction
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));  // Model rotation correction
+            matrixStack.mulPose(Axis.YP.rotationDegrees(90F));  // Model rotation correction
             matrixStack.scale(1.0F, -1.0F, -1.0F);
             VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
             this.model.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);

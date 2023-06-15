@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.FlyingCarpetModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
@@ -94,9 +94,9 @@ public class FlyingCarpetRenderer extends EntityRenderer<FlyingCarpetEntity> {
     public void render(FlyingCarpetEntity entityIn, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.translate(0.0D, 0.375D, 0.0D);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw));
         matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(90.0F));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(90.0F));
         
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.model.renderType(this.getTextureLocation(entityIn)));
         this.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

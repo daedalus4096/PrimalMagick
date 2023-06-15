@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.EnchantedGolemModel;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
 
@@ -26,7 +26,7 @@ public abstract class AbstractEnchantedGolemRenderer<T extends AbstractEnchanted
             float f = 13.0F;
             float f1 = entityLiving.animationPosition - entityLiving.animationSpeed * (1.0F - partialTicks) + 6.0F;
             float f2 = (Math.abs(f1 % f - 6.5F) - 3.25F) / 3.25F;
-            matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(6.5F * f2));
+            matrixStackIn.mulPose(Axis.ZP.rotationDegrees(6.5F * f2));
         }
     }
 }

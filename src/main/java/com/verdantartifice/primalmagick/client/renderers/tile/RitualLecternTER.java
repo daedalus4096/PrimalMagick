@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualLecternBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualLecternTileEntity;
 
@@ -35,8 +35,8 @@ public class RitualLecternTER implements BlockEntityRenderer<RitualLecternTileEn
             matrixStackIn.pushPose();
             matrixStackIn.translate(0.5D, 1.0625D, 0.5D);
             float f = state.getValue(RitualLecternBlock.FACING).getClockWise().toYRot();
-            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(-f));
-            matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(67.5F));
+            matrixStackIn.mulPose(Axis.YP.rotationDegrees(-f));
+            matrixStackIn.mulPose(Axis.ZP.rotationDegrees(67.5F));
             matrixStackIn.translate(0.0D, -0.125D, 0.0D);
             this.bookModel.setupAnim(0.0F, 0.1F, 0.9F, 1.2F);
             VertexConsumer ivertexbuilder = EnchantTableRenderer.BOOK_LOCATION.buffer(bufferIn, RenderType::entitySolid);

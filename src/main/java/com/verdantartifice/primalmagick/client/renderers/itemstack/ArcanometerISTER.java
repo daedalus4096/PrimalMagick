@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
@@ -91,7 +91,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     private void renderScreenItem(ItemRenderer itemRenderer, ItemStack screenStack, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0.4375D, 0.405D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.2F, 0.2F, 0.0001F);
         itemRenderer.renderStatic(screenStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer, 0);
         matrixStack.popPose();
@@ -105,7 +105,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
         }
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0.35D, 0.405D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         matrixStack.scale(scale, scale, 0.0001F);
         erm.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F, matrixStack, buffer, combinedLight);
         matrixStack.popPose();

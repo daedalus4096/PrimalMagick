@@ -6,14 +6,14 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -165,8 +165,8 @@ public class GuiUtils {
             if (amount > 0) {
                 matrixStack.pushPose();
                 matrixStack.translate(x - interpolatedPlayerX, y - interpolatedPlayerY - 0.5F, z - interpolatedPlayerZ);
-                matrixStack.mulPose(Vector3f.YP.rotationDegrees(rotYaw));
-                matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+                matrixStack.mulPose(Axis.YP.rotationDegrees(rotYaw));
+                matrixStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
                 matrixStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
                 matrixStack.scale(scale, scale, scale);
 

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.renderers.tile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity
             int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0.5D, 0.5D);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the wand around its Y-axis
+            matrixStack.mulPose(Axis.YP.rotationDegrees(rot));   // Spin the wand around its Y-axis
             matrixStack.scale(0.5F, 0.5F, 0.5F);
             Minecraft.getInstance().getItemRenderer().renderStatic(wandStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer, 0);
             matrixStack.popPose();
