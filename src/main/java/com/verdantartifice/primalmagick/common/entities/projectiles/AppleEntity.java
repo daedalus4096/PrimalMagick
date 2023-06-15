@@ -52,7 +52,7 @@ public class AppleEntity extends ThrowableItemProjectile {
         if (id == 3) {
             ParticleOptions particleData = this.makeParticle();
             for (int index = 0; index < 8; index++) {
-                this.level.addParticle(particleData, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(particleData, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
             }
         }
     }
@@ -66,8 +66,9 @@ public class AppleEntity extends ThrowableItemProjectile {
     @Override
     protected void onHit(HitResult result) {
         super.onHit(result);
-        if (!this.level.isClientSide) {
-            this.level.broadcastEntityEvent(this, (byte)3);
+        Level level = this.level();
+        if (!level.isClientSide) {
+            level.broadcastEntityEvent(this, (byte)3);
             this.discard();
         }
     }

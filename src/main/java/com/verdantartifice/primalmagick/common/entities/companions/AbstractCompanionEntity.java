@@ -93,7 +93,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     public Player getCompanionOwner() {
         try {
             UUID ownerId = this.getCompanionOwnerId();
-            return ownerId == null ? null : this.level.getPlayerByUUID(ownerId);
+            return ownerId == null ? null : this.level().getPlayerByUUID(ownerId);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -197,7 +197,8 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
 
     @Override
     public void die(DamageSource cause) {
-        if (!this.level.isClientSide && this.level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
+        Level level = this.level();
+        if (!level.isClientSide && level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && this.getCompanionOwner() instanceof ServerPlayer) {
             this.getCompanionOwner().sendSystemMessage(this.getCombatTracker().getDeathMessage());
         }
         super.die(cause);
@@ -208,7 +209,8 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
         super.tick();
         
         // Kill this companion if it's no longer present on its owner's companion list
-        if (!this.level.isClientSide && this.tickCount % 100 == 0) {
+        Level level = this.level();
+        if (!level.isClientSide && this.tickCount % 100 == 0) {
             Player owner = this.getCompanionOwner();
             if (owner != null && !CompanionManager.isCurrentCompanion(owner, this)) {
                 this.setCompanionOwnerId(null);

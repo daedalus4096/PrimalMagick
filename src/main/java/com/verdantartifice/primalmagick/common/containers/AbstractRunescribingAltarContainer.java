@@ -46,7 +46,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
     public AbstractRunescribingAltarContainer(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
         super(type, id);
         this.player = playerInv.player;
-        this.world = this.player.level;
+        this.world = this.player.level();
         
         // Slot 0: runescribing output
         this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));

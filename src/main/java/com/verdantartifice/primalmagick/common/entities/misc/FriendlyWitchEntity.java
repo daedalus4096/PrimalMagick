@@ -15,6 +15,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -116,8 +117,9 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setAge(Math.max(0, this.getAge()));
-        if (!this.level.isClientSide) {
-            this.readPersistentAngerSaveData((ServerLevel)this.level, tag);
+        Level level = this.level();
+        if (!level.isClientSide) {
+            this.readPersistentAngerSaveData((ServerLevel)level, tag);
         }
     }
 
@@ -151,23 +153,25 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                 potion = Potions.WEAKNESS;
             }
             
-            ThrownPotion thrownpotion = new ThrownPotion(this.level, this);
+            Level level = this.level();
+            ThrownPotion thrownpotion = new ThrownPotion(level, this);
             thrownpotion.setItem(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), potion));
             thrownpotion.setXRot(thrownpotion.getXRot() - -20.0F);
             thrownpotion.shoot(dx, dy + dist * 0.2D, dz, 0.75F, 8.0F);
             if (!this.isSilent()) {
-                this.level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITCH_THROW, this.getSoundSource(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
+                level.playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITCH_THROW, this.getSoundSource(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
             }
 
-            this.level.addFreshEntity(thrownpotion);
+            level.addFreshEntity(thrownpotion);
         }
     }
 
     @Override
     protected void rewardTradeXp(MerchantOffer offer) {
+        Level level = this.level();
         if (offer.shouldRewardExp()) {
             int i = 3 + this.random.nextInt(4);
-            this.level.addFreshEntity(new ExperienceOrb(this.level, this.getX(), this.getY() + 0.5D, this.getZ(), i));
+            level.addFreshEntity(new ExperienceOrb(level, this.getX(), this.getY() + 0.5D, this.getZ(), i));
         }
     }
 
@@ -194,15 +198,16 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        Level level = this.level();
         if (this.isAlive() && !this.isTrading() && !this.isBaby()) {
             if (this.getOffers().isEmpty()) {
-                return InteractionResult.sidedSuccess(this.level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else {
-                if (!this.level.isClientSide) {
+                if (!level.isClientSide) {
                     this.setTradingPlayer(player);
                     this.openTradingScreen(player, this.getDisplayName(), 1);
                 }
-                return InteractionResult.sidedSuccess(this.level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         } else {
             return super.mobInteract(player, hand);
@@ -239,7 +244,8 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     @SuppressWarnings("deprecation")
     @Override
     public void aiStep() {
-        if (!this.level.isClientSide && this.isAlive()) {
+        Level level = this.level();
+        if (!level.isClientSide && this.isAlive()) {
             if (this.isDrinkingPotion()) {
                 if (this.usingTime-- <= 0) {
                     this.setUsingItem(false);
@@ -259,7 +265,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                 Potion potion = null;
                 if (this.random.nextFloat() < 0.15F && this.isEyeInFluid(FluidTags.WATER) && !this.hasEffect(MobEffects.WATER_BREATHING)) {
                     potion = Potions.WATER_BREATHING;
-                } else if (this.random.nextFloat() < 0.15F && (this.isOnFire() || this.getLastDamageSource() != null && this.getLastDamageSource().isFire()) && !this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+                } else if (this.random.nextFloat() < 0.15F && (this.isOnFire() || this.getLastDamageSource() != null && this.getLastDamageSource().is(DamageTypeTags.IS_FIRE)) && !this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
                     potion = Potions.FIRE_RESISTANCE;
                 } else if (this.random.nextFloat() < 0.05F && this.getHealth() < this.getMaxHealth()) {
                     potion = Potions.HEALING;
@@ -272,7 +278,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                     this.usingTime = this.getMainHandItem().getUseDuration();
                     this.setUsingItem(true);
                     if (!this.isSilent()) {
-                        this.level.playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITCH_DRINK, this.getSoundSource(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
+                        level.playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.WITCH_DRINK, this.getSoundSource(), 1.0F, 0.8F + this.random.nextFloat() * 0.4F);
                     }
 
                     AttributeInstance attr = this.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -282,7 +288,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
             }
             
             if (this.random.nextFloat() < 7.5E-4F) {
-                this.level.broadcastEntityEvent(this, (byte)15);
+                level.broadcastEntityEvent(this, (byte)15);
             }
         }
         super.aiStep();
@@ -292,7 +298,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
     public void handleEntityEvent(byte val) {
         if (val == 15) {
             for (int i = 0; i < this.random.nextInt(35) + 10; ++i) {
-                this.level.addParticle(ParticleTypes.WITCH, this.getX() + this.random.nextGaussian() * (double)0.13F, this.getBoundingBox().maxY + 0.5D + this.random.nextGaussian() * (double)0.13F, this.getZ() + this.random.nextGaussian() * (double)0.13F, 0.0D, 0.0D, 0.0D);
+                this.level().addParticle(ParticleTypes.WITCH, this.getX() + this.random.nextGaussian() * (double)0.13F, this.getBoundingBox().maxY + 0.5D + this.random.nextGaussian() * (double)0.13F, this.getZ() + this.random.nextGaussian() * (double)0.13F, 0.0D, 0.0D, 0.0D);
             }
         } else {
             super.handleEntityEvent(val);
@@ -305,7 +311,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
         if (source.getEntity() == this) {
             damage = 0F;
         }
-        if (source.isMagic()) {
+        if (source.is(DamageTypeTags.WITCH_RESISTANT_TO)) {
             damage *= 0.15F;
         }
         return damage;

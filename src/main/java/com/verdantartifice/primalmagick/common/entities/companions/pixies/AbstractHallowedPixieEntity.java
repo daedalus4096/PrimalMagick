@@ -58,6 +58,6 @@ public abstract class AbstractHallowedPixieEntity extends AbstractPixieEntity im
     
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.level, this, null);
+        this.getSpellPackage().cast(this.level(), this, null);
     }
 }

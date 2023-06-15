@@ -113,7 +113,8 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingTickEvent event) {
-        if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
+        Level level = event.getEntity().level();
+        if (!level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -140,7 +141,7 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (event.getEntity().level.isClientSide && (event.getEntity() instanceof Player player)) {
+        if (level.isClientSide && (event.getEntity() instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
@@ -234,13 +235,14 @@ public class PlayerEvents {
     
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Level level = player.level();
             if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
                 return;
             }
             
-            Holder<Biome> biomeHolder = player.level.getBiome(player.blockPosition());
-            boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
+            Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
+            boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
             if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
@@ -283,7 +285,7 @@ public class PlayerEvents {
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -292,7 +294,7 @@ public class PlayerEvents {
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }

@@ -35,7 +35,7 @@ public class EssenceCaskContainer extends AbstractContainerMenu {
         checkContainerDataCount(caskData, EssenceCaskTileEntity.NUM_SLOTS);
         this.caskInv = caskInv;
         this.caskData = caskData;
-        this.level = playerInv.player.level;
+        this.level = playerInv.player.level();
         this.tilePos = pos;
         
         this.caskInv.startOpen(playerInv.player);

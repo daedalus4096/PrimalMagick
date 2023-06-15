@@ -40,7 +40,7 @@ public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> 
         checkContainerDataCount(concocterData, 4);
         this.concocterInv = concocterInv;
         this.concocterData = concocterData;
-        this.world = playerInv.player.level;
+        this.world = playerInv.player.level();
         
         // Slot 0: Output slot
         this.addSlot(new GenericResultSlot(playerInv.player, this.concocterInv, 10, 138, 35) {

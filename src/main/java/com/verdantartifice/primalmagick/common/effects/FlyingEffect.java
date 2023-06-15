@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
 
 /**
  * Definition for a potion effect type that grants creative flight for the duration.
@@ -19,7 +20,8 @@ public class FlyingEffect extends MobEffect {
 
     @Override
     public void addAttributeModifiers(LivingEntity entityLivingBaseIn, AttributeMap attributeMapIn, int amplifier) {
-        if (!entityLivingBaseIn.level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
+        Level level = entityLivingBaseIn.level();
+        if (!level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
             // Set the allowFlying player ability when this effect is applied and send the change to clients
             ServerPlayer player = (ServerPlayer)entityLivingBaseIn;
             player.getAbilities().mayfly = true;
@@ -30,7 +32,8 @@ public class FlyingEffect extends MobEffect {
     
     @Override
     public void removeAttributeModifiers(LivingEntity entityLivingBaseIn, AttributeMap attributeMapIn, int amplifier) {
-        if (!entityLivingBaseIn.level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
+        Level level = entityLivingBaseIn.level();
+        if (!level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
             ServerPlayer player = (ServerPlayer)entityLivingBaseIn;
             GameType type = player.gameMode.getGameModeForPlayer();
             player.getAbilities().mayfly = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode

@@ -119,7 +119,8 @@ public class DreamVisionTalismanItem extends Item {
      * @return whether the talisman was successfully drained
      */
     public boolean doDrain(ItemStack stack, Player player) {
-        if (!player.level.isClientSide && this.isReadyToDrain(stack)) {
+        Level level = player.level();
+        if (!level.isClientSide && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, player, p -> {

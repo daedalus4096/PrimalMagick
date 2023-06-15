@@ -79,7 +79,8 @@ public class ManaArrowEntity extends AbstractArrow {
         if (this.getSource() == Source.SKY && this.isNoGravity() && this.isInWater()) {
             this.setNoGravity(false);
         }
-        if (this.level.isClientSide) {
+        Level level = this.level();
+        if (level.isClientSide) {
             if (this.inGround) {
                 if (this.inGroundTime % 5 == 0) {
                     this.makeParticle(1);
@@ -93,7 +94,8 @@ public class ManaArrowEntity extends AbstractArrow {
     protected void makeParticle(int count) {
         Source source = this.getSource();
         if (source != null && count > 0) {
-            RandomSource rng = this.level.random;
+            Level level = this.level();
+            RandomSource rng = level.random;
             int color = source.getColor();
             for (int index = 0; index < count; index++) {
                 // Generate mana sparkle particle in a random direction

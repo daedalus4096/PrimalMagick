@@ -156,7 +156,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
     @Override
     public void slotsChanged(Container inventoryIn) {
         super.slotsChanged(inventoryIn);
-        this.slotChangedCraftingGrid(this.player.level);
+        this.slotChangedCraftingGrid(this.player.level());
     }
     
     protected void slotChangedCraftingGrid(Level world) {
@@ -227,7 +227,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
 
     @Override
     public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
-        return recipe.matches(this.craftingInv, this.player.level);
+        return recipe.matches(this.craftingInv, this.player.level());
     }
 
     @Override

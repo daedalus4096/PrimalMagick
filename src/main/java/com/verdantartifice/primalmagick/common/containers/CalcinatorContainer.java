@@ -35,7 +35,7 @@ public class CalcinatorContainer extends AbstractContainerMenu {
         checkContainerDataCount(calcinatorData, 4);
         this.calcinatorInv = calcinatorInv;
         this.calcinatorData = calcinatorData;
-        this.world = playerInv.player.level;
+        this.world = playerInv.player.level();
         
         // Slot 0: calcinator input
         this.addSlot(new Slot(this.calcinatorInv, 0, 34, 17));

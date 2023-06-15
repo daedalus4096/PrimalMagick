@@ -140,15 +140,16 @@ public class FlyingCarpetEntity extends Entity {
         super.tick();
         this.tickLerp();
         
+        Level level = this.level();
         if (this.isVehicle() && this.isControlledByLocalInstance()) {
             this.updateMotion();
-            if (this.level.isClientSide) {
+            if (level.isClientSide) {
                 this.controlCarpet();
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
         } else {
             this.setDeltaMovement(Vec3.ZERO);
-            if (this.level.isClientSide) {
+            if (level.isClientSide) {
                 this.updateInputs(false, false);
             }
         }
@@ -224,7 +225,8 @@ public class FlyingCarpetEntity extends Entity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if (!this.level.isClientSide && this.isAlive()) {
+        Level level = this.level();
+        if (!level.isClientSide && this.isAlive()) {
             if (player.isSecondaryUseActive()) {
                 ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
                 DyeColor color = this.getDyeColor();

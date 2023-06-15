@@ -43,7 +43,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
 
     public AnalysisTableScreen(AnalysisTableContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
-        this.world = inv.player.level;
+        this.world = inv.player.level();
     }
     
     @Override

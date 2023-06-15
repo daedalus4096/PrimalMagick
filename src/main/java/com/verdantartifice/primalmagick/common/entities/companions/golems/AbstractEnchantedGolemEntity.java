@@ -87,9 +87,10 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
+        Level level = this.level();
         super.readAdditionalSaveData(compound);
-        if (!this.level.isClientSide) {
-            this.readPersistentAngerSaveData((ServerLevel)this.level, compound);
+        if (!level.isClientSide) {
+            this.readPersistentAngerSaveData((ServerLevel)level, compound);
         }
     }
 
@@ -142,6 +143,8 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     public void aiStep() {
         super.aiStep();
         
+        Level level = this.level();
+        
         if (this.attackTimer > 0) {
             this.attackTimer--;
         }
@@ -151,16 +154,16 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
             int j = Mth.floor(this.getY() - (double)0.2F);
             int k = Mth.floor(this.getZ());
             BlockPos pos = new BlockPos(i, j, k);
-            BlockState blockstate = this.level.getBlockState(pos);
+            BlockState blockstate = level.getBlockState(pos);
             
             boolean isAir = blockstate.isAir();
             if (!isAir) {
-                this.level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), 4.0D * ((double)this.random.nextFloat() - 0.5D), 0.5D, ((double)this.random.nextFloat() - 0.5D) * 4.0D);
+                level.addParticle(new BlockParticleOption(ParticleTypes.BLOCK, blockstate).setPos(pos), this.getX() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), this.getY() + 0.1D, this.getZ() + ((double)this.random.nextFloat() - 0.5D) * (double)this.getBbWidth(), 4.0D * ((double)this.random.nextFloat() - 0.5D), 0.5D, ((double)this.random.nextFloat() - 0.5D) * 4.0D);
             }
         }
         
-        if (!this.level.isClientSide) {
-            this.updatePersistentAnger((ServerLevel)this.level, true);
+        if (!level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel)level, true);
         }
     }
 
@@ -225,7 +228,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     @Override
     public boolean doHurtTarget(Entity entityIn) {
         this.attackTimer = 10;
-        this.level.broadcastEntityEvent(this, (byte)4);
+        this.level().broadcastEntityEvent(this, (byte)4);
         float rawDamage = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
         float damage = ((int)rawDamage > 0) ? (rawDamage / 2.0F) + (float)this.random.nextInt((int)rawDamage) : rawDamage;
         boolean flag = entityIn.hurt(this.level().damageSources().mobAttack(this), damage);
@@ -270,11 +273,12 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
 
     @Override
     protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+        Level level = this.level();
         ItemStack itemstack = playerIn.getItemInHand(hand);
         if (!itemstack.is(this.getRepairMaterialTag())) {
             InteractionResult actionResult = super.mobInteract(playerIn, hand);
-            if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !this.level.isClientSide) {
-                long time = playerIn.level.getGameTime();
+            if (!actionResult.consumesAction() && this.isCompanionOwner(playerIn) && !level.isClientSide) {
+                long time = playerIn.level().getGameTime();
                 if (this.lastStayChangeTime != time) {
                     this.setCompanionStaying(!this.isCompanionStaying());
                     if (this.isCompanionStaying()) {
@@ -299,7 +303,7 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
                 if (!playerIn.getAbilities().instabuild) {
                     itemstack.shrink(1);
                 }
-                return InteractionResult.sidedSuccess(this.level.isClientSide);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
     }
