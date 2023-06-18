@@ -83,7 +83,7 @@ public class BurstSpellMod extends AbstractSpellMod {
         Set<HitResult> retVal = new HashSet<>();
         Set<BlockPos> affectedBlocks = new HashSet<>();
         Vec3 hitVec = origin.getLocation();
-        BlockPos hitPos = new BlockPos(hitVec);
+        BlockPos hitPos = BlockPos.containing(hitVec);
         int radius = this.getRadiusBlocks();
         int power = this.getBlastPower(spell, spellSource);
         double sqRadius = (double)(radius * radius);
@@ -102,7 +102,7 @@ public class BurstSpellMod extends AbstractSpellMod {
                         
                         while (remainingPower >= 0.0F && curVec.distanceToSqr(hitVec) < sqRadius) {
                             // Add the current block to the result set if it hasn't already been hit
-                            BlockPos curPos = new BlockPos(curVec);
+                            BlockPos curPos = BlockPos.containing(curVec);
                             if (affectedBlocks.add(curPos)) {
                                 Vec3 relVec = hitVec.subtract(curVec);
                                 Direction dir = Direction.getNearest(relVec.x, relVec.y, relVec.z);

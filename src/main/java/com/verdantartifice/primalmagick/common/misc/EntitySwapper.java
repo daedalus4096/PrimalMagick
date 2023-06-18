@@ -130,11 +130,11 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 
                 // Send an FX packet to all nearby player clients
                 PacketHandler.sendToAllAround(new WandPoofPacket(targetPos.x, targetPos.y, targetPos.z, Color.WHITE.getRGB(), true, null), 
-                        world.dimension(), new BlockPos(targetPos), 32.0D);
+                        world.dimension(), BlockPos.containing(targetPos), 32.0D);
                 
                 // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.discard();
-                Entity newEntity = this.entityType.create(serverWorld, data, customName, null, new BlockPos(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                Entity newEntity = this.entityType.create(serverWorld, data, customName, null, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
                 world.addFreshEntity(newEntity);
                 newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
                 

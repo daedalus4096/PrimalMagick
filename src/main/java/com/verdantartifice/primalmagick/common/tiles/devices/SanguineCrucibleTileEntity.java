@@ -115,7 +115,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
         double x = (double)this.worldPosition.getX() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
         double y = (double)this.worldPosition.getY() + this.level.random.nextInt(3) - 1;
         double z = (double)this.worldPosition.getZ() + (SPAWN_RANGE * (this.level.random.nextDouble() - this.level.random.nextDouble())) + 0.5D;
-        BlockPos spawnPos = new BlockPos(x, y, z);
+        BlockPos spawnPos = BlockPos.containing(x, y, z);
         
         if (this.level.noCollision(entityType.getAABB(x, y, z))) {
             ServerLevel serverWorld = (ServerLevel)this.level;

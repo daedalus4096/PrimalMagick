@@ -228,7 +228,7 @@ public class SpellManager {
             PacketHandler.sendToAllAround(
                     new SpellImpactPacket(hitVec.x, hitVec.y, hitVec.z, radius, spell.getPayload().getSource().getColor()), 
                     world.dimension(), 
-                    new BlockPos(hitVec), 
+                    BlockPos.containing(hitVec), 
                     64.0D);
             
             if (allowMine && mineMod != null) {
