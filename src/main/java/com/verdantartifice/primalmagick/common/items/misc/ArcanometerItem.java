@@ -42,7 +42,7 @@ public class ArcanometerItem extends Item {
     public static final ResourceLocation SCAN_STATE_PROPERTY = new ResourceLocation(PrimalMagick.MODID, "scan_state");
 
     public ArcanometerItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
     
     public static boolean isMouseOverScannable(@Nullable HitResult result, @Nullable Level world, @Nullable Player player) {

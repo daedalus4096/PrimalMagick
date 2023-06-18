@@ -25,7 +25,7 @@ public class EssenceItem extends Item {
     protected final Source source;
 
     public EssenceItem(@Nonnull EssenceType type, @Nonnull Source source) {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(type.getRarity()));
+        super(new Item.Properties().rarity(type.getRarity()));
         this.type = type;
         this.source = source;
         register(type, source, this);

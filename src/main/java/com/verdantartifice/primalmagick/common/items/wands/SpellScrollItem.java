@@ -36,7 +36,7 @@ public class SpellScrollItem extends Item {
     protected static final Component TOOLTIP = Component.translatable("tooltip.primalmagick.spell_scroll").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY);
     
     public SpellScrollItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP));
+        super(new Item.Properties());
     }
     
     @Nullable

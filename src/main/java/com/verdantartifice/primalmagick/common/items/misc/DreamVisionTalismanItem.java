@@ -26,7 +26,7 @@ public class DreamVisionTalismanItem extends Item {
     protected static final int CAPACITY = 64;
     
     public DreamVisionTalismanItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).durability(64));
+        super(new Item.Properties().durability(64));
     }
     
     /**

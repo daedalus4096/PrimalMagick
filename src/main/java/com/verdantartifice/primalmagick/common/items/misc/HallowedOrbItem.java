@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
  */
 public class HallowedOrbItem extends Item {
     public HallowedOrbItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE));
+        super(new Item.Properties().rarity(Rarity.RARE));
     }
 
     @Override

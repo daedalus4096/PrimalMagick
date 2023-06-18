@@ -35,7 +35,7 @@ import net.minecraftforge.network.NetworkHooks;
  */
 public class GrimoireItem extends Item implements MenuProvider {
     public GrimoireItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1).rarity(Rarity.UNCOMMON));
+        super(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
     
     @Override

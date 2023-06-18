@@ -22,7 +22,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
  */
 public class MundaneWandItem extends AbstractWandItem {
     public MundaneWandItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).stacksTo(1));
+        super(new Item.Properties().stacksTo(1));
     }
 
     @Override
