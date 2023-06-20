@@ -171,7 +171,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
                 ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
                 if (currentOutput.isEmpty()) {
                     return true;
-                } else if (!currentOutput.sameItem(output)) {
+                } else if (!ItemStack.isSameItem(currentOutput, output)) {
                     return false;
                 } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
                     return true;
@@ -190,7 +190,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
             ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
             if (currentOutput.isEmpty()) {
                 this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);
-            } else if (recipeOutput.getItem() == currentOutput.getItem() && ItemStack.tagMatches(recipeOutput, currentOutput)) {
+            } else if (ItemStack.isSameItemSameTags(recipeOutput, currentOutput)) {
                 currentOutput.grow(recipeOutput.getCount());
             }
             
@@ -208,7 +208,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
         super.setItem(index, stack);
-        if (index == 0 && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
+        if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();

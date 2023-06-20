@@ -288,7 +288,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
         super.setItem(index, stack);
-        boolean flag = !stack.isEmpty() && stack.sameItem(slotStack) && ItemStack.tagMatches(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index == 0 && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;

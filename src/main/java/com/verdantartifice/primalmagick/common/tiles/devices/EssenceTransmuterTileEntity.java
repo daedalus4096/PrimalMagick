@@ -274,7 +274,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
         super.setItem(index, stack);
-        if (index == 0 && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
+        if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.nextOutputSource = null;

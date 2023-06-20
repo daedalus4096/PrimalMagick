@@ -35,7 +35,7 @@ public class WandAssemblyRecipe extends CustomRecipe {
         return !coreStack.isEmpty() && ((coreStack.getItem() instanceof WandCoreItem) || (coreStack.getItem() instanceof StaffCoreItem)) &&
                !gemStack.isEmpty() && (gemStack.getItem() instanceof WandGemItem) &&
                !capStack1.isEmpty() && (capStack1.getItem() instanceof WandCapItem) &&
-               !capStack2.isEmpty() && capStack1.sameItem(capStack2);
+               !capStack2.isEmpty() && ItemStack.isSameItem(capStack1, capStack2);
     }
 
     @Override

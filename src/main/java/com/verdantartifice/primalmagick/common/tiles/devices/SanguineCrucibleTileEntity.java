@@ -140,7 +140,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
         super.setItem(index, stack);
-        if (index == 0 && (stack.isEmpty() || !stack.sameItem(slotStack) || !ItemStack.tagMatches(stack, slotStack))) {
+        if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.charge = 0;
             this.setChanged();
             this.syncTile(false);

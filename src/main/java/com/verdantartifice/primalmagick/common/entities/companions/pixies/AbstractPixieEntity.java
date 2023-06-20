@@ -229,7 +229,7 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
         if (!actionResult.consumesAction() && !this.level().isClientSide && this.isCompanionOwner(playerIn)) {
             ItemStack held = playerIn.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
-            if (held.sameItem(stack)) {
+            if (ItemStack.isSameItem(held, stack)) {
                 held.grow(1);
             } else if (held.isEmpty()) {
                 playerIn.setItemInHand(hand, stack);

@@ -167,7 +167,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
                     int slotIndex = this.inventory.getSlotWithRemainingSpace(stack);
                     if (slotIndex == -1 && stackList.size() < count) {
                         for (ItemStack listStack : stackList) {
-                            if (listStack.sameItem(stack) && listStack.getCount() != listStack.getMaxStackSize() && listStack.getCount() + stack.getCount() <= listStack.getMaxStackSize()) {
+                            if (ItemStack.isSameItem(listStack, stack) && listStack.getCount() != listStack.getMaxStackSize() && listStack.getCount() + stack.getCount() <= listStack.getMaxStackSize()) {
                                 listStack.grow(stack.getCount());
                                 stack.setCount(0);
                                 break;
