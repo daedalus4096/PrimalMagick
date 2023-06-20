@@ -1,10 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -38,9 +37,8 @@ public class ProjectMaterialSelectionCheckbox extends Button {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.getX(), this.getY(), this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height);
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.selected ? 16 : 0, this.isHoveredOrFocused() ? 16 : 0, this.width, this.height);
     }
     
     protected static class Handler implements OnPress {

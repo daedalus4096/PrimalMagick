@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -29,13 +30,12 @@ public class AidListWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Draw padlock icon
-        matrixStack.pushPose();
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        matrixStack.translate(this.getX(), this.getY(), 0.0F);
-        this.blit(matrixStack, 0, 0, 206, 0, 8, 8);
-        matrixStack.popPose();
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.blit(TEXTURE, 0, 0, 206, 0, 8, 8);
+        guiGraphics.pose().popPose();
     }
     
     @Override
@@ -49,13 +49,13 @@ public class AidListWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (!this.aidNames.isEmpty()) {
             // Render tooltip
             List<Component> tooltip = new ArrayList<>();
             tooltip.add(Component.translatable("primalmagick.research_table.aid_header"));
             tooltip.addAll(this.aidNames);
-            GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+            GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
         }
     }
 }

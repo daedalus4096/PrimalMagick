@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMat
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -40,28 +41,27 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.complete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
-            this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 162, 0, 10, 10);
+            guiGraphics.pose().popPose();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() - 3, this.getY() - 2, 200.0F);
-            this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() - 3, this.getY() - 2, 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 172, 0, 10, 10);
+            guiGraphics.pose().popPose();
         }
         if (this.hasBonus) {
             // Render bonus indicator if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() - 1, this.getY() + 10, 200.0F);
-            this.blit(matrixStack, 0, 0, 215, 0, 6, 5);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() - 1, this.getY() + 10, 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 215, 0, 6, 5);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -83,10 +83,10 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         List<Component> tooltip = new ArrayList<>(this.getHoverText());
         if (this.consumed) {
             tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
@@ -94,7 +94,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         if (this.hasBonus) {
             tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
-        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
-        matrixStack.popPose();
+        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
+        guiGraphics.pose().popPose();
     }
 }
