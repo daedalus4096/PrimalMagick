@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.items.misc;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
