@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -61,7 +62,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         // Set up the spell name text entry widget
         this.nameField = new EditBox(this.font, this.leftPos + 49, this.topPos + 12, 103, 12, Component.empty());
         this.nameField.setCanLoseFocus(false);
-        this.nameField.changeFocus(true);
+        this.nameField.setFocused(true);
         this.nameField.setTextColor(-1);
         this.nameField.setTextColorUneditable(-1);
         this.nameField.setBordered(false);
@@ -205,28 +206,28 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.regenerateWidgets();
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         RenderSystem.disableBlend();
-        this.nameField.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.nameField.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShaderTexture(0, TEXTURE);
         
         // Render the GUI background
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // Render the text entry widget's background
-        this.blit(matrixStack, this.leftPos + 46, this.topPos + 8, 0, this.imageHeight, 110, 16);
+        guiGraphics.blit(TEXTURE, this.leftPos + 46, this.topPos + 8, 0, this.imageHeight, 110, 16);
     }
     
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render any text entries generated during initWidgets
         int color = 0x404040;
         String str;
@@ -234,7 +235,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (Map.Entry<Vec3i, Component> entry : this.texts.entrySet()) {
             str = this.font.plainSubstrByWidth(entry.getValue().getString(), entry.getKey().getZ());
             strWidth = this.font.width(str);
-            this.font.draw(matrixStack, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color);
+            guiGraphics.drawString(this.minecraft.font, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color);
         }
     }
     

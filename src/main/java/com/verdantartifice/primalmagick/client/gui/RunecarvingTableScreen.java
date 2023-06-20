@@ -2,14 +2,13 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.containers.RunecarvingTableContainer;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -44,28 +43,27 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     }
     
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         int i = this.leftPos;
         int j = this.topPos;
-        this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, i, j, 0, 0, this.imageWidth, this.imageHeight);
         int k = (int)(41.0F * this.sliderProgress);
-        this.blit(matrixStack, i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
+        guiGraphics.blit(TEXTURE, i + 119, j + 15 + k, 176 + (this.canScroll() ? 0 : 12), 0, 12, 15);
         int l = this.leftPos + 52;
         int i1 = this.topPos + 14;
         int j1 = this.recipeIndexOffset + 12;
-        this.drawRecipesBackground(matrixStack, mouseX, mouseY, l, i1, j1);
-        this.drawRecipesItems(matrixStack, mouseX, mouseY, l, i1, j1);
+        this.drawRecipesBackground(guiGraphics, mouseX, mouseY, l, i1, j1);
+        this.drawRecipesItems(guiGraphics, mouseX, mouseY, l, i1, j1);
     }
     
-    protected void drawRecipesBackground(PoseStack matrixStack, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
+    protected void drawRecipesBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
@@ -77,21 +75,21 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
             } else if (mouseX >= k && mouseY >= i1 && mouseX < k + 16 && mouseY < i1 + 18) {
                 j1 += 36;
             }
-            this.blit(matrixStack, k, i1 - 1, 0, j1, 16, 18);
+            guiGraphics.blit(TEXTURE, k, i1 - 1, 0, j1, 16, 18);
         }
     }
     
-    protected void drawRecipesItems(PoseStack matrixStack, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
+    protected void drawRecipesItems(GuiGraphics guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
         List<IRunecarvingRecipe> list = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            ItemStack output = list.get(i).getResultItem();
-            this.minecraft.getItemRenderer().renderAndDecorateItem(output, k, i1);
+            ItemStack output = list.get(i).getResultItem(this.minecraft.level.registryAccess());
+            guiGraphics.renderItem(output, k, i1);
             if (mouseX >= k && mouseX < k + 16 && mouseY >= i1 && mouseY < i1 + 18) {
-                GuiUtils.renderItemTooltip(matrixStack, output, mouseX, mouseY);
+                GuiUtils.renderItemTooltip(guiGraphics, output, mouseX, mouseY);
             }
         }
     }

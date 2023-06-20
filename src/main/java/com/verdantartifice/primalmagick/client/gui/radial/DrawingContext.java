@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.radial;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.gui.GuiGraphics;
 
 public class DrawingContext {
     public final int width;
@@ -12,20 +10,18 @@ public class DrawingContext {
     public final float y;
     public final float z;
     public final Font fontRenderer;
-    public final ItemRenderer itemRenderer;
-    public final PoseStack matrixStack;
+    public final GuiGraphics guiGraphics;
     public final IDrawingHelper drawingHelper;
 
-    public DrawingContext(PoseStack matrixStack, int width, int height, float x, float y, float z, Font fontRenderer, ItemRenderer itemRenderer, IDrawingHelper drawingHelper)
+    public DrawingContext(GuiGraphics guiGraphics, int width, int height, float x, float y, float z, Font fontRenderer, IDrawingHelper drawingHelper)
     {
-        this.matrixStack = matrixStack;
+        this.guiGraphics = guiGraphics;
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
         this.z = z;
         this.fontRenderer = fontRenderer;
-        this.itemRenderer = itemRenderer;
         this.drawingHelper = drawingHelper;
     }
 }

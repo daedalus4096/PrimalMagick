@@ -26,8 +26,10 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -76,7 +78,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     }
     
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh, or writing tool availability
         long millis = System.currentTimeMillis();
         this.lastWritingReady = this.writingReady;
@@ -92,19 +94,19 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             this.initButtons();
         }
 
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         
-        for (Widget w : this.renderables) {
+        for (Renderable w : this.renderables) {
             if (w instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
-                widget.renderToolTip(matrixStack, mouseX, mouseY);
+                widget.renderToolTip(guiGraphics, mouseX, mouseY);
             }
         }
     }
     
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         
         if (this.isProjectReady()) {
@@ -113,39 +115,37 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             // Render title text
             Component titleText = Component.translatable(this.project.getNameTranslationKey()).withStyle(ChatFormatting.BOLD);
             int titleWidth = mc.font.width(titleText);
-            mc.font.draw(matrixStack, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
             y += (int)(mc.font.lineHeight * 1.66D);
             
             // Render description text
             Component descText = Component.translatable(this.project.getTextTranslationKey());
             List<FormattedText> descLines = mc.font.getSplitter().splitLines(descText, 154, Style.EMPTY); // list formatted string to width
             for (FormattedText line : descLines) {
-                mc.font.draw(matrixStack, line.getString(), 38, y, Color.BLACK.getRGB());
+                guiGraphics.drawString(mc.font, line.getString(), 38, y, Color.BLACK.getRGB());
                 y += mc.font.lineHeight;
             }
         } else if (!this.menu.isWritingReady()) {
             // Render missing writing materials text
             Component text = Component.translatable("primalmagick.research_table.missing_writing_supplies");
             int width = mc.font.width(text.getString());
-            mc.font.draw(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
         } else {
             // Render ready to start text
             Component text = Component.translatable("primalmagick.research_table.ready");
             int width = mc.font.width(text.getString());
-            mc.font.draw(matrixStack, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
         }
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render the GUI background
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         
         // If a research project is ready to go, render the page overlay
         if (this.isProjectReady()) {
-            RenderSystem.setShaderTexture(0, OVERLAY);
-            this.blit(matrixStack, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
+            guiGraphics.blit(OVERLAY, this.leftPos + 34, this.topPos + 7, 0, 0, 162, 128);
         }
     }
     
