@@ -9,6 +9,7 @@ import net.minecraft.client.searchtree.FullTextSearchTree;
 import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.client.searchtree.SearchTree;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -33,7 +34,7 @@ public class ArcaneSearchRegistry {
                 });
             }, (arc) -> {
                 return arc.getRecipes().stream().map((r) -> {
-                    return Registry.ITEM.getKey(r.getResultItem().getItem());
+                    return Registries.ITEM.getKey(r.getResultItem().getItem());
                 });
             }, contents);
         });
