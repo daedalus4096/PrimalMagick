@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCask
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -71,33 +72,32 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.initWidgets();
         
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
             if (widget.isHoveredOrFocused()) {
-                renderSlotHighlight(matrixStack, widget.getX(), widget.getY(), this.getBlitOffset(), this.slotColor);
-                widget.renderToolTip(matrixStack, mouseX, mouseY);
+                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), this.getBlitOffset(), this.slotColor);
+                widget.renderToolTip(guiGraphics, mouseX, mouseY);
             }
         }
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        super.renderLabels(matrixStack, mouseX, mouseY);
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(guiGraphics, mouseX, mouseY);
         Component contentsLabel = Component.translatable("primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
-        this.font.draw(matrixStack, contentsLabel, 8, 92, 4210752);
+        guiGraphics.drawString(this.font, contentsLabel, 8, 92, 4210752);
     }
 
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {

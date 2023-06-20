@@ -9,11 +9,11 @@ import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBo
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -69,14 +69,12 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(PoseStack poseStack, int p_93677_, int p_93678_, float p_93679_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
         if (!Screen.hasControlDown()) {
             this.time += p_93679_;
         }
         
         Minecraft mc = Minecraft.getInstance();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, RECIPE_BOOK_LOCATION);
 
         int texX = 29;
         if (!this.collection.hasCraftable()) {
@@ -100,16 +98,16 @@ public class ArcaneRecipeButton extends AbstractWidget {
             this.animationTime -= p_93679_;
         }
         
-        this.blit(poseStack, this.getX(), this.getY(), texX, texY, this.width, this.height);
+        guiGraphics.blit(RECIPE_BOOK_LOCATION, this.getX(), this.getY(), texX, texY, this.width, this.height);
         List<Recipe<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();
-        ItemStack stack = recipeList.get(this.currentIndex).getResultItem();
+        ItemStack stack = recipeList.get(this.currentIndex).getResultItem(mc.level.registryAccess());
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
-            mc.getItemRenderer().renderAndDecorateItem(stack, this.getX() + k + 1, this.getY() + k + 1, 0, 10);
+            guiGraphics.renderItem(stack, this.getX() + k + 1, this.getY() + k + 1, 0, 10);
             k--;
         }
-        mc.getItemRenderer().renderAndDecorateFakeItem(stack, this.getX() + k, this.getY() + k);
+        guiGraphics.renderFakeItem(stack, this.getX() + k, this.getY() + k);
         
         if (animating) {
             modelViewStack.popPose();
@@ -134,8 +132,9 @@ public class ArcaneRecipeButton extends AbstractWidget {
     }
     
     public List<Component> getTooltipText(Screen screen) {
-        ItemStack stack = this.getRecipe().getResultItem();
-        List<Component> retVal = new ArrayList<>(screen.getTooltipFromItem(stack));
+        Minecraft mc = screen.getMinecraft();
+        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
+        List<Component> retVal = new ArrayList<>(Screen.getTooltipFromItem(mc, stack));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             retVal.add(MORE_RECIPES_TOOLTIP);
         }
@@ -144,7 +143,8 @@ public class ArcaneRecipeButton extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-        ItemStack stack = this.getRecipe().getResultItem();
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
         output.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", stack.getHoverName()));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             output.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"), Component.translatable("narration.recipe.usage.more"));

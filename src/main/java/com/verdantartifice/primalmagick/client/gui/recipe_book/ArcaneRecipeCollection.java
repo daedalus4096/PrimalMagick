@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 
 import net.minecraft.client.gui.screens.recipebook.RecipeCollection;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
@@ -21,12 +22,12 @@ public class ArcaneRecipeCollection {
     protected final Set<Recipe<?>> fitsDimensions = new HashSet<>();
     protected final Set<Recipe<?>> known = new HashSet<>();
     
-    public ArcaneRecipeCollection(List<Recipe<?>> recipes) {
+    public ArcaneRecipeCollection(RegistryAccess registryAccess, List<Recipe<?>> recipes) {
         this.recipes = ImmutableList.copyOf(recipes);
         if (recipes.size() <= 1) {
             this.singleResultItem = true;
         } else {
-            this.singleResultItem = allRecipesHaveSameResult(recipes);
+            this.singleResultItem = allRecipesHaveSameResult(registryAccess, recipes);
         }
     }
     
@@ -35,11 +36,11 @@ public class ArcaneRecipeCollection {
         this.singleResultItem = vanillaCollection.hasSingleResultItem();
     }
     
-    protected static boolean allRecipesHaveSameResult(List<Recipe<?>> recipes) {
-        ItemStack referenceStack = recipes.get(0).getResultItem();
+    protected static boolean allRecipesHaveSameResult(RegistryAccess registryAccess, List<Recipe<?>> recipes) {
+        ItemStack referenceStack = recipes.get(0).getResultItem(registryAccess);
         for (int index = 1; index < recipes.size(); index++) {
-            ItemStack stack = recipes.get(index).getResultItem();
-            if (!ItemStack.isSame(referenceStack, stack) || !ItemStack.tagMatches(referenceStack, stack)) {
+            ItemStack stack = recipes.get(index).getResultItem(registryAccess);
+            if (!ItemStack.isSameItemSameTags(referenceStack, stack)) {
                 return false;
             }
         }

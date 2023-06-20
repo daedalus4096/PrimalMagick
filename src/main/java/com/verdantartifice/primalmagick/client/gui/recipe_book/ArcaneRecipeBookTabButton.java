@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBo
 
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -54,18 +55,16 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
 
     @Override
-    public void renderButton(PoseStack poseStack, int p_94632_, int p_94633_, float p_94634_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_94632_, int p_94633_, float p_94634_) {
         if (this.animationTime > 0.0F) {
             float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
-            poseStack.pushPose();
-            poseStack.translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
-            poseStack.scale(1.0F, f, 1.0F);
-            poseStack.translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
+            guiGraphics.pose().scale(1.0F, f, 1.0F);
+            guiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
         }
         
         Minecraft mc = Minecraft.getInstance();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, this.resourceLocation);
         RenderSystem.disableDepthTest();
         
         int texX = this.xTexStart;
@@ -82,25 +81,25 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
             localX -= 2;
         }
         
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(poseStack, localX, this.getY(), texX, texY, this.width, this.height);
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.blit(this.resourceLocation, localX, this.getY(), texX, texY, this.width, this.height);
         RenderSystem.enableDepthTest();
         this.renderIcon(mc.getItemRenderer());
 
         if (this.animationTime > 0.0F) {
-            poseStack.popPose();
+            guiGraphics.pose().popPose();
             this.animationTime -= p_94634_;
         }
     }
     
-    protected void renderIcon(ItemRenderer itemRenderer) {
+    protected void renderIcon(GuiGraphics guiGraphics) {
         List<ItemStack> list = this.category.getIconItems();
         int dx = this.isStateTriggered ? -2 : 0;
         if (list.size() == 1) {
-            itemRenderer.renderAndDecorateFakeItem(list.get(0), this.getX() + 9 + dx, this.getY() + 5);
+            guiGraphics.renderFakeItem(list.get(0), this.getX() + 9 + dx, this.getY() + 5);
         } else if (list.size() == 2) {
-            itemRenderer.renderAndDecorateFakeItem(list.get(0), this.getX() + 3 + dx, this.getY() + 5);
-            itemRenderer.renderAndDecorateFakeItem(list.get(1), this.getX() + 14 + dx, this.getY() + 5);
+            guiGraphics.renderFakeItem(list.get(0), this.getX() + 3 + dx, this.getY() + 5);
+            guiGraphics.renderFakeItem(list.get(1), this.getX() + 14 + dx, this.getY() + 5);
         }
     }
     

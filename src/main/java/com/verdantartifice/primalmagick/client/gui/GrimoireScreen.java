@@ -69,7 +69,9 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -123,7 +125,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
         if (millis > this.lastCheck) {
@@ -141,13 +143,13 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
             }
         }
         
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         
-        for (Widget w : this.renderables) {
+        for (Renderable w : this.renderables) {
             if (w instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
-                widget.renderToolTip(matrixStack, mouseX, mouseY);
+                widget.renderToolTip(guiGraphics, mouseX, mouseY);
             }
         }
     }
@@ -249,31 +251,29 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
 
     @Override
-    protected void renderLabels(PoseStack matrixStack, int x, int y) {
+    protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
         // Do nothing; we don't want to draw title text for the grimoire
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        RenderSystem.setShaderTexture(0, TEXTURE);
-
         int unscaledLeft = (this.width - this.imageWidth) / 2;
         int unscaledTop = (this.height - this.imageHeight) / 2;
         float scaledLeft = (this.width - this.imageWidth * SCALE) / 2.0F;
         float scaledTop = (this.height - this.imageHeight * SCALE) / 2.0F;
 
-        matrixStack.pushPose();
-        matrixStack.translate(scaledLeft, scaledTop, 0.0F);
-        matrixStack.scale(SCALE, SCALE, 1.0F);
-        this.blit(matrixStack, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
-        matrixStack.popPose();
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(scaledLeft, scaledTop, 0.0F);
+        guiGraphics.pose().scale(SCALE, SCALE, 1.0F);
+        guiGraphics.blit(TEXTURE, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.pose().popPose();
         
         // Render the two visible pages
         int current = 0;
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                page.render(matrixStack, current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
+                page.render(guiGraphics, current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
             }
             current++;
             if (current > this.currentPage + 1) {
@@ -854,14 +854,14 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void generateIndexMap() {
         Minecraft mc = this.getMinecraft();
-        Comparator<Recipe<?>> displayNameComparator = Comparator.comparing(r -> r.getResultItem().getHoverName().getString());
+        Comparator<Recipe<?>> displayNameComparator = Comparator.comparing(r -> r.getResultItem(mc.level.registryAccess()).getHoverName().getString());
         Comparator<Recipe<?>> recipeIdComparator = Comparator.comparing(r -> r.getId());
         List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
                 .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
 
         this.indexMap = new TreeMap<>();
         for (Recipe<?> recipe : processedRecipes) {
-            String recipeName = recipe.getResultItem().getHoverName().getString();
+            String recipeName = recipe.getResultItem(mc.level.registryAccess()).getHoverName().getString();
             if (!this.indexMap.containsKey(recipeName)) {
                 this.indexMap.put(recipeName, new ArrayList<>());
             }
@@ -875,11 +875,13 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
+        
+        Minecraft mc = this.getMinecraft();
         int heightRemaining = 137;
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
-            tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem());
+            tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
             heightRemaining -= 12;
             if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                 heightRemaining = 155;

@@ -7,8 +7,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
@@ -18,9 +16,9 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -73,31 +71,29 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.adjustCostWidgets();
-        this.renderBackground(matrixStack);
+        this.renderBackground(guiGraphics);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
-            this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
-            this.recipeBookComponent.render(matrixStack, mouseX, mouseY, partialTicks);
+            this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            this.recipeBookComponent.render(matrixStack, mouseX, mouseY, partialTicks);
-            super.render(matrixStack, mouseX, mouseY, partialTicks);
-            this.recipeBookComponent.renderGhostRecipe(matrixStack, this.leftPos, this.topPos, true, partialTicks);
+            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
+            super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks);
         }
-        this.renderTooltip(matrixStack, mouseX, mouseY);
-        this.recipeBookComponent.renderTooltip(matrixStack, this.leftPos, this.topPos, mouseX, mouseY);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        this.recipeBookComponent.renderTooltip(guiGraphics, this.leftPos, this.topPos, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.blit(TEXTURE, this.leftPos, (this.height - this.imageHeight) / 2, 0, 0, this.imageWidth, this.imageHeight);
     }
     
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
         IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
@@ -105,7 +101,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            this.font.draw(matrixStack, text, x, y, Color.BLACK.getRGB());
+            guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB());
         }
     }
     
