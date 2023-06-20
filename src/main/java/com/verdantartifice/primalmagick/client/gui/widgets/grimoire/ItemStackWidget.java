@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -32,30 +33,29 @@ public class ItemStackWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
-        GuiUtils.renderItemStack(matrixStack, this.stack, this.getX(), this.getY(), this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(guiGraphics, this.stack, this.getX(), this.getY(), this.getMessage().getString(), false);
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 900.0F);
-            matrixStack.scale(0.5F, 0.5F, 1.0F);
-            mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 900.0F);
+            guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            guiGraphics.pose().popPose();
         }
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
-            RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
-            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -70,13 +70,13 @@ public class ItemStackWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
-        GuiUtils.renderItemTooltip(matrixStack, this.stack, mouseX, mouseY);
+        GuiUtils.renderItemTooltip(guiGraphics, this.stack, mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

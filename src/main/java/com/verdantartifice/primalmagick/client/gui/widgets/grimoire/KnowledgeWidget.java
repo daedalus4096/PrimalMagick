@@ -3,13 +3,12 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import java.awt.Color;
 import java.util.Collections;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.Knowledge;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -33,35 +32,33 @@ public class KnowledgeWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         
         // Draw knowledge type icon
-        RenderSystem.setShaderTexture(0, this.knowledge.getType().getIconLocation());
-        matrixStack.translate(this.getX(), this.getY(), 0.0F);
-        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
-        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
+        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        guiGraphics.blit(this.knowledge.getType().getIconLocation(), 0, 0, 0, 0, 255, 255);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
         
         // Draw amount str
         Component amountText = Component.literal(Integer.toString(this.knowledge.getAmount()));
         int width = mc.font.width(amountText.getString());
-        matrixStack.pushPose();
-        matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
-        matrixStack.scale(0.5F, 0.5F, 0.5F);
-        mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
-        matrixStack.popPose();
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
+        guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+        guiGraphics.drawString(mc.font, amountText, 0, 0, this.isComplete ? Color.WHITE.getRGB() : Color.RED.getRGB());
+        guiGraphics.pose().popPose();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + 8, this.getY(), 100.0F);
-            RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
-            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
+            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -76,14 +73,14 @@ public class KnowledgeWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
         Component knowledgeText = Component.translatable(this.knowledge.getType().getNameTranslationKey());
-        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(knowledgeText), mouseX, mouseY);
+        GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(knowledgeText), mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

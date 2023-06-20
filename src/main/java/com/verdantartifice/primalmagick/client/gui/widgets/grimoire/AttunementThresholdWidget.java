@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -49,20 +50,19 @@ public class AttunementThresholdWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         if (this.threshold == AttunementThreshold.MINOR) {
             // Render casting wand into GUI
-            mc.getItemRenderer().renderGuiItem(WAND_STACK, this.getX() + 1, this.getY() + 1);
+            guiGraphics.renderItem(WAND_STACK, this.getX() + 1, this.getY() + 1);
         } else {
             // Render the icon appropriate for this widget's source and threshold
-            matrixStack.pushPose();
-            RenderSystem.setShaderTexture(0, this.texture);
-            matrixStack.translate(this.getX(), this.getY(), 0.0F);
-            matrixStack.scale(0.0703125F, 0.0703125F, 0.0703125F);
-            this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+            guiGraphics.pose().scale(0.0703125F, 0.0703125F, 0.0703125F);
+            guiGraphics.blit(this.texture, 0, 0, 0, 0, 255, 255);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -77,13 +77,13 @@ public class AttunementThresholdWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
-        GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(this.tooltipText), mouseX, mouseY);
+        GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(this.tooltipText), mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -36,32 +37,32 @@ public class UpcomingEntryWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int strWidth = mc.font.width(this.getMessage().getString());
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            mc.font.draw(matrixStack, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB());
+            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB());
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         } else {
             // If the button text is too long, scale it down to fit on one line
             float scale = (float)(this.width - dx) / (float)strWidth;
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
-            matrixStack.scale(scale, scale, scale);
-            mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.GRAY.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
+            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB());
+            guiGraphics.pose().popPose();
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         }
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 
     @Override
@@ -75,10 +76,10 @@ public class UpcomingEntryWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // When hovering, show a tooltip with the missing requirements
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
         Minecraft mc = Minecraft.getInstance();
         List<Component> tooltip = new ArrayList<>();
@@ -101,8 +102,8 @@ public class UpcomingEntryWidget extends AbstractWidget {
                 tooltip.add(comp);
             }
         }
-        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

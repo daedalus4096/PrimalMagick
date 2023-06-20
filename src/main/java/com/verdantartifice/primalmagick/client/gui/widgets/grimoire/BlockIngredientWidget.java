@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -29,7 +30,7 @@ public class BlockIngredientWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderButton(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {
@@ -39,7 +40,7 @@ public class BlockIngredientWidget extends AbstractWidget {
                 this.toDisplay = (block != null) ? 
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("primalmagick.grimoire.missing_block"));
-                GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
+                GuiUtils.renderItemStack(guiGraphics, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             } else {
                 this.toDisplay = ItemStack.EMPTY;
             }
@@ -57,15 +58,15 @@ public class BlockIngredientWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (!this.toDisplay.isEmpty()) {
             // If hovered, show a tooltip with the display name of the current matching itemstack
-            matrixStack.pushPose();
-            matrixStack.translate(0, 0, 200);
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0, 0, 200);
             
-            GuiUtils.renderItemTooltip(matrixStack, this.toDisplay, mouseX, mouseY);
+            GuiUtils.renderItemTooltip(guiGraphics, this.toDisplay, mouseX, mouseY);
             
-            matrixStack.popPose();
+            guiGraphics.pose().popPose();
         }
     }
 }

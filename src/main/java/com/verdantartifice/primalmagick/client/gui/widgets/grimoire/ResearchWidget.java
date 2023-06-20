@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -46,7 +47,7 @@ public class ResearchWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Pick the icon to show based on the prefix of the research key
         ResourceLocation loc;
         if (this.key.getRootKey().startsWith("m_")) {
@@ -60,22 +61,20 @@ public class ResearchWidget extends AbstractWidget {
         }
         
         // Render the icon
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderTexture(0, loc);
-        matrixStack.translate(this.getX(), this.getY(), 0.0F);
-        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
-        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        matrixStack.popPose();
+        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        guiGraphics.blit(loc, 0, 0, 0, 0, 255, 255);
+        guiGraphics.pose().popPose();
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.getX() + 8, this.getY(), 100.0F);
-            RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
-            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
+            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -90,10 +89,10 @@ public class ResearchWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
         List<Component> textLines;
         if (this.hasHint) {
@@ -109,8 +108,8 @@ public class ResearchWidget extends AbstractWidget {
             Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
             textLines = Collections.singletonList(baseText);
         }
-        GuiUtils.renderCustomTooltip(matrixStack, textLines, mouseX, mouseY);
+        GuiUtils.renderCustomTooltip(guiGraphics, textLines, mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

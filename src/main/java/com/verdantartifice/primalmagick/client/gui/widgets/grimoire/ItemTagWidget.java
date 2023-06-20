@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -38,7 +39,7 @@ public class ItemTagWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         TagKey<Item> itemTag = ItemTags.create(this.tag);
         List<Item> tagContents = new ArrayList<Item>();
         ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
@@ -47,14 +48,13 @@ public class ItemTagWidget extends AbstractWidget {
             int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
             Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
             this.toDisplay = new ItemStack(tagContentsArray[index], 1);
-            GuiUtils.renderItemStack(matrixStack, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(guiGraphics, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
-                matrixStack.pushPose();
-                matrixStack.translate(this.getX() + 8, this.getY(), 200.0F);
-                RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
-                this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-                matrixStack.popPose();
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+                guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+                guiGraphics.pose().popPose();
             }
         } else {
             this.toDisplay = ItemStack.EMPTY;
@@ -72,13 +72,13 @@ public class ItemTagWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // If hovered, show a tooltip with the display name of the current matching itemstack
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
-        GuiUtils.renderItemTooltip(matrixStack, this.toDisplay, mouseX, mouseY);
+        GuiUtils.renderItemTooltip(guiGraphics, this.toDisplay, mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

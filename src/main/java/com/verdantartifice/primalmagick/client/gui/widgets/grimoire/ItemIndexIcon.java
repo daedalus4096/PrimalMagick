@@ -9,6 +9,7 @@ import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -41,7 +42,7 @@ public class ItemIndexIcon extends AbstractIndexIcon {
     }
     
     @Override
-    public void render(PoseStack poseStack, double x, double y) {
+    public void render(GuiGraphics guiGraphics, double x, double y) {
         if (this.stack.isEmpty()) {
             return;
         }
@@ -50,7 +51,7 @@ public class ItemIndexIcon extends AbstractIndexIcon {
         Minecraft mc = Minecraft.getInstance();
         ItemRenderer itemRenderer = mc.getItemRenderer();
         
-        poseStack.pushPose();
+        guiGraphics.pose().pushPose();
         
         BakedModel bakedModel = itemRenderer.getModel(this.stack, null, mc.player, 0);
         itemRenderer.blitOffset = bakedModel.isGui3d() ? itemRenderer.blitOffset + 50.0F : itemRenderer.blitOffset + 50.0F;
@@ -108,6 +109,6 @@ public class ItemIndexIcon extends AbstractIndexIcon {
 
         itemRenderer.blitOffset = bakedModel.isGui3d() ? itemRenderer.blitOffset - 50.0F : itemRenderer.blitOffset - 50.0F;
 
-        poseStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

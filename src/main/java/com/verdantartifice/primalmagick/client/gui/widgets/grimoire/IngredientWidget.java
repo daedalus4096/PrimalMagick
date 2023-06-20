@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -37,24 +38,24 @@ public class IngredientWidget extends Button {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         ItemStack toDisplay = this.getDisplayStack();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(matrixStack, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(guiGraphics, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
         }
     }
     
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         ItemStack toDisplay = this.getDisplayStack();
         if (!toDisplay.isEmpty()) {
             // If hovered, show a tooltip with the display name of the current matching itemstack
-            matrixStack.pushPose();
-            matrixStack.translate(0, 0, 200);
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0, 0, 200);
             
-            GuiUtils.renderItemTooltip(matrixStack, toDisplay, mouseX, mouseY);
+            GuiUtils.renderItemTooltip(guiGraphics, toDisplay, mouseX, mouseY);
             
-            matrixStack.popPose();
+            guiGraphics.pose().popPose();
         }
     }
 
