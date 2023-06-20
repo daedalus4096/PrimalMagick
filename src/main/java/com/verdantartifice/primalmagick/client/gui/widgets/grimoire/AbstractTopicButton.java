@@ -52,7 +52,7 @@ public abstract class AbstractTopicButton extends Button {
         if (strWidth <= (this.width - dx)) {
             guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.BLACK.getRGB());
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         } else {
             // If the button text is too long, scale it down to fit on one line
@@ -63,7 +63,7 @@ public abstract class AbstractTopicButton extends Button {
             guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB());
             guiGraphics.pose().popPose();
             if (this.icon != null) {
-                this.icon.render(matrixStack, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
+                this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
         }
         guiGraphics.pose().popPose();

@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
@@ -15,6 +13,7 @@ import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -59,7 +58,7 @@ public class RuneEnchantmentPage extends AbstractPage {
     }
     
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         int startY = y;
         int indent = 84;
         int overlayWidth = 13;
@@ -67,22 +66,21 @@ public class RuneEnchantmentPage extends AbstractPage {
         
         // Draw title page and overlay background if applicable
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 77;
             
-            RenderSystem.setShaderTexture(0, OVERLAY);
-            matrixStack.pushPose();
-            matrixStack.translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
-            this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
-            this.blit(matrixStack, 32, 0, 0, 51, overlayWidth, overlayHeight);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(x + (side * 140) + (indent / 2) - (overlayWidth / 2), startY + 49, 0.0F);
+            guiGraphics.blit(OVERLAY, 0, 0, 0, 51, overlayWidth, overlayHeight);
+            guiGraphics.blit(OVERLAY, 32, 0, 0, 51, overlayWidth, overlayHeight);
+            guiGraphics.pose().popPose();
         } else {
             y += 25;
         }
         
         // Render page contents
         for (IPageElement content : this.contents) {
-            content.render(matrixStack, side, x, y);
+            content.render(guiGraphics, side, x, y);
             y = content.getNextY(y);
         }
     }

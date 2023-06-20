@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.EntryButton;
@@ -15,8 +14,8 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.item.crafting.Recipe;
 
 /**
@@ -47,9 +46,9 @@ public class RecipeMetadataPage extends AbstractPage {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title
-        this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+        this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         y += 53;
         
         Minecraft mc = Minecraft.getInstance();
@@ -60,22 +59,22 @@ public class RecipeMetadataPage extends AbstractPage {
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
-        mc.font.draw(matrixStack, Component.translatable("primalmagick.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research discipline
         if (entry == null) {
-            mc.font.draw(matrixStack, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
         }
         y += 2 * mc.font.lineHeight;
         
         // Render the metadata's entry header
-        mc.font.draw(matrixStack, Component.translatable("primalmagick.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research entry
         if (entry == null) {
-            mc.font.draw(matrixStack, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
         }
     }
 

@@ -6,9 +6,10 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
+
+import net.minecraft.client.gui.GuiGraphics;
 
 /**
  * Grimoire page showing the player's mod-relevant statistics (e.g. the number of times they cast
@@ -44,10 +45,10 @@ public class StatisticsPage extends AbstractPage {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Draw title page if applicable
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
             y += 53;
         } else {
             y += 25;
@@ -55,7 +56,7 @@ public class StatisticsPage extends AbstractPage {
         
         // Render page contents
         for (IPageElement content : this.contents) {
-            content.render(matrixStack, side, x, y);
+            content.render(guiGraphics, side, x, y);
             y = content.getNextY(y);
         }
     }

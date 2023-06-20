@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -50,25 +50,21 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
-        super.render(matrixStack, side, x, y, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        super.render(guiGraphics, side, x, y, mouseX, mouseY);
         y += 53;
         
         int indent = 84;
         int overlayWidth = 13;
         int overlayHeight = 13;
         
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.setShaderTexture(0, OVERLAY);
-        
         // Render overlay background
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        matrixStack.translate(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68, 0.0F);
-        matrixStack.scale(2.0F, 2.0F, 1.0F);
-        this.blit(matrixStack, 0, 0, 0, 51, overlayWidth, overlayHeight);
-        matrixStack.popPose();
+        guiGraphics.pose().translate(x + 16 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 68, 0.0F);
+        guiGraphics.pose().scale(2.0F, 2.0F, 1.0F);
+        guiGraphics.blit(OVERLAY, 0, 0, 0, 51, overlayWidth, overlayHeight);
+        guiGraphics.pose().popPose();
     }
 }

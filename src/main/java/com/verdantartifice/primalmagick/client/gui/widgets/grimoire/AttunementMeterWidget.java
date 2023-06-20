@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -40,7 +41,7 @@ public class AttunementMeterWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Render attunement meter
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -52,20 +53,20 @@ public class AttunementMeterWidget extends AbstractWidget {
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
 
         // Render permanent meter bar
-        RenderSystem.setShaderColor(this.permanentColor.getRed() / 255.0F, this.permanentColor.getGreen() / 255.0F, this.permanentColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
+        guiGraphics.setColor(this.permanentColor.getRed() / 255.0F, this.permanentColor.getGreen() / 255.0F, this.permanentColor.getBlue() / 255.0F, 1.0F);
+        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p, 0, 100)), 0, 10, 10, Mth.clamp(p, 0, 100));
         
         // Render induced meter bar
-        RenderSystem.setShaderColor(this.inducedColor.getRed() / 255.0F, this.inducedColor.getGreen() / 255.0F, this.inducedColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
+        guiGraphics.setColor(this.inducedColor.getRed() / 255.0F, this.inducedColor.getGreen() / 255.0F, this.inducedColor.getBlue() / 255.0F, 1.0F);
+        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i, 0, 100)), 0, 10, 10, Mth.clamp(i, 0, 100 - p));
         
         // Render temporary meter bar
-        RenderSystem.setShaderColor(this.temporaryColor.getRed() / 255.0F, this.temporaryColor.getGreen() / 255.0F, this.temporaryColor.getBlue() / 255.0F, 1.0F);
-        this.blit(matrixStack, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
+        guiGraphics.setColor(this.temporaryColor.getRed() / 255.0F, this.temporaryColor.getGreen() / 255.0F, this.temporaryColor.getBlue() / 255.0F, 1.0F);
+        guiGraphics.blit(TEXTURE, this.getX() + 1, this.getY() + 1 + (100 - Mth.clamp(p + i + t, 0, 100)), 0, 10, 10, Mth.clamp(t, 0, 100 - p - i));
 
         // Render meter foreground
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        this.blit(matrixStack, this.getX(), this.getY(), 29, 9, 12, 102);
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        guiGraphics.blit(TEXTURE, this.getX(), this.getY(), 29, 9, 12, 102);
     }
 
     @Override
@@ -79,9 +80,9 @@ public class AttunementMeterWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
+    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0, 0, 200);
         
         Minecraft mc = Minecraft.getInstance();
         int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
@@ -96,8 +97,8 @@ public class AttunementMeterWidget extends AbstractWidget {
             tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
         }
         tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
-        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
+        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
         
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

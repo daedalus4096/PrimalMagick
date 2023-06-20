@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BlockIngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
@@ -16,8 +15,8 @@ import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -103,20 +102,20 @@ public class RitualRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
-        super.render(matrixStack, side, x, y, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        super.render(guiGraphics, side, x, y, mouseX, mouseY);
         y += 79;
         
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        matrixStack.translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
+        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         Minecraft mc = Minecraft.getInstance();
 
         // Render ingredients section header
         if (!this.recipe.getIngredients().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
-            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.font.lineHeight * 0.66F);
@@ -125,7 +124,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Render props section header
         if (!this.recipe.getProps().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.ritual_props_header").withStyle(ChatFormatting.UNDERLINE);
-            mc.font.draw(matrixStack, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
             y += (int)(mc.font.lineHeight * 0.66F);
@@ -136,9 +135,9 @@ public class RitualRecipePage extends AbstractRecipePage {
         int rating = Mth.clamp(this.recipe.getInstability() / 2, 0, 5);
         Component valueComponent = Component.translatable("primalmagick.ritual.instability.rating." + rating);
         Component lineComponent = Component.translatable("primalmagick.ritual.instability", headerComponent, valueComponent);
-        mc.font.draw(matrixStack, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
         y += mc.font.lineHeight;
 
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
 }

@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -49,10 +49,10 @@ public class DisciplineIndexPage extends AbstractPage {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
         }
     }
     

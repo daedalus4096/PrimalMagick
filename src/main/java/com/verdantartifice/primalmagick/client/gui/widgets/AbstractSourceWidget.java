@@ -5,11 +5,11 @@ import java.util.Collections;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -42,32 +42,27 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         boolean discovered = this.source.isDiscovered(mc.player);
         
         // Draw the colored source icon
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        matrixStack.pushPose();
-        if (discovered) {
-            RenderSystem.setShaderTexture(0, this.source.getImage());
-        } else {
-            RenderSystem.setShaderTexture(0, Source.getUnknownImage());
-        }
-        matrixStack.translate(this.getX(), this.getY(), 0.0F);
-        matrixStack.scale(0.0625F, 0.0625F, 0.0625F);
-        this.blit(matrixStack, 0, 0, 0, 0, 255, 255);
-        matrixStack.popPose();
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+        guiGraphics.blit(discovered ? this.source.getImage() : Source.getUnknownImage(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.pose().popPose();
         
         // Draw the amount string
-        matrixStack.pushPose();
+        guiGraphics.pose().pushPose();
         Component amountText = Component.literal(Integer.toString(this.amount));
         int width = mc.font.width(amountText.getString());
-        matrixStack.translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
-        matrixStack.scale(0.5F, 0.5F, 0.5F);
-        mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-        matrixStack.popPose();
+        guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
+        guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+        guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+        guiGraphics.pose().popPose();
         
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {
@@ -75,7 +70,7 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
                     this.source.getNameText() :
                     Component.translatable(Source.getUnknownTranslationKey());
             Component labelText = Component.translatable(this.getTooltipTranslationKey(), this.amount, sourceText);
-            GuiUtils.renderCustomTooltip(matrixStack, Collections.singletonList(labelText), this.getX(), this.getY());
+            GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }
     

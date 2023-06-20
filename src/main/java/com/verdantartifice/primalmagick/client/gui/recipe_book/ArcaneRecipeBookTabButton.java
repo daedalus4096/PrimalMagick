@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
@@ -14,8 +13,6 @@ import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -64,7 +61,6 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
             guiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
         }
         
-        Minecraft mc = Minecraft.getInstance();
         RenderSystem.disableDepthTest();
         
         int texX = this.xTexStart;
@@ -84,7 +80,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         guiGraphics.blit(this.resourceLocation, localX, this.getY(), texX, texY, this.width, this.height);
         RenderSystem.enableDepthTest();
-        this.renderIcon(mc.getItemRenderer());
+        this.renderIcon(guiGraphics);
 
         if (this.animationTime > 0.0F) {
             guiGraphics.pose().popPose();
