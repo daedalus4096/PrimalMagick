@@ -1,11 +1,11 @@
 package com.verdantartifice.primalmagick.datagen.runes;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,9 +16,10 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 
+import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -26,35 +27,33 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RuneEnchantmentProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected final DataGenerator generator;
+    protected final PackOutput packOutput;
     protected final Set<ResourceLocation> registeredEnchantments = new HashSet<>();
 
-    public RuneEnchantmentProvider(DataGenerator generator) {
-        this.generator = generator;
+    public RuneEnchantmentProvider(PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
-        Path path = this.generator.getOutputFolder();
-        Map<ResourceLocation, IFinishedRuneEnchantment> map = new HashMap<>();
-        this.registerEnchantments((enchantment) -> {
-            if (map.put(enchantment.getId(), enchantment) != null) {
-                LOGGER.debug("Duplicate rune enchantment definition in data generation: {}", enchantment.getId().toString());
+    public CompletableFuture<?> run(CachedOutput cache) {
+        return CompletableFuture.runAsync(() -> {
+            Path path = this.packOutput.getOutputFolder();
+            Map<ResourceLocation, IFinishedRuneEnchantment> map = new HashMap<>();
+            this.registerEnchantments((enchantment) -> {
+                if (map.put(enchantment.getId(), enchantment) != null) {
+                    LOGGER.debug("Duplicate rune enchantment definition in data generation: {}", enchantment.getId().toString());
+                }
+                this.registeredEnchantments.add(enchantment.getId());
+            });
+            for (Map.Entry<ResourceLocation, IFinishedRuneEnchantment> entry : map.entrySet()) {
+                this.saveProject(cache, entry.getValue().getEnchantmentJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/rune_enchantments/" + entry.getKey().getPath() + ".json"));
             }
-            this.registeredEnchantments.add(enchantment.getId());
-        });
-        for (Map.Entry<ResourceLocation, IFinishedRuneEnchantment> entry : map.entrySet()) {
-            this.saveProject(cache, entry.getValue().getEnchantmentJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/rune_enchantments/" + entry.getKey().getPath() + ".json"));
-        }
-        this.checkExpectations();
+            this.checkExpectations();
+        }, Util.backgroundExecutor());
     }
     
     private void saveProject(CachedOutput cache, JsonObject json, Path path) {
-        try {
-            DataProvider.saveStable(cache, json, path);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save rune enchantment definition {}", path, e);
-        }
+        DataProvider.saveStable(cache, json, path);
     }
     
     private void registerEmptyEnchantment(Enchantment ench) {
