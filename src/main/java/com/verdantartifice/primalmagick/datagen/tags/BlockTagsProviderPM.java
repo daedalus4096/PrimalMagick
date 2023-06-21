@@ -22,11 +22,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * @author Daedalus4096
  */
 public class BlockTagsProviderPM extends BlockTagsProvider {
-    protected PackOutput packOutput;
-    
     public BlockTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
         super(packOutput, lookupProvider, PrimalMagick.MODID, helper);
-        this.packOutput = packOutput;
     }
 
     @Override

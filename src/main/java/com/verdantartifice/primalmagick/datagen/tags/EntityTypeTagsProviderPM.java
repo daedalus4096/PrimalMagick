@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.TagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -18,13 +17,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * 
  * @author Daedalus4096
  */
-public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
-    protected DataGenerator generator;
-    
-    @SuppressWarnings("deprecation")
-    public EntityTypeTagsProvider(DataGenerator generatorIn, ExistingFileHelper existingFileHelper) {
-        super(generatorIn, Registry.ENTITY_TYPE, PrimalMagick.MODID, existingFileHelper);
-        this.generator = generatorIn;
+public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
+    public EntityTypeTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(packOutput, lookupProvider, PrimalMagick.MODID, existingFileHelper);
     }
 
     @Override
@@ -33,7 +28,7 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider lookupProvider) {
         // Create custom tags
         this.tag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityTypesPM.PRIMALITE_GOLEM.get(), EntityTypesPM.HEXIUM_GOLEM.get(), EntityTypesPM.HALLOWSTEEL_GOLEM.get());
         this.tag(EntityTypeTagsPM.PIXIES).add(EntityTypesPM.BASIC_EARTH_PIXIE.get(), EntityTypesPM.GRAND_EARTH_PIXIE.get(), EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(),
@@ -58,10 +53,5 @@ public class EntityTypeTagsProvider extends TagsProvider<EntityType<?>> {
         this.tag(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW).add(EntityType.CREEPER, EntityType.DROWNED, EntityType.ENDERMAN, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HUSK,
                 EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.SKELETON, EntityType.STRAY, EntityType.VINDICATOR, EntityType.WITHER_SKELETON,
                 EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN, EntityTypesPM.TREEFOLK.get());
-    }
-
-    @Override
-    protected Path getPath(ResourceLocation id) {
-        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/entity_types/" + id.getPath() + ".json");
     }
 }
