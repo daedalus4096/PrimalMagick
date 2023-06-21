@@ -32,7 +32,7 @@ public class DataGenerators {
     public static void gatherData(GatherDataEvent event) {
         // Add all of the mod's data providers to the generator for processing
         DataGenerator generator = event.getGenerator();
-        generator.addProvider(event.includeServer(), new Recipes(generator));
+        generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new BlockLootTables(generator));
         generator.addProvider(event.includeServer(), new EntityLootTables(generator));
         generator.addProvider(event.includeServer(), new GameplayLootTables(generator));

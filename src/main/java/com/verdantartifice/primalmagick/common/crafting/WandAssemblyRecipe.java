@@ -7,9 +7,11 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -20,8 +22,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandAssemblyRecipe extends CustomRecipe {
-    public WandAssemblyRecipe(ResourceLocation idIn) {
-        super(idIn);
+    public WandAssemblyRecipe(ResourceLocation idIn, CraftingBookCategory category) {
+        super(idIn, category);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class WandAssemblyRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
+    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
         ItemStack coreStack = inv.getItem(0);
         ItemStack gemStack = inv.getItem(1);
         ItemStack capStack = inv.getItem(2);
