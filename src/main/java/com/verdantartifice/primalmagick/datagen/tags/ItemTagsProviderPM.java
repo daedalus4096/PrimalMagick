@@ -1,19 +1,20 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -22,13 +23,9 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * 
  * @author Daedalus4096
  */
-public class ItemTagsProvider extends TagsProvider<Item> {
-    protected DataGenerator generator;
-    
-    @SuppressWarnings("deprecation")
-    public ItemTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Registry.ITEM, PrimalMagick.MODID, helper);
-        this.generator = generator;
+public class ItemTagsProviderPM extends ItemTagsProvider {
+    public ItemTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagsProvider.TagLookup<Block>> blockTagLookup, ExistingFileHelper helper) {
+        super(packOutput, lookupProvider, blockTagLookup, PrimalMagick.MODID, helper);
     }
 
     @Override
@@ -37,7 +34,7 @@ public class ItemTagsProvider extends TagsProvider<Item> {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(ItemTags.ARROWS).add(ItemsPM.MANA_ARROW_EARTH.get(), ItemsPM.MANA_ARROW_SEA.get(), ItemsPM.MANA_ARROW_SKY.get(), ItemsPM.MANA_ARROW_SUN.get(), ItemsPM.MANA_ARROW_MOON.get(), ItemsPM.MANA_ARROW_BLOOD.get(), ItemsPM.MANA_ARROW_INFERNAL.get(), ItemsPM.MANA_ARROW_VOID.get(), ItemsPM.MANA_ARROW_HALLOWED.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
@@ -151,10 +148,5 @@ public class ItemTagsProvider extends TagsProvider<Item> {
         this.tag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL).add(ItemsPM.HALLOWSTEEL_BLOCK.get());
         this.tag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).add(ItemsPM.HEXIUM_BLOCK.get());
         this.tag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).add(ItemsPM.PRIMALITE_BLOCK.get());
-    }
-
-    @Override
-    protected Path getPath(ResourceLocation id) {
-        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/items/" + id.getPath() + ".json");
     }
 }
