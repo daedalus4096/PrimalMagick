@@ -20,7 +20,7 @@ import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -42,8 +42,8 @@ import net.minecraftforge.common.loot.LootTableIdCondition;
  * @author Daedalus4096
  */
 public class LootModifierProvider extends GlobalLootModifierProvider {
-    public LootModifierProvider(DataGenerator gen) {
-        super(gen, PrimalMagick.MODID);
+    public LootModifierProvider(PackOutput packOutput) {
+        super(packOutput, PrimalMagick.MODID);
     }
 
     @Override
