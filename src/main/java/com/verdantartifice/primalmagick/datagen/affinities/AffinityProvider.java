@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.affinities;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,9 +17,10 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -28,35 +29,33 @@ import net.minecraft.world.item.enchantment.Enchantments;
 
 public class AffinityProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected final DataGenerator generator;
+    protected final PackOutput packOutput;
     
-    public AffinityProvider(DataGenerator generator) {
-        this.generator = generator;
+    public AffinityProvider(PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
-        Path path = this.generator.getOutputFolder();
-        Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
-        this.registerAffinities((affinity) -> {
-            if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
-                LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+    public CompletableFuture<?> run(CachedOutput cache) {
+        return CompletableFuture.runAsync(() -> {
+            Path path = this.packOutput.getOutputFolder();
+            Map<AffinityType, Map<ResourceLocation, IFinishedAffinity>> map = new HashMap<>();
+            this.registerAffinities((affinity) -> {
+                if (map.computeIfAbsent(affinity.getType(), (type) -> { return new HashMap<>(); }).put(affinity.getId(), affinity) != null) {
+                    LOGGER.debug("Duplicate affinity in data generation: " + affinity.getId().toString());
+                }
+            });
+            for (Map.Entry<AffinityType, Map<ResourceLocation, IFinishedAffinity>> entry1 : map.entrySet()) {
+                for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : entry1.getValue().entrySet()) {
+                    IFinishedAffinity affinity = entry.getValue();
+                    this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + affinity.getType().getFolder() + "/" + entry.getKey().getPath() + ".json"));
+                }
             }
-        });
-        for (Map.Entry<AffinityType, Map<ResourceLocation, IFinishedAffinity>> entry1 : map.entrySet()) {
-            for (Map.Entry<ResourceLocation, IFinishedAffinity> entry : entry1.getValue().entrySet()) {
-                IFinishedAffinity affinity = entry.getValue();
-                this.saveAffinity(cache, affinity.getAffinityJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/affinities/" + affinity.getType().getFolder() + "/" + entry.getKey().getPath() + ".json"));
-            }
-        }
+        }, Util.backgroundExecutor());
     }
     
     private void saveAffinity(CachedOutput cache, JsonObject json, Path path) {
-        try {
-            DataProvider.saveStable(cache, json, path);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save affinity {}", path, e);
-        }
+        DataProvider.saveStable(cache, json, path);
     }
     
     protected void registerAffinities(Consumer<IFinishedAffinity> consumer) {
