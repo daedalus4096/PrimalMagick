@@ -1,20 +1,19 @@
 package com.verdantartifice.primalmagick.datagen.tags;
 
-import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 
-import net.minecraft.core.Registry;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**
@@ -22,13 +21,12 @@ import net.minecraftforge.common.data.ExistingFileHelper;
  * 
  * @author Daedalus4096
  */
-public class BlockTagsProvider extends TagsProvider<Block> {
-    protected DataGenerator generator;
+public class BlockTagsProviderPM extends BlockTagsProvider {
+    protected PackOutput packOutput;
     
-    @SuppressWarnings("deprecation")
-    public BlockTagsProvider(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, Registry.BLOCK, PrimalMagick.MODID, helper);
-        this.generator = generator;
+    public BlockTagsProviderPM(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper helper) {
+        super(packOutput, lookupProvider, PrimalMagick.MODID, helper);
+        this.packOutput = packOutput;
     }
 
     @Override
@@ -37,7 +35,7 @@ public class BlockTagsProvider extends TagsProvider<Block> {
     }
 
     @Override
-    protected void addTags() {
+    protected void addTags(HolderLookup.Provider lookupProvider) {
         // Add entries to vanilla tags
         this.tag(BlockTags.BEACON_BASE_BLOCKS).addTag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(BlockTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.tag(BlockTags.LOGS_THAT_BURN).addTag(BlockTagsPM.MOONWOOD_LOGS).addTag(BlockTagsPM.SUNWOOD_LOGS).addTag(BlockTagsPM.HALLOWOOD_LOGS);
@@ -125,10 +123,5 @@ public class BlockTagsProvider extends TagsProvider<Block> {
         this.tag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         this.tag(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
         this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.GRASS, Blocks.FERN);
-    }
-
-    @Override
-    protected Path getPath(ResourceLocation id) {
-        return this.generator.getOutputFolder().resolve("data/" + id.getNamespace() + "/tags/blocks/" + id.getPath() + ".json");
     }
 }

@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
 import com.verdantartifice.primalmagick.datagen.research.ResearchProvider;
 import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProvider;
-import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProvider;
+import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProvider;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProvider;
 import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectProvider;
@@ -36,7 +36,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new BlockLootTables(generator));
         generator.addProvider(event.includeServer(), new EntityLootTables(generator));
         generator.addProvider(event.includeServer(), new GameplayLootTables(generator));
-        generator.addProvider(event.includeServer(), new BlockTagsProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), output -> new BlockTagsProviderPM(output, event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new ItemTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new EntityTypeTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new BiomeTagsProvider(generator, event.getExistingFileHelper()));
