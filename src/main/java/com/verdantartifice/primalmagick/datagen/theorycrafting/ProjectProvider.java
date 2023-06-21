@@ -1,9 +1,9 @@
 package com.verdantartifice.primalmagick.datagen.theorycrafting;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,9 +17,10 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
@@ -31,32 +32,30 @@ import net.minecraftforge.common.Tags;
 
 public class ProjectProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected final DataGenerator generator;
+    protected final PackOutput packOutput;
     
-    public ProjectProvider(DataGenerator generator) {
-        this.generator = generator;
+    public ProjectProvider(PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
-        Path path = this.generator.getOutputFolder();
-        Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
-        this.registerProjects((project) -> {
-            if (map.put(project.getId(), project) != null) {
-                LOGGER.debug("Duplicate theorycrafting project in data generation: {}", project.getId().toString());
+    public CompletableFuture<?> run(CachedOutput cache) {
+        return CompletableFuture.runAsync(() -> {
+            Path path = this.packOutput.getOutputFolder();
+            Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
+            this.registerProjects((project) -> {
+                if (map.put(project.getId(), project) != null) {
+                    LOGGER.debug("Duplicate theorycrafting project in data generation: {}", project.getId().toString());
+                }
+            });
+            for (Map.Entry<ResourceLocation, IFinishedProject> entry : map.entrySet()) {
+                this.saveProject(cache, entry.getValue().getProjectJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/theorycrafting/" + entry.getKey().getPath() + ".json"));
             }
-        });
-        for (Map.Entry<ResourceLocation, IFinishedProject> entry : map.entrySet()) {
-            this.saveProject(cache, entry.getValue().getProjectJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/theorycrafting/" + entry.getKey().getPath() + ".json"));
-        }
+        }, Util.backgroundExecutor());
     }
 
     private void saveProject(CachedOutput cache, JsonObject json, Path path) {
-        try {
-            DataProvider.saveStable(cache, json, path);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save theorycrafting project {}", path, e);
-        }
+        DataProvider.saveStable(cache, json, path);
     }
     
     protected void registerProjects(Consumer<IFinishedProject> consumer) {
