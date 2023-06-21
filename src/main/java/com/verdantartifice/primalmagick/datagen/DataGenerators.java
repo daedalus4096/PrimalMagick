@@ -17,9 +17,9 @@ import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProvider;
 import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectProvider;
 
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.data.event.GatherDataEvent;
 
 /**
  * Handlers for events related to data file generation.
@@ -36,10 +36,10 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new BlockLootTables(generator));
         generator.addProvider(event.includeServer(), new EntityLootTables(generator));
         generator.addProvider(event.includeServer(), new GameplayLootTables(generator));
-        generator.addProvider(event.includeServer(), output -> new BlockTagsProviderPM(output, event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new BlockTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new ItemTagsProvider(generator, event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), output -> new EntityTypeTagsProviderPM(output, event.getLookupProvider(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeServer(), output -> new BiomeTagsProviderPM(output, event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new EntityTypeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeServer(), new BiomeTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator));
         generator.addProvider(event.includeServer(), new ResearchProvider(generator));
         generator.addProvider(event.includeServer(), new ProjectProvider(generator));
