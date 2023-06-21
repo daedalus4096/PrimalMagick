@@ -87,14 +87,12 @@ public class ArcaneRecipeButton extends AbstractWidget {
         }
         
         boolean animating = this.animationTime > 0.0F;
-        PoseStack modelViewStack = RenderSystem.getModelViewStack();
         if (animating) {
             float scale = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
-            modelViewStack.pushPose();
-            modelViewStack.translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
-            modelViewStack.scale(scale, scale, 1.0F);
-            modelViewStack.translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
-            RenderSystem.applyModelViewMatrix();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
+            guiGraphics.pose().scale(scale, scale, 1.0F);
+            guiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
             this.animationTime -= p_93679_;
         }
         
@@ -110,8 +108,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
         guiGraphics.renderFakeItem(stack, this.getX() + k, this.getY() + k);
         
         if (animating) {
-            modelViewStack.popPose();
-            RenderSystem.applyModelViewMatrix();
+            guiGraphics.pose().popPose();
         }
     }
     

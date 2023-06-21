@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
 import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
@@ -330,9 +329,8 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         }
         
         @Override
-        public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-            RenderSystem.setShaderTexture(0, TEXTURE);
-            this.blit(matrixStack, this.getX(), this.getY(), this.isIncrement ? 230 : 237, this.isHoveredOrFocused() ? 11 : 0, this.width, this.height);
+        public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+            guiGraphics.blit(TEXTURE, this.getX(), this.getY(), this.isIncrement ? 230 : 237, this.isHoveredOrFocused() ? 11 : 0, this.width, this.height);
         }
         
         public boolean isIncrement() {

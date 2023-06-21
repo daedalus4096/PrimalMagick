@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
@@ -18,6 +17,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -51,12 +51,12 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
     }
 
     @Override
-    public void draw(IRunecarvingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IRunecarvingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
-            stack.pushPose();
-            stack.scale(0.5F, 0.5F, 0.5F);
-            this.researchIcon.draw(stack, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
-            stack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
+            guiGraphics.pose().popPose();
         }
     }
 
