@@ -198,7 +198,7 @@ public class CombatEvents {
         // If the entity is afflicted with Stolen Essence, drop a sample of its essence
         if (entity.hasEffect(EffectsPM.STOLEN_ESSENCE.get()) && !event.isCanceled()) {
             MobEffectInstance instance = entity.getEffect(EffectsPM.STOLEN_ESSENCE.get());
-            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
+            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess());
             if (affinities != null && !affinities.isEmpty()) {
                 WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
                 for (Source source : affinities.getSources()) {

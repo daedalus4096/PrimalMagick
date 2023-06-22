@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -192,14 +193,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
             return new HashMap<>();
         });
         if (map.containsKey(id)) {
             return map.get(id);
         } else {
-            return this.generateItemAffinity(id, recipeManager, history);
+            return this.generateItemAffinity(id, recipeManager, registryAccess, history);
         }
     }
     
@@ -225,22 +226,22 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    public SourceList getAffinityValues(@Nullable EntityType<?> type) {
+    public SourceList getAffinityValues(@Nullable EntityType<?> type, @Nonnull RegistryAccess registryAccess) {
         IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
         if (entityAffinity == null) {
             return null;
         } else {
-            return this.capAffinities(entityAffinity.getTotal(null, new ArrayList<>()), MAX_AFFINITY);
+            return this.capAffinities(entityAffinity.getTotal(null, registryAccess, new ArrayList<>()), MAX_AFFINITY);
         }
     }
     
     @Nullable
-    public SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull Level world) {
-        return this.getAffinityValues(stack, world.getRecipeManager(), new ArrayList<>());
+    public SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull Level level) {
+        return this.getAffinityValues(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>());
     }
     
     @Nullable
-    protected SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (stack == null || stack.isEmpty()) {
             return null;
         }
@@ -249,7 +250,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         IAffinity itemAffinity = this.getAffinity(AffinityType.ITEM, ForgeRegistries.ITEMS.getKey(stack.getItem()));
         if (itemAffinity == null) {
             // If that doesn't work, generate affinities for the item and use those
-            itemAffinity = this.generateItemAffinity(ForgeRegistries.ITEMS.getKey(stack.getItem()), recipeManager, history);
+            itemAffinity = this.generateItemAffinity(ForgeRegistries.ITEMS.getKey(stack.getItem()), recipeManager, registryAccess, history);
             if (itemAffinity == null) {
                 // If that doesn't work either, return empty data
                 return null;
@@ -257,14 +258,14 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         
         // Extract source values from the affinity data
-        SourceList retVal = itemAffinity.getTotal(recipeManager, history);
+        SourceList retVal = itemAffinity.getTotal(recipeManager, registryAccess, history);
         
         // Append any needed bonus affinities for NBT data, then cap the result to a reasonable value
-        return this.capAffinities(this.addBonusAffinities(stack, retVal, recipeManager), MAX_AFFINITY);
+        return this.capAffinities(this.addBonusAffinities(stack, retVal, recipeManager, registryAccess), MAX_AFFINITY);
     }
     
     @Nullable
-    protected IAffinity generateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected IAffinity generateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // If the affinity is already registered, just return that
         if (this.isRegistered(AffinityType.ITEM, id)) {
             return this.getAffinity(AffinityType.ITEM, id);
@@ -278,7 +279,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
 
         // If we haven't hit a complexity limit, scan recipes to compute affinities
         if (history.size() < HISTORY_LIMIT) {
-            SourceList values = this.generateItemAffinityValuesFromRecipes(id, recipeManager, history);
+            SourceList values = this.generateItemAffinityValuesFromRecipes(id, recipeManager, registryAccess, history);
             if (values == null) {
                 return null;
             } else {
@@ -292,21 +293,21 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    protected SourceList generateItemAffinityValuesFromRecipes(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected SourceList generateItemAffinityValuesFromRecipes(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         SourceList retVal = null;
         int maxValue = Integer.MAX_VALUE;
         
         // Look up all recipes with the given item as an output
-        for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem() != null && ForgeRegistries.ITEMS.getKey(r.getResultItem().getItem()).equals(id)).collect(Collectors.toList())) {
+        for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.getResultItem(registryAccess).getItem()).equals(id)).collect(Collectors.toList())) {
             // Compute the affinities from the recipe's ingredients
-            SourceList ingSources = this.generateItemAffinityValuesFromIngredients(recipe, recipeManager, history);
+            SourceList ingSources = this.generateItemAffinityValuesFromIngredients(recipe, recipeManager, registryAccess, history);
             if (recipe instanceof IHasManaCost) {
                 // Add affinities from mana costs
                 IHasManaCost manaRecipe = (IHasManaCost)recipe;
                 SourceList manaCosts = manaRecipe.getManaCosts();
                 for (Source source : manaCosts.getSources()) {
                     if (manaCosts.getAmount(source) > 0) {
-                        int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem().getCount());
+                        int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem(registryAccess).getCount());
                         if (manaAmount > 0) {
                             ingSources.add(source, manaAmount);
                         }
@@ -324,9 +325,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nonnull
-    protected SourceList generateItemAffinityValuesFromIngredients(@Nonnull Recipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected SourceList generateItemAffinityValuesFromIngredients(@Nonnull Recipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         NonNullList<Ingredient> ingredients = recipe.getIngredients();
-        ItemStack output = recipe.getResultItem();
+        ItemStack output = recipe.getResultItem(registryAccess);
         SourceList intermediate = new SourceList();
         
         // Populate a fake crafting inventory with ingredients to see what container items would be left behind
@@ -336,7 +337,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             CraftingContainer inv = new CraftingContainer(new FakeContainer(), ingredients.size(), 1);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
-                ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, history);
+                ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);
                 if (!ingStack.isEmpty()) {
                     inv.setItem(index, ingStack);
                 }
@@ -347,9 +348,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
 
         // Compute total affinities for each ingredient
         for (Ingredient ingredient : ingredients) {
-            ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, history);
+            ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);
             if (!ingStack.isEmpty()) {
-                SourceList ingSources = this.getAffinityValues(ingStack, recipeManager, history);
+                SourceList ingSources = this.getAffinityValues(ingStack, recipeManager, registryAccess, history);
                 if (ingSources != null) {
                     intermediate.add(ingSources);
                 }
@@ -360,7 +361,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (containerList != null) {
             for (ItemStack containerStack : containerList) {
                 if (!containerStack.isEmpty()) {
-                    SourceList containerSources = this.getAffinityValues(containerStack, recipeManager, history);
+                    SourceList containerSources = this.getAffinityValues(containerStack, recipeManager, registryAccess, history);
                     if (containerSources != null) {
                         for (Source source : containerSources.getSources()) {
                             intermediate.reduce(source, containerSources.getAmount(source));
@@ -386,7 +387,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nonnull
-    protected ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (ingredient == null || ingredient.getItems() == null || ingredient.getItems().length <= 0) {
             return ItemStack.EMPTY;
         }
@@ -396,7 +397,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         
         // Scan through all of the ingredient's possible matches to determine which one to use for affinity computation
         for (ItemStack stack : ingredient.getItems()) {
-            SourceList stackSources = this.getAffinityValues(stack, recipeManager, history);
+            SourceList stackSources = this.getAffinityValues(stack, recipeManager, registryAccess, history);
             if (stackSources != null) {
                 int manaSize = stackSources.getManaSize();
                 if (manaSize > 0 && manaSize < maxValue) {
@@ -422,7 +423,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    protected SourceList addBonusAffinities(@Nonnull ItemStack stack, @Nullable SourceList inputSources, @Nonnull RecipeManager recipeManager) {
+    protected SourceList addBonusAffinities(@Nonnull ItemStack stack, @Nullable SourceList inputSources, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess) {
         if (inputSources == null) {
             return null;
         }
@@ -434,7 +435,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (potion != null && potion != Potions.EMPTY) {
             IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potion));
             if (bonus != null) {
-                retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()));
+                retVal.add(bonus.getTotal(recipeManager, registryAccess, new ArrayList<>()));
             }
         }
         
@@ -444,7 +445,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             for (Enchantment enchant : enchants.keySet()) {
                 IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, ForgeRegistries.ENCHANTMENTS.getKey(enchant));
                 if (bonus != null) {
-                    retVal.add(bonus.getTotal(recipeManager, new ArrayList<>()).multiply(enchants.get(enchant)));
+                    retVal.add(bonus.getTotal(recipeManager, registryAccess, new ArrayList<>()).multiply(enchants.get(enchant)));
                 }
             }
         }
