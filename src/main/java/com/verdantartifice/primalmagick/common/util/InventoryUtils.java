@@ -56,7 +56,7 @@ public class InventoryUtils {
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
-                    ItemStack.isSame(stack, searchStack);
+                    ItemStack.isSameItem(stack, searchStack);
             if (areEqual) {
                 count -= searchStack.getCount();
                 if (count <= 0) {
@@ -145,7 +145,7 @@ public class InventoryUtils {
             // Determine if the stack items, and optionally NBT, match
             boolean areEqual = matchNBT ?
                     ItemStack.matches(stack, searchStack) :
-                    ItemStack.isSame(stack, searchStack);
+                    ItemStack.isSameItem(stack, searchStack);
             if (areEqual) {
                 if (searchStack.getCount() > count) {
                     searchStack.shrink(count);
@@ -282,7 +282,7 @@ public class InventoryUtils {
                 // Determine if the stack items, and optionally NBT, match
                 boolean areEqual = matchNBT ?
                         ItemStack.matches(toFind, searchStack) :
-                        ItemStack.isSame(toFind, searchStack);
+                        ItemStack.isSameItem(toFind, searchStack);
                 if (areEqual) {
                     retVal.add(searchStack);
                 }
