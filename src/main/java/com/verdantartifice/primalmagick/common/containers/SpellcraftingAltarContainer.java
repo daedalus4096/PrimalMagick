@@ -397,7 +397,7 @@ public class SpellcraftingAltarContainer extends AbstractContainerMenu {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv);
+                    stack = recipe.assemble(this.scrollInv, world.registryAccess());
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }
