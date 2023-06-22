@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWi
 import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -21,13 +22,14 @@ import net.minecraft.world.item.ItemStack;
 public class DissolutionRecipePage extends AbstractRecipePage {
     protected DissolutionRecipe recipe;
     
-    public DissolutionRecipePage(DissolutionRecipe recipe) {
+    public DissolutionRecipePage(DissolutionRecipe recipe, RegistryAccess registryAccess) {
+        super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem().getDescriptionId();
+        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
     }
 
     @Override
@@ -46,7 +48,7 @@ public class DissolutionRecipePage extends AbstractRecipePage {
         }
 
         // Render output stack
-        ItemStack output = this.recipe.getResultItem();
+        ItemStack output = this.recipe.getResultItem(this.registryAccess);
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget

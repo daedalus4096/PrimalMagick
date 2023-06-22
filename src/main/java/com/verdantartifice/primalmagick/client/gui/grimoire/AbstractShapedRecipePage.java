@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWid
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -24,13 +25,14 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
 public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> extends AbstractRecipePage {
     protected T recipe;
     
-    public AbstractShapedRecipePage(T recipe) {
+    public AbstractShapedRecipePage(T recipe, RegistryAccess registryAccess) {
+        super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem().getDescriptionId();
+        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
     }
 
     @Override
@@ -52,7 +54,7 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
         }
         
         // Render output stack
-        ItemStack output = this.recipe.getResultItem();
+        ItemStack output = this.recipe.getResultItem(this.registryAccess);
         screen.addWidgetToScreen(new ItemStackWidget(output, x + 27 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget

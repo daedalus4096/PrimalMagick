@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -25,14 +26,16 @@ import net.minecraft.world.item.crafting.Recipe;
  */
 public class RecipeMetadataPage extends AbstractPage {
     protected final Recipe<?> recipe;
+    protected final RegistryAccess registryAccess;
     protected final boolean firstPage;
     
-    public RecipeMetadataPage(Recipe<?> recipe) {
-        this(recipe, false);
+    public RecipeMetadataPage(Recipe<?> recipe, RegistryAccess registryAccess) {
+        this(recipe, registryAccess, false);
     }
     
-    public RecipeMetadataPage(Recipe<?> recipe, boolean firstPage) {
+    public RecipeMetadataPage(Recipe<?> recipe, RegistryAccess registryAccess, boolean firstPage) {
         this.recipe = recipe;
+        this.registryAccess = registryAccess;
         this.firstPage = firstPage;
     }
     
@@ -80,7 +83,7 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem().getDescriptionId();
+        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWi
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -19,13 +20,14 @@ import net.minecraft.network.chat.Component;
 public class RunecarvingRecipePage extends AbstractRecipePage {
     protected RunecarvingRecipe recipe;
     
-    public RunecarvingRecipePage(RunecarvingRecipe recipe) {
+    public RunecarvingRecipePage(RunecarvingRecipe recipe, RegistryAccess registryAccess) {
+        super(registryAccess);
         this.recipe = recipe;
     }
 
     @Override
     protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem().getDescriptionId();
+        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
         screen.addWidgetToScreen(new IngredientWidget(this.recipe.getIngredients().get(1), x + 58 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 99, screen));
 
         // Render output stack
-        screen.addWidgetToScreen(new ItemStackWidget(this.recipe.getResultItem(), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
+        screen.addWidgetToScreen(new ItemStackWidget(this.recipe.getResultItem(this.registryAccess), x + 29 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, false));
         
         // Render recipe type widget
         screen.addWidgetToScreen(new RecipeTypeWidget(this.recipe, x - 22 + (side * 140) + (indent / 2) - (overlayWidth / 2), y + 30, Component.translatable(this.getRecipeTypeTranslationKey())));
