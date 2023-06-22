@@ -484,7 +484,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected void finishCraft() {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe != null) {
-            this.setItem(0, recipe.getResultItem().copy());
+            this.setItem(0, recipe.getResultItem(this.getLevel().registryAccess()).copy());
         }
         if (this.getActivePlayer() != null) {
             this.getActivePlayer().displayClientMessage(Component.translatable("primalmagick.ritual.info.complete"), false);
