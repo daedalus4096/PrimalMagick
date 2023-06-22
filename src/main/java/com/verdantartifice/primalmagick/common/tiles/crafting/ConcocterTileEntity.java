@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -229,12 +230,12 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
                 testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
             }
             IConcoctingRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.CONCOCTING.get(), testInv, level).orElse(null);
-            if (entity.canConcoct(realInv, recipe)) {
+            if (entity.canConcoct(realInv, level.registryAccess(), recipe)) {
                 entity.cookTime++;
                 if (entity.cookTime >= entity.cookTimeTotal) {
                     entity.cookTime = 0;
                     entity.cookTimeTotal = entity.getCookTimeTotal();
-                    entity.doConcoction(realInv, recipe);
+                    entity.doConcoction(realInv, level.registryAccess(), recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -250,9 +251,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         }
     }
     
-    protected boolean canConcoct(Container inputInv, @Nullable IConcoctingRecipe recipe) {
+    protected boolean canConcoct(Container inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.getResultItem();
+            ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
             } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
@@ -276,9 +277,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         }
     }
     
-    protected void doConcoction(Container inputInv, @Nullable IConcoctingRecipe recipe) {
-        if (recipe != null && this.canConcoct(inputInv, recipe)) {
-            ItemStack recipeOutput = recipe.assemble(inputInv);
+    protected void doConcoction(Container inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
+        if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
+            ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
             if (currentOutput.isEmpty()) {
                 this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);

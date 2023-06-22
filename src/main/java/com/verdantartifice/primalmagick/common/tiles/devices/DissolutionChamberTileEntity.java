@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -141,12 +142,12 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
 
             SimpleContainer testInv = new SimpleContainer(entity.items.get(INPUT_SLOT_INDEX));
             IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
-            if (entity.canDissolve(testInv, recipe)) {
+            if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = entity.getProcessTimeTotal();
-                    entity.doDissolve(testInv, recipe);
+                    entity.doDissolve(testInv, level.registryAccess(), recipe);
                     shouldMarkDirty = true;
                 }
             } else {
@@ -160,9 +161,9 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         }
     }
     
-    protected boolean canDissolve(Container inputInv, IDissolutionRecipe recipe) {
+    protected boolean canDissolve(Container inputInv, RegistryAccess registryAccess, IDissolutionRecipe recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.getResultItem();
+            ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
             } else if (this.getMana(Source.EARTH) < (100 * recipe.getManaCosts().getAmount(Source.EARTH))) {
@@ -184,9 +185,9 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         }
     }
     
-    protected void doDissolve(Container inputInv, IDissolutionRecipe recipe) {
-        if (recipe != null && this.canDissolve(inputInv, recipe)) {
-            ItemStack recipeOutput = recipe.assemble(inputInv);
+    protected void doDissolve(Container inputInv, RegistryAccess registryAccess, IDissolutionRecipe recipe) {
+        if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
+            ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
             if (currentOutput.isEmpty()) {
                 this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);

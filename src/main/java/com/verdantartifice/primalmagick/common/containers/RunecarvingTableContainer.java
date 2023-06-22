@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -83,7 +84,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
             public void onTake(Player thePlayer, ItemStack stack) {
                 RunecarvingTableContainer.this.inputSlabSlot.remove(1);
                 RunecarvingTableContainer.this.inputLapisSlot.remove(1);
-                RunecarvingTableContainer.this.updateRecipeResultSlot();
+                RunecarvingTableContainer.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
                 
                 stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
                 RunecarvingTableContainer.this.worldPosCallable.execute((world, pos) -> {
@@ -147,7 +148,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
     public boolean clickMenuButton(Player playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
             this.selectedRecipe.set(id);
-            this.updateRecipeResultSlot();
+            this.updateRecipeResultSlot(playerIn.level().registryAccess());
         }
         return true;
     }
@@ -175,10 +176,10 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         }
     }
     
-    protected void updateRecipeResultSlot() {
+    protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
-            this.outputSlot.set(recipe.assemble(this.tableInv));
+            this.outputSlot.set(recipe.assemble(this.tableInv, registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }

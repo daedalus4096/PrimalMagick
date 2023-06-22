@@ -179,7 +179,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
                 // If the inputs match a defined arcane recipe, show the output if the player can use it
                 IArcaneRecipe recipe = arcaneOptional.get();
                 if (this.canUseArcaneRecipe(world, spe, recipe)) {
-                    stack = recipe.assemble(this.craftingInv);
+                    stack = recipe.assemble(this.craftingInv, world.registryAccess());
                 }
             } else {
                 Optional<CraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInv, world);
@@ -187,7 +187,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
                     // If the inputs match a defined vanilla recipe, show the output if the player can use it
                     CraftingRecipe recipe = vanillaOptional.get();
                     if (this.resultInv.setRecipeUsed(world, spe, recipe)) {
-                        stack = recipe.assemble(this.craftingInv);
+                        stack = recipe.assemble(this.craftingInv, world.registryAccess());
                     }
                 }
             }
