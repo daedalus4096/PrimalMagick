@@ -148,7 +148,7 @@ public class RayTraceUtils {
         Vec3 sourceVec = source.getEyePosition();
         Vec3 targetVec = Vec3.atCenterOf(target);
         ClipContext context = new ClipContext(sourceVec, targetVec, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, source);
-        BlockHitResult result = source.getLevel().clip(context);
+        BlockHitResult result = source.level().clip(context);
         
         if (result == null || result.getType() == HitResult.Type.MISS) {
             return true;
