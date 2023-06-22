@@ -14,12 +14,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
+import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -109,9 +111,9 @@ public class ClientArcaneRecipeBook {
             // We don't deal with these crafting types
             return ArcaneRecipeBookCategories.UNKNOWN;
         } else {
-            LOGGER.warn("Unknown recipe category: {}/{}", () -> {
-                return Registry.RECIPE_TYPE.getKey(recipe.getType());
-            }, recipe::getId);
+            LOGGER.warn("Unknown recipe category: {}/{}", LogUtils.defer(() -> {
+                return BuiltInRegistries.RECIPE_TYPE.getKey(recipe.getType());
+            }), LogUtils.defer(recipe::getId));
             return ArcaneRecipeBookCategories.UNKNOWN;
         }
     }
