@@ -21,8 +21,11 @@ import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipe
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.Tags;
@@ -43,13 +46,15 @@ public class ClientArcaneRecipeBook {
         this.book = book;
     }
     
-    public void setupCollections(Iterable<Recipe<?>> recipes) {
-        Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> recipeListMap = categorizeAndGroupRecipes(recipes);
+    public void setupCollections(Iterable<Recipe<?>> recipes, RegistryAccess registryAccess) {
+        Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> recipeListMap = categorizeAndGroupRecipes(recipes, registryAccess);
         Map<ArcaneRecipeBookCategories, List<ArcaneRecipeCollection>> recipeCollectionMap = new HashMap<>();
         Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
 
         recipeListMap.forEach((category, recipeLists) -> {
-            recipeCollectionMap.put(category, recipeLists.stream().map(ArcaneRecipeCollection::new).peek(builder::add).collect(ImmutableList.toImmutableList()));
+            recipeCollectionMap.put(category, recipeLists.stream().map(recipeList -> {
+                return new ArcaneRecipeCollection(registryAccess, recipeList);
+            }).peek(builder::add).collect(ImmutableList.toImmutableList()));
         });
         ArcaneRecipeBookCategories.AGGREGATE_CATEGORIES.forEach((searchCategory, subCategories) -> {
             recipeCollectionMap.put(searchCategory, subCategories.stream().flatMap(cat -> {
@@ -61,13 +66,13 @@ public class ClientArcaneRecipeBook {
         this.allCollections = builder.build();
     }
     
-    protected static Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> categorizeAndGroupRecipes(Iterable<Recipe<?>> recipes) {
+    protected static Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> categorizeAndGroupRecipes(Iterable<Recipe<?>> recipes, RegistryAccess registryAccess) {
         Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> retVal = new HashMap<>();
         Table<ArcaneRecipeBookCategories, String, List<Recipe<?>>> table = HashBasedTable.create();
 
         for (Recipe<?> recipe : recipes) {
             if ((ArcaneRecipeBook.isValid(recipe) || !recipe.isSpecial()) && !recipe.isIncomplete()) {
-                ArcaneRecipeBookCategories category = getCategory(recipe);
+                ArcaneRecipeBookCategories category = getCategory(recipe, registryAccess);
                 String group = recipe.getGroup();
                 if (group.isEmpty()) {
                     retVal.computeIfAbsent(category, c -> new ArrayList<>()).add(ImmutableList.of(recipe));
@@ -87,21 +92,21 @@ public class ClientArcaneRecipeBook {
     }
     
     @SuppressWarnings("deprecation")
-    protected static ArcaneRecipeBookCategories getCategory(Recipe<?> recipe) {
+    protected static ArcaneRecipeBookCategories getCategory(Recipe<?> recipe, RegistryAccess registryAccess) {
         RecipeType<?> type = recipe.getType();
         if (type == RecipeTypesPM.ARCANE_CRAFTING.get()) {
             return ArcaneRecipeBookCategories.CRAFTING_ARCANE;
         } else if (type == RecipeTypesPM.CONCOCTING.get()) {
-            return recipe.getResultItem().getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
+            return recipe.getResultItem(registryAccess).getItem() instanceof AlchemicalBombItem ? ArcaneRecipeBookCategories.CONCOCTER_BOMB : ArcaneRecipeBookCategories.CONCOCTER_DRINKABLE;
         } else if (type == RecipeTypesPM.DISSOLUTION.get()) {
-            return recipe.getResultItem().is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
-        } else if (type == RecipeType.CRAFTING) {
-            CreativeModeTab tab = recipe.getResultItem().getItem().getItemCategory();
-            if (tab == CreativeModeTab.TAB_BUILDING_BLOCKS) {
+            return recipe.getResultItem(registryAccess).is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
+        } else if (type == RecipeType.CRAFTING && recipe instanceof CraftingRecipe craftingRecipe) {
+            CraftingBookCategory category = craftingRecipe.category();
+            if (category == CraftingBookCategory.BUILDING) {
                 return ArcaneRecipeBookCategories.CRAFTING_BUILDING_BLOCKS;
-            } else if (tab == CreativeModeTab.TAB_TOOLS || tab == CreativeModeTab.TAB_COMBAT) {
+            } else if (category == CraftingBookCategory.EQUIPMENT) {
                 return ArcaneRecipeBookCategories.CRAFTING_EQUIPMENT;
-            } else if (tab == CreativeModeTab.TAB_REDSTONE) {
+            } else if (category == CraftingBookCategory.REDSTONE) {
                 return ArcaneRecipeBookCategories.CRAFTING_REDSTONE;
             } else {
                 return ArcaneRecipeBookCategories.CRAFTING_MISC;
