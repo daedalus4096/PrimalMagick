@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -32,7 +33,7 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class ConfiguredFeaturesPM {
-    private static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registry.CONFIGURED_FEATURE_REGISTRY, PrimalMagick.MODID);
+    private static final DeferredRegister<ConfiguredFeature<?, ?>> CONFIGURED_FEATURES = DeferredRegister.create(Registries.CONFIGURED_FEATURE, PrimalMagick.MODID);
 
     public static void init() {
         CONFIGURED_FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
