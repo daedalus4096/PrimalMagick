@@ -38,6 +38,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -50,7 +51,7 @@ import net.minecraft.world.level.Level;
 public class SpellcraftingAltarContainer extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "spellcrafting");
 
-    protected final CraftingContainer scrollInv = new CraftingContainer(this, 1, 1);
+    protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess worldPosCallable;

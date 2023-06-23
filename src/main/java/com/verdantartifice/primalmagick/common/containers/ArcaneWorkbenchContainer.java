@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -35,7 +36,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
-    protected final CraftingContainer craftingInv = new CraftingContainer(this, 3, 3);
+    protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess worldPosCallable;

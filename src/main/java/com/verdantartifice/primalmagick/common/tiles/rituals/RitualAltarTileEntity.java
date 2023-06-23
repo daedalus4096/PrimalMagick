@@ -78,6 +78,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -403,7 +404,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         
         // Determine recipe that corresponds to offerings
-        CraftingContainer inv = new CraftingContainer(new FakeContainer(), offerings.size(), 1);
+        CraftingContainer inv = new TransientCraftingContainer(new FakeContainer(), offerings.size(), 1);
         int offeringIndex = 0;
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);

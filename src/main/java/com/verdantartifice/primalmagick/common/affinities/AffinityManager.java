@@ -41,6 +41,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
@@ -334,7 +335,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         NonNullList<ItemStack> containerList = NonNullList.create();
         if (recipe instanceof CraftingRecipe) {
             CraftingRecipe craftingRecipe = (CraftingRecipe)recipe;
-            CraftingContainer inv = new CraftingContainer(new FakeContainer(), ingredients.size(), 1);
+            CraftingContainer inv = new TransientCraftingContainer(new FakeContainer(), ingredients.size(), 1);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
                 ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);
