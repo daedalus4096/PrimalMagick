@@ -41,7 +41,7 @@ public class IgnyxEntity extends ThrowableItemProjectile {
         super.onHit(result);
         Level level = this.level();
         if (!level.isClientSide) {
-            level.explode(this, this.getX(), this.getY(), this.getZ(), 1.5F, BlockInteraction.BREAK);
+            level.explode(this, this.getX(), this.getY(), this.getZ(), 1.5F, Level.ExplosionInteraction.TNT);
             this.discard();
         }
     }

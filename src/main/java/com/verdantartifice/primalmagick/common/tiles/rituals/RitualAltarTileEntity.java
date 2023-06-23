@@ -1021,7 +1021,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
                 this.scanDirty = true;
             }
             float force = central ? 3.0F + this.level.random.nextFloat() : 2.0F;
-            this.level.explode(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Explosion.BlockInteraction.BREAK);
+            this.level.explode(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Level.ExplosionInteraction.TNT);
         }
     }
 }
