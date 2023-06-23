@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
 public class ArcaneRecipeCollection {
+    protected final RegistryAccess registryAccess;
     protected final List<Recipe<?>> recipes;
     protected final boolean singleResultItem;
     protected final Set<Recipe<?>> craftable = new HashSet<>();
@@ -23,6 +24,7 @@ public class ArcaneRecipeCollection {
     protected final Set<Recipe<?>> known = new HashSet<>();
     
     public ArcaneRecipeCollection(RegistryAccess registryAccess, List<Recipe<?>> recipes) {
+        this.registryAccess = registryAccess;
         this.recipes = ImmutableList.copyOf(recipes);
         if (recipes.size() <= 1) {
             this.singleResultItem = true;
@@ -32,6 +34,7 @@ public class ArcaneRecipeCollection {
     }
     
     public ArcaneRecipeCollection(RecipeCollection vanillaCollection) {
+        this.registryAccess = vanillaCollection.registryAccess();
         this.recipes = ImmutableList.copyOf(vanillaCollection.getRecipes());
         this.singleResultItem = vanillaCollection.hasSingleResultItem();
     }
@@ -89,6 +92,10 @@ public class ArcaneRecipeCollection {
     
     public List<Recipe<?>> getRecipes() {
         return this.recipes;
+    }
+    
+    public RegistryAccess registryAccess() {
+        return this.registryAccess;
     }
     
     public List<Recipe<?>> getRecipes(boolean isCraftable) {
