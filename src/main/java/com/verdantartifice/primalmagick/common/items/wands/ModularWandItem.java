@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
@@ -19,7 +20,6 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
@@ -28,11 +28,13 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 
 /**
  * Item definition for a modular wand.  Modular wands are made up of cores, caps, and gems, and their
@@ -251,21 +253,20 @@ public class ModularWandItem extends AbstractWandItem {
         return this.getComponents(stack).stream().mapToInt(IWandComponent::getEnchantability).sum();
     }
     
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        // Populate the creative pane with a NBT-complete modular wand(s)
-        if (this.allowedIn(group)) {
-            ItemStack stack = new ItemStack(this);
-            this.setWandCore(stack, WandCore.HEARTWOOD);
-            this.setWandCap(stack, WandCap.IRON);
-            this.setWandGem(stack, WandGem.APPRENTICE);
-            items.add(stack);
+    public static void registerCreativeTabItems(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> itemSupplier) {
+        Item item = itemSupplier.get().asItem();
+        if (item instanceof ModularWandItem wandItem) {
+            ItemStack stack = new ItemStack(wandItem);
+            wandItem.setWandCore(stack, WandCore.HEARTWOOD);
+            wandItem.setWandCap(stack, WandCap.IRON);
+            wandItem.setWandGem(stack, WandGem.APPRENTICE);
+            event.accept(stack);
             
-            stack = new ItemStack(this);
-            this.setWandCore(stack, WandCore.HEARTWOOD);
-            this.setWandCap(stack, WandCap.IRON);
-            this.setWandGem(stack, WandGem.CREATIVE);
-            items.add(stack);
+            stack = new ItemStack(wandItem);
+            wandItem.setWandCore(stack, WandCore.HEARTWOOD);
+            wandItem.setWandCap(stack, WandCap.IRON);
+            wandItem.setWandGem(stack, WandGem.CREATIVE);
+            event.accept(stack);
         }
     }
     

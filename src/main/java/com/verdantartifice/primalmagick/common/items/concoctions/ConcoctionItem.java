@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
@@ -9,9 +10,8 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +23,6 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -32,11 +31,13 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 
 /**
  * Definition of an alchemical concoction.  Similar to a brewed potion, but a single vial contains
@@ -153,19 +154,20 @@ public class ConcoctionItem extends Item {
         return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowedIn(group)) {
-            items.add(this.getDefaultInstance());   // Add basic water concoction separately
-            for (ConcoctionType concoctionType : ConcoctionType.values()) {
-                if (concoctionType.hasDrinkablePotion()) {
-                    for (Potion potion : Registry.POTION) { // Use Vanilla registry to preserve item ordering
-                        if (ConcoctionUtils.hasBeneficialEffect(potion)) {
-                            items.add(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(this), potion), concoctionType));
-                        }
-                    }
-                }
+    public static void registerCreativeTabItems(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> itemSupplier) {
+        Item item = itemSupplier.get().asItem();
+        event.accept(item.getDefaultInstance());    // Add basic water concoction separately
+        for (ConcoctionType concoctionType : ConcoctionType.values()) {
+            if (concoctionType.hasDrinkablePotion()) {
+                event.getParameters().holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
+                    registryLookup.listElements().filter(potionRef -> {
+                        return !potionRef.is(Potions.EMPTY_ID) && ConcoctionUtils.hasBeneficialEffect(potionRef.value());
+                    }).map(potionRef -> {
+                        return ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), concoctionType);
+                    }).forEach(stack -> {
+                        event.accept(stack);
+                    });
+                });
             }
         }
     }

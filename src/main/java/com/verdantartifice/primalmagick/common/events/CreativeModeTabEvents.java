@@ -17,7 +17,7 @@ public class CreativeModeTabEvents {
     @SubscribeEvent
     public static void onCreativeModeTabRegister(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabsPM.TAB.getKey()) {
-            CreativeModeTabsPM.getRegisteredTabItems().forEach(itemSupplier -> event.accept(itemSupplier));
+            CreativeModeTabsPM.getTabRegistrationEntries().forEach(entry -> entry.register(event));
         }
     }
 }

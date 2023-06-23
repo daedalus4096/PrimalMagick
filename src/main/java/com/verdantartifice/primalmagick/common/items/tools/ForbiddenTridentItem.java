@@ -9,9 +9,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTrid
 import com.verdantartifice.primalmagick.common.entities.projectiles.ForbiddenTridentEntity;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -40,14 +38,6 @@ public class ForbiddenTridentItem extends AbstractTieredTridentItem {
         ItemStack stack = new ItemStack(this);
         EnchantmentHelper.setEnchantments(ImmutableMap.of(EnchantmentsPM.RENDING.get(), 2), stack);
         return stack;
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        // Populate the creative pane with a pre-enchanted trident
-        if (this.allowedIn(group)) {
-            items.add(this.getDefaultInstance());
-        }
     }
 
     @Override
