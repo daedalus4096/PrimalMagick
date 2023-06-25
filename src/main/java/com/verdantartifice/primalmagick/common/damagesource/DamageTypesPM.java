@@ -18,7 +18,7 @@ public class DamageTypesPM {
     public static final ResourceKey<DamageType> HELLISH_CHAIN = create("hellish_chain");
     public static final ResourceKey<DamageType> SORCERY = create("sorcery");
     
-    public static ResourceKey<DamageType> create(String name) {
+    private static ResourceKey<DamageType> create(String name) {
         return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(PrimalMagick.MODID, name));
     }
     

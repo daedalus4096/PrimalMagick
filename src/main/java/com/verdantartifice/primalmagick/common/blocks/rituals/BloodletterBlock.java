@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -70,7 +70,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
         if (player != null && player.getItemInHand(handIn).isEmpty() && !state.getValue(FILLED)) {
             // If using an empty hand on an unfilled bloodletter, cut the player
             if (!worldIn.isClientSide) {
-                player.hurt(DamageSourcesPM.BLEEDING, 2.0F);
+                player.hurt(DamageSourcesPM.bleeding(worldIn), 2.0F);
                 worldIn.setBlock(pos, state.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
                 // If this block is awaiting activation for an altar, notify it

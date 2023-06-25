@@ -10,13 +10,14 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns.CooldownType;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentHelperPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -84,7 +85,7 @@ public class CombatEvents {
         if (event.getSource().getEntity() instanceof Player attacker) {
             // If the attacker has lesser infernal attunement, launch a hellish chain at the next closest nearby target
             Level attackerLevel = attacker.level();
-            if (!DamageSourcesPM.HELLISH_CHAIN_TYPE.equals(event.getSource().msgId) && 
+            if (!event.getSource().is(DamageTypesPM.HELLISH_CHAIN) && 
                     event.getAmount() > 0.0F && 
                     !attackerLevel.isClientSide && 
                     AttunementManager.meetsThreshold(attacker, Source.INFERNAL, AttunementThreshold.LESSER)) {
@@ -92,7 +93,7 @@ public class CombatEvents {
                         Arrays.asList(event.getEntity(), attacker), LivingEntity.class, 4.0D, EntitySelectorsPM.validHellishChainTarget(attacker));
                 if (!targets.isEmpty()) {
                     LivingEntity target = targets.get(0);
-                    target.hurt(DamageSourcesPM.causeHellishChainDamage(attacker), event.getAmount() / 2.0F);
+                    target.hurt(DamageSourcesPM.hellishChain(attackerLevel, attacker), event.getAmount() / 2.0F);
                     PacketHandler.sendToAllAround(new SpellBoltPacket(event.getEntity().getEyePosition(1.0F), target.getEyePosition(1.0F), Source.INFERNAL.getColor()), 
                             attackerLevel.dimension(), event.getEntity().blockPosition(), 64.0D);
                     attackerLevel.playSound(null, event.getEntity().blockPosition(), SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(attackerLevel.random.nextGaussian() * 0.05D));

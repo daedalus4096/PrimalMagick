@@ -5,7 +5,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -67,13 +67,13 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
-            return DamageSourcesPM.causeIndirectSorceryDamage(projectileEntity, source);
+            return DamageSourcesPM.sorcery(source.level(), projectileEntity, source);
         } else if (spell.getVehicle().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
-            return DamageSourcesPM.causeIndirectSorceryDamage(null, source);
+            return DamageSourcesPM.sorcery(source.level(), null, source);
         } else {
             // Otherwise, do direct damage
-            return DamageSourcesPM.causeDirectSorceryDamage(source);
+            return DamageSourcesPM.sorcery(source.level(), source);
         }
     }
 
