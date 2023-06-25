@@ -42,21 +42,21 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
-        event.register(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
-        event.register(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
-        event.register(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
-        event.register(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
-        event.register(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
-        event.register(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
-        event.register(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
-        event.register(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
-        event.register(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
-        event.register(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
-        event.register(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
-        event.register(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
-        event.register(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
-        event.register(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
-        event.register(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.MANA_SPARKLE.get(), ManaSparkleParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.SPELL_SPARKLE.get(), SpellSparkleParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.SPELL_BOLT.get(), SpellBoltParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.OFFERING.get(), OfferingParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.PROP_MARKER.get(), PropMarkerParticle.Factory::new);
+        event.registerSpecial(ParticleTypesPM.POTION_EXPLOSION.get(), new PotionExplosionParticle.Factory());
+        event.registerSpecial(ParticleTypesPM.NOTE_EMITTER.get(), new NoteEmitterParticle.Factory());
+        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_U.get(), SpellcraftingRuneParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_V.get(), SpellcraftingRuneParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_T.get(), SpellcraftingRuneParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.SPELLCRAFTING_RUNE_D.get(), SpellcraftingRuneParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
+        event.registerSpriteSet(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
     }
     
     /**
