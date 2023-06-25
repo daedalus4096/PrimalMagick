@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -46,7 +47,7 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
             return true;
         }
         
-        ItemStack recipeOutput = recipe.getResultItem();
+        ItemStack recipeOutput = RecipeUtil.getResultItem(recipe);
         if (recipeOutput == null || recipeOutput.isEmpty()) {
             LOGGER.error("Recipe has no output. {}", recipe.getId().toString());
             return false;

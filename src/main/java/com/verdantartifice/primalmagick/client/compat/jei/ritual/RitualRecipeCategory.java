@@ -18,6 +18,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -63,7 +64,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
         for (int index = 0; index < propCount; index++) {
             builder.addSlot(RecipeIngredientRole.INPUT, 1 + (index % 6) * 18, 63 + ((index / 6) * 18)).addIngredients(props.get(index));
         }
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 149, 32).addItemStack(recipe.getResultItem());
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 149, 32).addItemStack(RecipeUtil.getResultItem(recipe));
     }
 
     @Override
