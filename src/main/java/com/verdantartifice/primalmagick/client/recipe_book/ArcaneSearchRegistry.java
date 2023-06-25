@@ -46,7 +46,7 @@ public class ArcaneSearchRegistry {
     public static void populate() {
         Minecraft mc = Minecraft.getInstance();
         ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
-        book.setupCollections(mc.level.getRecipeManager().getRecipes());
+        book.setupCollections(mc.level.getRecipeManager().getRecipes(), mc.level.registryAccess());
         mc.getSearchTreeManager().populate(ARCANE_RECIPE_COLLECTIONS, book.getCollections());
     }
 }

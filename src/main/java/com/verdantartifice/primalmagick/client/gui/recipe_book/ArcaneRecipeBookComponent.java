@@ -98,7 +98,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.vanillaBook = mc.player.getRecipeBook();
         
         this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
-        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes());
+        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes(), this.mc.level.registryAccess());
         this.arcaneBook.getCollections().forEach(collection -> {
             collection.updateKnownRecipes(this.vanillaBook, this.arcaneBook.getData());
         });
