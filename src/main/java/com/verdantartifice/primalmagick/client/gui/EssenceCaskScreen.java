@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
@@ -81,7 +79,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
             if (widget.isHoveredOrFocused()) {
-                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), this.getBlitOffset(), this.slotColor);
+                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), 0, this.slotColor);
                 widget.renderToolTip(guiGraphics, mouseX, mouseY);
             }
         }
