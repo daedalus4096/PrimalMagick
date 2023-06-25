@@ -23,6 +23,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -50,7 +51,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack itemStack, ItemDisplayContext transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ArcanometerItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
@@ -89,11 +90,12 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     }
     
     private void renderScreenItem(ItemRenderer itemRenderer, ItemStack screenStack, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        Minecraft mc = Minecraft.getInstance();
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0.4375D, 0.405D);
         matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.2F, 0.2F, 0.0001F);
-        itemRenderer.renderStatic(screenStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer, 0);
+        itemRenderer.renderStatic(screenStack, ItemDisplayContext.GUI, combinedLight, combinedOverlay, matrixStack, buffer, mc.level, 0);
         matrixStack.popPose();
     }
     

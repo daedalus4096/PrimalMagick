@@ -11,12 +11,12 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -91,7 +91,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             matrixStack.translate(0.5D, 1.5D, 0.5D);
             matrixStack.mulPose(Axis.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
             matrixStack.scale(0.75F, 0.75F, 0.75F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer, tileEntityIn.getLevel(), 0);
             matrixStack.popPose();
         }
 
