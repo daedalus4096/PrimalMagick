@@ -7,11 +7,10 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -126,16 +125,11 @@ public class EntityEvents {
     public static void onLootingLevel(LootingLevelEvent event) {
         // If the damage was magickal, apply the Treasure enchantment as a looting modifier if greater than what's already there
         DamageSource source = event.getDamageSource();
-        Entity caster = null;
-        if (source != null && source.isMagic()) {
-            if (source instanceof IndirectEntityDamageSource indirectSource) {
-                caster = indirectSource.getEntity();
-            } else if (source instanceof EntityDamageSource directSource) {
-                caster = directSource.getEntity();
+        if (source != null && source.is(DamageTypeTagsPM.IS_MAGIC)) {
+            Entity caster = source.getEntity();
+            if (caster != null && caster instanceof LivingEntity living) {
+                event.setLootingLevel(Math.max(event.getLootingLevel(), EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), living)));
             }
-        }
-        if (caster != null && caster instanceof LivingEntity living) {
-            event.setLootingLevel(Math.max(event.getLootingLevel(), EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), living)));
         }
     }
 }

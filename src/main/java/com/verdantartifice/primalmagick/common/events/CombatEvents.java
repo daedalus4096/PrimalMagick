@@ -131,7 +131,7 @@ public class CombatEvents {
             }
             
             // Reduce all non-absolute (e.g. starvation) damage taken players with lesser void attunement
-            if (!event.getSource().isBypassMagic() && AttunementManager.meetsThreshold(target, Source.VOID, AttunementThreshold.LESSER)) {
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(target, Source.VOID, AttunementThreshold.LESSER)) {
                 event.setAmount(0.9F * event.getAmount());
             }
         }
@@ -141,7 +141,7 @@ public class CombatEvents {
             Player attacker = (Player)event.getSource().getEntity();
             
             // Increase all non-absolute damage dealt by players with greater void attunement
-            if (!event.getSource().isBypassMagic() && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
                 event.setAmount(1.25F * event.getAmount());
             }
             
