@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
+
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -24,7 +26,7 @@ public class AegisEnchantment extends ProtectionEnchantment {
             return 0;
         } else if (source.is(DamageTypeTags.IS_FALL)) {
             return level * 3;
-        } else if (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_PROJECTILE) || source.isMagic()) {
+        } else if (source.is(DamageTypeTags.IS_FIRE) || source.is(DamageTypeTags.IS_EXPLOSION) || source.is(DamageTypeTags.IS_PROJECTILE) || source.is(DamageTypeTagsPM.IS_MAGIC)) {
             return level * 2;
         } else {
             return level;

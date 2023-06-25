@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
+import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
+
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -27,9 +30,9 @@ public class MagickProtectionEnchantment extends ProtectionEnchantment {
 
     @Override
     public int getDamageProtection(int level, DamageSource source) {
-        if (source.isBypassInvul()) {
+        if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
             return 0;
-        } else if (source.isMagic()) {
+        } else if (source.is(DamageTypeTagsPM.IS_MAGIC)) {
             return level * 2;
         } else {
             return 0;
