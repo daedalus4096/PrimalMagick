@@ -131,7 +131,7 @@ public class PacketHandler {
     
     public static void sendToPlayer(IMessageToClient message, ServerPlayer player) {
         // Send a message from the server to a specific player's client
-        INSTANCE.sendTo(message, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+        INSTANCE.sendTo(message, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
     
     public static void sendToAllAround(IMessageToClient message, ResourceKey<Level> dimension, BlockPos center, double radius) {
