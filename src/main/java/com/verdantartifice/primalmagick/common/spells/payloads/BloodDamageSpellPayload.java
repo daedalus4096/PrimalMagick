@@ -9,9 +9,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -50,12 +47,6 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     @Override
     protected float getBaseDamage(SpellPackage spell, ItemStack spellSource) {
         return 3.0F + (2.0F * this.getModdedPropertyValue("power", spell, spellSource));
-    }
-
-    @Override
-    protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
-        // Bypass the target's armor, if any
-        return super.getDamageSource(source, spell, projectileEntity).bypassArmor();
     }
 
     @Override

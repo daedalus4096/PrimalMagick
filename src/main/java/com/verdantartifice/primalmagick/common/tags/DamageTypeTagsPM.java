@@ -15,6 +15,7 @@ import net.minecraft.world.damagesource.DamageType;
  */
 public class DamageTypeTagsPM {
     public static final TagKey<DamageType> IS_MAGIC = create("is_magic");
+    public static final TagKey<DamageType> IS_SORCERY = create("is_sorcery");
     
     private static TagKey<DamageType> create(String name) {
         return TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(PrimalMagick.MODID, name));

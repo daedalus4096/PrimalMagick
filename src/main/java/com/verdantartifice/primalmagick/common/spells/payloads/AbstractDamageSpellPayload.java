@@ -67,13 +67,13 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
-            return DamageSourcesPM.sorcery(source.level(), projectileEntity, source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), projectileEntity, source);
         } else if (spell.getVehicle().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
-            return DamageSourcesPM.sorcery(source.level(), null, source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), null, source);
         } else {
             // Otherwise, do direct damage
-            return DamageSourcesPM.sorcery(source.level(), source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), source);
         }
     }
 

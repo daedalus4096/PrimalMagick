@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.damagesource;
 
+import com.verdantartifice.primalmagick.common.sources.Source;
+
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -20,11 +22,11 @@ public class DamageSourcesPM {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.HELLISH_CHAIN), directSource);
     }
     
-    public static DamageSource sorcery(Level level, LivingEntity directSource) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.SORCERY), directSource);
+    public static DamageSource sorcery(Level level, Source source, LivingEntity directSource) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.getSorceryType(source)), directSource);
     }
     
-    public static DamageSource sorcery(Level level, Entity directSource, LivingEntity indirectSource) {
-        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.SORCERY), directSource, indirectSource);
+    public static DamageSource sorcery(Level level, Source source, Entity directSource, LivingEntity indirectSource) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.getSorceryType(source)), directSource, indirectSource);
     }
 }

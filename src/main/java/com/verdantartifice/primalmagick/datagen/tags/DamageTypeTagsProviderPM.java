@@ -27,8 +27,9 @@ public class DamageTypeTagsProviderPM extends TagsProvider<DamageType> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(DamageTypesPM.BLEEDING);
-        this.tag(DamageTypeTags.IS_FIRE).add(DamageTypesPM.HELLISH_CHAIN);
-        this.tag(DamageTypeTagsPM.IS_MAGIC).add(DamageTypes.MAGIC, DamageTypesPM.SORCERY);
+        this.tag(DamageTypeTags.BYPASSES_ARMOR).add(DamageTypesPM.BLEEDING, DamageTypesPM.SORCERY_BLOOD);
+        this.tag(DamageTypeTags.IS_FIRE).add(DamageTypesPM.HELLISH_CHAIN, DamageTypesPM.SORCERY_INFERNAL);
+        this.tag(DamageTypeTagsPM.IS_MAGIC).add(DamageTypes.MAGIC).addTag(DamageTypeTagsPM.IS_SORCERY);
+        this.tag(DamageTypeTagsPM.IS_SORCERY).add(DamageTypesPM.SORCERY_EARTH, DamageTypesPM.SORCERY_SEA, DamageTypesPM.SORCERY_SKY, DamageTypesPM.SORCERY_SUN, DamageTypesPM.SORCERY_MOON, DamageTypesPM.SORCERY_BLOOD, DamageTypesPM.SORCERY_INFERNAL, DamageTypesPM.SORCERY_VOID, DamageTypesPM.SORCERY_HALLOWED);
     }
 }
