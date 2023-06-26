@@ -55,6 +55,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -253,8 +254,8 @@ public class TreefolkAi {
 
     private static List<ItemStack> getBarterResponseItems(TreefolkEntity entity) {
         if (entity.level() instanceof ServerLevel serverLevel) {
-            LootTable table = serverLevel.getServer().getLootTables().get(LootTablesPM.TREEFOLK_BARTERING);
-            return table.getRandomItems(new LootContext.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).withRandom(serverLevel.random).create(LootContextParamSets.PIGLIN_BARTER));
+            LootTable table = serverLevel.getServer().getLootData().getLootTable(LootTablesPM.TREEFOLK_BARTERING);
+            return table.getRandomItems(new LootParams.Builder(serverLevel).withParameter(LootContextParams.THIS_ENTITY, entity).create(LootContextParamSets.PIGLIN_BARTER));
         } else {
             return Collections.emptyList();
         }
