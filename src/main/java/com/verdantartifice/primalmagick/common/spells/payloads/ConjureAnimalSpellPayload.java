@@ -17,6 +17,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
@@ -91,8 +92,8 @@ public class ConjureAnimalSpellPayload extends AbstractSpellPayload {
         EntityType<?> entityType = (state.is(FluidTags.WATER) && state.isSource()) ? 
                 WATER_ANIMALS.getRandom(world.random) : 
                 LAND_ANIMALS.getRandom(world.random);
-        if (entityType != null && world instanceof ServerLevel) {
-            entityType.spawn((ServerLevel)world, null, null, pos, MobSpawnType.MOB_SUMMONED, false, false);
+        if (entityType != null && world instanceof ServerLevel serverWorld) {
+            entityType.spawn(serverWorld, (ItemStack)null, (Player)null, pos, MobSpawnType.MOB_SUMMONED, false, false);
         }
     }
 
