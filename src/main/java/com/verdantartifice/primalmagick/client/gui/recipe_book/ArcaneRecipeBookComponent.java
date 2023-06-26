@@ -107,7 +107,6 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         if (this.visible) {
             this.initVisuals();
         }
-        mc.keyboardHandler.setSendRepeatsToGui(true);
     }
     
     public void initVisuals() {
@@ -154,10 +153,6 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         } else {
             this.filterButton.initTextureValues(152, 41, 28, 18, RECIPE_BOOK_LOCATION);
         }
-    }
-    
-    public void removed() {
-        this.mc.keyboardHandler.setSendRepeatsToGui(false);
     }
     
     public int updateScreenPosition(int width, int imageWidth) {

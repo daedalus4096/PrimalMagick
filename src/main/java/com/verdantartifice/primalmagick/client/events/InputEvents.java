@@ -29,8 +29,6 @@ public class InputEvents {
     private static boolean SPELL_SELECT_KEY_WAS_DOWN = false;
     
     public static void wipeOpen() {
-        Minecraft mc = Minecraft.getInstance();
-        mc.keyboardHandler.setSendRepeatsToGui(false);
         while (KeyBindings.changeSpellKey.consumeClick())
         {
         }

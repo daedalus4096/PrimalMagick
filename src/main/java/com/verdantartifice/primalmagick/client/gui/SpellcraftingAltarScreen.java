@@ -56,7 +56,6 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     @Override
     protected void init() {
         super.init();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
         
         // Set up the spell name text entry widget
         this.nameField = new EditBox(this.font, this.leftPos + 49, this.topPos + 12, 103, 12, Component.empty());
@@ -78,12 +77,6 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         String str = this.nameField.getValue();
         this.init(p_resize_1_, p_resize_2_, p_resize_3_);
         this.nameField.setValue(str);
-    }
-    
-    @Override
-    public void removed() {
-        super.removed();
-        this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
     }
     
     @Override
