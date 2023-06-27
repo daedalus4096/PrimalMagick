@@ -8,9 +8,8 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,6 +22,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -40,9 +40,9 @@ public class ConfiguredFeaturesPM {
     }
 
     // Register configured ore features
-    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_MARBLE_RAW = CONFIGURED_FEATURES.register("ore_marble_raw", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
-    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_ROCK_SALT = CONFIGURED_FEATURES.register("ore_rock_salt", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));
-    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_QUARTZ = CONFIGURED_FEATURES.register("ore_quartz", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NATURAL_STONE, BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)));
+    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_MARBLE_RAW = CONFIGURED_FEATURES.register("ore_marble_raw", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.MARBLE_RAW.get().defaultBlockState(), 33)));
+    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_ROCK_SALT = CONFIGURED_FEATURES.register("ore_rock_salt", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.ROCK_SALT_ORE.get().defaultBlockState(), 10)));
+    public static final RegistryObject<ConfiguredFeature<OreConfiguration, ?>> ORE_QUARTZ = CONFIGURED_FEATURES.register("ore_quartz", () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.BASE_STONE_OVERWORLD), BlocksPM.QUARTZ_ORE.get().defaultBlockState(), 3)));
     
     // Register configured tree features
     public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> TREE_SUNWOOD_FULL = CONFIGURED_FEATURES.register("tree_sunwood_full", () -> new ConfiguredFeature<>(Feature.TREE, (new TreeConfiguration.TreeConfigurationBuilder(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ConfiguredFeaturesPM.States.SUNWOOD_LOG_FULL, 39).add(ConfiguredFeaturesPM.States.PULSING_SUNWOOD_LOG_FULL, 1)), new StraightTrunkPlacer(5, 2, 0), BlockStateProvider.simple(ConfiguredFeaturesPM.States.SUNWOOD_LEAVES_FULL), new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3), new TwoLayersFeatureSize(1, 0, 1))).ignoreVines().build()));
