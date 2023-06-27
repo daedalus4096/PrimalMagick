@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -19,8 +18,8 @@ import net.minecraft.network.chat.Component;
 public class MainIndexButton extends Button {
     protected GrimoireScreen screen;
 
-    public MainIndexButton(int xPos, int yPos, GrimoireScreen screen) {
-        super(xPos, yPos, 10, 26, Component.empty(), new Handler());
+    public MainIndexButton(int x, int y, GrimoireScreen screen) {
+        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 10, 26));
         this.screen = screen;
     }
     

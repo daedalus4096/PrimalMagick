@@ -312,8 +312,8 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         protected final Supplier<Integer> getter;
         protected final Consumer<Integer> setter;
         
-        public CyclicBoundedSpinnerButton(int xPos, int yPos, boolean increment, int min, int max, Supplier<Integer> getter, Consumer<Integer> setter) {
-            super(xPos, yPos, 7, 11, Component.empty(), new Handler());
+        public CyclicBoundedSpinnerButton(int x, int y, boolean increment, int min, int max, Supplier<Integer> getter, Consumer<Integer> setter) {
+            super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 7, 11));
             this.isIncrement = increment;
             this.min = min;
             this.max = max;

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -25,8 +23,8 @@ public class BackButton extends Button {
 
     protected GrimoireScreen screen;
     
-    public BackButton(int widthIn, int heightIn, GrimoireScreen screen) {
-        super(widthIn, heightIn, 16, 8, Component.empty(), new Handler());
+    public BackButton(int x, int y, GrimoireScreen screen) {
+        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 8));
         this.screen = screen;
     }
     

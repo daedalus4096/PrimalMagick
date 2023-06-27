@@ -17,8 +17,8 @@ public class ProgressButton extends Button {
     protected ResearchStage stage;
     protected GrimoireScreen screen;
     
-    public ProgressButton(ResearchStage stage, int widthIn, int heightIn, Component text, GrimoireScreen screen) {
-        super(widthIn, heightIn, 119, 20, text, new Handler());
+    public ProgressButton(ResearchStage stage, int x, int y, Component text, GrimoireScreen screen) {
+        super(Button.builder(text, new Handler()).bounds(x, y, 119, 20));
         this.stage = stage;
         this.screen = screen;
     }

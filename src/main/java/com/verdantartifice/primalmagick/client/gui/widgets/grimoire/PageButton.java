@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -26,8 +24,8 @@ public class PageButton extends Button {
     protected GrimoireScreen screen;
     protected boolean isNext;
 
-    public PageButton(int widthIn, int heightIn, GrimoireScreen screen, boolean isNext) {
-        super(widthIn, heightIn, 12, 5, Component.empty(), new Handler());
+    public PageButton(int x, int y, GrimoireScreen screen, boolean isNext) {
+        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 12, 5));
         this.screen = screen;
         this.isNext = isNext;
     }

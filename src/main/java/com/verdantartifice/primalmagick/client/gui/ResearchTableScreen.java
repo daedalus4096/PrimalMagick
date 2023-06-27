@@ -5,8 +5,6 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Set;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
@@ -30,13 +28,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
-
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -259,7 +255,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         protected ResearchTableScreen screen;
         
         public StartProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
-            super(xIn, yIn, 154, 20, text, new Handler());
+            super(Button.builder(text, new Handler()).bounds(xIn, yIn, 154, 20));
             this.screen = screen;
         }
         
@@ -289,7 +285,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         protected ResearchTableScreen screen;
         
         public CompleteProjectButton(int xIn, int yIn, Component text, ResearchTableScreen screen) {
-            super(xIn, yIn, 154, 20, text, new Handler());
+            super(Button.builder(text, new Handler()).bounds(xIn, yIn, 154, 20));
             this.screen = screen;
         }
         

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
@@ -25,7 +24,7 @@ public abstract class AbstractTopicButton extends Button {
     protected AbstractIndexIcon icon;
     
     public AbstractTopicButton(int x, int y, int width, int height, Component text, GrimoireScreen screen, AbstractIndexIcon icon, OnPress onPress) {
-        super(x, y, width, height, text, onPress);
+        super(Button.builder(text, onPress).bounds(x, y, width, height));
         this.screen = screen;
         this.icon = icon;
     }

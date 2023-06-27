@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
@@ -27,8 +26,8 @@ public class IngredientWidget extends Button {
     protected Ingredient ingredient;
     protected GrimoireScreen screen;
 
-    public IngredientWidget(@Nullable Ingredient ingredient, int xIn, int yIn, GrimoireScreen screen) {
-        super(xIn, yIn, 16, 16, Component.empty(), new Handler());
+    public IngredientWidget(@Nullable Ingredient ingredient, int x, int y, GrimoireScreen screen) {
+        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 16));
         this.ingredient = ingredient;
         this.screen = screen;
     }
