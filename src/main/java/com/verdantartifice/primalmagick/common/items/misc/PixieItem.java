@@ -18,12 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.BaseSpawner;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -48,19 +43,6 @@ public class PixieItem extends ForgeSpawnEggItem {
             BlockState state = level.getBlockState(pos);
             Player player = context.getPlayer();
             EntityType<?> entityType = this.getType(stack.getTag());
-            
-            if (state.is(Blocks.SPAWNER)) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (blockEntity instanceof SpawnerBlockEntity spawnerEntity) {
-                    BaseSpawner baseSpawner = spawnerEntity.getSpawner();
-                    baseSpawner.setEntityId(entityType);
-                    blockEntity.setChanged();
-                    level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
-                    level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
-                    stack.shrink(1);
-                    return InteractionResult.CONSUME;
-                }
-            }
             
             BlockPos spawnPos = state.getCollisionShape(level, pos).isEmpty() ? pos : pos.relative(dir);
             Entity spawned = entityType.spawn(serverLevel, stack, player, spawnPos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && dir == Direction.UP);
