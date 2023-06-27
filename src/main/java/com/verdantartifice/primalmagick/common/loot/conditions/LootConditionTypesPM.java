@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.loot.conditions;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.Serializer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -21,6 +22,6 @@ public class LootConditionTypesPM {
     }
     
     protected static LootItemConditionType register(String name, Serializer<? extends LootItemCondition> serializer) {
-        return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(PrimalMagick.MODID, name), new LootItemConditionType(serializer));
+        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, new ResourceLocation(PrimalMagick.MODID, name), new LootItemConditionType(serializer));
     }
 }
