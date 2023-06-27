@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -28,7 +29,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -176,7 +176,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             if (this.progressing) {
                 // Render starting widget
                 Component text = Component.translatable("primalmagick.research_table.starting");
-                this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
+                this.addRenderableWidget(new InactiveWidget(this.leftPos + 38, this.topPos + 111, 154, 20, text));
             } else {
                 // Render start project button
                 Component text = Component.translatable("primalmagick.research_table.start");
@@ -186,7 +186,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             if (this.progressing) {
                 // Render completing widget
                 Component text = Component.translatable("primalmagick.research_table.completing");
-                this.addRenderableWidget(new WaitingWidget(this.leftPos + 38, this.topPos + 111, text));
+                this.addRenderableWidget(new InactiveWidget(this.leftPos + 38, this.topPos + 111, 154, 20, text));
             } else {
                 this.menu.getWorldPosCallable().execute((level, tablePos) -> {
                     // Render complete project button
@@ -228,22 +228,6 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         
         // Render observation progress widget
         this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
-    }
-    
-    /**
-     * GUI widget for a disabled text button to use while waiting for the server to update.
-     * 
-     * @author Daedalus4096
-     */
-    protected static class WaitingWidget extends AbstractWidget {
-        public WaitingWidget(int xIn, int yIn, Component msg) {
-            super(xIn, yIn, 154, 20, msg);
-            this.active = false;
-        }
-
-        @Override
-        public void updateWidgetNarration(NarrationElementOutput output) {
-        }
     }
     
     /**

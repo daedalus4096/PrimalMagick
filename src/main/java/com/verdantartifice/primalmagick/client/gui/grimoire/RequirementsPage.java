@@ -6,11 +6,11 @@ import java.util.List;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemTagWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.KnowledgeWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ProgressButton;
-import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ProgressingWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
 import com.verdantartifice.primalmagick.common.research.Knowledge;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
@@ -141,7 +141,7 @@ public class RequirementsPage extends AbstractPage {
         y = startY + 141;
         if (screen.isProgressing()) {
             Component text = Component.translatable("primalmagick.grimoire.completing_text");
-            screen.addWidgetToScreen(new ProgressingWidget(startX + 16 + (side * 136), y, text));
+            screen.addWidgetToScreen(new InactiveWidget(startX + 16 + (side * 136), y, 119, 20, text));
         } else if (this.stage.arePrerequisitesMet(mc.player)) {
             Component text = Component.translatable("primalmagick.grimoire.complete_button");
             screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
