@@ -122,12 +122,6 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
     }
 
     @Override
-    public void removed() {
-        super.removed();
-        this.recipeBookComponent.removed();
-    }
-
-    @Override
     public void recipesUpdated() {
         this.recipeBookComponent.recipesUpdated();
     }

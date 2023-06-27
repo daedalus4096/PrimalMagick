@@ -166,12 +166,6 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     }
 
     @Override
-    public void removed() {
-        super.removed();
-        this.recipeBookComponent.removed();
-    }
-
-    @Override
     public void recipesUpdated() {
         this.recipeBookComponent.recipesUpdated();
     }

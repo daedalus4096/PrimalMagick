@@ -121,12 +121,6 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
     }
 
     @Override
-    public void removed() {
-        super.removed();
-        this.recipeBookComponent.removed();
-    }
-
-    @Override
     public void recipesUpdated() {
         this.recipeBookComponent.recipesUpdated();
     }
