@@ -103,7 +103,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             }
         }
         if (this.container instanceof RecipeHolder recipeHolder) {
-            recipeHolder.awardUsedRecipes(this.player);
+            recipeHolder.awardUsedRecipes(this.player, this.craftingInventory.getItems());
         }
         
         // Reset crafted amount
