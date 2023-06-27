@@ -603,7 +603,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         for (ResourceLocation recipeLoc : locList) {
             Optional<? extends Recipe<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
             if (opt.isPresent()) {
-                AbstractRecipePage page = RecipePageFactory.createPage(opt.get());
+                AbstractRecipePage page = RecipePageFactory.createPage(opt.get(), this.minecraft.level.registryAccess());
                 if (page != null) {
                     this.pages.add(page);
                 }
@@ -893,7 +893,7 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     protected static boolean isValidRecipeIndexEntry(Recipe<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        if (!recipe.getId().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe) == null) {
+        if (!recipe.getId().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe, mc.level.registryAccess()) == null) {
             return false;
         }
         if (recipe instanceof IHasRequiredResearch hrr) {
@@ -905,13 +905,14 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
     
     protected void parseRecipeEntryPages(String recipeName) {
+        Minecraft mc = Minecraft.getInstance();
         this.currentStageIndex = 0;
         boolean firstPage = true;
         List<Recipe<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
         for (Recipe<?> recipe : recipes) {
-            AbstractRecipePage page = RecipePageFactory.createPage(recipe);
+            AbstractRecipePage page = RecipePageFactory.createPage(recipe, mc.level.registryAccess());
             if (page != null) {
-                this.pages.add(new RecipeMetadataPage(recipe, firstPage));
+                this.pages.add(new RecipeMetadataPage(recipe, mc.level.registryAccess(), firstPage));
                 this.pages.add(page);
                 firstPage = false;
             }
