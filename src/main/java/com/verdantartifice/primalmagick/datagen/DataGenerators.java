@@ -48,7 +48,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ResearchProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new BiomeModifierProvider(generator));
+        generator.addProvider(event.includeServer(), output -> new BiomeModifierProvider(output, event.getLookupProvider()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
     }
 }
