@@ -88,7 +88,7 @@ public class BurstSpellMod extends AbstractSpellMod {
         int power = this.getBlastPower(spell, spellSource);
         double sqRadius = (double)(radius * radius);
         int searchRadius = radius + 1;
-        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.NONE);
+        Explosion explosion = new Explosion(world, null, hitVec.x, hitVec.y, hitVec.z, (float)power, false, Explosion.BlockInteraction.KEEP);
         
         // Calculate blasted blocks
         for (int i = 0; i < 16; i++) {
