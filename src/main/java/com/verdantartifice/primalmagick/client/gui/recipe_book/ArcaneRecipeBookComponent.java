@@ -9,8 +9,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
@@ -28,19 +26,16 @@ import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.StateSwitchingButton;
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.recipebook.GhostRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
@@ -526,5 +521,15 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         if (result != null) {
             result.entry.updateNarration(output.nest());
         }
+    }
+
+    @Override
+    public void setFocused(boolean p_265728_) {
+        // Do nothing
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
     }
 }
