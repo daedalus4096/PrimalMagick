@@ -13,11 +13,9 @@ import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBo
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
-import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -143,7 +141,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             int maxRowSize = (this.recipeButtons.size() <= 16) ? MAX_ROW : MAX_ROW_LARGE;
             int colCount = Math.min(this.recipeButtons.size(), maxRowSize);
             int rowCount = Mth.ceil((float)this.recipeButtons.size() / (float)maxRowSize);
-            this.nineInchSprite(poseStack, colCount, rowCount, 24, 4, 82, 208);
+            guiGraphics.blitNineSliced(RECIPE_BOOK_LOCATION, this.x, this.y, colCount * 25 + 8, rowCount * 25 + 8, 4, 32, 32, 82, 208);
             RenderSystem.disableBlend();
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton recipeButton : this.recipeButtons) {
@@ -154,43 +152,22 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         }
     }
 
-    private void nineInchSprite(PoseStack p_100214_, int p_100215_, int p_100216_, int p_100217_, int p_100218_, int p_100219_, int p_100220_) {
-        this.blit(p_100214_, this.x, this.y, p_100219_, p_100220_, p_100218_, p_100218_);
-        this.blit(p_100214_, this.x + p_100218_ * 2 + p_100215_ * p_100217_, this.y, p_100219_ + p_100217_ + p_100218_, p_100220_, p_100218_, p_100218_);
-        this.blit(p_100214_, this.x, this.y + p_100218_ * 2 + p_100216_ * p_100217_, p_100219_, p_100220_ + p_100217_ + p_100218_, p_100218_, p_100218_);
-        this.blit(p_100214_, this.x + p_100218_ * 2 + p_100215_ * p_100217_, this.y + p_100218_ * 2 + p_100216_ * p_100217_, p_100219_ + p_100217_ + p_100218_, p_100220_ + p_100217_ + p_100218_, p_100218_, p_100218_);
-
-        for(int i = 0; i < p_100215_; ++i) {
-            this.blit(p_100214_, this.x + p_100218_ + i * p_100217_, this.y, p_100219_ + p_100218_, p_100220_, p_100217_, p_100218_);
-            this.blit(p_100214_, this.x + p_100218_ + (i + 1) * p_100217_, this.y, p_100219_ + p_100218_, p_100220_, p_100218_, p_100218_);
-
-            for(int j = 0; j < p_100216_; ++j) {
-                if (i == 0) {
-                    this.blit(p_100214_, this.x, this.y + p_100218_ + j * p_100217_, p_100219_, p_100220_ + p_100218_, p_100218_, p_100217_);
-                    this.blit(p_100214_, this.x, this.y + p_100218_ + (j + 1) * p_100217_, p_100219_, p_100220_ + p_100218_, p_100218_, p_100218_);
-                }
-
-                this.blit(p_100214_, this.x + p_100218_ + i * p_100217_, this.y + p_100218_ + j * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100218_, p_100217_, p_100217_);
-                this.blit(p_100214_, this.x + p_100218_ + (i + 1) * p_100217_, this.y + p_100218_ + j * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100218_, p_100218_, p_100217_);
-                this.blit(p_100214_, this.x + p_100218_ + i * p_100217_, this.y + p_100218_ + (j + 1) * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100218_, p_100217_, p_100218_);
-                this.blit(p_100214_, this.x + p_100218_ + (i + 1) * p_100217_ - 1, this.y + p_100218_ + (j + 1) * p_100217_ - 1, p_100219_ + p_100218_, p_100220_ + p_100218_, p_100218_ + 1, p_100218_ + 1);
-                if (i == p_100215_ - 1) {
-                    this.blit(p_100214_, this.x + p_100218_ * 2 + p_100215_ * p_100217_, this.y + p_100218_ + j * p_100217_, p_100219_ + p_100217_ + p_100218_, p_100220_ + p_100218_, p_100218_, p_100217_);
-                    this.blit(p_100214_, this.x + p_100218_ * 2 + p_100215_ * p_100217_, this.y + p_100218_ + (j + 1) * p_100217_, p_100219_ + p_100217_ + p_100218_, p_100220_ + p_100218_, p_100218_, p_100218_);
-                }
-            }
-
-            this.blit(p_100214_, this.x + p_100218_ + i * p_100217_, this.y + p_100218_ * 2 + p_100216_ * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100217_ + p_100218_, p_100217_, p_100218_);
-            this.blit(p_100214_, this.x + p_100218_ + (i + 1) * p_100217_, this.y + p_100218_ * 2 + p_100216_ * p_100217_, p_100219_ + p_100218_, p_100220_ + p_100217_ + p_100218_, p_100218_, p_100218_);
-        }
-    }
-    
     public void setVisible(boolean visible) {
         this.isVisible = visible;
     }
     
     public boolean isVisible() {
         return this.isVisible;
+    }
+
+    @Override
+    public void setFocused(boolean p_265728_) {
+        // Do nothing
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
     }
 
     protected class OverlayArcaneRecipeButton extends AbstractWidget implements PlaceRecipe<Ingredient> {
