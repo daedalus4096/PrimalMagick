@@ -45,6 +45,7 @@ import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.behavior.StopBeingAngryIfTargetDead;
 import net.minecraft.world.entity.ai.behavior.Swim;
+import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
@@ -111,7 +112,7 @@ public class TreefolkAi {
     }
     
     private static void initCoreActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), StopHoldingItemIfNoLongerAdmiring.create(), new StartAdmiringItemIfSeen<>(ADMIRE_DURATION), new JoinDanceParty<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), new StopBeingAngryIfTargetDead()));
+        brain.addActivity(Activity.CORE, 0, ImmutableList.of(new Swim(SWIM_CHANCE), new LookAtTargetSink(45, 90), new MoveToTargetSink(), StopHoldingItemIfNoLongerAdmiring.create(), StartAdmiringItemIfSeen.create(ADMIRE_DURATION), JoinDanceParty.create(DANCE_DURATION, RECENTLY_DANCED_DURATION), StopBeingAngryIfTargetDead.create()));
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
@@ -133,9 +134,9 @@ public class TreefolkAi {
     }
 
     private static void initCelebrateActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new RunIf<TreefolkEntity>(t -> {
+        brain.addActivityAndRemoveMemoryWhenStopped(Activity.CELEBRATE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), BehaviorBuilder.triggerIf(t -> {
             return !t.isDancing();
-        }, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), new RunIf<TreefolkEntity>(TreefolkEntity::isDancing, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
+        }, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 2, 1.0F)), BehaviorBuilder.triggerIf(TreefolkEntity::isDancing, GoToTargetLocation.create(MemoryModuleType.CELEBRATE_LOCATION, 4, 0.6F)), new RunOne<>(ImmutableList.of(Pair.of(SetEntityLookTarget.create(EntityTypesPM.TREEFOLK.get(), 8.0F), 1), Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING, 2, 1), 1), Pair.of(new DoNothing(10, 20), 1)))), MemoryModuleType.CELEBRATE_LOCATION);
     }
     
     private static void initWorkActivity(Brain<TreefolkEntity> brain) {
@@ -147,7 +148,7 @@ public class TreefolkAi {
     }
 
     private static RunOne<TreefolkEntity> createIdleMovementBehaviors() {
-        return new RunOne<>(ImmutableList.of(Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING), 2), Pair.of(InteractWith.of(EntityTypesPM.TREEFOLK.get(), INTERACTION_RANGE, MemoryModuleType.INTERACTION_TARGET, SPEED_MULTIPLIER_WHEN_IDLING, 2), 2), Pair.of(new RunIf<>(TreefolkAi::doesntSeeAnyPlayerHoldingLovedItem, SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_WHEN_IDLING, 3)), 2), Pair.of(new DoNothing(30, 60), 1)));
+        return new RunOne<>(ImmutableList.of(Pair.of(RandomStroll.stroll(SPEED_MULTIPLIER_WHEN_IDLING), 2), Pair.of(InteractWith.of(EntityTypesPM.TREEFOLK.get(), INTERACTION_RANGE, MemoryModuleType.INTERACTION_TARGET, SPEED_MULTIPLIER_WHEN_IDLING, 2), 2), Pair.of(BehaviorBuilder.triggerIf(TreefolkAi::doesntSeeAnyPlayerHoldingLovedItem, SetWalkTargetFromLookTarget.create(SPEED_MULTIPLIER_WHEN_IDLING, 3)), 2), Pair.of(new DoNothing(30, 60), 1)));
     }
 
     public static boolean isPlayerHoldingLovedItem(LivingEntity entity) {
