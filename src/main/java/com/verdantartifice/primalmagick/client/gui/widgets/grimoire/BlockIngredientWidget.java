@@ -30,7 +30,7 @@ public class BlockIngredientWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {
