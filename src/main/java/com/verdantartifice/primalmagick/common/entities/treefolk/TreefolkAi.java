@@ -33,9 +33,7 @@ import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
 import net.minecraft.world.entity.ai.behavior.MeleeAttack;
 import net.minecraft.world.entity.ai.behavior.MoveToTargetSink;
 import net.minecraft.world.entity.ai.behavior.RandomStroll;
-import net.minecraft.world.entity.ai.behavior.RunIf;
 import net.minecraft.world.entity.ai.behavior.RunOne;
-import net.minecraft.world.entity.ai.behavior.RunSometimes;
 import net.minecraft.world.entity.ai.behavior.SetEntityLookTarget;
 import net.minecraft.world.entity.ai.behavior.SetLookAndInteract;
 import net.minecraft.world.entity.ai.behavior.SetWalkTargetAwayFrom;
@@ -55,7 +53,6 @@ import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -116,7 +113,7 @@ public class TreefolkAi {
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), new RunSometimes<>(new StartDancing<>(DANCE_DURATION, RECENTLY_DANCED_DURATION), DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), StartDancingSometimes.create(DANCE_DURATION, RECENTLY_DANCED_DURATION, DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
