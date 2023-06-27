@@ -18,10 +18,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -185,7 +185,7 @@ public class WandGlamourTableContainer extends AbstractContainerMenu {
             if (opt.isPresent() && opt.get() instanceof WandGlamourRecipe recipe) {
                 // If the inputs are valid, show the output
                 if (recipe.matches(this.componentInv, world)) {
-                    stack = recipe.assemble(this.componentInv);
+                    stack = recipe.assemble(this.componentInv, world.registryAccess());
                 }
             }
             
@@ -195,7 +195,7 @@ public class WandGlamourTableContainer extends AbstractContainerMenu {
         }
     }
 
-    protected class GlamourComponentInventory extends CraftingContainer {
+    protected class GlamourComponentInventory extends TransientCraftingContainer {
         public GlamourComponentInventory() {
             super(WandGlamourTableContainer.this, 2, 2);
         }

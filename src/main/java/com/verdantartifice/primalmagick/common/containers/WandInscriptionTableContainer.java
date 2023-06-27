@@ -16,10 +16,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -167,7 +167,7 @@ public class WandInscriptionTableContainer extends AbstractContainerMenu {
                 // If the inputs are valid for inscribing a spell onto a wand, show the output
                 WandInscriptionRecipe recipe = (WandInscriptionRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
-                    stack = recipe.assemble(this.componentInv);
+                    stack = recipe.assemble(this.componentInv, world.registryAccess());
                 }
             }
             
@@ -177,7 +177,7 @@ public class WandInscriptionTableContainer extends AbstractContainerMenu {
         }
     }
 
-    protected class InscriptionComponentInventory extends CraftingContainer {
+    protected class InscriptionComponentInventory extends TransientCraftingContainer {
         public InscriptionComponentInventory() {
             super(WandInscriptionTableContainer.this, 2, 1);
         }
