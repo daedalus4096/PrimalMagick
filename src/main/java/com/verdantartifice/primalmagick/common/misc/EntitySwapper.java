@@ -134,7 +134,8 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 
                 // Remove the target entity and spawn a new one of the target type into the world
                 livingTarget.discard();
-                Entity newEntity = this.entityType.create(serverWorld, data, customName, null, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                Entity newEntity = this.entityType.create(serverWorld, data, null, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
+                newEntity.setCustomName(customName);
                 world.addFreshEntity(newEntity);
                 newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
                 
