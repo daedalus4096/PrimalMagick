@@ -7,11 +7,10 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 
 /**
  * Definition for a sunwood tree.  Used by sunwood saplings to spawn the sunwood tree worldgen feature.
@@ -21,12 +20,12 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
  */
 public class SunwoodTree extends AbstractPhasingTree {
     @Override
-    protected Map<TimePhase, Holder<ConfiguredFeature<TreeConfiguration, ?>>> getTreeFeaturesByPhase(RandomSource rand, boolean largeHive) {
+    protected Map<TimePhase, ResourceKey<ConfiguredFeature<?, ?>>> getTreeFeaturesByPhase(RandomSource rand, boolean largeHive) {
         return Util.make(new HashMap<>(), (map) -> {
-            map.put(TimePhase.FULL, Holder.direct(ConfiguredFeaturesPM.TREE_SUNWOOD_FULL.get()));
-            map.put(TimePhase.WAXING, Holder.direct(ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING.get()));
-            map.put(TimePhase.WANING, Holder.direct(ConfiguredFeaturesPM.TREE_SUNWOOD_WANING.get()));
-            map.put(TimePhase.FADED, Holder.direct(ConfiguredFeaturesPM.TREE_SUNWOOD_FADED.get()));
+            map.put(TimePhase.FULL, ConfiguredFeaturesPM.TREE_SUNWOOD_FULL.getKey());
+            map.put(TimePhase.WAXING, ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING.getKey());
+            map.put(TimePhase.WANING, ConfiguredFeaturesPM.TREE_SUNWOOD_WANING.getKey());
+            map.put(TimePhase.FADED, ConfiguredFeaturesPM.TREE_SUNWOOD_FADED.getKey());
         });
     }
 
