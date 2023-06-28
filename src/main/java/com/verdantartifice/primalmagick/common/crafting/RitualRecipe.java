@@ -19,6 +19,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -87,6 +88,12 @@ public class RitualRecipe implements IRitualRecipe {
     public boolean canCraftInDimensions(int width, int height) {
         // Ritual recipes aren't space-limited
         return true;
+    }
+
+    @Override
+    public CraftingBookCategory category() {
+        // Ritual recipes don't use the recipe book, so an accurate crafting book category isn't needed
+        return CraftingBookCategory.MISC;
     }
 
     @Override

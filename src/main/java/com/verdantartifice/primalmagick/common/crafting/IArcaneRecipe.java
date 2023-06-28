@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -27,5 +28,11 @@ public interface IArcaneRecipe extends CraftingRecipe, IHasManaCost, IHasRequire
     @Override
     default ItemStack getToastSymbol() {
         return new ItemStack(BlocksPM.ARCANE_WORKBENCH.get());
+    }
+
+    @Override
+    default CraftingBookCategory category() {
+        // Arcane recipes use a separate recipe book, so an accurate crafting book category isn't needed
+        return CraftingBookCategory.MISC;
     }
 }
