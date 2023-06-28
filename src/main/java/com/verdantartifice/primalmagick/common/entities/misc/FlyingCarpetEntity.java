@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
@@ -272,9 +270,13 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    public Entity getControllingPassenger() {
-        List<Entity> list = this.getPassengers();
-        return list.isEmpty() ? null : list.get(0);
+    public LivingEntity getControllingPassenger() {
+        Entity entity = this.getFirstPassenger();
+        if (entity instanceof LivingEntity living) {
+            return living;
+        } else {
+            return null;
+        }
     }
 
     @Override
