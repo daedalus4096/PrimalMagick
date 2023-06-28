@@ -1,17 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -27,6 +25,11 @@ public class AidListWidget extends AbstractWidget {
     public AidListWidget(int x, int y, List<Component> aidNames) {
         super(x, y, 8, 8, Component.empty());
         this.aidNames = aidNames;
+        if (!this.aidNames.isEmpty()) {
+            MutableComponent tooltip = Component.translatable("primalmagick.research_table.aid_header");
+            aidNames.forEach(name -> tooltip.append(name));
+            this.setTooltip(Tooltip.create(tooltip));
+        }
     }
     
     @Override
@@ -46,16 +49,5 @@ public class AidListWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput p_169152_) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        if (!this.aidNames.isEmpty()) {
-            // Render tooltip
-            List<Component> tooltip = new ArrayList<>();
-            tooltip.add(Component.translatable("primalmagick.research_table.aid_header"));
-            tooltip.addAll(this.aidNames);
-            GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
-        }
     }
 }

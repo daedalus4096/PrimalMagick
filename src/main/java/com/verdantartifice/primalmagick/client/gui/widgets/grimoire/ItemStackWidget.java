@@ -2,18 +2,19 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 /**
  * Display widget for showing a single itemstack.  Used on the requirements and recipe pages.
@@ -30,7 +31,12 @@ public class ItemStackWidget extends AbstractWidget {
         super(x, y, 16, 16, Component.empty());
         this.stack = stack;
         this.isComplete = isComplete;
-    }
+
+        Minecraft mc = Minecraft.getInstance();
+        MutableComponent tooltip = Component.empty();
+        this.stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line));
+        this.setTooltip(Tooltip.create(tooltip));
+}
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
@@ -67,16 +73,5 @@ public class ItemStackWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        GuiUtils.renderItemTooltip(guiGraphics, this.stack, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }

@@ -1,21 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -31,6 +28,22 @@ public class ManaCostSummaryWidget extends AbstractWidget {
     public ManaCostSummaryWidget(SourceList manaCosts, int x, int y) {
         super(x, y, 16, 16, Component.empty());
         this.manaCosts = manaCosts;
+        
+        Minecraft mc = Minecraft.getInstance();
+        MutableComponent tooltip = Component.empty();
+        if (this.manaCosts.isEmpty()) {
+            tooltip.append(Component.translatable("primalmagick.crafting.no_mana"));
+        } else {
+            tooltip.append(Component.translatable("primalmagick.crafting.mana_cost_header"));
+            for (Source source : this.manaCosts.getSourcesSorted()) {
+                boolean discovered = source.isDiscovered(mc.player);
+                Component sourceText = discovered ? 
+                        source.getNameText() :
+                        Component.translatable(Source.getUnknownTranslationKey());
+                tooltip.append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+            }
+        }
+        this.setTooltip(Tooltip.create(tooltip));
     }
     
     @Override
@@ -53,30 +66,5 @@ public class ManaCostSummaryWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip if hovered over
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        Minecraft mc = Minecraft.getInstance();
-        List<Component> tooltip = new ArrayList<>();
-        if (this.manaCosts.isEmpty()) {
-            tooltip.add(Component.translatable("primalmagick.crafting.no_mana"));
-        } else {
-            tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
-            for (Source source : this.manaCosts.getSourcesSorted()) {
-                boolean discovered = source.isDiscovered(mc.player);
-                Component sourceText = discovered ? 
-                        source.getNameText() :
-                        Component.translatable(Source.getUnknownTranslationKey());
-                tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
-            }
-        }
-        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }

@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiConsumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
@@ -15,8 +12,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -40,6 +39,14 @@ public class EssenceCaskWidget extends AbstractWidget {
         this.source = source;
         this.amount = amount;
         this.onClick = onClick;
+        
+        Minecraft mc = Minecraft.getInstance();
+        ItemStack stack = EssenceItem.getEssence(this.essenceType, this.source);
+        MutableComponent tooltip = Component.empty();
+        stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line));
+        tooltip.append(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.append(Component.translatable("primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        this.setTooltip(Tooltip.create(tooltip));
     }
     
     public int getIndex() {
@@ -88,21 +95,6 @@ public class EssenceCaskWidget extends AbstractWidget {
         } else {
             return false;
         }
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip
-        Minecraft mc = Minecraft.getInstance();
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        ItemStack stack = EssenceItem.getEssence(this.essenceType, this.source);
-        List<Component> textList = new ArrayList<>();
-        textList.addAll(stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL));
-        textList.add(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        textList.add(Component.translatable("primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        GuiUtils.renderCustomTooltip(guiGraphics, textList, mouseX, mouseY);
-        guiGraphics.pose().popPose();
     }
 
     @Override

@@ -1,16 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -18,8 +14,10 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -34,10 +32,23 @@ public class AttunementMeterWidget extends AbstractWidget {
     public AttunementMeterWidget(@Nonnull Source source, int x, int y) {
         super(x, y, 12, 102, Component.empty());
         this.source = source;
+        
         Color baseColor = new Color(this.source.getColor());
         this.permanentColor = baseColor.darker();
         this.inducedColor = baseColor;
         this.temporaryColor = baseColor.brighter();
+        
+        Minecraft mc = Minecraft.getInstance();
+        int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
+        int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
+        int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
+        MutableComponent tooltip = Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText());
+        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
+        if (i > 0) {
+            tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
+        }
+        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
+        this.setTooltip(Tooltip.create(tooltip));
     }
 
     @Override
@@ -77,28 +88,5 @@ public class AttunementMeterWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput p_169152_) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        Minecraft mc = Minecraft.getInstance();
-        int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
-        int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
-        int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
-
-        // Render tooltip
-        List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()));
-        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
-        if (i > 0) {
-            tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
-        }
-        tooltip.add(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
-        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }
