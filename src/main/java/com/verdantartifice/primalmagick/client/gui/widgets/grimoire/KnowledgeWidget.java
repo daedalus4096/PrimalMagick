@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import java.awt.Color;
-import java.util.Collections;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.Knowledge;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +28,7 @@ public class KnowledgeWidget extends AbstractWidget {
         super(x, y, 16, 16, Component.empty());
         this.knowledge = knowledge;
         this.isComplete = isComplete;
+        this.setTooltip(Tooltip.create(Component.translatable(this.knowledge.getType().getNameTranslationKey())));
     }
     
     @Override
@@ -70,17 +70,5 @@ public class KnowledgeWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        Component knowledgeText = Component.translatable(this.knowledge.getType().getNameTranslationKey());
-        GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(knowledgeText), mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }

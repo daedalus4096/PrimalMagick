@@ -1,16 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.Collections;
-
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +25,7 @@ public class AidUnlockWidget extends AbstractWidget {
     public AidUnlockWidget(int x, int y, @Nonnull Block aidBlock) {
         super(x, y, 8, 8, Component.empty());
         this.aidBlock = aidBlock;
+        this.setTooltip(Tooltip.create(Component.translatable("primalmagick.research_table.unlock", this.aidBlock.getName())));
     }
     
     @Override
@@ -48,14 +45,5 @@ public class AidUnlockWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        if (this.aidBlock != null) {
-            // Render tooltip
-            Component unlockText = Component.translatable("primalmagick.research_table.unlock", this.aidBlock.getName());
-            GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(unlockText), mouseX, mouseY);
-        }
     }
 }

@@ -1,12 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.Collections;
-
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Recipe;
@@ -18,12 +16,11 @@ import net.minecraft.world.item.crafting.Recipe;
  */
 public class RecipeTypeWidget extends AbstractWidget {
     protected Recipe<?> recipe;
-    protected Component tooltip;
     
     public RecipeTypeWidget(Recipe<?> recipe, int x, int y, Component tooltip) {
         super(x, y, 16, 16, Component.empty());
         this.recipe = recipe;
-        this.tooltip = tooltip;
+        this.setTooltip(Tooltip.create(tooltip));
     }
 
     @Override
@@ -40,16 +37,5 @@ public class RecipeTypeWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Draw tooltip if hovered
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(this.tooltip), mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }
