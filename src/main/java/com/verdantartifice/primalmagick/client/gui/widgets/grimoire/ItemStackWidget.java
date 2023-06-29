@@ -34,7 +34,7 @@ public class ItemStackWidget extends AbstractWidget {
 
         Minecraft mc = Minecraft.getInstance();
         MutableComponent tooltip = Component.empty();
-        this.stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line));
+        this.stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line).append("\n"));
         this.setTooltip(Tooltip.create(tooltip));
 }
     

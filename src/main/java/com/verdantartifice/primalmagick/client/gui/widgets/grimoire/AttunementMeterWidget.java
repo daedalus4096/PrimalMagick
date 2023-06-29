@@ -42,10 +42,10 @@ public class AttunementMeterWidget extends AbstractWidget {
         int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
         int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
-        MutableComponent tooltip = Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText());
-        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p));
+        MutableComponent tooltip = Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()).append("\n");
+        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p)).append("\n");
         if (i > 0) {
-            tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i));
+            tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i)).append("\n");
         }
         tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
         this.setTooltip(Tooltip.create(tooltip));

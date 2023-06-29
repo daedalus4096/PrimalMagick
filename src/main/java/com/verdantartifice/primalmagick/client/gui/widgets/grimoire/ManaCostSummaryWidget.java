@@ -40,7 +40,7 @@ public class ManaCostSummaryWidget extends AbstractWidget {
                 Component sourceText = discovered ? 
                         source.getNameText() :
                         Component.translatable(Source.getUnknownTranslationKey());
-                tooltip.append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+                tooltip.append("\n").append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
             }
         }
         this.setTooltip(Tooltip.create(tooltip));

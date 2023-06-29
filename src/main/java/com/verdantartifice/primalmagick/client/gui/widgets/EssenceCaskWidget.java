@@ -44,7 +44,7 @@ public class EssenceCaskWidget extends AbstractWidget {
         ItemStack stack = EssenceItem.getEssence(this.essenceType, this.source);
         MutableComponent tooltip = Component.empty();
         stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line));
-        tooltip.append(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        tooltip.append(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)).append("\n");
         tooltip.append(Component.translatable("primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         this.setTooltip(Tooltip.create(tooltip));
     }
