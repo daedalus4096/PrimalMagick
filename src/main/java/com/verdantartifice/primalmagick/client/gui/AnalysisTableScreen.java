@@ -1,15 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.function.Consumer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer;
@@ -20,9 +15,10 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -36,9 +32,6 @@ import net.minecraft.world.level.Level;
  */
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
-    private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
-    protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
     
     protected Level world;
 
@@ -87,18 +80,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
     protected void initWidgets() {
         this.clearWidgets();
         
-        this.addRenderableWidget(new ImageButton(this.leftPos + 78, this.topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, 256, 256, (button) -> {
-            PacketHandler.sendToServer(new AnalysisActionPacket(this.menu.containerId));
-        }, new Button.OnTooltip() {
-            @Override
-            public void onTooltip(Button button, PoseStack poseStack, int mouseX, int mouseY) {
-                GuiUtils.renderCustomTooltip(poseStack, Arrays.asList(ANALYZE_BUTTON_TOOLTIP_1, ANALYZE_BUTTON_TOOLTIP_2), mouseX, mouseY);
-            }
-
-            @Override
-            public void narrateTooltip(Consumer<Component> consumer) {
-            }
-        }, Component.empty()));
+        this.addRenderableWidget(new AnalyzeButton(this.menu, this.leftPos, this.topPos));
         
         // Render observation tracker widget
         this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
@@ -116,6 +98,19 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
                     x += 18;
                 }
             }
+        }
+    }
+    
+    protected static class AnalyzeButton extends ImageButton {
+        private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
+        protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
+        protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
+
+        public AnalyzeButton(AnalysisTableContainer menu, int leftPos, int topPos) {
+            super(leftPos + 78, topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, 256, 256, button -> {
+                PacketHandler.sendToServer(new AnalysisActionPacket(menu.containerId));
+            });
+            this.setTooltip(Tooltip.create(Component.empty().append(ANALYZE_BUTTON_TOOLTIP_1).append(CommonComponents.NEW_LINE).append(ANALYZE_BUTTON_TOOLTIP_2)));
         }
     }
 }
