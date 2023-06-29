@@ -138,6 +138,7 @@ public class CombatEvents {
         // Handle effects triggered by the damage source
         if (event.getSource().getEntity() instanceof Player) {
             Player attacker = (Player)event.getSource().getEntity();
+            Level level = attacker.level();
             
             // Increase all non-absolute damage dealt by players with greater void attunement
             if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(attacker, Source.VOID, AttunementThreshold.GREATER)) {
@@ -155,7 +156,7 @@ public class CombatEvents {
             }
             
             // Players with greater blood attunement can steal health, with a chance based on damage done
-            if (attacker.level().random.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.GREATER)) {
+            if (level.random.nextFloat() < (event.getAmount() / 12.0F) && AttunementManager.meetsThreshold(attacker, Source.BLOOD, AttunementThreshold.GREATER)) {
                 attacker.heal(1.0F);
             }
         }
