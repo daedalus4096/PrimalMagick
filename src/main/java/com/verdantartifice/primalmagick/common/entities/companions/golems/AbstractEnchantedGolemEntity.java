@@ -73,10 +73,9 @@ public abstract class AbstractEnchantedGolemEntity extends AbstractCompanionEnti
     protected UUID angerTarget;
     protected long lastStayChangeTime;
 
-    @SuppressWarnings("deprecation")
     public AbstractEnchantedGolemEntity(EntityType<? extends AbstractEnchantedGolemEntity> type, Level worldIn) {
         super(type, worldIn);
-        this.maxUpStep = 1.0F;
+        this.setMaxUpStep(1.0F);
     }
 
     @Override
