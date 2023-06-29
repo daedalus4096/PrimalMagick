@@ -1,22 +1,20 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -38,6 +36,18 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         this.hasBonus = material.getBonusReward() > 0.0D;
         this.consumed = material.isConsumed();
         this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
+        
+        MutableComponent tooltip = Component.empty();
+        if (this.consumed) {
+            tooltip.append(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            if (this.hasBonus) {
+                tooltip.append("\n");
+            }
+        }
+        if (this.hasBonus) {
+            tooltip.append(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        this.setTooltip(Tooltip.create(tooltip));
     }
     
     @Override
@@ -80,21 +90,5 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        List<Component> tooltip = new ArrayList<>(this.getHoverText());
-        if (this.consumed) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-        if (this.hasBonus) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
-        guiGraphics.pose().popPose();
     }
 }

@@ -1,13 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -17,6 +13,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -34,6 +31,29 @@ public class UpcomingEntryWidget extends AbstractWidget {
         super(x, y, 123, 12, text);
         this.entry = entry;
         this.icon = showIcon ? IndexIconFactory.fromEntryIcon(entry.getIcon(), false) : null;
+        
+        Minecraft mc = Minecraft.getInstance();
+        MutableComponent tooltip = Component.empty();
+        tooltip.append(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
+        
+        for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
+            ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
+            if (parentEntry == null) {
+                tooltip.append("\n").append(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
+            } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
+                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
+                if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
+                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
+                    if (disc != null) {
+                        comp.append(Component.literal(" ("));
+                        comp.append(Component.translatable(disc.getNameTranslationKey()));
+                        comp.append(Component.literal(")"));
+                    }
+                }
+                tooltip.append("\n").append(comp);
+            }
+        }
+        this.setTooltip(Tooltip.create(tooltip));
     }
 
     @Override
@@ -73,37 +93,5 @@ public class UpcomingEntryWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // When hovering, show a tooltip with the missing requirements
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        Minecraft mc = Minecraft.getInstance();
-        List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
-        
-        for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
-            ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
-            if (parentEntry == null) {
-                tooltip.add(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
-            } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
-                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
-                if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
-                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
-                    if (disc != null) {
-                        comp.append(Component.literal(" ("));
-                        comp.append(Component.translatable(disc.getNameTranslationKey()));
-                        comp.append(Component.literal(")"));
-                    }
-                }
-                tooltip.add(comp);
-            }
-        }
-        GuiUtils.renderCustomTooltip(guiGraphics, tooltip, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }
