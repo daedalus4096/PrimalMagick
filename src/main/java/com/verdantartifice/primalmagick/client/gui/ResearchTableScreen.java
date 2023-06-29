@@ -26,9 +26,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -93,12 +91,6 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
-        
-        for (Renderable w : this.renderables) {
-            if (w instanceof AbstractWidget widget && widget.isHoveredOrFocused()) {
-                widget.renderToolTip(guiGraphics, mouseX, mouseY);
-            }
-        }
     }
     
     @Override
