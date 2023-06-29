@@ -11,6 +11,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -40,7 +41,7 @@ public class ManaCostSummaryWidget extends AbstractWidget {
                 Component sourceText = discovered ? 
                         source.getNameText() :
                         Component.translatable(Source.getUnknownTranslationKey());
-                tooltip.append("\n").append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
             }
         }
         this.setTooltip(Tooltip.create(tooltip));

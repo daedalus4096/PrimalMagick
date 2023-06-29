@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +42,7 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
         if (this.consumed) {
             tooltip.append(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             if (this.hasBonus) {
-                tooltip.append("\n");
+                tooltip.append(CommonComponents.NEW_LINE);
             }
         }
         if (this.hasBonus) {

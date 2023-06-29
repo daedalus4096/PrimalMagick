@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
@@ -39,7 +40,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
         for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
             ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
             if (parentEntry == null) {
-                tooltip.append("\n").append(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
+                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
             } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
                 MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
                 if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
@@ -50,7 +51,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
                         comp.append(Component.literal(")"));
                     }
                 }
-                tooltip.append("\n").append(comp);
+                tooltip.append(CommonComponents.NEW_LINE).append(comp);
             }
         }
         this.setTooltip(Tooltip.create(tooltip));

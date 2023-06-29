@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ public class AidListWidget extends AbstractWidget {
         this.aidNames = aidNames;
         if (!this.aidNames.isEmpty()) {
             MutableComponent tooltip = Component.translatable("primalmagick.research_table.aid_header");
-            aidNames.forEach(name -> tooltip.append("\n").append(name));
+            aidNames.forEach(name -> tooltip.append(CommonComponents.NEW_LINE).append(name));
             this.setTooltip(Tooltip.create(tooltip));
         }
     }

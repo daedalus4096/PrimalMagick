@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -87,7 +88,7 @@ public class ResearchWidget extends AbstractWidget {
             if (Screen.hasShiftDown()) {
                 tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint"));
             } else {
-                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text")).append("\n");
+                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text")).append(CommonComponents.NEW_LINE);
                 tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
         } else {

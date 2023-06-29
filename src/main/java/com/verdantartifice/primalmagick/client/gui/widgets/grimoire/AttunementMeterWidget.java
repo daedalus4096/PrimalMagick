@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -42,10 +43,10 @@ public class AttunementMeterWidget extends AbstractWidget {
         int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
         int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
         int t = AttunementManager.getAttunement(mc.player, this.source, AttunementType.TEMPORARY);
-        MutableComponent tooltip = Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()).append("\n");
-        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p)).append("\n");
+        MutableComponent tooltip = Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.header", this.source.getNameText()).append(CommonComponents.NEW_LINE);
+        tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.permanent", p)).append(CommonComponents.NEW_LINE);
         if (i > 0) {
-            tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i)).append("\n");
+            tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.induced", i)).append(CommonComponents.NEW_LINE);
         }
         tooltip.append(Component.translatable("primalmagick.grimoire.attunement_meter.tooltip.temporary", t));
         this.setTooltip(Tooltip.create(tooltip));
