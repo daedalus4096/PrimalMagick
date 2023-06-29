@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.RuneBaseSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;

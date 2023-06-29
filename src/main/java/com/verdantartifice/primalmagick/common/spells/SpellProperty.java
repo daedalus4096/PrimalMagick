@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.spells;
 import javax.annotation.Nonnull;
 
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.util.Mth;
 
 /**

@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 

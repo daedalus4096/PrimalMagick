@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;

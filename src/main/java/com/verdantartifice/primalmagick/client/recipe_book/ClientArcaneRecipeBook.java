@@ -20,10 +20,8 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
