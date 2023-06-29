@@ -2,15 +2,18 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import javax.annotation.Nullable;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -45,6 +48,12 @@ public class BlockIngredientWidget extends AbstractWidget {
                 this.toDisplay = ItemStack.EMPTY;
             }
         }
+        if (!this.toDisplay.isEmpty()) {
+            Minecraft mc = Minecraft.getInstance();
+            MutableComponent tooltip = Component.empty();
+            this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line).append("\n"));
+            this.setTooltip(Tooltip.create(tooltip));
+        }
     }
     
     @Override
@@ -55,18 +64,5 @@ public class BlockIngredientWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        if (!this.toDisplay.isEmpty()) {
-            // If hovered, show a tooltip with the display name of the current matching itemstack
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0, 0, 200);
-            
-            GuiUtils.renderItemTooltip(guiGraphics, this.toDisplay, mouseX, mouseY);
-            
-            guiGraphics.pose().popPose();
-        }
     }
 }

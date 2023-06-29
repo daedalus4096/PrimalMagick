@@ -1,22 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -85,31 +81,22 @@ public class ResearchWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateWidgetNarration(NarrationElementOutput output) {
+    public Tooltip getTooltip() {
+        MutableComponent tooltip = Component.empty();
+        if (this.hasHint) {
+            if (Screen.hasShiftDown()) {
+                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint"));
+            } else {
+                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text")).append("\n");
+                tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            }
+        } else {
+            tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text"));
+        }
+        return Tooltip.create(tooltip);
     }
 
     @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // Render tooltip
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        List<Component> textLines;
-        if (this.hasHint) {
-            if (Screen.hasShiftDown()) {
-                Component hintText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint");
-                textLines = Collections.singletonList(hintText);
-            } else {
-                Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
-                Component shiftText = Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC);
-                textLines = Arrays.asList(baseText, shiftText);
-            }
-        } else {
-            Component baseText = Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text");
-            textLines = Collections.singletonList(baseText);
-        }
-        GuiUtils.renderCustomTooltip(guiGraphics, textLines, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }

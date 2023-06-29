@@ -8,12 +8,16 @@ import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
 
 /**
@@ -41,20 +45,11 @@ public class IngredientWidget extends Button {
         ItemStack toDisplay = this.getDisplayStack();
         if (!toDisplay.isEmpty()) {
             GuiUtils.renderItemStack(guiGraphics, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
-        }
-    }
-    
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        ItemStack toDisplay = this.getDisplayStack();
-        if (!toDisplay.isEmpty()) {
-            // If hovered, show a tooltip with the display name of the current matching itemstack
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0, 0, 200);
             
-            GuiUtils.renderItemTooltip(guiGraphics, toDisplay, mouseX, mouseY);
-            
-            guiGraphics.pose().popPose();
+            Minecraft mc = Minecraft.getInstance();
+            MutableComponent tooltip = Component.empty();
+            toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line).append("\n"));
+            this.setTooltip(Tooltip.create(tooltip));
         }
     }
 

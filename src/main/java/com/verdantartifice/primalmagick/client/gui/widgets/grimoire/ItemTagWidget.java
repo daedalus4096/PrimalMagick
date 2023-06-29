@@ -3,20 +3,22 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -59,6 +61,13 @@ public class ItemTagWidget extends AbstractWidget {
         } else {
             this.toDisplay = ItemStack.EMPTY;
         }
+        
+        if (!this.toDisplay.isEmpty()) {
+            Minecraft mc = Minecraft.getInstance();
+            MutableComponent tooltip = Component.empty();
+            this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line).append("\n"));
+            this.setTooltip(Tooltip.create(tooltip));
+        }
     }
     
     @Override
@@ -69,16 +78,5 @@ public class ItemTagWidget extends AbstractWidget {
 
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        // If hovered, show a tooltip with the display name of the current matching itemstack
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(0, 0, 200);
-        
-        GuiUtils.renderItemTooltip(guiGraphics, this.toDisplay, mouseX, mouseY);
-        
-        guiGraphics.pose().popPose();
     }
 }
