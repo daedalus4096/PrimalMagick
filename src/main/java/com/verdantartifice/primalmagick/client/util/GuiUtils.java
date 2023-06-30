@@ -11,12 +11,14 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -145,7 +147,7 @@ public class GuiUtils {
         guiGraphics.pose().popPose();
     }
     
-    public static void renderSourcesBillboard(GuiGraphics guiGraphics, MultiBufferSource buffers, double x, double y, double z, SourceList sources, float partialTicks) {
+    public static void renderSourcesBillboard(PoseStack poseStack, MultiBufferSource buffers, double x, double y, double z, SourceList sources, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
         
         double interpolatedPlayerX = mc.player.xo + (partialTicks * (mc.player.getX() - mc.player.xo));
@@ -161,18 +163,18 @@ public class GuiUtils {
         for (Source source : sources.getSourcesSorted()) {
             int amount = sources.getAmount(source);
             if (amount > 0) {
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(x - interpolatedPlayerX, y - interpolatedPlayerY - 0.5F, z - interpolatedPlayerZ);
-                guiGraphics.pose().mulPose(Axis.YP.rotationDegrees(rotYaw));
-                guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(180.0F));
-                guiGraphics.pose().translate(shiftX - startDeltaX, 0.0D, 0.0D);
-                guiGraphics.pose().scale(scale, scale, scale);
+                poseStack.pushPose();
+                poseStack.translate(x - interpolatedPlayerX, y - interpolatedPlayerY - 0.5F, z - interpolatedPlayerZ);
+                poseStack.mulPose(Axis.YP.rotationDegrees(rotYaw));
+                poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                poseStack.translate(shiftX - startDeltaX, 0.0D, 0.0D);
+                poseStack.scale(scale, scale, scale);
 
                 ResourceLocation texLoc = source.isDiscovered(mc.player) ? source.getAtlasLocation() : Source.getUnknownAtlasLocation();
                 @SuppressWarnings("deprecation")
                 TextureAtlasSprite sprite = mc.getModelManager().getAtlas(TextureAtlas.LOCATION_BLOCKS).getSprite(texLoc);
                 VertexConsumer builder = buffers.getBuffer(RenderType.cutout());
-                Matrix4f matrix = guiGraphics.pose().last().pose();
+                Matrix4f matrix = poseStack.last().pose();
                 builder.vertex(matrix, 0.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU0(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
                 builder.vertex(matrix, 16.0F, 16.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV1()).uv2(240, 240).normal(1, 0, 0).endVertex();
                 builder.vertex(matrix, 16.0F, 0.0F, 0.0F).color(1.0F, 1.0F, 1.0F, 1.0F).uv(sprite.getU1(), sprite.getV0()).uv2(240, 240).normal(1, 0, 0).endVertex();
@@ -180,13 +182,13 @@ public class GuiUtils {
 
                 String amountStr = Integer.toString(amount);
                 int amountWidth = mc.font.width(amountStr);
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
-                guiGraphics.pose().translate(32.0D - amountWidth, 32.0D - mc.font.lineHeight, 0.0D);
-                guiGraphics.drawString(mc.font, amountStr, 0, 0, Color.WHITE.getRGB());
-                guiGraphics.pose().popPose();
+                poseStack.pushPose();
+                poseStack.scale(0.5F, 0.5F, 0.5F);
+                poseStack.translate(32.0D - amountWidth, 32.0D - mc.font.lineHeight, 0.0D);
+                mc.font.drawInBatch(amountStr, 0F, 0F, Color.WHITE.getRGB(), true, poseStack.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, 15728880, mc.font.isBidirectional());
+                poseStack.popPose();
 
-                guiGraphics.pose().popPose();
+                poseStack.popPose();
                 shiftX += 16.0D * scale;
             }
         }
