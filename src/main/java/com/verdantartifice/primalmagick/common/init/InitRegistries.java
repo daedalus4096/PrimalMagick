@@ -16,7 +16,6 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
@@ -43,7 +42,6 @@ public class InitRegistries {
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();
         ArgumentTypesPM.init();
-        PlacedFeaturesPM.init();
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
     }
