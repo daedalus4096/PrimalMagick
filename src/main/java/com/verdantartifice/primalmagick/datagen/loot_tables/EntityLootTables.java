@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,6 +65,12 @@ public class EntityLootTables extends EntityLootSubProvider {
     }
     
     @Override
+    protected Stream<EntityType<?>> getKnownEntityTypes() {
+        // Limit this data provider to entity types added by the mod
+        return ForgeRegistries.ENTITY_TYPES.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(entry -> entry.getValue());
+    }
+
+    @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> writer) {
         super.generate(writer);
         this.checkExpectations();
@@ -86,8 +93,8 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.registerEmptyLootTable(EntityTypesPM.SIN_CRYSTAL.get());
         this.registerEmptyLootTable(EntityTypesPM.FLYING_CARPET.get());
         this.registerLootTable(EntityTypesPM.TREEFOLK.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HEARTWOOD.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))).apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE))).apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))))));
-        this.registerEmptyLootTable(EntityTypesPM.INNER_DEMON.get());   // Loot dropped by Inner Demons is special
-        this.registerEmptyLootTable(EntityTypesPM.FRIENDLY_WITCH.get());
+        this.registerLootTable(EntityTypesPM.INNER_DEMON.get(), LootTable.lootTable()); // Loot dropped by Inner Demons is special, so use an empty table
+        this.registerLootTable(EntityTypesPM.FRIENDLY_WITCH.get(), LootTable.lootTable());  // No loot dropped by Friendly Witches, so use an empty table
         this.registerLootTable(EntityTypesPM.PRIMALITE_GOLEM.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.PRIMALITE_INGOT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 5.0F))))));
         this.registerLootTable(EntityTypesPM.HEXIUM_GOLEM.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HEXIUM_INGOT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 5.0F))))));
         this.registerLootTable(EntityTypesPM.HALLOWSTEEL_GOLEM.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ItemsPM.HALLOWSTEEL_INGOT.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 5.0F))))));

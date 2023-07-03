@@ -68,6 +68,12 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
         this.checkExpectations();
     }
 
+    @Override
+    protected Iterable<Block> getKnownBlocks() {
+        // Limit this data provider to blocks added by the mod
+        return ForgeRegistries.BLOCKS.getEntries().stream().filter(entry -> entry.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(entry -> entry.getValue()).toList();
+    }
+
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
         this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
         this.add(block, builder);

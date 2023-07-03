@@ -167,18 +167,18 @@ public class EntityTypesPM {
             .clientTrackingRange(8)
             .setCustomClientFactory((spawnEntity, world) -> new FriendlyWitchEntity(EntityTypesPM.FRIENDLY_WITCH.get(), world))
             .build(PrimalMagick.MODID + ":friendly_witch"));
-    public static final RegistryObject<EntityType<PrimaliteGolemEntity>> PRIMALITE_GOLEM = ENTITY_TYPES.register("primalite_golem", () -> EntityType.Builder.<PrimaliteGolemEntity>of(PrimaliteGolemEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<PrimaliteGolemEntity>> PRIMALITE_GOLEM = ENTITY_TYPES.register("primalite_golem", () -> EntityType.Builder.<PrimaliteGolemEntity>of(PrimaliteGolemEntity::new, MobCategory.CREATURE)
             .sized(1.4F, 2.7F)
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new PrimaliteGolemEntity(EntityTypesPM.PRIMALITE_GOLEM.get(), world))
             .build(PrimalMagick.MODID + ":primalite_golem"));
-    public static final RegistryObject<EntityType<HexiumGolemEntity>> HEXIUM_GOLEM = ENTITY_TYPES.register("hexium_golem", () -> EntityType.Builder.<HexiumGolemEntity>of(HexiumGolemEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<HexiumGolemEntity>> HEXIUM_GOLEM = ENTITY_TYPES.register("hexium_golem", () -> EntityType.Builder.<HexiumGolemEntity>of(HexiumGolemEntity::new, MobCategory.CREATURE)
             .sized(1.4F, 2.7F)
             .fireImmune()
             .clientTrackingRange(10)
             .setCustomClientFactory((spawnEntity, world) -> new HexiumGolemEntity(EntityTypesPM.HEXIUM_GOLEM.get(), world))
             .build(PrimalMagick.MODID + ":hexium_golem"));
-    public static final RegistryObject<EntityType<HallowsteelGolemEntity>> HALLOWSTEEL_GOLEM = ENTITY_TYPES.register("hallowsteel_golem", () -> EntityType.Builder.<HallowsteelGolemEntity>of(HallowsteelGolemEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<HallowsteelGolemEntity>> HALLOWSTEEL_GOLEM = ENTITY_TYPES.register("hallowsteel_golem", () -> EntityType.Builder.<HallowsteelGolemEntity>of(HallowsteelGolemEntity::new, MobCategory.CREATURE)
             .sized(1.4F, 2.7F)
             .fireImmune()
             .clientTrackingRange(10)
