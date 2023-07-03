@@ -21,7 +21,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-            .add(Registries.CONFIGURED_FEATURE, ConfiguredFeaturesPM::bootstrap)
+            .add(Registries.CONFIGURED_FEATURE, context -> { ConfiguredFeaturesPM.bootstrap(context); })    // FIXME Compile error when just using ConfiguredFeaturesPM::bootstrap for some reason
             .add(Registries.PLACED_FEATURE, PlacedFeaturesPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap);
     
