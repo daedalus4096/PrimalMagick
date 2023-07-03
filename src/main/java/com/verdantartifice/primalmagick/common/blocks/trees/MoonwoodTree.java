@@ -22,10 +22,10 @@ public class MoonwoodTree extends AbstractPhasingTree {
     @Override
     protected Map<TimePhase, ResourceKey<ConfiguredFeature<?, ?>>> getTreeFeaturesByPhase(RandomSource rand, boolean largeHive) {
         return Util.make(new HashMap<>(), (map) -> {
-            map.put(TimePhase.FULL, ConfiguredFeaturesPM.TREE_MOONWOOD_FULL.getKey());
-            map.put(TimePhase.WAXING, ConfiguredFeaturesPM.TREE_MOONWOOD_WAXING.getKey());
-            map.put(TimePhase.WANING, ConfiguredFeaturesPM.TREE_MOONWOOD_WANING.getKey());
-            map.put(TimePhase.FADED, ConfiguredFeaturesPM.TREE_MOONWOOD_FADED.getKey());
+            map.put(TimePhase.FULL, ConfiguredFeaturesPM.TREE_MOONWOOD_FULL);
+            map.put(TimePhase.WAXING, ConfiguredFeaturesPM.TREE_MOONWOOD_WAXING);
+            map.put(TimePhase.WANING, ConfiguredFeaturesPM.TREE_MOONWOOD_WANING);
+            map.put(TimePhase.FADED, ConfiguredFeaturesPM.TREE_MOONWOOD_FADED);
         });
     }
 

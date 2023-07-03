@@ -22,10 +22,10 @@ public class SunwoodTree extends AbstractPhasingTree {
     @Override
     protected Map<TimePhase, ResourceKey<ConfiguredFeature<?, ?>>> getTreeFeaturesByPhase(RandomSource rand, boolean largeHive) {
         return Util.make(new HashMap<>(), (map) -> {
-            map.put(TimePhase.FULL, ConfiguredFeaturesPM.TREE_SUNWOOD_FULL.getKey());
-            map.put(TimePhase.WAXING, ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING.getKey());
-            map.put(TimePhase.WANING, ConfiguredFeaturesPM.TREE_SUNWOOD_WANING.getKey());
-            map.put(TimePhase.FADED, ConfiguredFeaturesPM.TREE_SUNWOOD_FADED.getKey());
+            map.put(TimePhase.FULL, ConfiguredFeaturesPM.TREE_SUNWOOD_FULL);
+            map.put(TimePhase.WAXING, ConfiguredFeaturesPM.TREE_SUNWOOD_WAXING);
+            map.put(TimePhase.WANING, ConfiguredFeaturesPM.TREE_SUNWOOD_WANING);
+            map.put(TimePhase.FADED, ConfiguredFeaturesPM.TREE_SUNWOOD_FADED);
         });
     }
 

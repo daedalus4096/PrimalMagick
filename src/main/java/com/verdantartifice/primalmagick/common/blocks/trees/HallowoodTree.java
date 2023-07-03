@@ -15,6 +15,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 public class HallowoodTree extends AbstractTreeGrower {
     @Override
     protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource randomIn, boolean largeHive) {
-        return ConfiguredFeaturesPM.TREE_HALLOWOOD.getKey();
+        return ConfiguredFeaturesPM.TREE_HALLOWOOD;
     }
 }
