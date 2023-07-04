@@ -107,6 +107,6 @@ public class GameplayLootTables implements LootTableSubProvider {
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
-        return new LootTableProvider.SubProviderEntry(GameplayLootTables::new, LootContextParamSets.EMPTY);
+        return new LootTableProvider.SubProviderEntry(GameplayLootTables::new, LootContextParamSets.PIGLIN_BARTER);
     }
 }

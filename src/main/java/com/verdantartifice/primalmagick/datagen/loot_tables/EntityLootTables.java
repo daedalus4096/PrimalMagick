@@ -128,6 +128,6 @@ public class EntityLootTables extends EntityLootSubProvider {
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
-        return new LootTableProvider.SubProviderEntry(EntityLootTables::new, LootContextParamSets.EMPTY);
+        return new LootTableProvider.SubProviderEntry(EntityLootTables::new, LootContextParamSets.ENTITY);
     }
 }

@@ -293,6 +293,6 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
-        return new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.EMPTY);
+        return new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.BLOCK);
     }
 }
