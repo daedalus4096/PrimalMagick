@@ -13,6 +13,7 @@ import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -73,44 +74,44 @@ public class BiomeModifierProvider implements DataProvider {
         // Register ore placement biome modifiers
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_marble_raw_upper"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_marble_raw_upper")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_UPPER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_marble_raw_lower"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_marble_raw_lower")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_LOWER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_rock_salt_upper"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_rock_salt_upper")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_UPPER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_rock_salt_lower"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_rock_salt_lower")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_LOWER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
-        consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_quartz"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+        consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_quartz_upper"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_quartz")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_UPPER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_ore_quartz_lower"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_OVERWORLD),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "ore_quartz_lower")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_LOWER)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
         
         // Register vegetation placement biome modifiers
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_trees_wild_sunwood"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_FOREST),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "trees_wild_sunwood")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.TREE_WILD_SUNWOOD)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
         consumer.accept(new ResourceLocation(PrimalMagick.MODID, "add_trees_wild_moonwood"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
                 ops.getter(Registries.BIOME).get().getOrThrow(BiomeTags.IS_FOREST),
-                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, "trees_wild_moonwood")))),
+                HolderSet.direct(ops.getter(Registries.PLACED_FEATURE).get().getOrThrow(PlacedFeaturesPM.TREE_WILD_MOONWOOD)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
         
