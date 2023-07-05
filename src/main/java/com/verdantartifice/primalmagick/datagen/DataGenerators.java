@@ -49,5 +49,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
+        RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
     }
 }
