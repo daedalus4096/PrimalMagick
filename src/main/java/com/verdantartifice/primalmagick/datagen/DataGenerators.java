@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
-import com.verdantartifice.primalmagick.datagen.biome_modifiers.BiomeModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
@@ -49,7 +48,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ResearchProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), (DataProvider.Factory<BiomeModifierProvider>)(output -> new BiomeModifierProvider(output, event.getLookupProvider())));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
     }
 }
