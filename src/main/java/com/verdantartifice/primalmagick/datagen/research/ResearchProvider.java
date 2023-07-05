@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
@@ -18,7 +19,6 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -37,23 +37,21 @@ public class ResearchProvider implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
-        return CompletableFuture.runAsync(() -> {
-            Path path = this.packOutput.getOutputFolder();
-            Map<ResourceLocation, IFinishedResearchEntry> map = new HashMap<>();
-            this.registerEntries((research) -> {
-                if (map.put(research.getId(), research) != null) {
-                    LOGGER.debug("Duplicate research entry in data generation: " + research.getId().toString());
-                }
-            });
-            for (Map.Entry<ResourceLocation, IFinishedResearchEntry> entry : map.entrySet()) {
-                IFinishedResearchEntry research = entry.getValue();
-                this.saveEntry(cache, research.getEntryJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/grimoire/" + entry.getKey().getPath() + ".json"));
+        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+        Map<ResourceLocation, IFinishedResearchEntry> map = new HashMap<>();
+        this.registerEntries((research) -> {
+            if (map.put(research.getId(), research) != null) {
+                LOGGER.debug("Duplicate research entry in data generation: " + research.getId().toString());
             }
-        }, Util.backgroundExecutor());
+        });
+        map.entrySet().forEach(entry -> {
+            futuresBuilder.add(DataProvider.saveStable(cache, entry.getValue().getEntryJson(), this.getPath(this.packOutput, entry.getKey())));
+        });
+        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
-    private void saveEntry(CachedOutput cache, JsonObject json, Path path) {
-        DataProvider.saveStable(cache, json, path);
+    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("grimoire").resolve(entryLoc.getPath() + ".json");
     }
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {
