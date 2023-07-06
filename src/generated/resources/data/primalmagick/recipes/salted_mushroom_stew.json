@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "salted_food",
+  "ingredients": [
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "minecraft:mushroom_stew"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:salted_mushroom_stew"
+  }
+}

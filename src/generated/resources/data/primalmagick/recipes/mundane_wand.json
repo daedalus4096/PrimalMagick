@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "tag": "forge:rods/wooden"
+    },
+    {
+      "tag": "primalmagick:essences/terrestrial_dusts"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:mundane_wand"
+  }
+}

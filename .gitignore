@@ -68,5 +68,5 @@ local.properties
 ## MC Generated Data
 #################
 
-/src/generated/
+/src/generated/resources/.cache/
 *.hprof
