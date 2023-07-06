@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -40,22 +39,21 @@ public class ProjectProvider implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
-        return CompletableFuture.runAsync(() -> {
-            Path path = this.packOutput.getOutputFolder();
-            Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
-            this.registerProjects((project) -> {
-                if (map.put(project.getId(), project) != null) {
-                    LOGGER.debug("Duplicate theorycrafting project in data generation: {}", project.getId().toString());
-                }
-            });
-            for (Map.Entry<ResourceLocation, IFinishedProject> entry : map.entrySet()) {
-                this.saveProject(cache, entry.getValue().getProjectJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/theorycrafting/" + entry.getKey().getPath() + ".json"));
+        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+        Map<ResourceLocation, IFinishedProject> map = new HashMap<>();
+        this.registerProjects((project) -> {
+            if (map.put(project.getId(), project) != null) {
+                LOGGER.debug("Duplicate theorycrafting project in data generation: {}", project.getId().toString());
             }
-        }, Util.backgroundExecutor());
+        });
+        map.entrySet().forEach(entry -> {
+            futuresBuilder.add(DataProvider.saveStable(cache, entry.getValue().getProjectJson(), this.getPath(this.packOutput, entry.getKey())));
+        });
+        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
-    private void saveProject(CachedOutput cache, JsonObject json, Path path) {
-        DataProvider.saveStable(cache, json, path);
+    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("theorycrafting").resolve(entryLoc.getPath() + ".json");
     }
     
     protected void registerProjects(Consumer<IFinishedProject> consumer) {

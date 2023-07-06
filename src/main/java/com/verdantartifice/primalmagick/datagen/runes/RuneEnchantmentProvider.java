@@ -11,12 +11,11 @@ import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 
-import net.minecraft.Util;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -36,24 +35,23 @@ public class RuneEnchantmentProvider implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput cache) {
-        return CompletableFuture.runAsync(() -> {
-            Path path = this.packOutput.getOutputFolder();
-            Map<ResourceLocation, IFinishedRuneEnchantment> map = new HashMap<>();
-            this.registerEnchantments((enchantment) -> {
-                if (map.put(enchantment.getId(), enchantment) != null) {
-                    LOGGER.debug("Duplicate rune enchantment definition in data generation: {}", enchantment.getId().toString());
-                }
-                this.registeredEnchantments.add(enchantment.getId());
-            });
-            for (Map.Entry<ResourceLocation, IFinishedRuneEnchantment> entry : map.entrySet()) {
-                this.saveProject(cache, entry.getValue().getEnchantmentJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/rune_enchantments/" + entry.getKey().getPath() + ".json"));
+        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+        Map<ResourceLocation, IFinishedRuneEnchantment> map = new HashMap<>();
+        this.registerEnchantments((enchantment) -> {
+            if (map.put(enchantment.getId(), enchantment) != null) {
+                LOGGER.debug("Duplicate rune enchantment definition in data generation: {}", enchantment.getId().toString());
             }
-            this.checkExpectations();
-        }, Util.backgroundExecutor());
+            this.registeredEnchantments.add(enchantment.getId());
+        });
+        map.entrySet().forEach(entry -> {
+            futuresBuilder.add(DataProvider.saveStable(cache, entry.getValue().getEnchantmentJson(), this.getPath(this.packOutput, entry.getKey())));
+        });
+        this.checkExpectations();
+        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
-    
-    private void saveProject(CachedOutput cache, JsonObject json, Path path) {
-        DataProvider.saveStable(cache, json, path);
+
+    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("rune_enchantments").resolve(entryLoc.getPath() + ".json");
     }
     
     private void registerEmptyEnchantment(Enchantment ench) {
