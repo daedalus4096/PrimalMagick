@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.creative;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -14,7 +13,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -40,8 +38,8 @@ public class CreativeModeTabsPM {
         TAB_REGISTRATIONS.add(new DefaultInstanceTabRegistration(itemSupplier));
     }
     
-    public static void registerCustom(Supplier<? extends ItemLike> itemSupplier, BiConsumer<BuildCreativeModeTabContentsEvent, Supplier<? extends ItemLike>> consumer) {
-        TAB_REGISTRATIONS.add(new CustomTabRegistration(itemSupplier, consumer));
+    public static void registerCustom(Supplier<? extends ItemLike> itemSupplier, CustomTabRegistrar registrar) {
+        TAB_REGISTRATIONS.add(new CustomTabRegistration(itemSupplier, registrar));
     }
     
     public static List<ICreativeTabRegistration> getTabRegistrationEntries() {
@@ -52,5 +50,13 @@ public class CreativeModeTabsPM {
     public static final RegistryObject<CreativeModeTab> TAB = TABS.register(PrimalMagick.MODID, () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.primalmagick"))
             .icon(() -> new ItemStack(ItemsPM.GRIMOIRE.get()))
+            .displayItems((params, output) -> {
+                CreativeModeTabsPM.getTabRegistrationEntries().forEach(entry -> entry.register(params, output));
+            })
             .build());
+    
+    @FunctionalInterface
+    public interface CustomTabRegistrar {
+        void accept(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier);
+    }
 }

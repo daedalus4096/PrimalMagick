@@ -23,6 +23,7 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
@@ -37,7 +38,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 
 /**
  * Definition of an alchemical concoction.  Similar to a brewed potion, but a single vial contains
@@ -154,18 +154,18 @@ public class ConcoctionItem extends Item {
         return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
     }
 
-    public static void registerCreativeTabItems(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> itemSupplier) {
+    public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
         Item item = itemSupplier.get().asItem();
-        event.accept(item.getDefaultInstance());    // Add basic water concoction separately
+        output.accept(item.getDefaultInstance());    // Add basic water concoction separately
         for (ConcoctionType concoctionType : ConcoctionType.values()) {
             if (concoctionType.hasDrinkablePotion()) {
-                event.getParameters().holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
+                params.holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
                     registryLookup.listElements().filter(potionRef -> {
                         return !potionRef.is(Potions.EMPTY_ID) && ConcoctionUtils.hasBeneficialEffect(potionRef.value());
                     }).map(potionRef -> {
                         return ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), concoctionType);
                     }).forEach(stack -> {
-                        event.accept(stack);
+                        output.accept(stack);
                     });
                 });
             }

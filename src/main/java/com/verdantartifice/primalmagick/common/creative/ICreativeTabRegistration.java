@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.creative;
 
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraft.world.item.CreativeModeTab;
 
 public interface ICreativeTabRegistration {
-    void register(BuildCreativeModeTabContentsEvent event);
+    void register(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output);
 }

@@ -26,9 +26,9 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePiec
  */
 public class InitRegistries {
     public static void initDeferredRegistries() {
-        CreativeModeTabsPM.init();
         BlocksPM.init();
         ItemsPM.init();
+        CreativeModeTabsPM.init();
         TileEntityTypesPM.init();
         ContainersPM.init();
         EntityTypesPM.init();

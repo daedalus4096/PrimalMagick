@@ -18,6 +18,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -26,7 +27,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 
 /**
  * Definition of an alchemical bomb.  Similar to a splash potion, but a single bomb has multiple
@@ -109,16 +109,16 @@ public class AlchemicalBombItem extends Item {
         return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
     }
 
-    public static void registerCreativeTabItems(BuildCreativeModeTabContentsEvent event, Supplier<? extends ItemLike> itemSupplier) {
+    public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
         Item item = itemSupplier.get().asItem();
-        event.accept(item.getDefaultInstance());    // Add basic water bomb separately
-        event.getParameters().holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
+        output.accept(item.getDefaultInstance());    // Add basic water bomb separately
+        params.holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
             registryLookup.listElements().filter(potionRef -> {
                 return !potionRef.is(Potions.EMPTY_ID);
             }).map(potionRef -> {
                 return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), ConcoctionType.BOMB), FuseType.MEDIUM);
             }).forEach(stack -> {
-                event.accept(stack);
+                output.accept(stack);
             });
         });
     }

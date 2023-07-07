@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items;
 
-import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -88,9 +87,7 @@ import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -109,18 +106,21 @@ public class ItemsPM {
     }
     
     protected static <I extends Item> RegistryObject<I> registerSupplier(String name, Supplier<? extends I> itemSupplier) {
-        CreativeModeTabsPM.registerSupplier(itemSupplier);
-        return registerWithoutTab(name, itemSupplier);
+        RegistryObject<I> obj = registerWithoutTab(name, itemSupplier);
+        CreativeModeTabsPM.registerSupplier(obj);
+        return obj;
     }
     
     protected static <I extends Item> RegistryObject<I> registerDefaultInstance(String name, Supplier<? extends I> itemSupplier) {
-        CreativeModeTabsPM.registerDefaultInstance(itemSupplier);
-        return registerWithoutTab(name, itemSupplier);
+        RegistryObject<I> obj = registerWithoutTab(name, itemSupplier);
+        CreativeModeTabsPM.registerDefaultInstance(obj);
+        return obj;
     }
     
-    protected static <I extends Item> RegistryObject<I> registerCustom(String name, BiConsumer<BuildCreativeModeTabContentsEvent, Supplier<? extends ItemLike>> consumer, Supplier<? extends I> itemSupplier) {
-        CreativeModeTabsPM.registerCustom(itemSupplier, consumer);
-        return registerWithoutTab(name, itemSupplier);
+    protected static <I extends Item> RegistryObject<I> registerCustom(String name, CreativeModeTabsPM.CustomTabRegistrar registrar, Supplier<? extends I> itemSupplier) {
+        RegistryObject<I> obj = registerWithoutTab(name, itemSupplier);
+        CreativeModeTabsPM.registerCustom(obj, registrar);
+        return obj;
     }
     
     protected static <I extends Item> RegistryObject<I> registerWithoutTab(String name, Supplier<? extends I> itemSupplier) {
