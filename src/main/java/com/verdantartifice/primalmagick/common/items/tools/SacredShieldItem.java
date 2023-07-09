@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagick.common.items.tools;
 import java.util.List;
 
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,6 +20,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SacredShieldItem extends AbstractTieredShieldItem {
+    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/shield/sacred_shield");
+    
     public SacredShieldItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);
     }

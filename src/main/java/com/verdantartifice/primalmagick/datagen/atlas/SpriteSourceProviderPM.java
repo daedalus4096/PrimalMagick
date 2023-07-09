@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.common.containers.slots.WandCoreSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandGemSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.WritingImplementSlot;
+import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
@@ -84,6 +85,7 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, HexiumShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_BASE);
         this.addSingle(blockAtlas, HallowsteelShieldISTER.TEXTURE_SHIELD_NO_PATTERN);
+        this.addSingle(blockAtlas, SacredShieldItem.TEXTURE);
         
         // Add source textures to the block atlas
         this.addSingle(blockAtlas, Source.getUnknownAtlasLocation());
