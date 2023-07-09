@@ -49,10 +49,10 @@ public class ResearchToast implements Toast {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(6.0F, 18.0F, 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
-            guiGraphics.drawString(mc.font, descText, 0, 0, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, descText, 0, 0, Color.BLACK.getRGB(), false);
             guiGraphics.pose().popPose();
         } else {
-            guiGraphics.drawString(mc.font, descText, 6, 18, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, descText, 6, 18, Color.BLACK.getRGB(), false);
         }
         
         // If the toast has been open long enough, hide it

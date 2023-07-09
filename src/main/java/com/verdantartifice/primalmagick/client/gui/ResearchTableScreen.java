@@ -103,26 +103,26 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
             // Render title text
             Component titleText = Component.translatable(this.project.getNameTranslationKey()).withStyle(ChatFormatting.BOLD);
             int titleWidth = mc.font.width(titleText);
-            guiGraphics.drawString(mc.font, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, titleText, 34 + ((162 - titleWidth) / 2), y, Color.BLACK.getRGB(), false);
             y += (int)(mc.font.lineHeight * 1.66D);
             
             // Render description text
             Component descText = Component.translatable(this.project.getTextTranslationKey());
             List<FormattedText> descLines = mc.font.getSplitter().splitLines(descText, 154, Style.EMPTY); // list formatted string to width
             for (FormattedText line : descLines) {
-                guiGraphics.drawString(mc.font, line.getString(), 38, y, Color.BLACK.getRGB());
+                guiGraphics.drawString(mc.font, line.getString(), 38, y, Color.BLACK.getRGB(), false);
                 y += mc.font.lineHeight;
             }
         } else if (!this.menu.isWritingReady()) {
             // Render missing writing materials text
             Component text = Component.translatable("primalmagick.research_table.missing_writing_supplies");
             int width = mc.font.width(text.getString());
-            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         } else {
             // Render ready to start text
             Component text = Component.translatable("primalmagick.research_table.ready");
             int width = mc.font.width(text.getString());
-            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         }
     }
 

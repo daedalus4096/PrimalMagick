@@ -65,7 +65,7 @@ public abstract class AbstractPage {
         int width = mc.font.width(headerText.getString());
         int indent = 124;
         if (width <= 124) {
-            guiGraphics.drawString(mc.font, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, headerText, x - 3 + (side * 140) + (indent / 2) - (width / 2), y + 25, Color.BLACK.getRGB(), false);
             if (icon != null) {
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
@@ -80,7 +80,7 @@ public abstract class AbstractPage {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale), y + 25 + (1.0F * scale), 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
-            guiGraphics.drawString(mc.font, headerText, 0, 0, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, headerText, 0, 0, Color.BLACK.getRGB(), false);
             if (icon != null) {
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2 * scale) - 17, y + 21, 0.0F);

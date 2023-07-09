@@ -45,7 +45,7 @@ public class AttunementGainPage extends AbstractPage {
                     Component.translatable(Source.getUnknownTranslationKey());
             Component amountText = Component.translatable("primalmagick.attunement_gain." + Integer.toString(amount));
             Component fullText = Component.translatable("primalmagick.attunement_gain.text", labelText, amountText);
-            guiGraphics.drawString(mc.font, fullText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, fullText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
         }
     }

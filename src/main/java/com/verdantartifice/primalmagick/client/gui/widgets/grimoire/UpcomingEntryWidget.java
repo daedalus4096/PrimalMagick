@@ -67,7 +67,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
         int dx = this.icon == null ? 0 : (this.icon.isLarge() ? 16 : 11);
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= (this.width - dx)) {
-            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB());
+            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + dx, this.getY() + dy, Color.GRAY.getRGB(), false);
             if (this.icon != null) {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));
             }
@@ -77,7 +77,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(this.getX() + dx, this.getY() + dy + (1.0F * scale), 0.0F);
             guiGraphics.pose().scale(scale, scale, scale);
-            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB());
+            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.GRAY.getRGB(), false);
             guiGraphics.pose().popPose();
             if (this.icon != null) {
                 this.icon.render(guiGraphics, this.getX() - 2, this.getY() + dy - (this.icon.isLarge() ? 4 : 1));

@@ -163,7 +163,7 @@ public class RequirementsPage extends AbstractPage {
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getMustObtain().size() / ITEMS_PER_ROW)));  // Make room for obtain widgets
         }
@@ -171,7 +171,7 @@ public class RequirementsPage extends AbstractPage {
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getMustCraft().size() / ITEMS_PER_ROW)));   // Make room for craft widgets
         }
@@ -179,7 +179,7 @@ public class RequirementsPage extends AbstractPage {
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getRequiredKnowledge().size() / ITEMS_PER_ROW)));   // Make room for knowledge widgets
         }
@@ -187,7 +187,7 @@ public class RequirementsPage extends AbstractPage {
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.required_research_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getRequiredResearch().getKeys().size() / ITEMS_PER_ROW)));  // Make room for research widgets
         }

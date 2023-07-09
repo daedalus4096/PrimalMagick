@@ -62,22 +62,22 @@ public class RecipeMetadataPage extends AbstractPage {
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
-        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.discipline").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research discipline
         if (entry == null) {
-            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
         }
         y += 2 * mc.font.lineHeight;
         
         // Render the metadata's entry header
-        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, Component.translatable("primalmagick.grimoire.recipe_metadata.entry").withStyle(ChatFormatting.UNDERLINE), x - 3 + (side * 138), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research entry
         if (entry == null) {
-            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
         }
     }
 

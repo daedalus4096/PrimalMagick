@@ -101,7 +101,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB());
+            guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB(), false);
         }
     }
     
