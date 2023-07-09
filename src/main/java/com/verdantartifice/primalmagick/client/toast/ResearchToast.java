@@ -38,7 +38,7 @@ public class ResearchToast implements Toast {
         
         // Render the toast title text
         Component titleText = this.isComplete ? Component.translatable("primalmagick.toast.completed.title") : Component.translatable("primalmagick.toast.revealed.title");
-        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor());
+        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor(), false);
         
         // Render the description of the completed research
         Component descText = Component.translatable(this.entry.getNameTranslationKey());
