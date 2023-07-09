@@ -12,7 +12,6 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
@@ -51,9 +50,7 @@ public class BlockIngredientWidget extends AbstractWidget {
         }
         if (!this.toDisplay.isEmpty()) {
             Minecraft mc = Minecraft.getInstance();
-            MutableComponent tooltip = Component.empty();
-            this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL).forEach(line -> tooltip.append(line).append(CommonComponents.NEW_LINE));
-            this.setTooltip(Tooltip.create(tooltip));
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
         }
     }
     

@@ -110,7 +110,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
             super(leftPos + 78, topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, 256, 256, button -> {
                 PacketHandler.sendToServer(new AnalysisActionPacket(menu.containerId));
             });
-            this.setTooltip(Tooltip.create(Component.empty().append(ANALYZE_BUTTON_TOOLTIP_1).append(CommonComponents.NEW_LINE).append(ANALYZE_BUTTON_TOOLTIP_2)));
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(ANALYZE_BUTTON_TOOLTIP_1, ANALYZE_BUTTON_TOOLTIP_2)));
         }
     }
 }
