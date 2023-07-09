@@ -117,7 +117,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Render ingredients section header
         if (!this.recipe.getIngredients().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.ritual_offerings_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getIngredients().size() / (double)ITEMS_PER_ROW); // Make room for ingredient widgets
             y += (int)(mc.font.lineHeight * 0.66F);
@@ -126,7 +126,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         // Render props section header
         if (!this.recipe.getProps().isEmpty()) {
             Component leadComponent = Component.translatable("primalmagick.grimoire.ritual_props_header").withStyle(ChatFormatting.UNDERLINE);
-            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += 18 * Mth.ceil((double)this.recipe.getProps().size() / (double)ITEMS_PER_ROW);       // Make room for prop widgets
             y += (int)(mc.font.lineHeight * 0.66F);
@@ -137,7 +137,7 @@ public class RitualRecipePage extends AbstractRecipePage {
         int rating = Mth.clamp(this.recipe.getInstability() / 2, 0, 5);
         Component valueComponent = Component.translatable("primalmagick.ritual.instability.rating." + rating);
         Component lineComponent = Component.translatable("primalmagick.ritual.instability", headerComponent, valueComponent);
-        guiGraphics.drawString(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB());
+        guiGraphics.drawString(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
         guiGraphics.pose().popPose();
