@@ -31,6 +31,7 @@ public class ResearchWidget extends AbstractWidget {
     protected final SimpleResearchKey key;
     protected final boolean isComplete;
     protected final boolean hasHint;
+    protected final ResourceLocation iconLoc;
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
         this(key, x, y, isComplete, false);
@@ -41,29 +42,28 @@ public class ResearchWidget extends AbstractWidget {
         this.key = key;
         this.isComplete = isComplete;
         this.hasHint = hasHint;
+        
+        // Pick the icon to show based on the prefix of the research key
+        if (this.key.getRootKey().startsWith("m_")) {
+            this.iconLoc = MAP_TEXTURE;
+        } else if (this.key.getRootKey().startsWith("b_")) {
+            this.iconLoc = BAG_TEXTURE;
+        } else if (this.key.getRootKey().startsWith("t_")) {
+            this.iconLoc = TUBE_TEXTURE;
+        } else {
+            this.iconLoc = UNKNOWN_TEXTURE;
+        }
     }
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        // Pick the icon to show based on the prefix of the research key
-        ResourceLocation loc;
-        if (this.key.getRootKey().startsWith("m_")) {
-            loc = MAP_TEXTURE;
-        } else if (this.key.getRootKey().startsWith("b_")) {
-            loc = BAG_TEXTURE;
-        } else if (this.key.getRootKey().startsWith("t_")) {
-            loc = TUBE_TEXTURE;
-        } else {
-            loc = UNKNOWN_TEXTURE;
-        }
-        
         // Render the icon
         guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        guiGraphics.blit(loc, 0, 0, 0, 0, 255, 255);
+        guiGraphics.blit(this.iconLoc, 0, 0, 0, 0, 255, 255);
         guiGraphics.pose().popPose();
         
         if (this.isComplete) {
@@ -73,16 +73,8 @@ public class ResearchWidget extends AbstractWidget {
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             guiGraphics.pose().popPose();
         }
-    }
-    
-    @Override
-    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
-        // Disable click behavior
-        return false;
-    }
-
-    @Override
-    public Tooltip getTooltip() {
+        
+        // Prepare the tooltip
         MutableComponent tooltip = Component.empty();
         if (this.hasHint) {
             if (Screen.hasShiftDown()) {
@@ -94,7 +86,13 @@ public class ResearchWidget extends AbstractWidget {
         } else {
             tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text"));
         }
-        return Tooltip.create(tooltip);
+        this.setTooltip(Tooltip.create(tooltip));
+    }
+    
+    @Override
+    public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
+        // Disable click behavior
+        return false;
     }
 
     @Override
