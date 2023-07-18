@@ -183,7 +183,7 @@ public class GuiUtils {
                 String amountStr = Integer.toString(amount);
                 int amountWidth = mc.font.width(amountStr);
                 poseStack.pushPose();
-                poseStack.scale(0.5F, 0.5F, 0.5F);
+                poseStack.scale(0.5F, 0.5F, -0.5F);
                 poseStack.translate(32.0D - amountWidth, 32.0D - mc.font.lineHeight, 0.0D);
                 mc.font.drawInBatch(amountStr, 0F, 0F, Color.WHITE.getRGB(), true, poseStack.last().pose(), buffers, Font.DisplayMode.NORMAL, 0, 15728880, mc.font.isBidirectional());
                 poseStack.popPose();
