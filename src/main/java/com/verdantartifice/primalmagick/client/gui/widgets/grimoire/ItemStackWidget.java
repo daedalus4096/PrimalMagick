@@ -48,7 +48,7 @@ public class ItemStackWidget extends AbstractWidget {
             Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 900.0F);
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
             guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
             guiGraphics.pose().popPose();
