@@ -94,7 +94,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         super.renderLabels(guiGraphics, mouseX, mouseY);
         Component contentsLabel = Component.translatable("primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
-        guiGraphics.drawString(this.font, contentsLabel, 8, 92, 4210752);
+        guiGraphics.drawString(this.font, contentsLabel, 8, 92, 4210752, false);
     }
 
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {
