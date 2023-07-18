@@ -1341,7 +1341,7 @@
     
     "primalmagick.research.spell_mod_quicken.title": "Spell Mod: Quicken",
     "primalmagick.research.spell_mod_quicken.text.stage.1": "It generally takes a few seconds to recover from casting a spell, be it from a scroll or a wand.  These seconds can be the difference between life or death in a duel.",
-    "primalmagick.research.spell_mod_quicken.text.stage.2": "By applying the Quicken mod to a spell, I can decrease the amount of recovery time needed between spellcasts.  Every point of Haste value applied to the mod will decrease that recovery time by a half second, down to a minimum of half a second.<BR>Any spell can be affected by a Quicken mod, but it greatly increases the mana cost of the spell, so I should be careful not to run out my mana reserves too quickly.<BR>Only the Quicken mod with the highest Haste value will be considered for a single spell.",
+    "primalmagick.research.spell_mod_quicken.text.stage.2": "By applying the Quicken mod to a spell, I can decrease the amount of recovery time needed between spellcasts.  Every point of Haste value applied to the mod will decrease that recovery time by a quarter second, down to a minimum of a quarter second recovery time.<BR>Any spell can be affected by a Quicken mod, but it greatly increases the mana cost of the spell, so I should be careful not to run out my mana reserves too quickly.<BR>Only the Quicken mod with the highest Haste value will be considered for a single spell.",
     
     "primalmagick.research.spell_mod_mine.title": "Spell Mod: Mine",
     "primalmagick.research.spell_mod_mine.text.stage.1": "Sometimes, rather than attack a creature directly, I would prefer to lay a trap.  Maybe that can be arranged.",
