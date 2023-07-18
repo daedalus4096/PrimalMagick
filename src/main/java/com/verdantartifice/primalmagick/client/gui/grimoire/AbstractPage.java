@@ -70,8 +70,7 @@ public abstract class AbstractPage {
                 guiGraphics.pose().pushPose();
                 guiGraphics.pose().translate(x - 3 + (side * 140) + (indent / 2) - (width / 2) - 17, y + 21, 0.0F);
                 guiGraphics.pose().scale(0.06F, 0.06F, 0.06F);
-                RenderSystem.setShaderTexture(0, icon);
-                guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 0, 255, 255);
+                guiGraphics.blit(icon, 0, 0, 0, 0, 255, 255);
                 guiGraphics.pose().popPose();
             }
         } else {

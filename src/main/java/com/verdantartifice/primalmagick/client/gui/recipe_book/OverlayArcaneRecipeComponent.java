@@ -134,7 +134,6 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             this.time += partialTicks;
             RenderSystem.enableBlend();
             guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.setShaderTexture(0, RECIPE_BOOK_LOCATION);
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(0.0D, 0.0D, 170.0D);
             

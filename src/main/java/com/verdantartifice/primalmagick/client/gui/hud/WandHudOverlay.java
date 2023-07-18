@@ -86,7 +86,6 @@ public class WandHudOverlay implements IGuiOverlay {
     private int renderManaGauge(GuiGraphics guiGraphics, int x, int y, Component text, double ratio, int color, boolean isLast, float partialTick, Font font) {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
-        RenderSystem.setShaderTexture(0, HUD_TEXTURE);
         
         // Render the gauge background
         guiGraphics.setColor(1, 1, 1, 1);

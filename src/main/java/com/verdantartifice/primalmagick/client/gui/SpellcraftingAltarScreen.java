@@ -209,8 +209,6 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        
         // Render the GUI background
         guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         

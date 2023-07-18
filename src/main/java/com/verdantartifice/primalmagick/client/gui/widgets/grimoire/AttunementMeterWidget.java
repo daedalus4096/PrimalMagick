@@ -58,7 +58,6 @@ public class AttunementMeterWidget extends AbstractWidget {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         Minecraft mc = Minecraft.getInstance();
-        RenderSystem.setShaderTexture(0, TEXTURE);
         
         int p = AttunementManager.getAttunement(mc.player, this.source, AttunementType.PERMANENT);
         int i = AttunementManager.getAttunement(mc.player, this.source, AttunementType.INDUCED);
