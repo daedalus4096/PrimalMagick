@@ -227,7 +227,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         for (Map.Entry<Vec3i, Component> entry : this.texts.entrySet()) {
             str = this.font.plainSubstrByWidth(entry.getValue().getString(), entry.getKey().getZ());
             strWidth = this.font.width(str);
-            guiGraphics.drawString(this.minecraft.font, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color);
+            guiGraphics.drawString(this.minecraft.font, str, entry.getKey().getX() - this.leftPos + ((entry.getKey().getZ() - strWidth) / 2), entry.getKey().getY() - this.topPos, color, false);
         }
     }
     
