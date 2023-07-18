@@ -19,15 +19,15 @@ import net.minecraft.world.level.block.Block;
  */
 public class ProjectMaterialWidgetFactory {
     @Nullable
-    public static AbstractProjectMaterialWidget create(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
-        if (material instanceof ItemProjectMaterial) {
-            return new ItemProjectMaterialWidget((ItemProjectMaterial)material, x, y, surroundings);
-        } else if (material instanceof ItemTagProjectMaterial) {
-            return new ItemTagProjectMaterialWidget((ItemTagProjectMaterial)material, x, y, surroundings);
-        } else if (material instanceof ObservationProjectMaterial) {
-            return new ObservationProjectMaterialWidget((ObservationProjectMaterial)material, x, y, surroundings);
-        } else if (material instanceof ExperienceProjectMaterial) {
-            return new ExperienceProjectMaterialWidget((ExperienceProjectMaterial)material, x, y, surroundings);
+    public static AbstractProjectMaterialWidget<?> create(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
+        if (material instanceof ItemProjectMaterial itemMaterial) {
+            return new ItemProjectMaterialWidget(itemMaterial, x, y, surroundings);
+        } else if (material instanceof ItemTagProjectMaterial itemTagMaterial) {
+            return new ItemTagProjectMaterialWidget(itemTagMaterial, x, y, surroundings);
+        } else if (material instanceof ObservationProjectMaterial observationMaterial) {
+            return new ObservationProjectMaterialWidget(observationMaterial, x, y, surroundings);
+        } else if (material instanceof ExperienceProjectMaterial expMaterial) {
+            return new ExperienceProjectMaterialWidget(expMaterial, x, y, surroundings);
         } else {
             return null;
         }

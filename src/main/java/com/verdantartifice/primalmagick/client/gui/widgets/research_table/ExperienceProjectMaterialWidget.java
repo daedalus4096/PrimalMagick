@@ -19,14 +19,11 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget {
+public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget<ExperienceProjectMaterial> {
     private static final ResourceLocation EXPERIENCE_ORB_TEXTURES = new ResourceLocation("textures/entity/experience_orb.png");
 
-    protected ExperienceProjectMaterial material;
-    
     public ExperienceProjectMaterialWidget(ExperienceProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);
-        this.material = material;
     }
     
     @Override

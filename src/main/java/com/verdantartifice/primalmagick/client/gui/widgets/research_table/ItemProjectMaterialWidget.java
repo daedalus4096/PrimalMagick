@@ -20,12 +20,9 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget {
-    protected ItemProjectMaterial material;
-    
+public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<ItemProjectMaterial> {
     public ItemProjectMaterialWidget(ItemProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);
-        this.material = material;
     }
     
     @Override

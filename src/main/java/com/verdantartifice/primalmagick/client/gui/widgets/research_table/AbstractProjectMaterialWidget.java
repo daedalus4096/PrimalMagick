@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -24,31 +24,21 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
+public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial> extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
 
-    protected boolean complete;
-    protected boolean consumed;
-    protected boolean hasBonus;
+    protected final T material;
+    protected final boolean complete;
+    protected final boolean consumed;
+    protected final boolean hasBonus;
     
-    public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
+    public AbstractProjectMaterialWidget(T material, int x, int y, Set<Block> surroundings) {
         super(x, y, 16, 16, Component.empty());
         Minecraft mc = Minecraft.getInstance();
+        this.material = material;
         this.hasBonus = material.getBonusReward() > 0.0D;
         this.consumed = material.isConsumed();
         this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
-        
-        MutableComponent tooltip = Component.empty();
-        if (this.consumed) {
-            tooltip.append(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            if (this.hasBonus) {
-                tooltip.append(CommonComponents.NEW_LINE);
-            }
-        }
-        if (this.hasBonus) {
-            tooltip.append(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-        this.setTooltip(Tooltip.create(tooltip));
     }
     
     @Override
@@ -74,6 +64,15 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
             guiGraphics.blit(TEXTURE, 0, 0, 215, 0, 6, 5);
             guiGraphics.pose().popPose();
         }
+        
+        List<Component> lines = new ArrayList<>(this.getHoverText());
+        if (this.consumed) {
+            lines.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        if (this.hasBonus) {
+            lines.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
     
     /**
