@@ -28,6 +28,8 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
+    protected long lastCheck = 0L;
+    protected int lastTotalEssence = 0;
 
     public EssenceCaskScreen(EssenceCaskContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -36,6 +38,13 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         this.inventoryLabelY = this.imageHeight - 94;
     }
     
+    @Override
+    protected void init() {
+        super.init();
+        this.lastTotalEssence = this.menu.getTotalEssenceCount();
+        this.initWidgets();
+    }
+
     protected void initWidgets() {
         Minecraft mc = Minecraft.getInstance();
         this.clearWidgets();
@@ -71,14 +80,20 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+        // Determine if we need to update the GUI based on how long it's been since the last refresh or the total essence in the cask
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastCheck || this.lastTotalEssence != this.menu.getTotalEssenceCount()) {
+            this.lastCheck = millis + 2000L;
+            this.lastTotalEssence = this.menu.getTotalEssenceCount();
+            this.initWidgets();
+        }
         
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
-            if (widget.isHoveredOrFocused()) {
+            if (widget.isHovered()) {
                 renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), 0, this.slotColor);
             }
         }
