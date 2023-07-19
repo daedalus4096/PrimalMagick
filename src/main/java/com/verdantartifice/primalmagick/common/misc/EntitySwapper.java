@@ -118,6 +118,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 Vec3 targetPos = livingTarget.position();
                 Vec2 targetRots = livingTarget.getRotationVector();
                 Component customName = livingTarget.getCustomName();
+                boolean customNameVisible = livingTarget.isCustomNameVisible();
                 double healthPercentage = (double)livingTarget.getHealth() / (double)livingTarget.getMaxHealth();
                 Collection<MobEffectInstance> activeEffects = livingTarget.getActiveEffects();
                 
@@ -136,6 +137,7 @@ public class EntitySwapper implements INBTSerializable<CompoundTag> {
                 livingTarget.discard();
                 Entity newEntity = this.entityType.create(serverWorld, data, null, BlockPos.containing(targetPos), MobSpawnType.MOB_SUMMONED, false, false);
                 newEntity.setCustomName(customName);
+                newEntity.setCustomNameVisible(customNameVisible);
                 world.addFreshEntity(newEntity);
                 newEntity.absMoveTo(targetPos.x, targetPos.y, targetPos.z, targetRots.y, targetRots.x);
                 
