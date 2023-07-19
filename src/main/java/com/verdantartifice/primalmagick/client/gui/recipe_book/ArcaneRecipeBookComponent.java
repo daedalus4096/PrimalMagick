@@ -58,7 +58,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     private static final int OFFSET_X_POSITION = 86;
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
-    
+
     protected int xOffset;
     protected int width;
     protected int height;
@@ -118,6 +118,8 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.searchBox.setVisible(true);
         this.searchBox.setTextColor(0xFFFFFF);
         this.searchBox.setValue(s);
+        this.searchBox.setHint(SEARCH_HINT);
+        this.searchBox.setEditable(true);
         this.recipeBookPage.init(this.mc, xPos, yPos, this.arcaneBook.getData());
         this.recipeBookPage.addListener(this);
         this.filterButton = new StateSwitchingButton(xPos + 110, yPos + 12, 26, 16, this.arcaneBook.getData().isFiltering(this.menu.getRecipeBookType()));
@@ -353,27 +355,31 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                 }
                 return true;
             } else if (this.searchBox.mouseClicked(mouseX, mouseY, buttonIndex)) {
-                return true;
-            } else if (this.filterButton.mouseClicked(mouseX, mouseY, buttonIndex)) {
-                this.filterButton.setStateTriggered(this.toggleFiltering());
-                this.sendUpdateSettings();
-                this.updateCollections(false);
+                this.searchBox.setFocused(true);
                 return true;
             } else {
-                for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
-                    if (tab.mouseClicked(mouseX, mouseY, buttonIndex)) {
-                        if (this.selectedTab != tab) {
-                            if (this.selectedTab != null) {
-                                this.selectedTab.setStateTriggered(false);
+                this.searchBox.setFocused(false);
+                if (this.filterButton.mouseClicked(mouseX, mouseY, buttonIndex)) {
+                    this.filterButton.setStateTriggered(this.toggleFiltering());
+                    this.sendUpdateSettings();
+                    this.updateCollections(false);
+                    return true;
+                } else {
+                    for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
+                        if (tab.mouseClicked(mouseX, mouseY, buttonIndex)) {
+                            if (this.selectedTab != tab) {
+                                if (this.selectedTab != null) {
+                                    this.selectedTab.setStateTriggered(false);
+                                }
+                                this.selectedTab = tab;
+                                this.selectedTab.setStateTriggered(true);
+                                this.updateCollections(true);
                             }
-                            this.selectedTab = tab;
-                            this.selectedTab.setStateTriggered(true);
-                            this.updateCollections(true);
+                            return true;
                         }
-                        return true;
                     }
+                    return false;
                 }
-                return false;
             }
         } else {
             return false;
