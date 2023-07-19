@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
@@ -34,6 +36,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
     
     protected Level world;
+    protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();
 
     public AnalysisTableScreen(AnalysisTableContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -41,8 +44,14 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
     }
     
     @Override
+    protected void init() {
+        super.init();
+        this.initControlWidgets();
+    }
+
+    @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+        this.initAffinityWidgets();
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
@@ -77,13 +86,15 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         }
     }
 
-    protected void initWidgets() {
-        this.clearWidgets();
-        
+    protected void initControlWidgets() {
         this.addRenderableWidget(new AnalyzeButton(this.menu, this.leftPos, this.topPos));
-        
-        // Render observation tracker widget
         this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+    }
+    
+    protected void initAffinityWidgets() {
+        // Remove any previously displayed affinity widgets
+        this.affinityWidgets.forEach(widget -> this.removeWidget(widget));
+        this.affinityWidgets.clear();
         
         // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
@@ -94,7 +105,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
                 int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
                 int y = this.topPos + 10;
                 for (Source source : sources.getSourcesSorted()) {
-                    this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y));
+                    this.affinityWidgets.add(this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y)));
                     x += 18;
                 }
             }
