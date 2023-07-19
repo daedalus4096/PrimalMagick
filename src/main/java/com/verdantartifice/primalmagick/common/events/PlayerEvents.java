@@ -602,8 +602,7 @@ public class PlayerEvents {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
-                        // FIXME Uncomment upon BTME becoming cancelable again
-                        //event.setCanceled(true);
+                        event.setCanceled(true);
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);
