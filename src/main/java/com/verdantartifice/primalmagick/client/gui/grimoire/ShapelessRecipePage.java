@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 
 /**
@@ -8,8 +9,8 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
  * @author Daedalus4096
  */
 public class ShapelessRecipePage extends AbstractShapelessRecipePage<ShapelessRecipe> {
-    public ShapelessRecipePage(ShapelessRecipe recipe) {
-        super(recipe);
+    public ShapelessRecipePage(ShapelessRecipe recipe, RegistryAccess registryAccess) {
+        super(recipe, registryAccess);
     }
 
     @Override

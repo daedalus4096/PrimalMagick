@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -20,7 +18,7 @@ import net.minecraft.world.level.Level;
  */
 public class HallowedOrbItem extends Item {
     public HallowedOrbItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.RARE));
+        super(new Item.Properties().rarity(Rarity.RARE));
     }
 
     @Override

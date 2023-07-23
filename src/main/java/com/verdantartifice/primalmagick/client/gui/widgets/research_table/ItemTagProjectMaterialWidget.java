@@ -7,11 +7,11 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.ItemTagProjectMaterial;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -26,34 +26,31 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget {
-    protected ItemTagProjectMaterial material;
-    
+public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<ItemTagProjectMaterial> {
     public ItemTagProjectMaterialWidget(ItemTagProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);
-        this.material = material;
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw time-selected stack icon and, if applicable, amount string
         Minecraft mc = Minecraft.getInstance();
         ItemStack toDisplay = this.getStackToDisplay();
         if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(matrixStack, toDisplay, this.x, this.y, this.getMessage().getString(), false);
+            GuiUtils.renderItemStack(guiGraphics, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             if (this.material.getQuantity() > 1) {
                 Component amountText = Component.literal(Integer.toString(this.material.getQuantity()));
                 int width = mc.font.width(amountText);
-                matrixStack.pushPose();
-                matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
-                matrixStack.scale(0.5F, 0.5F, 0.5F);
-                mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-                matrixStack.popPose();
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 500.0F);
+                guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+                guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+                guiGraphics.pose().popPose();
             }
         }
         
         // Draw base class stuff
-        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderWidget(guiGraphics, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     @Override

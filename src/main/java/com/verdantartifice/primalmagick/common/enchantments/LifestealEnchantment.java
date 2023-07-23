@@ -52,7 +52,7 @@ public class LifestealEnchantment extends AbstractRuneEnchantment {
         super.doPostAttack(user, target, level);
         
         // Disallow leeching from the same entity multiple times in one tick to prevent bigger than intended heals
-        long ticks = user.level.getGameTime();
+        long ticks = user.level().getGameTime();
         if (target instanceof LivingEntity && user.getRandom().nextInt(5) < level && LAST_LEECHED.getOrDefault(target, 0L) != ticks) {
             user.heal(1.0F);
             LAST_LEECHED.put(target, ticks);

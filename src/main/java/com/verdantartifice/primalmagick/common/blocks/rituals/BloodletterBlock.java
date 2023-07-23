@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
@@ -29,8 +29,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -46,7 +46,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/bloodletter"));
     
     public BloodletterBlock() {
-        super(Block.Properties.of(Material.STONE, MaterialColor.PODZOL).strength(1.5F, 6.0F).sound(SoundType.STONE));
+        super(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE));
         this.registerDefaultState(this.defaultBlockState().setValue(FILLED, Boolean.FALSE));
     }
     
@@ -70,7 +70,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
         if (player != null && player.getItemInHand(handIn).isEmpty() && !state.getValue(FILLED)) {
             // If using an empty hand on an unfilled bloodletter, cut the player
             if (!worldIn.isClientSide) {
-                player.hurt(DamageSourcesPM.BLEEDING, 2.0F);
+                player.hurt(DamageSourcesPM.bleeding(worldIn), 2.0F);
                 worldIn.setBlock(pos, state.setValue(FILLED, Boolean.TRUE), Block.UPDATE_ALL_IMMEDIATE);
                 
                 // If this block is awaiting activation for an altar, notify it

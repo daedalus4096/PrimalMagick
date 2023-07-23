@@ -27,7 +27,7 @@ public class TouchSpellVehicle extends AbstractRaycastSpellVehicle {
     
     @Override
     protected double getReachDistance(LivingEntity caster) {
-        return caster.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
+        return caster.getAttribute(ForgeMod.BLOCK_REACH.get()).getValue();
     }
 
     @Override

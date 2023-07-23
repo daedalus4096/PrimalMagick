@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -44,7 +45,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public ItemStack assemble(Container inv) {
+    public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
         return this.result.copy();
     }
 
@@ -54,7 +55,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.result;
     }
     

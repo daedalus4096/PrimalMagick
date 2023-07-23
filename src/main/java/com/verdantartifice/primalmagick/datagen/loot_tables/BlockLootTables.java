@@ -3,8 +3,9 @@ package com.verdantartifice.primalmagick.datagen.loot_tables;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
 /**
  * Data provider for all of the mod's block loot tables.
@@ -12,12 +13,8 @@ import net.minecraft.world.item.Items;
  * @author Daedalus4096
  */
 public class BlockLootTables extends AbstractBlockLootTableProvider {
-    public BlockLootTables(DataGenerator dataGeneratorIn) {
-        super(dataGeneratorIn);
-    }
-
     @Override
-    protected void addTables() {
+    protected void generate() {
         // Mark blocks as not having a loot table
         this.registerEmptyLootTables();
         
@@ -294,9 +291,8 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.HEAVENLY_FONT_VOID.get());
         this.registerBasicTable(BlocksPM.HEAVENLY_FONT_HALLOWED.get());
     }
-
-    @Override
-    public String getName() {
-        return "Primal Magick Block Loot Tables";
+    
+    public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
+        return new LootTableProvider.SubProviderEntry(BlockLootTables::new, LootContextParamSets.BLOCK);
     }
 }

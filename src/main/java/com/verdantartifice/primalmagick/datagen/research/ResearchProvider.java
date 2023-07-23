@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.research;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -19,8 +19,8 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
@@ -28,33 +28,29 @@ import net.minecraftforge.common.Tags;
 
 public class ResearchProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected final DataGenerator generator;
+    protected final PackOutput packOutput;
     
-    public ResearchProvider(DataGenerator generator) {
-        this.generator = generator;
+    public ResearchProvider(PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
-        Path path = this.generator.getOutputFolder();
+    public CompletableFuture<?> run(CachedOutput cache) {
+        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
         Map<ResourceLocation, IFinishedResearchEntry> map = new HashMap<>();
         this.registerEntries((research) -> {
             if (map.put(research.getId(), research) != null) {
                 LOGGER.debug("Duplicate research entry in data generation: " + research.getId().toString());
             }
         });
-        for (Map.Entry<ResourceLocation, IFinishedResearchEntry> entry : map.entrySet()) {
-            IFinishedResearchEntry research = entry.getValue();
-            this.saveEntry(cache, research.getEntryJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/grimoire/" + entry.getKey().getPath() + ".json"));
-        }
+        map.entrySet().forEach(entry -> {
+            futuresBuilder.add(DataProvider.saveStable(cache, entry.getValue().getEntryJson(), this.getPath(this.packOutput, entry.getKey())));
+        });
+        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
-    private void saveEntry(CachedOutput cache, JsonObject json, Path path) {
-        try {
-            DataProvider.saveStable(cache, json, path);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save research entry {}", path, e);
-        }
+    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("grimoire").resolve(entryLoc.getPath() + ".json");
     }
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {

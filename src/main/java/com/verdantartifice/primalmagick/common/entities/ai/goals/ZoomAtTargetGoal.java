@@ -39,7 +39,7 @@ public class ZoomAtTargetGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return !this.leaper.isOnGround();
+        return !this.leaper.onGround();
     }
 
     @Override

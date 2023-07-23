@@ -21,16 +21,8 @@ public class StatisticsButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof StatisticsButton gsb) {
-                // Push the current grimoire topic onto the history stack
-                gsb.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                gsb.getScreen().getMenu().setTopic(StatisticsPage.TOPIC);
-                gsb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    gsb.getScreen().getMenu(),
-                    gsb.getScreen().getPlayerInventory(),
-                    gsb.getScreen().getTitle()
-                ));
+                gsb.getScreen().gotoTopic(StatisticsPage.TOPIC);
             }
         }
     }

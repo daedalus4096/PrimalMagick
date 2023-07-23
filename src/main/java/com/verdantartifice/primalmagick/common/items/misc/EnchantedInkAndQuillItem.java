@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 
 import net.minecraft.world.item.Item;
@@ -12,7 +11,7 @@ import net.minecraft.world.item.Item;
  */
 public class EnchantedInkAndQuillItem extends Item implements IWritingImplement {
     public EnchantedInkAndQuillItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).durability(63));
+        super(new Item.Properties().durability(63));
     }
 
     @Override

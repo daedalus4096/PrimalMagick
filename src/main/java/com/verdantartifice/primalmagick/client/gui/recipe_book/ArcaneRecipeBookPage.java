@@ -7,10 +7,10 @@ import java.util.function.Consumer;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
@@ -98,30 +98,30 @@ public class ArcaneRecipeBookPage {
         this.backButton.visible = this.totalPages > 1 && this.currentPage > 0;
     }
     
-    public void render(PoseStack poseStack, int parentX, int parentY, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int parentX, int parentY, int mouseX, int mouseY, float partialTicks) {
         if (this.totalPages > 1) {
             String str = (this.currentPage + 1) + "/" + this.totalPages;
             int width = this.mc.font.width(str);
-            this.mc.font.draw(poseStack, str, (float)(parentX - width / 2 + 73), (float)(parentY + 141), -1);
+            guiGraphics.drawString(this.mc.font, str, parentX - width / 2 + 73, parentY + 141, -1);
         }
         
         this.hoveredButton = null;
         
         for (ArcaneRecipeButton button : this.buttons) {
-            button.render(poseStack, mouseX, mouseY, partialTicks);
+            button.render(guiGraphics, mouseX, mouseY, partialTicks);
             if (button.visible && button.isHoveredOrFocused()) {
                 this.hoveredButton = button;
             }
         }
         
-        this.backButton.render(poseStack, mouseX, mouseY, partialTicks);
-        this.forwardButton.render(poseStack, mouseX, mouseY, partialTicks);
-        this.overlay.render(poseStack, mouseX, mouseY, partialTicks);
+        this.backButton.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.forwardButton.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.overlay.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
-    public void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+    public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            this.mc.screen.renderComponentTooltip(poseStack, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().getResultItem());
+            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().getResultItem(this.mc.level.registryAccess()));
         }
     }
     
@@ -165,7 +165,7 @@ public class ArcaneRecipeBookPage {
                         this.lastClickedRecipe = recipeButton.getRecipe();
                         this.lastClickedRecipeCollection = recipeButton.getCollection();
                     } else if (button == 1 && !this.overlay.isVisible() && !recipeButton.isOnlyOption()) {
-                        this.overlay.init(this.mc, recipeButton.getCollection(), this.arcaneBook, recipeButton.x, recipeButton.y, xPos + width / 2, yPos + 13 + height / 2, (float)recipeButton.getWidth());
+                        this.overlay.init(this.mc, recipeButton.getCollection(), this.arcaneBook, recipeButton.getX(), recipeButton.getY(), xPos + width / 2, yPos + 13 + height / 2, (float)recipeButton.getWidth());
                     }
                     return true;
                 }

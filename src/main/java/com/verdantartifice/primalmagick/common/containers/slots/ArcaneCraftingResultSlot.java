@@ -27,6 +27,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -76,7 +77,7 @@ public class ArcaneCraftingResultSlot extends Slot {
     protected void checkTakeAchievements(ItemStack stack) {
         // Fire crafting handlers
         if (this.amountCrafted > 0) {
-            stack.onCraftedBy(this.player.level, this.player, this.amountCrafted);
+            stack.onCraftedBy(this.player.level(), this.player, this.amountCrafted);
             ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
             // Increment the craft counter for the recipe's discipline
@@ -102,7 +103,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             }
         }
         if (this.container instanceof RecipeHolder recipeHolder) {
-            recipeHolder.awardUsedRecipes(this.player);
+            recipeHolder.awardUsedRecipes(this.player, this.craftingInventory.getItems());
         }
         
         // Reset crafted amount
@@ -130,12 +131,13 @@ public class ArcaneCraftingResultSlot extends Slot {
         ForgeHooks.setCraftingPlayer(thePlayer);
         
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
+        Level level = thePlayer.level();
         NonNullList<ItemStack> remainingList;
-        Optional<IArcaneRecipe> arcaneOptional = thePlayer.level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, thePlayer.level);
+        Optional<IArcaneRecipe> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, level);
         if (arcaneOptional.isPresent()) {
             remainingList = arcaneOptional.get().getRemainingItems(this.craftingInventory);
         } else {
-            Optional<CraftingRecipe> vanillaOptional = thePlayer.level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, thePlayer.level);
+            Optional<CraftingRecipe> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, level);
             if (vanillaOptional.isPresent()) {
                 remainingList = vanillaOptional.get().getRemainingItems(this.craftingInventory);
             } else {
@@ -159,7 +161,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             if (!remainingStack.isEmpty()) {
                 if (materialStack.isEmpty()) {
                     this.craftingInventory.setItem(index, remainingStack);
-                } else if (ItemStack.isSame(materialStack, remainingStack) && ItemStack.tagMatches(materialStack, remainingStack)) {
+                } else if (ItemStack.isSameItemSameTags(materialStack, remainingStack)) {
                     remainingStack.grow(materialStack.getCount());
                     this.craftingInventory.setItem(index, remainingStack);
                 } else if (!this.player.getInventory().add(remainingStack)) {

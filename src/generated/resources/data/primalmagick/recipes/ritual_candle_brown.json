@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ritual_candles",
+  "ingredients": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "tag": "forge:dyes/brown"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:ritual_candle_brown"
+  }
+}

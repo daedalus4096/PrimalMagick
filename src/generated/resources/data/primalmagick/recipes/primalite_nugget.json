@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "primalmagick:ingots/primalite"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "primalmagick:primalite_nugget"
+  }
+}

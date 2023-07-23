@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "ritual_candles",
+  "ingredients": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "tag": "forge:dyes/light_gray"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:ritual_candle_light_gray"
+  }
+}

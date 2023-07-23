@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.concoctions;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
@@ -9,8 +10,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBo
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +25,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 
 /**
@@ -108,16 +109,17 @@ public class AlchemicalBombItem extends Item {
         return super.isFoil(stack) || !PotionUtils.getMobEffects(stack).isEmpty();
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-        if (this.allowedIn(group)) {
-            items.add(this.getDefaultInstance());   // Add basic water bomb separately
-            for (Potion potion : Registry.POTION) {
-                if (!potion.getEffects().isEmpty()) {
-                    items.add(ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(this), potion), ConcoctionType.BOMB), FuseType.MEDIUM));
-                }
-            }
-        }
+    public static void registerCreativeTabItems(CreativeModeTab.ItemDisplayParameters params, CreativeModeTab.Output output, Supplier<? extends ItemLike> itemSupplier) {
+        Item item = itemSupplier.get().asItem();
+        output.accept(item.getDefaultInstance());    // Add basic water bomb separately
+        params.holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
+            registryLookup.listElements().filter(potionRef -> {
+                return !potionRef.is(Potions.EMPTY_ID);
+            }).map(potionRef -> {
+                return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), ConcoctionType.BOMB), FuseType.MEDIUM);
+            }).forEach(stack -> {
+                output.accept(stack);
+            });
+        });
     }
 }

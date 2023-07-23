@@ -482,24 +482,24 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity living, int count) {
+    public void onUseTick(Level level, LivingEntity living, ItemStack stack, int count) {
         // If the player continues to hold the interact button, continue the interaction with the last wand-sensitive block/tile interacted with
         if (living instanceof Player player) {
             BlockPos wandPos = this.getPositionInUse(stack);
-            if (wandPos != null && player.level.getBlockEntity(wandPos) instanceof IInteractWithWand wandable) {
+            if (wandPos != null && level.getBlockEntity(wandPos) instanceof IInteractWithWand wandable) {
                 Vec3 playerPos = player.position().add(0.0D, player.getEyeHeight() / 2.0D, 0.0D);
-                wandable.onWandUseTick(stack, player.level, player, playerPos, count);
+                wandable.onWandUseTick(stack, level, player, playerPos, count);
             } else if (wandPos != null) {
                 for (IWandTransform transform : WandTransforms.getAll()) {
-                    if (transform.isValid(player.level, player, wandPos)) {
-                        if (player.level.isClientSide) {
+                    if (transform.isValid(level, player, wandPos)) {
+                        if (level.isClientSide) {
                             // Trigger visual effects during channel
                             FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
-                            if (!player.level.isClientSide && player instanceof ServerPlayer) {
+                            if (!level.isClientSide && player instanceof ServerPlayer) {
                                 // Only execute the transform on the server side
-                                transform.execute(player.level, player, wandPos);
+                                transform.execute(level, player, wandPos);
                             }
                             break;
                         }

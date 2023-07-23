@@ -4,9 +4,9 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -22,26 +22,26 @@ public class SectionHeaderWidget extends AbstractWidget {
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
-        matrixStack.pushPose();
-        matrixStack.translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0.0F, 0.0F, 1.0F);  // Bump up slightly in the Z-order to prevent the underline from being swallowed
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         int strWidth = mc.font.width(this.getMessage().getString());
         int dy = (this.height - mc.font.lineHeight) / 2;
         if (strWidth <= this.width) {
-            mc.font.draw(matrixStack, this.getMessage(), this.x + this.width / 2 - strWidth / 2, this.y + (this.height - 8) / 2, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, this.getMessage(), this.getX() + this.width / 2 - strWidth / 2, this.getY() + (this.height - 8) / 2, Color.BLACK.getRGB(), false);
         } else {
             // Scale the string down to fit on one line, if need be
             float scale = (float)this.width / (float)strWidth;
-            matrixStack.pushPose();
-            matrixStack.translate(this.x, this.y + dy + (1.0F * scale), 0.0F);
-            matrixStack.scale(scale, scale, scale);
-            mc.font.draw(matrixStack, this.getMessage(), 0, 0, Color.BLACK.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX(), this.getY() + dy + (1.0F * scale), 0.0F);
+            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.drawString(mc.font, this.getMessage(), 0, 0, Color.BLACK.getRGB(), false);
+            guiGraphics.pose().popPose();
         }
-        matrixStack.popPose();
+        guiGraphics.pose().popPose();
     }
     
     @Override
@@ -51,6 +51,6 @@ public class SectionHeaderWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }

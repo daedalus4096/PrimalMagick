@@ -1,0 +1,4 @@
+{
+  "type": "minecraft:entity",
+  "random_sequence": "primalmagick:entities/friendly_witch"
+}

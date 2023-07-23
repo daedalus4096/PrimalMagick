@@ -32,7 +32,7 @@ public class CapabilityEvents {
             event.addCapability(PlayerStats.Provider.NAME, new PlayerStats.Provider());
             event.addCapability(PlayerAttunements.Provider.NAME, new PlayerAttunements.Provider());
             event.addCapability(PlayerCompanions.Provider.NAME, new PlayerCompanions.Provider());
-            event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level.getRecipeManager()));
+            event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level().getRecipeManager()));
         }
     }
     

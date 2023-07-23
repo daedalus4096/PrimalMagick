@@ -28,16 +28,8 @@ public class RecipeEntryButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof RecipeEntryButton greb) {
-                // Push the current grimoire topic onto the history stack
-                greb.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getMenu().setTopic(new OtherResearchTopic(greb.getRecipeName(), 0));
-                greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    greb.getScreen().getMenu(),
-                    greb.getScreen().getPlayerInventory(),
-                    greb.getScreen().getTitle()
-                ));
+                greb.getScreen().gotoTopic(new OtherResearchTopic(greb.getRecipeName(), 0));
             }
         }
     }

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -22,25 +23,25 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
  */
 public class RecipePageFactory {
     @Nullable
-    public static AbstractRecipePage createPage(@Nonnull Recipe<?> recipe) {
-        if (recipe instanceof ShapelessArcaneRecipe) {
-            return new ShapelessArcaneRecipePage((ShapelessArcaneRecipe)recipe);
-        } else if (recipe instanceof ShapedArcaneRecipe) {
-            return new ShapedArcaneRecipePage((ShapedArcaneRecipe)recipe);
-        } else if (recipe instanceof ShapelessRecipe) {
-            return new ShapelessRecipePage((ShapelessRecipe)recipe);
-        } else if (recipe instanceof ShapedRecipe) {
-            return new ShapedRecipePage((ShapedRecipe)recipe);
-        } else if (recipe instanceof RitualRecipe) {
-            return new RitualRecipePage((RitualRecipe)recipe);
-        } else if (recipe instanceof RunecarvingRecipe) {
-            return new RunecarvingRecipePage((RunecarvingRecipe)recipe);
-        } else if (recipe instanceof ConcoctingRecipe) {
-            return new ConcoctingRecipePage((ConcoctingRecipe)recipe);
-        } else if (recipe instanceof SmeltingRecipe) {
-            return new SmeltingRecipePage((SmeltingRecipe)recipe);
-        } else if (recipe instanceof DissolutionRecipe) {
-            return new DissolutionRecipePage((DissolutionRecipe)recipe);
+    public static AbstractRecipePage createPage(@Nonnull Recipe<?> recipe, RegistryAccess registryAccess) {
+        if (recipe instanceof ShapelessArcaneRecipe sar) {
+            return new ShapelessArcaneRecipePage(sar, registryAccess);
+        } else if (recipe instanceof ShapedArcaneRecipe sar) {
+            return new ShapedArcaneRecipePage(sar, registryAccess);
+        } else if (recipe instanceof ShapelessRecipe sr) {
+            return new ShapelessRecipePage(sr, registryAccess);
+        } else if (recipe instanceof ShapedRecipe sr) {
+            return new ShapedRecipePage(sr, registryAccess);
+        } else if (recipe instanceof RitualRecipe rr) {
+            return new RitualRecipePage(rr, registryAccess);
+        } else if (recipe instanceof RunecarvingRecipe rr) {
+            return new RunecarvingRecipePage(rr, registryAccess);
+        } else if (recipe instanceof ConcoctingRecipe cr) {
+            return new ConcoctingRecipePage(cr, registryAccess);
+        } else if (recipe instanceof SmeltingRecipe sr) {
+            return new SmeltingRecipePage(sr, registryAccess);
+        } else if (recipe instanceof DissolutionRecipe dr) {
+            return new DissolutionRecipePage(dr, registryAccess);
         } else {
             return null;
         }

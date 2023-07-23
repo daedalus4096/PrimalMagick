@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
@@ -15,6 +13,7 @@ import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCask
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -29,6 +28,8 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
+    protected long lastCheck = 0L;
+    protected int lastTotalEssence = 0;
 
     public EssenceCaskScreen(EssenceCaskContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
@@ -37,6 +38,13 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
         this.inventoryLabelY = this.imageHeight - 94;
     }
     
+    @Override
+    protected void init() {
+        super.init();
+        this.lastTotalEssence = this.menu.getTotalEssenceCount();
+        this.initWidgets();
+    }
+
     protected void initWidgets() {
         Minecraft mc = Minecraft.getInstance();
         this.clearWidgets();
@@ -71,33 +79,37 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContai
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.initWidgets();
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        // Determine if we need to update the GUI based on how long it's been since the last refresh or the total essence in the cask
+        long millis = System.currentTimeMillis();
+        if (millis > this.lastCheck || this.lastTotalEssence != this.menu.getTotalEssenceCount()) {
+            this.lastCheck = millis + 2000L;
+            this.lastTotalEssence = this.menu.getTotalEssenceCount();
+            this.initWidgets();
+        }
         
-        this.renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderTooltip(matrixStack, mouseX, mouseY);
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
         
         for (EssenceCaskWidget widget : this.caskWidgets) {
-            if (widget.isHoveredOrFocused()) {
-                renderSlotHighlight(matrixStack, widget.x, widget.y, this.getBlitOffset(), this.slotColor);
-                widget.renderToolTip(matrixStack, mouseX, mouseY);
+            if (widget.isHovered()) {
+                renderSlotHighlight(guiGraphics, widget.getX(), widget.getY(), 0, this.slotColor);
             }
         }
     }
 
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render background texture
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
     
     @Override
-    protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
-        super.renderLabels(matrixStack, mouseX, mouseY);
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        super.renderLabels(guiGraphics, mouseX, mouseY);
         Component contentsLabel = Component.translatable("primalmagick.essence_cask.contents", this.menu.getTotalEssenceCount(), this.menu.getTotalEssenceCapacity());
-        this.font.draw(matrixStack, contentsLabel, 8, 92, 4210752);
+        guiGraphics.drawString(this.font, contentsLabel, 8, 92, 4210752, false);
     }
 
     protected void onWidgetClicked(EssenceCaskWidget widget, int clickButton) {

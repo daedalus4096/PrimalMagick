@@ -9,8 +9,9 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import org.joml.Vector3f;
+
 import com.google.common.collect.ImmutableMap;
-import com.mojang.math.Vector3f;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 
@@ -31,7 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -56,7 +57,7 @@ public class SaltTrailBlock extends Block implements ISaltPowered {
     protected final Set<BlockPos> blocksNeedingUpdate = new HashSet<>();
 
     public SaltTrailBlock() {
-        super(Block.Properties.of(Material.DECORATION).noCollission().strength(0.0F));
+        super(Block.Properties.of().pushReaction(PushReaction.DESTROY).noCollission().strength(0.0F));
         this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, SaltSide.NONE).setValue(EAST, SaltSide.NONE).setValue(SOUTH, SaltSide.NONE).setValue(WEST, SaltSide.NONE).setValue(POWER, Integer.valueOf(0)));
     }
     

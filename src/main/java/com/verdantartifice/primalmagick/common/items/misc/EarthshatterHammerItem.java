@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +15,7 @@ public class EarthshatterHammerItem extends Item {
     protected static final RandomSource RNG = RandomSource.create();
     
     public EarthshatterHammerItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).durability(255).rarity(Rarity.UNCOMMON).setNoRepair());
+        super(new Item.Properties().durability(255).rarity(Rarity.UNCOMMON).setNoRepair());
     }
     
     @Override

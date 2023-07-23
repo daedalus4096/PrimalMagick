@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.entities.misc;
 
-import java.util.List;
-
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
@@ -12,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -83,7 +82,7 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
@@ -140,15 +139,16 @@ public class FlyingCarpetEntity extends Entity {
         super.tick();
         this.tickLerp();
         
+        Level level = this.level();
         if (this.isVehicle() && this.isControlledByLocalInstance()) {
             this.updateMotion();
-            if (this.level.isClientSide) {
+            if (level.isClientSide) {
                 this.controlCarpet();
             }
             this.move(MoverType.SELF, this.getDeltaMovement());
         } else {
             this.setDeltaMovement(Vec3.ZERO);
-            if (this.level.isClientSide) {
+            if (level.isClientSide) {
                 this.updateInputs(false, false);
             }
         }
@@ -224,7 +224,8 @@ public class FlyingCarpetEntity extends Entity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if (!this.level.isClientSide && this.isAlive()) {
+        Level level = this.level();
+        if (!level.isClientSide && this.isAlive()) {
             if (player.isSecondaryUseActive()) {
                 ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
                 DyeColor color = this.getDyeColor();
@@ -269,9 +270,13 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    public Entity getControllingPassenger() {
-        List<Entity> list = this.getPassengers();
-        return list.isEmpty() ? null : list.get(0);
+    public LivingEntity getControllingPassenger() {
+        Entity entity = this.getFirstPassenger();
+        if (entity instanceof LivingEntity living) {
+            return living;
+        } else {
+            return null;
+        }
     }
 
     @Override

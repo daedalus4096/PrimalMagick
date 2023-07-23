@@ -37,8 +37,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -63,7 +63,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     });
     
     public SoulAnvilBlock() {
-        super(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_RED).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
+        super(Block.Properties.of().mapColor(MapColor.COLOR_RED).pushReaction(PushReaction.BLOCK).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(DIRTY, Boolean.FALSE));
     }
     

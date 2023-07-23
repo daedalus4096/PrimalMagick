@@ -28,16 +28,8 @@ public class AttunementButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof AttunementButton gab) {
-                // Push the current grimoire topic onto the history stack
-                gab.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                gab.getScreen().getMenu().setTopic(new SourceResearchTopic(gab.getSource(), 0));
-                gab.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    gab.getScreen().getMenu(),
-                    gab.getScreen().getPlayerInventory(),
-                    gab.getScreen().getTitle()
-                ));
+                gab.getScreen().gotoTopic(new SourceResearchTopic(gab.getSource(), 0));
             }
         }
     }

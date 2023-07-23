@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "bark",
+  "key": {
+    "W": {
+      "item": "primalmagick:hallowood_log"
+    }
+  },
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "result": {
+    "count": 3,
+    "item": "primalmagick:hallowood_wood"
+  },
+  "show_notification": true
+}

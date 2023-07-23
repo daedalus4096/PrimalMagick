@@ -80,7 +80,7 @@ public class ArcaneRecipeBookManager {
             return false;
         } else {
             recipeBook.get().clear();
-            RecipeManager recipeManager = player.level.getRecipeManager();
+            RecipeManager recipeManager = player.level().getRecipeManager();
             Set<ResourceLocation> idsToAdd = new HashSet<>();
             for (ResearchEntry entry : ResearchEntries.getAllEntries()) {
                 if (knowledge.isResearchKnown(entry.getKey())) {

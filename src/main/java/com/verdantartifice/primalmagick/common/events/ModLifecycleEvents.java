@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.IgnyxEntity;
-import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 import com.verdantartifice.primalmagick.common.init.InitAttunements;
 import com.verdantartifice.primalmagick.common.init.InitCauldron;
 import com.verdantartifice.primalmagick.common.init.InitRecipes;
@@ -22,13 +21,10 @@ import net.minecraft.Util;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.SpawnPlacements.Type;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -57,14 +53,7 @@ public class ModLifecycleEvents {
         
         LootConditionTypesPM.register();
 
-        registerEntityPlacements(event);
         registerDispenserBehaviors(event);
-    }
-    
-    private static void registerEntityPlacements(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            SpawnPlacements.register(EntityTypesPM.TREEFOLK.get(), Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TreefolkEntity::canSpawnOn);
-        });
     }
     
     private static void registerDispenserBehaviors(FMLCommonSetupEvent event) {

@@ -1,24 +1,24 @@
 package com.verdantartifice.primalmagick.datagen.runes;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.gson.JsonObject;
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -26,16 +26,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class RuneEnchantmentProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
-    protected final DataGenerator generator;
+    protected final PackOutput packOutput;
     protected final Set<ResourceLocation> registeredEnchantments = new HashSet<>();
 
-    public RuneEnchantmentProvider(DataGenerator generator) {
-        this.generator = generator;
+    public RuneEnchantmentProvider(PackOutput packOutput) {
+        this.packOutput = packOutput;
     }
 
     @Override
-    public void run(CachedOutput cache) throws IOException {
-        Path path = this.generator.getOutputFolder();
+    public CompletableFuture<?> run(CachedOutput cache) {
+        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
         Map<ResourceLocation, IFinishedRuneEnchantment> map = new HashMap<>();
         this.registerEnchantments((enchantment) -> {
             if (map.put(enchantment.getId(), enchantment) != null) {
@@ -43,18 +43,15 @@ public class RuneEnchantmentProvider implements DataProvider {
             }
             this.registeredEnchantments.add(enchantment.getId());
         });
-        for (Map.Entry<ResourceLocation, IFinishedRuneEnchantment> entry : map.entrySet()) {
-            this.saveProject(cache, entry.getValue().getEnchantmentJson(), path.resolve("data/" + entry.getKey().getNamespace() + "/rune_enchantments/" + entry.getKey().getPath() + ".json"));
-        }
+        map.entrySet().forEach(entry -> {
+            futuresBuilder.add(DataProvider.saveStable(cache, entry.getValue().getEnchantmentJson(), this.getPath(this.packOutput, entry.getKey())));
+        });
         this.checkExpectations();
+        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
-    
-    private void saveProject(CachedOutput cache, JsonObject json, Path path) {
-        try {
-            DataProvider.saveStable(cache, json, path);
-        } catch (IOException e) {
-            LOGGER.error("Couldn't save rune enchantment definition {}", path, e);
-        }
+
+    private Path getPath(PackOutput output, ResourceLocation entryLoc) {
+        return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("rune_enchantments").resolve(entryLoc.getPath() + ".json");
     }
     
     private void registerEmptyEnchantment(Enchantment ench) {

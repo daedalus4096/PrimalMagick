@@ -12,12 +12,14 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -78,7 +80,7 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv) {
+    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
         return this.recipeOutput.copy();
     }
 
@@ -89,7 +91,13 @@ public class RitualRecipe implements IRitualRecipe {
     }
 
     @Override
-    public ItemStack getResultItem() {
+    public CraftingBookCategory category() {
+        // Ritual recipes don't use the recipe book, so an accurate crafting book category isn't needed
+        return CraftingBookCategory.MISC;
+    }
+
+    @Override
+    public ItemStack getResultItem(RegistryAccess registryAccess) {
         return this.recipeOutput;
     }
 

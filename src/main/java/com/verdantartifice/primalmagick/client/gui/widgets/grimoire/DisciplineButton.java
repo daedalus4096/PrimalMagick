@@ -28,16 +28,8 @@ public class DisciplineButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof DisciplineButton gdb) {
-                // Push the current grimoire topic onto the history stack
-                gdb.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                gdb.getScreen().getMenu().setTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));
-                gdb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    gdb.getScreen().getMenu(),
-                    gdb.getScreen().getPlayerInventory(),
-                    gdb.getScreen().getTitle()
-                ));
+                gdb.getScreen().gotoTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));
             }
         }
     }

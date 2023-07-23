@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
@@ -35,7 +36,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
-    protected final CraftingContainer craftingInv = new CraftingContainer(this, 3, 3);
+    protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess worldPosCallable;
@@ -156,7 +157,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
     @Override
     public void slotsChanged(Container inventoryIn) {
         super.slotsChanged(inventoryIn);
-        this.slotChangedCraftingGrid(this.player.level);
+        this.slotChangedCraftingGrid(this.player.level());
     }
     
     protected void slotChangedCraftingGrid(Level world) {
@@ -179,7 +180,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
                 // If the inputs match a defined arcane recipe, show the output if the player can use it
                 IArcaneRecipe recipe = arcaneOptional.get();
                 if (this.canUseArcaneRecipe(world, spe, recipe)) {
-                    stack = recipe.assemble(this.craftingInv);
+                    stack = recipe.assemble(this.craftingInv, world.registryAccess());
                 }
             } else {
                 Optional<CraftingRecipe> vanillaOptional = world.getServer().getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInv, world);
@@ -187,7 +188,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
                     // If the inputs match a defined vanilla recipe, show the output if the player can use it
                     CraftingRecipe recipe = vanillaOptional.get();
                     if (this.resultInv.setRecipeUsed(world, spe, recipe)) {
-                        stack = recipe.assemble(this.craftingInv);
+                        stack = recipe.assemble(this.craftingInv, world.registryAccess());
                     }
                 }
             }
@@ -227,7 +228,7 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
 
     @Override
     public boolean recipeMatches(Recipe<? super CraftingContainer> recipe) {
-        return recipe.matches(this.craftingInv, this.player.level);
+        return recipe.matches(this.craftingInv, this.player.level());
     }
 
     @Override

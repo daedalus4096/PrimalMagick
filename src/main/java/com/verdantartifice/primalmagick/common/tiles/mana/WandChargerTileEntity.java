@@ -14,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -185,7 +184,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
         super.setItem(index, stack);
-        boolean flag = !stack.isEmpty() && stack.sameItem(slotStack) && ItemStack.tagMatches(stack, slotStack);
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index == 0 && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;

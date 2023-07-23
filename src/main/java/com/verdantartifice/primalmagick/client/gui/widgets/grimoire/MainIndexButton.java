@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
@@ -18,8 +18,8 @@ import net.minecraft.network.chat.Component;
 public class MainIndexButton extends Button {
     protected GrimoireScreen screen;
 
-    public MainIndexButton(int xPos, int yPos, GrimoireScreen screen) {
-        super(xPos, yPos, 10, 26, Component.empty(), new Handler());
+    public MainIndexButton(int x, int y, GrimoireScreen screen) {
+        super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 10, 26));
         this.screen = screen;
     }
     
@@ -28,7 +28,7 @@ public class MainIndexButton extends Button {
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Do nothing
     }
 
@@ -41,18 +41,8 @@ public class MainIndexButton extends Button {
         @Override
         public void onPress(Button button) {
             if (button instanceof MainIndexButton indexButton) {
-                // Push the current grimoire topic onto the history stack if we're not already on the main menu
-                if (!indexButton.getScreen().getMenu().getTopic().equals(MainIndexResearchTopic.INSTANCE)) {
-                    indexButton.getScreen().pushCurrentHistoryTopic();
-                }
-                
                 // Set the new grimoire topic and open a new screen for it
-                indexButton.getScreen().getMenu().setTopic(MainIndexResearchTopic.INSTANCE);
-                indexButton.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    indexButton.getScreen().getMenu(),
-                    indexButton.getScreen().getPlayerInventory(),
-                    indexButton.getScreen().getTitle()
-                ));
+                indexButton.getScreen().gotoTopic(MainIndexResearchTopic.INSTANCE, false);
             }
         }
     }

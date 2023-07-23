@@ -26,10 +26,8 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.block.state.pattern.BlockPattern;
 import net.minecraft.world.level.block.state.pattern.BlockPatternBuilder;
-import net.minecraft.world.level.block.state.predicate.BlockMaterialPredicate;
 import net.minecraft.world.level.block.state.predicate.BlockStatePredicate;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 
 /**
@@ -124,7 +122,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
             this.golemPattern = BlockPatternBuilder.start().aisle("~^~", "###", "~#~")
                     .where('^', BlockInWorld.hasState(BlockStatePredicate.forBlock(this.getControllerBlock())))
                     .where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(this.getBaseBlock())))
-                    .where('~', BlockInWorld.hasState(BlockMaterialPredicate.forMaterial(Material.AIR)))
+                    .where('~', b -> b.getState().isAir())
                     .build();
         }
         return this.golemPattern;

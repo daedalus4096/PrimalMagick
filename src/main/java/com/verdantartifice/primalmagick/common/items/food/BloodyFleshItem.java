@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.items.food;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -26,7 +25,7 @@ import net.minecraft.world.level.Level;
  */
 public class BloodyFleshItem extends Item {
     public BloodyFleshItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).meat().alwaysEat().build()));
+        super(new Item.Properties().rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).meat().alwaysEat().build()));
     }
 
     @Override

@@ -38,7 +38,7 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -52,7 +52,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     public static final BooleanProperty HAS_BOTTLE = BlockStateProperties.HAS_BOTTLE_0;
 
     public ConcocterBlock() {
-        super(Block.Properties.of(Material.METAL).strength(0.5F).lightLevel(state -> {
+        super(Block.Properties.of().mapColor(MapColor.METAL).strength(0.5F).lightLevel(state -> {
             return 1;
         }).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HAS_BOTTLE, false));

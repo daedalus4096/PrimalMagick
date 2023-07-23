@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellMineModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
@@ -36,8 +36,7 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
     
     @Override
     public void render(SpellMineEntity entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
-        @SuppressWarnings("deprecation")
-        float yaw = Mth.rotlerp(entity.yRotO, entity.getYRot(), partialTicks);
+        float yaw = Mth.rotLerp(entity.yRotO, entity.getYRot(), partialTicks);
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
         Color c = new Color(entity.getColor());
@@ -48,9 +47,9 @@ public class SpellMineRenderer extends EntityRenderer<SpellMineEntity> {
         double bob = 0.25D * Mth.sin(ticks * 0.1F);      // Calculate a vertical bobbing displacement
         matrixStack.pushPose();
         matrixStack.translate(0.0D, 0.5D + bob, 0.0D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the mine like a shulker bullet
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the mine like a shulker bullet
+        matrixStack.mulPose(Axis.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
         matrixStack.scale(-0.5F, -0.5F, 0.5F);
         this.model.setupAnim(entity, 0.0F, 0.0F, 0.0F, yaw, pitch);
         VertexConsumer coreVertexBuilder = buffer.getBuffer(this.model.renderType(TEXTURE));

@@ -2,17 +2,15 @@ package com.verdantartifice.primalmagick.client.toast;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -32,16 +30,15 @@ public class ResearchToast implements Toast {
     }
     
     @Override
-    public Visibility render(PoseStack matrixStack, ToastComponent toastGui, long delta) {
+    public Visibility render(GuiGraphics guiGraphics, ToastComponent toastGui, long delta) {
         Minecraft mc = toastGui.getMinecraft();
         
         // Render the toast background
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        toastGui.blit(matrixStack, 0, 0, 0, 224, 160, 32);
+        guiGraphics.blit(TEXTURE, 0, 0, 0, 224, 160, 32);
         
         // Render the toast title text
         Component titleText = this.isComplete ? Component.translatable("primalmagick.toast.completed.title") : Component.translatable("primalmagick.toast.revealed.title");
-        mc.font.draw(matrixStack, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor());
+        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor(), false);
         
         // Render the description of the completed research
         Component descText = Component.translatable(this.entry.getNameTranslationKey());
@@ -49,13 +46,13 @@ public class ResearchToast implements Toast {
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed
             float scale = (148.0F / width);
-            matrixStack.pushPose();
-            matrixStack.translate(6.0F, 18.0F, 0.0F);
-            matrixStack.scale(scale, scale, scale);
-            mc.font.draw(matrixStack, descText, 0, 0, Color.BLACK.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(6.0F, 18.0F, 0.0F);
+            guiGraphics.pose().scale(scale, scale, scale);
+            guiGraphics.drawString(mc.font, descText, 0, 0, Color.BLACK.getRGB(), false);
+            guiGraphics.pose().popPose();
         } else {
-            mc.font.draw(matrixStack, descText, 6, 18, Color.BLACK.getRGB());
+            guiGraphics.drawString(mc.font, descText, 6, 18, Color.BLACK.getRGB(), false);
         }
         
         // If the toast has been open long enough, hide it

@@ -1,9 +1,10 @@
 package com.verdantartifice.primalmagick.client.renderers.entity;
 
+import org.joml.Quaternionf;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 
 import net.minecraft.client.model.geom.ModelLayers;
@@ -63,17 +64,17 @@ public class SinCrystalRenderer extends EntityRenderer<SinCrystalEntity> {
         matrixStackIn.translate(0.0D, -0.5D, 0.0D);
         int i = OverlayTexture.NO_OVERLAY;
 
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(f1));
         matrixStackIn.translate(0.0D, (double)(1.5F + deltaY / 2.0F), 0.0D);
-        matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
+        matrixStackIn.mulPose((new Quaternionf()).setAngleAxis(((float)Math.PI / 3F), ANGLE, 0.0F, ANGLE));
         this.glass.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.scale(0.875F, 0.875F, 0.875F);
-        matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
+        matrixStackIn.mulPose((new Quaternionf()).setAngleAxis(((float)Math.PI / 3F), ANGLE, 0.0F, ANGLE));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(f1));
         this.glass.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.scale(0.875F, 0.875F, 0.875F);
-        matrixStackIn.mulPose(new Quaternion(new Vector3f(ANGLE, 0.0F, ANGLE), 60.0F, true));
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(f1));
+        matrixStackIn.mulPose((new Quaternionf()).setAngleAxis(((float)Math.PI / 3F), ANGLE, 0.0F, ANGLE));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(f1));
         this.cube.render(matrixStackIn, ivertexbuilder, packedLightIn, i);
         matrixStackIn.popPose();
         matrixStackIn.popPose();

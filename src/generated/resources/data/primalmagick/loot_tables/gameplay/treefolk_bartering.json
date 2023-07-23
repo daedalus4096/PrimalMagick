@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:barter",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/food",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/saplings",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/seeds",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/junk",
+          "weight": 15
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "primalmagick:gameplay/treefolk_bartering/treasure",
+          "weight": 5
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "primalmagick:gameplay/treefolk_bartering"
+}

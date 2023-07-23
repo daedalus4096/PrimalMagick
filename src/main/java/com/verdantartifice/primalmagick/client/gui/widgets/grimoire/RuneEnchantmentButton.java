@@ -29,16 +29,8 @@ public class RuneEnchantmentButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof RuneEnchantmentButton greb) {
-                // Push the current grimoire topic onto the history stack
-                greb.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                greb.getScreen().getMenu().setTopic(new EnchantmentResearchTopic(greb.getEnchantment(), 0));
-                greb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    greb.getScreen().getMenu(),
-                    greb.getScreen().getPlayerInventory(),
-                    greb.getScreen().getTitle()
-                ));
+                greb.getScreen().gotoTopic(new EnchantmentResearchTopic(greb.getEnchantment(), 0));
             }
         }
     }

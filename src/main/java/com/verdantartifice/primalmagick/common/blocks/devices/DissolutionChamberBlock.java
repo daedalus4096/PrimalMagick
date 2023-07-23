@@ -36,8 +36,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -51,7 +50,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     
     public DissolutionChamberBlock() {
-        super(Block.Properties.of(Material.METAL, MaterialColor.DIAMOND).strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion());
+        super(Block.Properties.of().mapColor(MapColor.DIAMOND).strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 

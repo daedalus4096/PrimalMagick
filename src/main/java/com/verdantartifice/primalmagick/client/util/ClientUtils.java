@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.util;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 
 import net.minecraft.client.Minecraft;
@@ -73,5 +74,15 @@ public class ClientUtils {
                 }
             });
         }
+    }
+
+    /**
+     * Opens the grimoire GUI on the client.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     */
+    public static void openGrimoireScreen() {
+        Minecraft mc = Minecraft.getInstance();
+        mc.setScreen(new GrimoireScreen());
     }
 }

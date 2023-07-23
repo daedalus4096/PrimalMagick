@@ -5,16 +5,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -24,45 +24,55 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
+public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial> extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
 
-    protected boolean complete;
-    protected boolean consumed;
-    protected boolean hasBonus;
+    protected final T material;
+    protected final boolean complete;
+    protected final boolean consumed;
+    protected final boolean hasBonus;
     
-    public AbstractProjectMaterialWidget(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
+    public AbstractProjectMaterialWidget(T material, int x, int y, Set<Block> surroundings) {
         super(x, y, 16, 16, Component.empty());
         Minecraft mc = Minecraft.getInstance();
+        this.material = material;
         this.hasBonus = material.getBonusReward() > 0.0D;
         this.consumed = material.isConsumed();
         this.complete = material.isSatisfied(mc.player, this.consumed ? Collections.emptySet() : surroundings);
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         if (this.complete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.x + 8, this.y, 200.0F);
-            this.blit(matrixStack, 0, 0, 162, 0, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 162, 0, 10, 10);
+            guiGraphics.pose().popPose();
         }
         if (this.consumed) {
             // Render consumption exclamation point if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.x - 3, this.y - 2, 200.0F);
-            this.blit(matrixStack, 0, 0, 172, 0, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() - 3, this.getY() - 2, 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 172, 0, 10, 10);
+            guiGraphics.pose().popPose();
         }
         if (this.hasBonus) {
             // Render bonus indicator if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.x - 1, this.y + 10, 200.0F);
-            this.blit(matrixStack, 0, 0, 215, 0, 6, 5);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() - 1, this.getY() + 10, 200.0F);
+            guiGraphics.blit(TEXTURE, 0, 0, 215, 0, 6, 5);
+            guiGraphics.pose().popPose();
         }
+        
+        List<Component> lines = new ArrayList<>(this.getHoverText());
+        if (this.consumed) {
+            lines.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        if (this.hasBonus) {
+            lines.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        }
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
     
     /**
@@ -79,22 +89,6 @@ public abstract class AbstractProjectMaterialWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-        // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
-        List<Component> tooltip = new ArrayList<>(this.getHoverText());
-        if (this.consumed) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-        if (this.hasBonus) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        }
-        GuiUtils.renderCustomTooltip(matrixStack, tooltip, mouseX, mouseY);
-        matrixStack.popPose();
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }

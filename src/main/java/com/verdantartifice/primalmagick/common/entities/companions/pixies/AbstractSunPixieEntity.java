@@ -48,7 +48,7 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
     }
     
     public void castSpell() {
-        this.getSpellPackage().cast(this.level, this, null);
+        this.getSpellPackage().cast(this.level(), this, null);
     }
     
     /**

@@ -211,7 +211,7 @@ public class PrimalMagickCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[researchSet.size()]);
             String output = String.join(", ", researchList);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.list", target.getName(), output), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.list", target.getName(), output), true);
         }
         return 0;
     }
@@ -224,7 +224,7 @@ public class PrimalMagickCommand {
             // Remove all unlocked research entries from the target player
             knowledge.clearResearch();
             ResearchManager.scheduleSync(target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.reset", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.research.reset.target", source.getTextName()));
         }
         return 0;
@@ -240,7 +240,7 @@ public class PrimalMagickCommand {
         } else {
             // Grant the specified research to the target player, along with all its parents
             ResearchManager.forceGrantWithAllParents(target, key);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.grant", target.getName(), key.toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant", target.getName(), key.toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant.target", source.getTextName(), key.toString()));
         }
         return 0;
@@ -256,7 +256,7 @@ public class PrimalMagickCommand {
         } else {
             // Grant the parents of the specified research to the target player, but not the research itself
             ResearchManager.forceGrantParentsOnly(target, key);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.grant_parents", target.getName(), key.toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_parents", target.getName(), key.toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_parents.target", source.getTextName(), key.toString()));
         }
         return 0;
@@ -269,7 +269,7 @@ public class PrimalMagickCommand {
         } else {
             // Grant all research entries to the target player
             ResearchManager.forceGrantAll(target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.grant_all", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_all", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_all.target", source.getTextName()));
         }
         return 0;
@@ -285,7 +285,7 @@ public class PrimalMagickCommand {
         } else {
             // Revoke the specified research from the target player, along with all its children
             ResearchManager.forceRevokeWithAllChildren(target, key);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.revoke", target.getName(), key.toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.revoke", target.getName(), key.toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.research.revoke.target", source.getTextName(), key.toString()));
         }
         return 0;
@@ -308,10 +308,10 @@ public class PrimalMagickCommand {
                                     .collect(Collectors.toSet())
                                     .toArray(new String[flagSet.size()]);
             String flagOutput = (flagStrs.length == 0) ? "none" : String.join(", ", flagStrs);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.details.1", key.toString(), target.getName()), true);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.details.2", status.name()), true);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.details.3", stage), true);
-            source.sendSuccess(Component.translatable("commands.primalmagick.research.details.4", flagOutput), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.1", key.toString(), target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.2", status.name()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.3", stage), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.details.4", flagOutput), true);
         }
         return 0;
     }
@@ -328,10 +328,10 @@ public class PrimalMagickCommand {
             int oldStage = knowledge.getResearchStage(key);
             if (ResearchManager.progressResearch(target, key)) {
                 int newStage = knowledge.getResearchStage(key);
-                source.sendSuccess(Component.translatable("commands.primalmagick.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage));
             } else {
-                source.sendSuccess(Component.translatable("commands.primalmagick.research.progress.failure", key.toString(), oldStage), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.failure", key.toString(), oldStage), true);
             }
         }
         return 0;
@@ -344,7 +344,7 @@ public class PrimalMagickCommand {
         } else {
             // Remove all observations and theories from the target player
             knowledge.clearKnowledge();
-            source.sendSuccess(Component.translatable("commands.primalmagick.knowledge.reset", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.reset.target", source.getTextName()));
         }
         return 0;
@@ -361,7 +361,7 @@ public class PrimalMagickCommand {
             // Get the current levels and points for the given knowledge type for the target player
             int levels = knowledge.getKnowledge(type);
             int points = knowledge.getKnowledgeRaw(type);
-            source.sendSuccess(Component.translatable("commands.primalmagick.knowledge.get", target.getName(), levels, type.name(), points), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.get", target.getName(), levels, type.name(), points), true);
         }
         return 0;
     }
@@ -376,10 +376,10 @@ public class PrimalMagickCommand {
         } else {
             // Add the given number of points to the given knowledge type for the target player
             if (ResearchManager.addKnowledge(target, type, points)) {
-                source.sendSuccess(Component.translatable("commands.primalmagick.knowledge.add.success", points, type.name(), target.getName()), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.add.success", points, type.name(), target.getName()), true);
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.add.target", points, type.name(), source.getTextName()));
             } else {
-                source.sendSuccess(Component.translatable("commands.primalmagick.knowledge.add.failure", target.getName()), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.add.failure", target.getName()), true);
             }
         }
         return 0;
@@ -395,7 +395,7 @@ public class PrimalMagickCommand {
         }
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
-            source.sendSuccess(Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()));
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
@@ -406,7 +406,7 @@ public class PrimalMagickCommand {
     private static int grantAllScanResearch(CommandSourceStack source, ServerPlayer target) {
         // Scan all possible items for the target player and grant them their research
         int count = ResearchManager.setAllScanned(target);
-        source.sendSuccess(Component.translatable("commands.primalmagick.scans.grant_all", count, target.getName()), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant_all", count, target.getName()), true);
         target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant_all.target", count, source.getTextName()));
         return 0;
     }
@@ -418,7 +418,7 @@ public class PrimalMagickCommand {
                                         .map((s) -> s.getTag().toUpperCase())
                                         .collect(Collectors.toList());
         String tagStr = String.join(", ", unlockedTags);
-        source.sendSuccess(Component.translatable("commands.primalmagick.sources.list", target.getName(), tagStr), true);
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.list", target.getName(), tagStr), true);
         return 0;
     }
 
@@ -432,8 +432,9 @@ public class PrimalMagickCommand {
                 }
             }
         }
-        source.sendSuccess(Component.translatable("commands.primalmagick.sources.unlock_all", target.getName(), unlocked), true);
-        target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), unlocked));
+        final int totalUnlocked = unlocked;
+        source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock_all", target.getName(), totalUnlocked), true);
+        target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), totalUnlocked));
         return 0;
     }
 
@@ -446,7 +447,7 @@ public class PrimalMagickCommand {
         } else if (toUnlock.isDiscovered(target)) {
             source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
         } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
-            source.sendSuccess(Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()));
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.failure", target.getName(), tag.toUpperCase()));
@@ -462,7 +463,7 @@ public class PrimalMagickCommand {
         } else {
             Component statName = Component.translatable(stat.getTranslationKey());
             Component statValue = StatsManager.getFormattedValue(target, stat);
-            source.sendSuccess(Component.translatable("commands.primalmagick.stats.get", target.getName(), statName, statValue), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.get", target.getName(), statName, statValue), true);
         }
         return 0;
     }
@@ -476,7 +477,7 @@ public class PrimalMagickCommand {
             StatsManager.setValue(target, stat, value);
             Component statName = Component.translatable(stat.getTranslationKey());
             Component statValue = StatsManager.getFormattedValue(target, stat);
-            source.sendSuccess(Component.translatable("commands.primalmagick.stats.set", target.getName(), statName, statValue), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.set", target.getName(), statName, statValue), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.set.target", source.getTextName(), statName, statValue));
         }
         return 0;
@@ -490,7 +491,7 @@ public class PrimalMagickCommand {
         } else {
             stats.clear();
             StatsManager.scheduleSync(target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.stats.reset", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.reset.target", source.getTextName()));
         }
         return 0;
@@ -504,7 +505,7 @@ public class PrimalMagickCommand {
         } else {
             attunements.clear();
             AttunementManager.scheduleSync(target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.attunements.reset", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.reset.target", source.getTextName()));
         }
         return 0;
@@ -518,10 +519,10 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.source.noexist", tag));
         } else {
             Component sourceText = Component.translatable(toQuery.getNameTranslationKey());
-            source.sendSuccess(Component.translatable("commands.primalmagick.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.total", sourceText, source.getTextName(), AttunementManager.getTotalAttunement(target, toQuery)), true);
             for (AttunementType type : AttunementType.values()) {
                 Component typeText = Component.translatable(type.getNameTranslationKey());
-                source.sendSuccess(Component.translatable("commands.primalmagick.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.get.partial", typeText, AttunementManager.getAttunement(target, toQuery, type)), true);
             }
         }
         return 0;
@@ -541,10 +542,10 @@ public class PrimalMagickCommand {
             Component sourceText = Component.translatable(toSet.getNameTranslationKey());
             Component typeText = Component.translatable(type.getNameTranslationKey());
             if (type.isCapped() && value > type.getMaximum()) {
-                source.sendSuccess(Component.translatable("commands.primalmagick.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value));
             } else {
-                source.sendSuccess(Component.translatable("commands.primalmagick.attunements.set.success", target.getName(), typeText, sourceText, value), true);
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.set.success", target.getName(), typeText, sourceText, value), true);
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target", target.getName(), typeText, sourceText, value));
             }
         }
@@ -558,7 +559,7 @@ public class PrimalMagickCommand {
         } else {
             recipeBook.get().clear();
             ArcaneRecipeBookManager.scheduleSync(target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.reset", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.reset.target", source.getTextName()));
         }
         return 0;
@@ -576,7 +577,7 @@ public class PrimalMagickCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[knownSet.size()]);
             String knownOutput = String.join(", ", knownList);
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.known", target.getName(), knownOutput), true);
 
             // List all highlighted arcane research book entries for the target player
             Set<ResourceLocation> highlightSet = recipeBook.get().getHighlight();
@@ -585,7 +586,7 @@ public class PrimalMagickCommand {
                                         .collect(Collectors.toSet())
                                         .toArray(new String[highlightSet.size()]);
             String highlightOutput = String.join(", ", highlightList);
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.list.highlight", target.getName(), highlightOutput), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.list.highlight", target.getName(), highlightOutput), true);
         }
         return 0;
     }
@@ -594,7 +595,7 @@ public class PrimalMagickCommand {
         if (!ArcaneRecipeBookManager.syncRecipesWithResearch(target)) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.sync", target.getName()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.sync", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.sync.target", source.getTextName()));
         }
         return 0;
@@ -608,7 +609,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.recipes.recipe_not_arcane"));
         } else {
             ArcaneRecipeBookManager.addRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.add", target.getName(), recipe.getId().toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.add", target.getName(), recipe.getId().toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.add.target", source.getTextName(), recipe.getId().toString()));
         }
         return 0;
@@ -622,7 +623,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.recipes.recipe_not_arcane"));
         } else {
             ArcaneRecipeBookManager.removeRecipes(Collections.singletonList(recipe), target);
-            source.sendSuccess(Component.translatable("commands.primalmagick.recipes.remove", target.getName(), recipe.getId().toString()), true);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.remove", target.getName(), recipe.getId().toString()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.getId().toString()));
         }
         return 0;

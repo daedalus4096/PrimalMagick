@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.searchtree.FullTextSearchTree;
 import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.client.searchtree.SearchTree;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -25,7 +25,7 @@ public class ArcaneSearchRegistry {
         Minecraft.getInstance().getSearchTreeManager().register(ArcaneSearchRegistry.ARCANE_RECIPE_COLLECTIONS, (contents) -> {
             return new FullTextSearchTree<>((arc) -> {
                 return arc.getRecipes().stream().flatMap((r) -> {
-                    return r.getResultItem().getTooltipLines((Player)null, TooltipFlag.Default.NORMAL).stream();
+                    return r.getResultItem(arc.registryAccess()).getTooltipLines((Player)null, TooltipFlag.Default.NORMAL).stream();
                 }).map((c) -> {
                     return ChatFormatting.stripFormatting(c.getString()).trim();
                 }).filter((s) -> {
@@ -33,7 +33,7 @@ public class ArcaneSearchRegistry {
                 });
             }, (arc) -> {
                 return arc.getRecipes().stream().map((r) -> {
-                    return Registry.ITEM.getKey(r.getResultItem().getItem());
+                    return BuiltInRegistries.ITEM.getKey(r.getResultItem(arc.registryAccess()).getItem());
                 });
             }, contents);
         });
@@ -46,7 +46,7 @@ public class ArcaneSearchRegistry {
     public static void populate() {
         Minecraft mc = Minecraft.getInstance();
         ClientArcaneRecipeBook book = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
-        book.setupCollections(mc.level.getRecipeManager().getRecipes());
+        book.setupCollections(mc.level.getRecipeManager().getRecipes(), mc.level.registryAccess());
         mc.getSearchTreeManager().populate(ARCANE_RECIPE_COLLECTIONS, book.getCollections());
     }
 }

@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "ManaStorage.Mana.Sources",
+                  "target": "ManaContainerTag.Sources"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "primalmagick:honey_extractor"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "primalmagick:blocks/honey_extractor"
+}

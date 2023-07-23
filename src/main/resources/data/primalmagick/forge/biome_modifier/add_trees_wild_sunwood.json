@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "#minecraft:is_forest",
-  "features": "primalmagick:trees_wild_sunwood",
-  "step": "vegetal_decoration"
-}

@@ -34,7 +34,7 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -53,7 +53,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE = Shapes.join(Shapes.block(), Shapes.or(box(0.0D, 0.0D, 4.0D, 16.0D, 3.0D, 12.0D), box(4.0D, 0.0D, 0.0D, 12.0D, 3.0D, 16.0D), box(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), INSIDE), BooleanOp.ONLY_FIRST);
 
     public SanguineCrucibleBlock() {
-        super(Block.Properties.of(Material.METAL).strength(7.0F, 6.0F).lightLevel((state) -> { 
+        super(Block.Properties.of().mapColor(MapColor.METAL).strength(7.0F, 6.0F).lightLevel((state) -> { 
             return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
         }).sound(SoundType.METAL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));

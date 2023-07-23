@@ -21,16 +21,8 @@ public class RecipeIndexButton extends AbstractTopicButton {
         @Override
         public void onPress(Button button) {
             if (button instanceof RecipeIndexButton grib) {
-                // Push the current grimoire topic onto the history stack
-                grib.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                grib.getScreen().getMenu().setTopic(RecipeIndexPage.TOPIC);
-                grib.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    grib.getScreen().getMenu(),
-                    grib.getScreen().getPlayerInventory(),
-                    grib.getScreen().getTitle()
-                ));
+                grib.getScreen().gotoTopic(RecipeIndexPage.TOPIC);
             }
         }
     }

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_forest",
+  "features": "primalmagick:tree_wild_moonwood",
+  "step": "vegetal_decoration"
+}

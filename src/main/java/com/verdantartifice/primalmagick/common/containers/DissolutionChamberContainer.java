@@ -39,7 +39,7 @@ public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Co
         checkContainerDataCount(chamberData, 4);
         this.chamberInv = chamberInv;
         this.chamberData = chamberData;
-        this.world = playerInv.player.level;
+        this.world = playerInv.player.level();
         
         // Slot 0: chamber output
         this.addSlot(new GenericResultSlot(playerInv.player, this.chamberInv, 0, 125, 35));

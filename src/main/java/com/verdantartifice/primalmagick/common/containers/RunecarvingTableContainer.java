@@ -6,14 +6,15 @@ import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.containers.slots.RuneBaseSlot;
+import com.verdantartifice.primalmagick.common.containers.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -59,7 +60,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
     protected Runnable inventoryUpdateListener = () -> {};
 
     public RunecarvingTableContainer(int windowId, Inventory inv, BlockPos pos) {
-        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level, pos));
+        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
         ((SimpleContainer)this.tableInv).addListener(this);
     }
     
@@ -67,7 +68,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         super(ContainersPM.RUNECARVING_TABLE.get(), windowId);
         this.worldPosCallable = worldPosCallable;
         this.player = inv.player;
-        this.world = inv.player.level;
+        this.world = inv.player.level();
         checkContainerSize(tableInv, 2);
         this.tableInv = tableInv;
         
@@ -83,9 +84,9 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
             public void onTake(Player thePlayer, ItemStack stack) {
                 RunecarvingTableContainer.this.inputSlabSlot.remove(1);
                 RunecarvingTableContainer.this.inputLapisSlot.remove(1);
-                RunecarvingTableContainer.this.updateRecipeResultSlot();
+                RunecarvingTableContainer.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
                 
-                stack.getItem().onCraftedBy(stack, thePlayer.level, thePlayer);
+                stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
                 RunecarvingTableContainer.this.worldPosCallable.execute((world, pos) -> {
                     long time = world.getGameTime();
                     if (RunecarvingTableContainer.this.lastOnTake != time) {
@@ -147,7 +148,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
     public boolean clickMenuButton(Player playerIn, int id) {
         if (id >= 0 && id < this.recipes.size()) {
             this.selectedRecipe.set(id);
-            this.updateRecipeResultSlot();
+            this.updateRecipeResultSlot(playerIn.level().registryAccess());
         }
         return true;
     }
@@ -175,10 +176,10 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         }
     }
     
-    protected void updateRecipeResultSlot() {
+    protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
-            this.outputSlot.set(recipe.assemble(this.tableInv));
+            this.outputSlot.set(recipe.assemble(this.tableInv, registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }
@@ -203,7 +204,7 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
             stack = slotStack.copy();
             if (index == 2) {
                 // If transferring the output item, move it into the player's backpack or hotbar
-                slotStack.getItem().onCraftedBy(slotStack, playerIn.level, playerIn);
+                slotStack.getItem().onCraftedBy(slotStack, playerIn.level(), playerIn);
                 if (!this.moveItemStackTo(slotStack, 3, 39, true)) {
                     return ItemStack.EMPTY;
                 }

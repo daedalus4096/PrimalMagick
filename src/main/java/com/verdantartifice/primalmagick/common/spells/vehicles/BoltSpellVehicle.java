@@ -58,7 +58,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
             PacketHandler.sendToAllAround(
                     new SpellBoltPacket(source, target, spell.getPayload().getSource().getColor()), 
                     world.dimension(), 
-                    new BlockPos(source), 
+                    BlockPos.containing(source), 
                     64.0D);
         }
     }

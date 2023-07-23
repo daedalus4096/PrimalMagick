@@ -2,17 +2,19 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
 import java.awt.Color;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 /**
  * Display widget for showing a single itemstack.  Used on the requirements and recipe pages.
@@ -29,33 +31,35 @@ public class ItemStackWidget extends AbstractWidget {
         super(x, y, 16, 16, Component.empty());
         this.stack = stack;
         this.isComplete = isComplete;
-    }
+
+        Minecraft mc = Minecraft.getInstance();
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+}
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
         
         // Draw stack icon
-        GuiUtils.renderItemStack(matrixStack, this.stack, this.x, this.y, this.getMessage().getString(), false);
+        GuiUtils.renderItemStack(guiGraphics, this.stack, this.getX(), this.getY(), this.getMessage().getString(), false);
         
         // Draw amount string if applicable
         if (this.stack.getCount() > 1) {
             Component amountText = Component.literal(Integer.toString(this.stack.getCount()));
             int width = mc.font.width(amountText.getString());
-            matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 900.0F);
-            matrixStack.scale(0.5F, 0.5F, 1.0F);
-            mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
+            guiGraphics.pose().scale(0.5F, 0.5F, 1.0F);
+            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            guiGraphics.pose().popPose();
         }
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
-            matrixStack.pushPose();
-            matrixStack.translate(this.x + 8, this.y, 200.0F);
-            RenderSystem.setShaderTexture(0, GRIMOIRE_TEXTURE);
-            this.blit(matrixStack, 0, 0, 159, 207, 10, 10);
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 8, this.getY(), 200.0F);
+            guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
+            guiGraphics.pose().popPose();
         }
     }
     
@@ -66,17 +70,6 @@ public class ItemStackWidget extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput output) {
-    }
-
-    @Override
-    public void renderToolTip(PoseStack matrixStack, int mouseX, int mouseY) {
-        // Render tooltip
-        matrixStack.pushPose();
-        matrixStack.translate(0, 0, 200);
-        
-        GuiUtils.renderItemTooltip(matrixStack, this.stack, mouseX, mouseY);
-        
-        matrixStack.popPose();
+    public void updateWidgetNarration(NarrationElementOutput output) {
     }
 }

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesP
 import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -15,8 +16,6 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
-import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
@@ -29,6 +28,7 @@ public class InitRegistries {
     public static void initDeferredRegistries() {
         BlocksPM.init();
         ItemsPM.init();
+        CreativeModeTabsPM.init();
         TileEntityTypesPM.init();
         ContainersPM.init();
         EntityTypesPM.init();
@@ -42,8 +42,6 @@ public class InitRegistries {
         LootModifierSerializersPM.init();
         ParticleTypesPM.init();
         ArgumentTypesPM.init();
-        ConfiguredFeaturesPM.init();
-        PlacedFeaturesPM.init();
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
     }

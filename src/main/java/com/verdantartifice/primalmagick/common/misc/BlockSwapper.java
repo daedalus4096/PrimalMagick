@@ -105,7 +105,7 @@ public class BlockSwapper {
     }
 
     protected boolean isTargetDifferent(BlockState sourceState) {
-        return this.target == null || this.target.isEmpty() || !this.target.sameItem(new ItemStack(sourceState.getBlock()));
+        return this.target == null || this.target.isEmpty() || !ItemStack.isSameItem(this.target, new ItemStack(sourceState.getBlock()));
     }
     
     protected boolean canPlace(Level world, BlockState state) {

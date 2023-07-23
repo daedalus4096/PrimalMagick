@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 
@@ -24,12 +25,12 @@ public abstract class AbstractAffinity implements IAffinity {
     }
 
     @Override
-    public SourceList getTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    public SourceList getTotal(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (this.totalCache == null) {
-            this.totalCache = this.calculateTotal(recipeManager, history);
+            this.totalCache = this.calculateTotal(recipeManager, registryAccess, history);
         }
         return this.totalCache == null ? null : this.totalCache.copy();
     }
     
-    protected abstract SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history);
+    protected abstract SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history);
 }

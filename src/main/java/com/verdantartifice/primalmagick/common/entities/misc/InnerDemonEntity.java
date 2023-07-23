@@ -42,7 +42,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -102,7 +101,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
         ProjectileSpellVehicle vehicle = new ProjectileSpellVehicle();
         spell.setVehicle(vehicle);
         BloodDamageSpellPayload payload = new BloodDamageSpellPayload();
-        Difficulty difficulty = this.level.getDifficulty();
+        Difficulty difficulty = this.level().getDifficulty();
         payload.getProperty("power").setValue(difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 5 : 3));
         spell.setPayload(payload);
         return spell;
@@ -110,7 +109,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public void performRangedAttack(LivingEntity target, float distanceFactor) {
-        this.getSpellPackage().cast(this.level, this, null);
+        this.getSpellPackage().cast(this.level(), this, null);
     }
 
     @Override
@@ -121,8 +120,9 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     @Override
     public void aiStep() {
         // Detect nearby sin crystals and heal for each
-        this.crystalsInRange = EntityUtils.getEntitiesInRange(this.level, this.position(), null, SinCrystalEntity.class, HEAL_RANGE);
-        if (!this.crystalsInRange.isEmpty() && this.tickCount % 10 == 0 && !this.level.isClientSide) {
+        Level level = this.level();
+        this.crystalsInRange = EntityUtils.getEntitiesInRange(level, this.position(), null, SinCrystalEntity.class, HEAL_RANGE);
+        if (!this.crystalsInRange.isEmpty() && this.tickCount % 10 == 0 && !level.isClientSide) {
             this.heal((float)this.crystalsInRange.size());
         }
         super.aiStep();
@@ -130,11 +130,12 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     protected void customServerAiStep() {
-        if (!this.level.isClientSide) {
+        Level level = this.level();
+        if (!level.isClientSide) {
             // Explode if suffocating
             if (this.isSuffocating && this.tickCount % 20 == 0) {
-                Explosion.BlockInteraction mode = ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
-                this.level.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
+                Level.ExplosionInteraction mode = ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE;
+                level.explode(this, this.getX(), this.getY(), this.getZ(), 7.0F, false, mode);
                 this.isSuffocating = false;
             }
             
@@ -152,10 +153,10 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source == DamageSource.DROWN || source.getEntity() instanceof InnerDemonEntity) {
+        if (source == this.level().damageSources().drown() || source.getEntity() instanceof InnerDemonEntity) {
             return false;
         } else {
-            if (source == DamageSource.IN_WALL) {
+            if (source == this.level().damageSources().inWall()) {
                 this.isSuffocating = true;
             }
             return super.hurt(source, amount);
@@ -185,7 +186,7 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
 
     @Override
     public void checkDespawn() {
-        if (this.level.getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL && this.shouldDespawnInPeaceful()) {
             this.discard();
         } else {
             this.noActionTime = 0;
@@ -213,21 +214,22 @@ public class InnerDemonEntity extends Monster implements RangedAttackMob, Powera
     }
     
     public void doSinCrash() {
-        if (!this.level.isClientSide) {
+        Level level = this.level();
+        if (!level.isClientSide) {
             double demonPosX = this.getX();
             double demonPosY = this.getEyeY();
             double demonPosZ = this.getZ();
-            Difficulty difficulty = this.level.getDifficulty();
+            Difficulty difficulty = level.getDifficulty();
             int crashCount = difficulty == Difficulty.EASY ? 1 : (difficulty == Difficulty.HARD ? 3 : 2);
             for (int index = 0; index < crashCount; index++) {
-                double dx = this.level.random.nextGaussian() * SIN_CRASH_RANGE * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
+                double dx = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
                 double dy = -1.0D * (double)this.getEyeHeight();
-                double dz = this.level.random.nextGaussian() * SIN_CRASH_RANGE * (this.level.random.nextBoolean() ? 1.0D : -1.0D);
-                SinCrashEntity crash = new SinCrashEntity(this.level, this, dx, dy, dz);
+                double dz = level.random.nextGaussian() * SIN_CRASH_RANGE * (level.random.nextBoolean() ? 1.0D : -1.0D);
+                SinCrashEntity crash = new SinCrashEntity(level, this, dx, dy, dz);
                 crash.moveTo(demonPosX, demonPosY, demonPosZ, 0.0F, 0.0F);
-                this.level.addFreshEntity(crash);
+                level.addFreshEntity(crash);
             }
-            this.level.playSound(null, demonPosX, demonPosY, demonPosZ, SoundsPM.WHISPERS.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
+            level.playSound(null, demonPosX, demonPosY, demonPosZ, SoundsPM.WHISPERS.get(), SoundSource.HOSTILE, 1.0F, 1.0F);
         }
     }
     

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Set;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.common.theorycrafting.ExperienceProjectMaterial;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -19,18 +19,15 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget {
+public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidget<ExperienceProjectMaterial> {
     private static final ResourceLocation EXPERIENCE_ORB_TEXTURES = new ResourceLocation("textures/entity/experience_orb.png");
 
-    protected ExperienceProjectMaterial material;
-    
     public ExperienceProjectMaterialWidget(ExperienceProjectMaterial material, int x, int y, Set<Block> surroundings) {
         super(material, x, y, surroundings);
-        this.material = material;
     }
     
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         Minecraft mc = Minecraft.getInstance();
 
         // Draw experience orb
@@ -42,28 +39,27 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         float g = 1.0F;
         float b = (float)(Math.sin(approxTicks + 4.1887903F) + 1.0F) * 0.1F;
         float a = 0.5F;
-        RenderSystem.setShaderTexture(0, EXPERIENCE_ORB_TEXTURES);
-        matrixStack.pushPose();
-        matrixStack.translate(this.x, this.y, 0.0F);
-        matrixStack.scale(0.25F, 0.25F, 0.25F);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
+        guiGraphics.pose().scale(0.25F, 0.25F, 0.25F);
         RenderSystem.setShaderColor(r, g, b, a);
-        this.blit(matrixStack, 0, 0, uMin, vMin, 63, 63);
-        matrixStack.popPose();
+        guiGraphics.blit(EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63);
+        guiGraphics.pose().popPose();
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getLevels()));
             int width = mc.font.width(amountText);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            matrixStack.pushPose();
-            matrixStack.translate(this.x + 16 - width / 2, this.y + 12, 500.0F);
-            matrixStack.scale(0.5F, 0.5F, 0.5F);
-            mc.font.drawShadow(matrixStack, amountText, 0.0F, 0.0F, Color.WHITE.getRGB());
-            matrixStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
+            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+            guiGraphics.pose().popPose();
         }
 
         // Draw base class stuff
-        super.renderButton(matrixStack, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
+        super.renderWidget(guiGraphics, p_renderButton_1_, p_renderButton_2_, p_renderButton_3_);
     }
     
     protected int getTextureIndexByXP(int xpValue) {

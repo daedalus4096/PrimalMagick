@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "hallowsteel_ingot",
+  "ingredients": [
+    {
+      "tag": "primalmagick:storage_blocks/hallowsteel"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "primalmagick:hallowsteel_ingot"
+  }
+}

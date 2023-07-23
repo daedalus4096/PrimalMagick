@@ -10,6 +10,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -35,7 +36,7 @@ public class EnchantmentBonusAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (this.multiplierValues != null) {
             return this.multiplierValues;
         } else {

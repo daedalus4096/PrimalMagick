@@ -4,19 +4,19 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -89,9 +89,9 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 1.5D, 0.5D);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
+            matrixStack.mulPose(Axis.YP.rotationDegrees(rot));   // Spin the stack around its Y-axis
             matrixStack.scale(0.75F, 0.75F, 0.75F);
-            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemTransforms.TransformType.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer, 0);
+            Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.GUI, combinedLightIn, combinedOverlayIn, matrixStack, buffer, tileEntityIn.getLevel(), 0);
             matrixStack.popPose();
         }
 
@@ -110,9 +110,9 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
             
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 2.5D, 0.5D);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the orb like a shulker bullet
-            matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
-            matrixStack.mulPose(Vector3f.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
+            matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(ticks * 0.1F) * 180.0F)); // Spin the orb like a shulker bullet
+            matrixStack.mulPose(Axis.XP.rotationDegrees(Mth.cos(ticks * 0.1F) * 180.0F));
+            matrixStack.mulPose(Axis.ZP.rotationDegrees(Mth.sin(ticks * 0.15F) * 360.0F));
             this.renderCube(builder, matrixStack, ds, r, g, b, 1.0F, sprite);
             
             // FIXME Uncomment once Fabulous graphics bug is fixed

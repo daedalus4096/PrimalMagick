@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import java.util.Map;
 
-import com.verdantartifice.primalmagick.common.misc.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -58,13 +58,13 @@ public class HealingSpellPayload extends AbstractSpellPayload {
     protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
         if (projectileEntity != null) {
             // If the spell was a projectile or a mine, then it's indirect now matter how it was deployed
-            return DamageSourcesPM.causeIndirectSorceryDamage(projectileEntity, source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), projectileEntity, source);
         } else if (spell.getVehicle().isIndirect()) {
             // If the spell vehicle is indirect but no projectile was given, then it's still indirect
-            return DamageSourcesPM.causeIndirectSorceryDamage(null, source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), null, source);
         } else {
             // Otherwise, do direct damage
-            return DamageSourcesPM.causeDirectSorceryDamage(source);
+            return DamageSourcesPM.sorcery(source.level(), this.getSource(), source);
         }
     }
 

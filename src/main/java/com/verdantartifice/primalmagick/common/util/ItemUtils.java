@@ -149,7 +149,7 @@ public class ItemUtils {
         
         // First, scan for existing stacks that can be added to
         for (ItemStack outStack : output) {
-            if (outStack.sameItem(stack)) {
+            if (ItemStack.isSameItem(outStack, stack)) {
                 if (stack.getCount() + outStack.getCount() <= outStack.getMaxStackSize()) {
                     // If the output stack can fully absorb the input, grow it and return
                     outStack.grow(stack.getCount());

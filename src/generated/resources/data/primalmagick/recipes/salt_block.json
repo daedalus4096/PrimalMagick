@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    },
+    {
+      "item": "primalmagick:refined_salt"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:salt_block"
+  }
+}

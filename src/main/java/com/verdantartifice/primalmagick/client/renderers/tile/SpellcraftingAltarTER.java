@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
@@ -60,10 +60,10 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         double bobDelta = 0.125D * Math.sin((time + (double)partialTicks) * (2D * Math.PI / (double)SpellcraftingAltarTileEntity.BOB_CYCLE_TIME_TICKS));
         matrixStack.translate(0D, bobDelta, 0D);    // Bob the ring up and down
         float facingAngle = state.getValue(SpellcraftingAltarBlock.FACING).getClockWise().toYRot();
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(180F));
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(-facingAngle));
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));  // Model rotation correction
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(tileEntityIn.getCurrentRotation(partialTicks)));    // Spin the ring according to tile control
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(180F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(-facingAngle));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(90F));  // Model rotation correction
+        matrixStack.mulPose(Axis.YP.rotationDegrees(tileEntityIn.getCurrentRotation(partialTicks)));    // Spin the ring according to tile control
         VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
         this.ringModel.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.popPose();
@@ -82,9 +82,9 @@ public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingA
         
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 1.125D, 0.5D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(rot));   // Spin the core around its Y-axis
-        matrixStack.mulPose(Vector3f.ZP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
-        matrixStack.mulPose(Vector3f.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
+        matrixStack.mulPose(Axis.YP.rotationDegrees(rot));   // Spin the core around its Y-axis
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
+        matrixStack.mulPose(Axis.XP.rotationDegrees(45.0F)); // Tilt the core onto its diagonal
         matrixStack.scale(scale, scale, scale);
         
         // TODO Abstract into a model instead of plotting individual vertices

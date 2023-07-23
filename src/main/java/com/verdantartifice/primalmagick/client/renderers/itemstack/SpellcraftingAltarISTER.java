@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.client.renderers.tile.model.SpellcraftingAltarRingModel;
@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
@@ -24,6 +23,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -49,7 +49,7 @@ public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack itemStack, ItemDisplayContext transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         Item item = itemStack.getItem();
         if (item instanceof BlockItem blockItem && blockItem.getBlock() instanceof SpellcraftingAltarBlock) {
             Minecraft mc = Minecraft.getInstance();
@@ -64,7 +64,7 @@ public class SpellcraftingAltarISTER extends BlockEntityWithoutLevelRenderer {
             matrixStack.pushPose();
             matrixStack.translate(0.5D, 0D, 0.5D);
             matrixStack.translate(0D, 2.4D, 0D);    // Model position correction
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(90F));  // Model rotation correction
+            matrixStack.mulPose(Axis.YP.rotationDegrees(90F));  // Model rotation correction
             matrixStack.scale(1.0F, -1.0F, -1.0F);
             VertexConsumer ringBuilder = RING_MATERIAL.buffer(buffer, RenderType::entitySolid);
             this.model.renderToBuffer(matrixStack, ringBuilder, combinedLight, combinedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);

@@ -51,7 +51,7 @@ public class TileToServerPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer sender = ctx.get().getSender();
-                Level world = sender.level;
+                Level world = sender.level();
                 // Only process tile entities that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {

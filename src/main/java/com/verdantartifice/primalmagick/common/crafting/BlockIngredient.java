@@ -17,7 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -140,7 +140,7 @@ public class BlockIngredient implements Predicate<Block> {
             }
         } else if (json.has("tag")) {
             ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            TagKey<Block> tag = TagKey.create(Registry.BLOCK_REGISTRY, loc);
+            TagKey<Block> tag = TagKey.create(Registries.BLOCK, loc);
             return new BlockIngredient.TagList(tag);
         } else {
             throw new JsonParseException("A block ingredient entry needs either a tag or a block");

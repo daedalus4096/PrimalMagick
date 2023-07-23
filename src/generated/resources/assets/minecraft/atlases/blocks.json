@@ -1,0 +1,128 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_wand_core_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_wand_cap_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_wand_gem_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_wand_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_paper_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_pencil_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_rune_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_slab_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_lapis_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_honeycomb_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_bottle_slot"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/mana_font_core"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/ritual_bell_body"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/spellcrafting_altar/spellcrafting_altar_ring"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/primalite_shield_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/primalite_shield_base_nopattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/hexium_shield_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/hexium_shield_base_nopattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/hallowsteel_shield_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/hallowsteel_shield_base_nopattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:entity/shield/sacred_shield"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:research/research_unknown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/earth"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/sea"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/sky"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/sun"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/moon"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/blood"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/infernal"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/void"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "primalmagick:sources/hallowed"
+    }
+  ]
+}

@@ -4,14 +4,16 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
 
+import net.minecraft.core.RegistryAccess;
+
 /**
  * Grimoire page showing a concocting recipe.
  * 
  * @author Daedalus4096
  */
 public class ConcoctingRecipePage extends AbstractShapelessRecipePage<ConcoctingRecipe> {
-    public ConcoctingRecipePage(ConcoctingRecipe recipe) {
-        super(recipe);
+    public ConcoctingRecipePage(ConcoctingRecipe recipe, RegistryAccess registryAccess) {
+        super(recipe, registryAccess);
     }
     
     @Override

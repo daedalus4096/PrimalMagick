@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -13,9 +14,15 @@ import net.minecraft.resources.ResourceLocation;
 public abstract class AbstractRecipePage extends AbstractPage {
     protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire_overlay.png");
     
+    protected final RegistryAccess registryAccess;
+    
+    public AbstractRecipePage(RegistryAccess registryAccess) {
+        this.registryAccess = registryAccess;
+    }
+    
     @Override
-    public void render(PoseStack matrixStack, int side, int x, int y, int mouseX, int mouseY) {
-        this.renderTitle(matrixStack, side, x, y, mouseX, mouseY, null);
+    public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
+        this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, null);
     }
 
     @Override

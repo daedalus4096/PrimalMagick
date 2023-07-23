@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 
 /**
@@ -8,8 +9,8 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
  * @author Daedalus4096
  */
 public class ShapedRecipePage extends AbstractShapedRecipePage<ShapedRecipe> {
-    public ShapedRecipePage(ShapedRecipe recipe) {
-        super(recipe);
+    public ShapedRecipePage(ShapedRecipe recipe, RegistryAccess registryAccess) {
+        super(recipe, registryAccess);
     }
 
     @Override

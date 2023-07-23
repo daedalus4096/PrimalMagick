@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -68,10 +69,11 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         }
         
         Entity shooter = this.getOwner();
+        Level level = this.level();
         if ((this.dealtDamage || this.isNoPhysics()) && shooter != null) {
             int loyalty = this.entityData.get(LOYALTY_LEVEL);
             if (loyalty > 0 && !this.shouldReturnToThrower()) {
-                if (!this.level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
+                if (!level.isClientSide && this.pickup == AbstractArrow.Pickup.ALLOWED) {
                     this.spawnAtLocation(this.getPickupItem(), 0.1F);
                 }
                 this.discard();
@@ -79,7 +81,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
                 this.setNoPhysics(true);
                 Vec3 vector3d = new Vec3(shooter.getX() - this.getX(), shooter.getEyeY() - this.getY(), shooter.getZ() - this.getZ());
                 this.setPosRaw(this.getX(), this.getY() + vector3d.y * 0.015D * (double)loyalty, this.getZ());
-                if (this.level.isClientSide) {
+                if (level.isClientSide) {
                     this.yOld = this.getY();
                 }
                 
@@ -131,7 +133,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         }
         
         Entity shooter = this.getOwner();
-        DamageSource damageSource = DamageSource.trident(this, (Entity)(shooter == null ? this : shooter));
+        DamageSource damageSource = this.level().damageSources().trident(this, (Entity)(shooter == null ? this : shooter));
         this.dealtDamage = true;
         SoundEvent soundEvent = SoundEvents.TRIDENT_HIT;
         if (entity.hurt(damageSource, damage)) {
@@ -150,13 +152,14 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
         
         this.setDeltaMovement(this.getDeltaMovement().multiply(-0.01D, -0.1D, -0.01D));
         float volume = 1.0F;
-        if (this.level instanceof ServerLevel && this.level.isThundering() && EnchantmentHelper.hasChanneling(this.thrownStack)) {
+        Level level = this.level();
+        if (level instanceof ServerLevel && level.isThundering() && EnchantmentHelper.hasChanneling(this.thrownStack)) {
             BlockPos pos = entity.blockPosition();
-            if (this.level.canSeeSky(pos)) {
-                LightningBolt lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(this.level);
+            if (level.canSeeSky(pos)) {
+                LightningBolt lightningBoltEntity = EntityType.LIGHTNING_BOLT.create(level);
                 lightningBoltEntity.moveTo(Vec3.atBottomCenterOf(pos));
                 lightningBoltEntity.setCause(shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null);
-                this.level.addFreshEntity(lightningBoltEntity);
+                level.addFreshEntity(lightningBoltEntity);
                 soundEvent = SoundEvents.TRIDENT_THUNDER;
                 volume = 5.0F;
             }
@@ -213,7 +216,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

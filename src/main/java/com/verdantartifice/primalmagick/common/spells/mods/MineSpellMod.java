@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 import net.minecraft.network.chat.Component;
-
 import net.minecraft.world.item.ItemStack;
 
 /**

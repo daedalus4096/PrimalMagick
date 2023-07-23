@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -93,7 +94,7 @@ public class SpellMineEntity extends Entity {
     
     @Nullable
     public LivingEntity getCaster() {
-        if (this.casterId != null && this.level instanceof ServerLevel serverLevel && serverLevel.getEntity(this.casterId) instanceof LivingEntity living) {
+        if (this.casterId != null && this.level() instanceof ServerLevel serverLevel && serverLevel.getEntity(this.casterId) instanceof LivingEntity living) {
             return living;
         } else {
             return null;
@@ -149,36 +150,37 @@ public class SpellMineEntity extends Entity {
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.level.isClientSide && (this.spell == null || !this.spell.isValid())) {
+        Level level = this.level();
+        if (!level.isClientSide && (this.spell == null || !this.spell.isValid())) {
             this.discard();
         }
         if (++this.currentLife > this.getLifespan()) {
             this.discard();
         }
-        if (!this.level.isClientSide && this.isAlive()) {
+        if (!level.isClientSide && this.isAlive()) {
             if (!this.isArmed() && this.currentLife >= ARMING_TIME) {
                 this.setArmed(true);
             }
             if (this.isArmed() && this.currentLife % 5 == 0) {
                 // Scan for living entities within a block
                 AABB aabb = new AABB(this.position(), this.position()).inflate(1.0D);
-                List<Entity> entityList = this.level.getEntities(this, aabb, e -> (e instanceof LivingEntity));
+                List<Entity> entityList = level.getEntities(this, aabb, e -> (e instanceof LivingEntity));
                 boolean found = false;
                 for (Entity entity : entityList) {
                     if (entity.isAlive()) {
                         // If found, execute the spell payload on them then remove self
                         if (this.spell != null && this.spell.getPayload() != null) {
-                            this.spell.getPayload().playSounds(this.level, this.blockPosition());
+                            this.spell.getPayload().playSounds(level, this.blockPosition());
                         }
                         if (this.getCaster() != null) {
-                            SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), this.level, this.getCaster(), this.spellSource, false, this);
+                            SpellManager.executeSpellPayload(this.spell, new EntityHitResult(entity, this.position().add(0.0D, 0.5D, 0.0D)), level, this.getCaster(), this.spellSource, false, this);
                         }
                         found = true;
                     }

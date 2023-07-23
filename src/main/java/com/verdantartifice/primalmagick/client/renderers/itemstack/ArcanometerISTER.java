@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.renderers.itemstack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
@@ -14,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -23,6 +22,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -50,7 +50,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     }
 
     @Override
-    public void renderByItem(ItemStack itemStack, ItemTransforms.TransformType transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack itemStack, ItemDisplayContext transformType, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
         if (itemStack.getItem() instanceof ArcanometerItem) {
             Minecraft mc = Minecraft.getInstance();
             ItemRenderer itemRenderer = mc.getItemRenderer();
@@ -89,11 +89,12 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
     }
     
     private void renderScreenItem(ItemRenderer itemRenderer, ItemStack screenStack, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+        Minecraft mc = Minecraft.getInstance();
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0.4375D, 0.405D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.2F, 0.2F, 0.0001F);
-        itemRenderer.renderStatic(screenStack, ItemTransforms.TransformType.GUI, combinedLight, combinedOverlay, matrixStack, buffer, 0);
+        itemRenderer.renderStatic(screenStack, ItemDisplayContext.GUI, combinedLight, combinedOverlay, matrixStack, buffer, mc.level, 0);
         matrixStack.popPose();
     }
     
@@ -105,7 +106,7 @@ public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
         }
         matrixStack.pushPose();
         matrixStack.translate(0.5D, 0.35D, 0.405D);
-        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         matrixStack.scale(scale, scale, 0.0001F);
         erm.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F, matrixStack, buffer, combinedLight);
         matrixStack.popPose();

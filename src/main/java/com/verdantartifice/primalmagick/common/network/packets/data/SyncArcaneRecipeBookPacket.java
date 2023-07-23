@@ -49,7 +49,7 @@ public class SyncArcaneRecipeBookPacket implements IMessageToClient {
                 Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
                 if (player != null) {
                     PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                        recipeBook.deserializeNBT(message.data, player.level.getRecipeManager());
+                        recipeBook.deserializeNBT(message.data, player.level().getRecipeManager());
                     });
                     ArcaneSearchRegistry.populate();
                 }

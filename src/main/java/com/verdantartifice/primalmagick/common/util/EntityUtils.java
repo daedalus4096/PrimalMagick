@@ -239,9 +239,9 @@ public class EntityUtils {
         if (!MinecraftForge.EVENT_BUS.post(event)) {
             // Show a teleport particle effect at the destination
             if (!world.isClientSide) {
-                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), new BlockPos(event.getTargetX(), event.getTargetY(), event.getTargetZ()), 64.0D);
+                PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), BlockPos.containing(event.getTarget()), 64.0D);
 
-                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.getConnection().isConnected() && player.level == world && !player.isSleeping()) {
+                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.connection.isConnected() && player.level() == world && !player.isSleeping()) {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }

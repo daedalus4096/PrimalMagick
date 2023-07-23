@@ -32,7 +32,7 @@ public class CompanionStayGoal extends Goal {
             return false;
         } else if (this.entity.isInWaterOrBubble()) {
             return false;
-        } else if (!this.entity.isOnGround()) {
+        } else if (!this.entity.onGround()) {
             return false;
         } else {
             Player owner = this.entity.getCompanionOwner();

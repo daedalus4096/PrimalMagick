@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mojang.math.Vector3d;
+import org.joml.Vector3d;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -123,9 +123,9 @@ public class RayTraceUtils {
         }
         
         // Get the raytrace result's hitVec and the entity's position
-        BlockPos targetPos = new BlockPos(entityResult.getLocation());
+        BlockPos targetPos = BlockPos.containing(entityResult.getLocation());
         Vec3 entityVec = entityResult.getEntity().position();
-        BlockPos entityPos = new BlockPos(entityVec);
+        BlockPos entityPos = BlockPos.containing(entityVec);
         Vec3 targetVec = new Vec3(targetPos.getX() + 0.5D, targetPos.getY() + 0.5D, targetPos.getZ() + 0.5D);
         
         // Calculate a direction vector based on the raytrace result's hitVec and the entity's position
@@ -150,7 +150,7 @@ public class RayTraceUtils {
         Vec3 sourceVec = source.getEyePosition();
         Vec3 targetVec = Vec3.atCenterOf(target);
         ClipContext context = new ClipContext(sourceVec, targetVec, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, source);
-        BlockHitResult result = source.getLevel().clip(context);
+        BlockHitResult result = source.level().clip(context);
         
         if (result == null || result.getType() == HitResult.Type.MISS) {
             return true;
@@ -214,7 +214,7 @@ public class RayTraceUtils {
     protected static BlockHitResult createMiss(EntitylessRayTraceContext context) {
         Vec3 endVec = context.getEndVec();
         Vec3 delta = context.getStartVec().subtract(endVec);
-        return BlockHitResult.miss(endVec, Direction.getNearest(delta.x, delta.y, delta.z), new BlockPos(endVec));
+        return BlockHitResult.miss(endVec, Direction.getNearest(delta.x, delta.y, delta.z), BlockPos.containing(endVec));
     }
     
     /**

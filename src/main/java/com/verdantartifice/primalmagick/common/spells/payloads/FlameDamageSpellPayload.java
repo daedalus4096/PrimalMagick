@@ -12,8 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -61,11 +59,6 @@ public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
         world.playSound(null, origin, SoundEvents.FIRECHARGE_USE, SoundSource.PLAYERS, 1.0F, 1.0F + (float)(world.random.nextGaussian() * 0.05D));
     }
     
-    @Override
-    protected DamageSource getDamageSource(LivingEntity source, SpellPackage spell, Entity projectileEntity) {
-        return super.getDamageSource(source, spell, projectileEntity).setIsFire();
-    }
-
     @Override
     protected String getPayloadType() {
         return TYPE;

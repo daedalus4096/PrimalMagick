@@ -10,6 +10,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
@@ -44,17 +45,17 @@ public class ItemAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager, @Nonnull List<ResourceLocation> history) {
+    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (this.setValues != null) {
             return this.setValues;
         } else if (this.baseEntryId != null) {
             if (this.baseEntry == null) {
-                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager, history);
+                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager, registryAccess, history);
                 if (this.baseEntry == null) {
                     return null;
                 }
             }
-            SourceList retVal = this.baseEntry.getTotal(recipeManager, history);
+            SourceList retVal = this.baseEntry.getTotal(recipeManager, registryAccess, history);
             if (retVal != null) {
                 if (this.addValues != null) {
                     retVal = retVal.add(this.addValues);

@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -32,7 +33,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarContainer extends AbstractContainerMenu {
-    protected final CraftingContainer altarInv = new CraftingContainer(this, 4, 3) {
+    protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
         @Override
         public int getMaxStackSize() {
             return 1;
@@ -46,7 +47,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
     public AbstractRunescribingAltarContainer(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
         super(type, id);
         this.player = playerInv.player;
-        this.world = this.player.level;
+        this.world = this.player.level();
         
         // Slot 0: runescribing output
         this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));

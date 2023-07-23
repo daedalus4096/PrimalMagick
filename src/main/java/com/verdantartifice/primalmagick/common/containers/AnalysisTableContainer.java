@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 /**
  * Server data container for the analysis table GUI.
@@ -105,14 +106,15 @@ public class AnalysisTableContainer extends AbstractContainerMenu {
     }
     
     public void doScan() {
-        if (!this.player.level.isClientSide && this.player instanceof ServerPlayer) {
+        Level level = this.player.level();
+        if (!level.isClientSide && this.player instanceof ServerPlayer serverPlayer) {
             // Move the input item into the recently-scanned slot and mark it as scanned
             ItemStack stack = this.analysisInventory.getItem(0).copy();
             if (!stack.isEmpty()) {
                 this.analysisInventory.setItem(0, ItemStack.EMPTY);
                 this.analysisInventory.setItem(1, stack);
                 if (!ResearchManager.isScanned(stack, this.player)) {
-                    ResearchManager.setScanned(stack, (ServerPlayer)this.player);
+                    ResearchManager.setScanned(stack, serverPlayer);
                 }
             }
         }

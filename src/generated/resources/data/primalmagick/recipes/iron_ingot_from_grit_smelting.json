@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "group": "iron_ingot",
+  "ingredient": {
+    "item": "primalmagick:iron_grit"
+  },
+  "result": "minecraft:iron_ingot"
+}

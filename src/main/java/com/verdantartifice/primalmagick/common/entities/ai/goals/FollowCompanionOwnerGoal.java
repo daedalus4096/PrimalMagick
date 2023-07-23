@@ -36,7 +36,7 @@ public class FollowCompanionOwnerGoal extends Goal {
     
     public FollowCompanionOwnerGoal(AbstractCompanionEntity entity, double speed, float minDist, float maxDist, boolean teleportToLeaves) {
         this.entity = entity;
-        this.world = entity.level;
+        this.world = entity.level();
         this.followSpeed = speed;
         this.navigator = entity.getNavigation();
         this.minDist = minDist;

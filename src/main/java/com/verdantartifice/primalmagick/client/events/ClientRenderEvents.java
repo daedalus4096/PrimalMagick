@@ -81,7 +81,7 @@ public class ClientRenderEvents {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
-            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType());
+            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess());
             boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
             if (isScanned && affinities != null && !affinities.isEmpty()) {
                 float partialTicks = event.getPartialTick();

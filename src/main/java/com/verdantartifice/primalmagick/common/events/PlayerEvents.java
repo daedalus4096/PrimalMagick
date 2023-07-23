@@ -113,7 +113,8 @@ public class PlayerEvents {
 
     @SubscribeEvent
     public static void livingTick(LivingEvent.LivingTickEvent event) {
-        if (!event.getEntity().level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
+        Level level = event.getEntity().level();
+        if (!level.isClientSide && (event.getEntity() instanceof ServerPlayer player)) {
             checkNearDeathExperience(player);
             if (player.tickCount % 5 == 0) {
                 // Apply any earned buffs for attunements
@@ -140,7 +141,7 @@ public class PlayerEvents {
                 AttunementManager.decayTemporaryAttunements(player);
             }
         }
-        if (event.getEntity().level.isClientSide && (event.getEntity() instanceof Player player)) {
+        if (level.isClientSide && (event.getEntity() instanceof Player player)) {
             // If this is a client-side player, handle any double jumps from attunement bonuses
             handleDoubleJump(player);
         }
@@ -234,13 +235,14 @@ public class PlayerEvents {
     
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            Level level = player.level();
             if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
                 return;
             }
             
-            Holder<Biome> biomeHolder = player.level.getBiome(player.blockPosition());
-            boolean inOverworld = player.level.dimension().equals(Level.OVERWORLD);
+            Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
+            boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
             if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
@@ -283,7 +285,7 @@ public class PlayerEvents {
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -292,7 +294,7 @@ public class PlayerEvents {
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
             if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
                 SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(player.level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
@@ -315,8 +317,9 @@ public class PlayerEvents {
 
     @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
-        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && player.level.isDay() &&
-                player.getLightLevelDependentMagicValue() > 0.5F && player.level.canSeeSky(player.blockPosition())) {
+        Level level = player.level();
+        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && level.isDay() &&
+                player.getLightLevelDependentMagicValue() > 0.5F && level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
         }
@@ -324,7 +327,7 @@ public class PlayerEvents {
 
     protected static void handleLightDrop(ServerPlayer player) {
         BlockPos pos = player.blockPosition();
-        Level world = player.level;
+        Level world = player.level();
         if (world.random.nextDouble() < 0.1D && 
                 AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
@@ -338,16 +341,18 @@ public class PlayerEvents {
 
     protected static void handleDoubleJump(Player player) {
         Minecraft mc = Minecraft.getInstance();
+        Level level = player.level();
+
         boolean jumpPressed = mc.options.keyJump.consumeClick();
         if (jumpPressed && !DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.TRUE);
         }
-        if (jumpPressed && !player.isOnGround() && !player.isInWater() && 
+        if (jumpPressed && !player.onGround() && !player.isInWater() && 
                 DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE).booleanValue() && 
                 AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
-            player.level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
-                    SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)player.level.random.nextGaussian()), false);
+            level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
+                    SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)level.random.nextGaussian()), false);
             DOUBLE_JUMP_ALLOWED.put(player.getUUID(), Boolean.FALSE);
             
             // Update motion
@@ -372,7 +377,7 @@ public class PlayerEvents {
             // Trigger jump events
             ForgeHooks.onLivingJump(player);
         }
-        if (player.isOnGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
+        if (player.onGround() && DOUBLE_JUMP_ALLOWED.containsKey(player.getUUID())) {
             // Reset double jump permissions upon touching the ground
             DOUBLE_JUMP_ALLOWED.remove(player.getUUID());
         }
@@ -440,7 +445,7 @@ public class PlayerEvents {
         
         try {
             CompoundTag nbtRecipeBook = PrimalMagickCapabilities.getArcaneRecipeBook(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
-            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level.getRecipeManager());
+            PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level().getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }
@@ -459,7 +464,7 @@ public class PlayerEvents {
     }
     
     protected static void registerItemCrafted(Player player, ItemStack stack) {
-        if (player != null && !player.level.isClientSide) {
+        if (player != null && !player.level().isClientSide) {
             int stackHash = ItemUtils.getHashCode(stack);
             
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
@@ -480,7 +485,7 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void onWakeUp(PlayerWakeUpEvent event) {
         Player player = event.getEntity();
-        if (player != null && !player.level.isClientSide) {
+        if (player != null && !player.level().isClientSide) {
             if ( ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_found_shrine")) &&
                  !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
@@ -552,7 +557,8 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void onPickupExperience(PlayerXpEvent.PickupXp event) {
         Player player = event.getEntity();
-        if (player != null && !player.level.isClientSide) {
+        Level level = player.level();
+        if (player != null && !level.isClientSide) {
             NonNullList<ItemStack> foundTalismans = InventoryUtils.find(player, ItemsPM.DREAM_VISION_TALISMAN.get().getDefaultInstance());
             if (!foundTalismans.isEmpty()) {
                 int xpValue = event.getOrb().value;
@@ -596,8 +602,9 @@ public class PlayerEvents {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
-                        // FIXME Uncomment upon BTME becoming cancelable again
-                        //event.setCanceled(true);
+                        // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and
+                        // the appropriate client/server syncing is performed.
+                        event.setFinalState(level.getBlockState(pos));
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);
@@ -611,7 +618,7 @@ public class PlayerEvents {
     public static void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         ItemStack stack = event.getEntity().getItemInHand(event.getHand());
         Entity target = event.getTarget();
-        Level level = target.getLevel();
+        Level level = target.level();
         
         // Befriend the targeted witch, if appropriate
         if ( !level.isClientSide && 

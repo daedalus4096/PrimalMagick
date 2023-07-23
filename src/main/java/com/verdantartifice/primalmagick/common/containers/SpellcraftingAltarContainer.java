@@ -38,6 +38,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
@@ -50,7 +51,7 @@ import net.minecraft.world.level.Level;
 public class SpellcraftingAltarContainer extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "spellcrafting");
 
-    protected final CraftingContainer scrollInv = new CraftingContainer(this, 1, 1);
+    protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
     protected final ContainerLevelAccess worldPosCallable;
@@ -397,7 +398,7 @@ public class SpellcraftingAltarContainer extends AbstractContainerMenu {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
                 SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
-                    stack = recipe.assemble(this.scrollInv);
+                    stack = recipe.assemble(this.scrollInv, world.registryAccess());
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {
                         ((SpellScrollItem)stack.getItem()).setSpell(stack, this.getSpellPackage());
                     }

@@ -2,11 +2,11 @@ package com.verdantartifice.primalmagick.client.compat.jei.concocting;
 
 import java.util.List;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiRecipeTypesPM;
 import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
+import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -20,6 +20,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeType;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +50,7 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, IConcoctingRecipe recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(recipe.getResultItem()));
+        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe)));
         
         // Initialize recipe inputs
         List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
@@ -57,15 +58,15 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     }
 
     @Override
-    public void draw(IConcoctingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+    public void draw(IConcoctingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
-            this.manaCostIcon.draw(stack, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
+            this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
         if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
-            stack.pushPose();
-            stack.scale(0.5F, 0.5F, 0.5F);
-            this.researchIcon.draw(stack, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
-            stack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+            this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
+            guiGraphics.pose().popPose();
         }
     }
 

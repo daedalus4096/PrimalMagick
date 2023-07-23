@@ -305,7 +305,7 @@ public class ResearchManager {
         if (player instanceof ServerPlayer serverPlayer) {
             ResearchEntry entry = ResearchEntries.getEntry(key);
             if (entry != null) {
-                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                 Set<Recipe<?>> recipesToRemove = entry.getAllRecipeIds().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                 ArcaneRecipeBookManager.removeRecipes(recipesToRemove, serverPlayer);
                 serverPlayer.resetRecipes(recipesToRemove);
@@ -389,7 +389,7 @@ public class ResearchManager {
                 
                 // Add any unlocked recipes from the current stage to the player's arcane recipe book
                 if (player instanceof ServerPlayer serverPlayer) {
-                    RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                    RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                     Set<Recipe<?>> recipesToUnlock = currentStage.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
@@ -411,7 +411,7 @@ public class ResearchManager {
             }
             
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
-                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                 for (ResearchAddendum addendum : entry.getAddenda()) {
                     if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
                         // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
@@ -474,7 +474,7 @@ public class ResearchManager {
                             
                             // Add any unlocked recipes to the player's arcane recipe book
                             if (player instanceof ServerPlayer serverPlayer) {
-                                RecipeManager recipeManager = serverPlayer.level.getRecipeManager();
+                                RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                                 Set<Recipe<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                                 serverPlayer.awardRecipes(recipesToUnlock);
@@ -593,7 +593,7 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.level);
+        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.level());
         if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
             // If the given itemstack has no affinities, consider it already scanned
             return true;

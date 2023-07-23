@@ -50,8 +50,8 @@ public class CompanionManager {
             IPlayerCompanions companions = PrimalMagickCapabilities.getCompanions(player);
             if (companions != null) {
                 UUID oldCompanion = companions.add(companion.getCompanionType(), companion.getUUID());
-                if (oldCompanion != null && player.level instanceof ServerLevel) {
-                    for (ServerLevel serverWorld : ((ServerLevel)player.level).getServer().getAllLevels()) {
+                if (oldCompanion != null && player.level() instanceof ServerLevel serverLevel) {
+                    for (ServerLevel serverWorld : serverLevel.getServer().getAllLevels()) {
                         Entity entity = serverWorld.getEntity(oldCompanion);
                         if (entity != null) {
                             entity.kill();

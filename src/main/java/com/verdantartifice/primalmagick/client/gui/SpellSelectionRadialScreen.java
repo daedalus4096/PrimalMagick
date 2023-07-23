@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.events.InputEvents;
 import com.verdantartifice.primalmagick.client.gui.radial.GenericRadialMenu;
@@ -20,8 +19,8 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -44,15 +43,15 @@ public class SpellSelectionRadialScreen extends Screen {
         }
         this.menu = new GenericRadialMenu(mc, new IRadialMenuHost() {
             @Override
-            public void renderTooltip(PoseStack matrixStack, ItemStack stack, int mouseX, int mouseY)
+            public void renderTooltip(GuiGraphics guiGraphics, ItemStack stack, int mouseX, int mouseY)
             {
-                SpellSelectionRadialScreen.this.renderTooltip(matrixStack, stack, mouseX, mouseY);
+                guiGraphics.renderTooltip(font, stack, mouseX, mouseY);
             }
 
             @Override
-            public void renderTooltip(PoseStack matrixStack, List<Component> textComponents, int mouseX, int mouseY)
+            public void renderTooltip(GuiGraphics guiGraphics, List<Component> textComponents, int mouseX, int mouseY)
             {
-                SpellSelectionRadialScreen.this.renderTooltip(matrixStack, textComponents, Optional.empty(), mouseX, mouseY);
+                guiGraphics.renderTooltip(font, textComponents, Optional.empty(), mouseX, mouseY);
             }
 
             @Override
@@ -65,12 +64,6 @@ public class SpellSelectionRadialScreen extends Screen {
             public Font getFontRenderer()
             {
                 return font;
-            }
-
-            @Override
-            public ItemRenderer getItemRenderer()
-            {
-                return SpellSelectionRadialScreen.this.getItemRenderer();
             }
         })
         {
@@ -86,10 +79,6 @@ public class SpellSelectionRadialScreen extends Screen {
                 return SpellSelectionRadialScreen.this.trySwitch(getSlot());
             }
         };
-    }
-
-    protected ItemRenderer getItemRenderer() {
-        return this.itemRenderer;
     }
 
     @Override
@@ -149,10 +138,10 @@ public class SpellSelectionRadialScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTick) {
-        matrixStack.pushPose();
-        super.render(matrixStack, mouseX, mouseY, partialTick);
-        matrixStack.popPose();
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        guiGraphics.pose().pushPose();
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        guiGraphics.pose().popPose();
         
         if (this.stackEquipped.isEmpty()) {
             return;
@@ -183,7 +172,7 @@ public class SpellSelectionRadialScreen extends Screen {
             this.needsRecheckSpells = false;
         }
         
-        this.menu.draw(matrixStack, partialTick, mouseX, mouseY);
+        this.menu.draw(guiGraphics, partialTick, mouseX, mouseY);
     }
     
     private boolean trySwitch(int slotNumber) {

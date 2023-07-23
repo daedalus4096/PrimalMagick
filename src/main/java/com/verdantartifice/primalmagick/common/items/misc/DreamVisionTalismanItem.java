@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
@@ -26,7 +25,7 @@ public class DreamVisionTalismanItem extends Item {
     protected static final int CAPACITY = 64;
     
     public DreamVisionTalismanItem() {
-        super(new Item.Properties().tab(PrimalMagick.ITEM_GROUP).durability(64));
+        super(new Item.Properties().durability(64));
     }
     
     /**
@@ -119,7 +118,8 @@ public class DreamVisionTalismanItem extends Item {
      * @return whether the talisman was successfully drained
      */
     public boolean doDrain(ItemStack stack, Player player) {
-        if (!player.level.isClientSide && this.isReadyToDrain(stack)) {
+        Level level = player.level();
+        if (!level.isClientSide && this.isReadyToDrain(stack)) {
             if (ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression())) {
                 this.setStoredExp(stack, 0);
                 stack.hurtAndBreak(1, player, p -> {

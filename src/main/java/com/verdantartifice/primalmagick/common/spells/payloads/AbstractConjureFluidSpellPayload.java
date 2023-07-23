@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -85,9 +84,8 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
     protected void placeFluid(Player player, Level world, BlockPos pos, BlockHitResult blockTarget) {
         BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
-        Material material = state.getMaterial();
-        boolean isSolid = material.isSolid();
-        boolean isReplaceable = material.isReplaceable();
+        boolean isSolid = state.isSolid();
+        boolean isReplaceable = state.canBeReplaced();
         if (world.isEmptyBlock(pos) || !isSolid || isReplaceable || (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, state, this.fluid))) {
             if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
                 // Do nothing for water in the Nether or similar dimensions
@@ -97,7 +95,7 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
                 ((LiquidBlockContainer)block).placeLiquid(world, pos, state, this.fluid.getSource(false));
             } else {
                 // Destroy the existing block at the target location if fluid would replace it
-                if (!world.isClientSide && (!isSolid || isReplaceable) && !material.isLiquid()) {
+                if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
                     world.destroyBlock(pos, true);
                 }
                 
