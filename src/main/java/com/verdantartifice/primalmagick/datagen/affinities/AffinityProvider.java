@@ -677,6 +677,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(new SourceList()).build(consumer); // Wands have no affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOODY_FLESH.get()).set(Source.BLOOD, 25).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.BLOOD_NOTES.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWED_ORB.get()).set(Source.HALLOWED, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ENCHANTED_INK.get()).set(Source.SEA, 3).set(Source.MOON, 3).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ROCK_SALT.get()).set(Source.EARTH, 5).build(consumer);
