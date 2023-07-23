@@ -602,7 +602,9 @@ public class PlayerEvents {
                             stack.hurtAndBreak(damage, player, p -> p.broadcastBreakEvent(context.getHand()));
                         }
                         
-                        event.setCanceled(true);
+                        // Explicitly set the final block state in the event so that the hoe's useOn method does not return PASS and
+                        // the appropriate client/server syncing is performed.
+                        event.setFinalState(level.getBlockState(pos));
                     }
                     if (!level.isClientSide) {
                         level.levelEvent(1505, pos, 0);
