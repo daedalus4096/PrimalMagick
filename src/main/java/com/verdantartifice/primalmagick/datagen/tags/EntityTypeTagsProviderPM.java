@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -29,6 +30,10 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
+        // Add entries to vanilla tags
+        this.tag(EntityTypeTags.IMPACT_PROJECTILES).add(EntityTypesPM.MANA_ARROW.get(), EntityTypesPM.PRIMALITE_TRIDENT.get(), EntityTypesPM.HEXIUM_TRIDENT.get(),
+                EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), EntityTypesPM.FORBIDDEN_TRIDENT.get(), EntityTypesPM.APPLE.get());
+        
         // Create custom tags
         this.tag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityTypesPM.PRIMALITE_GOLEM.get(), EntityTypesPM.HEXIUM_GOLEM.get(), EntityTypesPM.HALLOWSTEEL_GOLEM.get());
         this.tag(EntityTypeTagsPM.PIXIES).add(EntityTypesPM.BASIC_EARTH_PIXIE.get(), EntityTypesPM.GRAND_EARTH_PIXIE.get(), EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(),

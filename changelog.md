@@ -9,6 +9,7 @@ v4.0.0-beta
 * Allow datapack customization of biomes containing mod worldgen features
 * Allow datapack customization of blocks on which mod trees can be placed
 * Protect certain precious items from being consumed in the Analysis Table
+* Fixed an issue preventing certain mod projectiles from breaking Chorus Flower blocks on impact
 
 v3.2.2
 ------
