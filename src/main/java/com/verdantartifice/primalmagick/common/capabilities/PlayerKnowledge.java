@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
@@ -387,7 +388,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
     @Override
     public AbstractResearchTopic getLastResearchTopic() {
-        return this.topic;
+        return this.topic == null ? MainIndexResearchTopic.INSTANCE : this.topic;
     }
 
     @Override
