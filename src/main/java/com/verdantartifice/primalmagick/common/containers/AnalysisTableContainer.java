@@ -3,7 +3,10 @@ package com.verdantartifice.primalmagick.common.containers;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.AnalysisResultSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -110,7 +113,10 @@ public class AnalysisTableContainer extends AbstractContainerMenu {
         if (!level.isClientSide && this.player instanceof ServerPlayer serverPlayer) {
             // Move the input item into the recently-scanned slot and mark it as scanned
             ItemStack stack = this.analysisInventory.getItem(0).copy();
-            if (!stack.isEmpty()) {
+            if (stack.is(ItemTagsPM.ANALYSIS_TABLE_FORBIDDEN)) {
+                // Send a message to the player explaining that they can't destroy this item on the table
+                this.player.displayClientMessage(Component.translatable("event.primalmagick.analysis_table.forbidden").withStyle(ChatFormatting.RED), false);
+            } else if (!stack.isEmpty()) {
                 this.analysisInventory.setItem(0, ItemStack.EMPTY);
                 this.analysisInventory.setItem(1, stack);
                 if (!ResearchManager.isScanned(stack, this.player)) {

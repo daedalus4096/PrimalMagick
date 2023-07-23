@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item;
  * @author Daedalus4096
  */
 public class ItemTagsPM {
-    public static final TagKey<Item> BEDS = tag("beds");
+    public static final TagKey<Item> ANALYSIS_TABLE_FORBIDDEN = tag("analysis_table_forbidden");
     public static final TagKey<Item> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");
     public static final TagKey<Item> CONCRETE = tag("concrete");
     public static final TagKey<Item> CORAL_BLOCKS = tag("coral_blocks");
