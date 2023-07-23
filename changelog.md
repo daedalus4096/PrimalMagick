@@ -1,5 +1,6 @@
-v3.2.3
-------
+v4.0.0-beta
+-----------
+* Updated to Minecraft 1.20.1
 * Improved lag when reading affinities from items in large modpacks; thanks Issaferret!
 * Fixed pixies' recognition of their owner upon spawn
 * Breaking blocks bare-handed for the Break spell payload no longer requires an empty offhand
