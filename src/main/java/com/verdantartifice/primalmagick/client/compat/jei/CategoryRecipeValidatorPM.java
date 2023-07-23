@@ -5,8 +5,9 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.verdantartifice.primalmagick.client.util.RecipeUtils;
+
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -47,7 +48,7 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
             return true;
         }
         
-        ItemStack recipeOutput = RecipeUtil.getResultItem(recipe);
+        ItemStack recipeOutput = RecipeUtils.getResultItem(recipe);
         if (recipeOutput == null || recipeOutput.isEmpty()) {
             LOGGER.error("Recipe has no output. {}", recipe.getId().toString());
             return false;
