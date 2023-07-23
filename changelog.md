@@ -6,6 +6,7 @@ v4.0.0-beta
 * Breaking blocks bare-handed for the Break spell payload no longer requires an empty offhand
 * Fixed race condition when syncing capability data
 * Added missing affinities to Blood-Scrawled Ravings
+* Allow datapack customization of biomes containing mod worldgen features
 
 v3.2.2
 ------

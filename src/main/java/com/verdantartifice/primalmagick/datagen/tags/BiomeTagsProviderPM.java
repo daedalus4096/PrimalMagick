@@ -38,5 +38,13 @@ public class BiomeTagsProviderPM extends IntrinsicHolderTagsProvider<Biome> {
         this.tag(BiomeTagsPM.HAS_SKY_SHRINE).addTag(BiomeTags.IS_HILL).addTag(BiomeTags.IS_MOUNTAIN);
         this.tag(BiomeTagsPM.HAS_SUN_SHRINE).addTag(BiomeTags.IS_BADLANDS).add(Biomes.DESERT);
         this.tag(BiomeTagsPM.HAS_MOON_SHRINE).addTag(BiomeTags.IS_FOREST);
+        
+        this.tag(BiomeTagsPM.HAS_MARBLE).addTag(BiomeTags.IS_OVERWORLD);
+        this.tag(BiomeTagsPM.HAS_ROCK_SALT).addTag(BiomeTags.IS_OVERWORLD);
+        this.tag(BiomeTagsPM.HAS_QUARTZ).addTag(BiomeTags.IS_OVERWORLD);
+        this.tag(BiomeTagsPM.HAS_WILD_SUNWOOD).addTag(BiomeTags.IS_FOREST);
+        this.tag(BiomeTagsPM.HAS_WILD_MOONWOOD).addTag(BiomeTags.IS_FOREST);
+        
+        this.tag(BiomeTagsPM.HAS_TREEFOLK).addTag(BiomeTags.IS_FOREST);
     }
 }

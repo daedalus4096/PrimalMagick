@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.worldgen.biome_modifiers;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
+import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 
 import net.minecraft.core.HolderGetter;
@@ -10,7 +11,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -46,20 +46,24 @@ public class BiomeModifiersPM {
         HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         
         // Register ore placement biome modifiers
-        HolderSet.Named<Biome> overworldBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD);
-        context.register(ADD_ORE_MARBLE_RAW_UPPER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
-        context.register(ADD_ORE_MARBLE_RAW_LOWER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
-        context.register(ADD_ORE_ROCK_SALT_UPPER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
-        context.register(ADD_ORE_ROCK_SALT_LOWER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
-        context.register(ADD_ORE_QUARTZ_UPPER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
-        context.register(ADD_ORE_QUARTZ_LOWER, new AddFeaturesBiomeModifier(overworldBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        HolderSet.Named<Biome> marbleBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_MARBLE);
+        context.register(ADD_ORE_MARBLE_RAW_UPPER, new AddFeaturesBiomeModifier(marbleBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_ORE_MARBLE_RAW_LOWER, new AddFeaturesBiomeModifier(marbleBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_MARBLE_RAW_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        HolderSet.Named<Biome> rockSaltBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_ROCK_SALT);
+        context.register(ADD_ORE_ROCK_SALT_UPPER, new AddFeaturesBiomeModifier(rockSaltBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_ORE_ROCK_SALT_LOWER, new AddFeaturesBiomeModifier(rockSaltBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_ROCK_SALT_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        HolderSet.Named<Biome> quartzBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_QUARTZ);
+        context.register(ADD_ORE_QUARTZ_UPPER, new AddFeaturesBiomeModifier(quartzBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_UPPER)), GenerationStep.Decoration.UNDERGROUND_ORES));
+        context.register(ADD_ORE_QUARTZ_LOWER, new AddFeaturesBiomeModifier(quartzBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.ORE_QUARTZ_LOWER)), GenerationStep.Decoration.UNDERGROUND_ORES));
         
         // Register vegetation placement biome modifiers
-        HolderSet.Named<Biome> forestBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_FOREST);
-        context.register(ADD_TREE_WILD_SUNWOOD, new AddFeaturesBiomeModifier(forestBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.TREE_WILD_SUNWOOD)), GenerationStep.Decoration.VEGETAL_DECORATION));
-        context.register(ADD_TREE_WILD_MOONWOOD, new AddFeaturesBiomeModifier(forestBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.TREE_WILD_MOONWOOD)), GenerationStep.Decoration.VEGETAL_DECORATION));
+        HolderSet.Named<Biome> sunwoodBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_WILD_SUNWOOD);
+        context.register(ADD_TREE_WILD_SUNWOOD, new AddFeaturesBiomeModifier(sunwoodBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.TREE_WILD_SUNWOOD)), GenerationStep.Decoration.VEGETAL_DECORATION));
+        HolderSet.Named<Biome> moonwoodBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_WILD_MOONWOOD);
+        context.register(ADD_TREE_WILD_MOONWOOD, new AddFeaturesBiomeModifier(moonwoodBiomes, HolderSet.direct(placedFeatures.getOrThrow(PlacedFeaturesPM.TREE_WILD_MOONWOOD)), GenerationStep.Decoration.VEGETAL_DECORATION));
         
         // Register mob spawn biome modifiers
-        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(forestBiomes, new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3)));
+        HolderSet.Named<Biome> treefolkBiomes = context.lookup(Registries.BIOME).getOrThrow(BiomeTagsPM.HAS_TREEFOLK);
+        context.register(ADD_SPAWN_TREEFOLK, AddSpawnsBiomeModifier.singleSpawn(treefolkBiomes, new MobSpawnSettings.SpawnerData(EntityTypesPM.TREEFOLK.get(), 100, 1, 3)));
     }
 }

@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "#primalmagick:has_feature/ore_quartz",
   "features": "primalmagick:ore_quartz_upper",
   "step": "underground_ores"
 }

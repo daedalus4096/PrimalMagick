@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "#primalmagick:has_feature/ore_marble_raw",
   "features": "primalmagick:ore_marble_raw_upper",
   "step": "underground_ores"
 }

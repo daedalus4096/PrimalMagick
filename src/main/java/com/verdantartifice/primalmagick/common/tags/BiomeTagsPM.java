@@ -20,6 +20,14 @@ public class BiomeTagsPM {
     public static final TagKey<Biome> HAS_SUN_SHRINE = tag("has_structure/sun_shrine");
     public static final TagKey<Biome> HAS_MOON_SHRINE = tag("has_structure/moon_shrine");
     
+    public static final TagKey<Biome> HAS_MARBLE = tag("has_feature/ore_marble_raw");
+    public static final TagKey<Biome> HAS_ROCK_SALT = tag("has_feature/ore_rock_salt");
+    public static final TagKey<Biome> HAS_QUARTZ = tag("has_feature/ore_quartz");
+    public static final TagKey<Biome> HAS_WILD_SUNWOOD = tag("has_feature/tree_wild_sunwood");
+    public static final TagKey<Biome> HAS_WILD_MOONWOOD = tag("has_feature/tree_wild_moonwood");
+    
+    public static final TagKey<Biome> HAS_TREEFOLK = tag("has_spawn/treefolk");
+    
     private static TagKey<Biome> tag(String name) {
         return TagKey.create(Registries.BIOME, new ResourceLocation(PrimalMagick.MODID, name));
     }
