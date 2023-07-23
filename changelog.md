@@ -7,6 +7,7 @@ v4.0.0-beta
 * Fixed race condition when syncing capability data
 * Added missing affinities to Blood-Scrawled Ravings
 * Allow datapack customization of biomes containing mod worldgen features
+* Allow datapack customization of blocks on which mod trees can be placed
 
 v3.2.2
 ------

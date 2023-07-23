@@ -69,6 +69,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodTree;
 import com.verdantartifice.primalmagick.common.blocks.trees.TreefolkSproutBlock;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -161,7 +162,7 @@ public class BlocksPM {
     public static final RegistryObject<SunwoodLogBlock> STRIPPED_SUNWOOD_WOOD = BLOCKS.register("stripped_sunwood_wood", () -> new SunwoodLogBlock(null));
     public static final RegistryObject<SunwoodLogBlock> SUNWOOD_WOOD = BLOCKS.register("sunwood_wood", () -> new SunwoodLogBlock(STRIPPED_SUNWOOD_WOOD.get()));
     public static final RegistryObject<SunwoodLeavesBlock> SUNWOOD_LEAVES = BLOCKS.register("sunwood_leaves", SunwoodLeavesBlock::new);
-    public static final RegistryObject<SaplingBlockPM> SUNWOOD_SAPLING = BLOCKS.register("sunwood_sapling", () -> new SaplingBlockPM(new SunwoodTree(), Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final RegistryObject<SaplingBlockPM> SUNWOOD_SAPLING = BLOCKS.register("sunwood_sapling", () -> new SaplingBlockPM(new SunwoodTree(), BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<SunwoodPlanksBlock> SUNWOOD_PLANKS = BLOCKS.register("sunwood_planks", SunwoodPlanksBlock::new);
     public static final RegistryObject<SunwoodSlabBlock> SUNWOOD_SLAB = BLOCKS.register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.copy(SUNWOOD_PLANKS.get())));
     public static final RegistryObject<SunwoodStairsBlock> SUNWOOD_STAIRS = BLOCKS.register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(SUNWOOD_PLANKS.get())));
@@ -173,7 +174,7 @@ public class BlocksPM {
     public static final RegistryObject<MoonwoodLogBlock> STRIPPED_MOONWOOD_WOOD = BLOCKS.register("stripped_moonwood_wood", () -> new MoonwoodLogBlock(null));
     public static final RegistryObject<MoonwoodLogBlock> MOONWOOD_WOOD = BLOCKS.register("moonwood_wood", () -> new MoonwoodLogBlock(STRIPPED_MOONWOOD_WOOD.get()));
     public static final RegistryObject<MoonwoodLeavesBlock> MOONWOOD_LEAVES = BLOCKS.register("moonwood_leaves", MoonwoodLeavesBlock::new);
-    public static final RegistryObject<SaplingBlockPM> MOONWOOD_SAPLING = BLOCKS.register("moonwood_sapling", () -> new SaplingBlockPM(new MoonwoodTree(), Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final RegistryObject<SaplingBlockPM> MOONWOOD_SAPLING = BLOCKS.register("moonwood_sapling", () -> new SaplingBlockPM(new MoonwoodTree(), BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<MoonwoodPlanksBlock> MOONWOOD_PLANKS = BLOCKS.register("moonwood_planks", MoonwoodPlanksBlock::new);
     public static final RegistryObject<MoonwoodSlabBlock> MOONWOOD_SLAB = BLOCKS.register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.copy(MOONWOOD_PLANKS.get())));
     public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(MOONWOOD_PLANKS.get())));
@@ -185,7 +186,7 @@ public class BlocksPM {
     public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlocksPM::isntSolid).isViewBlocking(BlocksPM::isntSolid).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
-    public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.copy(HALLOWOOD_PLANKS.get())));
     public static final RegistryObject<StairBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairBlock(HALLOWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(HALLOWOOD_PLANKS.get())));

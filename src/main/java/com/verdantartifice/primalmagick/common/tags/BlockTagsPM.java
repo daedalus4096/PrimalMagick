@@ -36,6 +36,10 @@ public class BlockTagsPM {
     public static final TagKey<Block> SUNWOOD_LOGS = tag("sunwood_logs");
     public static final TagKey<Block> TREEFOLK_FERTILIZE_EXEMPT = tag("treefolk_fertilize_exempt");
     
+    public static final TagKey<Block> MAY_PLACE_SUNWOOD_SAPLINGS = tag("may_place/sunwood_sapling");
+    public static final TagKey<Block> MAY_PLACE_MOONWOOD_SAPLINGS = tag("may_place/moonwood_sapling");
+    public static final TagKey<Block> MAY_PLACE_HALLOWOOD_SAPLINGS = tag("may_place/hallowood_sapling");
+    
     private static TagKey<Block> tag(String name) {
         return BlockTags.create(new ResourceLocation(PrimalMagick.MODID, name));
     }
