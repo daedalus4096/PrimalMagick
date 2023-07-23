@@ -27,6 +27,9 @@ public class RecipeTypeWidget extends AbstractWidget {
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         // Draw recipe station icon
         GuiUtils.renderItemStack(guiGraphics, this.recipe.getToastSymbol(), this.getX(), this.getY(), this.getMessage().getString(), false);
+
+        // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
+        this.setFocused(false);
     }
 
     @Override

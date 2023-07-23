@@ -66,6 +66,9 @@ public class ItemTagWidget extends AbstractWidget {
             Minecraft mc = Minecraft.getInstance();
             this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
         }
+        
+        // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
+        this.setFocused(false);
     }
     
     @Override

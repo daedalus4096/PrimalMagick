@@ -61,6 +61,9 @@ public class ItemStackWidget extends AbstractWidget {
             guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             guiGraphics.pose().popPose();
         }
+        
+        // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
+        this.setFocused(false);
     }
     
     @Override
