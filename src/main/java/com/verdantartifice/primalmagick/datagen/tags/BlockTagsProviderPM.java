@@ -96,7 +96,6 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
         this.tag(Tags.Blocks.STAINED_GLASS_PANES).addTag(BlockTagsPM.STAINED_SKYGLASS_PANES);
         
         // Add entries to Forge extension tags
-        this.tag(BlockTagsForgeExt.BOOKSHELVES).add(Blocks.BOOKSHELF);
         this.tag(BlockTagsForgeExt.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
         
         // Create custom tags
