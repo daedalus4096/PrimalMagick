@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
@@ -46,7 +45,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
     private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
-    private final List<AbstractResearchTopic> topicHistory = new LinkedList<>();    // Grimoire research topic history
+    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();  // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
     private AbstractResearchTopic topic = null; // Last active grimoire research topic
@@ -397,8 +396,8 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public List<AbstractResearchTopic> getResearchTopicHistory() {
-        return ImmutableList.copyOf(this.topicHistory);
+    public LinkedList<AbstractResearchTopic> getResearchTopicHistory() {
+        return this.topicHistory;
     }
 
     @Override

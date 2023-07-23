@@ -38,7 +38,7 @@ public class EntryButton extends AbstractTopicButton {
                 
                 // Push the current grimoire topic onto the history stack
                 geb.getScreen().pushCurrentHistoryTopic();
-                geb.getScreen().getMenu().setTopic(new EntryResearchTopic(geb.getEntry(), 0));
+                geb.getScreen().setTopic(new EntryResearchTopic(geb.getEntry(), 0));
                 if (geb.getEntry().getKey().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
                     PrimalMagickCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {
@@ -51,11 +51,7 @@ public class EntryButton extends AbstractTopicButton {
                 }
                 
                 // Set the new grimoire topic and open a new screen for it
-                geb.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    geb.getScreen().getMenu(),
-                    geb.getScreen().getPlayerInventory(),
-                    geb.getScreen().getTitle()
-                ));
+                geb.getScreen().getMinecraft().setScreen(new GrimoireScreen());
             }
         }
     }

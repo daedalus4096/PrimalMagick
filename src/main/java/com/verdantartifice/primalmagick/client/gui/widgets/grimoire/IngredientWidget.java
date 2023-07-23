@@ -79,16 +79,8 @@ public class IngredientWidget extends Button {
         @Override
         public void onPress(Button button) {
             if (button instanceof IngredientWidget iw) {
-                // Push the current grimoire topic onto the history stack
-                iw.getScreen().pushCurrentHistoryTopic();
-                
                 // Set the new grimoire topic and open a new screen for it
-                iw.getScreen().getMenu().setTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString(), 0));
-                iw.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    iw.getScreen().getMenu(),
-                    iw.getScreen().getPlayerInventory(),
-                    iw.getScreen().getTitle()
-                ));
+                iw.getScreen().gotoTopic(new OtherResearchTopic(iw.getDisplayStack().getHoverName().getString(), 0));
             }
         }
     }

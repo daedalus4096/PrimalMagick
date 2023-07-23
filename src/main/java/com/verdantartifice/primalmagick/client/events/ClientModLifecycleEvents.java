@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
-import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.HoneyExtractorScreen;
 import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
 import com.verdantartifice.primalmagick.client.gui.RunecarvingTableScreen;
@@ -74,7 +73,6 @@ public class ClientModLifecycleEvents {
 
     private static void registerScreens() {
         // Register screen factories for each container
-        MenuScreens.register(ContainersPM.GRIMOIRE.get(), GrimoireScreen::new);
         MenuScreens.register(ContainersPM.ARCANE_WORKBENCH.get(), ArcaneWorkbenchScreen::new);
         MenuScreens.register(ContainersPM.WAND_ASSEMBLY_TABLE.get(), WandAssemblyTableScreen::new);
         MenuScreens.register(ContainersPM.ANALYSIS_TABLE.get(), AnalysisTableScreen::new);

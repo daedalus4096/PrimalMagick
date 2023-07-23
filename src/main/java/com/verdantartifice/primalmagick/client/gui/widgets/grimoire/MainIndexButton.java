@@ -41,18 +41,8 @@ public class MainIndexButton extends Button {
         @Override
         public void onPress(Button button) {
             if (button instanceof MainIndexButton indexButton) {
-                // Push the current grimoire topic onto the history stack if we're not already on the main menu
-                if (!indexButton.getScreen().getMenu().getTopic().equals(MainIndexResearchTopic.INSTANCE)) {
-                    indexButton.getScreen().pushCurrentHistoryTopic();
-                }
-                
                 // Set the new grimoire topic and open a new screen for it
-                indexButton.getScreen().getMenu().setTopic(MainIndexResearchTopic.INSTANCE);
-                indexButton.getScreen().getMinecraft().setScreen(new GrimoireScreen(
-                    indexButton.getScreen().getMenu(),
-                    indexButton.getScreen().getPlayerInventory(),
-                    indexButton.getScreen().getTitle()
-                ));
+                indexButton.getScreen().gotoTopic(MainIndexResearchTopic.INSTANCE, false);
             }
         }
     }

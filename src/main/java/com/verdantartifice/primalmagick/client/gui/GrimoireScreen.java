@@ -38,7 +38,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexBut
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.containers.GrimoireContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
@@ -69,14 +68,13 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -86,13 +84,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
+public class GrimoireScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;
+    private static final int BG_WIDTH = 256;
+    private static final int BG_HEIGHT = 181;
     
+    protected int leftPos;
+    protected int topPos;
     protected int scaledLeft;
     protected int scaledTop;
     protected int currentPage = 0;
@@ -102,24 +104,21 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     protected boolean progressing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
-    protected Inventory inventory;
     protected NavigableMap<String, List<Recipe<?>>> indexMap;
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
     protected BackButton backButton;
     
-    public GrimoireScreen(GrimoireContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
-        this.imageWidth = 256;
-        this.imageHeight = 181;
-        this.inventory = inv;
+    public GrimoireScreen() {
+        super(Component.empty());
     }
     
-    public Inventory getPlayerInventory() {
-        return this.inventory;
+    @Override
+    public boolean isPauseScreen() {
+        return false;
     }
-    
+
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
@@ -140,8 +139,8 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         }
         
         this.renderBackground(guiGraphics);
+        this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
     
     public boolean isProgressing() {
@@ -157,31 +156,34 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     @Override
     protected void init() {
         super.init();
-        this.scaledLeft = (int)(this.width - this.imageWidth * SCALE) / 2;
-        this.scaledTop = (int)(this.height - this.imageHeight * SCALE) / 2;
+        this.leftPos = (this.width - BG_WIDTH) / 2;
+        this.topPos = (this.height - BG_HEIGHT) / 2;
+        this.scaledLeft = (int)(this.width - BG_WIDTH * SCALE) / 2;
+        this.scaledTop = (int)(this.height - BG_HEIGHT * SCALE) / 2;
         Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagickCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
         this.generateIndexMap();
         this.initPages();
         this.initButtons();
-        this.setCurrentPage(this.menu.getTopic().getPage());
-        PacketHandler.sendToServer(new SetResearchTopicHistoryPacket(this.menu.getTopic(), this.getHistoryView()));
+        this.setCurrentPage(this.knowledge.getLastResearchTopic().getPage());
+        PacketHandler.sendToServer(new SetResearchTopicHistoryPacket(this.knowledge.getLastResearchTopic(), this.getHistoryView()));
     }
     
     protected void initPages() {
         // Parse grimoire pages based on the current topic
         this.pages.clear();
-        if (this.menu.getTopic() instanceof MainIndexResearchTopic) {
+        AbstractResearchTopic topic = this.knowledge.getLastResearchTopic();
+        if (topic instanceof MainIndexResearchTopic) {
             this.parseIndexPages();
-        } else if (this.menu.getTopic() instanceof DisciplineResearchTopic discTopic) {
+        } else if (topic instanceof DisciplineResearchTopic discTopic) {
             this.parseDisciplinePages(discTopic.getData());
-        } else if (this.menu.getTopic() instanceof EntryResearchTopic entryTopic) {
+        } else if (topic instanceof EntryResearchTopic entryTopic) {
             this.parseEntryPages(entryTopic.getData());
-        } else if (this.menu.getTopic() instanceof SourceResearchTopic sourceTopic) {
+        } else if (topic instanceof SourceResearchTopic sourceTopic) {
             this.parseAttunementPage(sourceTopic.getData());
-        } else if (this.menu.getTopic() instanceof EnchantmentResearchTopic enchTopic) {
+        } else if (topic instanceof EnchantmentResearchTopic enchTopic) {
             this.parseRuneEnchantmentPage(enchTopic.getData());
-        } else if (this.menu.getTopic() instanceof OtherResearchTopic otherTopic) {
+        } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
                 this.parseRecipeEntryPages(data);
@@ -240,30 +242,19 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
         abstractPage.initWidgets(this, side, x, y);
     }
 
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
-        // Do nothing; we don't want to draw title text for the grimoire
-    }
-
-    @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         // Render the grimoire background
-        int unscaledLeft = (this.width - this.imageWidth) / 2;
-        int unscaledTop = (this.height - this.imageHeight) / 2;
-        float scaledLeft = (this.width - this.imageWidth * SCALE) / 2.0F;
-        float scaledTop = (this.height - this.imageHeight * SCALE) / 2.0F;
-
         guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(scaledLeft, scaledTop, 0.0F);
+        guiGraphics.pose().translate(this.scaledLeft, this.scaledTop, 0.0F);
         guiGraphics.pose().scale(SCALE, SCALE, 1.0F);
-        guiGraphics.blit(TEXTURE, 0, 0, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(TEXTURE, 0, 0, 0, 0, BG_WIDTH, BG_HEIGHT);
         guiGraphics.pose().popPose();
         
         // Render the two visible pages
         int current = 0;
         for (AbstractPage page : this.pages) {
             if ((current == this.currentPage || current == this.currentPage + 1) && current < this.pages.size()) {
-                page.render(guiGraphics, current % 2, unscaledLeft, unscaledTop - 10, mouseX, mouseY);
+                page.render(guiGraphics, current % 2, this.leftPos, this.topPos - 10, mouseX, mouseY);
             }
             current++;
             if (current > this.currentPage + 1) {
@@ -941,19 +932,31 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     
     public boolean goBack() {
         // Pop the last viewed topic off the history stack and open a new screen for it
-        if (!this.getMenu().getTopicHistory().isEmpty()) {
-            AbstractResearchTopic lastTopic = this.getMenu().getTopicHistory().pop();
-            this.menu.setTopic(lastTopic);
-            this.getMinecraft().setScreen(new GrimoireScreen(this.menu, this.inventory, this.title));
+        if (!this.knowledge.getResearchTopicHistory().isEmpty()) {
+            AbstractResearchTopic lastTopic = this.knowledge.getResearchTopicHistory().pop();
+            this.knowledge.setLastResearchTopic(lastTopic);
+            this.getMinecraft().setScreen(new GrimoireScreen());
             return true;
         }
         return false;
     }
     
+    public void gotoTopic(AbstractResearchTopic newTopic) {
+        this.gotoTopic(newTopic, true);
+    }
+    
+    public void gotoTopic(AbstractResearchTopic newTopic, boolean allowRepeatInHistory) {
+        if (allowRepeatInHistory || !this.knowledge.getLastResearchTopic().equals(newTopic)) {
+            this.pushCurrentHistoryTopic();
+        }
+        this.setTopic(newTopic);
+        this.getMinecraft().setScreen(new GrimoireScreen());
+    }
+    
     protected void updateNavButtonVisibility() {
         this.prevPageButton.visible = (this.currentPage >= 2);
         this.nextPageButton.visible = (this.currentPage < this.pages.size() - 2);
-        this.backButton.visible = !this.getMenu().getTopicHistory().isEmpty();
+        this.backButton.visible = !this.knowledge.getResearchTopicHistory().isEmpty();
     }
     
     @Override
@@ -986,11 +989,15 @@ public class GrimoireScreen extends AbstractContainerScreen<GrimoireContainer> {
     }
 
     public void pushCurrentHistoryTopic() {
-        this.getMenu().getTopicHistory().push(this.getMenu().getTopic().withPage(this.getCurrentPage()));
+        this.knowledge.getResearchTopicHistory().push(this.knowledge.getLastResearchTopic().withPage(this.getCurrentPage()));
+    }
+    
+    public void setTopic(AbstractResearchTopic newTopic) {
+        this.knowledge.setLastResearchTopic(newTopic);
     }
     
     public List<AbstractResearchTopic> getHistoryView() {
-        return this.getMenu().getTopicHistory().subList(0, Math.min(this.getMenu().getTopicHistory().size(), HISTORY_LIMIT));
+        return this.knowledge.getResearchTopicHistory().subList(0, Math.min(this.knowledge.getResearchTopicHistory().size(), HISTORY_LIMIT));
     }
     
     protected static class DisciplinePageProperties {
