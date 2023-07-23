@@ -25,6 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.containers.FakeContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -54,9 +55,11 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
@@ -149,10 +152,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     // Derives all current affinities proactively based on current AffinityManager state.
     // In degenerate cases (400 mods! 30000 items!) takes 600ms or more to complete.
     private void deriveAffinities() {
-
-        Minecraft mc  = Minecraft.getInstance();
-        Level world = mc.level;
-
+        Level world = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentLevel() : null;
         if (world == null) {
             LOGGER.atWarn().log("Unable to derive affinities - no world available");
             return;
