@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "add": {
+    "hallowed": 5
+  },
+  "base": "minecraft:sand",
+  "target": "minecraft:suspicious_sand"
+}

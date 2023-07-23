@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:sniffer",
+  "values": {
+    "blood": 10,
+    "earth": 5
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 20,
+    "hallowed": 20
+  },
+  "target": "minecraft:angler_pottery_sherd"
+}

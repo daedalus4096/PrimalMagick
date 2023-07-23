@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "blood": 20,
+    "infernal": 5
+  },
+  "target": "minecraft:piglin_head"
+}

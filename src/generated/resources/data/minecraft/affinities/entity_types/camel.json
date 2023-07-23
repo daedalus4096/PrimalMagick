@@ -1,0 +1,8 @@
+{
+  "type": "entity_type",
+  "target": "minecraft:camel",
+  "values": {
+    "blood": 10,
+    "sun": 5
+  }
+}
