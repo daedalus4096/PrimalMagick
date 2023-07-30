@@ -31,5 +31,9 @@ public class EffectsPM {
     public static final RegistryObject<MobEffect> MANA_IMPEDANCE = EFFECTS.register("mana_impedance", () -> new EffectPM(MobEffectCategory.HARMFUL, 0x808080));
     public static final RegistryObject<MobEffect> ENDERLOCK = EFFECTS.register("enderlock", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.VOID.getColor()));
     public static final RegistryObject<MobEffect> SOULPIERCED = EFFECTS.register("soulpierced", () -> new EffectPM(MobEffectCategory.NEUTRAL, 0x808080));
+    /**
+     * @deprecated
+     */
+    @Deprecated(since = "4.0.1", forRemoval = true)
     public static final RegistryObject<MobEffect> STOLEN_ESSENCE = EFFECTS.register("stolen_essence", () -> new EffectPM(MobEffectCategory.HARMFUL, Source.VOID.getColor()));
 }

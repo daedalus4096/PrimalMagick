@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:essence_thief",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    }
+  ]
+}

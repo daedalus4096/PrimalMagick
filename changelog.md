@@ -1,3 +1,8 @@
+v4.0.1
+------
+* Changed the Essence Thief enchantment to work better with high damage weapons
+* The Essence Thief enchantment can now also be applied to wands and staves
+
 v4.0.0-beta
 -----------
 * Updated to Minecraft 1.20.1

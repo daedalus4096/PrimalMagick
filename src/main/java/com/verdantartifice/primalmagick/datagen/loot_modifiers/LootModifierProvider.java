@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BloodyFleshModifie
 import com.verdantartifice.primalmagick.common.loot.modifiers.BonusNuggetModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFarmingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.HummingArtifactModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
@@ -185,6 +186,11 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.WOODLAND_MANSION).build(),
                         LootItemRandomChanceCondition.randomChance(1.0F).build()
+                }));
+        this.add("essence_thief", new EssenceThiefModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }));
     }
 }

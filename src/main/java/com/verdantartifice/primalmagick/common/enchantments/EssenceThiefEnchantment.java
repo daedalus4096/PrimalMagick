@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.enchantments;
 
-import com.verdantartifice.primalmagick.common.effects.EffectsPM;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,15 +38,7 @@ public class EssenceThiefEnchantment extends AbstractRuneEnchantment {
     @Override
     public boolean canEnchant(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof TridentItem || item instanceof AxeItem ? true : super.canEnchant(stack);
-    }
-
-    @Override
-    public void doPostAttack(LivingEntity user, Entity target, int level) {
-        super.doPostAttack(user, target, level);
-        if (target instanceof LivingEntity) {
-            ((LivingEntity)target).addEffect(new MobEffectInstance(EffectsPM.STOLEN_ESSENCE.get(), 200, Math.max(0, level - 1)));
-        }
+        return item instanceof TridentItem || item instanceof AxeItem || item instanceof IWand ? true : super.canEnchant(stack);
     }
 
     @Override
