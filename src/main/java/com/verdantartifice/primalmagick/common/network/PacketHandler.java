@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArriva
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.CycleActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.GrantRuneHintsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
@@ -122,6 +123,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SetActiveSpellPacket.class, SetActiveSpellPacket::encode, SetActiveSpellPacket::decode, SetActiveSpellPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode, WithdrawCaskEssencePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket::encode, UpdateRuneEnchantmentsPacket::decode, UpdateRuneEnchantmentsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, GrantRuneHintsPacket.class, GrantRuneHintsPacket::encode, GrantRuneHintsPacket::decode, GrantRuneHintsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
