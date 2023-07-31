@@ -1,14 +1,21 @@
 package com.verdantartifice.primalmagick.common.containers;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.containers.slots.RunicGrindstoneInputSlot;
-import com.verdantartifice.primalmagick.common.network.PacketHandler;
-import com.verdantartifice.primalmagick.common.network.packets.misc.GrantRuneHintsPacket;
+import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.runes.RuneType;
+import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,6 +42,9 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class RunicGrindstoneContainer extends AbstractContainerMenu {
+    protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
+    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS");
+    
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {
        /**
@@ -73,10 +83,12 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
                 worldPosCallable.execute((level, pos) -> {
                     if (level instanceof ServerLevel serverLevel) {
                         ExperienceOrb.award(serverLevel, Vec3.atCenterOf(pos), this.getExperienceAmount(level));
-                    }
-                    if (level.isClientSide) {
-                        // Grant runic knowledge hints to the player based on the enchantments on the resulting item
-                        PacketHandler.sendToServer(new GrantRuneHintsPacket(pStack));
+                        
+                        // Grant runic knowledge hints to the player based on the enchantments on the pre-wipe item
+                        ItemStack preWipeStack = RunicGrindstoneContainer.this.mergeEnchants(
+                                RunicGrindstoneContainer.this.repairSlots.getItem(0), 
+                                RunicGrindstoneContainer.this.repairSlots.getItem(1));
+                        RunicGrindstoneContainer.this.grantHints(preWipeStack);
                     }
                     level.levelEvent(1042, pos, 0);
                 });
@@ -237,6 +249,41 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player playerIn) {
         return stillValid(this.worldPosCallable, playerIn, BlocksPM.RUNIC_GRINDSTONE.get());
+    }
+    
+    protected void grantHints(ItemStack stack) {
+        Set<Enchantment> enchants = EnchantmentHelper.getEnchantments(stack).keySet();
+        int hintCount = 0;
+        
+        for (Enchantment enchant : enchants) {
+            SimpleResearchKey fullResearch = SimpleResearchKey.parseRuneEnchantment(enchant);
+            if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownByStrict(this.player)) {
+                CompoundResearchKey requirements = RuneManager.getRuneDefinition(enchant).getRequiredResearch();
+                if (requirements == null || requirements.isKnownByStrict(this.player)) {
+                    List<SimpleResearchKey> candidates = RUNE_TYPES.stream().map(rt -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rt)).filter(key -> !key.isKnownByStrict(this.player)).toList();
+                    if (candidates.size() == 1) {
+                        // If only one hint remains to be given, grant it and the full research as well
+                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
+                        ResearchManager.completeResearch(this.player, candidates.get(0));
+                        ResearchManager.completeResearch(this.player, fullResearch);
+                        hintCount++;
+                    } else if (!candidates.isEmpty()) {
+                        // If more than one hint remains to be given, grant one at random
+                        WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
+                        for (SimpleResearchKey candidate : candidates) {
+                            candidateBag.add(candidate, 1);
+                        }
+                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
+                        ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
+                        hintCount++;
+                    }
+                }
+            }
+        }
+        if (hintCount > 0) {
+            // If at least one hint was granted to the player, notify them
+            this.player.displayClientMessage(Component.translatable("event.primalmagick.runic_grindstone.hints_granted").withStyle(ChatFormatting.GREEN), false);
+        }
     }
     
     public ItemStack mergeEnchants(ItemStack pCopyTo, ItemStack pCopyFrom) {
