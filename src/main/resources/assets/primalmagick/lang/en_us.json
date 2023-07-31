@@ -1637,7 +1637,7 @@
     
     "primalmagick.research.runic_grindstone.title": "Runic Grindstone",
     "primalmagick.research.runic_grindstone.text.stage.1": "There must be a way to remove runes from an item if I'm not satisfied with the result.  It's just so weird that I can't!",
-    "primalmagick.research.runic_grindstone.text.stage.2": "The grindstone already does the job I want it to, almost.  It just needs a little help.<BR>By inscribing Dispel runes onto the faces of the grindstone during its construction, I can allow it to purge runes completely.  It will be as if the item had never been inscribed.",
+    "primalmagick.research.runic_grindstone.text.stage.2": "The grindstone already does the job I want it to, almost.  It just needs a little help.<BR>By inscribing Dispel runes onto the faces of the grindstone during its construction, I can allow it to purge runes completely.  It will be as if the item had never been inscribed.<BR>But wait, there's more!  By grinding away the enchantments from items, I can gather hints as to the runes needed to replicate that enchant, if such a thing is possible.  The hints I learn will be recorded in the Rune Enchantments section of my Grimoire.  No more blind guessing for me!",
     
     "primalmagick.research.recall_stone.title": "Recall Stone",
     "primalmagick.research.recall_stone.text.stage.1": "Walking everywhere is such a drag.  Especially walking home; when you're doing that, all the fun is already behind you.  I wonder if I can use magic to speed up the process?",
@@ -2083,7 +2083,7 @@
     "event.primalmagick.recall_stone.failure": "No respawn location found",
     "event.primalmagick.recall_stone.cannot_cross_dimensions": "The stone cannot take you across dimensional boundaries",
     "event.primalmagick.analysis_table.forbidden": "This item is too precious to destroy in the Analysis Table; you must find another way to analyze it.",
-    "event.primalmagick.runic_grindstone.hints_granted": "You have gleaned a fragment of runic knowledge",
+    "event.primalmagick.runic_grindstone.hints_granted": "You have gleaned a fragment of runic knowledge.",
     
     "primalmagick.dream_journal.title": "Dream Journal",
     "primalmagick.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",
