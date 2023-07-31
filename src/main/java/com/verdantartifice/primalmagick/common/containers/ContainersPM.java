@@ -82,4 +82,7 @@ public class ContainersPM {
     public static final RegistryObject<MenuType<WandGlamourTableContainer>> WAND_GLAMOUR_TABLE = CONTAINERS.register("wand_glamour_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new WandGlamourTableContainer(windowId, inv);
     }));
+    public static final RegistryObject<MenuType<RunicGrindstoneContainer>> RUNIC_GRINDSTONE = CONTAINERS.register("runic_grindstone", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new RunicGrindstoneContainer(windowId, inv);
+    }));
 }
