@@ -57,6 +57,7 @@ import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearch
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -740,7 +741,10 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
-        String rawText = (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString();
+        Minecraft mc = Minecraft.getInstance();
+        String rawText = ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parseRuneEnchantment(enchant)) ?
+                (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString() :
+                (Component.translatable(Util.makeDescriptionId("rune_enchantment.partial_text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
@@ -818,7 +822,12 @@ public class GrimoireScreen extends Screen {
         Minecraft mc = Minecraft.getInstance();
 
         for (Enchantment enchant : RuneManager.getRuneEnchantmentsSorted()) {
-            if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parseRuneEnchantment(enchant))) {
+            List<SimpleResearchKey> researchKeys = List.of(
+                    SimpleResearchKey.parseRuneEnchantment(enchant), 
+                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.VERB), 
+                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.NOUN), 
+                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.SOURCE));
+            if (researchKeys.stream().anyMatch(key -> ResearchManager.isResearchComplete(mc.player, key))) {
                 tempPage.addEnchantment(enchant);
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getEnchantments().isEmpty()) {

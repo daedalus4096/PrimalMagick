@@ -15,6 +15,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -282,5 +284,10 @@ public class RuneManager {
     public static RuneEnchantmentDefinition getRuneDefinition(Enchantment enchant) {
         ResourceLocation loc = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
         return loc == null ? null : DEFINITIONS.getOrDefault(loc, null);
+    }
+    
+    public static boolean isRuneKnown(Player player, Enchantment enchant, RuneType runeType) {
+        return ResearchManager.isResearchComplete(player, SimpleResearchKey.parseRuneEnchantment(enchant)) || 
+                ResearchManager.isResearchComplete(player, SimpleResearchKey.parsePartialRuneEnchantment(enchant, runeType));
     }
 }

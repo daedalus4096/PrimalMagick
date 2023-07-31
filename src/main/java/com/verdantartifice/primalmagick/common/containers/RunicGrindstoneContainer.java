@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
@@ -127,20 +128,23 @@ public class RunicGrindstoneContainer extends GrindstoneMenu {
         for (Enchantment enchant : enchants) {
             SimpleResearchKey fullResearch = SimpleResearchKey.parseRuneEnchantment(enchant);
             if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownByStrict(this.player)) {
-                List<SimpleResearchKey> candidates = RUNE_TYPES.stream().map(rt -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rt)).filter(key -> !key.isKnownByStrict(this.player)).toList();
-                if (candidates.size() == 1) {
-                    // If only one hint remains to be given, grant it and the full research as well
-                    ResearchManager.completeResearch(this.player, candidates.get(0));
-                    ResearchManager.completeResearch(this.player, fullResearch);
-                    hintCount++;
-                } else if (!candidates.isEmpty()) {
-                    // If more than one hint remains to be given, grant one at random
-                    WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
-                    for (SimpleResearchKey candidate : candidates) {
-                        candidateBag.add(candidate, 1);
+                CompoundResearchKey requirements = RuneManager.getRuneDefinition(enchant).getRequiredResearch();
+                if (requirements == null || requirements.isKnownByStrict(this.player)) {
+                    List<SimpleResearchKey> candidates = RUNE_TYPES.stream().map(rt -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rt)).filter(key -> !key.isKnownByStrict(this.player)).toList();
+                    if (candidates.size() == 1) {
+                        // If only one hint remains to be given, grant it and the full research as well
+                        ResearchManager.completeResearch(this.player, candidates.get(0));
+                        ResearchManager.completeResearch(this.player, fullResearch);
+                        hintCount++;
+                    } else if (!candidates.isEmpty()) {
+                        // If more than one hint remains to be given, grant one at random
+                        WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
+                        for (SimpleResearchKey candidate : candidates) {
+                            candidateBag.add(candidate, 1);
+                        }
+                        ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
+                        hintCount++;
                     }
-                    ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
-                    hintCount++;
                 }
             }
         }

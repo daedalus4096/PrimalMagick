@@ -9,13 +9,16 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
-import com.verdantartifice.primalmagick.common.runes.Rune;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.runes.RuneType;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 /**
@@ -25,6 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  */
 public class RuneEnchantmentPage extends AbstractPage {
     protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire_overlay.png");
+    protected static final SimpleResearchKey UNKNOWN_RUNE = SimpleResearchKey.parse("u_unknown_rune");
     
     protected Enchantment enchant;
     protected List<IPageElement> contents = new ArrayList<>();
@@ -87,19 +91,33 @@ public class RuneEnchantmentPage extends AbstractPage {
     
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        Minecraft mc = Minecraft.getInstance();
         int indent = 124;
         int overlayWidth = 52;
 
         // Render rune item stacks if applicable
-        if (this.isFirstPage() && side == 0) {
-            List<Rune> runes = RuneManager.getRunesForEnchantment(this.enchant);
-            if (runes != null) {
-                for (int index = 0; index < Math.min(runes.size(), 3); index++) {
-                    ItemStack runeStack = RuneItem.getRune(runes.get(index));
-                    if (runeStack != null) {
-                        screen.addWidgetToScreen(new ItemStackWidget(runeStack, x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2) + (index * 32), y, false));
-                    }
-                }
+        if (this.isFirstPage() && side == 0 && RuneManager.hasRuneDefinition(this.enchant)) {
+            RuneEnchantmentDefinition def = RuneManager.getRuneDefinition(this.enchant);
+            
+            int widgetXPos = x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2);
+            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.VERB)) {
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getVerb()), widgetXPos, y, false));
+            } else {
+                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE, widgetXPos, y, false));
+            }
+            
+            widgetXPos += 32;
+            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.NOUN)) {
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getNoun()), widgetXPos, y, false));
+            } else {
+                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE, widgetXPos, y, false));
+            }
+            
+            widgetXPos += 32;
+            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.SOURCE)) {
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getSource()), widgetXPos, y, false));
+            } else {
+                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE, widgetXPos, y, false));
             }
         }
     }
