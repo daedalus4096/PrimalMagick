@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.containers.slots.RunicGrindstoneI
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -258,17 +259,13 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
         for (Enchantment enchant : enchants) {
             SimpleResearchKey fullResearch = SimpleResearchKey.parseRuneEnchantment(enchant);
             if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownByStrict(this.player)) {
-                CompoundResearchKey requirements = RuneManager.getRuneDefinition(enchant).getRequiredResearch();
+                RuneEnchantmentDefinition definition = RuneManager.getRuneDefinition(enchant);
+                CompoundResearchKey requirements = definition.getRequiredResearch();
                 if (requirements == null || requirements.isKnownByStrict(this.player)) {
-                    List<SimpleResearchKey> candidates = RUNE_TYPES.stream().map(rt -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rt)).filter(key -> !key.isKnownByStrict(this.player)).toList();
-                    if (candidates.size() == 1) {
-                        // If only one hint remains to be given, grant it and the full research as well
-                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
-                        ResearchManager.completeResearch(this.player, candidates.get(0));
-                        ResearchManager.completeResearch(this.player, fullResearch);
-                        hintCount++;
-                    } else if (!candidates.isEmpty()) {
-                        // If more than one hint remains to be given, grant one at random
+                    List<SimpleResearchKey> candidates = definition.getRunes().stream().filter(rune -> rune.getDiscoveryKey().isKnownByStrict(this.player))
+                            .map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).filter(key -> !key.isKnownByStrict(this.player)).toList();
+                    if (!candidates.isEmpty()) {
+                        // If at least one hint is available, grant one at random
                         WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
                         for (SimpleResearchKey candidate : candidates) {
                             candidateBag.add(candidate, 1);
@@ -276,6 +273,11 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
                         ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
                         ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
                         hintCount++;
+                        
+                        // If, after granting the hint, the player knows all three pieces, then grant them the full research
+                        if (definition.getRunes().stream().map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).allMatch(key -> key.isKnownByStrict(this.player))) {
+                            ResearchManager.completeResearch(this.player, fullResearch);
+                        }
                     }
                 }
             }

@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -51,6 +53,10 @@ public class RuneEnchantmentDefinition {
     
     public SourceRune getSource() {
         return this.source;
+    }
+    
+    public List<Rune> getRunes() {
+        return List.of(this.getVerb(), this.getNoun(), this.getSource());
     }
     
     public CompoundResearchKey getRequiredResearch() {
