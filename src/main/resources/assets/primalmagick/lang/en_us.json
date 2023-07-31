@@ -2083,6 +2083,7 @@
     "event.primalmagick.recall_stone.failure": "No respawn location found",
     "event.primalmagick.recall_stone.cannot_cross_dimensions": "The stone cannot take you across dimensional boundaries",
     "event.primalmagick.analysis_table.forbidden": "This item is too precious to destroy in the Analysis Table; you must find another way to analyze it.",
+    "event.primalmagick.runic_grindstone.hints_granted": "You have gleaned a fragment of runic knowledge",
     
     "primalmagick.dream_journal.title": "Dream Journal",
     "primalmagick.dream_journal.text.1": "\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"",

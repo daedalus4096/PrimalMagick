@@ -261,4 +261,26 @@ public class RuneManager {
             stack.removeTagKey(RUNE_TAG_NAME);
         }
     }
+    
+    /**
+     * Determine whether the given enchantment has a rune combination defined for it.
+     * 
+     * @param enchant the enchantment to query
+     * @return true if the enchantment has a rune combination defined for it, false otherwise
+     */
+    public static boolean hasRuneDefinition(Enchantment enchant) {
+        ResourceLocation loc = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
+        return loc != null && DEFINITIONS.containsKey(loc);
+    }
+    
+    /**
+     * Get the rune combination definition for the given enchant, if any.
+     * 
+     * @param enchant the enchantment to query
+     * @return the rune combination definition for the given enchant, or null if one was not registered
+     */
+    public static RuneEnchantmentDefinition getRuneDefinition(Enchantment enchant) {
+        ResourceLocation loc = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
+        return loc == null ? null : DEFINITIONS.getOrDefault(loc, null);
+    }
 }

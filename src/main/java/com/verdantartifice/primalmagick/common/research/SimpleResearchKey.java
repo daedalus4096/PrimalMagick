@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.world.entity.EntityType;
@@ -25,6 +26,7 @@ public class SimpleResearchKey {
     protected static final String ENTITY_SCAN_PREFIX = "*";
     protected static final String CRAFTED_PREFIX = "[#]";
     protected static final String RUNE_ENCHANT_PREFIX = "&";
+    protected static final String PARTIAL_RUNE_ENCHANT_PREFIX = "^";
     
     protected String rootKey;
     protected Integer stage;
@@ -85,6 +87,15 @@ public class SimpleResearchKey {
             return null;
         } else {
             return parse(RUNE_ENCHANT_PREFIX + ForgeRegistries.ENCHANTMENTS.getKey(enchant).toString());
+        }
+    }
+    
+    @Nullable
+    public static SimpleResearchKey parsePartialRuneEnchantment(@Nullable Enchantment enchant, RuneType runeType) {
+        if (enchant == null || runeType == null || runeType == RuneType.POWER) {
+            return null;
+        } else {
+            return parse(PARTIAL_RUNE_ENCHANT_PREFIX + ForgeRegistries.ENCHANTMENTS.getKey(enchant).toString() + "." + runeType.getSerializedName());
         }
     }
     
