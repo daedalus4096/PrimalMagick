@@ -2,6 +2,7 @@ v4.0.1
 ------
 * Changed the Essence Thief enchantment to work better with high damage weapons
 * The Essence Thief enchantment can now also be applied to wands and staves
+* Runic Grindstones will now grant hints to rune combinations when grinding off enchantments
 
 v4.0.0-beta
 -----------

@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.client.gui.RunescribingAltarBasicScreen;
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarEnchantedScreen;
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarForbiddenScreen;
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarHeavenlyScreen;
+import com.verdantartifice.primalmagick.client.gui.RunicGrindstoneScreen;
 import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
@@ -92,6 +93,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(ContainersPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberScreen::new);
         MenuScreens.register(ContainersPM.ESSENCE_CASK.get(), EssenceCaskScreen::new);
         MenuScreens.register(ContainersPM.WAND_GLAMOUR_TABLE.get(), WandGlamourTableScreen::new);
+        MenuScreens.register(ContainersPM.RUNIC_GRINDSTONE.get(), RunicGrindstoneScreen::new);
     }
     
     private static void registerTERs() {

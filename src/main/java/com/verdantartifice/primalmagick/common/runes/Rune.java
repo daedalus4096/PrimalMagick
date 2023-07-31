@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -22,40 +23,42 @@ import net.minecraft.world.item.Rarity;
 public abstract class Rune {
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
-    public static final SourceRune EARTH = new SourceRune("earth");
-    public static final SourceRune SEA = new SourceRune("sea");
-    public static final SourceRune SKY = new SourceRune("sky");
-    public static final SourceRune SUN = new SourceRune("sun");
-    public static final SourceRune MOON = new SourceRune("moon");
-    public static final SourceRune BLOOD = new SourceRune("blood");
-    public static final SourceRune INFERNAL = new SourceRune("infernal");
-    public static final SourceRune VOID = new SourceRune("void");
-    public static final SourceRune HALLOWED = new SourceRune("hallowed");
-    public static final VerbRune ABSORB = new VerbRune("absorb");
-    public static final VerbRune DISPEL = new VerbRune("dispel");
-    public static final VerbRune PROJECT = new VerbRune("project");
-    public static final VerbRune PROTECT = new VerbRune("protect");
-    public static final VerbRune SUMMON = new VerbRune("summon");
-    public static final NounRune AREA = new NounRune("area");
-    public static final NounRune CREATURE = new NounRune("creature");
-    public static final NounRune ITEM = new NounRune("item");
-    public static final NounRune SELF = new NounRune("self");
-    public static final PowerRune POWER = new PowerRune("power");
+    public static final SourceRune EARTH = new SourceRune("earth", "RUNE_EARTH");
+    public static final SourceRune SEA = new SourceRune("sea", "RUNE_SEA");
+    public static final SourceRune SKY = new SourceRune("sky", "RUNE_SKY");
+    public static final SourceRune SUN = new SourceRune("sun", "RUNE_SUN");
+    public static final SourceRune MOON = new SourceRune("moon", "RUNE_MOON");
+    public static final SourceRune BLOOD = new SourceRune("blood", "RUNE_BLOOD");
+    public static final SourceRune INFERNAL = new SourceRune("infernal", "RUNE_INFERNAL");
+    public static final SourceRune VOID = new SourceRune("void", "RUNE_VOID");
+    public static final SourceRune HALLOWED = new SourceRune("hallowed", "RUNE_HALLOWED");
+    public static final VerbRune ABSORB = new VerbRune("absorb", "RUNE_ABSORB");
+    public static final VerbRune DISPEL = new VerbRune("dispel", "RUNE_DISPEL");
+    public static final VerbRune PROJECT = new VerbRune("project", "RUNE_PROJECT");
+    public static final VerbRune PROTECT = new VerbRune("protect", "RUNE_PROTECT");
+    public static final VerbRune SUMMON = new VerbRune("summon", "RUNE_SUMMON");
+    public static final NounRune AREA = new NounRune("area", "RUNE_AREA");
+    public static final NounRune CREATURE = new NounRune("creature", "RUNE_CREATURE");
+    public static final NounRune ITEM = new NounRune("item", "RUNE_ITEM");
+    public static final NounRune SELF = new NounRune("self", "RUNE_SELF");
+    public static final PowerRune POWER = new PowerRune("power", "RUNE_POWER");
     
     protected final ResourceLocation id;
+    protected final SimpleResearchKey discoveryKey;
     protected final Rarity rarity;
     protected final boolean glint;
     
-    public Rune(@Nonnull String tag, @Nonnull Rarity rarity, boolean glint) {
-        this(new ResourceLocation(PrimalMagick.MODID, tag), rarity, glint);
+    public Rune(@Nonnull String tag, @Nonnull String discoveryTag, @Nonnull Rarity rarity, boolean glint) {
+        this(new ResourceLocation(PrimalMagick.MODID, tag), SimpleResearchKey.parse(discoveryTag), rarity, glint);
     }
     
-    public Rune(@Nonnull ResourceLocation id, @Nonnull Rarity rarity, boolean glint) {
+    public Rune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, @Nonnull Rarity rarity, boolean glint) {
         if (REGISTRY.containsKey(id)) {
             // Don't allow a given rune to be registered more than once
             throw new IllegalArgumentException("Rune " + id.toString() + " already registered!");
         }
         this.id = id;
+        this.discoveryKey = discoveryKey;
         this.rarity = rarity;
         this.glint = glint;
         REGISTRY.put(id, this);
@@ -64,6 +67,11 @@ public abstract class Rune {
     @Nonnull
     public ResourceLocation getId() {
         return this.id;
+    }
+    
+    @Nonnull
+    public SimpleResearchKey getDiscoveryKey() {
+        return this.discoveryKey;
     }
     
     @Nonnull
