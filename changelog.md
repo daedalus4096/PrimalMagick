@@ -3,6 +3,11 @@ v4.0.1
 * Changed the Essence Thief enchantment to work better with high damage weapons
 * The Essence Thief enchantment can now also be applied to wands and staves
 * Runic Grindstones will now grant hints to rune combinations when grinding off enchantments
+* Reduced material requirements to make Power Runes
+* Limited Power Runes to one per runescribe
+* Added Insight Runes, to start empowering rune enchantments sooner in a limited fashion
+* Added Grace Runes, to get the maximum power from your rune enchantments
+* Rebalanced requirements in research and recipes that needed Power Runes
 
 v4.0.0-beta
 -----------
