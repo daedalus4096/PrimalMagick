@@ -13,12 +13,12 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public class PowerRune extends Rune {
-    public PowerRune(@Nonnull String tag, @Nonnull String discoveryTag) {
-        super(tag, discoveryTag, Rarity.UNCOMMON, true);
+    public PowerRune(@Nonnull String tag, @Nonnull String discoveryTag, Rarity rarity, int limit) {
+        super(tag, discoveryTag, rarity, true, limit);
     }
     
-    public PowerRune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey) {
-        super(id, discoveryKey, Rarity.UNCOMMON, true);
+    public PowerRune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, Rarity rarity, int limit) {
+        super(id, discoveryKey, rarity, true, limit);
     }
     
     @Override

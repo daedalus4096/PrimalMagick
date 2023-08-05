@@ -802,6 +802,7 @@
     "tooltip.primalmagick.rune.item": "\"Mag\"",
     "tooltip.primalmagick.rune.self": "\"San\"",
     "tooltip.primalmagick.rune.power": "\"Par\"",
+    "tooltip.primalmagick.rune_limit": "Limit %1$d per runescribe",
     "tooltip.primalmagick.none": "None",
     "tooltip.primalmagick.question_marks": "???",
     "tooltip.primalmagick.more_info": "Hold Shift for more information",

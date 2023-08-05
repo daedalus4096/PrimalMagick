@@ -47,9 +47,13 @@ public class RuneItem extends Item {
     
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        if (stack != null && stack.getItem() instanceof RuneItem) {
-            String key = ((RuneItem)stack.getItem()).rune.getTooltipTranslationKey();
+        if (stack != null && stack.getItem() instanceof RuneItem runeItem) {
+            String key = runeItem.rune.getTooltipTranslationKey();
             tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
+            
+            if (runeItem.rune.hasLimit()) {
+                tooltip.add(Component.translatable("tooltip.primalmagick.rune_limit", runeItem.rune.getLimit()));
+            }
         }
     }
     
