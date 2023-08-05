@@ -14,11 +14,11 @@ import net.minecraft.world.item.Rarity;
  */
 public class VerbRune extends Rune {
     public VerbRune(@Nonnull String tag, @Nonnull String discoveryTag) {
-        super(tag, discoveryTag, Rarity.COMMON, false);
+        super(tag, discoveryTag, Rarity.COMMON, false, -1);
     }
     
     public VerbRune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey) {
-        super(id, discoveryKey, Rarity.COMMON, false);
+        super(id, discoveryKey, Rarity.COMMON, false, -1);
     }
     
     @Override

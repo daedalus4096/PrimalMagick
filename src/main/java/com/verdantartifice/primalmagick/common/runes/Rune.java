@@ -41,18 +41,21 @@ public abstract class Rune {
     public static final NounRune CREATURE = new NounRune("creature", "RUNE_CREATURE");
     public static final NounRune ITEM = new NounRune("item", "RUNE_ITEM");
     public static final NounRune SELF = new NounRune("self", "RUNE_SELF");
-    public static final PowerRune POWER = new PowerRune("power", "RUNE_POWER");
+    public static final PowerRune INSIGHT = new PowerRune("insight", "RUNE_INSIGHT", Rarity.UNCOMMON, 1);
+    public static final PowerRune POWER = new PowerRune("power", "RUNE_POWER", Rarity.RARE, 1);
+    public static final PowerRune GRACE = new PowerRune("grace", "RUNE_GRACE", Rarity.EPIC, -1);
     
     protected final ResourceLocation id;
     protected final SimpleResearchKey discoveryKey;
     protected final Rarity rarity;
     protected final boolean glint;
+    protected final int limit;
     
-    public Rune(@Nonnull String tag, @Nonnull String discoveryTag, @Nonnull Rarity rarity, boolean glint) {
-        this(new ResourceLocation(PrimalMagick.MODID, tag), SimpleResearchKey.parse(discoveryTag), rarity, glint);
+    public Rune(@Nonnull String tag, @Nonnull String discoveryTag, @Nonnull Rarity rarity, boolean glint, int limit) {
+        this(new ResourceLocation(PrimalMagick.MODID, tag), SimpleResearchKey.parse(discoveryTag), rarity, glint, limit);
     }
     
-    public Rune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, @Nonnull Rarity rarity, boolean glint) {
+    public Rune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, @Nonnull Rarity rarity, boolean glint, int limit) {
         if (REGISTRY.containsKey(id)) {
             // Don't allow a given rune to be registered more than once
             throw new IllegalArgumentException("Rune " + id.toString() + " already registered!");
@@ -61,6 +64,7 @@ public abstract class Rune {
         this.discoveryKey = discoveryKey;
         this.rarity = rarity;
         this.glint = glint;
+        this.limit = limit;
         REGISTRY.put(id, this);
     }
     
@@ -81,6 +85,14 @@ public abstract class Rune {
     
     public boolean hasGlint() {
         return this.glint;
+    }
+    
+    public boolean hasLimit() {
+        return this.limit > -1;
+    }
+    
+    public int getLimit() {
+        return this.limit;
     }
     
     @Nonnull

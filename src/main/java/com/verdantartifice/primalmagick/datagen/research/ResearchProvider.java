@@ -943,10 +943,19 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_INSIGHT", discipline).icon(ItemsPM.RUNE_INSIGHT.get()).parent("EXPERT_RUNEWORKING").parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_INSIGHT.get()).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("RUNE_POWER", discipline).icon(ItemsPM.RUNE_POWER.get()).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent(Source.BLOOD.getDiscoverKey())
-            .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey())
+            .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey()).parent("RUNE_INSIGHT")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_power_rune").recipe(ItemsPM.RUNE_POWER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_GRACE", discipline).icon(ItemsPM.RUNE_GRACE.get()).parent("SUPREME_RUNEWORKING").parent("CLUSTER_SYNTHESIS").parent(Source.HALLOWED.getDiscoverKey())
+            .parent("RUNE_POWER")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_GRACE.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNIC_GRINDSTONE", discipline).icon(ItemsPM.RUNIC_GRINDSTONE.get()).parent("RUNE_DISPEL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
@@ -1058,7 +1067,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("GRAND_PIXIES", discipline).icon(ItemsPM.GRAND_EARTH_PIXIE.get()).parent("MASTER_RITUAL").parent("PIXIES").parent("CRYSTAL_SYNTHESIS")
             .parent("RUNE_POWER").parent("SOUL_ANVIL")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_INSIGHT.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
                     .recipe(ItemsPM.GRAND_EARTH_PIXIE.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "pixie_grand_earth_revive"))
                     .recipe(ItemsPM.GRAND_SEA_PIXIE.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "pixie_grand_sea_revive"))
@@ -1076,7 +1085,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("MAJESTIC_PIXIES", discipline).icon(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).parent("SUPREME_RITUAL").parent("GRAND_PIXIES").parent("CLUSTER_SYNTHESIS")
             .parent("CELESTIAL_HARP")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
                     .recipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_earth_revive"))
                     .recipe(ItemsPM.MAJESTIC_SEA_PIXIE.get()).recipe(new ResourceLocation(PrimalMagick.MODID, "pixie_majestic_sea_revive"))
@@ -1105,7 +1114,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("GREATER_AMBROSIA", discipline).icon(ItemsPM.GREATER_EARTH_AMBROSIA.get()).parent("MASTER_RITUAL").parent("AMBROSIA").parent("CRYSTAL_SYNTHESIS")
             .parent("RUNE_POWER").parent("BLOODLETTER")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_INSIGHT.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 3).attunement(Source.SEA, 3).attunement(Source.SKY, 3).attunement(Source.SUN, 3).attunement(Source.MOON, 3)
                     .recipe(ItemsPM.GREATER_EARTH_AMBROSIA.get()).recipe(ItemsPM.GREATER_SEA_AMBROSIA.get()).recipe(ItemsPM.GREATER_SKY_AMBROSIA.get()).recipe(ItemsPM.GREATER_SUN_AMBROSIA.get())
                     .recipe(ItemsPM.GREATER_MOON_AMBROSIA.get()).build())
@@ -1116,7 +1125,7 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_AMBROSIA", discipline).icon(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).parent("SUPREME_RITUAL").parent("GREATER_AMBROSIA").parent("CLUSTER_SYNTHESIS")
             .parent("CELESTIAL_HARP")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.RUNE_POWER.get()).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 4).attunement(Source.SEA, 4).attunement(Source.SKY, 4).attunement(Source.SUN, 4).attunement(Source.MOON, 4)
                     .recipe(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SEA_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SKY_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SUN_AMBROSIA.get())
                     .recipe(ItemsPM.SUPREME_MOON_AMBROSIA.get()).build())

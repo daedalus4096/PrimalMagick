@@ -582,7 +582,9 @@ public class ItemsPM {
     public static final RegistryObject<RuneItem> RUNE_CREATURE = registerSupplier("rune_creature", () -> new RuneItem(Rune.CREATURE));
     public static final RegistryObject<RuneItem> RUNE_ITEM = registerSupplier("rune_item", () -> new RuneItem(Rune.ITEM));
     public static final RegistryObject<RuneItem> RUNE_SELF = registerSupplier("rune_self", () -> new RuneItem(Rune.SELF));
+    public static final RegistryObject<RuneItem> RUNE_INSIGHT = registerSupplier("rune_insight", () -> new RuneItem(Rune.INSIGHT));
     public static final RegistryObject<RuneItem> RUNE_POWER = registerSupplier("rune_power", () -> new RuneItem(Rune.POWER));
+    public static final RegistryObject<RuneItem> RUNE_GRACE = registerSupplier("rune_grace", () -> new RuneItem(Rune.GRACE));
     
     // Register ambrosia items
     public static final RegistryObject<AmbrosiaItem> BASIC_EARTH_AMBROSIA = registerSupplier("ambrosia_basic_earth", () -> new AmbrosiaItem(Source.EARTH, 10, new Item.Properties().rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));

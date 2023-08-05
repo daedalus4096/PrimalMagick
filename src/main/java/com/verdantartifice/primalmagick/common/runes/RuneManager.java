@@ -131,7 +131,7 @@ public class RuneManager {
      */
     @Nonnull
     public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
-        if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null) {
+        if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null || !checkLimits(runes)) {
             return Collections.emptyMap();
         }
         
@@ -168,6 +168,25 @@ public class RuneManager {
         }
         
         return retVal;
+    }
+    
+    /**
+     * Check that none of the given runes exceed their per-type limits.
+     * 
+     * @param runes the runes to be checked
+     * @return true if the list of runes is within allowed limits, false otherwise
+     */
+    public static boolean checkLimits(@Nonnull List<Rune> runes) {
+        Map<ResourceLocation, Integer> counts = new HashMap<>();
+        for (Rune rune : runes) {
+            if (rune.hasLimit()) {
+                counts.put(rune.getId(), counts.getOrDefault(rune.getId(), 0) + 1);
+                if (counts.getOrDefault(rune.getId(), 0) > rune.getLimit()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     /**

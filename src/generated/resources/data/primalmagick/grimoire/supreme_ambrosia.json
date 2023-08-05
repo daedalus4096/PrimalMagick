@@ -64,6 +64,9 @@
   ],
   "stages": [
     {
+      "required_item": [
+        "primalmagick:rune_power"
+      ],
       "required_knowledge": [
         "THEORY;3"
       ],
