@@ -943,10 +943,19 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_HALLOWED.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_INSIGHT", discipline).icon(ItemsPM.RUNE_INSIGHT.get()).parent("EXPERT_RUNEWORKING").parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_INSIGHT.get()).build())
+            .build(consumer);
         ResearchEntryBuilder.entry("RUNE_POWER", discipline).icon(ItemsPM.RUNE_POWER.get()).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent(Source.BLOOD.getDiscoverKey())
-            .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey())
+            .parent(Source.INFERNAL.getDiscoverKey()).parent(Source.VOID.getDiscoverKey()).parent("RUNE_INSIGHT")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_power_rune").recipe(ItemsPM.RUNE_POWER.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("RUNE_GRACE", discipline).icon(ItemsPM.RUNE_GRACE.get()).parent("SUPREME_RUNEWORKING").parent("CLUSTER_SYNTHESIS").parent(Source.HALLOWED.getDiscoverKey())
+            .parent("RUNE_POWER")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_GRACE.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("RUNIC_GRINDSTONE", discipline).icon(ItemsPM.RUNIC_GRINDSTONE.get()).parent("RUNE_DISPEL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())

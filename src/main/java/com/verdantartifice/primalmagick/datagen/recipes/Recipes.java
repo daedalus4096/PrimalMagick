@@ -2852,17 +2852,26 @@ public class Recipes extends RecipeProvider {
             .setGroup("source_runes")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_HALLOWED")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_INSIGHT.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_INSIGHT")))
+            .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_POWER.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
-            .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_POWER")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_GRACE.get())
+            .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
+            .addIngredient(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_GRACE")))
             .build(consumer);
     }
 
