@@ -70,7 +70,7 @@
   "stages": [
     {
       "required_item": [
-        "primalmagick:rune_power"
+        "primalmagick:rune_insight"
       ],
       "required_knowledge": [
         "THEORY;2"
