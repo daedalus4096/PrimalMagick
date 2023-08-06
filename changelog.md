@@ -8,6 +8,7 @@ v4.0.1
 * Added Insight Runes, to start empowering rune enchantments sooner in a limited fashion
 * Added Grace Runes, to get the maximum power from your rune enchantments
 * Rebalanced requirements in research and recipes that needed Power Runes
+* Allowed rebinding of the View Item Affinities key, previously Shift, now by default Left Shift
 
 v4.0.0-beta
 -----------
