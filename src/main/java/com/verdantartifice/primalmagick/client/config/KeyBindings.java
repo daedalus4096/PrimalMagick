@@ -23,6 +23,7 @@ public class KeyBindings {
     public static KeyMapping grimoireNextPage;  // Key for going to the next page in a grimoire entry
     public static KeyMapping grimoirePrevPage;  // Key for going to the previous page in a grimoire entry
     public static KeyMapping grimoirePrevTopic; // Key for going back to the previous grimoire topic
+    public static KeyMapping viewAffinityKey;   // Key for viewing affinities in an item stack tooltip
     
     private static final String KEY_CATEGORY = "key.categories." + PrimalMagick.MODID;
     
@@ -45,5 +46,8 @@ public class KeyBindings {
         
         grimoirePrevTopic = new KeyMapping("key.primalmagick.grimoire_prev_topic", GLFW.GLFW_KEY_BACKSPACE, KEY_CATEGORY);
         event.register(grimoirePrevTopic);
+        
+        viewAffinityKey = new KeyMapping("key.primalmagick.view_affinity", GLFW.GLFW_KEY_LEFT_SHIFT, KEY_CATEGORY);
+        event.register(viewAffinityKey);
     }
 }
