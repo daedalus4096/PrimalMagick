@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.events;
 
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
@@ -63,7 +64,7 @@ public class ClientRenderEvents {
         Screen gui = mc.screen;
 
         // Assemble the tooltip components for showing primal affinities on an item stack
-        if (gui instanceof AbstractContainerScreen && (Screen.hasShiftDown() != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
+        if (gui instanceof AbstractContainerScreen && (InputEvents.isKeyDown(KeyBindings.viewAffinityKey) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
                 event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.none")));
