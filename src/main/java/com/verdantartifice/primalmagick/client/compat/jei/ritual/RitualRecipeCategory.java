@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.ritual;
 
+import java.awt.Color;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -70,8 +71,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     @Override
     public void draw(IRitualRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
-        guiGraphics.drawString(mc.font, Component.translatable("gui.primalmagick.jei.ritual.offerings.header"), 0, 2, 0xFF808080);
-        guiGraphics.drawString(mc.font, Component.translatable("gui.primalmagick.jei.ritual.props.header"), 0, 51, 0xFF808080);
+        guiGraphics.drawString(mc.font, Component.translatable("gui.primalmagick.jei.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
+        guiGraphics.drawString(mc.font, Component.translatable("gui.primalmagick.jei.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
         
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
