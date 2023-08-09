@@ -11,10 +11,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -125,10 +123,11 @@ public class AttunementManager {
      * @return true if the player's attunement is being suppressed at the given threshold, false otherwise
      */
     public static boolean isSuppressed(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
-        if (player == null || source == null || threshold == null || threshold == AttunementThreshold.MINOR) {
+        if (player == null || source == null || threshold == null) {
             return false;
         } else {
-            return InventoryUtils.isPlayerCarrying(player, AttunementShacklesItem.getShackles(source));
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
+            return attunements != null && attunements.isSuppressed(source);
         }
     }
     

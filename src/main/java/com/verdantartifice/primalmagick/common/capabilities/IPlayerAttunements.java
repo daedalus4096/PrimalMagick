@@ -39,6 +39,22 @@ public interface IPlayerAttunements extends INBTSerializable<CompoundTag> {
     public void setValue(@Nullable Source source, @Nullable AttunementType type, int value);
     
     /**
+     * Get whether the given attunement is suppressed for the player.
+     * 
+     * @param source the source of the attunement to be queried
+     * @return true if the attunement is suppressed for the player, false otherwise
+     */
+    public boolean isSuppressed(@Nullable Source source);
+    
+    /**
+     * Store whether the given attunement should be suppressed for the player.
+     * 
+     * @param source the source of the attunement to be stored
+     * @param value the suppression status to be stored
+     */
+    public void setSuppressed(@Nullable Source source, boolean value);
+    
+    /**
      * Sync the given player's attunement data to the their client.
      * 
      * @param player the player whose client should receive the data
