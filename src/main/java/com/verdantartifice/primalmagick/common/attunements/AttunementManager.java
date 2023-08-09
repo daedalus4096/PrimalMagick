@@ -11,8 +11,10 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -104,10 +106,29 @@ public class AttunementManager {
      * @return true if the player's total attunement meets or exceeds the given threshold, false otherwise
      */
     public static boolean meetsThreshold(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
-        if (player != null && source != null && threshold != null) {
-            return getTotalAttunement(player, source) >= threshold.getValue();
-        } else {
+        if (player == null || source == null || threshold == null) {
             return false;
+        } else if (AttunementManager.isSuppressed(player, source, threshold)) {
+            return false;
+        } else {
+            return getTotalAttunement(player, source) >= threshold.getValue();
+        }
+    }
+    
+    /**
+     * Determine whether the given player's attunement for the given source and threshold are being suppressed
+     * and should not take effect.
+     * 
+     * @param player the player to be queried
+     * @param source the source of attunement being queried
+     * @param threshold the threshold value to test against
+     * @return true if the player's attunement is being suppressed at the given threshold, false otherwise
+     */
+    public static boolean isSuppressed(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
+        if (player == null || source == null || threshold == null || threshold == AttunementThreshold.MINOR) {
+            return false;
+        } else {
+            return InventoryUtils.isPlayerCarrying(player, AttunementShacklesItem.getShackles(source));
         }
     }
     

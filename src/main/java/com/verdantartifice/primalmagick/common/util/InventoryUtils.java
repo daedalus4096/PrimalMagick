@@ -84,6 +84,18 @@ public class InventoryUtils {
     }
     
     /**
+     * Determine if the given player is carrying a stack of the given item in their main inventory.  Does
+     * not consider equipped items or nested inventories (e.g. backpacks).
+     * 
+     * @param player the player whose inventory to search
+     * @param item the item being searched for
+     * @return true if the player is carrying at least one of the given item, false otherwise
+     */
+    public static boolean isPlayerCarrying(@Nullable Player player, @Nonnull Item item) {
+        return isPlayerCarrying(player, new ItemStack(item));
+    }
+    
+    /**
      * Determine if the given player is carrying items of the given tag in their main inventory.  Does
      * not consider equipped items or nested inventories (e.g. backpacks).  If the given amount is
      * greater than one, this method will search for any combination of itemstacks in the player's
