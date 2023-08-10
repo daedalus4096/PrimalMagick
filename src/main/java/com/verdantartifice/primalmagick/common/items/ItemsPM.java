@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagick.common.items.food.ManafruitItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementGainItem;
+import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.DowsingRodItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
@@ -614,6 +615,17 @@ public class ItemsPM {
     public static final RegistryObject<AmbrosiaItem> SUPREME_INFERNAL_AMBROSIA = registerSupplier("ambrosia_supreme_infernal", () -> new AmbrosiaItem(Source.INFERNAL, 50, new Item.Properties().rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_VOID_AMBROSIA = registerSupplier("ambrosia_supreme_void", () -> new AmbrosiaItem(Source.VOID, 50, new Item.Properties().rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
     public static final RegistryObject<AmbrosiaItem> SUPREME_HALLOWED_AMBROSIA = registerSupplier("ambrosia_supreme_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, 50, new Item.Properties().rarity(Rarity.EPIC).food(new FoodProperties.Builder().nutrition(4).saturationMod(1.2F).alwaysEat().build())));
+    
+    // Register attunement shackle items
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_EARTH = registerSupplier("attunement_shackles_earth", () -> new AttunementShacklesItem(Source.EARTH, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SEA = registerSupplier("attunement_shackles_sea", () -> new AttunementShacklesItem(Source.SEA, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SKY = registerSupplier("attunement_shackles_sky", () -> new AttunementShacklesItem(Source.SKY, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SUN = registerSupplier("attunement_shackles_sun", () -> new AttunementShacklesItem(Source.SUN, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_MOON = registerSupplier("attunement_shackles_moon", () -> new AttunementShacklesItem(Source.MOON, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_BLOOD = registerSupplier("attunement_shackles_blood", () -> new AttunementShacklesItem(Source.BLOOD, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_INFERNAL = registerSupplier("attunement_shackles_infernal", () -> new AttunementShacklesItem(Source.INFERNAL, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_VOID = registerSupplier("attunement_shackles_void", () -> new AttunementShacklesItem(Source.VOID, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_HALLOWED = registerSupplier("attunement_shackles_hallowed", () -> new AttunementShacklesItem(Source.HALLOWED, new Item.Properties()));
     
     // Register humming artifact items
     public static final RegistryObject<Item> HUMMING_ARTIFACT_UNATTUNED = registerSupplier("humming_artifact_unattuned", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

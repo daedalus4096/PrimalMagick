@@ -1,3 +1,7 @@
+v4.0.2
+------
+* Added Attunement Shackles, for those who don't want to embrace magickal attunement
+
 v4.0.1
 ------
 * Changed the Essence Thief enchantment to work better with high damage weapons

@@ -85,6 +85,7 @@ public class Recipes extends RecipeProvider {
         this.registerDissolutionChamberRecipes(consumer);
         this.registerHummingArtifactRecipes(consumer);
         this.registerEssenceCaskRecipes(consumer);
+        this.registerAttunementShacklesRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6338,6 +6339,90 @@ public class Recipes extends RecipeProvider {
             .key('B', ItemsPM.ESSENCE_CASK_FORBIDDEN.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_HEAVENLY")))
             .manaCost(new SourceList().add(Source.HALLOWED, 400))
+            .build(consumer);
+    }
+    
+    protected void registerAttunementShacklesRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .manaCost(new SourceList().add(Source.EARTH, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .manaCost(new SourceList().add(Source.SEA, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_SKY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .manaCost(new SourceList().add(Source.SKY, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .manaCost(new SourceList().add(Source.SUN, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_MOON.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .manaCost(new SourceList().add(Source.MOON, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_BLOOD.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.BLOOD.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.BLOOD, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.INFERNAL.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.INFERNAL, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_VOID.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.VOID.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.VOID, 40))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get())
+            .patternLine("CSC")
+            .patternLine("C C")
+            .patternLine("S S")
+            .key('C', Items.CHAIN)
+            .key('S', ItemsPM.ESSENCE_SHARD_HALLOWED.get())
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.HALLOWED.getDiscoverKey()))
+            .manaCost(new SourceList().add(Source.HALLOWED, 40))
             .build(consumer);
     }
 }

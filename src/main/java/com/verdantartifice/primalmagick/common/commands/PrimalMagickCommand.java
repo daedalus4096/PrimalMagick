@@ -504,6 +504,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             attunements.clear();
+            AttunementManager.removeAllAttributeModifiers(target);
             AttunementManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.reset", target.getName()), true);
             target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.reset.target", source.getTextName()));
