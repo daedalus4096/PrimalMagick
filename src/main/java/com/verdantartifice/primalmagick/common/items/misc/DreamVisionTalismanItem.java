@@ -136,9 +136,9 @@ public class DreamVisionTalismanItem extends Item {
         super.appendHoverText(stack, level, tooltip, flagIn);
         tooltip.add(Component.translatable("tooltip.primalmagick.dream_vision_talisman.exp", this.getStoredExp(stack), this.getExpCapacity(stack)));
         if (this.isActive(stack)) {
-            tooltip.add(Component.translatable("tooltip.primalmagick.dream_vision_talisman.active").withStyle(ChatFormatting.GREEN));
+            tooltip.add(Component.translatable("tooltip.primalmagick.active").withStyle(ChatFormatting.GREEN));
         } else {
-            tooltip.add(Component.translatable("tooltip.primalmagick.dream_vision_talisman.inactive").withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.primalmagick.inactive").withStyle(ChatFormatting.RED));
         }
     }
 
