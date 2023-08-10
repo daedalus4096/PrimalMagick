@@ -292,4 +292,15 @@ public class AttunementManager {
             }
         }
     }
+    
+    /**
+     * Remove all attunement attribute modifiers from the given player.  Used when resetting a player's attunements.
+     * 
+     * @param player the player to be modified
+     */
+    public static void removeAllAttributeModifiers(@Nullable Player player) {
+        if (player instanceof ServerPlayer) {
+            MODIFIERS.stream().forEach(modifier -> modifier.removeFromEntity(player));
+        }
+    }
 }
