@@ -2125,6 +2125,8 @@
     
     "primalmagick.attunement.threshold_gain": "You have gained %2$s attunement to the %1$s",
     "primalmagick.attunement.threshold_loss": "You have lost %2$s attunement to the %1$s",
+    "primalmagick.attunement.suppression_gain": "Your attunement to the %1$s has been suppressed",
+    "primalmagick.attunement.suppression_loss": "Your attunement to the %1$s has been restored",
     
     "primalmagick.attunement.threshold.earth.minor": "5% Earth mana discount",
     "primalmagick.attunement.threshold.earth.lesser": "Increased attack/mining speed",
