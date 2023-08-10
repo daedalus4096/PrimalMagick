@@ -1,6 +1,7 @@
 v4.0.2
 ------
 * Added Attunement Shackles, for those who don't want to embrace magickal attunement
+* Fix compatibility issue with the mod Create
 
 v4.0.1
 ------
