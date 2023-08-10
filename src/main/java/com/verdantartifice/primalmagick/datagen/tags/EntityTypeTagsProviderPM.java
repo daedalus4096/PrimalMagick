@@ -50,6 +50,9 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
                 EntityType.GHAST, EntityType.PARROT, EntityType.PHANTOM, EntityType.VEX, EntityType.WITHER);
         this.tag(EntityTypeTagsPM.GOLEMS).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);
         
+        this.tag(EntityTypeTagsPM.POLYMORPH_ALLOW).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM, EntityType.VILLAGER).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS);
+        this.tag(EntityTypeTagsPM.POLYMORPH_BAN).add(EntityType.ENDER_DRAGON, EntityType.WARDEN, EntityType.WITHER, EntityType.WOLF, EntityTypesPM.INNER_DEMON.get());
+        
         this.tag(EntityTypeTagsPM.DROPS_BLOODY_FLESH).add(EntityType.EVOKER, EntityType.ILLUSIONER, EntityType.PILLAGER, EntityType.VILLAGER, EntityType.VINDICATOR,
                 EntityType.WANDERING_TRADER, EntityType.WITCH);
         this.tag(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH).add(EntityType.EVOKER);

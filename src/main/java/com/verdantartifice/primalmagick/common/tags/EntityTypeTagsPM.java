@@ -20,6 +20,9 @@ public class EntityTypeTagsPM {
     public static final TagKey<EntityType<?>> FLYING_CREATURES = tag("flying_creatures");
     public static final TagKey<EntityType<?>> GOLEMS = tag("golems");
     
+    public static final TagKey<EntityType<?>> POLYMORPH_ALLOW = tag("polymorph_allow");
+    public static final TagKey<EntityType<?>> POLYMORPH_BAN = tag("polymorph_ban");
+    
     public static final TagKey<EntityType<?>> DROPS_BLOODY_FLESH = tag("drops_bloody_flesh");
     public static final TagKey<EntityType<?>> DROPS_BLOOD_NOTES_HIGH = tag("drops_blood_notes_high");
     public static final TagKey<EntityType<?>> DROPS_BLOOD_NOTES_LOW = tag("drops_blood_notes_low");

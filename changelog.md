@@ -1,7 +1,8 @@
 v4.0.2
 ------
 * Added Attunement Shackles, for those who don't want to embrace magickal attunement
-* Fix compatibility issue with the mod Create
+* Fixed compatibility issue with the mod Create
+* Changed allow and ban lists for the Polymorph spell to use tags instead of inter-mod comms
 
 v4.0.1
 ------

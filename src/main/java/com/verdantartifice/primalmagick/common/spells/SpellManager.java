@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.spells;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +23,7 @@ import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
@@ -60,10 +60,6 @@ public class SpellManager {
     protected static final Map<String, Supplier<CompoundResearchKey>> VEHICLE_RESEARCH_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<CompoundResearchKey>> PAYLOAD_RESEARCH_SUPPLIERS = new HashMap<>();
     protected static final Map<String, Supplier<CompoundResearchKey>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
-    
-    // Allow and ban lists for polymorphing entity types
-    protected static final Set<EntityType<?>> POLYMORPH_ALLOW = new HashSet<>();
-    protected static final Set<EntityType<?>> POLYMORPH_BAN = new HashSet<>();
     
     protected static final DecimalFormat COOLDOWN_FORMATTER = new DecimalFormat("#######.##");
 
@@ -249,18 +245,10 @@ public class SpellManager {
         }
     }
     
-    public static void setPolymorphAllowed(@Nonnull EntityType<?> entityType) {
-        POLYMORPH_ALLOW.add(entityType);
-    }
-    
-    public static void setPolymorphBanned(@Nonnull EntityType<?> entityType) {
-        POLYMORPH_BAN.add(entityType);
-    }
-    
     public static boolean canPolymorph(@Nonnull EntityType<?> entityType) {
-        if (POLYMORPH_ALLOW.contains(entityType)) {
+        if (entityType.is(EntityTypeTagsPM.POLYMORPH_ALLOW)) {
             return true;
-        } else if (POLYMORPH_BAN.contains(entityType)) {
+        } else if (entityType.is(EntityTypeTagsPM.POLYMORPH_BAN)) {
             return false;
         } else {
             // Don't allow misc entities like arrows and fishing bobbers unless explicitly allow-listed
