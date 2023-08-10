@@ -6,9 +6,15 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Iterables;
+import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 /**
  * Item definition for attunement shackles.  An item that, when carried in a player's inventory, will
@@ -28,6 +34,14 @@ public class AttunementShacklesItem extends Item {
         SHACKLES.put(source, this);
     }
     
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        if (!pLevel.isClientSide) {
+            AttunementManager.setSuppressed(pPlayer, this.source, !AttunementManager.isSuppressed(pPlayer, this.source));
+        }
+        return super.use(pLevel, pPlayer, pUsedHand);
+    }
+
     public int getColor(int tintIndex) {
         return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
     }

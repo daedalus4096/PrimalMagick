@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -106,7 +107,7 @@ public class AttunementManager {
     public static boolean meetsThreshold(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
         if (player == null || source == null || threshold == null) {
             return false;
-        } else if (AttunementManager.isSuppressed(player, source, threshold)) {
+        } else if (AttunementManager.isSuppressed(player, source)) {
             return false;
         } else {
             return getTotalAttunement(player, source) >= threshold.getValue();
@@ -119,15 +120,52 @@ public class AttunementManager {
      * 
      * @param player the player to be queried
      * @param source the source of attunement being queried
-     * @param threshold the threshold value to test against
-     * @return true if the player's attunement is being suppressed at the given threshold, false otherwise
+     * @return true if the player's attunement is being suppressed, false otherwise
      */
-    public static boolean isSuppressed(@Nullable Player player, @Nullable Source source, @Nullable AttunementThreshold threshold) {
-        if (player == null || source == null || threshold == null) {
+    public static boolean isSuppressed(@Nullable Player player, @Nullable Source source) {
+        if (player == null || source == null) {
             return false;
         } else {
             IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
             return attunements != null && attunements.isSuppressed(source);
+        }
+    }
+    
+    /**
+     * Sets whether the given source attunement should be suppressed for the given player.  Also notifies the player
+     * and adds or removes any attribute modifiers, as appropriate.
+     * 
+     * @param player the player to be modified
+     * @param source the source of attunement to be modified
+     * @param value true if the attunement should be suppressed, false otherwise
+     */
+    public static void setSuppressed(@Nullable Player player, @Nullable Source source, boolean value) {
+        if (player instanceof ServerPlayer && source != null) {
+            IPlayerAttunements attunements = PrimalMagickCapabilities.getAttunements(player);
+            if (attunements != null) {
+                boolean before = attunements.isSuppressed(source);
+                Component sourceText = source.getNameText();
+                
+                // Set the new value into the player capability
+                attunements.setSuppressed(source, value);
+                scheduleSync(player);
+                
+                // Determine if any attribute modifiers need to change
+                int total = getTotalAttunement(player, source);
+                if (!before && value) {
+                    // Suppression newly active, so remove any active modifiers
+                    player.displayClientMessage(Component.translatable("primalmagick.attunement.suppression_gain", sourceText), false);
+                    Stream.of(AttunementThreshold.values()).filter(threshold -> total >= threshold.getValue()).forEach(threshold -> {
+                        MODIFIERS.stream().filter(mod -> source.equals(mod.getSource()) && threshold == mod.getThreshold()).forEach(mod -> mod.removeFromEntity(player));
+                    });
+                } else if (before && !value) {
+                    // Suppression newly inactive, so add any appropriate modifiers
+                    player.displayClientMessage(Component.translatable("primalmagick.attunement.suppression_loss", sourceText), false);
+                    Stream.of(AttunementThreshold.values()).filter(threshold -> total >= threshold.getValue()).forEach(threshold -> {
+                        MODIFIERS.stream().filter(mod -> source.equals(mod.getSource()) && threshold == mod.getThreshold()).forEach(mod -> mod.applyToEntity(player));
+                    });
+                }
+            }
         }
     }
     
