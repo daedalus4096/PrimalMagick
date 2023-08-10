@@ -841,6 +841,7 @@
     "tooltip.primalmagick.humming_artifact_infernal": "Use to gain a point of permanent Infernal attunement",
     "tooltip.primalmagick.humming_artifact_void": "Use to gain a point of permanent Void attunement",
     "tooltip.primalmagick.humming_artifact_hallowed": "Use to gain a point of permanent Hallowed attunement",
+    "tooltip.primalmagick.attunement_shackles.shackled": "Shackled",
     
     "effect.primalmagick.flying": "Flying",
     "effect.primalmagick.polymorph": "Polymorph",

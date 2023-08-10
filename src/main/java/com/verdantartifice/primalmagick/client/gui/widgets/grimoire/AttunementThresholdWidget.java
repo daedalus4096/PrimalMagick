@@ -1,8 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -10,11 +14,14 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -30,17 +37,26 @@ public class AttunementThresholdWidget extends AbstractWidget {
         ItemsPM.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
         ItemsPM.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
     });
+    protected static final ResourceLocation SHACKLED_TEXTURE = new ResourceLocation("textures/item/barrier.png");
     
     protected final Source source;
     protected final AttunementThreshold threshold;
+    protected final boolean suppressed;
     protected final ResourceLocation texture;
     
     public AttunementThresholdWidget(@Nonnull Source source, @Nonnull AttunementThreshold threshold, int x, int y) {
         super(x, y, 18, 18, Component.empty());
         this.source = source;
         this.threshold = threshold;
+        Minecraft mc = Minecraft.getInstance();
+        this.suppressed = AttunementManager.isSuppressed(mc.player, source);
         this.texture = new ResourceLocation(PrimalMagick.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
-        this.setTooltip(Tooltip.create(Component.translatable("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag())));
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag()));
+        if (this.suppressed) {
+            lines.add(Component.translatable("tooltip.primalmagick.attunement_shackles.shackled").withStyle(ChatFormatting.RED));
+        }
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
     
     @Override
@@ -54,6 +70,12 @@ public class AttunementThresholdWidget extends AbstractWidget {
             guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
             guiGraphics.pose().scale(0.0703125F, 0.0703125F, 0.0703125F);
             guiGraphics.blit(this.texture, 0, 0, 0, 0, 255, 255);
+            guiGraphics.pose().popPose();
+        }
+        if (this.suppressed) {
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(this.getX() + 1, this.getY() + 1, 0.0F);
+            guiGraphics.blit(SHACKLED_TEXTURE, 0, 0, 0, 0, 16, 16);
             guiGraphics.pose().popPose();
         }
     }
