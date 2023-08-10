@@ -435,6 +435,16 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 2).recipe(ItemsPM.WAND_GLAMOUR_TABLE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("ATTUNEMENT_SHACKLES", discipline).icon(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get()).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
+            .parent("ATTUNEMENTS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
+                    .recipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.BLOOD.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.INFERNAL.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.VOID.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).build())
+            .build(consumer);
     }
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
