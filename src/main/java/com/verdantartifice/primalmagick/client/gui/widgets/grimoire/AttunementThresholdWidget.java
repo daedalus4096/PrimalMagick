@@ -25,6 +25,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Display widget for showing attunement threshold bonuses.
@@ -37,7 +38,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         ItemsPM.MODULAR_WAND.get().setWandCap(stack, WandCap.IRON);
         ItemsPM.MODULAR_WAND.get().setWandGem(stack, WandGem.APPRENTICE);
     });
-    protected static final ResourceLocation SHACKLED_TEXTURE = new ResourceLocation("textures/item/barrier.png");
+    protected static final ItemStack SHACKLED_OVERLAY_STACK = new ItemStack(Items.BARRIER);
     
     protected final Source source;
     protected final AttunementThreshold threshold;
@@ -74,8 +75,8 @@ public class AttunementThresholdWidget extends AbstractWidget {
         }
         if (this.suppressed) {
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 1, this.getY() + 1, 0.0F);
-            guiGraphics.blit(SHACKLED_TEXTURE, 0, 0, 0, 0, 16, 16);
+            guiGraphics.pose().translate(this.getX() + 1, this.getY() + 1, 1.0F);
+            guiGraphics.renderItem(SHACKLED_OVERLAY_STACK, 0, 0);
             guiGraphics.pose().popPose();
         }
     }
