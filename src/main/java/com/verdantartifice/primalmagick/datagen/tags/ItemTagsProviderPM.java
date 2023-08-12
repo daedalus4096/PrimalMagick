@@ -43,6 +43,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.LEAVES).add(ItemsPM.MOONWOOD_LEAVES.get(), ItemsPM.SUNWOOD_LEAVES.get(), ItemsPM.HALLOWOOD_LEAVES.get());
         this.tag(ItemTags.PLANKS).add(ItemsPM.MOONWOOD_PLANKS.get(), ItemsPM.SUNWOOD_PLANKS.get(), ItemsPM.HALLOWOOD_PLANKS.get());
         this.tag(ItemTags.SAPLINGS).add(ItemsPM.MOONWOOD_SAPLING.get(), ItemsPM.SUNWOOD_SAPLING.get(), ItemsPM.HALLOWOOD_SAPLING.get());
+        this.tag(ItemTags.TRIMMABLE_ARMOR).addTag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.PRIMALITE_FEET.get(), ItemsPM.PRIMALITE_HEAD.get(), ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HEXIUM_HEAD.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_CHEST.get(), ItemsPM.HALLOWSTEEL_FEET.get(), ItemsPM.HALLOWSTEEL_HEAD.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(ItemTags.WALLS).add(ItemsPM.MARBLE_WALL.get(), ItemsPM.MARBLE_BRICK_WALL.get(), ItemsPM.MARBLE_ENCHANTED_WALL.get(), ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get(), ItemsPM.MARBLE_SMOKED_WALL.get(), ItemsPM.MARBLE_SMOKED_BRICK_WALL.get());
         this.tag(ItemTags.WOODEN_SLABS).add(ItemsPM.MOONWOOD_SLAB.get(), ItemsPM.SUNWOOD_SLAB.get(), ItemsPM.HALLOWOOD_SLAB.get());
         this.tag(ItemTags.WOODEN_STAIRS).add(ItemsPM.MOONWOOD_STAIRS.get(), ItemsPM.SUNWOOD_STAIRS.get(), ItemsPM.HALLOWOOD_STAIRS.get());
@@ -119,6 +120,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.RITUAL_CANDLES).add(ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
         this.tag(ItemTagsPM.RUNE_BASES).add(Items.STONE_SLAB);
         this.tag(ItemTagsPM.RUNE_ETCHINGS).addTag(Tags.Items.GEMS_LAPIS);
+        this.tag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR).add(ItemsPM.IMBUED_WOOL_CHEST.get(), ItemsPM.IMBUED_WOOL_FEET.get(), ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.IMBUED_WOOL_LEGS.get(), ItemsPM.SPELLCLOTH_CHEST.get(), ItemsPM.SPELLCLOTH_FEET.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.SPELLCLOTH_LEGS.get(), ItemsPM.HEXWEAVE_CHEST.get(), ItemsPM.HEXWEAVE_FEET.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.HEXWEAVE_LEGS.get(), ItemsPM.SAINTSWOOL_CHEST.get(), ItemsPM.SAINTSWOOL_FEET.get(), ItemsPM.SAINTSWOOL_HEAD.get(), ItemsPM.SAINTSWOOL_LEGS.get());
         this.tag(ItemTagsPM.SHULKER_BOXES).addTag(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
         this.tag(ItemTagsPM.SKYGLASS).add(ItemsPM.SKYGLASS.get()).addTag(ItemTagsPM.STAINED_SKYGLASS);
         this.tag(ItemTagsPM.SKYGLASS_PANES).add(ItemsPM.SKYGLASS_PANE.get()).addTag(ItemTagsPM.STAINED_SKYGLASS_PANES);
