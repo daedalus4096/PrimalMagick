@@ -121,6 +121,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.RUNE_BASES).add(Items.STONE_SLAB);
         this.tag(ItemTagsPM.RUNE_ETCHINGS).addTag(Tags.Items.GEMS_LAPIS);
         this.tag(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR).add(ItemsPM.IMBUED_WOOL_CHEST.get(), ItemsPM.IMBUED_WOOL_FEET.get(), ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.IMBUED_WOOL_LEGS.get(), ItemsPM.SPELLCLOTH_CHEST.get(), ItemsPM.SPELLCLOTH_FEET.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.SPELLCLOTH_LEGS.get(), ItemsPM.HEXWEAVE_CHEST.get(), ItemsPM.HEXWEAVE_FEET.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.HEXWEAVE_LEGS.get(), ItemsPM.SAINTSWOOL_CHEST.get(), ItemsPM.SAINTSWOOL_FEET.get(), ItemsPM.SAINTSWOOL_HEAD.get(), ItemsPM.SAINTSWOOL_LEGS.get());
+        this.tag(ItemTagsPM.RUNIC_TRIM_MATERIALS).add(ItemsPM.RUNE_EARTH.get(), ItemsPM.RUNE_SEA.get(), ItemsPM.RUNE_SKY.get(), ItemsPM.RUNE_SUN.get(), ItemsPM.RUNE_MOON.get(), ItemsPM.RUNE_BLOOD.get(), ItemsPM.RUNE_INFERNAL.get(), ItemsPM.RUNE_VOID.get(), ItemsPM.RUNE_HALLOWED.get());
         this.tag(ItemTagsPM.SHULKER_BOXES).addTag(ItemTagsPM.COLORED_SHULKER_BOXES).add(Items.SHULKER_BOX);
         this.tag(ItemTagsPM.SKYGLASS).add(ItemsPM.SKYGLASS.get()).addTag(ItemTagsPM.STAINED_SKYGLASS);
         this.tag(ItemTagsPM.SKYGLASS_PANES).add(ItemsPM.SKYGLASS_PANE.get()).addTag(ItemTagsPM.STAINED_SKYGLASS_PANES);

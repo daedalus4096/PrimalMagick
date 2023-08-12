@@ -30,6 +30,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> RUNE_BASES = tag("rune_bases");
     public static final TagKey<Item> RUNE_ETCHINGS = tag("rune_etchings");
     public static final TagKey<Item> RUNIC_TRIMMABLE_ARMOR = tag("runic_trimmable_armor");
+    public static final TagKey<Item> RUNIC_TRIM_MATERIALS = tag("runic_trim_materials");
     public static final TagKey<Item> SHULKER_BOXES = tag("shulker_boxes");
     public static final TagKey<Item> SKYGLASS = tag("skyglass");
     public static final TagKey<Item> SKYGLASS_PANES = tag("skyglass_panes");
