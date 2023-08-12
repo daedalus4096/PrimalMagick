@@ -2,6 +2,6 @@
     "parent": "minecraft:item/generated",
     "textures": {
         "layer0": "primalmagick:item/imbued_wool_chest",
-        "layer1": "minecraft:trims/items/chestplate_trim_amethyst"
+        "layer1": "primalmagick:trims/items/robe_chest_trim_amethyst"
     }
 }
