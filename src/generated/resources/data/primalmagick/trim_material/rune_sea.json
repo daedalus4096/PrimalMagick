@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_sea",
+  "description": {
+    "color": "#117899",
+    "translate": "trim_material.primalmagick.rune_sea"
+  },
+  "ingredient": "primalmagick:rune_sea",
+  "item_model_index": 0.9
+}

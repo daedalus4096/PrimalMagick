@@ -2692,6 +2692,16 @@
     "concoctions.primalmagick.fuse.long": "5s",
     "concoctions.primalmagick.fuse_set": "Bomb fuse set to %1$s",
     
+    "trim_material.primalmagick.rune_earth": "Earth Rune Material",
+    "trim_material.primalmagick.rune_sea": "Sea Rune Material",
+    "trim_material.primalmagick.rune_sky": "Sky Rune Material",
+    "trim_material.primalmagick.rune_sun": "Sun Rune Material",
+    "trim_material.primalmagick.rune_moon": "Moon Rune Material",
+    "trim_material.primalmagick.rune_blood": "Blood Rune Material",
+    "trim_material.primalmagick.rune_infernal": "Infernal Rune Material",
+    "trim_material.primalmagick.rune_void": "Void Rune Material",
+    "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
+    
     "death.attack.primalmagick.bleeding": "%1$s bled to death",
     "death.attack.primalmagick.bleeding.player": "%1$s bled to death whilst fighting %2$s",
     "death.attack.primalmagick.hellish_chain": "%1$s was killed by %2$s",

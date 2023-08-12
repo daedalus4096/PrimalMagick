@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_sun",
+  "description": {
+    "color": "#F9C81C",
+    "translate": "trim_material.primalmagick.rune_sun"
+  },
+  "ingredient": "primalmagick:rune_sun",
+  "item_model_index": 0.6
+}

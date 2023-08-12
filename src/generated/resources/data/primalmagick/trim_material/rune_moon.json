@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_moon",
+  "description": {
+    "color": "#D1DDE3",
+    "translate": "trim_material.primalmagick.rune_moon"
+  },
+  "ingredient": "primalmagick:rune_moon",
+  "item_model_index": 0.2
+}
