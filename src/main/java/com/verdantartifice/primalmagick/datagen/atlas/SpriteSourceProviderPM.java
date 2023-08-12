@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.datagen.atlas;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import org.slf4j.Logger;
 
+import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.itemstack.HallowsteelShieldISTER;
@@ -28,6 +30,7 @@ import com.verdantartifice.primalmagick.common.containers.slots.WritingImplement
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -92,6 +95,26 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         for (Source source : Source.SORTED_SOURCES) {
             this.addSingle(blockAtlas, source.getAtlasLocation());
         }
+        
+        // Add robe armor trim item overlays to the block atlas
+        blockAtlas.addSource(new PalettedPermutations(
+                List.of(new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_chest_trim"), 
+                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_feet_trim"), 
+                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_head_trim"), 
+                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_legs_trim")),
+                new ResourceLocation("trims/color_palettes/trim_palette"),
+                ImmutableMap.<String, ResourceLocation>builder()
+                        .put("quartz", new ResourceLocation("trims/color_palettes/quartz"))
+                        .put("iron", new ResourceLocation("trims/color_palettes/iron"))
+                        .put("gold", new ResourceLocation("trims/color_palettes/gold"))
+                        .put("diamond", new ResourceLocation("trims/color_palettes/diamond"))
+                        .put("netherite", new ResourceLocation("trims/color_palettes/netherite"))
+                        .put("redstone", new ResourceLocation("trims/color_palettes/redstone"))
+                        .put("copper", new ResourceLocation("trims/color_palettes/copper"))
+                        .put("emerald", new ResourceLocation("trims/color_palettes/emerald"))
+                        .put("lapis", new ResourceLocation("trims/color_palettes/lapis"))
+                        .put("amethyst", new ResourceLocation("trims/color_palettes/amethyst"))
+                        .build()));
     }
 
 }
