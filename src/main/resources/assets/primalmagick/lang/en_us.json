@@ -842,6 +842,10 @@
     "tooltip.primalmagick.humming_artifact_void": "Use to gain a point of permanent Void attunement",
     "tooltip.primalmagick.humming_artifact_hallowed": "Use to gain a point of permanent Hallowed attunement",
     "tooltip.primalmagick.attunement_shackles.shackled": "Shackled",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.additions_slot_description": "Add source rune",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.applies_to": "Robes",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.base_slot_description": "Add a piece of robe armor",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.ingredients": "Source Runes",
     
     "effect.primalmagick.flying": "Flying",
     "effect.primalmagick.polymorph": "Polymorph",
@@ -2701,6 +2705,7 @@
     "trim_material.primalmagick.rune_infernal": "Infernal Rune Material",
     "trim_material.primalmagick.rune_void": "Void Rune Material",
     "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
+    "trim_pattern.primalmagick.runic": "Runic Armor Trim",
     
     "death.attack.primalmagick.bleeding": "%1$s bled to death",
     "death.attack.primalmagick.bleeding.player": "%1$s bled to death whilst fighting %2$s",

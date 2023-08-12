@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.items;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
@@ -87,6 +88,7 @@ import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -510,6 +512,7 @@ public class ItemsPM {
     public static final RegistryObject<DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = registerSupplier("four_leaf_clover", () -> new Item(new Item.Properties()));
     public static final RegistryObject<RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));
+    public static final RegistryObject<SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(TrimPatternsPM.RUNIC));
     
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = registerSupplier("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties()));

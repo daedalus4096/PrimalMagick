@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
+import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
@@ -28,6 +29,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.PLACED_FEATURE, PlacedFeaturesPM::bootstrap)
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, BiomeModifiersPM::bootstrap)
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
+            .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap);
     
     // Use addProviders() instead
