@@ -124,16 +124,15 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
                         new ResourceLocation(PrimalMagick.MODID, "trims/models/armor/runic_leggings")),
                 new ResourceLocation("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
-                        .put("quartz", new ResourceLocation("trims/color_palettes/quartz"))
-                        .put("iron", new ResourceLocation("trims/color_palettes/iron"))
-                        .put("gold", new ResourceLocation("trims/color_palettes/gold"))
-                        .put("diamond", new ResourceLocation("trims/color_palettes/diamond"))
-                        .put("netherite", new ResourceLocation("trims/color_palettes/netherite"))
-                        .put("redstone", new ResourceLocation("trims/color_palettes/redstone"))
-                        .put("copper", new ResourceLocation("trims/color_palettes/copper"))
-                        .put("emerald", new ResourceLocation("trims/color_palettes/emerald"))
-                        .put("lapis", new ResourceLocation("trims/color_palettes/lapis"))
-                        .put("amethyst", new ResourceLocation("trims/color_palettes/amethyst"))
+                        .put("rune_earth", new ResourceLocation("trims/color_palettes/emerald"))
+                        .put("rune_sea", new ResourceLocation("trims/color_palettes/lapis"))
+                        .put("rune_sky", new ResourceLocation("trims/color_palettes/diamond"))
+                        .put("rune_sun", new ResourceLocation("trims/color_palettes/gold"))
+                        .put("rune_moon", new ResourceLocation("trims/color_palettes/iron"))
+                        .put("rune_blood", new ResourceLocation("trims/color_palettes/redstone"))
+                        .put("rune_infernal", new ResourceLocation("trims/color_palettes/copper"))
+                        .put("rune_void", new ResourceLocation("trims/color_palettes/amethyst"))
+                        .put("rune_hallowed", new ResourceLocation("trims/color_palettes/quartz"))
                         .build()));
     }
 
