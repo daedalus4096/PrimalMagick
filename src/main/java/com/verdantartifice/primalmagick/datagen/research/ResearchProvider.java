@@ -975,6 +975,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredCraftTag(ItemTags.BEDS).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RECALL_STONE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("RUNIC_TRIM", discipline).icon(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).parent("EXPERT_RUNEWORKING").parent("IMBUED_WOOL").parent("RUNE_EARTH")
+            .parent("RUNE_SEA").parent("RUNE_SKY").parent("RUNE_SUN").parent("RUNE_MOON")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemStack(ItemsPM.RUNE_EARTH.get()).requiredItemStack(ItemsPM.RUNE_SEA.get())
+                    .requiredItemStack(ItemsPM.RUNE_SKY.get()).requiredItemStack(ItemsPM.RUNE_SUN.get()).requiredItemStack(ItemsPM.RUNE_MOON.get()).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).build())
+            .build(consumer);
     }
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {

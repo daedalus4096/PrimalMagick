@@ -113,7 +113,12 @@ public class Source {
     
     @Nonnull
     public Component getNameText() {
-        return Component.translatable(this.getNameTranslationKey()).withStyle(this.getChatColor());
+        return this.getNameText(this.getChatColor());
+    }
+    
+    @Nonnull
+    public Component getNameText(ChatFormatting format) {
+        return Component.translatable(this.getNameTranslationKey()).withStyle(format);
     }
     
     @Nonnull

@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -23,15 +24,15 @@ import net.minecraft.world.item.Rarity;
 public abstract class Rune {
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
-    public static final SourceRune EARTH = new SourceRune("earth", "RUNE_EARTH");
-    public static final SourceRune SEA = new SourceRune("sea", "RUNE_SEA");
-    public static final SourceRune SKY = new SourceRune("sky", "RUNE_SKY");
-    public static final SourceRune SUN = new SourceRune("sun", "RUNE_SUN");
-    public static final SourceRune MOON = new SourceRune("moon", "RUNE_MOON");
-    public static final SourceRune BLOOD = new SourceRune("blood", "RUNE_BLOOD");
-    public static final SourceRune INFERNAL = new SourceRune("infernal", "RUNE_INFERNAL");
-    public static final SourceRune VOID = new SourceRune("void", "RUNE_VOID");
-    public static final SourceRune HALLOWED = new SourceRune("hallowed", "RUNE_HALLOWED");
+    public static final SourceRune EARTH = new SourceRune("earth", "RUNE_EARTH", Source.EARTH);
+    public static final SourceRune SEA = new SourceRune("sea", "RUNE_SEA", Source.SEA);
+    public static final SourceRune SKY = new SourceRune("sky", "RUNE_SKY", Source.SKY);
+    public static final SourceRune SUN = new SourceRune("sun", "RUNE_SUN", Source.SUN);
+    public static final SourceRune MOON = new SourceRune("moon", "RUNE_MOON", Source.MOON);
+    public static final SourceRune BLOOD = new SourceRune("blood", "RUNE_BLOOD", Source.BLOOD);
+    public static final SourceRune INFERNAL = new SourceRune("infernal", "RUNE_INFERNAL", Source.INFERNAL);
+    public static final SourceRune VOID = new SourceRune("void", "RUNE_VOID", Source.VOID);
+    public static final SourceRune HALLOWED = new SourceRune("hallowed", "RUNE_HALLOWED", Source.HALLOWED);
     public static final VerbRune ABSORB = new VerbRune("absorb", "RUNE_ABSORB");
     public static final VerbRune DISPEL = new VerbRune("dispel", "RUNE_DISPEL");
     public static final VerbRune PROJECT = new VerbRune("project", "RUNE_PROJECT");

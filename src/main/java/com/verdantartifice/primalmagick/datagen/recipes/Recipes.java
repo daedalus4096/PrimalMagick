@@ -27,6 +27,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -587,6 +588,20 @@ public class Recipes extends RecipeProvider {
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
             .save(consumer, new ResourceLocation(PrimalMagick.MODID, "charcoal_from_smelting_heartwood"));
+        
+        SmithingTrimRecipeBuilder.smithingTrim(Ingredient.of(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()), Ingredient.of(ItemTagsPM.RUNIC_TRIMMABLE_ARMOR), 
+                Ingredient.of(ItemTagsPM.RUNIC_TRIM_MATERIALS), RecipeCategory.MISC).unlocks("has_smithing_trim_template", has(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()))
+            .save(consumer, new ResourceLocation(PrimalMagick.MODID, "runic_armor_trim_smithing_template_smithing_trim"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get())
+            .patternLine("#R#")
+            .patternLine("#M#")
+            .patternLine("###")
+            .key('#', Tags.Items.GEMS_DIAMOND)
+            .key('R', ItemsPM.RUNE_UNATTUNED.get())
+            .key('M', ItemsPM.MARBLE_RAW.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNIC_TRIM")))
+            .manaCost(new SourceList().add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
+            .build(consumer);
 
         SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
             .save(consumer, PrimalMagick.MODID + ":wand_assembly");

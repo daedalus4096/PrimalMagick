@@ -1,0 +1,9 @@
+{
+  "asset_name": "rune_void",
+  "description": {
+    "color": "#551A8B",
+    "translate": "trim_material.primalmagick.rune_void"
+  },
+  "ingredient": "primalmagick:rune_void",
+  "item_model_index": 1.0
+}

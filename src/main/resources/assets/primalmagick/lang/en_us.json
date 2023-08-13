@@ -792,6 +792,7 @@
     "tooltip.primalmagick.sanguine_core.1": "Durability: %1$d",
     "tooltip.primalmagick.sanguine_core.2": "Souls per spawn: %1$d",
     "tooltip.primalmagick.mana_discount": "Mana discount: %1$d%%",
+    "tooltip.primalmagick.mana_discount_attuned": "%2$s mana discount: %1$d%%",
     "tooltip.primalmagick.glamoured": "Glamoured",
     "tooltip.primalmagick.runescribed": "Runescribed",
     "tooltip.primalmagick.rune.earth": "\"Teq\"",
@@ -842,6 +843,10 @@
     "tooltip.primalmagick.humming_artifact_void": "Use to gain a point of permanent Void attunement",
     "tooltip.primalmagick.humming_artifact_hallowed": "Use to gain a point of permanent Hallowed attunement",
     "tooltip.primalmagick.attunement_shackles.shackled": "Shackled",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.additions_slot_description": "Add source rune",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.applies_to": "Robes",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.base_slot_description": "Add a piece of robe armor",
+    "tooltip.primalmagick.smithing_template.runic_armor_trim.ingredients": "Source Runes",
     
     "effect.primalmagick.flying": "Flying",
     "effect.primalmagick.polymorph": "Polymorph",
@@ -1673,6 +1678,10 @@
     "primalmagick.research.recall_stone.title": "Recall Stone",
     "primalmagick.research.recall_stone.text.stage.1": "Walking everywhere is such a drag.  Especially walking home; when you're doing that, all the fun is already behind you.  I wonder if I can use magick to speed up the process?",
     "primalmagick.research.recall_stone.text.stage.2": "With careful application of the Summon and Self runes, I can craft a stone that will whisk me back home upon use.  It's great!<BR>There are just two limitations that I've found so far.  First, the stone is one use only; it crumbles to inert dust upon use.  Second, it won't take me across dimensional boundaries.  So if I'm in the Nether and want to get home to the Overworld, I'll have to find a portal first.",
+    
+    "primalmagick.research.runic_trim.title": "Runic Armor Trim",
+    "primalmagick.research.runic_trim.text.stage.1": "Being able to customize my armor with trim is really cool.  It's so stylish!  But what if it was functional, too?",
+    "primalmagick.research.runic_trim.text.stage.2": "I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the mana discount that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal mana discount for the source signified by the rune I used, at the cost of no longer providing any discount for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.",
     
     "primalmagick.research.basic_ritual.title": "Basic Ritual Magick",
     "primalmagick.research.basic_ritual.text.stage.1": "I think I'm starting to get the hang of Ritual Magick.  It's like cooking a recipe.<BR>First, you assemble your ingredients.  Then you stage everything in the right place.  And then you follow each step exactly as written at the appointed time.<BR>There's just a slightly higher chance of something exploding if you do it wrong.<BR>I need several things in order to conduct a ritual.  First and most important is the central altar.  This serves as the focal point of the ritual, around which everything else is arrayed, both physically and metaphysically.<BR>Next come the offering pedestals, arrayed around the altar.  It's on these that I place the ingredients for the ritual.  Having more pedestals than I need doesn't hurt, but they might get a little in the way.<BR>Thirdly, all rituals require props of some kind, placed near the altar.  I'll come back to these in a bit.<BR>Finally, I need refined salt, and lots of it.  Every block that's part of the ritual, be it a prop or an offering pedestal, must be connected to the central altar by an unbroken line of salt.  No salt, no mystical connection, bad times.<BR>To start a ritual, I must first identify what ingredients and props it needs.  These will be listed in the Grimoire entry for each ritual.  Once identified, I array the pedestals and props around the altar, ensuring a salt connection.  Symmetry is important in this placement, and will contribute to a successful ritual.  I then place each of the ingredients on a separate pedestal and, once I'm ready to begin, wave my wand at the central altar.<BR>Once started, an orb of energy will appear above the altar.  This orb is a sort of status indicator for the ritual's stability.<BR>Right, stability.<BR>Ritual magick is dangerous, and rituals destabilize the longer they go on.  Too much instability buildup, and mishaps can happen.  That's bad, potentially disastrous.  The more red that orb over the altar is, the more unstable the ritual has become.  On the other hand, if it turns green, that means I'm doing a good job keeping the instability in check.  All rituals will destabilize over time proportionately to their instability rating, but other things can affect it as well.  The symmetry that I mentioned earlier?  Asymmetrical ritual setups will destabilize faster.  Using too much salt will also cause destabilization, as it grounds out the magick.<BR>Anyway, as the ritual progresses, the central altar will absorb the offerings I've placed on the pedestals.  At certain points, though, the ritual will pause and demand that I interact with one of the ritual's props.  This is the most dangerous time in a ritual, as instability will be mounting while no progress is being made.  Once the prop interaction is complete, the ritual will resume progress, with an added burst of stability.  Precisely how I need to interact with a prop will be detailed in its Grimoire entry.<BR>Once all of the offerings have been absorbed and all of the props have been interacted with, the ritual will end and the end result will appear on the central altar for me to claim.<BR>Should I feel at any point that a ritual is spiraling beyond my control, I can abort the ritual by waving my wand at the altar a second time.  This may have consequences, depending on the built-up instability, but that's better than letting it continue indefinitely.",
@@ -2691,6 +2700,17 @@
     "concoctions.primalmagick.fuse.medium": "3s",
     "concoctions.primalmagick.fuse.long": "5s",
     "concoctions.primalmagick.fuse_set": "Bomb fuse set to %1$s",
+    
+    "trim_material.primalmagick.rune_earth": "Earth Rune Material",
+    "trim_material.primalmagick.rune_sea": "Sea Rune Material",
+    "trim_material.primalmagick.rune_sky": "Sky Rune Material",
+    "trim_material.primalmagick.rune_sun": "Sun Rune Material",
+    "trim_material.primalmagick.rune_moon": "Moon Rune Material",
+    "trim_material.primalmagick.rune_blood": "Blood Rune Material",
+    "trim_material.primalmagick.rune_infernal": "Infernal Rune Material",
+    "trim_material.primalmagick.rune_void": "Void Rune Material",
+    "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
+    "trim_pattern.primalmagick.runic": "Runic Armor Trim",
     
     "death.attack.primalmagick.bleeding": "%1$s bled to death",
     "death.attack.primalmagick.bleeding.player": "%1$s bled to death whilst fighting %2$s",
