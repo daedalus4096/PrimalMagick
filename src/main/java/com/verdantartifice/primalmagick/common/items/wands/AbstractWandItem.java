@@ -267,8 +267,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Subtract discounts from equipped player gear
             int gearDiscount = 0;
             for (ItemStack gearStack : player.getAllSlots()) {
-                if (gearStack.getItem() instanceof IManaDiscountGear) {
-                    gearDiscount += ((IManaDiscountGear)gearStack.getItem()).getManaDiscount(gearStack, player);
+                if (gearStack.getItem() instanceof IManaDiscountGear discountItem) {
+                    gearDiscount += discountItem.getManaDiscount(gearStack, player, source);
                 }
             }
             if (gearDiscount > 0) {

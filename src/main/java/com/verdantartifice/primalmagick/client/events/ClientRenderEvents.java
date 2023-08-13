@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import java.util.Optional;
+
 import com.mojang.datafixers.util.Either;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
@@ -12,6 +14,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -42,9 +45,12 @@ public class ClientRenderEvents {
         Minecraft mc = Minecraft.getInstance();
         
         // Show a tooltip entry if the item stack grants a mana discount
-        if (event.getItemStack().getItem() instanceof IManaDiscountGear) {
-            int discount = ((IManaDiscountGear)event.getItemStack().getItem()).getManaDiscount(event.getItemStack(), mc.player);
-            event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA));
+        if (event.getItemStack().getItem() instanceof IManaDiscountGear discountItem) {
+            int discount = discountItem.getBestManaDiscount(event.getItemStack(), mc.player);
+            Optional<Source> attunedSource = discountItem.getAttunedSource(event.getItemStack(), mc.player);
+            attunedSource.ifPresentOrElse(
+                    source -> event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount_attuned", discount, source.getNameText(ChatFormatting.DARK_AQUA)).withStyle(ChatFormatting.DARK_AQUA)), 
+                    () -> event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA)));
         }
         
         // Show a tooltip entry if the item stack is runescribed
