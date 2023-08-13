@@ -3,6 +3,8 @@ v4.0.2
 * Added Attunement Shackles, for those who don't want to embrace magickal attunement
 * Fixed compatibility issue with the mod Create
 * Changed allow and ban lists for the Polymorph spell to use tags instead of inter-mod comms
+* Made mod robes and armor compatible with vanilla armor trims
+* Added Runic Armor Trim, to better target your robes' mana discount
 
 v4.0.1
 ------
