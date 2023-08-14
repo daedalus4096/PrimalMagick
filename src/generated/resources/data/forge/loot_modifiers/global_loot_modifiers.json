@@ -2,6 +2,7 @@
   "entries": [
     "primalmagick:bloody_flesh",
     "primalmagick:humming_artifact_pillager_outpost",
+    "primalmagick:lucky_strike",
     "primalmagick:bounty_farming",
     "primalmagick:essence_thief",
     "primalmagick:humming_artifact_woodland_mansion",
@@ -24,8 +25,7 @@
     "primalmagick:humming_artifact_ancient_city",
     "primalmagick:humming_artifact_nether_fortress",
     "primalmagick:humming_artifact_bastion_treasure",
-    "primalmagick:bounty_fishing",
-    "primalmagick:bonus_nuggets"
+    "primalmagick:bounty_fishing"
   ],
   "replace": false
 }

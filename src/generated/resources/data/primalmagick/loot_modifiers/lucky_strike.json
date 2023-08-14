@@ -17,6 +17,7 @@
     }
   ],
   "nuggetMap": {
+    "forge:ores/copper": "forge:nuggets/copper",
     "forge:ores/gold": "forge:nuggets/gold",
     "forge:ores/iron": "forge:nuggets/iron",
     "forge:ores/quartz": "forge:nuggets/quartz"

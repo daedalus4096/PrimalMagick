@@ -68,13 +68,14 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
-        this.add("bonus_nuggets", new BonusNuggetModifier(
+        this.add("lucky_strike", new BonusNuggetModifier(
                 new LootItemCondition[] {
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
                     .put(Tags.Blocks.ORES_IRON, Tags.Items.NUGGETS_IRON)
                     .put(Tags.Blocks.ORES_GOLD, Tags.Items.NUGGETS_GOLD)
                     .put(Tags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
+                    .put(Tags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
                     .build()
                 , 0.5F));
         this.add("blood_notes_high", new BloodNotesModifier(
