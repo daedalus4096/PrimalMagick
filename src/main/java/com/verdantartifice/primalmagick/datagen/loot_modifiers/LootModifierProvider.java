@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifi
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.HummingArtifactModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
+import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
@@ -76,6 +77,10 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                     .put(Tags.Blocks.ORES_GOLD, Tags.Items.NUGGETS_GOLD)
                     .put(Tags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
                     .put(Tags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
+                    .put(BlockTagsForgeExt.ORES_TIN, ItemTagsForgeExt.NUGGETS_TIN)
+                    .put(BlockTagsForgeExt.ORES_LEAD, ItemTagsForgeExt.NUGGETS_LEAD)
+                    .put(BlockTagsForgeExt.ORES_SILVER, ItemTagsForgeExt.NUGGETS_SILVER)
+                    .put(BlockTagsForgeExt.ORES_URANIUM, ItemTagsForgeExt.NUGGETS_URANIUM)
                     .build()
                 , 0.5F));
         this.add("blood_notes_high", new BloodNotesModifier(
