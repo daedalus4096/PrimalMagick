@@ -1,0 +1,29 @@
+{
+  "type": "primalmagick:bonus_nugget",
+  "chance": 0.5,
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "enchantments": [
+          {
+            "enchantment": "primalmagick:lucky_strike",
+            "levels": {
+              "min": 1
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "nuggetMap": {
+    "forge:ores/copper": "forge:nuggets/copper",
+    "forge:ores/gold": "forge:nuggets/gold",
+    "forge:ores/iron": "forge:nuggets/iron",
+    "forge:ores/lead": "forge:nuggets/lead",
+    "forge:ores/quartz": "forge:nuggets/quartz",
+    "forge:ores/silver": "forge:nuggets/silver",
+    "forge:ores/tin": "forge:nuggets/tin",
+    "forge:ores/uranium": "forge:nuggets/uranium"
+  }
+}

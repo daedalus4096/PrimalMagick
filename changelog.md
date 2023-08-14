@@ -5,6 +5,8 @@ v4.0.2
 * Changed allow and ban lists for the Polymorph spell to use tags instead of inter-mod comms
 * Made mod robes and armor compatible with vanilla armor trims
 * Added Runic Armor Trim, to better target your robes' mana discount
+* Added support for several common ore types from other mods to the Lucky Strike enchantment
+* Allowed datapack customization of ores supported by Lucky Strike's loot modifier
 
 v4.0.1
 ------

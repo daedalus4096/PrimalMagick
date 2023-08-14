@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.loot_modifiers;
 
+import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.conditions.MatchBlockTag;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BloodNotesModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.BloodyFleshModifier;
@@ -13,8 +13,10 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifi
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.HummingArtifactModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
+import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -22,7 +24,9 @@ import net.minecraft.advancements.critereon.FishingHookPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Items;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
@@ -65,21 +69,20 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().subPredicate(FishingHookPredicate.inOpenWater(true))).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.BOUNTY.get(), MinMaxBounds.Ints.atLeast(1)))).build()
                 }, 0.25F));
-        this.add("bonus_nugget_iron", new BonusNuggetModifier(
+        this.add("lucky_strike", new BonusNuggetModifier(
                 new LootItemCondition[] {
-                        MatchBlockTag.builder(Tags.Blocks.ORES_IRON).build(),
                         MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
-                }, 0.5F, Items.IRON_NUGGET));
-        this.add("bonus_nugget_gold", new BonusNuggetModifier(
-                new LootItemCondition[] {
-                        MatchBlockTag.builder(Tags.Blocks.ORES_GOLD).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
-                }, 0.5F, Items.GOLD_NUGGET));
-        this.add("bonus_nugget_quartz", new BonusNuggetModifier(
-                new LootItemCondition[] {
-                        MatchBlockTag.builder(Tags.Blocks.ORES_QUARTZ).build(),
-                        MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(EnchantmentsPM.LUCKY_STRIKE.get(), MinMaxBounds.Ints.atLeast(1)))).build()
-                }, 0.5F, ItemsPM.QUARTZ_NUGGET.get()));
+                }, ImmutableMap.<TagKey<Block>, TagKey<Item>>builder()
+                    .put(Tags.Blocks.ORES_IRON, Tags.Items.NUGGETS_IRON)
+                    .put(Tags.Blocks.ORES_GOLD, Tags.Items.NUGGETS_GOLD)
+                    .put(Tags.Blocks.ORES_QUARTZ, ItemTagsForgeExt.NUGGETS_QUARTZ)
+                    .put(Tags.Blocks.ORES_COPPER, ItemTagsForgeExt.NUGGETS_COPPER)
+                    .put(BlockTagsForgeExt.ORES_TIN, ItemTagsForgeExt.NUGGETS_TIN)
+                    .put(BlockTagsForgeExt.ORES_LEAD, ItemTagsForgeExt.NUGGETS_LEAD)
+                    .put(BlockTagsForgeExt.ORES_SILVER, ItemTagsForgeExt.NUGGETS_SILVER)
+                    .put(BlockTagsForgeExt.ORES_URANIUM, ItemTagsForgeExt.NUGGETS_URANIUM)
+                    .build()
+                , 0.5F));
         this.add("blood_notes_high", new BloodNotesModifier(
                 new LootItemCondition[] {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.DROPS_BLOOD_NOTES_HIGH)).build(),
