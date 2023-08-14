@@ -6,7 +6,6 @@
     "primalmagick:essence_thief",
     "primalmagick:humming_artifact_woodland_mansion",
     "primalmagick:humming_artifact_stronghold_library",
-    "primalmagick:bonus_nugget_gold",
     "primalmagick:four_leaf_clover_tall_grass",
     "primalmagick:four_leaf_clover_short_grass",
     "primalmagick:humming_artifact_jungle_temple",
@@ -21,13 +20,12 @@
     "primalmagick:blood_notes_low",
     "primalmagick:relic_fragments_high",
     "primalmagick:humming_artifact_simple_dungeon",
-    "primalmagick:bonus_nugget_iron",
     "primalmagick:humming_artifact_shipwreck_treasure",
     "primalmagick:humming_artifact_ancient_city",
     "primalmagick:humming_artifact_nether_fortress",
-    "primalmagick:bonus_nugget_quartz",
     "primalmagick:humming_artifact_bastion_treasure",
-    "primalmagick:bounty_fishing"
+    "primalmagick:bounty_fishing",
+    "primalmagick:bonus_nuggets"
   ],
   "replace": false
 }

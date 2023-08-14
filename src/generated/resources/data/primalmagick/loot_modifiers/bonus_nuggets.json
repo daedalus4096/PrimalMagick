@@ -3,10 +3,6 @@
   "chance": 0.5,
   "conditions": [
     {
-      "condition": "primalmagick:match_block_tag",
-      "tag": "forge:ores/quartz"
-    },
-    {
       "condition": "minecraft:match_tool",
       "predicate": {
         "enchantments": [
@@ -20,5 +16,9 @@
       }
     }
   ],
-  "nugget": "primalmagick:quartz_nugget"
+  "nuggetMap": {
+    "forge:ores/gold": "forge:nuggets/gold",
+    "forge:ores/iron": "forge:nuggets/iron",
+    "forge:ores/quartz": "forge:nuggets/quartz"
+  }
 }
