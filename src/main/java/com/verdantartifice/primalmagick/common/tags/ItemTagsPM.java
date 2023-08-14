@@ -39,6 +39,12 @@ public class ItemTagsPM {
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
     
+    public static final TagKey<Item> ROBES = tag("robes");
+    public static final TagKey<Item> ROBES_HELMETS = tag("robes/helmets");
+    public static final TagKey<Item> ROBES_CHESTPLATES = tag("robes/chestplates");
+    public static final TagKey<Item> ROBES_LEGGINGS = tag("robes/leggings");
+    public static final TagKey<Item> ROBES_BOOTS = tag("robes/boots");
+    
     public static final TagKey<Item> ESSENCES_DUSTS = tag("essences/dusts");
     public static final TagKey<Item> ESSENCES_TERRESTRIAL_DUSTS = tag("essences/terrestrial_dusts");
     public static final TagKey<Item> ESSENCES_FORBIDDEN_DUSTS = tag("essences/forbidden_dusts");

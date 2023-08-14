@@ -1,9 +1,7 @@
 {
   "values": [
-    "minecraft:ender_dragon",
+    "#forge:bosses",
     "minecraft:warden",
-    "minecraft:wither",
-    "minecraft:wolf",
-    "primalmagick:inner_demon"
+    "minecraft:wolf"
   ]
 }
