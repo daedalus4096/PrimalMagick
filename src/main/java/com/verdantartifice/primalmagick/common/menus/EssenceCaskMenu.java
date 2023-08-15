@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.slots.EssenceSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -41,7 +43,7 @@ public class EssenceCaskMenu extends AbstractContainerMenu {
         this.caskInv.startOpen(playerInv.player);
         
         // Slot 0: Cask input
-        this.inputSlot = this.addSlot(new EssenceSlot(this.caskInv, 0, 80, 108));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.caskInv, 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-27: Player backpack
         for (int i = 0; i < 3; i++) {
