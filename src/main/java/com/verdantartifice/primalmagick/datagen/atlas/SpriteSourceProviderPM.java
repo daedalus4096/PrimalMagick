@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.PaperSlot;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneBaseSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneSlot;
@@ -26,7 +26,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.WandCapSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandCoreSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandGemSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
@@ -69,8 +68,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, WandCapSlot.TEXTURE);
         this.addSingle(blockAtlas, WandGemSlot.TEXTURE);
         this.addSingle(blockAtlas, WandSlot.TEXTURE);
-        this.addSingle(blockAtlas, PaperSlot.TEXTURE);
-        this.addSingle(blockAtlas, WritingImplementSlot.TEXTURE);
+        this.addSingle(blockAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);
         this.addSingle(blockAtlas, RuneSlot.TEXTURE);
         this.addSingle(blockAtlas, RuneBaseSlot.TEXTURE);
         this.addSingle(blockAtlas, RuneEtchingSlot.TEXTURE);

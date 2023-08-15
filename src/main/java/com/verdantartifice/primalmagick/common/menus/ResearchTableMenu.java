@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.menus.slots.PaperSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WritingImplementSlot;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
@@ -25,6 +26,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 /**
@@ -33,6 +35,9 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ResearchTableMenu extends AbstractContainerMenu implements ContainerListener {
+    public static final ResourceLocation PAPER_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_paper_slot");
+    public static final ResourceLocation PENCIL_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_pencil_slot");
+    
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     protected final Container writingInv;
@@ -52,10 +57,12 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
         this.writingInv = tableInv;
         
         // Slot 0: Pencil
-        this.pencilSlot = this.addSlot(new WritingImplementSlot(this.writingInv, 0, 8, 8));
+        this.pencilSlot = this.addSlot(new FilteredSlot(this.writingInv, 0, 8, 8,
+                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).filter(stack -> stack.getItem() instanceof IWritingImplement)));
         
         // Slot 1: Paper
-        this.paperSlot = this.addSlot(new PaperSlot(this.writingInv, 1, 206, 8));
+        this.paperSlot = this.addSlot(new FilteredSlot(this.writingInv, 1, 206, 8,
+                new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -165,7 +172,7 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
         if (!this.player.getAbilities().instabuild) {
             // Consume ink, if applicable
             ItemStack inkStack = this.getWritingImplementStack();
-            if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement && ((IWritingImplement)inkStack.getItem()).isDamagedOnUse()) {
+            if (!inkStack.isEmpty() && inkStack.getItem() instanceof IWritingImplement inkItem && inkItem.isDamagedOnUse()) {
                 inkStack.hurtAndBreak(1, this.player, (player) -> {});
             }
 
