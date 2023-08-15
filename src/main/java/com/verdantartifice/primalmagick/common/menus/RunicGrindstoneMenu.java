@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.menus.slots.RunicGrindstoneInputSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -71,8 +71,8 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         this.player = playerInv.player;
 
         // Add grindstone slots
-        this.addSlot(new RunicGrindstoneInputSlot(this.repairSlots, 0, 49, 19));
-        this.addSlot(new RunicGrindstoneInputSlot(this.repairSlots, 1, 49, 40));
+        this.addSlot(makeInputSlot(this.repairSlots, 0, 49, 19));
+        this.addSlot(makeInputSlot(this.repairSlots, 1, 49, 40));
         this.addSlot(new Slot(this.resultSlots, 2, 129, 34) {
             @Override
             public boolean mayPlace(ItemStack pStack) {
@@ -131,6 +131,11 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         for (int k = 0; k < 9; ++k) {
              this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
          }
+    }
+    
+    protected static Slot makeInputSlot(Container pContainer, int pSlot, int pX, int pY) {
+        return new FilteredSlot(pContainer, pSlot, pX, pY,
+                new FilteredSlot.Properties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
     }
     
     @Override
