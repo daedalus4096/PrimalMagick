@@ -17,17 +17,12 @@ import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
-import com.verdantartifice.primalmagick.common.menus.slots.BottleSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.HoneycombSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.PaperSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneBaseSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneEtchingSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandCapSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandCoreSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandGemSlot;
+import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
+import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
+import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WritingImplementSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
@@ -66,17 +61,17 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         SourceList armorTrimsAtlas = this.atlas(ARMOR_TRIMS_ATLAS);
         
         // Add empty-slot background images to the block atlas
-        this.addSingle(blockAtlas, WandCoreSlot.TEXTURE);
-        this.addSingle(blockAtlas, WandCapSlot.TEXTURE);
-        this.addSingle(blockAtlas, WandGemSlot.TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.CORE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.CAP_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.GEM_SLOT_TEXTURE);
         this.addSingle(blockAtlas, WandSlot.TEXTURE);
-        this.addSingle(blockAtlas, PaperSlot.TEXTURE);
-        this.addSingle(blockAtlas, WritingImplementSlot.TEXTURE);
-        this.addSingle(blockAtlas, RuneSlot.TEXTURE);
-        this.addSingle(blockAtlas, RuneBaseSlot.TEXTURE);
-        this.addSingle(blockAtlas, RuneEtchingSlot.TEXTURE);
-        this.addSingle(blockAtlas, HoneycombSlot.TEXTURE);
-        this.addSingle(blockAtlas, BottleSlot.TEXTURE);
+        this.addSingle(blockAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, AbstractRunescribingAltarMenu.RUNE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, RunecarvingTableMenu.BASE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, RunecarvingTableMenu.ETCHING_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
         
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);

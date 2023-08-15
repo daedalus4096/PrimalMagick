@@ -10,8 +10,9 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
-import com.verdantartifice.primalmagick.common.menus.slots.SpellScrollBlankSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -86,7 +87,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8, false));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new SpellScrollBlankSlot(this.scrollInv, 0, 160, 8));
+        this.scrollSlot = this.addSlot(new FilteredSlot(this.scrollInv, 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

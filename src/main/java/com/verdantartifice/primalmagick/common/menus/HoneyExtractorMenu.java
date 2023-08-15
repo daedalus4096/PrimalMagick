@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.menus.slots.BottleSlot;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.HoneycombSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * Server data container for the honey extractor GUI.
@@ -21,6 +23,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class HoneyExtractorMenu extends AbstractContainerMenu {
+    public static final ResourceLocation BOTTLE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_bottle_slot");
+    public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_honeycomb_slot");
+
     protected final Container extractorInv;
     protected final ContainerData extractorData;
     protected final Slot honeycombSlot;
@@ -39,10 +44,12 @@ public class HoneyExtractorMenu extends AbstractContainerMenu {
         this.extractorData = extractorData;
         
         // Slot 0: honeycomb input
-        this.honeycombSlot = this.addSlot(new HoneycombSlot(this.extractorInv, 0, 30, 35));
+        this.honeycombSlot = this.addSlot(new FilteredSlot(this.extractorInv, 0, 30, 35,
+                new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
-        this.bottleSlot = this.addSlot(new BottleSlot(this.extractorInv, 1, 52, 35));
+        this.bottleSlot = this.addSlot(new FilteredSlot(this.extractorInv, 1, 52, 35, 
+                new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
         this.addSlot(new GenericResultSlot(playerInv.player, this.extractorInv, 2, 108, 35));

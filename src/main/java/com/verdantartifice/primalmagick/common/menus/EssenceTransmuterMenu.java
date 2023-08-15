@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.menus.slots.EssenceSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -37,7 +38,7 @@ public class EssenceTransmuterMenu extends AbstractContainerMenu {
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new EssenceSlot(this.transmuterInv, 0, 44, 35));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.transmuterInv, 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {

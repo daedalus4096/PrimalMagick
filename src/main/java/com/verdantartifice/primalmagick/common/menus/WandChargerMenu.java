@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.menus.slots.EssenceSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -36,7 +37,7 @@ public class WandChargerMenu extends AbstractContainerMenu {
         this.chargerData = chargerData;
         
         // Slot 0: essence input
-        this.essenceSlot = this.addSlot(new EssenceSlot(this.chargerInv, 0, 52, 35));
+        this.essenceSlot = this.addSlot(new FilteredSlot(this.chargerInv, 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new WandSlot(this.chargerInv, 1, 108, 35, true));

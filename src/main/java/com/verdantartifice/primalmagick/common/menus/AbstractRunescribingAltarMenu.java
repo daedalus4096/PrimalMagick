@@ -6,12 +6,15 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RunescribingResultSlot;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -33,6 +36,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMenu {
+    public static final ResourceLocation RUNE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_rune_slot");
+
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
         @Override
         public int getMaxStackSize() {
@@ -83,6 +88,11 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMen
      */
     @Nonnull
     protected abstract Slot addRuneSlots();
+    
+    protected static Slot makeRuneSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
+        return new FilteredSlot(inventoryIn, index, xPosition, yPosition,
+                new FilteredSlot.Properties().background(RUNE_SLOT_TEXTURE).typeOf(RuneItem.class));
+    }
     
     @Override
     public boolean stillValid(Player playerIn) {

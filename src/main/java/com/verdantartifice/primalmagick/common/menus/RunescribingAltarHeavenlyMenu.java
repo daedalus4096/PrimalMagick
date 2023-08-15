@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.menus.slots.RuneSlot;
-
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -26,14 +24,14 @@ public class RunescribingAltarHeavenlyMenu extends AbstractRunescribingAltarMenu
     
     @Override
     protected Slot addRuneSlots() {
-        this.addSlot(new RuneSlot(this.altarInv, 1, 44, 17));
-        this.addSlot(new RuneSlot(this.altarInv, 2, 62, 17));
-        this.addSlot(new RuneSlot(this.altarInv, 3, 80, 17));
-        this.addSlot(new RuneSlot(this.altarInv, 4, 44, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 5, 62, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 6, 80, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 7, 44, 53));
-        this.addSlot(new RuneSlot(this.altarInv, 8, 62, 53));
-        return this.addSlot(new RuneSlot(this.altarInv, 9, 80, 53));
+        this.addSlot(makeRuneSlot(this.altarInv, 1, 44, 17));
+        this.addSlot(makeRuneSlot(this.altarInv, 2, 62, 17));
+        this.addSlot(makeRuneSlot(this.altarInv, 3, 80, 17));
+        this.addSlot(makeRuneSlot(this.altarInv, 4, 44, 35));
+        this.addSlot(makeRuneSlot(this.altarInv, 5, 62, 35));
+        this.addSlot(makeRuneSlot(this.altarInv, 6, 80, 35));
+        this.addSlot(makeRuneSlot(this.altarInv, 7, 44, 53));
+        this.addSlot(makeRuneSlot(this.altarInv, 8, 62, 53));
+        return this.addSlot(makeRuneSlot(this.altarInv, 9, 80, 53));
     }
 }

@@ -9,6 +9,7 @@ v4.0.2
 * Allowed datapack customization of ores supported by Lucky Strike's loot modifier
 * Upgraded the Dowsing Rod to mark expected symmetry location if no matching block is found
 * Fixed symmetry calculation bug with Offering Pedestals
+* Performed miscellaneous refactoring and code cleanup
 
 v4.0.1
 ------

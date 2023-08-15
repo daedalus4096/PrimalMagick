@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneBaseSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneEtchingSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -36,6 +38,9 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class RunecarvingTableMenu extends AbstractContainerMenu implements ContainerListener {
+    public static final ResourceLocation BASE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_slab_slot");
+    public static final ResourceLocation ETCHING_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_lapis_slot");
+
     protected final ContainerLevelAccess worldPosCallable;
     protected final DataSlot selectedRecipe = DataSlot.standalone();
     protected final Player player;
@@ -73,10 +78,12 @@ public class RunecarvingTableMenu extends AbstractContainerMenu implements Conta
         this.tableInv = tableInv;
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(new RuneBaseSlot(this.tableInv, 0, 20, 21));
+        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.tableInv, 0, 20, 21,
+                new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(new RuneEtchingSlot(this.tableInv, 1, 20, 46));
+        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.tableInv, 1, 20, 46,
+                new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, this.outputInventory, 0, 143, 33) {
