@@ -18,19 +18,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class EssenceCaskContainer extends AbstractContainerMenu {
+public class EssenceCaskMenu extends AbstractContainerMenu {
     protected final Container caskInv;
     protected final ContainerData caskData;
     protected final Level level;
     protected final Slot inputSlot;
     protected final BlockPos tilePos;
 
-    public EssenceCaskContainer(int id, Inventory playerInv, BlockPos pos) {
+    public EssenceCaskMenu(int id, Inventory playerInv, BlockPos pos) {
         this(id, playerInv, new SimpleContainer(1), new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS), pos);
     }
     
-    public EssenceCaskContainer(int id, Inventory playerInv, Container caskInv, ContainerData caskData, BlockPos pos) {
-        super(ContainersPM.ESSENCE_CASK.get(), id);
+    public EssenceCaskMenu(int id, Inventory playerInv, Container caskInv, ContainerData caskData, BlockPos pos) {
+        super(MenuTypesPM.ESSENCE_CASK.get(), id);
         checkContainerSize(caskInv, 1);
         checkContainerDataCount(caskData, EssenceCaskTileEntity.NUM_SLOTS);
         this.caskInv = caskInv;

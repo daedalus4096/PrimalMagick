@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import com.verdantartifice.primalmagick.common.menus.RunecarvingTableContainer;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 
@@ -34,7 +34,7 @@ public class RunecarvingTableTileEntity extends TileInventoryPM implements MenuP
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        RunecarvingTableContainer menu = new RunecarvingTableContainer(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
+        RunecarvingTableMenu menu = new RunecarvingTableMenu(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
         this.addListener(menu);
         return menu;
     }

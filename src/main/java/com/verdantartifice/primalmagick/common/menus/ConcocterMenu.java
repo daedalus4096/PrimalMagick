@@ -24,18 +24,18 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ConcocterContainer extends AbstractArcaneRecipeBookMenu<Container> {
+public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
     protected final Container concocterInv;
     protected final ContainerData concocterData;
     protected final Level world;
     protected final Slot wandSlot;
     
-    public ConcocterContainer(int id, Inventory playerInv) {
+    public ConcocterMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
     }
     
-    public ConcocterContainer(int id, Inventory playerInv, Container concocterInv, ContainerData concocterData) {
-        super(ContainersPM.CONCOCTER.get(), id);
+    public ConcocterMenu(int id, Inventory playerInv, Container concocterInv, ContainerData concocterData) {
+        super(MenuTypesPM.CONCOCTER.get(), id);
         checkContainerSize(concocterInv, 11);
         checkContainerDataCount(concocterData, 4);
         this.concocterInv = concocterInv;

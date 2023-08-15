@@ -35,7 +35,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableContainer extends AbstractContainerMenu implements ContainerListener {
+public class RunecarvingTableMenu extends AbstractContainerMenu implements ContainerListener {
     protected final ContainerLevelAccess worldPosCallable;
     protected final DataSlot selectedRecipe = DataSlot.standalone();
     protected final Player player;
@@ -59,13 +59,13 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
     protected long lastOnTake;
     protected Runnable inventoryUpdateListener = () -> {};
 
-    public RunecarvingTableContainer(int windowId, Inventory inv, BlockPos pos) {
+    public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
         ((SimpleContainer)this.tableInv).addListener(this);
     }
     
-    public RunecarvingTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess worldPosCallable) {
-        super(ContainersPM.RUNECARVING_TABLE.get(), windowId);
+    public RunecarvingTableMenu(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess worldPosCallable) {
+        super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId);
         this.worldPosCallable = worldPosCallable;
         this.player = inv.player;
         this.world = inv.player.level();
@@ -82,16 +82,16 @@ public class RunecarvingTableContainer extends AbstractContainerMenu implements 
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, this.outputInventory, 0, 143, 33) {
             @Override
             public void onTake(Player thePlayer, ItemStack stack) {
-                RunecarvingTableContainer.this.inputSlabSlot.remove(1);
-                RunecarvingTableContainer.this.inputLapisSlot.remove(1);
-                RunecarvingTableContainer.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
+                RunecarvingTableMenu.this.inputSlabSlot.remove(1);
+                RunecarvingTableMenu.this.inputLapisSlot.remove(1);
+                RunecarvingTableMenu.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
                 
                 stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
-                RunecarvingTableContainer.this.worldPosCallable.execute((world, pos) -> {
+                RunecarvingTableMenu.this.worldPosCallable.execute((world, pos) -> {
                     long time = world.getGameTime();
-                    if (RunecarvingTableContainer.this.lastOnTake != time) {
+                    if (RunecarvingTableMenu.this.lastOnTake != time) {
                         world.playSound(null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.0F);
-                        RunecarvingTableContainer.this.lastOnTake = time;
+                        RunecarvingTableMenu.this.lastOnTake = time;
                     }
                 });
                 

@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class WandInscriptionTableContainer extends AbstractContainerMenu {
+public class WandInscriptionTableMenu extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
@@ -39,12 +39,12 @@ public class WandInscriptionTableContainer extends AbstractContainerMenu {
     protected final Slot wandSlot;
     protected final Slot scrollSlot;
     
-    public WandInscriptionTableContainer(int windowId, Inventory inv) {
+    public WandInscriptionTableMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
 
-    public WandInscriptionTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(ContainersPM.WAND_INSCRIPTION_TABLE.get(), windowId);
+    public WandInscriptionTableMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.WAND_INSCRIPTION_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         
@@ -179,7 +179,7 @@ public class WandInscriptionTableContainer extends AbstractContainerMenu {
 
     protected class InscriptionComponentInventory extends TransientCraftingContainer {
         public InscriptionComponentInventory() {
-            super(WandInscriptionTableContainer.this, 2, 1);
+            super(WandInscriptionTableMenu.this, 2, 1);
         }
         
         @Override

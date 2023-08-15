@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class AnalysisTableContainer extends AbstractContainerMenu {
+public class AnalysisTableMenu extends AbstractContainerMenu {
     protected final Container analysisInventory = new SimpleContainer(2) {
         public int getMaxStackSize() {
             return 1;
@@ -32,12 +32,12 @@ public class AnalysisTableContainer extends AbstractContainerMenu {
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     
-    public AnalysisTableContainer(int windowId, Inventory inv) {
+    public AnalysisTableMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
     
-    public AnalysisTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(ContainersPM.ANALYSIS_TABLE.get(), windowId);
+    public AnalysisTableMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.ANALYSIS_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

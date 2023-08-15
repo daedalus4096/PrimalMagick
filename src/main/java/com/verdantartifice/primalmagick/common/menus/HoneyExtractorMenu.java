@@ -20,19 +20,19 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class HoneyExtractorContainer extends AbstractContainerMenu {
+public class HoneyExtractorMenu extends AbstractContainerMenu {
     protected final Container extractorInv;
     protected final ContainerData extractorData;
     protected final Slot honeycombSlot;
     protected final Slot bottleSlot;
     protected final Slot wandSlot;
 
-    public HoneyExtractorContainer(int id, Inventory playerInv) {
+    public HoneyExtractorMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(5), new SimpleContainerData(4));
     }
     
-    public HoneyExtractorContainer(int id, Inventory playerInv, Container extractorInv, ContainerData extractorData) {
-        super(ContainersPM.HONEY_EXTRACTOR.get(), id);
+    public HoneyExtractorMenu(int id, Inventory playerInv, Container extractorInv, ContainerData extractorData) {
+        super(MenuTypesPM.HONEY_EXTRACTOR.get(), id);
         checkContainerSize(extractorInv, 5);
         checkContainerDataCount(extractorData, 4);
         this.extractorInv = extractorInv;

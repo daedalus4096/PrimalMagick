@@ -18,18 +18,18 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class WandChargerContainer extends AbstractContainerMenu {
+public class WandChargerMenu extends AbstractContainerMenu {
     protected final Container chargerInv;
     protected final ContainerData chargerData;
     protected final Slot essenceSlot;
     protected final Slot wandSlot;
     
-    public WandChargerContainer(int id, Inventory playerInv) {
+    public WandChargerMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(2), new SimpleContainerData(2));
     }
     
-    public WandChargerContainer(int id, Inventory playerInv, Container chargerInv, ContainerData chargerData) {
-        super(ContainersPM.WAND_CHARGER.get(), id);
+    public WandChargerMenu(int id, Inventory playerInv, Container chargerInv, ContainerData chargerData) {
+        super(MenuTypesPM.WAND_CHARGER.get(), id);
         checkContainerSize(chargerInv, 2);
         checkContainerDataCount(chargerData, 2);
         this.chargerInv = chargerInv;

@@ -33,7 +33,7 @@ import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.menus.FakeContainer;
+import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -402,7 +402,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         }
         
         // Determine recipe that corresponds to offerings
-        CraftingContainer inv = new TransientCraftingContainer(new FakeContainer(), offerings.size(), 1);
+        CraftingContainer inv = new TransientCraftingContainer(new FakeMenu(), offerings.size(), 1);
         int offeringIndex = 0;
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);

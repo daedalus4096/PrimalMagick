@@ -20,17 +20,17 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorContainer extends AbstractContainerMenu {
+public class CalcinatorMenu extends AbstractContainerMenu {
     protected final Container calcinatorInv;
     protected final ContainerData calcinatorData;
     protected final Level world;
     
-    public CalcinatorContainer(int id, Inventory playerInv) {
+    public CalcinatorMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
     }
     
-    public CalcinatorContainer(int id, Inventory playerInv, Container calcinatorInv, ContainerData calcinatorData) {
-        super(ContainersPM.CALCINATOR.get(), id);
+    public CalcinatorMenu(int id, Inventory playerInv, Container calcinatorInv, ContainerData calcinatorData) {
+        super(MenuTypesPM.CALCINATOR.get(), id);
         checkContainerSize(calcinatorInv, 11);
         checkContainerDataCount(calcinatorData, 4);
         this.calcinatorInv = calcinatorInv;

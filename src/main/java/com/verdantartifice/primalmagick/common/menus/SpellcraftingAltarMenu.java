@@ -48,7 +48,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarContainer extends AbstractContainerMenu {
+public class SpellcraftingAltarMenu extends AbstractContainerMenu {
     protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "spellcrafting");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
@@ -67,12 +67,12 @@ public class SpellcraftingAltarContainer extends AbstractContainerMenu {
     protected SpellPackage spellPackageCache = null;
     protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
 
-    public SpellcraftingAltarContainer(int windowId, Inventory inv) {
+    public SpellcraftingAltarMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
 
-    public SpellcraftingAltarContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(ContainersPM.SPELLCRAFTING_ALTAR.get(), windowId);
+    public SpellcraftingAltarMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         for (SpellComponent comp : SpellComponent.values()) {

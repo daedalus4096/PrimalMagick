@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class FakeContainer extends AbstractContainerMenu {
-    public FakeContainer() {
+public class FakeMenu extends AbstractContainerMenu {
+    public FakeMenu() {
         super(MenuType.CRAFTING, 0);
     }
     

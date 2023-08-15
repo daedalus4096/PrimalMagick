@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.common.menus.ConcocterContainer;
+import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,7 +24,7 @@ import net.minecraft.world.inventory.Slot;
  * 
  * @author Daedalus4096
  */
-public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer> implements ArcaneRecipeUpdateListener {
+public class ConcocterScreen extends AbstractContainerScreen<ConcocterMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/concocter.png");
     protected static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
@@ -33,7 +33,7 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterContainer>
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
 
-    public ConcocterScreen(ConcocterContainer screenContainer, Inventory inv, Component titleIn) {
+    public ConcocterScreen(ConcocterMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.titleLabelX = 44;
         this.inventoryLabelX = 27;

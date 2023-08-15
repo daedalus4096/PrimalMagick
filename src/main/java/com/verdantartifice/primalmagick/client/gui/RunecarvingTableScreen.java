@@ -5,7 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.menus.RunecarvingTableContainer;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableContainer> {
+public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runecarving_table.png");
     
     protected float sliderProgress;
@@ -37,7 +37,7 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     protected int recipeIndexOffset;
     protected boolean hasItemsInInputSlot;
 
-    public RunecarvingTableScreen(RunecarvingTableContainer screenContainer, Inventory inv, Component titleIn) {
+    public RunecarvingTableScreen(RunecarvingTableMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         screenContainer.setInventoryUpdateListener(this::onInventoryUpdate);
     }

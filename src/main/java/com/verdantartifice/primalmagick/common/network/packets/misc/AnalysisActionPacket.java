@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.menus.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -41,9 +41,9 @@ public class AnalysisActionPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableContainer) {
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableMenu) {
                     // Trigger the scan if the open container window matches the given one
-                    ((AnalysisTableContainer)player.containerMenu).doScan();
+                    ((AnalysisTableMenu)player.containerMenu).doScan();
                 }
             });
             

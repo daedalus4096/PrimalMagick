@@ -19,18 +19,18 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class EssenceTransmuterContainer extends AbstractContainerMenu {
+public class EssenceTransmuterMenu extends AbstractContainerMenu {
     protected final Container transmuterInv;
     protected final ContainerData transmuterData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
 
-    public EssenceTransmuterContainer(int id, Inventory playerInv) {
+    public EssenceTransmuterMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
     }
     
-    public EssenceTransmuterContainer(int id, Inventory playerInv, Container transmuterInv, ContainerData transmuterData) {
-        super(ContainersPM.ESSENCE_TRANSMUTER.get(), id);
+    public EssenceTransmuterMenu(int id, Inventory playerInv, Container transmuterInv, ContainerData transmuterData) {
+        super(MenuTypesPM.ESSENCE_TRANSMUTER.get(), id);
         checkContainerSize(transmuterInv, 11);
         checkContainerDataCount(transmuterData, 4);
         this.transmuterInv = transmuterInv;

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import com.verdantartifice.primalmagick.common.menus.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -82,7 +82,7 @@ public class AnalysisTableBlock extends Block {
             NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new AnalysisTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
+                    return new AnalysisTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override

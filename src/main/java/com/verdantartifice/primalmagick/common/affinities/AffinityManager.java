@@ -27,7 +27,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
-import com.verdantartifice.primalmagick.common.menus.FakeContainer;
+import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -334,7 +334,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         NonNullList<ItemStack> containerList = NonNullList.create();
         if (recipe instanceof CraftingRecipe) {
             CraftingRecipe craftingRecipe = (CraftingRecipe)recipe;
-            CraftingContainer inv = new TransientCraftingContainer(new FakeContainer(), ingredients.size(), 1);
+            CraftingContainer inv = new TransientCraftingContainer(new FakeMenu(), ingredients.size(), 1);
             int index = 0;
             for (Ingredient ingredient : ingredients) {
                 ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);

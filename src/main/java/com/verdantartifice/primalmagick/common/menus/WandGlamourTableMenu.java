@@ -4,10 +4,11 @@ import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.crafting.WandAssemblyRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
 import com.verdantartifice.primalmagick.common.menus.slots.WandCapSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandCoreSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandGemSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -25,43 +26,41 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 
-/**
- * Server data container for the wand assembly table GUI.
- * 
- * @author Daedalus4096
- */
-public class WandAssemblyTableContainer extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_assembly");
-    
+public class WandGlamourTableMenu extends AbstractContainerMenu {
+    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_glamour");
+
     protected final ContainerLevelAccess worldPosCallable;
-    protected final WandComponentInventory componentInv = new WandComponentInventory();
+    protected final GlamourComponentInventory componentInv = new GlamourComponentInventory();
     protected final ResultContainer resultInv = new ResultContainer();
     protected final Player player;
+    protected final Slot wandSlot;
     protected final Slot coreSlot;
     protected final Slot capSlot;
     protected final Slot gemSlot;
     
-    public WandAssemblyTableContainer(int windowId, Inventory inv) {
+    public WandGlamourTableMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
     
-    public WandAssemblyTableContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(ContainersPM.WAND_ASSEMBLY_TABLE.get(), windowId);
+    public WandGlamourTableMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.WAND_GLAMOUR_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         
         // Slot 0: Result
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
-        // Slot 1: Wand core
-        this.coreSlot = this.addSlot(new WandCoreSlot(this.componentInv, 0, 48, 35));
+        // Slot 1: Wand/staff
+        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 66, 35, true));
         
-        // Slot 2: Wand gem
-        this.gemSlot = this.addSlot(new WandGemSlot(this.componentInv, 1, 48, 17));
+        // Slot 2: Wand core
+        this.coreSlot = this.addSlot(new WandCoreSlot(this.componentInv, 1, 30, 17));
         
-        // Slots 3-4: Wand caps
-        this.capSlot = this.addSlot(new WandCapSlot(this.componentInv, 2, 30, 53));
-        this.addSlot(new WandCapSlot(this.componentInv, 3, 66, 17));
+        // Slot 3: Wand caps
+        this.capSlot = this.addSlot(new WandCapSlot(this.componentInv, 2, 30, 35));
+        
+        // Slot 4: Wand gem
+        this.gemSlot = this.addSlot(new WandGemSlot(this.componentInv, 3, 30, 53));
         
         // Slots 5-31: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -77,19 +76,7 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.WAND_ASSEMBLY_TABLE.get());
-    }
-    
-    @Override
-    public void removed(Player playerIn) {
-        // Return crafting inputs to the player's inventory when GUI is closed
-        super.removed(playerIn);
-        this.clearContainer(playerIn, this.componentInv);
-    }
-    
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
+    public ItemStack quickMoveStack(Player player, int index) {
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
         if (slot != null && slot.hasItem()) {
@@ -102,17 +89,21 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
                 }
                 slot.onQuickCraft(slotStack, stack);
             } else if (index >= 5 && index < 32) {
-                // If transferring from the backpack, move cores, caps, and gems to the appropriate slots, and everything else to the hotbar
-                if (this.coreSlot.mayPlace(slotStack)) {
+                // If transferring from the backpack, move wands, cores, caps, and gems to the appropriate slots, and everything else to the hotbar
+                if (this.wandSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.mayPlace(slotStack)) {
+                } else if (this.coreSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (this.capSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 3, 5, false)) {
+                    if (!this.moveItemStackTo(slotStack, 3, 4, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (this.gemSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 4, 5, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
@@ -121,17 +112,21 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
                     }
                 }
             } else if (index >= 32 && index < 41) {
-                // If transferring from the hotbar, move cores, caps, and gems to the appropriate slots, and everything else to the backpack
-                if (this.coreSlot.mayPlace(slotStack)) {
+                // If transferring from the hotbar, move wands, cores, caps, and gems to the appropriate slots, and everything else to the backpack
+                if (this.wandSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 1, 2, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (this.gemSlot.mayPlace(slotStack)) {
+                } else if (this.coreSlot.mayPlace(slotStack)) {
                     if (!this.moveItemStackTo(slotStack, 2, 3, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (this.capSlot.mayPlace(slotStack)) {
-                    if (!this.moveItemStackTo(slotStack, 3, 5, false)) {
+                    if (!this.moveItemStackTo(slotStack, 3, 4, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (this.gemSlot.mayPlace(slotStack)) {
+                    if (!this.moveItemStackTo(slotStack, 4, 5, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else {
@@ -154,32 +149,41 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
             
-            slot.onTake(playerIn, slotStack);
+            slot.onTake(player, slotStack);
         }
         return stack;
     }
-    
+
     @Override
-    public boolean canTakeItemForPickAll(ItemStack stack, Slot slotIn) {
-        return slotIn.container != this.resultInv && super.canTakeItemForPickAll(stack, slotIn);
+    public boolean stillValid(Player player) {
+        return stillValid(this.worldPosCallable, player, BlocksPM.WAND_GLAMOUR_TABLE.get());
     }
-    
+
     @Override
-    public void slotsChanged(Container inventoryIn) {
-        super.slotsChanged(inventoryIn);
+    public void removed(Player player) {
+        super.removed(player);
+        this.clearContainer(player, this.componentInv);
+    }
+
+    @Override
+    public boolean canTakeItemForPickAll(ItemStack stack, Slot slot) {
+        return slot.container != this.resultInv && super.canTakeItemForPickAll(stack, slot);
+    }
+
+    @Override
+    public void slotsChanged(Container inv) {
+        super.slotsChanged(inv);
         this.worldPosCallable.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
-    
+
     protected void slotChangedCraftingGrid(Level world) {
-        if (!world.isClientSide && this.player instanceof ServerPlayer) {
-            ServerPlayer spe = (ServerPlayer)this.player;
+        if (!world.isClientSide && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
             Optional<? extends Recipe<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
-            if (opt.isPresent() && opt.get() instanceof WandAssemblyRecipe) {
-                // If the inputs make a valid wand, show the output
-                WandAssemblyRecipe recipe = (WandAssemblyRecipe)opt.get();
+            if (opt.isPresent() && opt.get() instanceof WandGlamourRecipe recipe) {
+                // If the inputs are valid, show the output
                 if (recipe.matches(this.componentInv, world)) {
                     stack = recipe.assemble(this.componentInv, world.registryAccess());
                 }
@@ -191,9 +195,9 @@ public class WandAssemblyTableContainer extends AbstractContainerMenu {
         }
     }
 
-    protected class WandComponentInventory extends TransientCraftingContainer {
-        public WandComponentInventory() {
-            super(WandAssemblyTableContainer.this, 2, 2);
+    protected class GlamourComponentInventory extends TransientCraftingContainer {
+        public GlamourComponentInventory() {
+            super(WandGlamourTableMenu.this, 2, 2);
         }
         
         @Override

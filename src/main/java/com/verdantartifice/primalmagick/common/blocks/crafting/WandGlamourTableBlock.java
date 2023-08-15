@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.menus.WandGlamourTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandGlamourTableMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -81,7 +81,7 @@ public class WandGlamourTableBlock extends Block {
             NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new WandGlamourTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
+                    return new WandGlamourTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override

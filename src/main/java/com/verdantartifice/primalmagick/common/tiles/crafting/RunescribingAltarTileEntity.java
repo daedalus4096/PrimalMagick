@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
-import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicContainer;
-import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedContainer;
-import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenContainer;
-import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicMenu;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedMenu;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenMenu;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
@@ -33,13 +33,13 @@ public class RunescribingAltarTileEntity extends TilePM implements MenuProvider 
             DeviceTier tier = ((RunescribingAltarBlock)this.getBlockState().getBlock()).getDeviceTier();
             switch (tier) {
             case BASIC:
-                return new RunescribingAltarBasicContainer(windowId, playerInv);
+                return new RunescribingAltarBasicMenu(windowId, playerInv);
             case ENCHANTED:
-                return new RunescribingAltarEnchantedContainer(windowId, playerInv);
+                return new RunescribingAltarEnchantedMenu(windowId, playerInv);
             case FORBIDDEN:
-                return new RunescribingAltarForbiddenContainer(windowId, playerInv);
+                return new RunescribingAltarForbiddenMenu(windowId, playerInv);
             case HEAVENLY:
-                return new RunescribingAltarHeavenlyContainer(windowId, playerInv);
+                return new RunescribingAltarHeavenlyMenu(windowId, playerInv);
             default:
                 return null;
             }

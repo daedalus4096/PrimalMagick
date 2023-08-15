@@ -8,15 +8,15 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
 /**
- * Server data container for the heavenly runescribing altar GUI.
+ * Server data container for the forbidden runescribing altar GUI.
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarHeavenlyContainer extends AbstractRunescribingAltarContainer {
-    protected static final int RUNE_CAPACITY = 9;
+public class RunescribingAltarForbiddenMenu extends AbstractRunescribingAltarMenu {
+    protected static final int RUNE_CAPACITY = 7;
     
-    public RunescribingAltarHeavenlyContainer(int id, @Nonnull Inventory playerInv) {
-        super(ContainersPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), id, playerInv);
+    public RunescribingAltarForbiddenMenu(int id, @Nonnull Inventory playerInv) {
+        super(MenuTypesPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), id, playerInv);
     }
     
     @Override
@@ -32,8 +32,6 @@ public class RunescribingAltarHeavenlyContainer extends AbstractRunescribingAlta
         this.addSlot(new RuneSlot(this.altarInv, 4, 44, 35));
         this.addSlot(new RuneSlot(this.altarInv, 5, 62, 35));
         this.addSlot(new RuneSlot(this.altarInv, 6, 80, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 7, 44, 53));
-        this.addSlot(new RuneSlot(this.altarInv, 8, 62, 53));
-        return this.addSlot(new RuneSlot(this.altarInv, 9, 80, 53));
+        return this.addSlot(new RuneSlot(this.altarInv, 7, 62, 53));
     }
 }

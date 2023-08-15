@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -12,10 +12,10 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarHeavenlyScreen extends AbstractRunescribingAltarScreen<RunescribingAltarHeavenlyContainer> {
+public class RunescribingAltarHeavenlyScreen extends AbstractRunescribingAltarScreen<RunescribingAltarHeavenlyMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runescribing_altar_9.png");
 
-    public RunescribingAltarHeavenlyScreen(RunescribingAltarHeavenlyContainer screenContainer, Inventory inv, Component titleIn) {
+    public RunescribingAltarHeavenlyScreen(RunescribingAltarHeavenlyMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
     

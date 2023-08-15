@@ -4,7 +4,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.menus.HoneyExtractorContainer;
+import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -106,7 +106,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new HoneyExtractorContainer(windowId, playerInv, this, this.extractorData);
+        return new HoneyExtractorMenu(windowId, playerInv, this, this.extractorData);
     }
 
     @Override

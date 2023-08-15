@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import com.verdantartifice.primalmagick.common.menus.CalcinatorContainer;
+import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
@@ -13,9 +13,9 @@ import net.minecraft.world.item.Items;
  * @author Daedalus4096
  */
 public class CalcinatorFuelSlot extends Slot {
-    protected final CalcinatorContainer container;
+    protected final CalcinatorMenu container;
 
-    public CalcinatorFuelSlot(CalcinatorContainer container, Container inventoryIn, int index, int xPosition, int yPosition) {
+    public CalcinatorFuelSlot(CalcinatorMenu container, Container inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
         this.container = container;
     }

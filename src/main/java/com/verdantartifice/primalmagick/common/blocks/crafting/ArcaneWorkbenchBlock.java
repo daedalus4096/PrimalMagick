@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchContainer;
+import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -49,7 +49,7 @@ public class ArcaneWorkbenchBlock extends Block {
             NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new ArcaneWorkbenchContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
+                    return new ArcaneWorkbenchMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override

@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterContainer;
+import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -154,7 +154,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceTransmuterContainer(windowId, playerInv, this, this.transmuterData);
+        return new EssenceTransmuterMenu(windowId, playerInv, this, this.transmuterData);
     }
 
     @Override

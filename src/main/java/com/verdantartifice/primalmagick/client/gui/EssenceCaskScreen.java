@@ -7,7 +7,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.EssenceCaskContainer;
+import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -24,14 +24,14 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskContainer> {
+public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
     protected long lastCheck = 0L;
     protected int lastTotalEssence = 0;
 
-    public EssenceCaskScreen(EssenceCaskContainer screenContainer, Inventory inv, Component titleIn) {
+    public EssenceCaskScreen(EssenceCaskMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 176;
         this.imageHeight = 222;

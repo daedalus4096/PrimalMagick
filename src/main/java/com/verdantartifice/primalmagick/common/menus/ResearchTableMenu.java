@@ -32,7 +32,7 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableContainer extends AbstractContainerMenu implements ContainerListener {
+public class ResearchTableMenu extends AbstractContainerMenu implements ContainerListener {
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     protected final Container writingInv;
@@ -40,12 +40,12 @@ public class ResearchTableContainer extends AbstractContainerMenu implements Con
     protected final Slot pencilSlot;
     protected final DataSlot writingReady = DataSlot.standalone();
 
-    public ResearchTableContainer(int windowId, Inventory inv, BlockPos pos) {
+    public ResearchTableMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
     }
 
-    public ResearchTableContainer(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
-        super(ContainersPM.RESEARCH_TABLE.get(), windowId);
+    public ResearchTableMenu(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.RESEARCH_TABLE.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         checkContainerSize(tableInv, 2);

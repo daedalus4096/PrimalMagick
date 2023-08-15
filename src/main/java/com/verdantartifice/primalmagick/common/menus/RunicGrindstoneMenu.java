@@ -42,7 +42,7 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class RunicGrindstoneContainer extends AbstractContainerMenu {
+public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
     protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS");
     
@@ -54,19 +54,19 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
         */
        public void setChanged() {
           super.setChanged();
-          RunicGrindstoneContainer.this.slotsChanged(this);
+          RunicGrindstoneMenu.this.slotsChanged(this);
        }
     };
     protected final ContainerLevelAccess worldPosCallable;
     protected Player player;
     private int xp = -1;
 
-    public RunicGrindstoneContainer(int windowId, Inventory playerInv) {
+    public RunicGrindstoneMenu(int windowId, Inventory playerInv) {
         this(windowId, playerInv, ContainerLevelAccess.NULL);
     }
     
-    public RunicGrindstoneContainer(int windowId, Inventory playerInv, ContainerLevelAccess worldPosCallable) {
-        super(ContainersPM.RUNIC_GRINDSTONE.get(), windowId);
+    public RunicGrindstoneMenu(int windowId, Inventory playerInv, ContainerLevelAccess worldPosCallable) {
+        super(MenuTypesPM.RUNIC_GRINDSTONE.get(), windowId);
         this.worldPosCallable = worldPosCallable;
         this.player = playerInv.player;
 
@@ -86,22 +86,22 @@ public class RunicGrindstoneContainer extends AbstractContainerMenu {
                         ExperienceOrb.award(serverLevel, Vec3.atCenterOf(pos), this.getExperienceAmount(level));
                         
                         // Grant runic knowledge hints to the player based on the enchantments on the pre-wipe item
-                        ItemStack preWipeStack = RunicGrindstoneContainer.this.mergeEnchants(
-                                RunicGrindstoneContainer.this.repairSlots.getItem(0), 
-                                RunicGrindstoneContainer.this.repairSlots.getItem(1));
-                        RunicGrindstoneContainer.this.grantHints(preWipeStack);
+                        ItemStack preWipeStack = RunicGrindstoneMenu.this.mergeEnchants(
+                                RunicGrindstoneMenu.this.repairSlots.getItem(0), 
+                                RunicGrindstoneMenu.this.repairSlots.getItem(1));
+                        RunicGrindstoneMenu.this.grantHints(preWipeStack);
                     }
                     level.levelEvent(1042, pos, 0);
                 });
-                RunicGrindstoneContainer.this.repairSlots.setItem(0, ItemStack.EMPTY);
-                RunicGrindstoneContainer.this.repairSlots.setItem(1, ItemStack.EMPTY);
+                RunicGrindstoneMenu.this.repairSlots.setItem(0, ItemStack.EMPTY);
+                RunicGrindstoneMenu.this.repairSlots.setItem(1, ItemStack.EMPTY);
             }
 
             private int getExperienceAmount(Level level) {
                 if (xp > -1) return xp;
                 int l = 0;
-                l += this.getExperienceFromItem(RunicGrindstoneContainer.this.repairSlots.getItem(0));
-                l += this.getExperienceFromItem(RunicGrindstoneContainer.this.repairSlots.getItem(1));
+                l += this.getExperienceFromItem(RunicGrindstoneMenu.this.repairSlots.getItem(0));
+                l += this.getExperienceFromItem(RunicGrindstoneMenu.this.repairSlots.getItem(1));
                 if (l > 0) {
                     int i1 = (int)Math.ceil((double)l / 2.0D);
                     return i1 + level.random.nextInt(i1);

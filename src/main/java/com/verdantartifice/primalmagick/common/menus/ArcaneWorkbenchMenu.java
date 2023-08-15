@@ -35,7 +35,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
+public class ArcaneWorkbenchMenu extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
     protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
@@ -44,12 +44,12 @@ public class ArcaneWorkbenchContainer extends AbstractArcaneRecipeBookMenu<Craft
     protected final Slot wandSlot;
     protected IArcaneRecipe activeArcaneRecipe = null;
     
-    public ArcaneWorkbenchContainer(int windowId, Inventory inv) {
+    public ArcaneWorkbenchMenu(int windowId, Inventory inv) {
         this(windowId, inv, ContainerLevelAccess.NULL);
     }
     
-    public ArcaneWorkbenchContainer(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(ContainersPM.ARCANE_WORKBENCH.get(), windowId);
+    public ArcaneWorkbenchMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
+        super(MenuTypesPM.ARCANE_WORKBENCH.get(), windowId);
         this.worldPosCallable = callable;
         this.player = inv.player;
         

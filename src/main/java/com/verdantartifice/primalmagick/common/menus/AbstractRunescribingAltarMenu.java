@@ -32,7 +32,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRunescribingAltarContainer extends AbstractContainerMenu {
+public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMenu {
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
         @Override
         public int getMaxStackSize() {
@@ -44,7 +44,7 @@ public abstract class AbstractRunescribingAltarContainer extends AbstractContain
     protected final Level world;
     protected final Slot runeSlot;
 
-    public AbstractRunescribingAltarContainer(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
+    public AbstractRunescribingAltarMenu(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
         super(type, id);
         this.player = playerInv.player;
         this.world = this.player.level();

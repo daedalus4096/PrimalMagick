@@ -12,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
-import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
@@ -39,7 +39,7 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarContainer> {
+public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
@@ -47,7 +47,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     
     private EditBox nameField;
 
-    public SpellcraftingAltarScreen(SpellcraftingAltarContainer screenContainer, Inventory inv, Component titleIn) {
+    public SpellcraftingAltarScreen(SpellcraftingAltarMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 230;
         this.imageHeight = 222;

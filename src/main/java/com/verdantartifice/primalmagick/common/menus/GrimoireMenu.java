@@ -15,13 +15,13 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class GrimoireContainer extends AbstractContainerMenu {
+public class GrimoireMenu extends AbstractContainerMenu {
     protected final LinkedList<AbstractResearchTopic> history = new LinkedList<>();
 
     protected AbstractResearchTopic topic;
     
-    public GrimoireContainer(int windowId, AbstractResearchTopic topic, List<AbstractResearchTopic> history) {
-        super(ContainersPM.GRIMOIRE.get(), windowId);
+    public GrimoireMenu(int windowId, AbstractResearchTopic topic, List<AbstractResearchTopic> history) {
+        super(MenuTypesPM.GRIMOIRE.get(), windowId);
         this.topic = topic == null ? MainIndexResearchTopic.INSTANCE : topic;
         this.history.addAll(history);
     }

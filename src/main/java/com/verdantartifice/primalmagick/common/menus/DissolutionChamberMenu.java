@@ -22,19 +22,19 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberContainer extends AbstractArcaneRecipeBookMenu<Container> {
+public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Container> {
     protected final Container chamberInv;
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
     protected final Level world;
     
-    public DissolutionChamberContainer(int id, Inventory playerInv) {
+    public DissolutionChamberMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(3), new SimpleContainerData(4));
     }
     
-    public DissolutionChamberContainer(int id, Inventory playerInv, Container chamberInv, ContainerData chamberData) {
-        super(ContainersPM.DISSOLUTION_CHAMBER.get(), id);
+    public DissolutionChamberMenu(int id, Inventory playerInv, Container chamberInv, ContainerData chamberData) {
+        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id);
         checkContainerSize(chamberInv, 3);
         checkContainerDataCount(chamberData, 4);
         this.chamberInv = chamberInv;

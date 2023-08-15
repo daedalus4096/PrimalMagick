@@ -19,7 +19,7 @@ import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.CalcinatorContainer;
+import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -276,7 +276,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new CalcinatorContainer(windowId, playerInv, this, this.calcinatorData);
+        return new CalcinatorMenu(windowId, playerInv, this, this.calcinatorData);
     }
 
     @Override

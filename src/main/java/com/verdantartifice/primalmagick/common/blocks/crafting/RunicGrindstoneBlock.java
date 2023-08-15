@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.menus.RunicGrindstoneContainer;
+import com.verdantartifice.primalmagick.common.menus.RunicGrindstoneMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -68,7 +68,7 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     @Override
     public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
         return new SimpleMenuProvider((windowId, playerInv, player) -> {
-            return new RunicGrindstoneContainer(windowId, playerInv, ContainerLevelAccess.create(worldIn, pos));
+            return new RunicGrindstoneMenu(windowId, playerInv, ContainerLevelAccess.create(worldIn, pos));
          }, Component.translatable(this.getDescriptionId()));
     }
 }

@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.research_table.Projec
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.menus.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
@@ -41,7 +41,7 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableContainer> {
+public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table.png");
     private static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
@@ -55,7 +55,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableCo
     protected Project lastProject = null;
     protected Button completeProjectButton = null;
 
-    public ResearchTableScreen(ResearchTableContainer screenContainer, Inventory inv, Component titleIn) {
+    public ResearchTableScreen(ResearchTableMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.imageWidth = 230;
         this.imageHeight = 222;

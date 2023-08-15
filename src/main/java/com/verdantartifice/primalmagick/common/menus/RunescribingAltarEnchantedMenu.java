@@ -12,11 +12,11 @@ import net.minecraft.world.inventory.Slot;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarEnchantedContainer extends AbstractRunescribingAltarContainer {
+public class RunescribingAltarEnchantedMenu extends AbstractRunescribingAltarMenu {
     protected static final int RUNE_CAPACITY = 5;
     
-    public RunescribingAltarEnchantedContainer(int id, @Nonnull Inventory playerInv) {
-        super(ContainersPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), id, playerInv);
+    public RunescribingAltarEnchantedMenu(int id, @Nonnull Inventory playerInv) {
+        super(MenuTypesPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), id, playerInv);
     }
     
     @Override

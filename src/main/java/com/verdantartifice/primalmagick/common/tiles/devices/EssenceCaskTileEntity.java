@@ -10,7 +10,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.EssenceCaskContainer;
+import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -94,7 +94,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
 
         @Override
         protected boolean isOwnContainer(Player player) {
-            return player.containerMenu instanceof EssenceCaskContainer caskMenu && caskMenu.getContainer() == EssenceCaskTileEntity.this;  // Reference comparison intended
+            return player.containerMenu instanceof EssenceCaskMenu caskMenu && caskMenu.getContainer() == EssenceCaskTileEntity.this;  // Reference comparison intended
         }
     };
     
@@ -131,7 +131,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceCaskContainer(windowId, playerInv, this, this.caskData, this.worldPosition);
+        return new EssenceCaskMenu(windowId, playerInv, this, this.caskData, this.worldPosition);
     }
 
     @Override

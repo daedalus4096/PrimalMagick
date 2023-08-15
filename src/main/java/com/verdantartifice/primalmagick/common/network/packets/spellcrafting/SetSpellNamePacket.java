@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -45,9 +45,9 @@ public class SetSpellNamePacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarContainer) {
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu) {
                     // Update the spell name if the open container window matches the given one
-                    ((SpellcraftingAltarContainer)player.containerMenu).setSpellName(message.name);
+                    ((SpellcraftingAltarMenu)player.containerMenu).setSpellName(message.name);
                 }
             });
             

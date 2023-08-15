@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 
@@ -62,9 +62,9 @@ public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarContainer) {
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu) {
                     // Update the appropriate spell component type if the open container window matches the given one
-                    SpellcraftingAltarContainer container = (SpellcraftingAltarContainer)player.containerMenu;
+                    SpellcraftingAltarMenu container = (SpellcraftingAltarMenu)player.containerMenu;
                     switch (message.attr) {
                     case VEHICLE:
                         container.setSpellVehicleTypeIndex(message.index);

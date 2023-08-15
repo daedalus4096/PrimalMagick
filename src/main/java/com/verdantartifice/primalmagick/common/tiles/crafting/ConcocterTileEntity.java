@@ -18,7 +18,7 @@ import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
-import com.verdantartifice.primalmagick.common.menus.ConcocterContainer;
+import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
@@ -144,7 +144,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new ConcocterContainer(windowId, playerInv, this, this.concocterData);
+        return new ConcocterMenu(windowId, playerInv, this, this.concocterData);
     }
 
     @Override
