@@ -22,6 +22,11 @@ public class MenuTypesPM {
         MENU_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
+    /**
+     * @deprecated
+     */
+    @SuppressWarnings("removal")
+    @Deprecated(since = "4.0.2", forRemoval = true)
     public static final RegistryObject<MenuType<GrimoireMenu>> GRIMOIRE = MENU_TYPES.register("grimoire", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new GrimoireMenu(windowId, ResearchTopicFactory.decode(data), ResearchTopicFactory.decodeHistory(data));
     }));

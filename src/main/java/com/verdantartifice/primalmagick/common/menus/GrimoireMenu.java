@@ -14,7 +14,9 @@ import net.minecraft.world.item.ItemStack;
  * Server data container for the grimoire GUI.
  * 
  * @author Daedalus4096
+ * @deprecated
  */
+@Deprecated(since = "4.0.2", forRemoval = true)
 public class GrimoireMenu extends AbstractContainerMenu {
     protected final LinkedList<AbstractResearchTopic> history = new LinkedList<>();
 
