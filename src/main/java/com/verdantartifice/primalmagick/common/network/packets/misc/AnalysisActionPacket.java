@@ -42,7 +42,7 @@ public class AnalysisActionPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
                 if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableMenu) {
-                    // Trigger the scan if the open container window matches the given one
+                    // Trigger the scan if the open menu window matches the given one
                     ((AnalysisTableMenu)player.containerMenu).doScan();
                 }
             });

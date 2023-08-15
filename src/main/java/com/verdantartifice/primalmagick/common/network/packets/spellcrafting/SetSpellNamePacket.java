@@ -46,7 +46,7 @@ public class SetSpellNamePacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
                 if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu) {
-                    // Update the spell name if the open container window matches the given one
+                    // Update the spell name if the open menu window matches the given one
                     ((SpellcraftingAltarMenu)player.containerMenu).setSpellName(message.name);
                 }
             });

@@ -67,10 +67,9 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu) {
-                    // Update the property value if the open container window matches the given one
-                    SpellcraftingAltarMenu container = (SpellcraftingAltarMenu)player.containerMenu;
-                    container.setSpellPropertyValue(message.attr, message.name, message.value);
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
+                    // Update the property value if the open menu window matches the given one
+                    altarMenu.setSpellPropertyValue(message.attr, message.name, message.value);
                 }
             });
             
