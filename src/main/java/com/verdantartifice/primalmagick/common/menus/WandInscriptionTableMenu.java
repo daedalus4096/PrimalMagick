@@ -5,7 +5,8 @@ import java.util.Optional;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
-import com.verdantartifice.primalmagick.common.menus.slots.SpellScrollFilledSlot;
+import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -55,7 +56,7 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 30, 35, true));
         
         // Slot 2: Input scroll
-        this.scrollSlot = this.addSlot(new SpellScrollFilledSlot(this.componentInv, 1, 66, 35));
+        this.scrollSlot = this.addSlot(new FilteredSlot(this.componentInv, 1, 66, 35, new FilteredSlot.Properties().typeOf(SpellScrollItem.class)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {
