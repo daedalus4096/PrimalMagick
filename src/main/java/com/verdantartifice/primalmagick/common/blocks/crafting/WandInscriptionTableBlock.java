@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.WandInscriptionTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandInscriptionTableMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -81,7 +81,7 @@ public class WandInscriptionTableBlock extends Block {
             NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new WandInscriptionTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
+                    return new WandInscriptionTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override

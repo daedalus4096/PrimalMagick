@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 
@@ -67,10 +67,9 @@ public class SetSpellComponentPropertyPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarContainer) {
-                    // Update the property value if the open container window matches the given one
-                    SpellcraftingAltarContainer container = (SpellcraftingAltarContainer)player.containerMenu;
-                    container.setSpellPropertyValue(message.attr, message.name, message.value);
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
+                    // Update the property value if the open menu window matches the given one
+                    altarMenu.setSpellPropertyValue(message.attr, message.name, message.value);
                 }
             });
             

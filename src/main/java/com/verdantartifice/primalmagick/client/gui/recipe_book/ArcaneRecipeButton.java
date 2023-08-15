@@ -3,8 +3,8 @@ package com.verdantartifice.primalmagick.client.gui.recipe_book;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
+import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

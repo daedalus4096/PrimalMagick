@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 
@@ -62,21 +62,20 @@ public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarContainer) {
-                    // Update the appropriate spell component type if the open container window matches the given one
-                    SpellcraftingAltarContainer container = (SpellcraftingAltarContainer)player.containerMenu;
+                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
+                    // Update the appropriate spell component type if the open menu window matches the given one
                     switch (message.attr) {
                     case VEHICLE:
-                        container.setSpellVehicleTypeIndex(message.index);
+                        altarMenu.setSpellVehicleTypeIndex(message.index);
                         break;
                     case PAYLOAD:
-                        container.setSpellPayloadTypeIndex(message.index);
+                        altarMenu.setSpellPayloadTypeIndex(message.index);
                         break;
                     case PRIMARY_MOD:
-                        container.setSpellPrimaryModTypeIndex(message.index);
+                        altarMenu.setSpellPrimaryModTypeIndex(message.index);
                         break;
                     case SECONDARY_MOD:
-                        container.setSpellSecondaryModTypeIndex(message.index);
+                        altarMenu.setSpellSecondaryModTypeIndex(message.index);
                         break;
                     default:
                         // Do nothing

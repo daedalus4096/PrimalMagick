@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.WandInscriptionTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandInscriptionTableMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,11 +14,11 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class WandInscriptionTableScreen extends AbstractContainerScreen<WandInscriptionTableContainer> {
+public class WandInscriptionTableScreen extends AbstractContainerScreen<WandInscriptionTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_inscription_table.png");
 
-    public WandInscriptionTableScreen(WandInscriptionTableContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandInscriptionTableScreen(WandInscriptionTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

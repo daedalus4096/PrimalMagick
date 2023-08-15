@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.common.containers.DissolutionChamberContainer;
+import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,7 +24,7 @@ import net.minecraft.world.inventory.Slot;
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberScreen extends AbstractContainerScreen<DissolutionChamberContainer> implements ArcaneRecipeUpdateListener {
+public class DissolutionChamberScreen extends AbstractContainerScreen<DissolutionChamberMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/dissolution_chamber.png");
     protected static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
@@ -33,8 +33,8 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
 
-    public DissolutionChamberScreen(DissolutionChamberContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public DissolutionChamberScreen(DissolutionChamberMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.titleLabelX = 44;
         this.inventoryLabelX = 27;
     }

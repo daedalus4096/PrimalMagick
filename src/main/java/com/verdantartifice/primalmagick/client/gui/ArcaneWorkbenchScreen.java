@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
-import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -30,7 +30,7 @@ import net.minecraft.world.inventory.Slot;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchContainer> implements ArcaneRecipeUpdateListener {
+public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/arcane_workbench.png");
     private static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
@@ -39,8 +39,8 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();
     protected boolean widthTooNarrow;
 
-    public ArcaneWorkbenchScreen(ArcaneWorkbenchContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.imageHeight = 183;
     }
     

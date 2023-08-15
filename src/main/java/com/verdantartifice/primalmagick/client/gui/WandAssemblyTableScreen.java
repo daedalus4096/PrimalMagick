@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.WandAssemblyTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,11 +14,11 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class WandAssemblyTableScreen extends AbstractContainerScreen<WandAssemblyTableContainer> {
+public class WandAssemblyTableScreen extends AbstractContainerScreen<WandAssemblyTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_assembly_table.png");
 
-    public WandAssemblyTableScreen(WandAssemblyTableContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandAssemblyTableScreen(WandAssemblyTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

@@ -33,10 +33,10 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
+import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
@@ -73,27 +73,27 @@ public class ClientModLifecycleEvents {
     }
 
     private static void registerScreens() {
-        // Register screen factories for each container
-        MenuScreens.register(ContainersPM.ARCANE_WORKBENCH.get(), ArcaneWorkbenchScreen::new);
-        MenuScreens.register(ContainersPM.WAND_ASSEMBLY_TABLE.get(), WandAssemblyTableScreen::new);
-        MenuScreens.register(ContainersPM.ANALYSIS_TABLE.get(), AnalysisTableScreen::new);
-        MenuScreens.register(ContainersPM.CALCINATOR.get(), CalcinatorScreen::new);
-        MenuScreens.register(ContainersPM.WAND_INSCRIPTION_TABLE.get(), WandInscriptionTableScreen::new);
-        MenuScreens.register(ContainersPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarScreen::new);
-        MenuScreens.register(ContainersPM.WAND_CHARGER.get(), WandChargerScreen::new);
-        MenuScreens.register(ContainersPM.RESEARCH_TABLE.get(), ResearchTableScreen::new);
-        MenuScreens.register(ContainersPM.RUNESCRIBING_ALTAR_BASIC.get(), RunescribingAltarBasicScreen::new);
-        MenuScreens.register(ContainersPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), RunescribingAltarEnchantedScreen::new);
-        MenuScreens.register(ContainersPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), RunescribingAltarForbiddenScreen::new);
-        MenuScreens.register(ContainersPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), RunescribingAltarHeavenlyScreen::new);
-        MenuScreens.register(ContainersPM.RUNECARVING_TABLE.get(), RunecarvingTableScreen::new);
-        MenuScreens.register(ContainersPM.HONEY_EXTRACTOR.get(), HoneyExtractorScreen::new);
-        MenuScreens.register(ContainersPM.CONCOCTER.get(), ConcocterScreen::new);
-        MenuScreens.register(ContainersPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterScreen::new);
-        MenuScreens.register(ContainersPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberScreen::new);
-        MenuScreens.register(ContainersPM.ESSENCE_CASK.get(), EssenceCaskScreen::new);
-        MenuScreens.register(ContainersPM.WAND_GLAMOUR_TABLE.get(), WandGlamourTableScreen::new);
-        MenuScreens.register(ContainersPM.RUNIC_GRINDSTONE.get(), RunicGrindstoneScreen::new);
+        // Register screen factories for each menu
+        MenuScreens.register(MenuTypesPM.ARCANE_WORKBENCH.get(), ArcaneWorkbenchScreen::new);
+        MenuScreens.register(MenuTypesPM.WAND_ASSEMBLY_TABLE.get(), WandAssemblyTableScreen::new);
+        MenuScreens.register(MenuTypesPM.ANALYSIS_TABLE.get(), AnalysisTableScreen::new);
+        MenuScreens.register(MenuTypesPM.CALCINATOR.get(), CalcinatorScreen::new);
+        MenuScreens.register(MenuTypesPM.WAND_INSCRIPTION_TABLE.get(), WandInscriptionTableScreen::new);
+        MenuScreens.register(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), SpellcraftingAltarScreen::new);
+        MenuScreens.register(MenuTypesPM.WAND_CHARGER.get(), WandChargerScreen::new);
+        MenuScreens.register(MenuTypesPM.RESEARCH_TABLE.get(), ResearchTableScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNESCRIBING_ALTAR_BASIC.get(), RunescribingAltarBasicScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), RunescribingAltarEnchantedScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), RunescribingAltarForbiddenScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), RunescribingAltarHeavenlyScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNECARVING_TABLE.get(), RunecarvingTableScreen::new);
+        MenuScreens.register(MenuTypesPM.HONEY_EXTRACTOR.get(), HoneyExtractorScreen::new);
+        MenuScreens.register(MenuTypesPM.CONCOCTER.get(), ConcocterScreen::new);
+        MenuScreens.register(MenuTypesPM.ESSENCE_TRANSMUTER.get(), EssenceTransmuterScreen::new);
+        MenuScreens.register(MenuTypesPM.DISSOLUTION_CHAMBER.get(), DissolutionChamberScreen::new);
+        MenuScreens.register(MenuTypesPM.ESSENCE_CASK.get(), EssenceCaskScreen::new);
+        MenuScreens.register(MenuTypesPM.WAND_GLAMOUR_TABLE.get(), WandGlamourTableScreen::new);
+        MenuScreens.register(MenuTypesPM.RUNIC_GRINDSTONE.get(), RunicGrindstoneScreen::new);
     }
     
     private static void registerTERs() {

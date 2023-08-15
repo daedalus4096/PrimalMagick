@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -54,7 +54,7 @@ public class CompleteProjectPacket implements IMessageToServer {
                 ServerPlayer player = ctx.get().getSender();
                 PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     // Consume paper and ink
-                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableContainer researchMenu) {
+                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu researchMenu) {
                         researchMenu.consumeWritingImplements();
                         researchMenu.getWorldPosCallable().execute((world, blockPos) -> {
                             // Determine if current project is a success

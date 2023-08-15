@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -51,7 +51,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new SpellcraftingAltarContainer(windowId, playerInv, ContainerLevelAccess.create(this.level, this.getBlockPos()));
+        return new SpellcraftingAltarMenu(windowId, playerInv, ContainerLevelAccess.create(this.level, this.getBlockPos()));
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.containers.AbstractRunescribingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -15,9 +15,9 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescribingAltarContainer> extends AbstractContainerScreen<T> {
-    public AbstractRunescribingAltarScreen(T screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescribingAltarMenu> extends AbstractContainerScreen<T> {
+    public AbstractRunescribingAltarScreen(T screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
     
     @Override

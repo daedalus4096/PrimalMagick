@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.WandGlamourTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandGlamourTableMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,11 +14,11 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class WandGlamourTableScreen extends AbstractContainerScreen<WandGlamourTableContainer> {
+public class WandGlamourTableScreen extends AbstractContainerScreen<WandGlamourTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_glamour_table.png");
 
-    public WandGlamourTableScreen(WandGlamourTableContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandGlamourTableScreen(WandGlamourTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

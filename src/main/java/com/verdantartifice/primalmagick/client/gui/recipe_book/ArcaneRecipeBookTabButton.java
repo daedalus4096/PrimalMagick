@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
 
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;

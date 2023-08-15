@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.WandAssemblyTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -69,7 +69,7 @@ public class WandAssemblyTableBlock extends Block {
             NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-                    return new WandAssemblyTableContainer(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
+                    return new WandAssemblyTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));
                 }
 
                 @Override

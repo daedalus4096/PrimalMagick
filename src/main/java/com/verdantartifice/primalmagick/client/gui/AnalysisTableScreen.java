@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -32,14 +32,14 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableContainer> {
+public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
     
     protected Level world;
     protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();
 
-    public AnalysisTableScreen(AnalysisTableContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public AnalysisTableScreen(AnalysisTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.world = inv.player.level();
     }
     
@@ -117,7 +117,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableCo
         protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
         protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
 
-        public AnalyzeButton(AnalysisTableContainer menu, int leftPos, int topPos) {
+        public AnalyzeButton(AnalysisTableMenu menu, int leftPos, int topPos) {
             super(leftPos + 78, topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, 256, 256, button -> {
                 PacketHandler.sendToServer(new AnalysisActionPacket(menu.containerId));
             });

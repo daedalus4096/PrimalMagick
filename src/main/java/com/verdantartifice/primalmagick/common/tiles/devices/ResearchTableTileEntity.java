@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
@@ -34,7 +34,7 @@ public class ResearchTableTileEntity extends TileInventoryPM implements MenuProv
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        ResearchTableContainer menu = new ResearchTableContainer(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
+        ResearchTableMenu menu = new ResearchTableMenu(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.worldPosition));
         this.addListener(menu);
         return menu;
     }

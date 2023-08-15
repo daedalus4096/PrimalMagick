@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.init;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
-import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
@@ -14,6 +13,7 @@ import com.verdantartifice.primalmagick.common.entities.ai.memory.MemoryModuleTy
 import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
+import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
@@ -30,7 +30,7 @@ public class InitRegistries {
         ItemsPM.init();
         CreativeModeTabsPM.init();
         TileEntityTypesPM.init();
-        ContainersPM.init();
+        MenuTypesPM.init();
         EntityTypesPM.init();
         EffectsPM.init();
         RecipeTypesPM.init();

@@ -16,16 +16,16 @@ import com.verdantartifice.primalmagick.client.gui.ArcaneWorkbenchScreen;
 import com.verdantartifice.primalmagick.client.gui.ConcocterScreen;
 import com.verdantartifice.primalmagick.client.gui.DissolutionChamberScreen;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
-import com.verdantartifice.primalmagick.common.containers.ConcocterContainer;
-import com.verdantartifice.primalmagick.common.containers.ContainersPM;
-import com.verdantartifice.primalmagick.common.containers.DissolutionChamberContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
+import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
+import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
+import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
@@ -130,9 +130,9 @@ public class JeiHelper implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ArcaneWorkbenchContainer.class, ContainersPM.ARCANE_WORKBENCH.get(), JeiRecipeTypesPM.ARCANE_CRAFTING, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(ConcocterContainer.class, ContainersPM.CONCOCTER.get(), JeiRecipeTypesPM.CONCOCTING, 1, 9, 11, 36);
-        registration.addRecipeTransferHandler(DissolutionChamberContainer.class, ContainersPM.DISSOLUTION_CHAMBER.get(), JeiRecipeTypesPM.DISSOLUTION, 1, 1, 3, 36);
+        registration.addRecipeTransferHandler(ArcaneWorkbenchMenu.class, MenuTypesPM.ARCANE_WORKBENCH.get(), JeiRecipeTypesPM.ARCANE_CRAFTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(ConcocterMenu.class, MenuTypesPM.CONCOCTER.get(), JeiRecipeTypesPM.CONCOCTING, 1, 9, 11, 36);
+        registration.addRecipeTransferHandler(DissolutionChamberMenu.class, MenuTypesPM.DISSOLUTION_CHAMBER.get(), JeiRecipeTypesPM.DISSOLUTION, 1, 1, 3, 36);
     }
 
     @Override

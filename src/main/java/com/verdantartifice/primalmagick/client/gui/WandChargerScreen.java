@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.WandChargerContainer;
+import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -14,11 +14,11 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class WandChargerScreen extends AbstractContainerScreen<WandChargerContainer> {
+public class WandChargerScreen extends AbstractContainerScreen<WandChargerMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_charger.png");
 
-    public WandChargerScreen(WandChargerContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandChargerScreen(WandChargerMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

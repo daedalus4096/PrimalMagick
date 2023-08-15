@@ -16,10 +16,10 @@ import net.minecraft.world.item.ItemStack;
  */
 public class WandInventory implements Container {
     protected final NonNullList<ItemStack> stackWand = NonNullList.withSize(1, ItemStack.EMPTY);
-    protected final AbstractContainerMenu container;
+    protected final AbstractContainerMenu menu;
     
-    public WandInventory(AbstractContainerMenu container) {
-        this.container = container;
+    public WandInventory(AbstractContainerMenu menu) {
+        this.menu = menu;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class WandInventory implements Container {
     public ItemStack removeItemNoUpdate(int index) {
         // Update the callback container's crafting state when a wand is removed from this inventory
         ItemStack stack = ContainerHelper.takeItem(this.stackWand, 0);
-        this.container.slotsChanged(this);
+        this.menu.slotsChanged(this);
         return stack;
     }
 
@@ -59,7 +59,7 @@ public class WandInventory implements Container {
     public void setItem(int index, ItemStack stack) {
         // Update the callback container's crafting state when this inventory's contents are changed
         this.stackWand.set(0, stack);
-        this.container.slotsChanged(this);
+        this.menu.slotsChanged(this);
     }
 
     @Override

@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.containers.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 

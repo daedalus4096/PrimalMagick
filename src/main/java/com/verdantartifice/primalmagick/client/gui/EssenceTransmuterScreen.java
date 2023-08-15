@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.common.containers.EssenceTransmuterContainer;
+import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -16,13 +16,13 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class EssenceTransmuterScreen extends AbstractContainerScreen<EssenceTransmuterContainer> {
+public class EssenceTransmuterScreen extends AbstractContainerScreen<EssenceTransmuterMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_transmuter.png");
     
     protected ManaGaugeWidget manaGauge;
 
-    public EssenceTransmuterScreen(EssenceTransmuterContainer screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public EssenceTransmuterScreen(EssenceTransmuterMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override
