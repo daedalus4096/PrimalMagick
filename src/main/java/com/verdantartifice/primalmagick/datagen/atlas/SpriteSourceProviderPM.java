@@ -21,9 +21,7 @@ import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMe
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.WandCapSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandCoreSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandGemSlot;
+import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -63,9 +61,9 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         SourceList armorTrimsAtlas = this.atlas(ARMOR_TRIMS_ATLAS);
         
         // Add empty-slot background images to the block atlas
-        this.addSingle(blockAtlas, WandCoreSlot.TEXTURE);
-        this.addSingle(blockAtlas, WandCapSlot.TEXTURE);
-        this.addSingle(blockAtlas, WandGemSlot.TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.CORE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.CAP_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, WandAssemblyTableMenu.GEM_SLOT_TEXTURE);
         this.addSingle(blockAtlas, WandSlot.TEXTURE);
         this.addSingle(blockAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
         this.addSingle(blockAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);

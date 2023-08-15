@@ -71,6 +71,11 @@ public class FilteredSlot extends Slot {
             return this.filter(stack -> clazz.isInstance(stack.getItem()));
         }
         
+        public FilteredSlot.Properties typeOf(Class<?>... clazzes) {
+            Objects.requireNonNull(clazzes);
+            return this.filter(stack -> Stream.of(clazzes).anyMatch(clazz -> clazz.isInstance(stack.getItem())));
+        }
+        
         public FilteredSlot.Properties background(ResourceLocation loc) {
             this.background = Optional.ofNullable(loc);
             return this;
