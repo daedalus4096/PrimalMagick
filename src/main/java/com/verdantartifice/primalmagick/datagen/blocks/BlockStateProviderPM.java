@@ -4,8 +4,13 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Data provider for mod block states and associated blocks and items.
@@ -20,6 +25,27 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
-        this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get(), this.cubeAll(BlocksPM.MARBLE_RAW.get()));
+        this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), PrimalMagick.resource("block/marble_raw"));
+    }
+
+    private ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
+    }
+
+    private String name(Block block) {
+        return key(block).getPath();
+    }
+    
+    private void simpleBlockWithItem(Block block) {
+        this.simpleBlockWithItem(block, this.cubeAll(block));
+    }
+    
+    private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock, ResourceLocation texture) {
+        String blockName = this.name(block);
+        ModelFile bottomModel = this.models().slab(blockName, texture, texture, texture);
+        ModelFile topModel = this.models().slabTop(blockName + "_top", texture, texture, texture);
+        this.slabBlock(block, bottomModel, topModel, this.models().getExistingFile(this.key(doubleSlabBlock)));
+        this.simpleBlockItem(block, bottomModel);
     }
 }
