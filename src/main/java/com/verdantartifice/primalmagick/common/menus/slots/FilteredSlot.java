@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
@@ -51,18 +52,23 @@ public class FilteredSlot extends Slot {
         }
         
         public FilteredSlot.Properties item(Item item) {
-            this.filter = Optional.of(stack -> stack.is(item));
-            return this;
+            Objects.requireNonNull(item);
+            return this.filter(stack -> stack.is(item));
         }
         
         public FilteredSlot.Properties item(Item... items) {
-            this.filter = Optional.of(stack -> Stream.of(items).anyMatch(item -> stack.is(item)));
-            return this;
+            Objects.requireNonNull(items);
+            return this.filter(stack -> Stream.of(items).anyMatch(item -> stack.is(item)));
         }
         
         public FilteredSlot.Properties tag(TagKey<Item> tagKey) {
-            this.filter = Optional.of(stack -> stack.is(tagKey));
-            return this;
+            Objects.requireNonNull(tagKey);
+            return this.filter(stack -> stack.is(tagKey));
+        }
+        
+        public FilteredSlot.Properties typeOf(Class<?> clazz) {
+            Objects.requireNonNull(clazz);
+            return this.filter(stack -> clazz.isInstance(stack.getItem()));
         }
         
         public FilteredSlot.Properties background(ResourceLocation loc) {

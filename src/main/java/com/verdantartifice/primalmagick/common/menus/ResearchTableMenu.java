@@ -58,7 +58,7 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
         
         // Slot 0: Pencil
         this.pencilSlot = this.addSlot(new FilteredSlot(this.writingInv, 0, 8, 8,
-                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).filter(stack -> stack.getItem() instanceof IWritingImplement)));
+                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
         this.paperSlot = this.addSlot(new FilteredSlot(this.writingInv, 1, 206, 8,
