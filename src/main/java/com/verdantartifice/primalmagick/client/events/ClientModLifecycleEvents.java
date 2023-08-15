@@ -73,7 +73,7 @@ public class ClientModLifecycleEvents {
     }
 
     private static void registerScreens() {
-        // Register screen factories for each container
+        // Register screen factories for each menu
         MenuScreens.register(MenuTypesPM.ARCANE_WORKBENCH.get(), ArcaneWorkbenchScreen::new);
         MenuScreens.register(MenuTypesPM.WAND_ASSEMBLY_TABLE.get(), WandAssemblyTableScreen::new);
         MenuScreens.register(MenuTypesPM.ANALYSIS_TABLE.get(), AnalysisTableScreen::new);

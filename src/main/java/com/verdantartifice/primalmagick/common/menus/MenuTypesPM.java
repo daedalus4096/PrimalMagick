@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
- * Deferred registry for mod containers.
+ * Deferred registry for mod menu types.
  * 
  * @author Daedalus4096
  */
