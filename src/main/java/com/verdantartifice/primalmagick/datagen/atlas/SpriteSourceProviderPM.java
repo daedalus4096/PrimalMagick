@@ -19,8 +19,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltar
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneBaseSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.RuneEtchingSlot;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandCapSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandCoreSlot;
@@ -71,8 +70,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, ResearchTableMenu.PAPER_SLOT_TEXTURE);
         this.addSingle(blockAtlas, ResearchTableMenu.PENCIL_SLOT_TEXTURE);
         this.addSingle(blockAtlas, RuneSlot.TEXTURE);
-        this.addSingle(blockAtlas, RuneBaseSlot.TEXTURE);
-        this.addSingle(blockAtlas, RuneEtchingSlot.TEXTURE);
+        this.addSingle(blockAtlas, RunecarvingTableMenu.BASE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, RunecarvingTableMenu.ETCHING_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
         
