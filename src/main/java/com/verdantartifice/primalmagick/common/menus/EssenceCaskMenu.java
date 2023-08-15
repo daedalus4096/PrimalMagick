@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.slots.EssenceSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
