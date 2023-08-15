@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.menus.slots.RuneSlot;
-
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -26,8 +24,8 @@ public class RunescribingAltarBasicMenu extends AbstractRunescribingAltarMenu {
     
     @Override
     protected Slot addRuneSlots() {
-        this.addSlot(new RuneSlot(this.altarInv, 1, 44, 35));
-        this.addSlot(new RuneSlot(this.altarInv, 2, 62, 35));
-        return this.addSlot(new RuneSlot(this.altarInv, 3, 80, 35));
+        this.addSlot(makeRuneSlot(this.altarInv, 1, 44, 35));
+        this.addSlot(makeRuneSlot(this.altarInv, 2, 62, 35));
+        return this.addSlot(makeRuneSlot(this.altarInv, 3, 80, 35));
     }
 }
