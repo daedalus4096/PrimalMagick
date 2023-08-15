@@ -104,17 +104,24 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     
     @Override
     public boolean hasSymmetryPenalty(Level world, BlockPos pos, BlockPos otherPos) {
-        // If one pedestal is full and the other is empty, invoke a symmetry penalty
         BlockEntity tile = world.getBlockEntity(pos);
         BlockEntity otherTile = world.getBlockEntity(otherPos);
+        
+        // If there's a pedestal in one spot but not the other, invoke a symmetry penalty
+        if ( ((tile instanceof OfferingPedestalTileEntity) && !(otherTile instanceof OfferingPedestalTileEntity)) ||
+                (!(tile instanceof OfferingPedestalTileEntity) && (otherTile instanceof OfferingPedestalTileEntity)) ) {
+            return true;
+        }
+
+        // If one pedestal is full and the other is empty, invoke a symmetry penalty
         if (world.isClientSide) {
-            return ( (tile instanceof OfferingPedestalTileEntity) &&
-                     (otherTile instanceof OfferingPedestalTileEntity) &&
-                     ((OfferingPedestalTileEntity)tile).getSyncedStackInSlot(0).isEmpty() != ((OfferingPedestalTileEntity)otherTile).getSyncedStackInSlot(0).isEmpty() );
+            return ( (tile instanceof OfferingPedestalTileEntity pedestal) &&
+                     (otherTile instanceof OfferingPedestalTileEntity otherPedestal) &&
+                     pedestal.getSyncedStackInSlot(0).isEmpty() != otherPedestal.getSyncedStackInSlot(0).isEmpty() );
         } else {
-            return ( (tile instanceof OfferingPedestalTileEntity) &&
-                     (otherTile instanceof OfferingPedestalTileEntity) &&
-                     ((OfferingPedestalTileEntity)tile).getItem(0).isEmpty() != ((OfferingPedestalTileEntity)otherTile).getItem(0).isEmpty() );
+            return ( (tile instanceof OfferingPedestalTileEntity pedestal) &&
+                     (otherTile instanceof OfferingPedestalTileEntity otherPedestal) &&
+                     pedestal.getItem(0).isEmpty() != otherPedestal.getItem(0).isEmpty() );
         }
     }
     

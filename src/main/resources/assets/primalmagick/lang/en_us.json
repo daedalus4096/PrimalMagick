@@ -2116,6 +2116,7 @@
     "event.primalmagick.dowsing_rod.salt_connection.inactive": "No salt connection found",
     "event.primalmagick.dowsing_rod.symmetry.found": "Symmetric match found!",
     "event.primalmagick.dowsing_rod.symmetry.not_found": "No symmetric match found",
+    "event.primalmagick.dowsing_rod.symmetry.marking_pos": "Marking position where symmetric match is expected",
     "event.primalmagick.friendly_witch.spawn": "%1$s says, \"BAH! Fine! Whaddaya want?\"",
     "event.primalmagick.research.gain": "You have learned a new arcane secret! Check your Grimoire!",
     "event.primalmagick.attunement_item.success": "You feel a tingling sensation as the magick courses through you",

@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBlock;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPacket;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
@@ -10,6 +12,7 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -91,6 +94,10 @@ public class DowsingRodItem extends Item {
         BlockPos symPos = RitualAltarTileEntity.getSymmetricPosition(altarPos, blockPos);
         if (symPos == null || block.hasSymmetryPenalty(level, blockPos, symPos)) {
             player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.not_found"));
+            if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.marking_pos"));
+                PacketHandler.sendToPlayer(new PropMarkerPacket(symPos, 200), serverPlayer);
+            }
         } else {
             player.sendSystemMessage(Component.translatable("event.primalmagick.dowsing_rod.symmetry.found"));
         }

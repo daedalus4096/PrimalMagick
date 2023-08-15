@@ -22,20 +22,28 @@ import net.minecraftforge.network.NetworkEvent;
  */
 public class PropMarkerPacket implements IMessageToClient {
     protected BlockPos pos;
+    protected int lifetime;
     
     public PropMarkerPacket() {}
     
     public PropMarkerPacket(@Nonnull BlockPos pos) {
+        this(pos, FxDispatcher.DEFAULT_PROP_MARKER_LIFETIME);
+    }
+    
+    public PropMarkerPacket(@Nonnull BlockPos pos, int lifetime) {
         this.pos = pos;
+        this.lifetime = lifetime;
     }
     
     public static void encode(PropMarkerPacket message, FriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
+        buf.writeVarInt(message.lifetime);
     }
     
     public static PropMarkerPacket decode(FriendlyByteBuf buf) {
         PropMarkerPacket message = new PropMarkerPacket();
         message.pos = buf.readBlockPos();
+        message.lifetime = buf.readVarInt();
         return message;
     }
     
@@ -48,7 +56,7 @@ public class PropMarkerPacket implements IMessageToClient {
                 // Only process positions that are currently loaded into the world.  Safety check to prevent
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {
-                    FxDispatcher.INSTANCE.propMarker(message.pos);
+                    FxDispatcher.INSTANCE.propMarker(message.pos, message.lifetime);
                 }
             });
             

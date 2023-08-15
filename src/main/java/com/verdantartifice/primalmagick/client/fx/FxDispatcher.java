@@ -28,6 +28,7 @@ import net.minecraft.world.level.Level;
  */
 public class FxDispatcher {
     public static final FxDispatcher INSTANCE = new FxDispatcher();
+    public static final int DEFAULT_PROP_MARKER_LIFETIME = 6000;
     
     protected static final Map<BlockPos, Particle> PROP_MARKER_PARTICLES = new HashMap<>();
     
@@ -207,9 +208,14 @@ public class FxDispatcher {
     }
     
     public void propMarker(BlockPos pos) {
+        this.propMarker(pos, DEFAULT_PROP_MARKER_LIFETIME);
+    }
+    
+    public void propMarker(BlockPos pos, int lifetimeTicks) {
         // Show a marker above a ritual prop's position and save it for later manual canceling
         Minecraft mc = Minecraft.getInstance();
         Particle p = mc.particleEngine.createParticle(ParticleTypesPM.PROP_MARKER.get(), pos.getX() + 0.5D, pos.getY() + 1.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+        p.setLifetime(lifetimeTicks);
         this.removePropMarker(pos);
         PROP_MARKER_PARTICLES.put(pos, p);
     }

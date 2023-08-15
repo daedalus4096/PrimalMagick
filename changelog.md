@@ -7,6 +7,8 @@ v4.0.2
 * Added Runic Armor Trim, to better target your robes' mana discount
 * Added support for several common ore types from other mods to the Lucky Strike enchantment
 * Allowed datapack customization of ores supported by Lucky Strike's loot modifier
+* Upgraded the Dowsing Rod to mark expected symmetry location if no matching block is found
+* Fixed symmetry calculation bug with Offering Pedestals
 
 v4.0.1
 ------
