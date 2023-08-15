@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -46,6 +47,16 @@ public class FilteredSlot extends Slot {
         
         public FilteredSlot.Properties filter(Predicate<ItemStack> filter) {
             this.filter = Optional.ofNullable(filter);
+            return this;
+        }
+        
+        public FilteredSlot.Properties item(Item item) {
+            this.filter = Optional.of(stack -> stack.is(item));
+            return this;
+        }
+        
+        public FilteredSlot.Properties item(Item... items) {
+            this.filter = Optional.of(stack -> Stream.of(items).anyMatch(item -> stack.is(item)));
             return this;
         }
         

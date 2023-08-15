@@ -17,8 +17,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.RitualBellTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
-import com.verdantartifice.primalmagick.common.menus.slots.BottleSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.HoneycombSlot;
+import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.PaperSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneBaseSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RuneEtchingSlot;
@@ -75,8 +74,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, RuneSlot.TEXTURE);
         this.addSingle(blockAtlas, RuneBaseSlot.TEXTURE);
         this.addSingle(blockAtlas, RuneEtchingSlot.TEXTURE);
-        this.addSingle(blockAtlas, HoneycombSlot.TEXTURE);
-        this.addSingle(blockAtlas, BottleSlot.TEXTURE);
+        this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
         
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);
