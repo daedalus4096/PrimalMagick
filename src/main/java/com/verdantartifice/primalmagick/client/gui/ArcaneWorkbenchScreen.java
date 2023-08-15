@@ -39,8 +39,8 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     protected List<ManaCostWidget> costWidgets = new ArrayList<>();
     protected boolean widthTooNarrow;
 
-    public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.imageHeight = 183;
     }
     

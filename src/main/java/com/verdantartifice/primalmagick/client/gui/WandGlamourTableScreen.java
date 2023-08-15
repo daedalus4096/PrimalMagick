@@ -17,8 +17,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class WandGlamourTableScreen extends AbstractContainerScreen<WandGlamourTableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_glamour_table.png");
 
-    public WandGlamourTableScreen(WandGlamourTableMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandGlamourTableScreen(WandGlamourTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

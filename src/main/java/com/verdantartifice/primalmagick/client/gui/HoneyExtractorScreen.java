@@ -21,8 +21,8 @@ public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractor
     
     protected ManaGaugeWidget manaGauge;
 
-    public HoneyExtractorScreen(HoneyExtractorMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public HoneyExtractorScreen(HoneyExtractorMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

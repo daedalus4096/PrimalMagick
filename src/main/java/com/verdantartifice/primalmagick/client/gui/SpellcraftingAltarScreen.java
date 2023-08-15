@@ -47,8 +47,8 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     
     private EditBox nameField;
 
-    public SpellcraftingAltarScreen(SpellcraftingAltarMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public SpellcraftingAltarScreen(SpellcraftingAltarMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.imageWidth = 230;
         this.imageHeight = 222;
     }

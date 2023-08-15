@@ -37,9 +37,9 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     protected int recipeIndexOffset;
     protected boolean hasItemsInInputSlot;
 
-    public RunecarvingTableScreen(RunecarvingTableMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
-        screenContainer.setInventoryUpdateListener(this::onInventoryUpdate);
+    public RunecarvingTableScreen(RunecarvingTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
+        screenMenu.setInventoryUpdateListener(this::onInventoryUpdate);
     }
     
     @Override

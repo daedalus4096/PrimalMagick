@@ -21,8 +21,8 @@ public class EssenceTransmuterScreen extends AbstractContainerScreen<EssenceTran
     
     protected ManaGaugeWidget manaGauge;
 
-    public EssenceTransmuterScreen(EssenceTransmuterMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public EssenceTransmuterScreen(EssenceTransmuterMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

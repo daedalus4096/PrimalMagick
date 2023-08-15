@@ -33,8 +33,8 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterMenu> impl
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
 
-    public ConcocterScreen(ConcocterMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public ConcocterScreen(ConcocterMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.titleLabelX = 44;
         this.inventoryLabelX = 27;
     }

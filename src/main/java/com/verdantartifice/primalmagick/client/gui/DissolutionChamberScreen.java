@@ -33,8 +33,8 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
     protected boolean widthTooNarrow;
     protected ManaGaugeWidget manaGauge;
 
-    public DissolutionChamberScreen(DissolutionChamberMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public DissolutionChamberScreen(DissolutionChamberMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.titleLabelX = 44;
         this.inventoryLabelX = 27;
     }

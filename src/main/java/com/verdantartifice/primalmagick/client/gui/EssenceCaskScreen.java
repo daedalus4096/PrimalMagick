@@ -31,8 +31,8 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskMenu> 
     protected long lastCheck = 0L;
     protected int lastTotalEssence = 0;
 
-    public EssenceCaskScreen(EssenceCaskMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public EssenceCaskScreen(EssenceCaskMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.imageWidth = 176;
         this.imageHeight = 222;
         this.inventoryLabelY = this.imageHeight - 94;

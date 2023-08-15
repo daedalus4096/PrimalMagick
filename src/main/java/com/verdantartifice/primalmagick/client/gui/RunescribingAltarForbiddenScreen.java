@@ -15,8 +15,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class RunescribingAltarForbiddenScreen extends AbstractRunescribingAltarScreen<RunescribingAltarForbiddenMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runescribing_altar_7.png");
 
-    public RunescribingAltarForbiddenScreen(RunescribingAltarForbiddenMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public RunescribingAltarForbiddenScreen(RunescribingAltarForbiddenMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
     
     @Override

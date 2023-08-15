@@ -55,8 +55,8 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
     protected Project lastProject = null;
     protected Button completeProjectButton = null;
 
-    public ResearchTableScreen(ResearchTableMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public ResearchTableScreen(ResearchTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.imageWidth = 230;
         this.imageHeight = 222;
     }

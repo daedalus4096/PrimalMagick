@@ -17,8 +17,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class WandChargerScreen extends AbstractContainerScreen<WandChargerMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_charger.png");
 
-    public WandChargerScreen(WandChargerMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public WandChargerScreen(WandChargerMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
 
     @Override

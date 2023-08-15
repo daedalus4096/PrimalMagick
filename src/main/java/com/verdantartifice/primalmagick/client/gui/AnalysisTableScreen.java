@@ -38,8 +38,8 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
     protected Level world;
     protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();
 
-    public AnalysisTableScreen(AnalysisTableMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public AnalysisTableScreen(AnalysisTableMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
         this.world = inv.player.level();
     }
     

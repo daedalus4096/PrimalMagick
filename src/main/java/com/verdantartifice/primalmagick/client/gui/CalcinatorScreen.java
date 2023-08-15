@@ -17,8 +17,8 @@ import net.minecraft.world.entity.player.Inventory;
 public class CalcinatorScreen extends AbstractContainerScreen<CalcinatorMenu> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/calcinator.png");
 
-    public CalcinatorScreen(CalcinatorMenu screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public CalcinatorScreen(CalcinatorMenu screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
     
     @Override

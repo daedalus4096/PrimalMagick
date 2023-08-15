@@ -16,8 +16,8 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarScreen<T extends AbstractRunescribingAltarMenu> extends AbstractContainerScreen<T> {
-    public AbstractRunescribingAltarScreen(T screenContainer, Inventory inv, Component titleIn) {
-        super(screenContainer, inv, titleIn);
+    public AbstractRunescribingAltarScreen(T screenMenu, Inventory inv, Component titleIn) {
+        super(screenMenu, inv, titleIn);
     }
     
     @Override
