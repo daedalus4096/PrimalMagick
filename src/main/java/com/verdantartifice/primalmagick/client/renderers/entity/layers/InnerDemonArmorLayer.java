@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class InnerDemonArmorLayer extends EnergySwirlLayer<InnerDemonEntity, PlayerModel<InnerDemonEntity>> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/inner_demon/inner_demon_armor.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/inner_demon/inner_demon_armor.png");
     protected final PlayerModel<InnerDemonEntity> model;
 
     public InnerDemonArmorLayer(RenderLayerParent<InnerDemonEntity, PlayerModel<InnerDemonEntity>> renderer, EntityModelSet modelSet, boolean slimModel) {

@@ -33,9 +33,9 @@ import net.minecraft.world.item.crafting.Ingredient;
  * @author Daedalus4096
  */
 public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "ritual_altar");
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/ritual_altar.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png");
+    public static final ResourceLocation UID = PrimalMagick.resource("ritual_altar");
+    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/ritual_altar.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 118;
     private static final int MANA_COST_Y_OFFSET = 14;
     private static final int RESEARCH_X_OFFSET = 118;

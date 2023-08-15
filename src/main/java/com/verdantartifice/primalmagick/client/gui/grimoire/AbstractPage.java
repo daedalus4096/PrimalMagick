@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public abstract class AbstractPage {
-    private static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
     /**
      * Render this grimoire page

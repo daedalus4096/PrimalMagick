@@ -59,7 +59,7 @@ public class PlayerArcaneRecipeBook implements IPlayerArcaneRecipeBook {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_arcane_recipe_book");
+        public static final ResourceLocation NAME = PrimalMagick.resource("capability_arcane_recipe_book");
         
         private final IPlayerArcaneRecipeBook instance = new PlayerArcaneRecipeBook();
         private final LazyOptional<IPlayerArcaneRecipeBook> holder = LazyOptional.of(() -> instance);   // Cache a lazy optional of the capability instance

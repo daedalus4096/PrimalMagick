@@ -36,7 +36,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMenu {
-    public static final ResourceLocation RUNE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_rune_slot");
+    public static final ResourceLocation RUNE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_rune_slot");
 
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
         @Override

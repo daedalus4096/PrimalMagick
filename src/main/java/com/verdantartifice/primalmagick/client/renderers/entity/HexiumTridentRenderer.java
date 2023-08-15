@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HexiumTridentRenderer extends AbstractTridentRenderer {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/trident/hexium_trident.png");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/trident/hexium_trident.png");
 
     public HexiumTridentRenderer(EntityRendererProvider.Context context) {
         super(context);

@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class GrandPixieRenderer extends AbstractPixieRenderer {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/pixie/grand_pixie.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/pixie/grand_pixie.png");
     
     public GrandPixieRenderer(EntityRendererProvider.Context context) {
         super(context, new PixieModel(context.bakeLayer(ModelLayersPM.PIXIE_BASIC)));

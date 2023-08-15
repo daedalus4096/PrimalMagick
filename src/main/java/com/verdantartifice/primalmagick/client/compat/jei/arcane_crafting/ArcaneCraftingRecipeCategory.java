@@ -32,9 +32,9 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @author Daedalus4096
  */
 public class ArcaneCraftingRecipeCategory extends RecipeCategoryPM<IArcaneRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "arcane_workbench");
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/arcane_workbench.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png");
+    public static final ResourceLocation UID = PrimalMagick.resource("arcane_workbench");
+    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/arcane_workbench.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;

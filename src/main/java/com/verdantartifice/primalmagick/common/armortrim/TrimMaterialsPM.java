@@ -12,7 +12,6 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 
@@ -33,7 +32,7 @@ public class TrimMaterialsPM {
     public static final ResourceKey<TrimMaterial> RUNE_HALLOWED = registryKey("rune_hallowed");
     
     private static ResourceKey<TrimMaterial> registryKey(String name) {
-        return ResourceKey.create(Registries.TRIM_MATERIAL, new ResourceLocation(PrimalMagick.MODID, name));
+        return ResourceKey.create(Registries.TRIM_MATERIAL, PrimalMagick.resource(name));
     }
     
     private static void register(BootstapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {

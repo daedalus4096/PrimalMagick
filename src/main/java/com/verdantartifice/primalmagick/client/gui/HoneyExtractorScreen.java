@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractorMenu> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/honey_extractor.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/honey_extractor.png");
     
     protected ManaGaugeWidget manaGauge;
 

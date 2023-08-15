@@ -87,7 +87,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class GrimoireScreen extends Screen {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
     private static final PageImage IMAGE_LINE = PageImage.parse("primalmagick:textures/gui/grimoire.png:24:184:95:6:1");
     private static final float SCALE = 1.3F;
     private static final int HISTORY_LIMIT = 64;

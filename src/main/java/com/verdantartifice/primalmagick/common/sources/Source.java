@@ -43,8 +43,8 @@ public class Source {
     // List of sources in the order in which they should be displayed
     public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
     
-    public static final ResourceLocation UNKNOWN_IMAGE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
-    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = new ResourceLocation(PrimalMagick.MODID, "research/research_unknown");
+    public static final ResourceLocation UNKNOWN_IMAGE = PrimalMagick.resource("textures/research/research_unknown.png");
+    protected static final ResourceLocation UNKNOWN_ATLAS_LOC = PrimalMagick.resource("research/research_unknown");
 
     protected final String tag; // Unique identifier for the source
     protected final int color;  // Color to use for graphical effects
@@ -65,7 +65,7 @@ public class Source {
     }
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull ChatFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey, @Nonnull List<SimpleResearchKey> siblings) {
-        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, siblings, new ResourceLocation(PrimalMagick.MODID, "textures/sources/" + tag.toLowerCase() + ".png"), new ResourceLocation(PrimalMagick.MODID, "sources/" + tag.toLowerCase()));
+        this(tag, color, multiplier, chatColor, manaSpentStat, discoverKey, siblings, PrimalMagick.resource("textures/sources/" + tag.toLowerCase() + ".png"), PrimalMagick.resource("sources/" + tag.toLowerCase()));
     }
     
     public Source(@Nonnull String tag, int color, double multiplier, @Nonnull ChatFormatting chatColor, @Nonnull Stat manaSpentStat, @Nullable SimpleResearchKey discoverKey, @Nonnull List<SimpleResearchKey> siblings, @Nonnull ResourceLocation image, @Nonnull ResourceLocation atlasLoc) {

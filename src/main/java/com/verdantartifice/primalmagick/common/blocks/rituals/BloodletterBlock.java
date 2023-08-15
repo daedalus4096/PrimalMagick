@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEnti
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -43,7 +42,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty FILLED = BooleanProperty.create("filled");
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/bloodletter"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/bloodletter"));
     
     public BloodletterBlock() {
         super(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE));

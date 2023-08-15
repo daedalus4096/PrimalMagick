@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class WandAssemblyTableScreen extends AbstractContainerScreen<WandAssemblyTableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_assembly_table.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/wand_assembly_table.png");
 
     public WandAssemblyTableScreen(WandAssemblyTableMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);

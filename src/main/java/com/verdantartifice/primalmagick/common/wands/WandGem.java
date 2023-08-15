@@ -34,7 +34,7 @@ public class WandGem implements IWandComponent {
     protected final ResourceLocation mrlNamespace;  // Resource location of the gem's model, stored in a blockstate file
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity) {
-        this(tag, rarity, capacity, new ResourceLocation(PrimalMagick.MODID, tag + "_wand_gem"));
+        this(tag, rarity, capacity, PrimalMagick.resource(tag + "_wand_gem"));
     }
     
     public WandGem(@Nonnull String tag, @Nonnull Rarity rarity, int capacity, @Nonnull ResourceLocation mrln) {

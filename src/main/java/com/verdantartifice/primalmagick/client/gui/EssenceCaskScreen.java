@@ -25,7 +25,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskMenu> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_cask.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/essence_cask.png");
     
     protected final List<EssenceCaskWidget> caskWidgets = new ArrayList<>();
     protected long lastCheck = 0L;

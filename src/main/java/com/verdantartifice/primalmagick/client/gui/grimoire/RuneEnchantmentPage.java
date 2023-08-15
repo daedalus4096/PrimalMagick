@@ -27,7 +27,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  * @author Daedalus4096
  */
 public class RuneEnchantmentPage extends AbstractPage {
-    protected static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire_overlay.png");
+    protected static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/grimoire_overlay.png");
     protected static final SimpleResearchKey UNKNOWN_RUNE = SimpleResearchKey.parse("u_unknown_rune");
     
     protected Enchantment enchant;

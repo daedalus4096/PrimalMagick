@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMaterial> extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
 
     protected final T material;
     protected final boolean complete;

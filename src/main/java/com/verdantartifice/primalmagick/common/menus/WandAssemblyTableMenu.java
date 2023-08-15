@@ -33,10 +33,10 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandAssemblyTableMenu extends AbstractContainerMenu {
-    public static final ResourceLocation CAP_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_wand_cap_slot");
-    public static final ResourceLocation CORE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_wand_core_slot");
-    public static final ResourceLocation GEM_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_wand_gem_slot");
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_assembly");
+    public static final ResourceLocation CAP_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_cap_slot");
+    public static final ResourceLocation CORE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_core_slot");
+    public static final ResourceLocation GEM_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_gem_slot");
+    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_assembly");
     
     protected final ContainerLevelAccess worldPosCallable;
     protected final WandComponentInventory componentInv = new WandComponentInventory();

@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaArrowRenderer extends ArrowRenderer<ManaArrowEntity> {
-    public static final ResourceLocation MANA_ARROW_LOCATION = new ResourceLocation(PrimalMagick.MODID, "textures/entity/mana_arrow.png");
+    public static final ResourceLocation MANA_ARROW_LOCATION = PrimalMagick.resource("textures/entity/mana_arrow.png");
 
     public ManaArrowRenderer(EntityRendererProvider.Context context) {
         super(context);

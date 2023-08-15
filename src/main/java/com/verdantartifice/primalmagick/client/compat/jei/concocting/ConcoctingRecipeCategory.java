@@ -26,9 +26,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "concocter");
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/arcane_workbench.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png");
+    public static final ResourceLocation UID = PrimalMagick.resource("concocter");
+    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/arcane_workbench.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
     private static final int MANA_COST_X_OFFSET = 64;
     private static final int MANA_COST_Y_OFFSET = 1;
     private static final int RESEARCH_X_OFFSET = 64;

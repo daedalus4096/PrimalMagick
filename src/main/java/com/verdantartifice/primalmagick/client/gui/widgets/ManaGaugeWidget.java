@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaGaugeWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/mana_gauge.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_gauge.png");
 
     protected final Source source;
     protected int maxAmount;

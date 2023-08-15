@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.tags;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
@@ -30,6 +29,6 @@ public class EntityTypeTagsPM {
     public static final TagKey<EntityType<?>> DROPS_RELIC_FRAGMENTS_LOW = tag("drops_relic_fragments_low");
 
     private static TagKey<EntityType<?>> tag(String name) {
-        return TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(PrimalMagick.MODID, name));
+        return TagKey.create(Registries.ENTITY_TYPE, PrimalMagick.resource(name));
     }
 }

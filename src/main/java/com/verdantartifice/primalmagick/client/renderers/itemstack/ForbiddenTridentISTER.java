@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ForbiddenTridentISTER extends AbstractTieredTridentISTER {
-    protected static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "forbidden_trident"), "inventory");
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/trident/forbidden_trident.png");
+    protected static final ModelResourceLocation MRL = new ModelResourceLocation(PrimalMagick.resource("forbidden_trident"), "inventory");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/trident/forbidden_trident.png");
 
     @Override
     public ModelResourceLocation getModelResourceLocation() {

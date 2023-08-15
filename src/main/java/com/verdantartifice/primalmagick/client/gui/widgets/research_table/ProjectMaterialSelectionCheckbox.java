@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ProjectMaterialSelectionCheckbox extends Button {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/checkbox.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/checkbox.png");
     
     protected ResearchTableScreen screen;
     protected boolean selected;

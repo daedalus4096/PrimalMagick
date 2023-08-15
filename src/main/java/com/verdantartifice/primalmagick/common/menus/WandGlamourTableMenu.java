@@ -32,7 +32,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     public static final ResourceLocation CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;
     public static final ResourceLocation CORE_SLOT_TEXTURE = WandAssemblyTableMenu.CORE_SLOT_TEXTURE;
     public static final ResourceLocation GEM_SLOT_TEXTURE = WandAssemblyTableMenu.GEM_SLOT_TEXTURE;
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_glamour");
+    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_glamour");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final GlamourComponentInventory componentInv = new GlamourComponentInventory();

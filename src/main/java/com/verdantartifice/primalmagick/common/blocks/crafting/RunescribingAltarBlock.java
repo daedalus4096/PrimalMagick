@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarT
 import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,7 +33,7 @@ import net.minecraftforge.network.NetworkHooks;
  * @author Daedalus4096
  */
 public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDevice {
-    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/runescribing_altar_basic"));
+    protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/runescribing_altar_basic"));
     
     protected final DeviceTier tier;
 

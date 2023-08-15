@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class RunescribingAltarHeavenlyScreen extends AbstractRunescribingAltarScreen<RunescribingAltarHeavenlyMenu> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runescribing_altar_9.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/runescribing_altar_9.png");
 
     public RunescribingAltarHeavenlyScreen(RunescribingAltarHeavenlyMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);

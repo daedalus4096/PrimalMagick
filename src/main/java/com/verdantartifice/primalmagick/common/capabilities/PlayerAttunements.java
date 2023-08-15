@@ -159,7 +159,7 @@ public class PlayerAttunements implements IPlayerAttunements {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_attunements");
+        public static final ResourceLocation NAME = PrimalMagick.resource("capability_attunements");
         
         private final IPlayerAttunements instance = new PlayerAttunements();
         private final LazyOptional<IPlayerAttunements> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

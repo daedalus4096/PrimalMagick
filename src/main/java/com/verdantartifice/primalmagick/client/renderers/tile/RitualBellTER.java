@@ -25,7 +25,7 @@ import net.minecraft.util.Mth;
  */
 @SuppressWarnings("deprecation")
 public class RitualBellTER implements BlockEntityRenderer<RitualBellTileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/ritual_bell_body");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/ritual_bell_body");
     public static final Material BODY_MATERIAL = new Material(TextureAtlas.LOCATION_BLOCKS, TEXTURE);
     protected final ModelPart modelRenderer;
 

@@ -26,7 +26,7 @@ import net.minecraft.world.inventory.Slot;
  */
 public class DissolutionChamberScreen extends AbstractContainerScreen<DissolutionChamberMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/dissolution_chamber.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/dissolution_chamber.png");
     protected static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();

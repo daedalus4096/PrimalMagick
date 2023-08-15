@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HallowsteelGolemRenderer extends AbstractEnchantedGolemRenderer<HallowsteelGolemEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/hallowsteel_golem/hallowsteel_golem.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/hallowsteel_golem/hallowsteel_golem.png");
     
     public HallowsteelGolemRenderer(EntityRendererProvider.Context context) {
         super(context);

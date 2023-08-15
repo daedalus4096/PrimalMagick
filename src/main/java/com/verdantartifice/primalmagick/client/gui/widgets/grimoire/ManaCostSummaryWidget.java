@@ -22,7 +22,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ManaCostSummaryWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/mana_cost_summary_widget.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_cost_summary_widget.png");
 
     protected SourceList manaCosts;
     

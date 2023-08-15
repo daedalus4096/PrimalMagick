@@ -22,11 +22,11 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation BAG_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_bag.png");
-    protected static final ResourceLocation TUBE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_tube.png");
-    protected static final ResourceLocation MAP_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_map.png");
-    protected static final ResourceLocation UNKNOWN_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/research/research_unknown.png");
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
+    protected static final ResourceLocation BAG_TEXTURE = PrimalMagick.resource("textures/research/research_bag.png");
+    protected static final ResourceLocation TUBE_TEXTURE = PrimalMagick.resource("textures/research/research_tube.png");
+    protected static final ResourceLocation MAP_TEXTURE = PrimalMagick.resource("textures/research/research_map.png");
+    protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
     
     protected final SimpleResearchKey key;
     protected final boolean isComplete;

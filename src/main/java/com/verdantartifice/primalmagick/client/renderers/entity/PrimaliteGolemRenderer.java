@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class PrimaliteGolemRenderer extends AbstractEnchantedGolemRenderer<PrimaliteGolemEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/primalite_golem/primalite_golem.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/primalite_golem/primalite_golem.png");
     
     public PrimaliteGolemRenderer(EntityRendererProvider.Context context) {
         super(context);

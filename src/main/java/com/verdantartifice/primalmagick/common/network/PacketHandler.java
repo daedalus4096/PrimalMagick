@@ -51,7 +51,6 @@ import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.St
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkDirection;
@@ -68,7 +67,7 @@ public class PacketHandler {
     private static final String PROTOCOL_VERSION = Integer.toString(1);
     
     private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
-            .named(new ResourceLocation(PrimalMagick.MODID, "main_channel"))
+            .named(PrimalMagick.resource("main_channel"))
             .clientAcceptedVersions(PROTOCOL_VERSION::equals)
             .serverAcceptedVersions(PROTOCOL_VERSION::equals)
             .networkProtocolVersion(() -> PROTOCOL_VERSION)

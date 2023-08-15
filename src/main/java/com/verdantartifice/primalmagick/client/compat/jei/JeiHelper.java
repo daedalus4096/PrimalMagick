@@ -24,8 +24,8 @@ import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchMenu;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
-import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
+import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
@@ -58,7 +58,7 @@ import net.minecraft.world.item.ItemStack;
  */
 @JeiPlugin
 public class JeiHelper implements IModPlugin {
-    private static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "jei");
+    private static final ResourceLocation UID = PrimalMagick.resource("jei");
     
     @Nullable
     private IRecipeCategory<IArcaneRecipe> arcaneCategory;

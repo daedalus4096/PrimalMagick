@@ -95,10 +95,10 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         
         // Add robe armor trim item overlays to the block atlas
         blockAtlas.addSource(new PalettedPermutations(
-                List.of(new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_chest_trim"), 
-                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_feet_trim"), 
-                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_head_trim"), 
-                        new ResourceLocation(PrimalMagick.MODID, "trims/items/robe_legs_trim")),
+                List.of(PrimalMagick.resource("trims/items/robe_chest_trim"), 
+                        PrimalMagick.resource("trims/items/robe_feet_trim"), 
+                        PrimalMagick.resource("trims/items/robe_head_trim"), 
+                        PrimalMagick.resource("trims/items/robe_legs_trim")),
                 new ResourceLocation("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
                         .put("quartz", new ResourceLocation("trims/color_palettes/quartz"))
@@ -115,8 +115,8 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         
         // Add mod armor trim pattern model overlays to the armor trims atlas
         armorTrimsAtlas.addSource(new PalettedPermutations(
-                List.of(new ResourceLocation(PrimalMagick.MODID, "trims/models/armor/runic"), 
-                        new ResourceLocation(PrimalMagick.MODID, "trims/models/armor/runic_leggings")),
+                List.of(PrimalMagick.resource("trims/models/armor/runic"), 
+                        PrimalMagick.resource("trims/models/armor/runic_leggings")),
                 new ResourceLocation("trims/color_palettes/trim_palette"),
                 ImmutableMap.<String, ResourceLocation>builder()
                         .put("rune_earth", new ResourceLocation("trims/color_palettes/emerald"))

@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -47,8 +46,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class SunlampBlock extends BaseEntityBlock {
     public static final DirectionProperty ATTACHMENT = DirectionProperty.create("attachment", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     
-    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/sunlamp_ground_base"));
-    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/sunlamp_hanging_base"));
+    protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/sunlamp_ground_base"));
+    protected static final VoxelShape HANGING_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/sunlamp_hanging_base"));
     
     protected final Supplier<GlowFieldBlock> glowSupplier;
     

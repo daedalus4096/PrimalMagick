@@ -11,7 +11,6 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
@@ -51,7 +50,7 @@ public class PlacedFeaturesPM {
     public static final ResourceKey<PlacedFeature> TREE_WILD_MOONWOOD = registerKey("tree_wild_moonwood");
     
     public static ResourceKey<PlacedFeature> registerKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(PrimalMagick.MODID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, PrimalMagick.resource(name));
     }
     
     public static void bootstrap(BootstapContext<PlacedFeature> context) {

@@ -38,8 +38,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class RunecarvingTableMenu extends AbstractContainerMenu implements ContainerListener {
-    public static final ResourceLocation BASE_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_slab_slot");
-    public static final ResourceLocation ETCHING_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_lapis_slot");
+    public static final ResourceLocation BASE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_slab_slot");
+    public static final ResourceLocation ETCHING_SLOT_TEXTURE = PrimalMagick.resource("item/empty_lapis_slot");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final DataSlot selectedRecipe = DataSlot.standalone();

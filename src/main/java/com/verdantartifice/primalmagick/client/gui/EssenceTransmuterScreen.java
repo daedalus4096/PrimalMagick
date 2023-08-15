@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class EssenceTransmuterScreen extends AbstractContainerScreen<EssenceTransmuterMenu> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/essence_transmuter.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/essence_transmuter.png");
     
     protected ManaGaugeWidget manaGauge;
 

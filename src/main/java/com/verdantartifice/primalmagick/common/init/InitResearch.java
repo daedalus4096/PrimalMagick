@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
@@ -34,14 +33,14 @@ public class InitResearch {
     }
     
     private static void initDisciplines() {
-        ResearchDisciplines.registerDiscipline("BASICS", null, new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png"), null);
-        ResearchDisciplines.registerDiscipline("MANAWEAVING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MANAWEAVING")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_manaweaving.png"), StatsPM.CRAFTED_MANAWEAVING);
-        ResearchDisciplines.registerDiscipline("ALCHEMY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ALCHEMY")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_alchemy.png"), StatsPM.CRAFTED_ALCHEMY);
-        ResearchDisciplines.registerDiscipline("SORCERY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SORCERY")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_sorcery.png"), StatsPM.CRAFTED_SORCERY);
-        ResearchDisciplines.registerDiscipline("RUNEWORKING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RUNEWORKING")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_runeworking.png"), StatsPM.CRAFTED_RUNEWORKING);
-        ResearchDisciplines.registerDiscipline("RITUAL", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RITUAL")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
-        ResearchDisciplines.registerDiscipline("MAGITECH", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MAGITECH")), new ResourceLocation(PrimalMagick.MODID, "textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
-        ResearchDisciplines.registerDiscipline("SCANS", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SCANS")), new ResourceLocation(PrimalMagick.MODID, "textures/item/magnifying_glass.png"), null);
+        ResearchDisciplines.registerDiscipline("BASICS", null, PrimalMagick.resource("textures/item/grimoire.png"), null);
+        ResearchDisciplines.registerDiscipline("MANAWEAVING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MANAWEAVING")), PrimalMagick.resource("textures/research/discipline_manaweaving.png"), StatsPM.CRAFTED_MANAWEAVING);
+        ResearchDisciplines.registerDiscipline("ALCHEMY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_ALCHEMY")), PrimalMagick.resource("textures/research/discipline_alchemy.png"), StatsPM.CRAFTED_ALCHEMY);
+        ResearchDisciplines.registerDiscipline("SORCERY", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SORCERY")), PrimalMagick.resource("textures/research/discipline_sorcery.png"), StatsPM.CRAFTED_SORCERY);
+        ResearchDisciplines.registerDiscipline("RUNEWORKING", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RUNEWORKING")), PrimalMagick.resource("textures/research/discipline_runeworking.png"), StatsPM.CRAFTED_RUNEWORKING);
+        ResearchDisciplines.registerDiscipline("RITUAL", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_RITUAL")), PrimalMagick.resource("textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
+        ResearchDisciplines.registerDiscipline("MAGITECH", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_MAGITECH")), PrimalMagick.resource("textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
+        ResearchDisciplines.registerDiscipline("SCANS", CompoundResearchKey.from(SimpleResearchKey.parse("UNLOCK_SCANS")), PrimalMagick.resource("textures/item/magnifying_glass.png"), null);
     }
     
     private static void initScanResearch() {

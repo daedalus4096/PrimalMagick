@@ -24,7 +24,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableMenu> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/runecarving_table.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/runecarving_table.png");
     
     protected float sliderProgress;
     protected boolean clickedOnSroll;

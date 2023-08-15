@@ -20,7 +20,6 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -37,11 +36,11 @@ import net.minecraftforge.entity.PartEntity;
  */
 @SuppressWarnings("deprecation")
 public class ArcanometerISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_0"), "");
-    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_1"), "");
-    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_2"), "");
-    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_3"), "");
-    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_4"), "");
+    private static final ModelResourceLocation MRL0 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_0"), "");
+    private static final ModelResourceLocation MRL1 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_1"), "");
+    private static final ModelResourceLocation MRL2 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_2"), "");
+    private static final ModelResourceLocation MRL3 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_3"), "");
+    private static final ModelResourceLocation MRL4 = new ModelResourceLocation(PrimalMagick.resource("arcanometer_4"), "");
     private static AtomicBoolean isRenderingScreen = new AtomicBoolean(false);
     
     public ArcanometerISTER() {

@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class AidListWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
     
     protected final List<Component> aidNames;
 

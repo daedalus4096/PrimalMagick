@@ -22,7 +22,7 @@ import net.minecraft.world.item.TooltipFlag;
  * @author Daedalus4096
  */
 public class ItemStackWidget extends AbstractWidget {
-    protected static final ResourceLocation GRIMOIRE_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
+    protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
     protected ItemStack stack;
     protected boolean isComplete;

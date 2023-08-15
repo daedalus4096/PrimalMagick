@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HexiumGolemRenderer extends AbstractEnchantedGolemRenderer<HexiumGolemEntity> {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/hexium_golem/hexium_golem.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/hexium_golem/hexium_golem.png");
     
     public HexiumGolemRenderer(EntityRendererProvider.Context context) {
         super(context);

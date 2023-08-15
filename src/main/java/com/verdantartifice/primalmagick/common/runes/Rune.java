@@ -53,7 +53,7 @@ public abstract class Rune {
     protected final int limit;
     
     public Rune(@Nonnull String tag, @Nonnull String discoveryTag, @Nonnull Rarity rarity, boolean glint, int limit) {
-        this(new ResourceLocation(PrimalMagick.MODID, tag), SimpleResearchKey.parse(discoveryTag), rarity, glint, limit);
+        this(PrimalMagick.resource(tag), SimpleResearchKey.parse(discoveryTag), rarity, glint, limit);
     }
     
     public Rune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, @Nonnull Rarity rarity, boolean glint, int limit) {

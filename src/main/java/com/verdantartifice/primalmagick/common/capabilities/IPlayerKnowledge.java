@@ -224,8 +224,8 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
     }
     
     public static enum KnowledgeType {
-        OBSERVATION(16, new ResourceLocation(PrimalMagick.MODID, "textures/research/knowledge_observation.png")),
-        THEORY(32, new ResourceLocation(PrimalMagick.MODID, "textures/research/knowledge_theory.png"));
+        OBSERVATION(16, PrimalMagick.resource("textures/research/knowledge_observation.png")),
+        THEORY(32, PrimalMagick.resource("textures/research/knowledge_theory.png"));
         
         private short progression;  // How many points make a complete level for this knowledge type
         private ResourceLocation iconLocation;

@@ -50,7 +50,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarMenu extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "spellcrafting");
+    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("spellcrafting");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);

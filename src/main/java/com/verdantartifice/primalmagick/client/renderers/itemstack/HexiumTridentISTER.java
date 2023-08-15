@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class HexiumTridentISTER extends AbstractTieredTridentISTER {
-    protected static final ModelResourceLocation MRL = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "hexium_trident"), "inventory");
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/trident/hexium_trident.png");
+    protected static final ModelResourceLocation MRL = new ModelResourceLocation(PrimalMagick.resource("hexium_trident"), "inventory");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/trident/hexium_trident.png");
 
     @Override
     public ModelResourceLocation getModelResourceLocation() {

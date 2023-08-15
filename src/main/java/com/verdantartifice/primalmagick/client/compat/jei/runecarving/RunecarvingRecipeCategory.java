@@ -29,9 +29,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "runecarving_table");
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/runecarving_table.png");
-    private static final ResourceLocation RESEARCH_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/item/grimoire.png");
+    public static final ResourceLocation UID = PrimalMagick.resource("runecarving_table");
+    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/runecarving_table.png");
+    private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
     private static final int RESEARCH_X_OFFSET = 79;
     private static final int RESEARCH_Y_OFFSET = 19;
 

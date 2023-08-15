@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tags;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -41,6 +40,6 @@ public class BlockTagsPM {
     public static final TagKey<Block> MAY_PLACE_HALLOWOOD_SAPLINGS = tag("may_place/hallowood_sapling");
     
     private static TagKey<Block> tag(String name) {
-        return BlockTags.create(new ResourceLocation(PrimalMagick.MODID, name));
+        return BlockTags.create(PrimalMagick.resource(name));
     }
 }

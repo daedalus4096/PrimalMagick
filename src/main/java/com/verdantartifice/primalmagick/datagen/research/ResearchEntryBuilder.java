@@ -79,7 +79,7 @@ public class ResearchEntryBuilder {
     }
     
     public ResearchEntryBuilder icon(String path) {
-        return icon(new ResourceLocation(PrimalMagick.MODID, path));
+        return icon(PrimalMagick.resource(path));
     }
     
     public ResearchEntryBuilder finale(String discipline) {
@@ -115,7 +115,7 @@ public class ResearchEntryBuilder {
     }
     
     public void build(Consumer<IFinishedResearchEntry> consumer) {
-        this.build(consumer, new ResourceLocation(PrimalMagick.MODID, this.key.toString().toLowerCase()));
+        this.build(consumer, PrimalMagick.resource(this.key.toString().toLowerCase()));
     }
     
     public void build(Consumer<IFinishedResearchEntry> consumer, String name) {

@@ -19,7 +19,7 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class BackButton extends Button {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/grimoire.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
     protected GrimoireScreen screen;
     

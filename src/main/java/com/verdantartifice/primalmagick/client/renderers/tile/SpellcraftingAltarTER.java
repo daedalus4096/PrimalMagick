@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarTER implements BlockEntityRenderer<SpellcraftingAltarTileEntity> {
-    public static final ResourceLocation RING_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/spellcrafting_altar/spellcrafting_altar_ring");
+    public static final ResourceLocation RING_TEXTURE = PrimalMagick.resource("entity/spellcrafting_altar/spellcrafting_altar_ring");
     public static final Material RING_MATERIAL = new Material(InventoryMenu.BLOCK_ATLAS, RING_TEXTURE);
 
     protected final SpellcraftingAltarRingModel ringModel;

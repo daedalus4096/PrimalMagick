@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 
 /**
@@ -33,7 +32,7 @@ public class DamageTypesPM {
     public static final ResourceKey<DamageType> SORCERY_HALLOWED = createSorcery("sorcery_hallowed", Source.HALLOWED);
     
     private static ResourceKey<DamageType> create(String name) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(PrimalMagick.MODID, name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, PrimalMagick.resource(name));
     }
     
     private static ResourceKey<DamageType> createSorcery(String name, Source source) {

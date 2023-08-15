@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchToast implements Toast {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/hud.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/hud.png");
     
     protected final ResearchEntry entry;
     protected final boolean isComplete;

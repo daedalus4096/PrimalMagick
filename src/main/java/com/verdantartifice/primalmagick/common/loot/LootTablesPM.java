@@ -25,7 +25,7 @@ public class LootTablesPM {
     public static final ResourceLocation TREEFOLK_BARTERING_TREASURE = register("gameplay/treefolk_bartering/treasure");
     
     private static ResourceLocation register(String id) {
-        return register(new ResourceLocation(PrimalMagick.MODID, id));
+        return register(PrimalMagick.resource(id));
     }
 
     private static ResourceLocation register(ResourceLocation id) {

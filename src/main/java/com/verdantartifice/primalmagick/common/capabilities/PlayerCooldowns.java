@@ -108,7 +108,7 @@ public class PlayerCooldowns implements IPlayerCooldowns {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_cooldowns");
+        public static final ResourceLocation NAME = PrimalMagick.resource("capability_cooldowns");
         
         private final IPlayerCooldowns instance = new PlayerCooldowns();
         private final LazyOptional<IPlayerCooldowns> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

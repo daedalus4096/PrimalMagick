@@ -40,7 +40,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/spellcrafting_altar.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();
     private final List<GuiEventListener> localWidgets = new ArrayList<>();

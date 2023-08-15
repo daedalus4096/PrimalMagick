@@ -13,7 +13,7 @@ import net.minecraft.world.Container;
  * @author Daedalus4096
  */
 public class WandSlot extends FilteredSlot {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_wand_slot");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("item/empty_wand_slot");
     
     public WandSlot(Container inventoryIn, int index, int xPosition, int yPosition, boolean allowStaves) {
         super(inventoryIn, index, xPosition, yPosition, 

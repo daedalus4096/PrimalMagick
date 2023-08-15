@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
-    protected static final ResourceLocation RECIPE_LOC = new ResourceLocation(PrimalMagick.MODID, "wand_inscription");
+    protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final InscriptionComponentInventory componentInv = new InscriptionComponentInventory();

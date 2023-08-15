@@ -29,8 +29,8 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionRecipe> {
-    public static final ResourceLocation UID = new ResourceLocation(PrimalMagick.MODID, "dissolution_chamber");
-    private static final ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/jei/dissolution_chamber.png");
+    public static final ResourceLocation UID = PrimalMagick.resource("dissolution_chamber");
+    private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/dissolution_chamber.png");
     private static final int MANA_COST_X_OFFSET = 28;
     private static final int MANA_COST_Y_OFFSET = 1;
 

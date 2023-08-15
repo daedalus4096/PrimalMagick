@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class PrimaliteTridentRenderer extends AbstractTridentRenderer {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/entity/trident/primalite_trident.png");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/entity/trident/primalite_trident.png");
 
     public PrimaliteTridentRenderer(EntityRendererProvider.Context context) {
         super(context);

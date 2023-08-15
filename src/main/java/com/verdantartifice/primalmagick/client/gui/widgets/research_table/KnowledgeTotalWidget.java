@@ -21,7 +21,7 @@ import net.minecraftforge.common.util.LazyOptional;
  * @author Daedalus4096
  */
 public class KnowledgeTotalWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
 
     protected IPlayerKnowledge.KnowledgeType type;
     protected LazyOptional<IPlayerKnowledge> knowledgeOpt;

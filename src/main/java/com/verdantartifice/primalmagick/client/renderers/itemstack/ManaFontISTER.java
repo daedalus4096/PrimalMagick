@@ -19,7 +19,6 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -32,10 +31,10 @@ import net.minecraft.world.item.ItemStack;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock}
  */
 public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
-    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "ancient_font_earth"), "");
-    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "artificial_font_earth"), "");
-    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "forbidden_font_earth"), "");
-    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "heavenly_font_earth"), "");
+    private static final ModelResourceLocation MRL_BASIC = new ModelResourceLocation(PrimalMagick.resource("ancient_font_earth"), "");
+    private static final ModelResourceLocation MRL_ENCHANTED = new ModelResourceLocation(PrimalMagick.resource("artificial_font_earth"), "");
+    private static final ModelResourceLocation MRL_FORBIDDEN = new ModelResourceLocation(PrimalMagick.resource("forbidden_font_earth"), "");
+    private static final ModelResourceLocation MRL_HEAVENLY = new ModelResourceLocation(PrimalMagick.resource("heavenly_font_earth"), "");
     
     public ManaFontISTER() {
         super(Minecraft.getInstance() == null ? null : Minecraft.getInstance().getBlockEntityRenderDispatcher(), 

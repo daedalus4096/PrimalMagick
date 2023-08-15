@@ -15,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
  * @author Daedalus4096
  */
 public class WandInscriptionTableScreen extends AbstractContainerScreen<WandInscriptionTableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/wand_inscription_table.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/wand_inscription_table.png");
 
     public WandInscriptionTableScreen(WandInscriptionTableMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);

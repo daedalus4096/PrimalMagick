@@ -23,7 +23,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class AttunementMeterWidget extends AbstractWidget {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/attunement_meter.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/attunement_meter.png");
 
     protected final Source source;
     protected final Color permanentColor;

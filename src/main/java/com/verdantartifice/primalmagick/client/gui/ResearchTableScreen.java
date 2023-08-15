@@ -42,8 +42,8 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table.png");
-    private static final ResourceLocation OVERLAY = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table.png");
+    private static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");
     
     protected long lastCheck = 0L;

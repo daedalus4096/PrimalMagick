@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -54,7 +53,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty DIRTY = BooleanProperty.create("dirty");
     
-    protected static final VoxelShape BASE_SHAPE = VoxelShapeUtils.fromModel(new ResourceLocation(PrimalMagick.MODID, "block/soul_anvil"));
+    protected static final VoxelShape BASE_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/soul_anvil"));
     protected static final Map<Direction, VoxelShape> SHAPES = Util.make(Maps.newEnumMap(Direction.class), (map) -> {
         map.put(Direction.NORTH, BASE_SHAPE);
         map.put(Direction.SOUTH, VoxelShapeUtils.rotate(BASE_SHAPE, Direction.Axis.Y, Rotation.CLOCKWISE_180));

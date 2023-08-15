@@ -24,7 +24,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class AttunementPage extends AbstractPage {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/attunement_meter.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/attunement_meter.png");
 
     protected Source source;
     protected List<IPageElement> contents = new ArrayList<>();

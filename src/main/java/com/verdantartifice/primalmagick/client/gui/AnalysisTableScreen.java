@@ -33,7 +33,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_table.png");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/analysis_table.png");
     
     protected Level world;
     protected final List<AffinityWidget> affinityWidgets = new ArrayList<>();
@@ -113,7 +113,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
     }
     
     protected static class AnalyzeButton extends ImageButton {
-        private static final ResourceLocation BUTTON_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/analysis_button.png");
+        private static final ResourceLocation BUTTON_TEXTURE = PrimalMagick.resource("textures/gui/analysis_button.png");
         protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
         protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
 

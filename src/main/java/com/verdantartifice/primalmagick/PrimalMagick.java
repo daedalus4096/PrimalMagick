@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.init.InitRegistries;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -22,5 +23,9 @@ public class PrimalMagick {
     public PrimalMagick() {
         Config.register();
         InitRegistries.initDeferredRegistries();
+    }
+    
+    public static ResourceLocation resource(String name) {
+        return new ResourceLocation(MODID, name);
     }
 }

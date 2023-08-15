@@ -35,8 +35,8 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ResearchTableMenu extends AbstractContainerMenu implements ContainerListener {
-    public static final ResourceLocation PAPER_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_paper_slot");
-    public static final ResourceLocation PENCIL_SLOT_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "item/empty_pencil_slot");
+    public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
+    public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
     
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;

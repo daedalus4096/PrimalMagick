@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -50,7 +49,7 @@ public class ConfiguredFeaturesPM {
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_HALLOWOOD = registerKey("tree_hallowood");
 
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(PrimalMagick.MODID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, PrimalMagick.resource(name));
     }
     
     public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {

@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SacredShieldItem extends AbstractTieredShieldItem {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/shield/sacred_shield");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/shield/sacred_shield");
     
     public SacredShieldItem(Item.Properties properties) {
         super(ItemTierPM.HALLOWSTEEL, properties);

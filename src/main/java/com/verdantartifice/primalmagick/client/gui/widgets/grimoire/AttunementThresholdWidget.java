@@ -51,7 +51,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         this.threshold = threshold;
         Minecraft mc = Minecraft.getInstance();
         this.suppressed = AttunementManager.isSuppressed(mc.player, source);
-        this.texture = new ResourceLocation(PrimalMagick.MODID, "textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
+        this.texture = PrimalMagick.resource("textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
         List<Component> lines = new ArrayList<>();
         lines.add(Component.translatable("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag()));
         if (this.suppressed) {

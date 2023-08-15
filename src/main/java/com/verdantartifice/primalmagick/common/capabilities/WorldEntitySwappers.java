@@ -88,7 +88,7 @@ public class WorldEntitySwappers implements IWorldEntitySwappers {
      * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
      */
     public static class Provider implements ICapabilitySerializable<CompoundTag> {
-        public static final ResourceLocation NAME = new ResourceLocation(PrimalMagick.MODID, "capability_world_entity_swappers");
+        public static final ResourceLocation NAME = PrimalMagick.resource("capability_world_entity_swappers");
 
         private final IWorldEntitySwappers instance = new WorldEntitySwappers();
         private final LazyOptional<IWorldEntitySwappers> holder = LazyOptional.of(() -> instance);  // Cache a lazy optional of the capability instance

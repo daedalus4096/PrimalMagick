@@ -10,7 +10,6 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -39,7 +38,7 @@ public class BiomeModifiersPM {
     public static final ResourceKey<BiomeModifier> ADD_SPAWN_TREEFOLK = registerKey("add_spawn_treefolk");
     
     public static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(PrimalMagick.MODID, name));
+        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, PrimalMagick.resource(name));
     }
     
     public static void bootstrap(BootstapContext<BiomeModifier> context) {

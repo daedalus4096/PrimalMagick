@@ -26,7 +26,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
  * @author Daedalus4096
  */
 public class WandHudOverlay implements IGuiOverlay {
-    private static final ResourceLocation HUD_TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/hud.png");
+    private static final ResourceLocation HUD_TEXTURE = PrimalMagick.resource("textures/gui/hud.png");
     
     @Override
     public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {

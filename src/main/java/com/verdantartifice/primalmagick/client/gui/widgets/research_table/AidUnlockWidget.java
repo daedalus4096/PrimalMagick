@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class AidUnlockWidget extends AbstractWidget {
-    protected static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "textures/gui/research_table_overlay.png");
+    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
     
     protected Block aidBlock;
 

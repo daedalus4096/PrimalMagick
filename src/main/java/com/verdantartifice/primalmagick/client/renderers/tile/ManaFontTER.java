@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.Block;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock}
  */
 public class ManaFontTER implements BlockEntityRenderer<AbstractManaFontTileEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(PrimalMagick.MODID, "entity/mana_font_core");
+    public static final ResourceLocation TEXTURE = PrimalMagick.resource("entity/mana_font_core");
     
     public ManaFontTER(BlockEntityRendererProvider.Context context) {
     }

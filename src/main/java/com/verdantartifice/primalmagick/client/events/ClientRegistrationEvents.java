@@ -22,7 +22,6 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
@@ -66,7 +65,7 @@ public class ClientRegistrationEvents {
      */
     @SubscribeEvent
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
-        event.register(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "mundane_wand_core"), ""));
+        event.register(new ModelResourceLocation(PrimalMagick.resource("mundane_wand_core"), ""));
         for (WandCore core : WandCore.getAllWandCores()) {
             event.register(new ModelResourceLocation(core.getWandModelResourceLocationNamespace(), ""));
             event.register(new ModelResourceLocation(core.getStaffModelResourceLocationNamespace(), ""));
@@ -79,7 +78,7 @@ public class ClientRegistrationEvents {
             event.register(new ModelResourceLocation(gem.getModelResourceLocationNamespace(), ""));
         }
         for (int index = 0; index <= 4; index++) {
-            event.register(new ModelResourceLocation(new ResourceLocation(PrimalMagick.MODID, "arcanometer_" + index), ""));
+            event.register(new ModelResourceLocation(PrimalMagick.resource("arcanometer_" + index), ""));
         }
     }
     
