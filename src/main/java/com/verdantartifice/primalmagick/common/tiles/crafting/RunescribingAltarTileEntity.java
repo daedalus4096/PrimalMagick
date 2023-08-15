@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
-import com.verdantartifice.primalmagick.common.containers.RunescribingAltarBasicContainer;
-import com.verdantartifice.primalmagick.common.containers.RunescribingAltarEnchantedContainer;
-import com.verdantartifice.primalmagick.common.containers.RunescribingAltarForbiddenContainer;
-import com.verdantartifice.primalmagick.common.containers.RunescribingAltarHeavenlyContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyContainer;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;

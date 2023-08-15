@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;

@@ -3,9 +3,9 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
-import com.verdantartifice.primalmagick.common.containers.WandChargerContainer;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.menus.WandChargerContainer;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;

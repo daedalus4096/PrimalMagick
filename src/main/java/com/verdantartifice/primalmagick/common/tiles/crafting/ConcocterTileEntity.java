@@ -16,9 +16,9 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
-import com.verdantartifice.primalmagick.common.containers.ConcocterContainer;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
+import com.verdantartifice.primalmagick.common.menus.ConcocterContainer;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;

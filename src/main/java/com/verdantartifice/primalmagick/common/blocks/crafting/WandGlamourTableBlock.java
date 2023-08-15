@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.WandGlamourTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandGlamourTableContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -12,7 +12,7 @@ import org.lwjgl.glfw.GLFW;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;

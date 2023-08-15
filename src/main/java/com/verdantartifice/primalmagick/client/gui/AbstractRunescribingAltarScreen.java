@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.containers.AbstractRunescribingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarContainer;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

@@ -26,8 +26,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
-import com.verdantartifice.primalmagick.common.containers.FakeContainer;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
+import com.verdantartifice.primalmagick.common.menus.FakeContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 

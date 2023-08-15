@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableContainer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;

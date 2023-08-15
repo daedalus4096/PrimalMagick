@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.sources.Source;

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;

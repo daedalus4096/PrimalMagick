@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
-import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableContainer;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;

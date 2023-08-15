@@ -11,8 +11,8 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaCostWidget;
-import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
+import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 

@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.EssenceCaskWidget;
-import com.verdantartifice.primalmagick.common.containers.EssenceCaskContainer;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.menus.EssenceCaskContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;

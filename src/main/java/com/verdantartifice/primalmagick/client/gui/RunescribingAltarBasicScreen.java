@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.RunescribingAltarBasicContainer;
+import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicContainer;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

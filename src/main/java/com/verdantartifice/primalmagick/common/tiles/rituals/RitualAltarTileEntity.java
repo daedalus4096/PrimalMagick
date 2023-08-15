@@ -28,12 +28,12 @@ import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBl
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
-import com.verdantartifice.primalmagick.common.containers.FakeContainer;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.menus.FakeContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;

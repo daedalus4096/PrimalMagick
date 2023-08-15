@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAltarBlock;
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.containers.SpellcraftingAltarContainer;
+import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarContainer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 

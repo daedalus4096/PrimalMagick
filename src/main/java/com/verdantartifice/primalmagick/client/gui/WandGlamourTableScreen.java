@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.WandGlamourTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandGlamourTableContainer;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

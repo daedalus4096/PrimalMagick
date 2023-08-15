@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.research_table.Projec
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.containers.ResearchTableContainer;
+import com.verdantartifice.primalmagick.common.menus.ResearchTableContainer;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;

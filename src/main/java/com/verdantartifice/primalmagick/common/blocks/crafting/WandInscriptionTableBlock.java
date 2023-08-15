@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.WandInscriptionTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandInscriptionTableContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

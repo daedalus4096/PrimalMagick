@@ -33,10 +33,10 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SanguineCrucibleTE
 import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltarTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WandChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.WindGeneratorTER;
-import com.verdantartifice.primalmagick.common.containers.ContainersPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.FlyingCarpetItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
+import com.verdantartifice.primalmagick.common.menus.ContainersPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.WandAssemblyTableContainer;
+import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

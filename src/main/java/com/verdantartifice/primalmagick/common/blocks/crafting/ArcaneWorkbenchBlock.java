@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.ArcaneWorkbenchContainer;
+import com.verdantartifice.primalmagick.common.menus.ArcaneWorkbenchContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

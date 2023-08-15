@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui;
 
-import com.verdantartifice.primalmagick.common.containers.RunicGrindstoneContainer;
+import com.verdantartifice.primalmagick.common.menus.RunicGrindstoneContainer;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

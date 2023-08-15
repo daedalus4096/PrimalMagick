@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
-import com.verdantartifice.primalmagick.common.containers.AnalysisTableContainer;
+import com.verdantartifice.primalmagick.common.menus.AnalysisTableContainer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

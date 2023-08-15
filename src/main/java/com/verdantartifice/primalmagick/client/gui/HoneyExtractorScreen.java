@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.common.containers.HoneyExtractorContainer;
+import com.verdantartifice.primalmagick.common.menus.HoneyExtractorContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;

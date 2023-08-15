@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.containers.CalcinatorContainer;
+import com.verdantartifice.primalmagick.common.menus.CalcinatorContainer;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

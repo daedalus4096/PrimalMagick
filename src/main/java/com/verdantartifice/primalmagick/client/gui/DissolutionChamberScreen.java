@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeBookComponent;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
-import com.verdantartifice.primalmagick.common.containers.DissolutionChamberContainer;
+import com.verdantartifice.primalmagick.common.menus.DissolutionChamberContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;

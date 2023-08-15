@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
-import com.verdantartifice.primalmagick.common.containers.RunecarvingTableContainer;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableContainer;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-import com.verdantartifice.primalmagick.common.containers.RunecarvingTableContainer;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.menus.RunecarvingTableContainer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
