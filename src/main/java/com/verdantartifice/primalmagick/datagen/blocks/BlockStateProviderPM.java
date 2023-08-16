@@ -54,6 +54,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
         this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
+        
+        // Generate smoked marble blocks
+        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_SLAB.get(), BlocksPM.MARBLE_SMOKED.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
+        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICKS.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), BlocksPM.MARBLE_SMOKED_BRICKS.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
+        this.pillarBlockWithItem(BlocksPM.MARBLE_SMOKED_PILLAR.get());
+        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
     }
 
     private ResourceLocation key(Block block) {
