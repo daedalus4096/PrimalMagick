@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.blocks;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,19 +29,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
-        ResourceLocation rawMarbleTexture = PrimalMagick.resource("block/marble_raw");
+        ResourceLocation rawMarbleTexture = this.modLoc("block/marble_raw");
         this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), rawMarbleTexture);
         this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), rawMarbleTexture);
         this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), rawMarbleTexture);
-        ResourceLocation marbleBricksTexture = PrimalMagick.resource("block/marble_bricks");
+        ResourceLocation marbleBricksTexture = this.modLoc("block/marble_bricks");
         this.simpleBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get(), marbleBricksTexture);
         this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), marbleBricksTexture);
         this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), marbleBricksTexture);
-        // TODO Marble pillar
+        this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
         this.simpleBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), PrimalMagick.resource("block/marble_runed"), rawMarbleTexture);
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.modLoc("block/marble_runed"), rawMarbleTexture);
         this.simpleBlockWithItem(BlocksPM.MARBLE_TILES.get());
     }
 
@@ -51,6 +53,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         return key(block).getPath();
     }
     
+    private ResourceLocation extend(ResourceLocation rl, String suffix) {
+        return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
+    }
+
     private void simpleBlockWithItem(Block block) {
         this.simpleBlockWithItem(block, this.cubeAll(block));
     }
@@ -80,5 +86,32 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private void cubeColumnBlockWithItem(Block block, ResourceLocation sideTexture, ResourceLocation endTexture) {
         this.simpleBlockWithItem(block, this.models().cubeColumn(this.name(block), sideTexture, endTexture));
+    }
+    
+    private void pillarBlockWithItem(PillarBlock block) {
+        this.pillarBlockWithItem(block, this.blockTexture(block));
+    }
+    
+    private void pillarBlockWithItem(PillarBlock block, ResourceLocation texture) {
+        this.pillarBlockWithItem(block, texture, this.extend(texture, "_inner"), this.extend(texture, "_top"), this.extend(texture, "_bottom"), this.extend(texture, "_base"));
+    }
+    
+    private void pillarBlockWithItem(PillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, ResourceLocation bottomTexture, ResourceLocation baseTexture) {
+        ModelFile baseModel = this.models().withExistingParent(this.name(block), this.modLoc("block/pillar"))
+                .texture("side", sideTexture)
+                .texture("inner", innerTexture);
+        ModelFile topModel = this.models().withExistingParent(this.name(block) + "_top", this.modLoc("block/pillar_top"))
+                .texture("side", topTexture)
+                .texture("inner", innerTexture)
+                .texture("top", baseTexture);
+        ModelFile bottomModel = this.models().withExistingParent(this.name(block) + "_bottom", this.modLoc("block/pillar_bottom"))
+                .texture("side", bottomTexture)
+                .texture("inner", innerTexture)
+                .texture("bottom", baseTexture);
+        this.getVariantBuilder(block)
+                .partialState().with(PillarBlock.PROPERTY_TYPE, PillarBlock.Type.BASE).addModels(new ConfiguredModel(baseModel))
+                .partialState().with(PillarBlock.PROPERTY_TYPE, PillarBlock.Type.TOP).addModels(new ConfiguredModel(topModel))
+                .partialState().with(PillarBlock.PROPERTY_TYPE, PillarBlock.Type.BOTTOM).addModels(new ConfiguredModel(bottomModel));
+        this.simpleBlockItem(block, baseModel);
     }
 }

@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "type=base":   { "model": "primalmagick:block/marble_pillar" },
-        "type=bottom": { "model": "primalmagick:block/marble_pillar_bottom" },
-        "type=top":    { "model": "primalmagick:block/marble_pillar_top" }
-    }
-}
