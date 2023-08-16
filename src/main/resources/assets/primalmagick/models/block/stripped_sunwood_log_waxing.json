@@ -1,8 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "render_type": "translucent",
-    "textures": {
-        "end": "primalmagick:block/stripped_sunwood_log_top_waxing",
-        "side": "primalmagick:block/stripped_sunwood_log_waxing"
-    }
-}

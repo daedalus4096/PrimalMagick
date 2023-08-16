@@ -93,6 +93,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         
         // Generate sunwood blocks
         this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get(), TRANSLUCENT);
+        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
