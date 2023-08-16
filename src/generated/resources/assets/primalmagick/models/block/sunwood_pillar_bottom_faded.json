@@ -1,0 +1,9 @@
+{
+  "parent": "primalmagick:block/pillar_bottom",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "primalmagick:block/sunwood_pillar_base_faded",
+    "inner": "primalmagick:block/sunwood_pillar_inner_faded",
+    "side": "primalmagick:block/sunwood_pillar_bottom_faded"
+  }
+}

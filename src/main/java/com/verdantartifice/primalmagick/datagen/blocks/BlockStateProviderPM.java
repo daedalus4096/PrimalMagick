@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingPillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingStairsBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
@@ -22,7 +25,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
@@ -112,6 +114,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
         this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
         this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()), TRANSLUCENT);
+        this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -309,5 +312,42 @@ public class BlockStateProviderPM extends BlockStateProvider {
                     .build();
         }, StairBlock.WATERLOGGED);
         this.simpleBlockItem(block, baseModels.get(TimePhase.FULL));
+    }
+    
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation renderType) {
+        this.phasingPillarBlockWithItem(block, this.blockTexture(block), renderType);
+    }
+    
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation texture, ResourceLocation renderType) {
+        this.phasingPillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"), renderType);
+    }
+    
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, 
+            ResourceLocation bottomTexture, ResourceLocation baseTexture, ResourceLocation renderType) {
+        String baseName = this.name(block);
+        Table<PillarBlock.Type, TimePhase, ModelFile> models = HashBasedTable.create();
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            models.put(PillarBlock.Type.BASE, phase, this.models().withExistingParent(baseName + "_" + phaseName, PrimalMagick.resource("block/pillar"))
+                    .texture("side", sideTexture.withSuffix("_" + phaseName))
+                    .texture("inner", innerTexture.withSuffix("_" + phaseName))
+                    .renderType(renderType));
+            models.put(PillarBlock.Type.TOP, phase, this.models().withExistingParent(baseName + "_top_" + phaseName, PrimalMagick.resource("block/pillar_top"))
+                    .texture("side", topTexture.withSuffix("_" + phaseName))
+                    .texture("inner", innerTexture.withSuffix("_" + phaseName))
+                    .texture("top", baseTexture.withSuffix("_" + phaseName))
+                    .renderType(renderType));
+            models.put(PillarBlock.Type.BOTTOM, phase, this.models().withExistingParent(baseName + "_bottom_" + phaseName, PrimalMagick.resource("block/pillar_bottom"))
+                    .texture("side", bottomTexture.withSuffix("_" + phaseName))
+                    .texture("inner", innerTexture.withSuffix("_" + phaseName))
+                    .texture("bottom", baseTexture.withSuffix("_" + phaseName))
+                    .renderType(renderType));
+        });
+        this.getVariantBuilder(block).forAllStates(state -> {
+            PillarBlock.Type type = state.getValue(AbstractPhasingPillarBlock.PROPERTY_TYPE);
+            TimePhase phase = state.getValue(AbstractPhasingPillarBlock.PHASE);
+            return ConfiguredModel.builder().modelFile(models.get(type, phase)).build();
+        });
+        this.simpleBlockItem(block, models.get(PillarBlock.Type.BASE, TimePhase.FULL));
     }
 }

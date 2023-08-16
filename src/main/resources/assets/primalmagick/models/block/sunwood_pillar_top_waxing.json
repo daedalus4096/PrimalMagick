@@ -1,9 +1,0 @@
-{
-	"parent": "primalmagick:block/pillar_top",
-    "render_type": "translucent",
-	"textures": {
-		"inner": "primalmagick:block/sunwood_pillar_inner_waxing",
-		"side": "primalmagick:block/sunwood_pillar_top_waxing",
-		"top": "primalmagick:block/stripped_sunwood_log_waxing"
-	}
-}
