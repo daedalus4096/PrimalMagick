@@ -32,6 +32,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), rawMarbleTexture);
         this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), rawMarbleTexture);
         this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), rawMarbleTexture);
+        ResourceLocation marbleBricksTexture = PrimalMagick.resource("block/marble_bricks");
+        this.simpleBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get(), marbleBricksTexture);
+        this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), marbleBricksTexture);
+        this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), marbleBricksTexture);
     }
 
     private ResourceLocation key(Block block) {
