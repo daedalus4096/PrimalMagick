@@ -1,9 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.blocks;
 
+import java.util.stream.Stream;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
+import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +27,11 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BlockStateProviderPM extends BlockStateProvider {
+    protected static final ResourceLocation SOLID = new ResourceLocation("solid");
+    protected static final ResourceLocation CUTOUT = new ResourceLocation("cutout");
+    protected static final ResourceLocation CUTOUT_MIPPED = new ResourceLocation("cutout_mipped");
+    protected static final ResourceLocation TRANSLUCENT = new ResourceLocation("translucent");
+
     public BlockStateProviderPM(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, PrimalMagick.MODID, exFileHelper);
     }
@@ -80,6 +90,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
         this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
+        
+        // Generate sunwood blocks
+        this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -154,5 +167,27 @@ public class BlockStateProviderPM extends BlockStateProvider {
                 .partialState().with(PillarBlock.PROPERTY_TYPE, PillarBlock.Type.TOP).addModels(new ConfiguredModel(topModel))
                 .partialState().with(PillarBlock.PROPERTY_TYPE, PillarBlock.Type.BOTTOM).addModels(new ConfiguredModel(bottomModel));
         this.simpleBlockItem(block, baseModel);
+    }
+    
+    private void phasingLogBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation renderType) {
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
+            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture).renderType(renderType);
+            this.axisBlockPhase(block, model, model, phase);
+        });
+
+        String phaseName = TimePhase.FULL.getSerializedName();
+        ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
+        this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture));
+    }
+    
+    private void axisBlockPhase(AbstractPhasingLogBlock block, ModelFile vertical, ModelFile horizontal, TimePhase phase) {
+        this.getVariantBuilder(block)
+            .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.Y).modelForState().modelFile(vertical).addModel()
+            .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.Z).modelForState().modelFile(horizontal).rotationX(90).addModel()
+            .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.X).modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel();
     }
 }
