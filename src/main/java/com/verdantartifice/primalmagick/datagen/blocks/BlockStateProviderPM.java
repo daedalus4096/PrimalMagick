@@ -94,6 +94,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         // Generate sunwood blocks
         this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get(), TRANSLUCENT);
         this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), TRANSLUCENT);
+        this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()), TRANSLUCENT);
+        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -183,6 +185,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
         ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
         this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture));
+    }
+    
+    private void phasingWoodBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation texture, ResourceLocation renderType) {
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture).renderType(renderType);
+            this.axisBlockPhase(block, model, model, phase);
+        });
+
+        String phaseName = TimePhase.FULL.getSerializedName();
+        ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+        this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture));
     }
     
     private void axisBlockPhase(AbstractPhasingLogBlock block, ModelFile vertical, ModelFile horizontal, TimePhase phase) {
