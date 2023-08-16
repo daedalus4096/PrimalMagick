@@ -37,6 +37,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get(), marbleBricksTexture);
         this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), marbleBricksTexture);
         this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), marbleBricksTexture);
+        // TODO Marble pillar
+        this.simpleBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), PrimalMagick.resource("block/marble_runed"), rawMarbleTexture);
+        this.simpleBlockWithItem(BlocksPM.MARBLE_TILES.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -72,5 +76,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.wallBlock(block, texture);
         ModelFile wallInv = this.models().wallInventory(this.name(block) + "_inventory", texture);
         this.simpleBlockItem(block, wallInv);
+    }
+    
+    private void cubeColumnBlockWithItem(Block block, ResourceLocation sideTexture, ResourceLocation endTexture) {
+        this.simpleBlockWithItem(block, this.models().cubeColumn(this.name(block), sideTexture, endTexture));
     }
 }
