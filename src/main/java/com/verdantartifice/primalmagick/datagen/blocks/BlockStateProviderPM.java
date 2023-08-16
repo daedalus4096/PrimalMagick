@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.Direction.Axis;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -101,6 +103,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get(), TRANSLUCENT);
         this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
+        this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -241,5 +244,26 @@ public class BlockStateProviderPM extends BlockStateProvider {
         String phaseName = TimePhase.FULL.getSerializedName();
         ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
         this.simpleBlockItem(block, this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(renderType));
+    }
+    
+    private void phasingSlabBlockWithItem(AbstractPhasingSlabBlock block, AbstractPhasingBlock doubleSlabBlock, ResourceLocation renderType) {
+        String blockName = this.name(block);
+        ResourceLocation texture = this.blockTexture(doubleSlabBlock);
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
+            ModelFile topModel = this.models().slabTop(blockName + "_top_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
+            ModelFile doubleModel = this.models().getExistingFile(this.key(doubleSlabBlock).withSuffix("_" + phaseName));
+            this.getVariantBuilder(block)
+                .partialState().with(AbstractPhasingSlabBlock.PHASE, phase).with(SlabBlock.TYPE, SlabType.BOTTOM).addModels(new ConfiguredModel(bottomModel))
+                .partialState().with(AbstractPhasingSlabBlock.PHASE, phase).with(SlabBlock.TYPE, SlabType.TOP).addModels(new ConfiguredModel(topModel))
+                .partialState().with(AbstractPhasingSlabBlock.PHASE, phase).with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(doubleModel));
+        });
+        
+        String phaseName = TimePhase.FULL.getSerializedName();
+        ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+        ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture);
+        this.simpleBlockItem(block, bottomModel);
     }
 }
