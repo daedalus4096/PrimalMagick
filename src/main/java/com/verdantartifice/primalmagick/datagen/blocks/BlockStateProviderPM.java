@@ -29,19 +29,17 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
-        ResourceLocation rawMarbleTexture = this.modLoc("block/marble_raw");
         this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), rawMarbleTexture);
-        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), rawMarbleTexture);
-        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), rawMarbleTexture);
-        ResourceLocation marbleBricksTexture = this.modLoc("block/marble_bricks");
+        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.simpleBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get(), marbleBricksTexture);
-        this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), marbleBricksTexture);
-        this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), marbleBricksTexture);
+        this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
         this.simpleBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
-        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.modLoc("block/marble_runed"), rawMarbleTexture);
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.simpleBlockWithItem(BlocksPM.MARBLE_TILES.get());
     }
 
@@ -53,12 +51,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
         return key(block).getPath();
     }
     
-    private ResourceLocation extend(ResourceLocation rl, String suffix) {
-        return new ResourceLocation(rl.getNamespace(), rl.getPath() + suffix);
-    }
-
     private void simpleBlockWithItem(Block block) {
         this.simpleBlockWithItem(block, this.cubeAll(block));
+    }
+    
+    private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock) {
+        this.slabBlockWithItem(block, doubleSlabBlock, this.blockTexture(doubleSlabBlock));
     }
     
     private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock, ResourceLocation texture) {
@@ -84,6 +82,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, wallInv);
     }
     
+    private void cubeColumnBlockWithItem(Block block, ResourceLocation endTexture) {
+        this.cubeColumnBlockWithItem(block, this.blockTexture(block), endTexture);
+    }
+    
     private void cubeColumnBlockWithItem(Block block, ResourceLocation sideTexture, ResourceLocation endTexture) {
         this.simpleBlockWithItem(block, this.models().cubeColumn(this.name(block), sideTexture, endTexture));
     }
@@ -93,18 +95,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void pillarBlockWithItem(PillarBlock block, ResourceLocation texture) {
-        this.pillarBlockWithItem(block, texture, this.extend(texture, "_inner"), this.extend(texture, "_top"), this.extend(texture, "_bottom"), this.extend(texture, "_base"));
+        this.pillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"));
     }
     
     private void pillarBlockWithItem(PillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, ResourceLocation bottomTexture, ResourceLocation baseTexture) {
-        ModelFile baseModel = this.models().withExistingParent(this.name(block), this.modLoc("block/pillar"))
+        ModelFile baseModel = this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/pillar"))
                 .texture("side", sideTexture)
                 .texture("inner", innerTexture);
-        ModelFile topModel = this.models().withExistingParent(this.name(block) + "_top", this.modLoc("block/pillar_top"))
+        ModelFile topModel = this.models().withExistingParent(this.name(block) + "_top", PrimalMagick.resource("block/pillar_top"))
                 .texture("side", topTexture)
                 .texture("inner", innerTexture)
                 .texture("top", baseTexture);
-        ModelFile bottomModel = this.models().withExistingParent(this.name(block) + "_bottom", this.modLoc("block/pillar_bottom"))
+        ModelFile bottomModel = this.models().withExistingParent(this.name(block) + "_bottom", PrimalMagick.resource("block/pillar_bottom"))
                 .texture("side", bottomTexture)
                 .texture("inner", innerTexture)
                 .texture("bottom", baseTexture);
