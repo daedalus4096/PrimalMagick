@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "phase=full": { "model": "primalmagick:block/sunwood_leaves_full" },
-        "phase=waxing": { "model": "primalmagick:block/sunwood_leaves_waxing" },
-        "phase=waning": { "model": "primalmagick:block/sunwood_leaves_waning" },
-        "phase=faded": { "model": "primalmagick:block/sunwood_leaves_faded" }
-    }
-}

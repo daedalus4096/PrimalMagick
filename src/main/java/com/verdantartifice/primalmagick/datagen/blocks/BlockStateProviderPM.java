@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
@@ -96,6 +97,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), TRANSLUCENT);
         this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()), TRANSLUCENT);
         this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()), TRANSLUCENT);
+        this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -205,5 +207,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.Y).modelForState().modelFile(vertical).addModel()
             .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.Z).modelForState().modelFile(horizontal).rotationX(90).addModel()
             .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.X).modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel();
+    }
+    
+    private void phasingLeavesBlockWithItem(AbstractPhasingLeavesBlock block, ResourceLocation renderType) {
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves")).texture("all", phaseTexture).renderType(renderType);
+            this.getVariantBuilder(block).partialState().with(AbstractPhasingLeavesBlock.PHASE, phase).modelForState().modelFile(model).addModel();
+        });
+
+        String phaseName = TimePhase.FULL.getSerializedName();
+        ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves")).texture("all", phaseTexture));
     }
 }
