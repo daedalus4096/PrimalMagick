@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.blocks;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -9,8 +11,10 @@ import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingStairsBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
+import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -18,7 +22,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -104,6 +111,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
         this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
         this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
+        this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -265,5 +273,41 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
         ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture);
         this.simpleBlockItem(block, bottomModel);
+    }
+    
+    private void phasingStairsBlockWithItem(AbstractPhasingStairsBlock block, ResourceLocation texture, ResourceLocation renderType) {
+        String baseName = this.name(block);
+        Map<TimePhase, ModelFile> baseModels = new HashMap<>();
+        Map<TimePhase, ModelFile> innerModels = new HashMap<>();
+        Map<TimePhase, ModelFile> outerModels = new HashMap<>();
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            baseModels.put(phase, this.models().stairs(baseName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
+            innerModels.put(phase, this.models().stairsInner(baseName + "_inner_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
+            outerModels.put(phase, this.models().stairsOuter(baseName + "_outer_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
+        });
+        this.getVariantBuilder(block).forAllStatesExcept(state -> {
+            Direction facing = state.getValue(StairBlock.FACING);
+            Half half = state.getValue(StairBlock.HALF);
+            StairsShape shape = state.getValue(StairBlock.SHAPE);
+            TimePhase phase = state.getValue(AbstractPhasingStairsBlock.PHASE);
+            int yRot = (int) facing.getClockWise().toYRot(); // Stairs model is rotated 90 degrees clockwise for some reason
+            if (shape == StairsShape.INNER_LEFT || shape == StairsShape.OUTER_LEFT) {
+                yRot += 270; // Left facing stairs are rotated 90 degrees clockwise
+            }
+            if (shape != StairsShape.STRAIGHT && half == Half.TOP) {
+                yRot += 90; // Top stairs are rotated 90 degrees clockwise
+            }
+            yRot %= 360;
+            boolean uvlock = yRot != 0 || half == Half.TOP; // Don't set uvlock for states that have no rotation
+            return ConfiguredModel.builder()
+                    .modelFile(shape == StairsShape.STRAIGHT ? baseModels.get(phase) : shape == StairsShape.INNER_LEFT || shape == StairsShape.INNER_RIGHT ? innerModels.get(phase) : outerModels.get(phase))
+                    .rotationX(half == Half.BOTTOM ? 0 : 180)
+                    .rotationY(yRot)
+                    .uvLock(uvlock)
+                    .build();
+        }, StairBlock.WATERLOGGED);
+        this.simpleBlockItem(block, baseModels.get(TimePhase.FULL));
     }
 }

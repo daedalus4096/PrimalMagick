@@ -1,0 +1,824 @@
+{
+  "variants": {
+    "facing=east,half=bottom,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded"
+    },
+    "facing=east,half=bottom,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded"
+    },
+    "facing=east,half=bottom,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded"
+    },
+    "facing=east,half=bottom,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full"
+    },
+    "facing=east,half=bottom,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full"
+    },
+    "facing=east,half=bottom,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full"
+    },
+    "facing=east,half=bottom,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning"
+    },
+    "facing=east,half=bottom,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning"
+    },
+    "facing=east,half=bottom,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning"
+    },
+    "facing=east,half=bottom,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing"
+    },
+    "facing=east,half=bottom,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,half=bottom,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing"
+    },
+    "facing=east,half=bottom,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing"
+    },
+    "facing=east,half=top,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=east,half=top,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=east,half=top,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=bottom,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,half=bottom,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=bottom,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=north,half=top,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=north,half=top,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180
+    },
+    "facing=north,half=top,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=south,half=bottom,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded"
+    },
+    "facing=south,half=bottom,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded"
+    },
+    "facing=south,half=bottom,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full"
+    },
+    "facing=south,half=bottom,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full"
+    },
+    "facing=south,half=bottom,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning"
+    },
+    "facing=south,half=bottom,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning"
+    },
+    "facing=south,half=bottom,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing"
+    },
+    "facing=south,half=bottom,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing"
+    },
+    "facing=south,half=bottom,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=bottom,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=south,half=top,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=south,half=top,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,half=top,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,half=bottom,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=bottom,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=west,half=top,phase=faded,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=faded,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=faded,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=faded,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=faded,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_faded",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=full,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=full,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=full,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=full,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=full,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_full",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waning,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waning,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=waning,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waning,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=waning,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waning",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waxing,shape=inner_left": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waxing,shape=inner_right": {
+      "model": "primalmagick:block/sunwood_stairs_inner_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=waxing,shape=outer_left": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "facing=west,half=top,phase=waxing,shape=outer_right": {
+      "model": "primalmagick:block/sunwood_stairs_outer_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,half=top,phase=waxing,shape=straight": {
+      "model": "primalmagick:block/sunwood_stairs_waxing",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    }
+  }
+}
