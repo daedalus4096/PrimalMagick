@@ -98,6 +98,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()), TRANSLUCENT);
         this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()), TRANSLUCENT);
         this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get(), TRANSLUCENT);
+        this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -220,5 +221,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         String phaseName = TimePhase.FULL.getSerializedName();
         ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
         this.simpleBlockItem(block, this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves")).texture("all", phaseTexture));
+    }
+    
+    private void saplingBlockWithItem(Block block) {
+        this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block));
     }
 }
