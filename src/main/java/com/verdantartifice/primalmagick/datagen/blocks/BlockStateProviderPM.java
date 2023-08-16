@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
@@ -99,6 +100,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()), TRANSLUCENT);
         this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get(), TRANSLUCENT);
         this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
+        this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {
@@ -226,5 +228,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void saplingBlockWithItem(Block block) {
         this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block));
+    }
+    
+    private void phasingCubeBlockWithItem(AbstractPhasingBlock block, ResourceLocation renderType) {
+        Stream.of(TimePhase.values()).forEach(phase -> {
+            String phaseName = phase.getSerializedName();
+            ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+            ModelFile model = this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(renderType);
+            this.getVariantBuilder(block).partialState().with(AbstractPhasingBlock.PHASE, phase).modelForState().modelFile(model).addModel();
+        });
+        
+        String phaseName = TimePhase.FULL.getSerializedName();
+        ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
+        this.simpleBlockItem(block, this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(renderType));
     }
 }
