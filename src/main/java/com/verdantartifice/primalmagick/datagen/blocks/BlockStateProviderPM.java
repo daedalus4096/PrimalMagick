@@ -67,6 +67,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_SMOKED_PILLAR.get());
         this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
+        
+        // Generate hallowed marble blocks
+        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), BlocksPM.MARBLE_HALLOWED.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
+        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), BlocksPM.MARBLE_HALLOWED_BRICKS.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
+        this.pillarBlockWithItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
+        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
     }
 
     private ResourceLocation key(Block block) {

@@ -1,0 +1,8 @@
+{
+  "parent": "primalmagick:block/pillar_top",
+  "textures": {
+    "inner": "primalmagick:block/marble_hallowed_pillar_inner",
+    "side": "primalmagick:block/marble_hallowed_pillar_top",
+    "top": "primalmagick:block/marble_hallowed_pillar_base"
+  }
+}
