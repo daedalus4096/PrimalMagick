@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -25,8 +26,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
+        ResourceLocation rawMarbleTexture = PrimalMagick.resource("block/marble_raw");
         this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
-        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), PrimalMagick.resource("block/marble_raw"));
+        this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), rawMarbleTexture);
+        this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), rawMarbleTexture);
     }
 
     private ResourceLocation key(Block block) {
@@ -47,5 +50,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ModelFile topModel = this.models().slabTop(blockName + "_top", texture, texture, texture);
         this.slabBlock(block, bottomModel, topModel, this.models().getExistingFile(this.key(doubleSlabBlock)));
         this.simpleBlockItem(block, bottomModel);
+    }
+    
+    private void stairsBlockWithItem(StairBlock block, ResourceLocation texture) {
+        String baseName = this.name(block);
+        ModelFile stairs = this.models().stairs(baseName, texture, texture, texture);
+        ModelFile stairsInner = this.models().stairsInner(baseName + "_inner", texture, texture, texture);
+        ModelFile stairsOuter = this.models().stairsOuter(baseName + "_outer", texture, texture, texture);
+        this.stairsBlock(block, stairs, stairsInner, stairsOuter);
+        this.simpleBlockItem(block, stairs);
     }
 }
