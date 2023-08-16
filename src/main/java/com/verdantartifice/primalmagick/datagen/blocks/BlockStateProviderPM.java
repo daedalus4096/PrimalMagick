@@ -41,6 +41,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.simpleBlockWithItem(BlocksPM.MARBLE_TILES.get());
+        
+        // Generate enchanted marble blocks
+        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), BlocksPM.MARBLE_ENCHANTED.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
+        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
+        this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
+        this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
+        this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
+        this.pillarBlockWithItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
+        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
+        this.cubeColumnBlockWithItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
     }
 
     private ResourceLocation key(Block block) {

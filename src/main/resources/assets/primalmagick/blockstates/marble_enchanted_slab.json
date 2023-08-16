@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "type=bottom": { "model": "primalmagick:block/marble_enchanted_slab_bottom" },
-        "type=top":    { "model": "primalmagick:block/marble_enchanted_slab_top" },
-        "type=double": { "model": "primalmagick:block/marble_enchanted" }
-    }
-}

@@ -1,7 +1,0 @@
-{
-    "parent": "primalmagick:block/pillar",
-    "textures": {
-        "side": "primalmagick:block/marble_enchanted_pillar",
-        "inner": "primalmagick:block/marble_enchanted_pillar_inner"
-    }
-}
