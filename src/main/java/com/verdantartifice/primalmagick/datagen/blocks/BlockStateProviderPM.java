@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -30,6 +31,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get(), rawMarbleTexture);
         this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), rawMarbleTexture);
+        this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), rawMarbleTexture);
     }
 
     private ResourceLocation key(Block block) {
@@ -59,5 +61,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ModelFile stairsOuter = this.models().stairsOuter(baseName + "_outer", texture, texture, texture);
         this.stairsBlock(block, stairs, stairsInner, stairsOuter);
         this.simpleBlockItem(block, stairs);
+    }
+    
+    private void wallBlockWithItem(WallBlock block, ResourceLocation texture) {
+        this.wallBlock(block, texture);
+        ModelFile wallInv = this.models().wallInventory(this.name(block) + "_inventory", texture);
+        this.simpleBlockItem(block, wallInv);
     }
 }
