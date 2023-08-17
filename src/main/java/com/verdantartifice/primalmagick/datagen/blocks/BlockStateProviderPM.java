@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -61,56 +62,56 @@ public class BlockStateProviderPM extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         // Generate marble blocks
-        this.simpleBlockWithItem(BlocksPM.MARBLE_RAW.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_RAW.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SLAB.get(), BlocksPM.MARBLE_RAW.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_WALL.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
-        this.simpleBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_BRICK_SLAB.get(), BlocksPM.MARBLE_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_PILLAR.get());
-        this.simpleBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
-        this.simpleBlockWithItem(BlocksPM.MARBLE_TILES.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
         
         // Generate enchanted marble blocks
-        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), BlocksPM.MARBLE_ENCHANTED.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
-        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), BlocksPM.MARBLE_ENCHANTED_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
-        this.simpleBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
         
         // Generate smoked marble blocks
-        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_SLAB.get(), BlocksPM.MARBLE_SMOKED.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
-        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICKS.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), BlocksPM.MARBLE_SMOKED_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_SMOKED_PILLAR.get());
-        this.simpleBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         
         // Generate hallowed marble blocks
-        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), BlocksPM.MARBLE_HALLOWED.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
-        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICKS.get());
         this.slabBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), BlocksPM.MARBLE_HALLOWED_BRICKS.get());
         this.stairsBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
         this.wallBlockWithItem(BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED_BRICKS.get()));
         this.pillarBlockWithItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
-        this.simpleBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
+        this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
         
         // Generate sunwood blocks
@@ -144,17 +145,17 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
         this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
         this.saplingBlockWithItem(BlocksPM.HALLOWOOD_SAPLING.get());
-        this.simpleBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
+        this.simpleCubeBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
         this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
         this.pillarBlockWithItem(BlocksPM.HALLOWOOD_PILLAR.get());
         
         // Generate infused stone blocks
-        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
-        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SEA.get());
-        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SKY.get());
-        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
-        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
+        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
+        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SEA.get());
+        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SKY.get());
+        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
+        this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
         
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
@@ -169,20 +170,20 @@ public class BlockStateProviderPM extends BlockStateProvider {
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
         
         // Generate device blocks
-        this.simpleBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get(), PrimalMagick.resource("block/arcane_workbench"));
-        this.horizontalBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), PrimalMagick.resource("block/wand_assembly_table"));
-        this.simpleBlockWithItem(BlocksPM.WOOD_TABLE.get(), PrimalMagick.resource("block/wood_table"));
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get(), PrimalMagick.resource("block/analysis_table"));
+        this.simpleExistingBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get());
+        this.simpleExistingBlockWithItem(BlocksPM.WOOD_TABLE.get());
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());
         this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
                 .getExistingFile(PrimalMagick.resource("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), PrimalMagick.resource("block/wand_inscription_table"));
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get());
         this.spellcraftingAltarBlockWithItem();
-        this.simpleBlockWithItem(BlocksPM.WAND_CHARGER.get(), PrimalMagick.resource("block/wand_charger"));
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get(), PrimalMagick.resource("block/research_table"));
+        this.simpleExistingBlockWithItem(BlocksPM.WAND_CHARGER.get());
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -193,11 +194,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         return key(block).getPath();
     }
     
-    private void simpleBlockWithItem(Block block) {
+    private ResourceLocation defaultModel(Block block) {
+        return this.key(block).withPrefix(ModelProvider.BLOCK_FOLDER + "/");
+    }
+    
+    private void simpleCubeBlockWithItem(Block block) {
         this.simpleBlockWithItem(block, this.cubeAll(block));
     }
     
-    private void simpleBlockWithItem(Block block, ResourceLocation modelFile) {
+    private void simpleExistingBlockWithItem(Block block) {
+        this.simpleExistingBlockWithItem(block, this.defaultModel(block));
+    }
+    
+    private void simpleExistingBlockWithItem(Block block, ResourceLocation modelFile) {
         this.simpleBlockWithItem(block, this.models().getExistingFile(modelFile));
     }
 
@@ -445,7 +454,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void ritualCandleBlockWithItem(RitualCandleBlock block) {
-        this.simpleBlockWithItem(block, PrimalMagick.resource("block/ritual_candle"));
+        this.simpleExistingBlockWithItem(block, PrimalMagick.resource("block/ritual_candle"));
     }
     
     private void manaFontBlockWithItem(AbstractManaFontBlock block, ResourceLocation baseTexture) {
@@ -453,13 +462,21 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.itemModels().withExistingParent(this.name(block), PrimalMagick.resource("item/template_mana_font"));
     }
     
-    private void horizontalBlockWithItem(Block block, ResourceLocation modelFile) {
+    private void horizontalExistingBlockWithItem(Block block) {
+        this.horizontalExistingBlockWithItem(block, this.defaultModel(block));
+    }
+    
+    private void horizontalExistingBlockWithItem(Block block, ResourceLocation modelFile) {
         this.horizontalBlockWithItem(block, this.models().getExistingFile(modelFile));
     }
     
     private void horizontalBlockWithItem(Block block, ModelFile model) {
         this.horizontalBlock(block, model);
         this.simpleBlockItem(block, model);
+    }
+    
+    private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block) {
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.defaultModel(block));
     }
     
     private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block, ResourceLocation modelFile) {
