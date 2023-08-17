@@ -1,5 +1,12 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -21,6 +28,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  */
 public abstract class AbstractManaFontBlock extends BaseEntityBlock implements ITieredDevice {
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    
+    protected static final Map<DeviceTier, List<AbstractManaFontBlock>> REGISTRY = new HashMap<>();
 
     protected Source source;
     protected DeviceTier tier;
@@ -29,6 +38,7 @@ public abstract class AbstractManaFontBlock extends BaseEntityBlock implements I
         super(properties);
         this.source = source;
         this.tier = tier;
+        REGISTRY.computeIfAbsent(tier, (t) -> new ArrayList<>()).add(this);
     }
     
     @Override
@@ -50,6 +60,14 @@ public abstract class AbstractManaFontBlock extends BaseEntityBlock implements I
         return this.tier;
     }
     
+    public String getTierDescriptor() {
+        return switch (this.tier) {
+            case BASIC -> "ancient";
+            case ENCHANTED -> "artificial";
+            default -> this.tier.getSerializedName();
+        };
+    }
+    
     public int getManaCapacity() {
         switch (this.tier) {
         case BASIC:
@@ -64,5 +82,9 @@ public abstract class AbstractManaFontBlock extends BaseEntityBlock implements I
         default:
             return 0;
         }
+    }
+    
+    public static Collection<AbstractManaFontBlock> getAllManaFontsForTier(DeviceTier tier) {
+        return Collections.unmodifiableList(REGISTRY.getOrDefault(tier, List.of()));
     }
 }

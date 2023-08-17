@@ -8,6 +8,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingPilla
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingStairsBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -156,6 +158,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         
         // Generate ritual candle blocks
         RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
+        
+        // Generate mana font blocks
+        AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.BASIC).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_RAW.get())));
     }
 
     private ResourceLocation key(Block block) {
@@ -415,5 +420,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private void ritualCandleBlockWithItem(RitualCandleBlock block) {
         this.simpleBlockWithItem(block, this.models().getExistingFile(PrimalMagick.resource("block/ritual_candle")));
+    }
+    
+    private void manaFontBlockWithItem(AbstractManaFontBlock block, ResourceLocation baseTexture) {
+        this.simpleBlock(block, this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/template_mana_font")).texture("base", baseTexture));
+        this.itemModels().withExistingParent(this.name(block), PrimalMagick.resource("item/template_mana_font"));
     }
 }
