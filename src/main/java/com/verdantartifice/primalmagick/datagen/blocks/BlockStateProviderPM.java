@@ -163,6 +163,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.ENCHANTED).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.FORBIDDEN).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_SMOKED.get())));
         AbstractManaFontBlock.getAllManaFontsForTier(DeviceTier.HEAVENLY).forEach(block -> this.manaFontBlockWithItem(block, this.blockTexture(BlocksPM.MARBLE_HALLOWED.get())));
+        
+        // Generate device blocks
+        this.simpleBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get(), PrimalMagick.resource("block/arcane_workbench"));
+        this.horizontalBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), PrimalMagick.resource("block/wand_assembly_table"));
+        this.simpleBlockWithItem(BlocksPM.WOOD_TABLE.get(), PrimalMagick.resource("block/wood_table"));
     }
 
     private ResourceLocation key(Block block) {
@@ -177,6 +182,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(block, this.cubeAll(block));
     }
     
+    private void simpleBlockWithItem(Block block, ResourceLocation modelFile) {
+        this.simpleBlockWithItem(block, this.models().getExistingFile(modelFile));
+    }
+
     private void slabBlockWithItem(SlabBlock block, Block doubleSlabBlock) {
         this.slabBlockWithItem(block, doubleSlabBlock, this.blockTexture(doubleSlabBlock));
     }
@@ -421,11 +430,20 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void ritualCandleBlockWithItem(RitualCandleBlock block) {
-        this.simpleBlockWithItem(block, this.models().getExistingFile(PrimalMagick.resource("block/ritual_candle")));
+        this.simpleBlockWithItem(block, PrimalMagick.resource("block/ritual_candle"));
     }
     
     private void manaFontBlockWithItem(AbstractManaFontBlock block, ResourceLocation baseTexture) {
         this.simpleBlock(block, this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/template_mana_font")).texture("base", baseTexture));
         this.itemModels().withExistingParent(this.name(block), PrimalMagick.resource("item/template_mana_font"));
+    }
+    
+    private void horizontalBlockWithItem(Block block, ResourceLocation modelFile) {
+        this.horizontalBlockWithItem(block, this.models().getExistingFile(modelFile));
+    }
+    
+    private void horizontalBlockWithItem(Block block, ModelFile model) {
+        this.horizontalBlock(block, model);
+        this.simpleBlockItem(block, model);
     }
 }
