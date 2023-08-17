@@ -172,14 +172,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get(), PrimalMagick.resource("block/arcane_workbench"));
         this.horizontalBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), PrimalMagick.resource("block/wand_assembly_table"));
         this.simpleBlockWithItem(BlocksPM.WOOD_TABLE.get(), PrimalMagick.resource("block/wood_table"));
-        this.analysisTableBlockWithItem();
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get(), PrimalMagick.resource("block/analysis_table"));
         this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
                 .getExistingFile(PrimalMagick.resource("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
-        this.wandInscriptionTableBlockWithItem();
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), PrimalMagick.resource("block/wand_inscription_table"));
         this.spellcraftingAltarBlockWithItem();
         this.simpleBlockWithItem(BlocksPM.WAND_CHARGER.get(), PrimalMagick.resource("block/wand_charger"));
     }
@@ -461,9 +461,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, model);
     }
     
-    private void analysisTableBlockWithItem() {
-        Block block = BlocksPM.ANALYSIS_TABLE.get();
-        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/analysis_table"));
+    private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block, ResourceLocation modelFile) {
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.models().getExistingFile(modelFile));
+    }
+    
+    private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block, ModelFile model) {
         this.horizontalBlock(block, model);
         this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
             .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
@@ -483,15 +485,6 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block, Function<BlockState, ModelFile> modelFunc) {
         this.horizontalBlock(block, modelFunc);
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
-    }
-    
-    private void wandInscriptionTableBlockWithItem() {
-        Block block = BlocksPM.WAND_INSCRIPTION_TABLE.get();
-        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/wand_inscription_table"));
-        this.horizontalBlock(block, model);
-        this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
-            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
-            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
     }
     
     private void spellcraftingAltarBlockWithItem() {
