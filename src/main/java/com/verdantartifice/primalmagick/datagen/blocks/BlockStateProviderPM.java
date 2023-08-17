@@ -2,12 +2,14 @@ package com.verdantartifice.primalmagick.datagen.blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
@@ -31,6 +33,7 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
@@ -170,6 +173,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), PrimalMagick.resource("block/wand_assembly_table"));
         this.simpleBlockWithItem(BlocksPM.WOOD_TABLE.get(), PrimalMagick.resource("block/wood_table"));
         this.analysisTableBlockWithItem();
+        this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
+                .getExistingFile(PrimalMagick.resource("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
+        this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
+        this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
+        this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
+        this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -456,5 +465,20 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
             .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
+    }
+    
+    private void calcinatorBlockWithItem(AbstractCalcinatorBlock block) {
+        ResourceLocation texture = this.blockTexture(block);
+        this.calcinatorBlockWithItem(block, state -> this.models().orientableWithBottom(
+                this.name(block) + (state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : ""), 
+                texture.withSuffix("_side"), 
+                texture.withSuffix("_front" + (state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")), 
+                this.mcLoc("block/furnace_top"), 
+                texture.withSuffix("_top")));
+    }
+    
+    private void calcinatorBlockWithItem(AbstractCalcinatorBlock block, Function<BlockState, ModelFile> modelFunc) {
+        this.horizontalBlock(block, modelFunc);
+        this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
     }
 }
