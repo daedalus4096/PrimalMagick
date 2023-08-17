@@ -22,6 +22,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
@@ -134,6 +135,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.logBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
         this.woodBlockWithItem(BlocksPM.HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.HALLOWOOD_LOG.get()));
         this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
+        this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -384,5 +386,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ModelFile model = this.models().cubeColumn(this.name(block), texture, texture);
         this.axisBlock(block, model, model);
         this.simpleBlockItem(block, model);
+    }
+    
+    private void leavesBlockWithItem(LeavesBlock block) {
+        ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/leaves")).texture("all", this.blockTexture(block));
+        this.simpleBlockWithItem(block, model);
     }
 }
