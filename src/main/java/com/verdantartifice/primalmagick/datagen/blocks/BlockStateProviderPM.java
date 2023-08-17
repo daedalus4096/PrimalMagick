@@ -136,6 +136,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.woodBlockWithItem(BlocksPM.HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.HALLOWOOD_LOG.get()));
         this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
         this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
+        this.saplingBlockWithItem(BlocksPM.HALLOWOOD_SAPLING.get());
     }
 
     private ResourceLocation key(Block block) {
