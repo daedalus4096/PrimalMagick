@@ -9,6 +9,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
@@ -21,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -148,6 +150,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SKY.get());
         this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
         this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
+        
+        // TODO Generate skyglass blocks
+        // TODO Generate skyglass pane blocks
+        
+        // Generate ritual candle blocks
+        RitualCandleBlock.getAllCandles().forEach(this::ritualCandleBlockWithItem);
     }
 
     private ResourceLocation key(Block block) {
@@ -403,5 +411,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void leavesBlockWithItem(LeavesBlock block) {
         ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/leaves")).texture("all", this.blockTexture(block));
         this.simpleBlockWithItem(block, model);
+    }
+    
+    private void ritualCandleBlockWithItem(RitualCandleBlock block) {
+        this.simpleBlockWithItem(block, this.models().getExistingFile(PrimalMagick.resource("block/ritual_candle")));
     }
 }

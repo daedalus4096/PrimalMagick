@@ -1,6 +1,10 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
@@ -42,6 +46,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock {
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/ritual_candle"));
+    
+    protected static final List<RitualCandleBlock> REGISTRY = new ArrayList<>();
 
     protected final DyeColor color;
     
@@ -49,6 +55,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
         super(properties);
         this.color = colorIn;
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));
+        REGISTRY.add(this);
     }
     
     public DyeColor getColor() {
@@ -161,5 +168,9 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     @Override
     public float getSymmetryPenalty(Level world, BlockPos pos) {
         return 0.01F;
+    }
+    
+    public static Collection<RitualCandleBlock> getAllCandles() {
+        return Collections.unmodifiableList(REGISTRY);
     }
 }
