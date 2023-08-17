@@ -138,6 +138,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.leavesBlockWithItem(BlocksPM.HALLOWOOD_LEAVES.get());
         this.saplingBlockWithItem(BlocksPM.HALLOWOOD_SAPLING.get());
         this.simpleBlockWithItem(BlocksPM.HALLOWOOD_PLANKS.get());
+        this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
     }
 
     private ResourceLocation key(Block block) {
