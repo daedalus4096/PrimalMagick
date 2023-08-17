@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "primalmagick:block/hallowood_planks",
-        "top": "primalmagick:block/hallowood_planks",
-        "side": "primalmagick:block/hallowood_planks"
-    }
-}
