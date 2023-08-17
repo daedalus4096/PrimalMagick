@@ -132,6 +132,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         // Generate hallowood blocks
         this.logBlockWithItem(BlocksPM.HALLOWOOD_LOG.get());
         this.logBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
+        this.woodBlockWithItem(BlocksPM.HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.HALLOWOOD_LOG.get()));
+        this.woodBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_HALLOWOOD_LOG.get()));
     }
 
     private ResourceLocation key(Block block) {
@@ -375,6 +377,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(RotatedPillarBlock.AXIS, Axis.Y).modelForState().modelFile(model).addModel()
             .partialState().with(RotatedPillarBlock.AXIS, Axis.Z).modelForState().modelFile(model).rotationX(90).addModel()
             .partialState().with(RotatedPillarBlock.AXIS, Axis.X).modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
+        this.simpleBlockItem(block, model);
+    }
+    
+    private void woodBlockWithItem(RotatedPillarBlock block, ResourceLocation texture) {
+        ModelFile model = this.models().cubeColumn(this.name(block), texture, texture);
+        this.axisBlock(block, model, model);
         this.simpleBlockItem(block, model);
     }
 }

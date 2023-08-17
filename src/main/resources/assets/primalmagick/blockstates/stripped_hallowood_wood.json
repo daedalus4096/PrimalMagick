@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=y": { "model": "primalmagick:block/stripped_hallowood_wood" },
-        "axis=z": { "model": "primalmagick:block/stripped_hallowood_wood", "x": 90 },
-        "axis=x": { "model": "primalmagick:block/stripped_hallowood_wood", "x": 90, "y": 90 }
-    }
-}
