@@ -24,6 +24,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -168,6 +169,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get(), PrimalMagick.resource("block/arcane_workbench"));
         this.horizontalBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get(), PrimalMagick.resource("block/wand_assembly_table"));
         this.simpleBlockWithItem(BlocksPM.WOOD_TABLE.get(), PrimalMagick.resource("block/wood_table"));
+        this.analysisTableBlockWithItem();
     }
 
     private ResourceLocation key(Block block) {
@@ -445,5 +447,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void horizontalBlockWithItem(Block block, ModelFile model) {
         this.horizontalBlock(block, model);
         this.simpleBlockItem(block, model);
+    }
+    
+    private void analysisTableBlockWithItem() {
+        Block block = BlocksPM.ANALYSIS_TABLE.get();
+        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/analysis_table"));
+        this.horizontalBlock(block, model);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
+            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
     }
 }
