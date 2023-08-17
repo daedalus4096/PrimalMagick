@@ -179,6 +179,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
+        this.wandInscriptionTableBlockWithItem();
     }
 
     private ResourceLocation key(Block block) {
@@ -480,5 +481,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block, Function<BlockState, ModelFile> modelFunc) {
         this.horizontalBlock(block, modelFunc);
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
+    
+    private void wandInscriptionTableBlockWithItem() {
+        Block block = BlocksPM.WAND_INSCRIPTION_TABLE.get();
+        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/wand_inscription_table"));
+        this.horizontalBlock(block, model);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
+            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
     }
 }
