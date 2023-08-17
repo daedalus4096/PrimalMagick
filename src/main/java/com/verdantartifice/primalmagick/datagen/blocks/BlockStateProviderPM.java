@@ -115,6 +115,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
         this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()), TRANSLUCENT);
         this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get(), TRANSLUCENT);
+        
+        // Generate moonwood blocks
+        this.phasingLogBlockWithItem(BlocksPM.MOONWOOD_LOG.get(), TRANSLUCENT);
+        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), TRANSLUCENT);
+        this.phasingWoodBlockWithItem(BlocksPM.MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.MOONWOOD_LOG.get()), TRANSLUCENT);
+        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_MOONWOOD_LOG.get()), TRANSLUCENT);
+        this.phasingLeavesBlockWithItem(BlocksPM.MOONWOOD_LEAVES.get(), TRANSLUCENT);
+        this.saplingBlockWithItem(BlocksPM.MOONWOOD_SAPLING.get());
+        this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get(), TRANSLUCENT);
+        this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get(), TRANSLUCENT);
+        this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()), TRANSLUCENT);
+        this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get(), TRANSLUCENT);
     }
 
     private ResourceLocation key(Block block) {

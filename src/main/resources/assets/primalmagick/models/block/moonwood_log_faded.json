@@ -1,8 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "render_type": "translucent",
-    "textures": {
-        "end": "primalmagick:block/moonwood_log_top_faded",
-        "side": "primalmagick:block/moonwood_log_faded"
-    }
-}

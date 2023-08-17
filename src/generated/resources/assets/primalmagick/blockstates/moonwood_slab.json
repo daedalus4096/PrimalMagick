@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "phase=faded,type=bottom": {
+      "model": "primalmagick:block/moonwood_slab_faded"
+    },
+    "phase=faded,type=double": {
+      "model": "primalmagick:block/moonwood_planks_faded"
+    },
+    "phase=faded,type=top": {
+      "model": "primalmagick:block/moonwood_slab_top_faded"
+    },
+    "phase=full,type=bottom": {
+      "model": "primalmagick:block/moonwood_slab_full"
+    },
+    "phase=full,type=double": {
+      "model": "primalmagick:block/moonwood_planks_full"
+    },
+    "phase=full,type=top": {
+      "model": "primalmagick:block/moonwood_slab_top_full"
+    },
+    "phase=waning,type=bottom": {
+      "model": "primalmagick:block/moonwood_slab_waning"
+    },
+    "phase=waning,type=double": {
+      "model": "primalmagick:block/moonwood_planks_waning"
+    },
+    "phase=waning,type=top": {
+      "model": "primalmagick:block/moonwood_slab_top_waning"
+    },
+    "phase=waxing,type=bottom": {
+      "model": "primalmagick:block/moonwood_slab_waxing"
+    },
+    "phase=waxing,type=double": {
+      "model": "primalmagick:block/moonwood_planks_waxing"
+    },
+    "phase=waxing,type=top": {
+      "model": "primalmagick:block/moonwood_slab_top_waxing"
+    }
+  }
+}

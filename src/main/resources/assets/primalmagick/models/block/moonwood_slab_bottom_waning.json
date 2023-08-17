@@ -1,9 +1,0 @@
-{
-    "parent": "block/slab",
-    "render_type": "translucent",
-    "textures": {
-        "bottom": "primalmagick:block/moonwood_planks_waning",
-        "top": "primalmagick:block/moonwood_planks_waning",
-        "side": "primalmagick:block/moonwood_planks_waning"
-    }
-}
