@@ -180,6 +180,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
         this.wandInscriptionTableBlockWithItem();
+        this.spellcraftingAltarBlockWithItem();
     }
 
     private ResourceLocation key(Block block) {
@@ -490,5 +491,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.itemModels().getBuilder(this.key(block).toString()).parent(model).transforms()
             .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
+    }
+    
+    private void spellcraftingAltarBlockWithItem() {
+        Block block = BlocksPM.SPELLCRAFTING_ALTAR.get();
+        ModelFile model = this.models().getExistingFile(PrimalMagick.resource("block/spellcrafting_altar"));
+        this.horizontalBlock(block, model);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("builtin/entity")).transforms()
+            .transform(ItemDisplayContext.GUI).rotation(30, 225, 0).translation(0, 0, 0).scale(0.625F).end()
+            .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(0, 3F, 0).scale(0.25F).end()
+            .transform(ItemDisplayContext.FIXED).rotation(0, 0, 0).translation(0, 0, 0).scale(0.5F).end()
+            .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
+            .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
     }
 }
