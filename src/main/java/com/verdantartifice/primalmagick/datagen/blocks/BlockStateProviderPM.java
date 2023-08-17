@@ -181,6 +181,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
         this.wandInscriptionTableBlockWithItem();
         this.spellcraftingAltarBlockWithItem();
+        this.simpleBlockWithItem(BlocksPM.WAND_CHARGER.get(), PrimalMagick.resource("block/wand_charger"));
     }
 
     private ResourceLocation key(Block block) {
