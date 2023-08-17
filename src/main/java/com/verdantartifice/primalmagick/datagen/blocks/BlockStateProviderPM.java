@@ -131,6 +131,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         
         // Generate hallowood blocks
         this.logBlockWithItem(BlocksPM.HALLOWOOD_LOG.get());
+        this.logBlockWithItem(BlocksPM.STRIPPED_HALLOWOOD_LOG.get());
     }
 
     private ResourceLocation key(Block block) {
