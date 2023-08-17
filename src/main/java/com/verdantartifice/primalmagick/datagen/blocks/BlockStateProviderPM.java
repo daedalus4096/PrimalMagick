@@ -22,6 +22,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
@@ -127,6 +128,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get(), TRANSLUCENT);
         this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()), TRANSLUCENT);
         this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get(), TRANSLUCENT);
+        
+        // Generate hallowood blocks
+        this.logBlockWithItem(BlocksPM.HALLOWOOD_LOG.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -361,5 +365,15 @@ public class BlockStateProviderPM extends BlockStateProvider {
             return ConfiguredModel.builder().modelFile(models.get(type, phase)).build();
         });
         this.simpleBlockItem(block, models.get(PillarBlock.Type.BASE, TimePhase.FULL));
+    }
+    
+    private void logBlockWithItem(RotatedPillarBlock block) {
+        ResourceLocation texture = this.blockTexture(block);
+        ModelFile model = this.models().cubeColumn(this.name(block), texture, texture.withSuffix("_top"));
+        this.getVariantBuilder(block)
+            .partialState().with(RotatedPillarBlock.AXIS, Axis.Y).modelForState().modelFile(model).addModel()
+            .partialState().with(RotatedPillarBlock.AXIS, Axis.Z).modelForState().modelFile(model).rotationX(90).addModel()
+            .partialState().with(RotatedPillarBlock.AXIS, Axis.X).modelForState().modelFile(model).rotationX(90).rotationY(90).addModel();
+        this.simpleBlockItem(block, model);
     }
 }

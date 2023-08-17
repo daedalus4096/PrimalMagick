@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "primalmagick:block/hallowood_log_top",
+    "side": "primalmagick:block/hallowood_log"
+  }
+}
