@@ -182,6 +182,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get(), PrimalMagick.resource("block/wand_inscription_table"));
         this.spellcraftingAltarBlockWithItem();
         this.simpleBlockWithItem(BlocksPM.WAND_CHARGER.get(), PrimalMagick.resource("block/wand_charger"));
+        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get(), PrimalMagick.resource("block/research_table"));
     }
 
     private ResourceLocation key(Block block) {
