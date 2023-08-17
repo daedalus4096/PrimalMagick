@@ -141,6 +141,13 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
         this.pillarBlockWithItem(BlocksPM.HALLOWOOD_PILLAR.get());
+        
+        // Generate infused stone blocks
+        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
+        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SEA.get());
+        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SKY.get());
+        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
+        this.simpleBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
     }
 
     private ResourceLocation key(Block block) {
