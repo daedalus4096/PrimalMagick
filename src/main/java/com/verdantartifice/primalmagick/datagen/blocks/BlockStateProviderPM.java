@@ -206,6 +206,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RUNECARVING_TABLE.get());
+        this.horizontalFaceExistingBlockWithItem(BlocksPM.RUNIC_GRINDSTONE.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -516,7 +517,16 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 135, 0).translation(0, 2.5F, 0).scale(0.375F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 135, 0).translation(0, 0, 0).scale(0.40F).end();
     }
+
+    private void horizontalFaceExistingBlockWithItem(Block block) {
+        this.horizontalFaceBlockWithItem(block, this.models().getExistingFile(this.defaultModel(block)));
+    }
     
+    private void horizontalFaceBlockWithItem(Block block, ModelFile model) {
+        this.horizontalFaceBlock(block, model);
+        this.simpleBlockItem(block, model);
+    }
+
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block) {
         ResourceLocation texture = this.blockTexture(block);
         this.calcinatorBlockWithItem(block, state -> this.models().orientableWithBottom(
