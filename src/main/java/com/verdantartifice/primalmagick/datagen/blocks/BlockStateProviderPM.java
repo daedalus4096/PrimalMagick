@@ -221,6 +221,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalExistingBlockWithItem(BlocksPM.CELESTIAL_HARP.get());
         this.horizontalExistingBlockWithItem(BlocksPM.ENTROPY_SINK.get());
         this.simpleExistingBlockWithItem(BlocksPM.AUTO_CHARGER.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.ESSENCE_TRANSMUTER.get());
     }
 
     private ResourceLocation key(Block block) {
