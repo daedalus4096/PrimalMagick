@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.items;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
@@ -11,7 +12,9 @@ import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -65,10 +68,15 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.handheldItem(ItemsPM.PRIMALITE_AXE.get());
         this.handheldItem(ItemsPM.PRIMALITE_HOE.get());
         this.fishingRodItem(ItemsPM.PRIMALITE_FISHING_ROD.get());
+        this.shieldItem(ItemsPM.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
     }
     
     private ResourceLocation key(Item item) {
         return ForgeRegistries.ITEMS.getKey(item);
+    }
+    
+    private ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
     
     private ItemModelBuilder builder(Item item) {
@@ -89,6 +97,10 @@ public class ItemModelProviderPM extends ItemModelProvider {
     
     private ModelFile uncheckedModel(ResourceLocation modelLoc) {
         return new ModelFile.UncheckedModelFile(modelLoc);
+    }
+    
+    private ResourceLocation blockTexture(Block block) {
+        return this.key(block).withPrefix(ModelProvider.BLOCK_FOLDER + "/");
     }
     
     private ItemModelBuilder itemWithParent(Item item, Item parent) {
@@ -176,5 +188,36 @@ public class ItemModelProviderPM extends ItemModelProvider {
     private ItemModelBuilder fishingRodCastModel(FishingRodItem item) {
         ResourceLocation castKey = this.key(item).withSuffix("_cast");
         return this.builder(castKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", castKey.withPrefix(ModelProvider.ITEM_FOLDER + "/"));
+    }
+    
+    private ItemModelBuilder shieldItem(ShieldItem item, ResourceLocation particleTexture) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .texture("particle", particleTexture)
+                .override().predicate(new ResourceLocation("blocking"), 1).model(this.shieldBlockingModel(item, particleTexture)).end()
+                .transforms()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(0, 90, 0).translation(10, 6, -4).scale(1).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(0, 90, 0).translation(10, 6, 12).scale(1).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 180, 5).translation(-10, 2, -10).scale(1.25F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 180, 5).translation(10, 0, -10).scale(1.25F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
+                        .transform(ItemDisplayContext.FIXED).rotation(0, 180, 0).translation(-2, 4, -5).scale(0.5F).end()
+                        .transform(ItemDisplayContext.GROUND).rotation(0, 0, 0).translation(4, 4, 2).scale(0.25F).end()
+                        .end();
+    }
+    
+    private ItemModelBuilder shieldBlockingModel(ShieldItem item, ResourceLocation particleTexture) {
+        return this.builder(this.key(item).withSuffix("_blocking"))
+                .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+                .guiLight(GuiLight.FRONT)
+                .texture("particle", particleTexture)
+                .transforms()
+                        .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(45, 135, 0).translation(3.51F, 11, -2).scale(1).end()
+                        .transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(45, 135, 0).translation(13.51F, 3, 5).scale(1).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 180, -5).translation(-15, 5, -11).scale(1.25F).end()
+                        .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F).end()
+                        .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
+                        .end();
     }
 }
