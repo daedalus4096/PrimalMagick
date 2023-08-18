@@ -10,6 +10,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
+import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
@@ -200,6 +201,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.bloodletterBlockWithItem();
         this.horizontalBlockWithItem(BlocksPM.SOUL_ANVIL.get(), state -> this.models()
                 .getExistingFile(this.defaultModel(BlocksPM.SOUL_ANVIL.get()).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_BASIC.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
+        this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
     }
 
     private ResourceLocation key(Block block) {
@@ -599,5 +604,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(BloodletterBlock.FILLED, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
             .partialState().with(BloodletterBlock.FILLED, true).modelForState().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_full"))).addModel();
         this.simpleBlockItem(block, this.models().getExistingFile(modelLoc));
+    }
+    
+    private void runescribingAltarBlockWithItem(RunescribingAltarBlock block, ResourceLocation texture) {
+        ModelFile model = this.models().withExistingParent(this.name(block), PrimalMagick.resource("block/runescribing_altar"))
+                .texture("altar_bottom", texture)
+                .texture("altar_side", this.blockTexture(block).withSuffix("_side"));
+        this.simpleBlockWithItem(block, model);
     }
 }
