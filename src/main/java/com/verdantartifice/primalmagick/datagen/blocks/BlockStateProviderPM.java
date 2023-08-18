@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
@@ -212,6 +213,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.golemControllerBlockWithItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
         this.golemControllerBlockWithItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));
         this.golemControllerBlockWithItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
+        this.horizontalBlockWithItem(BlocksPM.SANGUINE_CRUCIBLE.get(), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.SANGUINE_CRUCIBLE.get()).withSuffix(state.getValue(SanguineCrucibleBlock.LIT) ? "_lit" : "")));
     }
 
     private ResourceLocation key(Block block) {
