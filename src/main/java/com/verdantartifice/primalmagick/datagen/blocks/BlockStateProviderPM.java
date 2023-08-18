@@ -207,6 +207,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RUNECARVING_TABLE.get());
         this.horizontalFaceExistingBlockWithItem(BlocksPM.RUNIC_GRINDSTONE.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.HONEY_EXTRACTOR.get());
     }
 
     private ResourceLocation key(Block block) {
