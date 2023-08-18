@@ -10,6 +10,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
+import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
@@ -215,6 +216,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.golemControllerBlockWithItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
         this.horizontalBlockWithItem(BlocksPM.SANGUINE_CRUCIBLE.get(), state -> this.models()
                 .getExistingFile(this.defaultModel(BlocksPM.SANGUINE_CRUCIBLE.get()).withSuffix(state.getValue(SanguineCrucibleBlock.LIT) ? "_lit" : "")));
+        this.horizontalBlockWithItem(BlocksPM.CONCOCTER.get(), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.CONCOCTER.get()).withSuffix(state.getValue(ConcocterBlock.HAS_BOTTLE) ? "_bottle" : "")));
     }
 
     private ResourceLocation key(Block block) {
