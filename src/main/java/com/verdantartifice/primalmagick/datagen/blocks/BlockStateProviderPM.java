@@ -241,6 +241,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.PRIMALITE_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.HEXIUM_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.HALLOWSTEEL_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
     }
 
     private ResourceLocation key(Block block) {
