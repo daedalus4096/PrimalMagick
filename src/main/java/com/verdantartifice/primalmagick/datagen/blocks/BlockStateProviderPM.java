@@ -238,6 +238,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         // TODO Generate salt trail block
         this.simpleCubeBlockWithItem(BlocksPM.ROCK_SALT_ORE.get());
         this.simpleCubeBlockWithItem(BlocksPM.QUARTZ_ORE.get());
+        this.simpleCubeBlockWithItem(BlocksPM.PRIMALITE_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.HEXIUM_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.HALLOWSTEEL_BLOCK.get());
     }
 
     private ResourceLocation key(Block block) {
