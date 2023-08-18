@@ -229,6 +229,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get());
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
     }
 
     private ResourceLocation key(Block block) {
