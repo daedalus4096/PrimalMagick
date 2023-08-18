@@ -38,6 +38,18 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.itemWithParent(ItemsPM.SALTED_BEETROOT_SOUP.get(), Items.BEETROOT_SOUP);
         this.itemWithParent(ItemsPM.SALTED_MUSHROOM_STEW.get(), Items.MUSHROOM_STEW);
         this.itemWithParent(ItemsPM.SALTED_RABBIT_STEW.get(), Items.RABBIT_STEW);
+        
+        // Generate mineral items
+        this.basicItem(ItemsPM.IRON_GRIT.get());
+        this.basicItem(ItemsPM.GOLD_GRIT.get());
+        this.basicItem(ItemsPM.COPPER_GRIT.get());
+        this.basicItem(ItemsPM.PRIMALITE_INGOT.get());
+        this.basicItem(ItemsPM.HEXIUM_INGOT.get());
+        this.basicItem(ItemsPM.HALLOWSTEEL_INGOT.get());
+        this.basicItem(ItemsPM.PRIMALITE_NUGGET.get());
+        this.basicItem(ItemsPM.HEXIUM_NUGGET.get());
+        this.basicItem(ItemsPM.HALLOWSTEEL_NUGGET.get());
+        this.basicItem(ItemsPM.QUARTZ_NUGGET.get());
     }
     
     private ResourceLocation key(Item item) {
