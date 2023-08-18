@@ -246,6 +246,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.SALT_BLOCK.get());
         this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
+        
+        // TODO Generate wand component blockstates
+        // TODO Genreate arcanometer blockstates
     }
 
     private ResourceLocation key(Block block) {
