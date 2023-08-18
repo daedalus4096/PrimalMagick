@@ -10,6 +10,7 @@ import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
@@ -34,6 +35,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
@@ -184,6 +186,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.spellcraftingAltarBlockWithItem();
         this.simpleExistingBlockWithItem(BlocksPM.WAND_CHARGER.get());
         this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get());
+        this.sunlampBlockWithItem(BlocksPM.SUNLAMP.get());
+        this.sunlampBlockWithItem(BlocksPM.SPIRIT_LANTERN.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -516,5 +520,21 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5F, 0).scale(0.375F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).translation(0, 0, 0).scale(0.40F).end()
             .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).translation(0, 0, 0).scale(0.40F).end();
+    }
+    
+    private void sunlampBlockWithItem(SunlampBlock block) {
+        ResourceLocation modelLoc = this.defaultModel(block);
+        DirectionProperty prop = SunlampBlock.ATTACHMENT;
+        this.getMultipartBuilder(block)
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_ground_base"))).addModel().condition(prop, Direction.DOWN).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_ground_chain_stub"))).addModel().condition(prop, Direction.DOWN).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_base"))).addModel().condition(prop, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST, Direction.UP).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_chain_stub"))).addModel().condition(prop, Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_chain_full"))).addModel().condition(prop, Direction.UP).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).addModel().condition(prop, Direction.NORTH).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).rotationY(90).addModel().condition(prop, Direction.EAST).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).rotationY(180).addModel().condition(prop, Direction.SOUTH).end()
+            .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).rotationY(270).addModel().condition(prop, Direction.WEST).end();
+        this.itemModels().basicItem(block.asItem());
     }
 }
