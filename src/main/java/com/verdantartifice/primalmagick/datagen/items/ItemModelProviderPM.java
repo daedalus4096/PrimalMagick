@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
@@ -59,6 +60,11 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.handheldItem(ItemsPM.PRIMALITE_SWORD.get());
         this.tridentItem(ItemsPM.PRIMALITE_TRIDENT.get());
         this.bowItem(ItemsPM.PRIMALITE_BOW.get());
+        this.handheldItem(ItemsPM.PRIMALITE_SHOVEL.get());
+        this.handheldItem(ItemsPM.PRIMALITE_PICKAXE.get());
+        this.handheldItem(ItemsPM.PRIMALITE_AXE.get());
+        this.handheldItem(ItemsPM.PRIMALITE_HOE.get());
+        this.fishingRodItem(ItemsPM.PRIMALITE_FISHING_ROD.get());
     }
     
     private ResourceLocation key(Item item) {
@@ -158,5 +164,17 @@ public class ItemModelProviderPM extends ItemModelProvider {
     private ItemModelBuilder bowPullingModel(BowItem item, int stage) {
         ResourceLocation stageKey = this.key(item).withSuffix("_pulling_" + stage);
         return this.builder(stageKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", stageKey.withPrefix(ModelProvider.ITEM_FOLDER + "/"));
+    }
+    
+    private ItemModelBuilder fishingRodItem(FishingRodItem item) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
+                .texture("layer0", this.defaultModelLoc(item))
+                .override().predicate(new ResourceLocation("cast"), 1).model(this.fishingRodCastModel(item)).end();
+    }
+    
+    private ItemModelBuilder fishingRodCastModel(FishingRodItem item) {
+        ResourceLocation castKey = this.key(item).withSuffix("_cast");
+        return this.builder(castKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", castKey.withPrefix(ModelProvider.ITEM_FOLDER + "/"));
     }
 }
