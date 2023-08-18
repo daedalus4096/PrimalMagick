@@ -235,6 +235,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
         this.emptyBlock(BlocksPM.GLOW_FIELD.get());         // Do not generate an item
         this.emptyBlock(BlocksPM.SOUL_GLOW_FIELD.get());    // Do not generate an item
+        // TODO Generate salt trail block
+        this.simpleCubeBlockWithItem(BlocksPM.ROCK_SALT_ORE.get());
+        this.simpleCubeBlockWithItem(BlocksPM.QUARTZ_ORE.get());
     }
 
     private ResourceLocation key(Block block) {
