@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
+import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
@@ -208,6 +209,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RUNECARVING_TABLE.get());
         this.horizontalFaceExistingBlockWithItem(BlocksPM.RUNIC_GRINDSTONE.get());
         this.horizontalExistingBlockWithItem(BlocksPM.HONEY_EXTRACTOR.get());
+        this.golemControllerBlockWithItem(BlocksPM.PRIMALITE_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
+        this.golemControllerBlockWithItem(BlocksPM.HEXIUM_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));
+        this.golemControllerBlockWithItem(BlocksPM.HALLOWSTEEL_GOLEM_CONTROLLER.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
     }
 
     private ResourceLocation key(Block block) {
@@ -623,5 +627,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
                 .texture("altar_bottom", texture)
                 .texture("altar_side", this.blockTexture(block).withSuffix("_side"));
         this.simpleBlockWithItem(block, model);
+    }
+    
+    private void golemControllerBlockWithItem(AbstractEnchantedGolemControllerBlock<?> block, ResourceLocation topTexture) {
+        ResourceLocation baseTexture = this.blockTexture(block);
+        ModelFile model = this.models().orientable(this.name(block), baseTexture.withSuffix("_side"), baseTexture.withSuffix("_front"), topTexture);
+        this.horizontalBlockWithItem(block, model);
     }
 }
