@@ -223,6 +223,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.AUTO_CHARGER.get());
         this.horizontalExistingBlockWithItem(BlocksPM.ESSENCE_TRANSMUTER.get());
         this.horizontalExistingBlockWithItem(BlocksPM.DISSOLUTION_CHAMBER.get());
+        this.directionalExistingBlockWithItem(BlocksPM.ZEPHYR_ENGINE.get());
+        this.directionalExistingBlockWithItem(BlocksPM.VOID_TURBINE.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -540,6 +542,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private void horizontalFaceBlockWithItem(Block block, ModelFile model) {
         this.horizontalFaceBlock(block, model);
+        this.simpleBlockItem(block, model);
+    }
+    
+    private void directionalExistingBlockWithItem(Block block) {
+        this.directionalExistingBlockWithItem(block, this.defaultModel(block));
+    }
+    
+    private void directionalExistingBlockWithItem(Block block, ResourceLocation modelFile) {
+        this.directionalBlockWithItem(block, this.models().getExistingFile(modelFile));
+    }
+    
+    private void directionalBlockWithItem(Block block, ModelFile model) {
+        this.directionalBlock(block, model);
         this.simpleBlockItem(block, model);
     }
 
