@@ -220,6 +220,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
                 .getExistingFile(this.defaultModel(BlocksPM.CONCOCTER.get()).withSuffix(state.getValue(ConcocterBlock.HAS_BOTTLE) ? "_bottle" : "")));
         this.horizontalExistingBlockWithItem(BlocksPM.CELESTIAL_HARP.get());
         this.horizontalExistingBlockWithItem(BlocksPM.ENTROPY_SINK.get());
+        this.simpleExistingBlockWithItem(BlocksPM.AUTO_CHARGER.get());
     }
 
     private ResourceLocation key(Block block) {
