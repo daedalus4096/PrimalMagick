@@ -69,6 +69,15 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.handheldItem(ItemsPM.PRIMALITE_HOE.get());
         this.fishingRodItem(ItemsPM.PRIMALITE_FISHING_ROD.get());
         this.shieldItem(ItemsPM.PRIMALITE_SHIELD.get(), this.blockTexture(BlocksPM.PRIMALITE_BLOCK.get()));
+        this.handheldItem(ItemsPM.HEXIUM_SWORD.get());
+        this.tridentItem(ItemsPM.HEXIUM_TRIDENT.get());
+        this.bowItem(ItemsPM.HEXIUM_BOW.get());
+        this.handheldItem(ItemsPM.HEXIUM_SHOVEL.get());
+        this.handheldItem(ItemsPM.HEXIUM_PICKAXE.get());
+        this.handheldItem(ItemsPM.HEXIUM_AXE.get());
+        this.handheldItem(ItemsPM.HEXIUM_HOE.get());
+        this.fishingRodItem(ItemsPM.HEXIUM_FISHING_ROD.get());
+        this.shieldItem(ItemsPM.HEXIUM_SHIELD.get(), this.blockTexture(BlocksPM.HEXIUM_BLOCK.get()));
     }
     
     private ResourceLocation key(Item item) {
