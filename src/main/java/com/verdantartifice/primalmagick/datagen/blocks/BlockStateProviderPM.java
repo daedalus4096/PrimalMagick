@@ -180,17 +180,17 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.ARCANE_WORKBENCH.get());
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_ASSEMBLY_TABLE.get());
         this.simpleExistingBlockWithItem(BlocksPM.WOOD_TABLE.get());
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.ANALYSIS_TABLE.get());
         this.calcinatorBlockWithItem(BlocksPM.ESSENCE_FURNACE.get(), state -> this.models()
                 .getExistingFile(PrimalMagick.resource("block/essence_furnace").withSuffix(state.getValue(AbstractCalcinatorBlock.LIT) ? "_on" : "")));
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_BASIC.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_ENCHANTED.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_FORBIDDEN.get());
         this.calcinatorBlockWithItem(BlocksPM.CALCINATOR_HEAVENLY.get());
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get());
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.WAND_INSCRIPTION_TABLE.get());
         this.spellcraftingAltarBlockWithItem();
         this.simpleExistingBlockWithItem(BlocksPM.WAND_CHARGER.get());
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get());
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get());
         this.sunlampBlockWithItem(BlocksPM.SUNLAMP.get());
         this.sunlampBlockWithItem(BlocksPM.SPIRIT_LANTERN.get());
         this.simpleExistingBlockWithItem(BlocksPM.RITUAL_ALTAR.get());
@@ -205,6 +205,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_ENCHANTED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
         this.runescribingAltarBlockWithItem(BlocksPM.RUNESCRIBING_ALTAR_HEAVENLY.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.RUNECARVING_TABLE.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -501,11 +502,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
     }
     
-    private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block) {
-        this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.defaultModel(block));
+    private void horizontalExistingBlockWithRightHandAdjustmentsAndItem(Block block) {
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(block, this.defaultModel(block));
     }
     
-    private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block, ResourceLocation modelFile) {
+    private void horizontalExistingBlockWithRightHandAdjustmentsAndItem(Block block, ResourceLocation modelFile) {
         this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.models().getExistingFile(modelFile));
     }
     
