@@ -222,6 +222,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalExistingBlockWithItem(BlocksPM.ENTROPY_SINK.get());
         this.simpleExistingBlockWithItem(BlocksPM.AUTO_CHARGER.get());
         this.horizontalExistingBlockWithItem(BlocksPM.ESSENCE_TRANSMUTER.get());
+        this.horizontalExistingBlockWithItem(BlocksPM.DISSOLUTION_CHAMBER.get());
     }
 
     private ResourceLocation key(Block block) {
