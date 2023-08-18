@@ -29,12 +29,14 @@ import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingPilla
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingStairsBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
@@ -243,10 +245,15 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.HALLOWSTEEL_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.SALT_BLOCK.get());
+        this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
     }
 
     private ResourceLocation key(Block block) {
         return ForgeRegistries.BLOCKS.getKey(block);
+    }
+    
+    private ResourceLocation key(Item item) {
+        return ForgeRegistries.ITEMS.getKey(item);
     }
 
     private String name(Block block) {
@@ -700,5 +707,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void essenceCaskBlockWithItem(EssenceCaskBlock block, Function<BlockState, ModelFile> modelFunc) {
         this.directionalBlockWithItem(block, modelFunc);
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
+    
+    private void crossBlockWithItem(Block block, ResourceLocation itemTexture) {
+        this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
+        this.itemModels().basicItem(itemTexture);
     }
 }
