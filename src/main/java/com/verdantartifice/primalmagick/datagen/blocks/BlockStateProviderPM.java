@@ -230,6 +230,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
+        
+        // Generate misc blocks
+        this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
+        this.emptyBlock(BlocksPM.GLOW_FIELD.get());         // Do not generate an item
+        this.emptyBlock(BlocksPM.SOUL_GLOW_FIELD.get());    // Do not generate an item
     }
 
     private ResourceLocation key(Block block) {
@@ -242,6 +247,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
     
     private ResourceLocation defaultModel(Block block) {
         return this.key(block).withPrefix(ModelProvider.BLOCK_FOLDER + "/");
+    }
+    
+    private void emptyBlock(Block block) {
+        this.simpleBlock(block, this.models().getExistingFile(PrimalMagick.resource("block/empty")));
     }
     
     private void simpleCubeBlockWithItem(Block block) {
