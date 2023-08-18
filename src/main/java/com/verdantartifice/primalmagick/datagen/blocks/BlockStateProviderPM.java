@@ -13,7 +13,10 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinato
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.IncenseBrazierBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualCandleBlock;
+import com.verdantartifice.primalmagick.common.blocks.rituals.SoulAnvilBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLeavesBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.AbstractPhasingLogBlock;
@@ -35,6 +38,7 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -188,6 +192,14 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalBlockWithRightHandAdjustmentsAndItem(BlocksPM.RESEARCH_TABLE.get());
         this.sunlampBlockWithItem(BlocksPM.SUNLAMP.get());
         this.sunlampBlockWithItem(BlocksPM.SPIRIT_LANTERN.get());
+        this.simpleExistingBlockWithItem(BlocksPM.RITUAL_ALTAR.get());
+        this.simpleExistingBlockWithItem(BlocksPM.OFFERING_PEDESTAL.get());
+        this.incenseBrazierBlockWithItem();
+        this.horizontalExistingBlockWithItem(BlocksPM.RITUAL_LECTERN.get());
+        this.ritualBellBlockWithItem();
+        this.bloodletterBlockWithItem();
+        this.horizontalBlockWithItem(BlocksPM.SOUL_ANVIL.get(), state -> this.models()
+                .getExistingFile(this.defaultModel(BlocksPM.SOUL_ANVIL.get()).withSuffix(state.getValue(SoulAnvilBlock.DIRTY) ? "_dirty" : "")));
     }
 
     private ResourceLocation key(Block block) {
@@ -479,6 +491,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, model);
     }
     
+    private void horizontalBlockWithItem(Block block, Function<BlockState, ModelFile> modelFunc) {
+        this.horizontalBlock(block, modelFunc);
+        this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
+    
     private void horizontalBlockWithRightHandAdjustmentsAndItem(Block block) {
         this.horizontalBlockWithRightHandAdjustmentsAndItem(block, this.defaultModel(block));
     }
@@ -536,5 +553,51 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).rotationY(180).addModel().condition(prop, Direction.SOUTH).end()
             .part().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_hanging_arm"))).rotationY(270).addModel().condition(prop, Direction.WEST).end();
         this.itemModels().basicItem(block.asItem());
+    }
+    
+    private void incenseBrazierBlockWithItem() {
+        Block block = BlocksPM.INCENSE_BRAZIER.get();
+        ResourceLocation modelLoc = this.defaultModel(block);
+        this.getVariantBuilder(block)
+            .partialState().with(IncenseBrazierBlock.LIT, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
+            .partialState().with(IncenseBrazierBlock.LIT, true).modelForState().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_lit"))).addModel();
+        this.simpleBlockItem(block, this.models().getExistingFile(modelLoc));
+    }
+    
+    private void ritualBellBlockWithItem() {
+        Block block = BlocksPM.RITUAL_BELL.get();
+        this.getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(this.getRitualBellModel(state))
+                .rotationY(this.getRitualBellRotationY(state))
+                .build());
+        this.itemModels().basicItem(block.asItem());
+    }
+
+    private ModelFile getRitualBellModel(BlockState state) {
+        String suffix = switch (state.getValue(BlockStateProperties.BELL_ATTACHMENT)) {
+            case FLOOR -> "_floor";
+            case CEILING -> "_ceiling";
+            case SINGLE_WALL -> "_wall";
+            case DOUBLE_WALL -> "_between_walls";
+            default -> throw new IllegalArgumentException("Unknown bell attachment type");
+        };
+        return this.models().getExistingFile(this.defaultModel(state.getBlock()).withSuffix(suffix));
+    }
+    
+    private int getRitualBellRotationY(BlockState state) {
+        int angleOffset = switch (state.getValue(BlockStateProperties.BELL_ATTACHMENT)) {
+            case FLOOR, CEILING -> 180;
+            case SINGLE_WALL, DOUBLE_WALL -> 90;
+        };
+        return ((int)state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + angleOffset) % 360;
+    }
+    
+    private void bloodletterBlockWithItem() {
+        Block block = BlocksPM.BLOODLETTER.get();
+        ResourceLocation modelLoc = this.defaultModel(block);
+        this.getVariantBuilder(block)
+            .partialState().with(BloodletterBlock.FILLED, false).modelForState().modelFile(this.models().getExistingFile(modelLoc)).addModel()
+            .partialState().with(BloodletterBlock.FILLED, true).modelForState().modelFile(this.models().getExistingFile(modelLoc.withSuffix("_full"))).addModel();
+        this.simpleBlockItem(block, this.models().getExistingFile(modelLoc));
     }
 }

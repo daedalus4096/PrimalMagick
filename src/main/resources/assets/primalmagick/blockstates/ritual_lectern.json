@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "primalmagick:block/ritual_lectern" },
-        "facing=south": { "model": "primalmagick:block/ritual_lectern", "y": 180 },
-        "facing=west":  { "model": "primalmagick:block/ritual_lectern", "y": 270 },
-        "facing=east":  { "model": "primalmagick:block/ritual_lectern", "y": 90 }
-    }
-}
