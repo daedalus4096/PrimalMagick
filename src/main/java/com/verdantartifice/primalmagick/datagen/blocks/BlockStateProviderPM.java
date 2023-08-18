@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.RunescribingAltarBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
@@ -225,6 +226,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalExistingBlockWithItem(BlocksPM.DISSOLUTION_CHAMBER.get());
         this.directionalExistingBlockWithItem(BlocksPM.ZEPHYR_ENGINE.get());
         this.directionalExistingBlockWithItem(BlocksPM.VOID_TURBINE.get());
+        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_ENCHANTED.get());
+        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
+        this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
     }
 
     private ResourceLocation key(Block block) {
@@ -557,6 +561,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.directionalBlock(block, model);
         this.simpleBlockItem(block, model);
     }
+    
+    private void directionalBlockWithItem(Block block, Function<BlockState, ModelFile> modelFunc) {
+        this.directionalBlock(block, modelFunc);
+        this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
 
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block) {
         ResourceLocation texture = this.blockTexture(block);
@@ -659,5 +668,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
         ResourceLocation baseTexture = this.blockTexture(block);
         ModelFile model = this.models().orientable(this.name(block), baseTexture.withSuffix("_side"), baseTexture.withSuffix("_front"), topTexture);
         this.horizontalBlockWithItem(block, model);
+    }
+    
+    private void essenceCaskBlockWithItem(EssenceCaskBlock block) {
+        ResourceLocation texture = this.blockTexture(block);
+        this.essenceCaskBlockWithItem(block, state -> this.models().cubeBottomTop(
+                this.name(block) + (state.getValue(EssenceCaskBlock.OPEN) ? "_open" : ""), 
+                texture.withSuffix("_side"), 
+                texture.withSuffix("_bottom"), 
+                texture.withSuffix("_top" + (state.getValue(EssenceCaskBlock.OPEN) ? "_open" : ""))));
+    }
+    
+    private void essenceCaskBlockWithItem(EssenceCaskBlock block, Function<BlockState, ModelFile> modelFunc) {
+        this.directionalBlockWithItem(block, modelFunc);
+        this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
     }
 }
