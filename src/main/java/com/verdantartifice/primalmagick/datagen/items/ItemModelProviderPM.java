@@ -205,6 +205,12 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // Generate sanguine core items
         this.itemWithParent(ItemsPM.SANGUINE_CORE_BLANK.get(), PrimalMagick.resource("item/template_sanguine_core"));
         SanguineCoreItem.getAllCores().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_sanguine_core")));
+        
+        // Generate concoction items
+        this.basicItem(ItemsPM.SKYGLASS_FLASK.get());
+        this.itemWithOverlay(ItemsPM.CONCOCTION.get());
+        this.basicItem(ItemsPM.BOMB_CASING.get());
+        this.itemWithOverlay(ItemsPM.ALCHEMICAL_BOMB.get());
     }
     
     private ResourceLocation key(Item item) {
@@ -427,5 +433,13 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ArmorMaterial armorMaterial) {
         Map<ArmorMaterials, String> map = trimMaterial.value().overrideArmorMaterials();
         return armorMaterial instanceof ArmorMaterials && map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
+    }
+    
+    private ItemModelBuilderPM itemWithOverlay(Item item) {
+        ResourceLocation texture = this.defaultModelLoc(item);
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", texture.withSuffix("_overlay"))
+                .texture("layer1", texture);
     }
 }
