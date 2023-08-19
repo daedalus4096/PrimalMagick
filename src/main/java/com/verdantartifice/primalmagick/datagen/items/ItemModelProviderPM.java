@@ -183,7 +183,14 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_FEET.get(), lookupProvider);
         
         // TODO Generate miscellaneous items
-        // TODO Generate knowledge items
+        
+        // Generate knowledge items
+        this.basicItem(ItemsPM.OBSERVATION_NOTES.get());
+        this.basicItem(ItemsPM.THEORY_NOTES.get());
+        this.basicItem(ItemsPM.MYSTICAL_RELIC.get());
+        this.basicItem(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get());
+        this.basicItem(ItemsPM.BLOOD_NOTES.get());
+        this.basicItem(ItemsPM.SHEEP_TOME.get());
         
         // Generate essence items
         EssenceItem.getAllEssences().forEach(this::basicItem);
