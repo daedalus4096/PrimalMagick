@@ -211,6 +211,13 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.itemWithOverlay(ItemsPM.CONCOCTION.get());
         this.basicItem(ItemsPM.BOMB_CASING.get());
         this.itemWithOverlay(ItemsPM.ALCHEMICAL_BOMB.get());
+        
+        // Generate caster items
+        this.basicItem(ItemsPM.SPELL_SCROLL_BLANK.get());
+        this.basicItem(ItemsPM.SPELL_SCROLL_FILLED.get());
+        // TODO Generate mundane wand
+        // TODO Generate modular wand
+        // TODO Generate modular staff
     }
     
     private ResourceLocation key(Item item) {
