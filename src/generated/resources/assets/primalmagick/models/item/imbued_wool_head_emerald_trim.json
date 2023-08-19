@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/imbued_wool_head",
+    "layer1": "primalmagick:trims/items/robe_head_trim_emerald"
+  }
+}

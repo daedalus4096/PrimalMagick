@@ -1,13 +1,28 @@
 package com.verdantartifice.primalmagick.datagen.items;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
@@ -15,9 +30,9 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -28,13 +43,41 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ItemModelProviderPM extends ItemModelProvider {
-    public ItemModelProviderPM(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, PrimalMagick.MODID, exFileHelper);
+public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
+    @SuppressWarnings("unchecked")
+    private static final List<ResourceKey<TrimMaterial>> SUPPORTED_TRIMS = ImmutableList.<ResourceKey<TrimMaterial>>builder().add(
+            TrimMaterials.AMETHYST, TrimMaterials.COPPER, TrimMaterials.DIAMOND, TrimMaterials.EMERALD, TrimMaterials.GOLD,
+            TrimMaterials.IRON, TrimMaterials.LAPIS, TrimMaterials.NETHERITE, TrimMaterials.QUARTZ, TrimMaterials.REDSTONE).build();
+    
+    private final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
+
+    public ItemModelProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper exFileHelper) {
+        super(output, PrimalMagick.MODID, ITEM_FOLDER, ItemModelBuilderPM::new, exFileHelper);
+        this.lookupProviderFuture = lookupProvider;
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput cache) {
+        return this.lookupProviderFuture.thenApply(p -> {
+            this.clear();
+            this.registerModels(p);
+            return p;
+        }).thenCompose(p -> {
+            return this.generateAll(cache);
+        });
+    }
+
+    @Override
+    public String getName() {
+        return "Item Models: " + this.modid;
     }
 
     @Override
     protected void registerModels() {
+        // Not used
+    }
+    
+    protected void registerModels(HolderLookup.Provider lookupProvider) {
         // Generate salted food items
         this.itemWithParent(ItemsPM.SALTED_BAKED_POTATO.get(), Items.BAKED_POTATO);
         this.itemWithParent(ItemsPM.SALTED_COOKED_BEEF.get(), Items.COOKED_BEEF);
@@ -100,6 +143,9 @@ public class ItemModelProviderPM extends ItemModelProvider {
         
         // Generate mana arrow items
         ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_mana_arrow")));
+        
+        // Generate armor items
+        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_HEAD.get(), lookupProvider);
     }
     
     private ResourceLocation key(Item item) {
@@ -110,11 +156,11 @@ public class ItemModelProviderPM extends ItemModelProvider {
         return ForgeRegistries.BLOCKS.getKey(block);
     }
     
-    private ItemModelBuilder builder(Item item) {
+    private ItemModelBuilderPM builder(Item item) {
         return this.builder(this.key(item));
     }
     
-    private ItemModelBuilder builder(ResourceLocation loc) {
+    private ItemModelBuilderPM builder(ResourceLocation loc) {
         return this.getBuilder(loc.toString());
     }
     
@@ -134,27 +180,37 @@ public class ItemModelProviderPM extends ItemModelProvider {
         return this.key(block).withPrefix(ModelProvider.BLOCK_FOLDER + "/");
     }
     
-    private ItemModelBuilder itemWithParent(Item item, Item parent) {
+    public ItemModelBuilderPM basicItem(Item item) {
+        return this.basicItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)));
+    }
+
+    public ItemModelBuilderPM basicItem(ResourceLocation item) {
+        return this.builder(item)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + item.getPath()));
+    }
+
+    private ItemModelBuilderPM itemWithParent(Item item, Item parent) {
         return this.itemWithParent(item, this.defaultModelLoc(parent));
     }
     
-    private ItemModelBuilder itemWithParent(Item item, ResourceLocation parent) {
+    private ItemModelBuilderPM itemWithParent(Item item, ResourceLocation parent) {
         return this.builder(item).parent(this.existingModel(parent));
     }
     
-    private ItemModelBuilder handheldItem(Item item) {
+    private ItemModelBuilderPM handheldItem(Item item) {
         return this.builder(item).parent(this.existingModel(new ResourceLocation("item/handheld"))).texture("layer0", this.defaultModelLoc(item));
     }
     
-    private ItemModelBuilder tridentItem(TridentItem item) {
-        ItemModelBuilder throwingModel = this.tridentThrowingModel(item);
-        ItemModelBuilder inHandModel = this.tridentInHandModel(item, throwingModel);
+    private ItemModelBuilderPM tridentItem(TridentItem item) {
+        ItemModelBuilderPM throwingModel = this.tridentThrowingModel(item);
+        ItemModelBuilderPM inHandModel = this.tridentInHandModel(item, throwingModel);
         return this.basicItem(item)
                 .override().predicate(new ResourceLocation("throwing"), 0).model(inHandModel).end()
                 .override().predicate(new ResourceLocation("throwing"), 1).model(throwingModel).end();
     }
     
-    private ItemModelBuilder tridentInHandModel(TridentItem item, ModelFile throwingModel) {
+    private ItemModelBuilderPM tridentInHandModel(TridentItem item, ModelFile throwingModel) {
         return this.builder(this.key(item).withSuffix("_in_hand"))
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
@@ -171,7 +227,7 @@ public class ItemModelProviderPM extends ItemModelProvider {
                         .end();
     }
     
-    private ItemModelBuilder tridentThrowingModel(TridentItem item) {
+    private ItemModelBuilderPM tridentThrowingModel(TridentItem item) {
         return this.builder(this.key(item).withSuffix("_throwing"))
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
@@ -187,7 +243,7 @@ public class ItemModelProviderPM extends ItemModelProvider {
                         .end();
     }
     
-    private ItemModelBuilder bowItem(BowItem item) {
+    private ItemModelBuilderPM bowItem(BowItem item) {
         ResourceLocation pulling = new ResourceLocation("pulling");
         ResourceLocation pull = new ResourceLocation("pull");
         return this.builder(item)
@@ -204,24 +260,24 @@ public class ItemModelProviderPM extends ItemModelProvider {
                         .end();
     }
     
-    private ItemModelBuilder bowPullingModel(BowItem item, int stage) {
+    private ItemModelBuilderPM bowPullingModel(BowItem item, int stage) {
         ResourceLocation stageKey = this.key(item).withSuffix("_pulling_" + stage);
         return this.builder(stageKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", stageKey.withPrefix(ModelProvider.ITEM_FOLDER + "/"));
     }
     
-    private ItemModelBuilder fishingRodItem(FishingRodItem item) {
+    private ItemModelBuilderPM fishingRodItem(FishingRodItem item) {
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
                 .texture("layer0", this.defaultModelLoc(item))
                 .override().predicate(new ResourceLocation("cast"), 1).model(this.fishingRodCastModel(item)).end();
     }
     
-    private ItemModelBuilder fishingRodCastModel(FishingRodItem item) {
+    private ItemModelBuilderPM fishingRodCastModel(FishingRodItem item) {
         ResourceLocation castKey = this.key(item).withSuffix("_cast");
         return this.builder(castKey).parent(this.uncheckedModel(this.defaultModelLoc(item))).texture("layer0", castKey.withPrefix(ModelProvider.ITEM_FOLDER + "/"));
     }
     
-    private ItemModelBuilder shieldItem(ShieldItem item, ResourceLocation particleTexture) {
+    private ItemModelBuilderPM shieldItem(ShieldItem item, ResourceLocation particleTexture) {
         return this.builder(item)
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
@@ -238,7 +294,7 @@ public class ItemModelProviderPM extends ItemModelProvider {
                         .end();
     }
     
-    private ItemModelBuilder shieldBlockingModel(ShieldItem item, ResourceLocation particleTexture) {
+    private ItemModelBuilderPM shieldBlockingModel(ShieldItem item, ResourceLocation particleTexture) {
         return this.builder(this.key(item).withSuffix("_blocking"))
                 .parent(new ModelFile.UncheckedModelFile("builtin/entity"))
                 .guiLight(GuiLight.FRONT)
@@ -250,5 +306,67 @@ public class ItemModelProviderPM extends ItemModelProvider {
                         .transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 180, -5).translation(5, 5, -11).scale(1.25F).end()
                         .transform(ItemDisplayContext.GUI).rotation(15, -25, -5).translation(2, 3, 0).scale(0.65F).end()
                         .end();
+    }
+    
+    private ItemModelBuilderPM armorItemWithTrims(ArmorItem item, HolderLookup.Provider lookupProvider) {
+        return this.armorItemWithTrims(item, SUPPORTED_TRIMS, lookupProvider);
+    }
+    
+    private ItemModelBuilderPM armorItemWithTrims(ArmorItem item, List<ResourceKey<TrimMaterial>> trimKeys, HolderLookup.Provider lookupProvider) {
+        return this.armorItemWithTrims(item, trimKeys.stream().map(key -> this.getTrimMaterial(key, lookupProvider)).toList());
+    }
+    
+    private ItemModelBuilderPM armorItemWithTrims(ArmorItem item, List<Holder<TrimMaterial>> trims) {
+        return this.armorItemWithTrims(item, this.getArmorTrimOverlay(item), trims);
+    }
+    
+    private ItemModelBuilderPM armorItemWithTrims(ArmorItem item, ResourceLocation trimOverlayLoc, List<Holder<TrimMaterial>> trims) {
+        ResourceLocation trimType = new ResourceLocation("trim_type");
+        ItemModelBuilderPM builder = this.basicItem(item);
+        
+        // It's very important that the overrides be written in ascending order of item model index, otherwise you may get the wrong texture for any given property value
+        List<Holder<TrimMaterial>> sortedTrims = trims.stream().sorted((m1, m2) -> Float.compare(m1.value().itemModelIndex(), m2.value().itemModelIndex())).toList();
+        
+        for (Holder<TrimMaterial> trim : sortedTrims) {
+            builder = builder.override().predicate(trimType, trim.value().itemModelIndex()).model(this.trimmedArmorModel(item, trimOverlayLoc, trim)).end();
+        }
+        return builder;
+    }
+    
+    private ItemModelBuilderPM trimmedArmorModel(ArmorItem item, ResourceLocation trimOverlayLoc, Holder<TrimMaterial> trim) {
+        String trimSuffix = this.getArmorTrimColorPaletteSuffix(trim, item.getMaterial());
+        return this.builder(this.key(item).withSuffix("_" + trimSuffix + "_trim"))
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", this.defaultModelLoc(item))
+                .palattedTexture("layer1", trimOverlayLoc, trimSuffix);
+    }
+    
+    private ResourceLocation getArmorTrimOverlay(ArmorItem item) {
+        if (item instanceof RobeArmorItem) {
+            return switch (item.getEquipmentSlot()) {
+                case HEAD -> PrimalMagick.resource("trims/items/robe_head_trim");
+                case CHEST -> PrimalMagick.resource("trims/items/robe_chest_trim");
+                case LEGS -> PrimalMagick.resource("trims/items/robe_legs_trim");
+                case FEET -> PrimalMagick.resource("trims/items/robe_feet_trim");
+                default -> throw new IllegalArgumentException("Invalid armor type for trim overlay detection");
+            };
+        } else {
+            return switch (item.getEquipmentSlot()) {
+                case HEAD -> new ResourceLocation("trims/items/helmet_trim");
+                case CHEST -> new ResourceLocation("trims/items/chestplate_trim");
+                case LEGS -> new ResourceLocation("trims/items/leggings_trim");
+                case FEET -> new ResourceLocation("trims/items/boots_trim");
+                default -> throw new IllegalArgumentException("Invalid armor type for trim overlay detection");
+            };
+        }
+    }
+    
+    private Holder<TrimMaterial> getTrimMaterial(ResourceKey<TrimMaterial> key, HolderLookup.Provider lookupProvider) {
+        return lookupProvider.lookupOrThrow(Registries.TRIM_MATERIAL).getOrThrow(key);
+    }
+    
+    private String getArmorTrimColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ArmorMaterial armorMaterial) {
+        Map<ArmorMaterials, String> map = trimMaterial.value().overrideArmorMaterials();
+        return armorMaterial instanceof ArmorMaterials && map.containsKey(armorMaterial) ? map.get(armorMaterial) : trimMaterial.value().assetName();
     }
 }
