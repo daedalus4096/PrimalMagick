@@ -182,7 +182,41 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_LEGS.get(), lookupProvider);
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_FEET.get(), lookupProvider);
         
-        // TODO Generate miscellaneous items
+        // Generate miscellaneous items
+        this.basicItem(ItemsPM.GRIMOIRE.get());
+        // TODO Generate arcanometer
+        this.basicItem(ItemsPM.MAGNIFYING_GLASS.get());
+        this.basicItem(ItemsPM.ALCHEMICAL_WASTE.get());
+        this.basicItem(ItemsPM.BLOODY_FLESH.get());
+        this.basicItem(ItemsPM.HALLOWED_ORB.get());
+        this.basicItem(ItemsPM.HEARTWOOD.get());
+        this.basicItem(ItemsPM.ENCHANTED_INK.get());
+        this.basicItem(ItemsPM.ENCHANTED_INK_AND_QUILL.get());
+        this.basicItem(ItemsPM.SEASCRIBE_PEN.get());
+        this.basicItem(ItemsPM.ROCK_SALT.get());
+        this.basicItem(ItemsPM.EARTHSHATTER_HAMMER.get());
+        this.basicItem(ItemsPM.MANA_PRISM.get());
+        this.basicItem(ItemsPM.TALLOW.get());
+        this.basicItem(ItemsPM.BEESWAX.get());
+        this.basicItem(ItemsPM.MANA_SALTS.get());
+        this.basicItem(ItemsPM.MANAFRUIT.get());
+        this.basicItem(ItemsPM.INCENSE_STICK.get());
+        this.basicItem(ItemsPM.SOUL_GEM.get());
+        this.basicItem(ItemsPM.SOUL_GEM_SLIVER.get());
+        this.basicItem(ItemsPM.SPELLCLOTH.get());
+        this.basicItem(ItemsPM.HEXWEAVE.get());
+        this.basicItem(ItemsPM.SAINTSWOOL.get());
+        this.basicItem(ItemsPM.MAGITECH_PARTS_BASIC.get());
+        this.basicItem(ItemsPM.MAGITECH_PARTS_ENCHANTED.get());
+        this.basicItem(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get());
+        this.basicItem(ItemsPM.MAGITECH_PARTS_HEAVENLY.get());
+        // TODO Generate flying carpet
+        this.basicItem(ItemsPM.DREAM_VISION_TALISMAN.get());
+        this.basicItem(ItemsPM.IGNYX.get());
+        this.basicItem(ItemsPM.DOWSING_ROD.get());
+        this.basicItem(ItemsPM.FOUR_LEAF_CLOVER.get());
+        this.basicItem(ItemsPM.RECALL_STONE.get());
+        this.basicItem(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get());
         
         // Generate knowledge items
         this.basicItem(ItemsPM.OBSERVATION_NOTES.get());
@@ -239,11 +273,11 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ResourceLocation key(Item item) {
-        return ForgeRegistries.ITEMS.getKey(item);
+        return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item));
     }
     
     private ResourceLocation key(Block block) {
-        return ForgeRegistries.BLOCKS.getKey(block);
+        return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(block));
     }
     
     private ItemModelBuilderPM builder(Item item) {
@@ -271,13 +305,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     public ItemModelBuilderPM basicItem(Item item) {
-        return this.basicItem(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(item)));
-    }
-
-    public ItemModelBuilderPM basicItem(ResourceLocation item) {
-        return this.builder(item)
+        ResourceLocation key = this.key(item);
+        return this.builder(key)
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
-                .texture("layer0", new ResourceLocation(item.getNamespace(), "item/" + item.getPath()));
+                .texture("layer0", new ResourceLocation(key.getNamespace(), "item/" + key.getPath()));
     }
 
     private ItemModelBuilderPM itemWithParent(Item item, Item parent) {
