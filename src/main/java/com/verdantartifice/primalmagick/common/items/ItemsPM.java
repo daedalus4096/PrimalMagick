@@ -505,7 +505,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> MAGITECH_PARTS_ENCHANTED = registerSupplier("magitech_parts_enchanted", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MAGITECH_PARTS_FORBIDDEN = registerSupplier("magitech_parts_forbidden", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MAGITECH_PARTS_HEAVENLY = registerSupplier("magitech_parts_heavenly", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> FLYING_CARPET = registerSupplier("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<FlyingCarpetItem> FLYING_CARPET = registerSupplier("flying_carpet", () -> new FlyingCarpetItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<DreamVisionTalismanItem> DREAM_VISION_TALISMAN = registerSupplier("dream_vision_talisman", DreamVisionTalismanItem::new);
     public static final RegistryObject<IgnyxItem> IGNYX = registerSupplier("ignyx", () -> new IgnyxItem(new Item.Properties()));
     public static final RegistryObject<DowsingRodItem> DOWSING_ROD = registerSupplier("dowsing_rod", () -> new DowsingRodItem(new Item.Properties().stacksTo(1).durability(63)));

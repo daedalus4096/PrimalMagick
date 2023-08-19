@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -31,6 +32,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -210,7 +212,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.basicItem(ItemsPM.MAGITECH_PARTS_ENCHANTED.get());
         this.basicItem(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get());
         this.basicItem(ItemsPM.MAGITECH_PARTS_HEAVENLY.get());
-        // TODO Generate flying carpet
+        this.dyeableItem(ItemsPM.FLYING_CARPET.get(), DyeColor.WHITE);
         this.basicItem(ItemsPM.DREAM_VISION_TALISMAN.get());
         this.basicItem(ItemsPM.IGNYX.get());
         this.basicItem(ItemsPM.DOWSING_ROD.get());
@@ -445,7 +447,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         ResourceLocation trimType = new ResourceLocation("trim_type");
         ItemModelBuilderPM builder = this.basicItem(item);
         
-        // It's very important that the overrides be written in ascending order of item model index, otherwise you may get the wrong texture for any given property value
+        // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
         List<Holder<TrimMaterial>> sortedTrims = trims.stream().sorted((m1, m2) -> Float.compare(m1.value().itemModelIndex(), m2.value().itemModelIndex())).toList();
         
         for (Holder<TrimMaterial> trim : sortedTrims) {
@@ -506,5 +508,25 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     private void pixieItem(PixieItem item) {
         this.itemWithParent(item, PrimalMagick.resource("item/template_pixie"));
         this.getBuilder(this.key(item).withPrefix("drained_").toString()).parent(this.existingModel(PrimalMagick.resource("item/template_drained_pixie")));
+    }
+    
+    private ItemModelBuilderPM dyeableItem(Item item, DyeColor defaultColor) {
+        ResourceLocation key = this.key(item);
+        ItemModelBuilderPM builder = this.builder(key)
+                .parent(new ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", new ResourceLocation(key.getNamespace(), "item/" + key.getPath() + "_" + defaultColor.getName()));
+        
+        // It's very important that the overrides be written in ascending order of value, otherwise you may get the wrong texture for any given property value
+        List<DyeColor> sortedColors = Stream.of(DyeColor.values()).sorted((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).toList();
+        for (DyeColor color : sortedColors) {
+            builder = builder.override().predicate(PrimalMagick.resource("color"), color.getId() / 16F).model(this.dyedItemModel(item, color)).end();
+        }
+        return builder;
+    }
+    
+    private ItemModelBuilderPM dyedItemModel(Item item, DyeColor color) {
+        return this.builder(this.key(item).withSuffix("_" + color.getName()))
+                .parent(this.existingModel(this.defaultModelLoc(item)))
+                .texture("layer0", this.defaultModelLoc(item).withSuffix("_" + color.getName()));
     }
 }
