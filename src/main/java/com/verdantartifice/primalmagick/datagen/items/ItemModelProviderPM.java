@@ -87,6 +87,15 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.handheldItem(ItemsPM.HALLOWSTEEL_HOE.get());
         this.fishingRodItem(ItemsPM.HALLOWSTEEL_FISHING_ROD.get());
         this.shieldItem(ItemsPM.HALLOWSTEEL_SHIELD.get(), this.blockTexture(BlocksPM.HALLOWSTEEL_BLOCK.get()));
+        this.handheldItem(ItemsPM.FORBIDDEN_SWORD.get());
+        this.tridentItem(ItemsPM.FORBIDDEN_TRIDENT.get());
+        this.bowItem(ItemsPM.FORBIDDEN_BOW.get());
+        this.handheldItem(ItemsPM.PRIMAL_SHOVEL.get());
+        this.handheldItem(ItemsPM.PRIMAL_PICKAXE.get());
+        this.handheldItem(ItemsPM.PRIMAL_AXE.get());
+        this.handheldItem(ItemsPM.PRIMAL_HOE.get());
+        this.fishingRodItem(ItemsPM.PRIMAL_FISHING_ROD.get());
+        // Do not generate an item model for the sacred shield
     }
     
     private ResourceLocation key(Item item) {
