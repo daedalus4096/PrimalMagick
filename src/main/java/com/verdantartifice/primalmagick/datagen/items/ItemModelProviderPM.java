@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
@@ -180,6 +181,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate essence items
         EssenceItem.getAllEssences().forEach(this::basicItem);
+        
+        // Generate rune items
+        this.basicItem(ItemsPM.RUNE_UNATTUNED.get());
+        RuneItem.getAllRunes().forEach(this::basicItem);
     }
     
     private ResourceLocation key(Item item) {
