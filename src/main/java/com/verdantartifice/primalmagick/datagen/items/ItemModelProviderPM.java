@@ -146,6 +146,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate armor items
         this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_FEET.get(), lookupProvider);
     }
     
     private ResourceLocation key(Item item) {
@@ -334,11 +337,11 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
     
     private ItemModelBuilderPM trimmedArmorModel(ArmorItem item, ResourceLocation trimOverlayLoc, Holder<TrimMaterial> trim) {
-        String trimSuffix = this.getArmorTrimColorPaletteSuffix(trim, item.getMaterial());
-        return this.builder(this.key(item).withSuffix("_" + trimSuffix + "_trim"))
+        String palatteSuffix = this.getArmorTrimColorPaletteSuffix(trim, item.getMaterial());
+        return this.builder(this.key(item).withSuffix("_" + palatteSuffix + "_trim"))
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", this.defaultModelLoc(item))
-                .palattedTexture("layer1", trimOverlayLoc, trimSuffix);
+                .palattedTexture("layer1", trimOverlayLoc, palatteSuffix);
     }
     
     private ResourceLocation getArmorTrimOverlay(ArmorItem item) {
