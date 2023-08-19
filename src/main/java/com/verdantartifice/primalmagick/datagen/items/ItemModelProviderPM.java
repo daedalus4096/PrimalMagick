@@ -35,6 +35,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
@@ -218,6 +219,12 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // TODO Generate mundane wand
         // TODO Generate modular wand
         // TODO Generate modular staff
+        
+        // Generate spawn items
+        this.spawnEggItem(ItemsPM.TREEFOLK_SPAWN_EGG.get());
+        this.spawnEggItem(ItemsPM.PRIMALITE_GOLEM_SPAWN_EGG.get());
+        this.spawnEggItem(ItemsPM.HEXIUM_GOLEM_SPAWN_EGG.get());
+        this.spawnEggItem(ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get());
     }
     
     private ResourceLocation key(Item item) {
@@ -448,5 +455,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", texture.withSuffix("_overlay"))
                 .texture("layer1", texture);
+    }
+    
+    private ItemModelBuilderPM spawnEggItem(SpawnEggItem item) {
+        return this.itemWithParent(item, new ResourceLocation("item/template_spawn_egg"));
     }
 }
