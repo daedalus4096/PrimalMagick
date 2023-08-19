@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/hallowsteel_head",
+    "layer1": "minecraft:trims/items/helmet_trim_gold"
+  }
+}

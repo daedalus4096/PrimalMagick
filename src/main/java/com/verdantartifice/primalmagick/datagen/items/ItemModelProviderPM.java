@@ -149,6 +149,30 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_CHEST.get(), lookupProvider);
         this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_LEGS.get(), lookupProvider);
         this.armorItemWithTrims(ItemsPM.IMBUED_WOOL_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SPELLCLOTH_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXWEAVE_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXWEAVE_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXWEAVE_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXWEAVE_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.SAINTSWOOL_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.PRIMALITE_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.PRIMALITE_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.PRIMALITE_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.PRIMALITE_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXIUM_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXIUM_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXIUM_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HEXIUM_FEET.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_HEAD.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_CHEST.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_LEGS.get(), lookupProvider);
+        this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_FEET.get(), lookupProvider);
     }
     
     private ResourceLocation key(Item item) {
