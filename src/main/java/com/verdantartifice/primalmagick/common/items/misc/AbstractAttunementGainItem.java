@@ -28,12 +28,12 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class AttunementGainItem extends Item {
+public abstract class AbstractAttunementGainItem extends Item {
     protected final Source source;
     protected final AttunementType attunementType;
     protected final int amount;
     
-    public AttunementGainItem(Source source, AttunementType type, int amount, Item.Properties properties) {
+    public AbstractAttunementGainItem(Source source, AttunementType type, int amount, Item.Properties properties) {
         super(properties);
         this.source = source;
         this.attunementType = type;

@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
-import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
@@ -23,7 +22,6 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagick.common.items.food.ManafruitItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
-import com.verdantartifice.primalmagick.common.items.misc.AttunementGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
 import com.verdantartifice.primalmagick.common.items.misc.DowsingRodItem;
@@ -33,6 +31,7 @@ import com.verdantartifice.primalmagick.common.items.misc.EnchantedInkAndQuillIt
 import com.verdantartifice.primalmagick.common.items.misc.ForbiddenSourceGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.GrimoireItem;
 import com.verdantartifice.primalmagick.common.items.misc.HallowedOrbItem;
+import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.IgnyxItem;
 import com.verdantartifice.primalmagick.common.items.misc.KnowledgeGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.ManaFontBlockItem;
@@ -632,15 +631,15 @@ public class ItemsPM {
     
     // Register humming artifact items
     public static final RegistryObject<Item> HUMMING_ARTIFACT_UNATTUNED = registerSupplier("humming_artifact_unattuned", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_EARTH = registerSupplier("humming_artifact_earth", () -> new AttunementGainItem(Source.EARTH, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SEA = registerSupplier("humming_artifact_sea", () -> new AttunementGainItem(Source.SEA, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SKY = registerSupplier("humming_artifact_sky", () -> new AttunementGainItem(Source.SKY, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_SUN = registerSupplier("humming_artifact_sun", () -> new AttunementGainItem(Source.SUN, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_MOON = registerSupplier("humming_artifact_moon", () -> new AttunementGainItem(Source.MOON, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_BLOOD = registerSupplier("humming_artifact_blood", () -> new AttunementGainItem(Source.BLOOD, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_INFERNAL = registerSupplier("humming_artifact_infernal", () -> new AttunementGainItem(Source.INFERNAL, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_VOID = registerSupplier("humming_artifact_void", () -> new AttunementGainItem(Source.VOID, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<AttunementGainItem> HUMMING_ARTIFACT_HALLOWED = registerSupplier("humming_artifact_hallowed", () -> new AttunementGainItem(Source.HALLOWED, AttunementType.PERMANENT, 1, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_EARTH = registerSupplier("humming_artifact_earth", () -> new HummingArtifactItem(Source.EARTH, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SEA = registerSupplier("humming_artifact_sea", () -> new HummingArtifactItem(Source.SEA, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SKY = registerSupplier("humming_artifact_sky", () -> new HummingArtifactItem(Source.SKY, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SUN = registerSupplier("humming_artifact_sun", () -> new HummingArtifactItem(Source.SUN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_MOON = registerSupplier("humming_artifact_moon", () -> new HummingArtifactItem(Source.MOON, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_BLOOD = registerSupplier("humming_artifact_blood", () -> new HummingArtifactItem(Source.BLOOD, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_INFERNAL = registerSupplier("humming_artifact_infernal", () -> new HummingArtifactItem(Source.INFERNAL, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_VOID = registerSupplier("humming_artifact_void", () -> new HummingArtifactItem(Source.VOID, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_HALLOWED = registerSupplier("humming_artifact_hallowed", () -> new HummingArtifactItem(Source.HALLOWED, new Item.Properties().rarity(Rarity.RARE)));
     
     // Register sanguine core items
     public static final RegistryObject<Item> SANGUINE_CORE_BLANK = registerSupplier("sanguine_core_blank", () -> new Item(new Item.Properties()));

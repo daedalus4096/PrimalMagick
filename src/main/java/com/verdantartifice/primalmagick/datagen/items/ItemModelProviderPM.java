@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
+import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
@@ -195,6 +196,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate attunement shackles items
         AttunementShacklesItem.getAllShackles().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_attunement_shackles")));
+        
+        // Generate humming artifact items
+        this.basicItem(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get());
+        HummingArtifactItem.getAllHummingArtifacts().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_humming_artifact")));
     }
     
     private ResourceLocation key(Item item) {
