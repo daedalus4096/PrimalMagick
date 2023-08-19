@@ -1,12 +1,13 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.world.item.Item;
@@ -18,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class EssenceItem extends Item {
-    protected static final Map<EssenceType, Map<Source, Item>> ESSENCES = new HashMap<>();
+    protected static final Table<EssenceType, Source, Item> ESSENCES = HashBasedTable.create();
     
     protected final EssenceType type;
     protected final Source source;
@@ -39,7 +40,7 @@ public class EssenceItem extends Item {
     }
     
     protected static void register(@Nonnull EssenceType type, @Nonnull Source source, @Nonnull Item item) {
-        ESSENCES.computeIfAbsent(type, k -> new HashMap<>()).put(source, item);
+        ESSENCES.put(type, source, item);
     }
     
     @Nonnull
@@ -49,7 +50,11 @@ public class EssenceItem extends Item {
     
     @Nonnull
     public static ItemStack getEssence(@Nullable EssenceType type, @Nullable Source source, int count) {
-        Item item = ESSENCES.getOrDefault(type, Collections.emptyMap()).get(source);
+        Item item = ESSENCES.get(type, source);
         return (item == null) ? ItemStack.EMPTY : new ItemStack(item, count);
+    }
+    
+    public static Collection<Item> getAllEssences() {
+        return Collections.unmodifiableCollection(ESSENCES.values());
     }
 }

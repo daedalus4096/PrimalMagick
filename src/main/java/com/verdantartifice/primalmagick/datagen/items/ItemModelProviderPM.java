@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
@@ -173,6 +174,12 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_CHEST.get(), lookupProvider);
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_LEGS.get(), lookupProvider);
         this.armorItemWithTrims(ItemsPM.HALLOWSTEEL_FEET.get(), lookupProvider);
+        
+        // TODO Generate miscellaneous items
+        // TODO Generate knowledge items
+        
+        // Generate essence items
+        EssenceItem.getAllEssences().forEach(this::basicItem);
     }
     
     private ResourceLocation key(Item item) {
