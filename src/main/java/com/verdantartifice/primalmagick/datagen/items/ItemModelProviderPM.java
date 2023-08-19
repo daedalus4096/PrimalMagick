@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
+import com.verdantartifice.primalmagick.common.items.misc.PixieItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 
@@ -225,6 +226,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.spawnEggItem(ItemsPM.PRIMALITE_GOLEM_SPAWN_EGG.get());
         this.spawnEggItem(ItemsPM.HEXIUM_GOLEM_SPAWN_EGG.get());
         this.spawnEggItem(ItemsPM.HALLOWSTEEL_GOLEM_SPAWN_EGG.get());
+        
+        // Generate pixie and drained pixie items
+        PixieItem.getAllPixies().forEach(this::pixieItem);
     }
     
     private ResourceLocation key(Item item) {
@@ -459,5 +463,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     
     private ItemModelBuilderPM spawnEggItem(SpawnEggItem item) {
         return this.itemWithParent(item, new ResourceLocation("item/template_spawn_egg"));
+    }
+    
+    private void pixieItem(PixieItem item) {
+        this.itemWithParent(item, PrimalMagick.resource("item/template_pixie"));
+        this.getBuilder(this.key(item).withPrefix("drained_").toString()).parent(this.existingModel(PrimalMagick.resource("item/template_drained_pixie")));
     }
 }

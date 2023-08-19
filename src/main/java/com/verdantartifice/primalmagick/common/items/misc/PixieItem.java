@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -29,8 +33,11 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
  * @author Daedalus4096
  */
 public class PixieItem extends ForgeSpawnEggItem {
+    protected static final List<PixieItem> PIXIES = new ArrayList<>();
+    
     public PixieItem(Supplier<EntityType<? extends AbstractPixieEntity>> typeSupplier, Source source, Item.Properties properties) {
         super(typeSupplier, 0xFFFFFF, source.getColor(), properties);
+        PIXIES.add(this);
     }
 
     @Override
@@ -60,5 +67,9 @@ public class PixieItem extends ForgeSpawnEggItem {
         } else {
             return InteractionResult.SUCCESS;
         }
+    }
+    
+    public static Collection<PixieItem> getAllPixies() {
+        return Collections.unmodifiableCollection(PIXIES);
     }
 }
