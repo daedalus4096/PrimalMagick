@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -17,6 +20,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SanguineCoreItem extends Item {
+    protected static final List<SanguineCoreItem> CORES = new ArrayList<>();
+    
     protected final Supplier<EntityType<?>> typeSupplier;
     protected final int soulsPerSpawn;
 
@@ -24,6 +29,7 @@ public class SanguineCoreItem extends Item {
         super(properties);
         this.typeSupplier = typeSupplier;
         this.soulsPerSpawn = soulsPerSpawn;
+        CORES.add(this);
     }
 
     @Override
@@ -44,5 +50,9 @@ public class SanguineCoreItem extends Item {
     
     public int getSoulsPerSpawn() {
         return this.soulsPerSpawn;
+    }
+    
+    public static Collection<SanguineCoreItem> getAllCores() {
+        return Collections.unmodifiableCollection(CORES);
     }
 }

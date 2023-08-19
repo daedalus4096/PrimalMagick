@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.core.Holder;
@@ -200,6 +201,10 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         // Generate humming artifact items
         this.basicItem(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get());
         HummingArtifactItem.getAllHummingArtifacts().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_humming_artifact")));
+        
+        // Generate sanguine core items
+        this.itemWithParent(ItemsPM.SANGUINE_CORE_BLANK.get(), PrimalMagick.resource("item/template_sanguine_core"));
+        SanguineCoreItem.getAllCores().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_sanguine_core")));
     }
     
     private ResourceLocation key(Item item) {
