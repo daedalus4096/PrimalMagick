@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.datagen.items;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 
 import net.minecraft.client.renderer.block.model.BlockModel.GuiLight;
 import net.minecraft.data.PackOutput;
@@ -96,6 +97,9 @@ public class ItemModelProviderPM extends ItemModelProvider {
         this.handheldItem(ItemsPM.PRIMAL_HOE.get());
         this.fishingRodItem(ItemsPM.PRIMAL_FISHING_ROD.get());
         // Do not generate an item model for the sacred shield
+        
+        // Generate mana arrow items
+        ManaArrowItem.getManaArrows().forEach(item -> this.itemWithParent(item, PrimalMagick.resource("item/template_mana_arrow")));
     }
     
     private ResourceLocation key(Item item) {

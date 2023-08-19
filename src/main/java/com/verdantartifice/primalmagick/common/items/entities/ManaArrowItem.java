@@ -1,9 +1,10 @@
 package com.verdantartifice.primalmagick.common.items.entities;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.common.collect.Iterables;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ManaArrowEntity;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -41,7 +42,7 @@ public class ManaArrowItem extends ArrowItem {
         return tintIndex == 0 ? this.source.getColor() : 0xFFFFFF;
     }
     
-    public static Iterable<ManaArrowItem> getManaArrows() {
-        return Iterables.unmodifiableIterable(SOURCE_MAPPING.values());
+    public static Collection<ManaArrowItem> getManaArrows() {
+        return Collections.unmodifiableCollection(SOURCE_MAPPING.values());
     }
 }
