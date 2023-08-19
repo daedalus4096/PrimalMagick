@@ -1,9 +1,13 @@
 package com.verdantartifice.primalmagick.common.items.food;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.Iterables;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -12,6 +16,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -24,17 +29,17 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AmbrosiaItem extends Item {
-    public static final List<AmbrosiaItem> AMBROSIAS = new ArrayList<>();
+    protected static final List<AmbrosiaItem> AMBROSIAS = new ArrayList<>();
     protected static final int BONUS = 2;
     protected static final int PENALTY = -1;
     
     protected final Source source;
-    protected final int limit;
+    protected final AmbrosiaItem.Type ambrosiaType;
     
-    public AmbrosiaItem(Source source, int limit, Item.Properties properties) {
+    public AmbrosiaItem(Source source, AmbrosiaItem.Type ambrosiaType, Item.Properties properties) {
         super(properties);
         this.source = source;
-        this.limit = limit;
+        this.ambrosiaType = ambrosiaType;
         AMBROSIAS.add(this);
     }
 
@@ -45,7 +50,7 @@ public class AmbrosiaItem extends Item {
 
             // Only modify attunements if the player has started mod progression
             if (ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
-                int limit = Math.min(this.limit, AttunementType.INDUCED.getMaximum());
+                int limit = Math.min(this.ambrosiaType.getLimit(), AttunementType.INDUCED.getMaximum());
                 int current = AttunementManager.getAttunement(player, this.source, AttunementType.INDUCED);
                 int toIncrement = Math.min(BONUS, limit - current);
                 if (toIncrement > 0) {
@@ -71,7 +76,45 @@ public class AmbrosiaItem extends Item {
         return tintIndex == 0 ? 0xFFFFFF : this.source.getColor();
     }
     
-    public static Iterable<AmbrosiaItem> getAmbrosias() {
-        return Iterables.unmodifiableIterable(AMBROSIAS);
+    public static Collection<AmbrosiaItem> getAllAmbrosias() {
+        return Collections.unmodifiableCollection(AMBROSIAS);
+    }
+    
+    public static Collection<AmbrosiaItem> getAllAmbrosiasOfType(AmbrosiaItem.Type ambrosiaType) {
+        return AMBROSIAS.stream().filter(item -> item.ambrosiaType.equals(ambrosiaType)).toList();
+    }
+    
+    public static enum Type implements StringRepresentable {
+        BASIC("basic", 10),
+        GREATER("greater", 30),
+        SUPREME("supreme", 50);
+        
+        private final String name;
+        private final int limit;
+        
+        private Type(String name, int limit) {
+            this.name = name;
+            this.limit = limit;
+        }
+
+        @Override
+        @Nonnull
+        public String getSerializedName() {
+            return this.name;
+        }
+        
+        public int getLimit() {
+            return this.limit;
+        }
+        
+        @Nullable
+        public static Type fromName(@Nullable String name) {
+            for (Type ambrosiaType : values()) {
+                if (ambrosiaType.getSerializedName().equals(name)) {
+                    return ambrosiaType;
+                }
+            }
+            return null;
+        }
     }
 }
