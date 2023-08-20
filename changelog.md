@@ -10,6 +10,7 @@ v4.0.2
 * Upgraded the Dowsing Rod to mark expected symmetry location if no matching block is found
 * Fixed symmetry calculation bug with Offering Pedestals
 * Performed miscellaneous refactoring and code cleanup
+* Converted most hand-written blockstate and model files to code-generated assets
 
 v4.0.1
 ------
