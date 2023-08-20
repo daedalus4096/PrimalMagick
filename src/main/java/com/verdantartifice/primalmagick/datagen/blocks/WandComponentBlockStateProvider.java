@@ -3,10 +3,11 @@ package com.verdantartifice.primalmagick.datagen.blocks;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
-import com.verdantartifice.primalmagick.common.wands.WandCore;
+import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
@@ -39,12 +40,16 @@ public class WandComponentBlockStateProvider extends AbstractSpecialBlockStatePr
     }
     
     private void wandCoreWithItem(WandCoreItem coreItem) {
-        WandCore core = coreItem.getWandCore();
-        ResourceLocation key = PrimalMagick.resource(core.getTag() + "_wand_core");
+        this.componentWithItem(coreItem, coreItem.getWandCore(), "wand_core");
+    }
+    
+    private void componentWithItem(Item item, IWandComponent component, String componentSuffix) {
+        ResourceLocation modelParent = PrimalMagick.resource("item/" + componentSuffix);
+        ResourceLocation key = PrimalMagick.resource(component.getTag() + "_" + componentSuffix);
         String name = key.getPath();
         ResourceLocation modelLoc = this.modelLoc(key);
-        ModelFile model = this.models().withExistingParent(name, PrimalMagick.resource("item/wand_core")).texture("core", modelLoc);
+        ModelFile model = this.models().withExistingParent(name, modelParent).texture("core", modelLoc);
         this.getSpecialBuilder(key).setModels(new ConfiguredModel(model));
-        this.itemModels().basicItem(coreItem);
+        this.itemModels().basicItem(item);
     }
 }
