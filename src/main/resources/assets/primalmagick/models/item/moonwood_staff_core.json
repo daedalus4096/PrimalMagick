@@ -1,6 +1,0 @@
-{
-    "parent": "primalmagick:item/staff_core",
-    "textures": {
-        "core": "primalmagick:item/moonwood_wand_core"
-    }
-}

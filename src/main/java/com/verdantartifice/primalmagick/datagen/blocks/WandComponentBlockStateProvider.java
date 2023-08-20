@@ -35,10 +35,10 @@ public class WandComponentBlockStateProvider extends AbstractSpecialBlockStatePr
     @Override
     protected void registerStatesAndModels() {
         // Generate wand component blockstates and items
-        this.wandCoreWithItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get());
-        this.staffCoreWithItem(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get());
-        this.wandCapWithItem(ItemsPM.IRON_WAND_CAP_ITEM.get());
-        this.wandGemWithItem(ItemsPM.CREATIVE_WAND_GEM_ITEM.get());
+        WandCoreItem.getAllCores().forEach(this::wandCoreWithItem);
+        StaffCoreItem.getAllCores().forEach(this::staffCoreWithItem);
+        WandCapItem.getAllCaps().forEach(this::wandCapWithItem);
+        WandGemItem.getAllGems().forEach(this::wandGemWithItem);
     }
     
     private ResourceLocation itemTextureLoc(ResourceLocation key) {

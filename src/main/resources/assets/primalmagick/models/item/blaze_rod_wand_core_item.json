@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagick:item/blaze_rod_wand_core_item"
-    }
-}
