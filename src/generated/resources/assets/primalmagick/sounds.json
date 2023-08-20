@@ -1,0 +1,125 @@
+{
+  "angels": {
+    "sounds": [
+      "primalmagick:angels"
+    ]
+  },
+  "blood": {
+    "sounds": [
+      "primalmagick:blood"
+    ]
+  },
+  "clank": {
+    "sounds": [
+      "primalmagick:clank1",
+      "primalmagick:clank2",
+      "primalmagick:clank3"
+    ]
+  },
+  "coins": {
+    "sounds": [
+      "primalmagick:coins1",
+      "primalmagick:coins2",
+      "primalmagick:coins3"
+    ]
+  },
+  "egg_crack": {
+    "sounds": [
+      "primalmagick:egg_crack"
+    ]
+  },
+  "electric": {
+    "sounds": [
+      "primalmagick:electric"
+    ]
+  },
+  "harp": {
+    "sounds": [
+      "primalmagick:harp"
+    ]
+  },
+  "heal": {
+    "sounds": [
+      "primalmagick:heal"
+    ]
+  },
+  "ice": {
+    "sounds": [
+      "primalmagick:ice1",
+      "primalmagick:ice2",
+      "primalmagick:ice3"
+    ]
+  },
+  "moonbeam": {
+    "sounds": [
+      "primalmagick:moonbeam"
+    ]
+  },
+  "page": {
+    "sounds": [
+      "primalmagick:page"
+    ]
+  },
+  "poof": {
+    "sounds": [
+      "primalmagick:poof"
+    ]
+  },
+  "ritual": {
+    "sounds": [
+      "primalmagick:ritual"
+    ]
+  },
+  "rockslide": {
+    "sounds": [
+      "primalmagick:rockslide1",
+      "primalmagick:rockslide2",
+      "primalmagick:rockslide3"
+    ]
+  },
+  "scan": {
+    "sounds": [
+      "primalmagick:scan"
+    ]
+  },
+  "shimmer": {
+    "sounds": [
+      "primalmagick:shimmer"
+    ]
+  },
+  "sunbeam": {
+    "sounds": [
+      "primalmagick:sunbeam1",
+      "primalmagick:sunbeam2",
+      "primalmagick:sunbeam3"
+    ]
+  },
+  "treefolk_death": {
+    "sounds": [
+      "primalmagick:treefolk_death1",
+      "primalmagick:treefolk_death2"
+    ]
+  },
+  "treefolk_hurt": {
+    "sounds": [
+      "primalmagick:treefolk_hurt1",
+      "primalmagick:treefolk_hurt2",
+      "primalmagick:treefolk_hurt3"
+    ]
+  },
+  "whispers": {
+    "sounds": [
+      "primalmagick:whispers"
+    ]
+  },
+  "wingflap": {
+    "sounds": [
+      "primalmagick:wingflap"
+    ]
+  },
+  "writing": {
+    "sounds": [
+      "primalmagick:writing"
+    ]
+  }
+}
