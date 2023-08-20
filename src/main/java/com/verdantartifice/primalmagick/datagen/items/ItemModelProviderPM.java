@@ -78,6 +78,18 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     }
 
     @Override
+    public void clear() {
+        // Expose publicly is all
+        super.clear();
+    }
+
+    @Override
+    public CompletableFuture<?> generateAll(CachedOutput cache) {
+        // Expose publicly is all
+        return super.generateAll(cache);
+    }
+
+    @Override
     public String getName() {
         return "Item Models: " + this.modid;
     }

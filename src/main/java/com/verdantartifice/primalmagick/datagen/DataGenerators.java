@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
+import com.verdantartifice.primalmagick.datagen.blocks.WandComponentBlockStateProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
@@ -42,6 +43,7 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         generator.addProvider(event.includeClient(), new SpriteSourceProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new BlockStateProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new WandComponentBlockStateProvider(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
