@@ -1,0 +1,7 @@
+{
+  "parent": "primalmagick:block/runescribing_altar",
+  "textures": {
+    "altar_bottom": "primalmagick:block/marble_enchanted",
+    "altar_side": "primalmagick:block/runescribing_altar_enchanted_side"
+  }
+}

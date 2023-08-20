@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "primalmagick:block/sunwood_planks_waning",
+    "side": "primalmagick:block/sunwood_planks_waning",
+    "top": "primalmagick:block/sunwood_planks_waning"
+  }
+}

@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,5 +72,9 @@ public class RuneItem extends Item {
     public static ItemStack getRune(@Nullable Rune rune, int count) {
         Item item = RUNES.get(rune);
         return (item == null) ? ItemStack.EMPTY : new ItemStack(item, count);
+    }
+    
+    public static Collection<Item> getAllRunes() {
+        return Collections.unmodifiableCollection(RUNES.values());
     }
 }

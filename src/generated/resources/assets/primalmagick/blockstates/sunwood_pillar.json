@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "phase=faded,type=base": {
+      "model": "primalmagick:block/sunwood_pillar_faded"
+    },
+    "phase=faded,type=bottom": {
+      "model": "primalmagick:block/sunwood_pillar_bottom_faded"
+    },
+    "phase=faded,type=top": {
+      "model": "primalmagick:block/sunwood_pillar_top_faded"
+    },
+    "phase=full,type=base": {
+      "model": "primalmagick:block/sunwood_pillar_full"
+    },
+    "phase=full,type=bottom": {
+      "model": "primalmagick:block/sunwood_pillar_bottom_full"
+    },
+    "phase=full,type=top": {
+      "model": "primalmagick:block/sunwood_pillar_top_full"
+    },
+    "phase=waning,type=base": {
+      "model": "primalmagick:block/sunwood_pillar_waning"
+    },
+    "phase=waning,type=bottom": {
+      "model": "primalmagick:block/sunwood_pillar_bottom_waning"
+    },
+    "phase=waning,type=top": {
+      "model": "primalmagick:block/sunwood_pillar_top_waning"
+    },
+    "phase=waxing,type=base": {
+      "model": "primalmagick:block/sunwood_pillar_waxing"
+    },
+    "phase=waxing,type=bottom": {
+      "model": "primalmagick:block/sunwood_pillar_bottom_waxing"
+    },
+    "phase=waxing,type=top": {
+      "model": "primalmagick:block/sunwood_pillar_top_waxing"
+    }
+  }
+}

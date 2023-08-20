@@ -1,0 +1,57 @@
+{
+  "variants": {
+    "face=ceiling,facing=east": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=north": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=south": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 180
+    },
+    "face=ceiling,facing=west": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 180,
+      "y": 90
+    },
+    "face=floor,facing=east": {
+      "model": "primalmagick:block/runic_grindstone",
+      "y": 90
+    },
+    "face=floor,facing=north": {
+      "model": "primalmagick:block/runic_grindstone"
+    },
+    "face=floor,facing=south": {
+      "model": "primalmagick:block/runic_grindstone",
+      "y": 180
+    },
+    "face=floor,facing=west": {
+      "model": "primalmagick:block/runic_grindstone",
+      "y": 270
+    },
+    "face=wall,facing=east": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=north": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 90
+    },
+    "face=wall,facing=south": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west": {
+      "model": "primalmagick:block/runic_grindstone",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

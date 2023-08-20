@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "primalmagick:block/primal_wand_core"
+    }
+  }
+}

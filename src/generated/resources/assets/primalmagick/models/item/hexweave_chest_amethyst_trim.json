@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/hexweave_chest",
+    "layer1": "primalmagick:trims/items/robe_chest_trim_amethyst"
+  }
+}

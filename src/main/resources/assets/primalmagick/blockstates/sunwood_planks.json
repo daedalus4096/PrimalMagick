@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "phase=full": { "model": "primalmagick:block/sunwood_planks_full" },
-        "phase=waxing": { "model": "primalmagick:block/sunwood_planks_waxing" },
-        "phase=waning": { "model": "primalmagick:block/sunwood_planks_waning" },
-        "phase=faded": { "model": "primalmagick:block/sunwood_planks_faded" }
-    }
-}

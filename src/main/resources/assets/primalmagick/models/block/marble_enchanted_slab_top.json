@@ -1,8 +1,0 @@
-{
-    "parent": "block/slab_top",
-    "textures": {
-        "bottom": "primalmagick:block/marble_enchanted",
-        "top": "primalmagick:block/marble_enchanted",
-        "side": "primalmagick:block/marble_enchanted"
-    }
-}

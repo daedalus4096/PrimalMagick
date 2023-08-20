@@ -1,8 +1,0 @@
-{
-	"parent": "primalmagick:block/pillar_bottom",
-	"textures": {
-		"inner": "primalmagick:block/hallowood_pillar_inner",
-		"side": "primalmagick:block/hallowood_pillar_bottom",
-		"bottom": "primalmagick:block/stripped_hallowood_log"
-	}
-}

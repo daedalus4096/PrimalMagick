@@ -1,0 +1,6 @@
+{
+  "parent": "primalmagick:item/staff_core",
+  "textures": {
+    "core": "primalmagick:item/blaze_rod_wand_core"
+  }
+}

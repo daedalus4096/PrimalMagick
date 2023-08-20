@@ -1,7 +1,0 @@
-{
-    "parent": "minecraft:item/generated",
-    "textures": {
-        "layer0": "primalmagick:item/primalite_legs",
-        "layer1": "minecraft:trims/items/leggings_trim_amethyst"
-    }
-}

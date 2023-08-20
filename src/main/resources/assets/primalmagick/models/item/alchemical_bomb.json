@@ -1,7 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagick:item/alchemical_bomb_overlay",
-        "layer1": "primalmagick:item/alchemical_bomb"
-    }
-}

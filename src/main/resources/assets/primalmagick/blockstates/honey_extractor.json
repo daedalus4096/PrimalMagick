@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "primalmagick:block/honey_extractor" },
-        "facing=south": { "model": "primalmagick:block/honey_extractor", "y": 180 },
-        "facing=west":  { "model": "primalmagick:block/honey_extractor", "y": 270 },
-        "facing=east":  { "model": "primalmagick:block/honey_extractor", "y": 90 }
-    }
-}

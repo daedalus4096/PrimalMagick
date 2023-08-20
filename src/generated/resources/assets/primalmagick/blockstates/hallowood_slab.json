@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "primalmagick:block/hallowood_slab"
+    },
+    "type=double": {
+      "model": "primalmagick:block/hallowood_planks"
+    },
+    "type=top": {
+      "model": "primalmagick:block/hallowood_slab_top"
+    }
+  }
+}

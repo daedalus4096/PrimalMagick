@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "primalmagick:block/celestial_harp",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "primalmagick:block/celestial_harp"
+    },
+    "facing=south": {
+      "model": "primalmagick:block/celestial_harp",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "primalmagick:block/celestial_harp",
+      "y": 270
+    }
+  }
+}

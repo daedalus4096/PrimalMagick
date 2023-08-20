@@ -1,6 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": {
-        "layer0": "primalmagick:item/mystical_relic_fragment"
-    }
-}

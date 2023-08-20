@@ -1,12 +1,13 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.Iterables;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -70,7 +71,7 @@ public class AttunementShacklesItem extends Item {
         return SHACKLES.getOrDefault(source, null);
     }
     
-    public static Iterable<AttunementShacklesItem> getAllShackles() {
-        return Iterables.unmodifiableIterable(SHACKLES.values());
+    public static Collection<AttunementShacklesItem> getAllShackles() {
+        return Collections.unmodifiableCollection(SHACKLES.values());
     }
 }

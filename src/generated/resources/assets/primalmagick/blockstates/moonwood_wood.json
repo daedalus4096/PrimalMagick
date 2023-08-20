@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "axis=x,phase=faded": {
+      "model": "primalmagick:block/moonwood_wood_faded",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,phase=full": {
+      "model": "primalmagick:block/moonwood_wood_full",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,phase=waning": {
+      "model": "primalmagick:block/moonwood_wood_waning",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,phase=waxing": {
+      "model": "primalmagick:block/moonwood_wood_waxing",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,phase=faded": {
+      "model": "primalmagick:block/moonwood_wood_faded"
+    },
+    "axis=y,phase=full": {
+      "model": "primalmagick:block/moonwood_wood_full"
+    },
+    "axis=y,phase=waning": {
+      "model": "primalmagick:block/moonwood_wood_waning"
+    },
+    "axis=y,phase=waxing": {
+      "model": "primalmagick:block/moonwood_wood_waxing"
+    },
+    "axis=z,phase=faded": {
+      "model": "primalmagick:block/moonwood_wood_faded",
+      "x": 90
+    },
+    "axis=z,phase=full": {
+      "model": "primalmagick:block/moonwood_wood_full",
+      "x": 90
+    },
+    "axis=z,phase=waning": {
+      "model": "primalmagick:block/moonwood_wood_waning",
+      "x": 90
+    },
+    "axis=z,phase=waxing": {
+      "model": "primalmagick:block/moonwood_wood_waxing",
+      "x": 90
+    }
+  }
+}

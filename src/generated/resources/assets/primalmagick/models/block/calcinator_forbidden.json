@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "minecraft:block/furnace_top",
+    "front": "primalmagick:block/calcinator_forbidden_front",
+    "side": "primalmagick:block/calcinator_forbidden_side",
+    "top": "primalmagick:block/calcinator_forbidden_top"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "primalmagick:item/spellcloth_feet",
+    "layer1": "primalmagick:trims/items/robe_feet_trim_redstone"
+  }
+}

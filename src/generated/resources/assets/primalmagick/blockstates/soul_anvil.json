@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "dirty=false,facing=east": {
+      "model": "primalmagick:block/soul_anvil",
+      "y": 90
+    },
+    "dirty=false,facing=north": {
+      "model": "primalmagick:block/soul_anvil"
+    },
+    "dirty=false,facing=south": {
+      "model": "primalmagick:block/soul_anvil",
+      "y": 180
+    },
+    "dirty=false,facing=west": {
+      "model": "primalmagick:block/soul_anvil",
+      "y": 270
+    },
+    "dirty=true,facing=east": {
+      "model": "primalmagick:block/soul_anvil_dirty",
+      "y": 90
+    },
+    "dirty=true,facing=north": {
+      "model": "primalmagick:block/soul_anvil_dirty"
+    },
+    "dirty=true,facing=south": {
+      "model": "primalmagick:block/soul_anvil_dirty",
+      "y": 180
+    },
+    "dirty=true,facing=west": {
+      "model": "primalmagick:block/soul_anvil_dirty",
+      "y": 270
+    }
+  }
+}

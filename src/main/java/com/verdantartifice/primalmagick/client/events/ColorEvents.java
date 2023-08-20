@@ -9,8 +9,8 @@ import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.entities.ManaArrowItem;
 import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
-import com.verdantartifice.primalmagick.common.items.misc.AttunementGainItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
+import com.verdantartifice.primalmagick.common.items.misc.HummingArtifactItem;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;
@@ -89,7 +89,7 @@ public class ColorEvents {
             return DyeColor.WHITE.getFireworkColor();
         }, ItemsPM.RITUAL_CANDLE_BLACK.get(), ItemsPM.RITUAL_CANDLE_BLUE.get(), ItemsPM.RITUAL_CANDLE_BROWN.get(), ItemsPM.RITUAL_CANDLE_CYAN.get(), ItemsPM.RITUAL_CANDLE_GRAY.get(), ItemsPM.RITUAL_CANDLE_GREEN.get(), ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get(), ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get(), ItemsPM.RITUAL_CANDLE_LIME.get(), ItemsPM.RITUAL_CANDLE_MAGENTA.get(), ItemsPM.RITUAL_CANDLE_ORANGE.get(), ItemsPM.RITUAL_CANDLE_PINK.get(), ItemsPM.RITUAL_CANDLE_PURPLE.get(), ItemsPM.RITUAL_CANDLE_RED.get(), ItemsPM.RITUAL_CANDLE_WHITE.get(), ItemsPM.RITUAL_CANDLE_YELLOW.get());
         
-        for (AmbrosiaItem ambrosia : AmbrosiaItem.getAmbrosias()) {
+        for (AmbrosiaItem ambrosia : AmbrosiaItem.getAllAmbrosias()) {
             event.register((stack, color) -> {
                 return ambrosia.getColor(color);
             }, ambrosia);
@@ -105,13 +105,7 @@ public class ColorEvents {
             }, arrow);
         }
         
-        event.register((stack, tintIndex) -> {
-            if (stack.getItem() instanceof AttunementGainItem agi) {
-                return agi.getColor(tintIndex);
-            } else {
-                return -1;
-            }
-        }, ItemsPM.HUMMING_ARTIFACT_EARTH.get(), ItemsPM.HUMMING_ARTIFACT_SEA.get(), ItemsPM.HUMMING_ARTIFACT_SKY.get(), ItemsPM.HUMMING_ARTIFACT_SUN.get(), ItemsPM.HUMMING_ARTIFACT_MOON.get(), ItemsPM.HUMMING_ARTIFACT_BLOOD.get(), ItemsPM.HUMMING_ARTIFACT_INFERNAL.get(), ItemsPM.HUMMING_ARTIFACT_VOID.get(), ItemsPM.HUMMING_ARTIFACT_HALLOWED.get());
+        HummingArtifactItem.getAllHummingArtifacts().forEach(artifact -> event.register((stack, tintIndex) -> artifact.getColor(tintIndex), artifact));
         
         for (AttunementShacklesItem shackles : AttunementShacklesItem.getAllShackles()) {
             event.register((stack, tintIndex) -> {

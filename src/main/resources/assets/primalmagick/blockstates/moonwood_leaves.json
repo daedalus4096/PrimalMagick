@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "phase=full": { "model": "primalmagick:block/moonwood_leaves_full" },
-        "phase=waxing": { "model": "primalmagick:block/moonwood_leaves_waxing" },
-        "phase=waning": { "model": "primalmagick:block/moonwood_leaves_waning" },
-        "phase=faded": { "model": "primalmagick:block/moonwood_leaves_faded" }
-    }
-}
