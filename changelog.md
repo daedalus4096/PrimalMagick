@@ -11,6 +11,7 @@ v4.0.2
 * Fixed symmetry calculation bug with Offering Pedestals
 * Performed miscellaneous refactoring and code cleanup
 * Converted most hand-written blockstate and model files to code-generated assets
+* Fixed alchemical bombs with dud potions showing up in creative tab
 
 v4.0.1
 ------

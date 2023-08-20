@@ -114,7 +114,7 @@ public class AlchemicalBombItem extends Item {
         output.accept(item.getDefaultInstance());    // Add basic water bomb separately
         params.holders().lookup(Registries.POTION).ifPresent(registryLookup -> {
             registryLookup.listElements().filter(potionRef -> {
-                return !potionRef.is(Potions.EMPTY_ID);
+                return !potionRef.value().getEffects().isEmpty();
             }).map(potionRef -> {
                 return ConcoctionUtils.setFuseType(ConcoctionUtils.setConcoctionType(PotionUtils.setPotion(new ItemStack(item), potionRef.value()), ConcoctionType.BOMB), FuseType.MEDIUM);
             }).forEach(stack -> {
