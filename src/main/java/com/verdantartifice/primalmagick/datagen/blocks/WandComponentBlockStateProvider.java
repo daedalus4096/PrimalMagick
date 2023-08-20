@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
+import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 
 import net.minecraft.data.PackOutput;
@@ -37,41 +38,54 @@ public class WandComponentBlockStateProvider extends AbstractSpecialBlockStatePr
         this.wandCoreWithItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get());
         this.staffCoreWithItem(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get());
         this.wandCapWithItem(ItemsPM.IRON_WAND_CAP_ITEM.get());
+        this.wandGemWithItem(ItemsPM.CREATIVE_WAND_GEM_ITEM.get());
     }
     
-    private ResourceLocation modelLoc(ResourceLocation key) {
+    private ResourceLocation itemTextureLoc(ResourceLocation key) {
         return key.withPrefix(ModelProvider.ITEM_FOLDER + "/");
     }
     
     private void wandCoreWithItem(WandCoreItem coreItem) {
-        this.componentWithItem(coreItem, coreItem.getWandCore(), "wand_core", "core");
+        this.generatedComponentWithItem(coreItem, coreItem.getWandCore(), "wand_core", "core");
     }
     
     private void staffCoreWithItem(StaffCoreItem coreItem) {
-        this.componentWithItem(coreItem, coreItem.getWandCore(), "staff_core", "core", "wand_core");    // Staff cores use the same model texture as wand cores
+        this.generatedComponentWithItem(coreItem, coreItem.getWandCore(), "staff_core", "core", "wand_core");    // Staff cores use the same model texture as wand cores
     }
     
     private void wandCapWithItem(WandCapItem capItem) {
-        this.componentWithItem(capItem, capItem.getWandCap(), "wand_cap", "cap");
-        this.component(capItem.getWandCap(), "staff_cap", "cap", "wand_cap");   // Staff caps use the same model texture as wand caps and have no corresponding item
+        this.generatedComponentWithItem(capItem, capItem.getWandCap(), "wand_cap", "cap");
+        this.generatedComponent(capItem.getWandCap(), "staff_cap", "cap", "wand_cap");   // Staff caps use the same model texture as wand caps and have no corresponding item
     }
     
-    private void componentWithItem(Item item, IWandComponent component, String componentSuffix, String textureComponentName) {
-        this.componentWithItem(item, component, componentSuffix, textureComponentName, componentSuffix);
+    private void wandGemWithItem(WandGemItem gemItem) {
+        this.existingComponentWithItem(gemItem, gemItem.getWandGem(), "wand_gem");
     }
     
-    private void component(IWandComponent component, String modelComponentSuffix, String textureComponentName, String textureComponentSuffix) {
-        ResourceLocation modelParent = PrimalMagick.resource("item/" + modelComponentSuffix);
+    private void generatedComponentWithItem(Item item, IWandComponent component, String componentSuffix, String textureComponentName) {
+        this.generatedComponentWithItem(item, component, componentSuffix, textureComponentName, componentSuffix);
+    }
+    
+    private void generatedComponentWithItem(Item item, IWandComponent component, String modelComponentSuffix, String textureComponentName, String textureComponentSuffix) {
+        this.generatedComponent(component, modelComponentSuffix, textureComponentName, textureComponentSuffix);
+        this.itemModels().basicItem(item);
+    }
+    
+    private void generatedComponent(IWandComponent component, String modelComponentSuffix, String textureComponentName, String textureComponentSuffix) {
+        ResourceLocation modelParent = PrimalMagick.resource(ModelProvider.ITEM_FOLDER + "/" + modelComponentSuffix);
         ResourceLocation modelKey = PrimalMagick.resource(component.getTag() + "_" + modelComponentSuffix);
         ResourceLocation textureKey = PrimalMagick.resource(component.getTag() + "_" + textureComponentSuffix);
         String modelName = modelKey.getPath();
-        ResourceLocation textureLoc = this.modelLoc(textureKey);
+        ResourceLocation textureLoc = this.itemTextureLoc(textureKey);
         ModelFile model = this.models().withExistingParent(modelName, modelParent).texture(textureComponentName, textureLoc);
         this.getSpecialBuilder(modelKey).setModels(new ConfiguredModel(model));
     }
     
-    private void componentWithItem(Item item, IWandComponent component, String modelComponentSuffix, String textureComponentName, String textureComponentSuffix) {
-        this.component(component, modelComponentSuffix, textureComponentName, textureComponentSuffix);
+    private void existingComponentWithItem(Item item, IWandComponent component, String modelComponentSuffix) {
+        ResourceLocation modelKey = PrimalMagick.resource(component.getTag() + "_" + modelComponentSuffix);
+        String modelName = modelKey.getPath();
+        ModelFile model = new ModelFile.ExistingModelFile(PrimalMagick.resource(ModelProvider.BLOCK_FOLDER + "/" + modelName), this.existingFileHelper);
+        this.getSpecialBuilder(modelKey).setModels(new ConfiguredModel(model));
         this.itemModels().basicItem(item);
     }
 }

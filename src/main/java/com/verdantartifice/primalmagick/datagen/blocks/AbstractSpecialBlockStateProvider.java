@@ -31,10 +31,12 @@ public abstract class AbstractSpecialBlockStateProvider implements DataProvider 
     protected final String modid;
     private final BlockModelProviderPM blockModels;
     private final ItemModelProviderPM itemModels;
+    protected final ExistingFileHelper existingFileHelper;
 
     public AbstractSpecialBlockStateProvider(PackOutput output, String modid, ExistingFileHelper exFileHelper) {
         this.output = output;
         this.modid = modid;
+        this.existingFileHelper = exFileHelper;
         this.blockModels = new BlockModelProviderPM(output, modid, exFileHelper) {
             @Override public CompletableFuture<?> run(CachedOutput cache) { return CompletableFuture.allOf(); }
 
