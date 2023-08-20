@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.blocks;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 
@@ -33,6 +34,7 @@ public class WandComponentBlockStateProvider extends AbstractSpecialBlockStatePr
     protected void registerStatesAndModels() {
         // Generate wand component blockstates and items
         this.wandCoreWithItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get());
+        this.staffCoreWithItem(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get());
     }
     
     private ResourceLocation modelLoc(ResourceLocation key) {
@@ -43,13 +45,22 @@ public class WandComponentBlockStateProvider extends AbstractSpecialBlockStatePr
         this.componentWithItem(coreItem, coreItem.getWandCore(), "wand_core");
     }
     
+    private void staffCoreWithItem(StaffCoreItem coreItem) {
+        this.componentWithItem(coreItem, coreItem.getWandCore(), "staff_core", "wand_core");    // Staff cores use the same model texture as wand cores
+    }
+    
     private void componentWithItem(Item item, IWandComponent component, String componentSuffix) {
-        ResourceLocation modelParent = PrimalMagick.resource("item/" + componentSuffix);
-        ResourceLocation key = PrimalMagick.resource(component.getTag() + "_" + componentSuffix);
-        String name = key.getPath();
-        ResourceLocation modelLoc = this.modelLoc(key);
-        ModelFile model = this.models().withExistingParent(name, modelParent).texture("core", modelLoc);
-        this.getSpecialBuilder(key).setModels(new ConfiguredModel(model));
+        this.componentWithItem(item, component, componentSuffix, componentSuffix);
+    }
+    
+    private void componentWithItem(Item item, IWandComponent component, String modelComponentSuffix, String textureComponentSuffix) {
+        ResourceLocation modelParent = PrimalMagick.resource("item/" + modelComponentSuffix);
+        ResourceLocation modelKey = PrimalMagick.resource(component.getTag() + "_" + modelComponentSuffix);
+        ResourceLocation textureKey = PrimalMagick.resource(component.getTag() + "_" + textureComponentSuffix);
+        String modelName = modelKey.getPath();
+        ResourceLocation textureLoc = this.modelLoc(textureKey);
+        ModelFile model = this.models().withExistingParent(modelName, modelParent).texture("core", textureLoc);
+        this.getSpecialBuilder(modelKey).setModels(new ConfiguredModel(model));
         this.itemModels().basicItem(item);
     }
 }
