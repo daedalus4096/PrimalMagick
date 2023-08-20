@@ -1,0 +1,6 @@
+{
+  "parent": "primalmagick:item/wand_cap",
+  "textures": {
+    "cap": "primalmagick:item/iron_wand_cap"
+  }
+}
