@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -40,5 +41,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
+        
+        // Generate enchantment localizations
+        this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")
+            .description("Grants a chance for the wielder to heal themselves a small amount when striking a creature.")
+            .fullRuneText("The Lifesteal enchantment can be imbued through the use of Absorb, Self, and Blood runes.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
+            .partialRuneText("The Lifesteal enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
+            .build();
     }
 }

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuil
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -94,6 +96,16 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public EntityTypeLanguageBuilder entity(EntityType<?> entity) {
         EntityTypeLanguageBuilder builder = new EntityTypeLanguageBuilder(entity, this::untrack, this::add);
+        this.track(builder);
+        return builder;
+    }
+    
+    public EnchantmentLanguageBuilder enchantment(Supplier<? extends Enchantment> ench) {
+        return this.enchantment(ench.get());
+    }
+    
+    public EnchantmentLanguageBuilder enchantment(Enchantment ench) {
+        EnchantmentLanguageBuilder builder = new EnchantmentLanguageBuilder(ench, this::untrack, this::add);
         this.track(builder);
         return builder;
     }
