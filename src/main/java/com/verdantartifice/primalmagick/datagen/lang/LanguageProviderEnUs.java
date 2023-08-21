@@ -5,6 +5,9 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.wands.WandCap;
+import com.verdantartifice.primalmagick.common.wands.WandCore;
+import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.data.PackOutput;
 
@@ -48,5 +51,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Lifesteal enchantment can be imbued through the use of Absorb, Self, and Blood runes.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .partialRuneText("The Lifesteal enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .build();
+        
+        // Generate wand component localizations
+        this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
+        this.wandComponent(WandCap.IRON).name("Iron-Shod").build();
+        this.wandComponent(WandGem.APPRENTICE).name("Apprentice's").build();
     }
 }

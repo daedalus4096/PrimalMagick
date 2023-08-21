@@ -8,12 +8,14 @@ import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -112,6 +114,12 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public SourceLanguageBuilder source(Source source) {
         SourceLanguageBuilder builder = new SourceLanguageBuilder(source, this::untrack, this::add);
+        this.track(builder);
+        return builder;
+    }
+    
+    public WandComponentLanguageBuilder wandComponent(IWandComponent component) {
+        WandComponentLanguageBuilder builder = new WandComponentLanguageBuilder(component, this::untrack, this::add);
         this.track(builder);
         return builder;
     }

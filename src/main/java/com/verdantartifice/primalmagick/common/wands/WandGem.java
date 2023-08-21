@@ -54,6 +54,11 @@ public class WandGem implements IWandComponent {
         return this.tag;
     }
     
+    @Override
+    public Type getComponentType() {
+        return IWandComponent.Type.GEM;
+    }
+    
     public int getCapacity() {
         return this.capacity;
     }
@@ -66,11 +71,6 @@ public class WandGem implements IWandComponent {
     @Nonnull
     public ResourceLocation getModelResourceLocationNamespace() {
         return this.mrlNamespace;
-    }
-    
-    @Override
-    public String getNameTranslationKey() {
-        return "primalmagick.wand_gem." + this.tag + ".name";
     }
     
     @Nonnull

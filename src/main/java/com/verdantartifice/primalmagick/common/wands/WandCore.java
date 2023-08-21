@@ -78,6 +78,11 @@ public class WandCore implements IWandComponent {
         return this.rarity;
     }
     
+    @Override
+    public Type getComponentType() {
+        return IWandComponent.Type.CORE;
+    }
+    
     public int getSpellSlots() {
         return this.spellSlots;
     }
@@ -100,11 +105,6 @@ public class WandCore implements IWandComponent {
     @Nonnull
     public ResourceLocation getStaffModelResourceLocationNamespace() {
         return this.staffMrlNamespace;
-    }
-    
-    @Override
-    public String getNameTranslationKey() {
-        return "primalmagick.wand_core." + this.tag + ".name";
     }
     
     public static Collection<WandCore> getAllWandCores() {

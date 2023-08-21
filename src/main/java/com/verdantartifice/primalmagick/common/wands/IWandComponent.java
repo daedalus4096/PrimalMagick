@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagick.common.wands;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
+
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Rarity;
 
 /**
@@ -17,6 +20,14 @@ public interface IWandComponent {
      */
     @Nonnull
     public String getTag();
+    
+    /**
+     * Get the type of the component.
+     * 
+     * @return the type of the component
+     */
+    @Nonnull
+    public Type getComponentType();
 
     /**
      * Get the rarity of the component.
@@ -32,7 +43,9 @@ public interface IWandComponent {
      * @return the translation key for the component's display name
      */
     @Nonnull
-    public String getNameTranslationKey();
+    public default String getNameTranslationKey() {
+        return String.join(".", this.getComponentType().getSerializedName(), PrimalMagick.MODID, this.getTag());
+    }
 
     /**
      * Get the enchantability conferred to a wand by this component.
@@ -51,6 +64,23 @@ public interface IWandComponent {
             return 16;
         default:
             return 0;
+        }
+    }
+    
+    public static enum Type implements StringRepresentable {
+        CORE("wand_core"),
+        CAP("wand_cap"),
+        GEM("wand_gem");
+        
+        private final String name;
+        
+        private Type(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name;
         }
     }
 }

@@ -64,6 +64,11 @@ public class WandCap implements IWandComponent {
         return this.rarity;
     }
     
+    @Override
+    public Type getComponentType() {
+        return IWandComponent.Type.CAP;
+    }
+
     public double getBaseCostModifier() {
         return this.baseCostModifier;
     }
@@ -80,11 +85,6 @@ public class WandCap implements IWandComponent {
     @Nonnull
     public ResourceLocation getStaffModelResourceLocationNamespace() {
         return this.staffMrlNamespace;
-    }
-    
-    @Override
-    public String getNameTranslationKey() {
-        return "primalmagick.wand_cap." + this.tag + ".name";
     }
     
     @Nonnull
