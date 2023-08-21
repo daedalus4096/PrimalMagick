@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.mods.EmptySpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.EarthDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.TouchSpellVehicle;
+import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -133,6 +134,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate key mapping localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
+        
+        // Generate statistics localizations
+        this.stat(StatsPM.GRIMOIRE_READ).name("Times Grimoire consulted").build();
         
         // Generate research requirement localizations
         this.researchRequirement("m_dummy").name("Location Discovery").build();

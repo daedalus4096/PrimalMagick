@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementThresholdLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLanguageBuilder;
@@ -34,6 +35,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SpellModLanguageBu
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPayloadLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPropertyLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.StatLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 
@@ -205,5 +207,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public KeyMappingLanguageBuilder keyMapping(KeyMapping mapping, String regName) {
         return this.createBuilder(() -> new KeyMappingLanguageBuilder(mapping, regName, this::untrack, this::add));
+    }
+    
+    public StatLanguageBuilder stat(Stat stat) {
+        return this.createBuilder(() -> new StatLanguageBuilder(stat, this::untrack, this::add));
     }
 }
