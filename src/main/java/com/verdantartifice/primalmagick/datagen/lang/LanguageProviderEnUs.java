@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
@@ -56,5 +57,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
         this.wandComponent(WandCap.IRON).name("Iron-Shod").build();
         this.wandComponent(WandGem.APPRENTICE).name("Apprentice's").build();
+        
+        // Generate research discipline localizations
+        this.researchDiscipline(ResearchDisciplines.BASICS).name("Fundamentals").build();
     }
 }

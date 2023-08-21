@@ -8,6 +8,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.google.common.base.Preconditions;
+
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -23,10 +25,10 @@ public abstract class AbstractLanguageBuilder<T> implements ILanguageBuilder {
     protected final Map<String, String> data = new TreeMap<>();
     
     public AbstractLanguageBuilder(T base, Supplier<String> keyExtractor, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        this.base = base;
-        this.keyExtractor = keyExtractor;
-        this.untracker = untracker;
-        this.adder = adder;
+        this.base = Preconditions.checkNotNull(base);
+        this.keyExtractor = Preconditions.checkNotNull(keyExtractor);
+        this.untracker = Preconditions.checkNotNull(untracker);
+        this.adder = Preconditions.checkNotNull(adder);
     }
 
     protected ResourceLocation getBaseRegistryKey() {

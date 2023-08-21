@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.resources.ResourceLocation;
@@ -48,7 +49,7 @@ public class ResearchDiscipline {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return "primalmagick.research_discipline." + this.key;
+        return String.join(".", "research_discipline", PrimalMagick.MODID, this.key);
     }
     
     @Nullable
