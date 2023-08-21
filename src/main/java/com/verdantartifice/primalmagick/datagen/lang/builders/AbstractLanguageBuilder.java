@@ -66,9 +66,13 @@ public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuild
     }
     
     protected String getKey(String... suffixes) {
+        return this.getKey(List.of(suffixes));
+    }
+    
+    protected String getKey(List<String> suffixes) {
         List<String> tokens = new ArrayList<>();
         tokens.add(this.keyExtractor.get());
-        tokens.addAll(List.of(suffixes));
+        tokens.addAll(suffixes);
         return String.join(".", tokens);
     }
 

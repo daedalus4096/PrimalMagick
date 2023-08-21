@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementThresholdLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.CommandLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
@@ -150,5 +151,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public ResearchEntryLanguageBuilder researchEntry(SimpleResearchKey key) {
         return this.createBuilder(() -> new ResearchEntryLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public CommandLanguageBuilder command(String token) {
+        return this.createBuilder(() -> new CommandLanguageBuilder(token, this::untrack, this::add));
     }
 }

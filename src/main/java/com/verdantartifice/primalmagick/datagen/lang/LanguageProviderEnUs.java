@@ -90,5 +90,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Some bomb recipes requires the use of Void essence.")
                 .end()
             .build();
+        
+        // Generate command output localizations
+        this.command("research").sub("grant").output("Granting research to %1$s: %2$s").end().build();
+        this.command("research").sub("grant").sub("target").output("%1$s has granted you %2$s research and its parents").end().build();
+        this.command("research").sub("details").output("Research %1$s of player %2$s:", "  Status: %1$s", "  Current stage: %1$d", "  Flags: %1$s").end().build();
+        this.command("error").name("Error executing command").build();
     }
 }
