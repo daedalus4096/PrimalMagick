@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementThresholdLanguageBuilder;
@@ -22,6 +23,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 
@@ -140,5 +142,13 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public ResearchDisciplineLanguageBuilder researchDiscipline(ResearchDiscipline disc) {
         return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(disc, this::untrack, this::add));
+    }
+    
+    public ResearchEntryLanguageBuilder researchEntry(String keyStr) {
+        return this.researchEntry(SimpleResearchKey.parse(keyStr));
+    }
+    
+    public ResearchEntryLanguageBuilder researchEntry(SimpleResearchKey key) {
+        return this.createBuilder(() -> new ResearchEntryLanguageBuilder(key, this::untrack, this::add));
     }
 }

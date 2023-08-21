@@ -77,5 +77,18 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.attunementThreshold(AttunementThreshold.MINOR).name("Minor").build();
         this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser").build();
         this.attunementThreshold(AttunementThreshold.GREATER).name("Greater").build();
+        
+        // Generate research entry localizations
+        this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
+            .stages()
+                .add("Some potions just aren't meant to be drunk, at least by oneself.  Or perhaps meant to be shared?<BR>Either way, skyglass flasks don't shatter like the regular glass bottles in splash potions do.  And even if they did, who wants to waste all those doses of potion at once?<BR>I must devise a new method of distribution.")
+                .add("Bombs!  Bombs are great!<BR>By creating a set of special bomb casings, I can distribute individual doses of potion to anyone at range.  A single set of casings will produce six bombs.<BR>Alchemical bombs don't just explode on impact, necessarily.  I mean, they will if you score a direct hit on a creature, but if you miss, they'll bounce.  Bombs are on a timed fuse and will detonate when that time runs out.  I can change the length of the fuse by using it while sneaking.")
+                .end()
+            .addenda()
+                .add("Some bomb recipes requires the use of Blood essence.")
+                .add("Some bomb recipes requires the use of Infernal essence.")
+                .add("Some bomb recipes requires the use of Void essence.")
+                .end()
+            .build();
     }
 }
