@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuild
 import com.verdantartifice.primalmagick.datagen.lang.builders.CommandLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
@@ -155,5 +156,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public CommandLanguageBuilder command(String token) {
         return this.createBuilder(() -> new CommandLanguageBuilder(token, this::untrack, this::add));
+    }
+    
+    public EventLanguageBuilder event(String token) {
+        return this.createBuilder(() -> new EventLanguageBuilder(token, this::untrack, this::add));
     }
 }

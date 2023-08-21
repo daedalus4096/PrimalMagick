@@ -96,5 +96,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("research").sub("grant").sub("target").output("%1$s has granted you %2$s research and its parents").end().build();
         this.command("research").sub("details").output("Research %1$s of player %2$s:", "  Status: %1$s", "  Current stage: %1$d", "  Flags: %1$s").end().build();
         this.command("error").name("Error executing command").build();
+        
+        // Generate event output localizations
+        this.event("add_addendum").name("Addendum added to %1$s").build();
+        this.event("scan").sub("success").output("You have gained valuable research data").end().build();
+        this.event("scan").sub("fail").output("You are unable to scan that").end().build();
+        this.event("scan").sub("repeat").output("You learn nothing new from scanning that").end().build();
+        this.event("scan").sub("toobig").output("There are too many items there to scan completely").end().build();
     }
 }
