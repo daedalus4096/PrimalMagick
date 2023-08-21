@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Helper for specifying research discipline-related localizations in a structured way.
+ * Helper for specifying research entry-related localizations in a structured way.
  * 
  * @author Daedalus4096
  */

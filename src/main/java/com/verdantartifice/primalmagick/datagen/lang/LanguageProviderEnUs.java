@@ -129,6 +129,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
         
+        // Generate research requirement localizations
+        this.researchRequirement("m_dummy").name("Location Discovery").build();
+        this.researchRequirement(Source.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
+        this.researchRequirement("b_scan_primalite").name("Analyze a magickal metal").hint("Complete the Alchemy research entry for Primalite, then scan a nugget, ingot, or block of it").build();
+        
         // Generate research entry localizations
         this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
             .stages()
