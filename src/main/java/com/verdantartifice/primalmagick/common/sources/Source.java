@@ -95,7 +95,11 @@ public class Source {
     
     @Nonnull
     public String getNameTranslationKey() {
-        return PrimalMagick.MODID + ".source." + this.tag;
+        return getNameTranslationKey(this.tag);
+    }
+    
+    private static String getNameTranslationKey(String tag) {
+        return String.join(".", "source", PrimalMagick.MODID, tag);
     }
     
     public int getColor() {
@@ -157,7 +161,7 @@ public class Source {
     
     @Nonnull
     public static String getUnknownTranslationKey() {
-        return PrimalMagick.MODID + ".source.unknown";
+        return getNameTranslationKey("unknown");
     }
     
     @Nonnull

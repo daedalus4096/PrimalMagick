@@ -1,9 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
-import net.minecraft.resources.ResourceKey;
-
 public interface ILanguageBuilder {
-    ResourceKey<?> getKey();
+    String getBuilderKey();
     boolean isEmpty();
     void build();
 }

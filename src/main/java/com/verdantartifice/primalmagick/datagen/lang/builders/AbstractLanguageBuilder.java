@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.BiConsumer;
@@ -13,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuilder<T, U>> implements ILanguageBuilder {
+public abstract class AbstractLanguageBuilder<T> implements ILanguageBuilder {
     protected final T base;
     protected final Supplier<String> keyExtractor;
     protected final Consumer<ILanguageBuilder> untracker;
@@ -27,11 +29,6 @@ public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuild
         this.adder = adder;
     }
 
-    @SuppressWarnings("unchecked")
-    private U self() {
-        return (U)this;
-    }
-    
     protected ResourceLocation getBaseRegistryKey() {
         return this.getBaseRegistryKey(this.base);
     }
@@ -56,22 +53,15 @@ public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuild
         this.data.forEach((key, value) -> this.adder.accept(key, value));
         this.untracker.accept(this);
     }
-
-    public U name(String value) {
-        this.add(this.keyExtractor.get(), value);
-        return self();
+    
+    protected String getKey() {
+        return this.keyExtractor.get();
     }
     
-    public U tooltip(String value) {
-        this.add(this.keyExtractor.get().concat(".tooltip"), value);
-        return self();
-    }
-    
-    public U tooltip(String... values) {
-        int index = 1;
-        for (String value : values) {
-            this.add(this.keyExtractor.get().concat(".tooltip.").concat(Integer.toString(index++)), value);
-        }
-        return self();
+    protected String getKey(String... suffixes) {
+        List<String> tokens = new ArrayList<>();
+        tokens.add(this.keyExtractor.get());
+        tokens.addAll(List.of(suffixes));
+        return String.join(".", tokens);
     }
 }
