@@ -27,4 +27,9 @@ public class SourceLanguageBuilder extends AbstractLanguageBuilder<Source, Sourc
     protected ResourceLocation getBaseRegistryKey(Source base) {
         return PrimalMagick.resource(base.getTag());
     }
+    
+    public SourceLanguageBuilder attunement(String value) {
+        this.add(this.getKey("attunement", "text"), value);
+        return this;
+    }
 }

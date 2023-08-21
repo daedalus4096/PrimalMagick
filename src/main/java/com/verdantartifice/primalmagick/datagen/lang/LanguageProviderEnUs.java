@@ -28,7 +28,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
     @Override
     protected void addLocalizations() {
         // Generate magickal source localizations
-        this.source(Source.EARTH).name("Earth").build();
+        this.source(Source.EARTH).name("Earth")
+            .attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.")
+            .build();
         this.source(Source.SEA).name("Sea").build();
         this.source(Source.SKY).name("Sky").build();
         this.source(Source.SUN).name("Sun").build();
