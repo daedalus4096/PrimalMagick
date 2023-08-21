@@ -125,6 +125,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate spell property localizations
         this.spellProperty("power").name("Power").build();
         
+        // Generate grimoire GUI localizations
+        this.grimoire("index_header").name("Disciplines").build();
+        this.grimoire("section_header").sub("new").output("New").end().build();
+        
         // Generate research entry localizations
         this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
             .stages()

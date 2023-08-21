@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.CommandLanguageBui
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.GrimoireLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
@@ -185,5 +186,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public SpellPropertyLanguageBuilder spellProperty(String id) {
         return this.createBuilder(() -> new SpellPropertyLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public GrimoireLanguageBuilder grimoire(String id) {
+        return this.createBuilder(() -> new GrimoireLanguageBuilder(id, this::untrack, this::add));
     }
 }
