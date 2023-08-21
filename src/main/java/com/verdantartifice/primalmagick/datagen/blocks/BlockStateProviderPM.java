@@ -128,28 +128,28 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
         
         // Generate sunwood blocks
-        this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get(), TRANSLUCENT);
-        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get(), TRANSLUCENT);
-        this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()), TRANSLUCENT);
-        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()), TRANSLUCENT);
-        this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get(), TRANSLUCENT);
+        this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get());
+        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_LOG.get());
+        this.phasingWoodBlockWithItem(BlocksPM.SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.SUNWOOD_LOG.get()));
+        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_SUNWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_SUNWOOD_LOG.get()));
+        this.phasingLeavesBlockWithItem(BlocksPM.SUNWOOD_LEAVES.get());
         this.saplingBlockWithItem(BlocksPM.SUNWOOD_SAPLING.get());
-        this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
-        this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get(), TRANSLUCENT);
-        this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()), TRANSLUCENT);
-        this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get(), TRANSLUCENT);
+        this.phasingCubeBlockWithItem(BlocksPM.SUNWOOD_PLANKS.get());
+        this.phasingSlabBlockWithItem(BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.SUNWOOD_PLANKS.get());
+        this.phasingStairsBlockWithItem(BlocksPM.SUNWOOD_STAIRS.get(), this.blockTexture(BlocksPM.SUNWOOD_PLANKS.get()));
+        this.phasingPillarBlockWithItem(BlocksPM.SUNWOOD_PILLAR.get());
         
         // Generate moonwood blocks
-        this.phasingLogBlockWithItem(BlocksPM.MOONWOOD_LOG.get(), TRANSLUCENT);
-        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_LOG.get(), TRANSLUCENT);
-        this.phasingWoodBlockWithItem(BlocksPM.MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.MOONWOOD_LOG.get()), TRANSLUCENT);
-        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_MOONWOOD_LOG.get()), TRANSLUCENT);
-        this.phasingLeavesBlockWithItem(BlocksPM.MOONWOOD_LEAVES.get(), TRANSLUCENT);
+        this.phasingLogBlockWithItem(BlocksPM.MOONWOOD_LOG.get());
+        this.phasingLogBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_LOG.get());
+        this.phasingWoodBlockWithItem(BlocksPM.MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.MOONWOOD_LOG.get()));
+        this.phasingWoodBlockWithItem(BlocksPM.STRIPPED_MOONWOOD_WOOD.get(), this.blockTexture(BlocksPM.STRIPPED_MOONWOOD_LOG.get()));
+        this.phasingLeavesBlockWithItem(BlocksPM.MOONWOOD_LEAVES.get());
         this.saplingBlockWithItem(BlocksPM.MOONWOOD_SAPLING.get());
-        this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get(), TRANSLUCENT);
-        this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get(), TRANSLUCENT);
-        this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()), TRANSLUCENT);
-        this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get(), TRANSLUCENT);
+        this.phasingCubeBlockWithItem(BlocksPM.MOONWOOD_PLANKS.get());
+        this.phasingSlabBlockWithItem(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.MOONWOOD_PLANKS.get());
+        this.phasingStairsBlockWithItem(BlocksPM.MOONWOOD_STAIRS.get(), this.blockTexture(BlocksPM.MOONWOOD_PLANKS.get()));
+        this.phasingPillarBlockWithItem(BlocksPM.MOONWOOD_PILLAR.get());
         
         // Generate hallowood blocks
         this.logBlockWithItem(BlocksPM.HALLOWOOD_LOG.get());
@@ -344,12 +344,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, baseModel);
     }
     
-    private void phasingLogBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation renderType) {
+    private void phasingLogBlockWithItem(AbstractPhasingLogBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation sideTexture = this.blockTexture(block).withSuffix("_" + phaseName);
             ResourceLocation endTexture = this.blockTexture(block).withSuffix("_top_" + phaseName);
-            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture).renderType(renderType);
+            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.axisBlockPhase(block, model, model, phase);
         });
 
@@ -359,11 +359,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, this.models().cubeColumn(this.name(block) + "_" + phaseName, sideTexture, endTexture));
     }
     
-    private void phasingWoodBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation texture, ResourceLocation renderType) {
+    private void phasingWoodBlockWithItem(AbstractPhasingLogBlock block, ResourceLocation texture) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
-            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture).renderType(renderType);
+            ModelFile model = this.models().cubeColumn(this.name(block) + "_" + phaseName, phaseTexture, phaseTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.axisBlockPhase(block, model, model, phase);
         });
 
@@ -379,11 +379,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(AbstractPhasingLogBlock.PHASE, phase).with(AbstractPhasingLogBlock.AXIS, Axis.X).modelForState().modelFile(horizontal).rotationX(90).rotationY(90).addModel();
     }
     
-    private void phasingLeavesBlockWithItem(AbstractPhasingLeavesBlock block, ResourceLocation renderType) {
+    private void phasingLeavesBlockWithItem(AbstractPhasingLeavesBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves")).texture("all", phaseTexture).renderType(renderType);
+            ModelFile model = this.models().withExistingParent(this.name(block) + "_" + phaseName, new ResourceLocation("block/leaves"))
+                    .texture("all", phaseTexture).renderType(TimePhase.FULL.equals(phase) ? CUTOUT : TRANSLUCENT);
             this.getVariantBuilder(block).partialState().with(AbstractPhasingLeavesBlock.PHASE, phase).modelForState().modelFile(model).addModel();
         });
 
@@ -397,25 +398,26 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block));
     }
     
-    private void phasingCubeBlockWithItem(AbstractPhasingBlock block, ResourceLocation renderType) {
+    private void phasingCubeBlockWithItem(AbstractPhasingBlock block) {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-            ModelFile model = this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(renderType);
+            ModelFile model = this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT);
             this.getVariantBuilder(block).partialState().with(AbstractPhasingBlock.PHASE, phase).modelForState().modelFile(model).addModel();
         });
         
         String phaseName = TimePhase.FULL.getSerializedName();
         ResourceLocation phaseTexture = this.blockTexture(block).withSuffix("_" + phaseName);
-        this.simpleBlockItem(block, this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(renderType));
+        this.simpleBlockItem(block, this.models().cubeAll(this.name(block) + "_" + phaseName, phaseTexture).renderType(SOLID));
     }
     
-    private void phasingSlabBlockWithItem(AbstractPhasingSlabBlock block, AbstractPhasingBlock doubleSlabBlock, ResourceLocation renderType) {
+    private void phasingSlabBlockWithItem(AbstractPhasingSlabBlock block, AbstractPhasingBlock doubleSlabBlock) {
         String blockName = this.name(block);
         ResourceLocation texture = this.blockTexture(doubleSlabBlock);
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             ModelFile bottomModel = this.models().slab(blockName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
             ModelFile topModel = this.models().slabTop(blockName + "_top_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType);
             ModelFile doubleModel = this.models().getExistingFile(this.key(doubleSlabBlock).withSuffix("_" + phaseName));
@@ -431,7 +433,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, bottomModel);
     }
     
-    private void phasingStairsBlockWithItem(AbstractPhasingStairsBlock block, ResourceLocation texture, ResourceLocation renderType) {
+    private void phasingStairsBlockWithItem(AbstractPhasingStairsBlock block, ResourceLocation texture) {
         String baseName = this.name(block);
         Map<TimePhase, ModelFile> baseModels = new HashMap<>();
         Map<TimePhase, ModelFile> innerModels = new HashMap<>();
@@ -439,6 +441,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
             ResourceLocation phaseTexture = texture.withSuffix("_" + phaseName);
+            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             baseModels.put(phase, this.models().stairs(baseName + "_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
             innerModels.put(phase, this.models().stairsInner(baseName + "_inner_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
             outerModels.put(phase, this.models().stairsOuter(baseName + "_outer_" + phaseName, phaseTexture, phaseTexture, phaseTexture).renderType(renderType));
@@ -467,20 +470,21 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, baseModels.get(TimePhase.FULL));
     }
     
-    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation renderType) {
-        this.phasingPillarBlockWithItem(block, this.blockTexture(block), renderType);
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block) {
+        this.phasingPillarBlockWithItem(block, this.blockTexture(block));
     }
     
-    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation texture, ResourceLocation renderType) {
-        this.phasingPillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"), renderType);
+    private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation texture) {
+        this.phasingPillarBlockWithItem(block, texture, texture.withSuffix("_inner"), texture.withSuffix("_top"), texture.withSuffix("_bottom"), texture.withSuffix("_base"));
     }
     
     private void phasingPillarBlockWithItem(AbstractPhasingPillarBlock block, ResourceLocation sideTexture, ResourceLocation innerTexture, ResourceLocation topTexture, 
-            ResourceLocation bottomTexture, ResourceLocation baseTexture, ResourceLocation renderType) {
+            ResourceLocation bottomTexture, ResourceLocation baseTexture) {
         String baseName = this.name(block);
         Table<PillarBlock.Type, TimePhase, ModelFile> models = HashBasedTable.create();
         Stream.of(TimePhase.values()).forEach(phase -> {
             String phaseName = phase.getSerializedName();
+            ResourceLocation renderType = TimePhase.FULL.equals(phase) ? SOLID : TRANSLUCENT;
             models.put(PillarBlock.Type.BASE, phase, this.models().withExistingParent(baseName + "_" + phaseName, PrimalMagick.resource("block/pillar"))
                     .texture("side", sideTexture.withSuffix("_" + phaseName))
                     .texture("inner", innerTexture.withSuffix("_" + phaseName))

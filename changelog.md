@@ -12,6 +12,7 @@ v4.0.2
 * Performed miscellaneous refactoring and code cleanup
 * Converted most hand-written blockstate, model, sound, and structure files to code-generated assets
 * Fixed alchemical bombs with dud potions showing up in creative tab
+* Made sunwood and moonwood trees use a solid render type when fully phased in
 
 v4.0.1
 ------

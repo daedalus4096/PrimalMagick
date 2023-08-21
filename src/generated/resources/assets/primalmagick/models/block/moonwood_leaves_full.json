@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/leaves",
-  "render_type": "minecraft:translucent",
+  "render_type": "minecraft:cutout",
   "textures": {
     "all": "primalmagick:block/moonwood_leaves_full"
   }
