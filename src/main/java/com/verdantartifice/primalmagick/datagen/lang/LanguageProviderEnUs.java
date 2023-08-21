@@ -138,6 +138,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate statistics localizations
         this.stat(StatsPM.GRIMOIRE_READ).name("Times Grimoire consulted").build();
         
+        // Generate research project localizations
+        this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();
+        
         // Generate research requirement localizations
         this.researchRequirement("m_dummy").name("Location Discovery").build();
         this.researchRequirement(Source.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();

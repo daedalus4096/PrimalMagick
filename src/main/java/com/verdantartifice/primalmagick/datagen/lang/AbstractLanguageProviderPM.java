@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.KeyMappingLanguage
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchProjectLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchRequirementLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellModLanguageBuilder;
@@ -171,6 +172,10 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public ResearchRequirementLanguageBuilder researchRequirement(SimpleResearchKey key) {
         return this.createBuilder(() -> new ResearchRequirementLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public ResearchProjectLanguageBuilder researchProject(String id) {
+        return this.createBuilder(() -> new ResearchProjectLanguageBuilder(id, this::untrack, this::add));
     }
     
     public CommandLanguageBuilder command(String token) {
