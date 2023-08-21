@@ -28,6 +28,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDiscipline
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
@@ -160,5 +161,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public EventLanguageBuilder event(String token) {
         return this.createBuilder(() -> new EventLanguageBuilder(token, this::untrack, this::add));
+    }
+    
+    public WrittenBookLanguageBuilder book(String id) {
+        return this.createBuilder(() -> new WrittenBookLanguageBuilder(id, this::untrack, this::add));
     }
 }
