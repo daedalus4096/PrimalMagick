@@ -122,6 +122,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.add("spells.primalmagick.secondary_mod.header", "Secondary Mod");
         this.spellMod(EmptySpellMod.TYPE).name("None").defaultName("").build();
         
+        // Generate spell property localizations
+        this.spellProperty("power").name("Power").build();
+        
         // Generate research entry localizations
         this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
             .stages()
