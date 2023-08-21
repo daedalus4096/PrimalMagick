@@ -970,15 +970,15 @@ public class GrimoireScreen extends Screen {
     
     @Override
     public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
-        if (keyCode == KeyBindings.grimoirePrevTopic.getKey().getValue()) {
+        if (keyCode == KeyBindings.GRIMOIRE_PREV_TOPIC.getKey().getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == KeyBindings.grimoirePrevPage.getKey().getValue()) {
+        } else if (keyCode == KeyBindings.GRIMOIRE_PREV_PAGE.getKey().getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
-        } else if (keyCode == KeyBindings.grimoireNextPage.getKey().getValue()) {
+        } else if (keyCode == KeyBindings.GRIMOIRE_NEXT_PAGE.getKey().getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }

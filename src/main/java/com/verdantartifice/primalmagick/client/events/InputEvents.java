@@ -29,7 +29,7 @@ public class InputEvents {
     private static boolean SPELL_SELECT_KEY_WAS_DOWN = false;
     
     public static void wipeOpen() {
-        while (KeyBindings.changeSpellKey.consumeClick())
+        while (KeyBindings.CHANGE_SPELL_KEY.consumeClick())
         {
         }
     }
@@ -41,7 +41,7 @@ public class InputEvents {
         if (player != null) {
             Entity ridingEntity = player.getVehicle();
             if (ridingEntity != null && ridingEntity instanceof FlyingCarpetEntity) {
-                ((FlyingCarpetEntity)ridingEntity).updateInputs(KeyBindings.carpetForwardKey.isDown(), KeyBindings.carpetBackwardKey.isDown());
+                ((FlyingCarpetEntity)ridingEntity).updateInputs(KeyBindings.CARPET_FORWARD_KEY.isDown(), KeyBindings.CARPET_BACKWARD_KEY.isDown());
             }
         }
     }
@@ -54,9 +54,9 @@ public class InputEvents {
         
         Minecraft mc = Minecraft.getInstance();
         if (mc.screen == null) {
-            boolean spellSelectKeyIsDown = KeyBindings.changeSpellKey.isDown();
+            boolean spellSelectKeyIsDown = KeyBindings.CHANGE_SPELL_KEY.isDown();
             if (spellSelectKeyIsDown && !SPELL_SELECT_KEY_WAS_DOWN) {
-                while (KeyBindings.changeSpellKey.consumeClick()) {
+                while (KeyBindings.CHANGE_SPELL_KEY.consumeClick()) {
                     if (mc.screen == null && (mc.player.getMainHandItem().getItem() instanceof IWand || mc.player.getOffhandItem().getItem() instanceof IWand)) {
                         mc.setScreen(new SpellSelectionRadialScreen());
                     }

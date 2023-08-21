@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -128,6 +129,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate grimoire GUI localizations
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
+        
+        // Generate key mapping localizations
+        this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
+        this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
         
         // Generate research requirement localizations
         this.researchRequirement("m_dummy").name("Location Discovery").build();

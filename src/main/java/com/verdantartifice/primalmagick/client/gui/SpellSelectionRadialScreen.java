@@ -118,7 +118,7 @@ public class SpellSelectionRadialScreen extends Screen {
         
         if (this.stackEquipped.isEmpty()) {
             this.minecraft.setScreen(null);
-        } else if (!InputEvents.isKeyDown(KeyBindings.changeSpellKey)) {
+        } else if (!InputEvents.isKeyDown(KeyBindings.CHANGE_SPELL_KEY)) {
             if (Config.RADIAL_RELEASE_TO_SWITCH.get()) {
                 this.processClick(false);
             } else {

@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuild
 import com.verdantartifice.primalmagick.datagen.lang.builders.GrimoireLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.KeyMappingLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
@@ -36,6 +37,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLangua
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -199,5 +201,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public GrimoireLanguageBuilder grimoire(String id) {
         return this.createBuilder(() -> new GrimoireLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public KeyMappingLanguageBuilder keyMapping(KeyMapping mapping, String regName) {
+        return this.createBuilder(() -> new KeyMappingLanguageBuilder(mapping, regName, this::untrack, this::add));
     }
 }
