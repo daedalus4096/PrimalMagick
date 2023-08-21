@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -71,5 +72,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.attunementType(AttunementType.PERMANENT).name("Permanent").build();
         this.attunementType(AttunementType.INDUCED).name("Induced").build();
         this.attunementType(AttunementType.TEMPORARY).name("Temporary").build();
+        
+        // Generate attunement threshold localizations
+        this.attunementThreshold(AttunementThreshold.MINOR).name("Minor").build();
+        this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser").build();
+        this.attunementThreshold(AttunementThreshold.GREATER).name("Greater").build();
     }
 }
