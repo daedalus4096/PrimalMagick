@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagick.common.commands.arguments.SourceInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -352,7 +353,7 @@ public class PrimalMagickCommand {
     
     private static int getKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
+        KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else if (type == null) {
@@ -368,7 +369,7 @@ public class PrimalMagickCommand {
     
     private static int addKnowledge(CommandSourceStack source, ServerPlayer target, KnowledgeTypeInput knowledgeTypeInput, int points) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(target).orElse(null);
-        IPlayerKnowledge.KnowledgeType type = knowledgeTypeInput.getType();
+        KnowledgeType type = knowledgeTypeInput.getType();
         if (knowledge == null) {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else if (type == null) {

@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagick.common.research;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-
 /**
  * Represents a packet of knowledge levels (e.g. 3 levels worth of observations).  Primarily used to
  * parse knowledge requirements for research and display them in the grimoire.
@@ -12,10 +10,10 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
  * @author Daedalus4096
  */
 public class Knowledge {
-    protected IPlayerKnowledge.KnowledgeType type;
+    protected KnowledgeType type;
     protected int amount;
     
-    protected Knowledge(@Nonnull IPlayerKnowledge.KnowledgeType type, int amount) {
+    protected Knowledge(@Nonnull KnowledgeType type, int amount) {
         this.type = type;
         this.amount = amount;
     }
@@ -25,9 +23,9 @@ public class Knowledge {
         if (str != null) {
             String[] tokens = str.split(";");
             if (tokens.length == 2) {
-                IPlayerKnowledge.KnowledgeType type;
+                KnowledgeType type;
                 try {
-                    type = IPlayerKnowledge.KnowledgeType.valueOf(tokens[0].toUpperCase());
+                    type = KnowledgeType.valueOf(tokens[0].toUpperCase());
                 } catch (Exception e) {
                     return null;
                 }
@@ -48,7 +46,7 @@ public class Knowledge {
     }
     
     @Nonnull
-    public IPlayerKnowledge.KnowledgeType getType() {
+    public KnowledgeType getType() {
         return this.type;
     }
     

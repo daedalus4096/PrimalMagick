@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.config.Config;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -4,23 +4,22 @@ import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 /**
  * Input predicate for a knowledge type.  Determines if a given string represents a valid argument.
  * 
  * @author Daedalus4096
  */
-public class KnowledgeTypeInput implements Predicate<IPlayerKnowledge.KnowledgeType> {
-    protected final IPlayerKnowledge.KnowledgeType type;
+public class KnowledgeTypeInput implements Predicate<KnowledgeType> {
+    protected final KnowledgeType type;
     
-    public KnowledgeTypeInput(@Nonnull IPlayerKnowledge.KnowledgeType type) {
+    public KnowledgeTypeInput(@Nonnull KnowledgeType type) {
         this.type = type;
     }
     
     @Nonnull
-    public IPlayerKnowledge.KnowledgeType getType() {
+    public KnowledgeType getType() {
         return this.type;
     }
 

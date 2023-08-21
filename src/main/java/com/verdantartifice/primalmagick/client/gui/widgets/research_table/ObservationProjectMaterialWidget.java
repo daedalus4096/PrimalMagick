@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.ObservationProjectMaterial;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -27,7 +27,7 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
         guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        guiGraphics.blit(IPlayerKnowledge.KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 0, 0, 255, 255);
+        guiGraphics.blit(KnowledgeType.OBSERVATION.getIconLocation(), 0, 0, 0, 0, 255, 255);
         guiGraphics.pose().popPose();
         
         // Draw base class stuff
@@ -36,6 +36,6 @@ public class ObservationProjectMaterialWidget extends AbstractProjectMaterialWid
     
     @Override
     protected List<Component> getHoverText() {
-        return Collections.singletonList(Component.translatable(IPlayerKnowledge.KnowledgeType.OBSERVATION.getNameTranslationKey()));
+        return Collections.singletonList(Component.translatable(KnowledgeType.OBSERVATION.getNameTranslationKey()));
     }
 }

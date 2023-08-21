@@ -17,6 +17,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -45,7 +46,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     private final Set<String> research = ConcurrentHashMap.newKeySet();             // Set of known research
     private final Map<String, Integer> stages = new ConcurrentHashMap<>();          // Map of research keys to current stage numbers
     private final Map<String, Set<ResearchFlag>> flags = new ConcurrentHashMap<>(); // Map of research keys to attached flag sets
-    private final Map<IPlayerKnowledge.KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
+    private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();   // Map of knowledge types to accrued points
     private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();  // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
@@ -80,7 +81,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize knowledge types, including accrued points
         ListTag knowledgeList = new ListTag();
-        for (IPlayerKnowledge.KnowledgeType knowledgeKey : this.knowledge.keySet()) {
+        for (KnowledgeType knowledgeKey : this.knowledge.keySet()) {
             if (knowledgeKey != null) {
                 Integer points = this.knowledge.get(knowledgeKey);
                 if (points != null && points.intValue() > 0) {
@@ -155,9 +156,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         for (int index = 0; index < knowledgeList.size(); index++) {
             CompoundTag tag = knowledgeList.getCompound(index);
             String keyStr = tag.getString("key");
-            IPlayerKnowledge.KnowledgeType key = null;
+            KnowledgeType key = null;
             try {
-                key = IPlayerKnowledge.KnowledgeType.valueOf(keyStr);
+                key = KnowledgeType.valueOf(keyStr);
             } catch (Exception e) {}
             int points = tag.getInt("value");
             if (key != null) {

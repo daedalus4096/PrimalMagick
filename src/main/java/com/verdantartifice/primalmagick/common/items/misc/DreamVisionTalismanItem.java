@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.ChatFormatting;

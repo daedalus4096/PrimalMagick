@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.CompleteProjectPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
@@ -162,7 +163,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
         this.completeProjectButton = null;
         
         // Render theory progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, IPlayerKnowledge.KnowledgeType.THEORY));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY));
         
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
@@ -219,7 +220,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
         }
         
         // Render observation progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 11, this.topPos + 116, KnowledgeType.OBSERVATION));
     }
     
     /**

@@ -8,10 +8,10 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -88,7 +88,7 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
 
     protected void initControlWidgets() {
         this.addRenderableWidget(new AnalyzeButton(this.menu, this.leftPos, this.topPos));
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, IPlayerKnowledge.KnowledgeType.OBSERVATION));
+        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 8, this.topPos + 60, KnowledgeType.OBSERVATION));
     }
     
     protected void initAffinityWidgets() {

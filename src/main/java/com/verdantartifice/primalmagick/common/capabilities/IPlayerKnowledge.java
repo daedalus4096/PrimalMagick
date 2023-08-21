@@ -7,13 +7,12 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -221,32 +220,5 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
         NEW,
         UPDATED,
         POPUP
-    }
-    
-    public static enum KnowledgeType {
-        OBSERVATION(16, PrimalMagick.resource("textures/research/knowledge_observation.png")),
-        THEORY(32, PrimalMagick.resource("textures/research/knowledge_theory.png"));
-        
-        private short progression;  // How many points make a complete level for this knowledge type
-        private ResourceLocation iconLocation;
-        
-        private KnowledgeType(int progression, @Nonnull ResourceLocation iconLocation) {
-            this.progression = (short)progression;
-            this.iconLocation = iconLocation;
-        }
-        
-        public int getProgression() {
-            return this.progression;
-        }
-        
-        @Nonnull
-        public ResourceLocation getIconLocation() {
-            return this.iconLocation;
-        }
-        
-        @Nonnull
-        public String getNameTranslationKey() {
-            return "primalmagick.knowledge_type." + this.name();
-        }
     }
 }

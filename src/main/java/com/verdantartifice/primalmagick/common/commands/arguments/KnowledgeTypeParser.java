@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.commands.arguments;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 /**
  * Debug command argument parser for a knowledge type.  Reads the argument from the command line.
@@ -11,13 +11,13 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
  */
 public class KnowledgeTypeParser {
     protected final StringReader reader;
-    protected IPlayerKnowledge.KnowledgeType type;
+    protected KnowledgeType type;
     
     public KnowledgeTypeParser(StringReader reader) {
         this.reader = reader;
     }
     
-    public IPlayerKnowledge.KnowledgeType getType() {
+    public KnowledgeType getType() {
         return this.type;
     }
     
@@ -29,7 +29,7 @@ public class KnowledgeTypeParser {
         }
         String rawKey = this.reader.getString().substring(i, this.reader.getCursor());
         try {
-            this.type = IPlayerKnowledge.KnowledgeType.valueOf(rawKey);
+            this.type = KnowledgeType.valueOf(rawKey);
         } catch (Exception e) {}
     }
     

@@ -2,12 +2,12 @@ package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -62,7 +62,7 @@ public class CompleteProjectPacket implements IMessageToServer {
                             RandomSource rand = player.getRandom();
                             if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
                                 if (rand.nextDouble() < project.getSuccessChance()) {
-                                    ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.THEORY, project.getTheoryPointReward());
+                                    ResearchManager.addKnowledge(player, KnowledgeType.THEORY, project.getTheoryPointReward());
                                     StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
                                     PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
                                 } else {

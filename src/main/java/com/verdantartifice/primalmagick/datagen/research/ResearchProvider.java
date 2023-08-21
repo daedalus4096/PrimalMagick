@@ -11,9 +11,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge.KnowledgeType;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;

@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
 import net.minecraft.nbt.CompoundTag;
@@ -65,13 +66,13 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        return (knowledge != null && knowledge.getKnowledge(IPlayerKnowledge.KnowledgeType.OBSERVATION) >= this.count);
+        return (knowledge != null && knowledge.getKnowledge(KnowledgeType.OBSERVATION) >= this.count);
     }
 
     @Override
     public boolean consume(Player player) {
         // Deduct observation level(s) from the player's knowledge pool
-        return ResearchManager.addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, -1 * this.count * IPlayerKnowledge.KnowledgeType.OBSERVATION.getProgression());
+        return ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, -1 * this.count * KnowledgeType.OBSERVATION.getProgression());
     }
     
     @Override

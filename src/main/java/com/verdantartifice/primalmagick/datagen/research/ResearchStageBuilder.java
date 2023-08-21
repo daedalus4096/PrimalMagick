@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -82,7 +82,7 @@ public class ResearchStageBuilder {
         return this;
     }
     
-    public ResearchStageBuilder requiredKnowledge(@Nonnull IPlayerKnowledge.KnowledgeType type, int count) {
+    public ResearchStageBuilder requiredKnowledge(@Nonnull KnowledgeType type, int count) {
         this.requiredKnowledge.add(type.toString() + ";" + count);
         return this;
     }

@@ -5,6 +5,7 @@ import java.awt.Color;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -23,10 +24,10 @@ import net.minecraftforge.common.util.LazyOptional;
 public class KnowledgeTotalWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
 
-    protected IPlayerKnowledge.KnowledgeType type;
+    protected KnowledgeType type;
     protected LazyOptional<IPlayerKnowledge> knowledgeOpt;
     
-    public KnowledgeTotalWidget(int x, int y, IPlayerKnowledge.KnowledgeType type) {
+    public KnowledgeTotalWidget(int x, int y, KnowledgeType type) {
         super(x, y, 16, 19, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.type = type;

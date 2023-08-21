@@ -516,11 +516,11 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points) {
+    public static boolean addKnowledge(Player player, KnowledgeType type, int points) {
         return addKnowledge(player, type, points, true);
     }
     
-    public static boolean addKnowledge(Player player, IPlayerKnowledge.KnowledgeType type, int points, boolean scheduleSync) {
+    public static boolean addKnowledge(Player player, KnowledgeType type, int points, boolean scheduleSync) {
         // Add the given number of knowledge points to the player and sync to their client
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
@@ -534,9 +534,9 @@ public class ResearchManager {
         if (points > 0) {
             int levelsAfter = knowledge.getKnowledge(type);
             int delta = levelsAfter - levelsBefore;
-            if (type == IPlayerKnowledge.KnowledgeType.OBSERVATION) {
+            if (type == KnowledgeType.OBSERVATION) {
                 StatsManager.incrementValue(player, StatsPM.OBSERVATIONS_MADE, delta);
-            } else if (type == IPlayerKnowledge.KnowledgeType.THEORY) {
+            } else if (type == KnowledgeType.THEORY) {
                 StatsManager.incrementValue(player, StatsPM.THEORIES_FORMED, delta);
             }
             for (int index = 0; index < delta; index++) {
@@ -634,7 +634,7 @@ public class ResearchManager {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
             int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
             if (obsPoints > 0) {
-                addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints, false);
+                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
             }
             
             // Increment the items analyzed stat
@@ -669,7 +669,7 @@ public class ResearchManager {
             // Determine how many observation points the entity is worth and add those to the player's knowledge
             int obsPoints = getObservationPoints(type);
             if (obsPoints > 0) {
-                addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints, false);
+                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
             }
             
             // Increment the entities analyzed stat
@@ -711,7 +711,7 @@ public class ResearchManager {
                 // Determine how many observation points the itemstack is worth and add those to the player's knowledge
                 int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
                 if (obsPoints > 0) {
-                    addKnowledge(player, IPlayerKnowledge.KnowledgeType.OBSERVATION, obsPoints, false);
+                    addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
                 }
                 
                 // Check to see if any scan triggers need to be run for the item
