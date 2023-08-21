@@ -1,4 +1,10 @@
 {
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 11893192,
+    "separation": 10,
+    "spacing": 20
+  },
   "structures": [
     {
       "structure": "primalmagick:earth_shrine",
@@ -20,11 +26,5 @@
       "structure": "primalmagick:moon_shrine",
       "weight": 1
     }
-  ],
-  "placement": {
-    "salt": 11893192,
-    "spacing": 20,
-    "separation": 10,
-    "type": "minecraft:random_spread"
-  }
+  ]
 }
