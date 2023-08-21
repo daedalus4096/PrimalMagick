@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -36,5 +37,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate item localizations
         this.item(ItemsPM.HALLOWED_ORB).name("Hallowed Orb").tooltip("A sense of peace washes over", "you as you hold this").build();
         this.item(ItemsPM.RUNE_EARTH).name("Earth Rune").tooltip("\"Teq\"").build();
+        
+        // Generate entity type localizations
+        this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
     }
 }
