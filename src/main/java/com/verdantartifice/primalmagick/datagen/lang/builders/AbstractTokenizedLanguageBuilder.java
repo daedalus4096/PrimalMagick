@@ -69,7 +69,11 @@ public abstract class AbstractTokenizedLanguageBuilder extends AbstractLanguageB
         }
         
         public SubtokenBuilder output(String... values) {
-            int index = 1;
+            return this.output(1, values);
+        }
+        
+        public SubtokenBuilder output(int start, String... values) {
+            int index = start;
             for (String value : values) {
                 AbstractTokenizedLanguageBuilder.this.add(this.getKey(index++), value);
             }

@@ -31,6 +31,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDiscipline
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchProjectLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchRequirementLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.RitualLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellModLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPayloadLanguageBuilder;
@@ -216,5 +217,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public StatLanguageBuilder stat(Stat stat) {
         return this.createBuilder(() -> new StatLanguageBuilder(stat, this::untrack, this::add));
+    }
+    
+    public RitualLanguageBuilder ritual(String id) {
+        return this.createBuilder(() -> new RitualLanguageBuilder(id, this::untrack, this::add));
     }
 }

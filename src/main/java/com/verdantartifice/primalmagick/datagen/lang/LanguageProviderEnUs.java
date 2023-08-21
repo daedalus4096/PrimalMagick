@@ -131,6 +131,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
         
+        // Generate ritual feedback localizations
+        this.ritual("instability").name("%1$s: %2$s").build();
+        this.ritual("instability").sub("header").output("Instability").end().build();
+        this.ritual("instability").sub("rating").output(0, "Trivial", "Low", "Moderate", "High", "Very High", "Extreme").end().build();
+        
         // Generate key mapping localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
