@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.WandComponentBlockStateProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
+import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
@@ -47,6 +48,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new WandComponentBlockStateProvider(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), EntityLootTables.getSubProviderEntry(), GameplayLootTables.getSubProviderEntry()))));
