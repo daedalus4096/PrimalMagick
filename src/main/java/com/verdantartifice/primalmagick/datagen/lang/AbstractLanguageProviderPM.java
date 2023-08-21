@@ -27,6 +27,9 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLangu
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.SpellModLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPayloadLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 
@@ -165,5 +168,17 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public WrittenBookLanguageBuilder book(String id) {
         return this.createBuilder(() -> new WrittenBookLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public SpellVehicleLanguageBuilder spellVehicle(String id) {
+        return this.createBuilder(() -> new SpellVehicleLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public SpellPayloadLanguageBuilder spellPayload(String id) {
+        return this.createBuilder(() -> new SpellPayloadLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public SpellModLanguageBuilder spellMod(String id) {
+        return this.createBuilder(() -> new SpellModLanguageBuilder(id, this::untrack, this::add));
     }
 }

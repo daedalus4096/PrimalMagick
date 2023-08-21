@@ -9,6 +9,9 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagick.common.spells.payloads.EarthDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.TouchSpellVehicle;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -86,19 +89,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .effect(Source.EARTH, "Step height increase")
             .build();
         
-        // Generate research entry localizations
-        this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
-            .stages()
-                .add("Some potions just aren't meant to be drunk, at least by oneself.  Or perhaps meant to be shared?<BR>Either way, skyglass flasks don't shatter like the regular glass bottles in splash potions do.  And even if they did, who wants to waste all those doses of potion at once?<BR>I must devise a new method of distribution.")
-                .add("Bombs!  Bombs are great!<BR>By creating a set of special bomb casings, I can distribute individual doses of potion to anyone at range.  A single set of casings will produce six bombs.<BR>Alchemical bombs don't just explode on impact, necessarily.  I mean, they will if you score a direct hit on a creature, but if you miss, they'll bounce.  Bombs are on a timed fuse and will detonate when that time runs out.  I can change the length of the fuse by using it while sneaking.")
-                .end()
-            .addenda()
-                .add("Some bomb recipes requires the use of Blood essence.")
-                .add("Some bomb recipes requires the use of Infernal essence.")
-                .add("Some bomb recipes requires the use of Void essence.")
-                .end()
-            .build();
-        
         // Generate command output localizations
         this.command("research").sub("grant").output("Granting research to %1$s: %2$s").end().build();
         this.command("research").sub("grant").sub("target").output("%1$s has granted you %2$s research and its parents").end().build();
@@ -117,6 +107,32 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .text("\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"")
             .text("\"the shrine and found stone laced with a curious dust. Sensing more magick within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase.\"")
             .text("\"The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.\"")
+            .build();
+        
+        // Generate spell vehicle localizations
+        this.add("spells.primalmagick.vehicle.header", "Spell Type");
+        this.spellVehicle(TouchSpellVehicle.TYPE).name("Touch").defaultName("Hand").build();
+        
+        // Generate spell payload localizations
+        this.add("spells.primalmagick.payload.header", "Spell Payload");
+        this.spellPayload(EarthDamageSpellPayload.TYPE).name("Earth Damage").defaultName("Earthen").detailTooltip("Earth Damage (%1$s damage)").build();
+        
+        // Generate spell mod localizations
+        this.add("spells.primalmagick.primary_mod.header", "Primary Mod");
+        this.add("spells.primalmagick.secondary_mod.header", "Secondary Mod");
+        this.spellMod(EmptySpellMod.TYPE).name("None").defaultName("").build();
+        
+        // Generate research entry localizations
+        this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
+            .stages()
+                .add("Some potions just aren't meant to be drunk, at least by oneself.  Or perhaps meant to be shared?<BR>Either way, skyglass flasks don't shatter like the regular glass bottles in splash potions do.  And even if they did, who wants to waste all those doses of potion at once?<BR>I must devise a new method of distribution.")
+                .add("Bombs!  Bombs are great!<BR>By creating a set of special bomb casings, I can distribute individual doses of potion to anyone at range.  A single set of casings will produce six bombs.<BR>Alchemical bombs don't just explode on impact, necessarily.  I mean, they will if you score a direct hit on a creature, but if you miss, they'll bounce.  Bombs are on a timed fuse and will detonate when that time runs out.  I can change the length of the fuse by using it while sneaking.")
+                .end()
+            .addenda()
+                .add("Some bomb recipes requires the use of Blood essence.")
+                .add("Some bomb recipes requires the use of Infernal essence.")
+                .add("Some bomb recipes requires the use of Void essence.")
+                .end()
             .build();
     }
 }
