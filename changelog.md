@@ -10,7 +10,7 @@ v4.0.2
 * Upgraded the Dowsing Rod to mark expected symmetry location if no matching block is found
 * Fixed symmetry calculation bug with Offering Pedestals
 * Performed miscellaneous refactoring and code cleanup
-* Converted most hand-written blockstate, model, and sound files to code-generated assets
+* Converted most hand-written blockstate, model, sound, and structure files to code-generated assets
 * Fixed alchemical bombs with dud potions showing up in creative tab
 
 v4.0.1
