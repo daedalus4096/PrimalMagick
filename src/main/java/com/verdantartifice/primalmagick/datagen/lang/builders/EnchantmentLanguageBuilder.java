@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Enchantment> {
+public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Enchantment, EnchantmentLanguageBuilder> {
     public EnchantmentLanguageBuilder(Enchantment ench, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(ench, ench::getDescriptionId, untracker, adder);
     }
@@ -28,11 +28,6 @@ public class EnchantmentLanguageBuilder extends AbstractLanguageBuilder<Enchantm
     @Override
     protected ResourceLocation getBaseRegistryKey(Enchantment base) {
         return Objects.requireNonNull(ForgeRegistries.ENCHANTMENTS.getKey(base));
-    }
-
-    public EnchantmentLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
     }
 
     public EnchantmentLanguageBuilder description(String value) {

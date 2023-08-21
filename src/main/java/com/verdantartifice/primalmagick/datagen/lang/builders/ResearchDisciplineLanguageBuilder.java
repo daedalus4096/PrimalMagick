@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class ResearchDisciplineLanguageBuilder extends AbstractLanguageBuilder<ResearchDiscipline> {
+public class ResearchDisciplineLanguageBuilder extends AbstractLanguageBuilder<ResearchDiscipline, ResearchDisciplineLanguageBuilder> {
     public ResearchDisciplineLanguageBuilder(ResearchDiscipline disc, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(disc, disc::getNameTranslationKey, untracker, adder);
     }
@@ -26,10 +26,5 @@ public class ResearchDisciplineLanguageBuilder extends AbstractLanguageBuilder<R
     @Override
     protected ResourceLocation getBaseRegistryKey(ResearchDiscipline base) {
         return PrimalMagick.resource(base.getKey().toLowerCase());
-    }
-
-    public ResearchDisciplineLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
     }
 }

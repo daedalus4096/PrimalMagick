@@ -15,7 +15,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityType<?>> {
+public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityType<?>, EntityTypeLanguageBuilder> {
     public EntityTypeLanguageBuilder(EntityType<?> entityType, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(entityType, entityType::getDescriptionId, untracker, adder);
     }
@@ -28,10 +28,5 @@ public class EntityTypeLanguageBuilder extends AbstractLanguageBuilder<EntityTyp
     @Override
     protected ResourceLocation getBaseRegistryKey(EntityType<?> base) {
         return Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(base));
-    }
-    
-    public EntityTypeLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
     }
 }

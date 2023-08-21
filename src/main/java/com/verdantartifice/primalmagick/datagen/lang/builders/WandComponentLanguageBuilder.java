@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class WandComponentLanguageBuilder extends AbstractLanguageBuilder<IWandComponent> {
+public class WandComponentLanguageBuilder extends AbstractLanguageBuilder<IWandComponent, WandComponentLanguageBuilder> {
     public WandComponentLanguageBuilder(IWandComponent component, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(component, component::getNameTranslationKey, untracker, adder);
     }
@@ -26,10 +26,5 @@ public class WandComponentLanguageBuilder extends AbstractLanguageBuilder<IWandC
     @Override
     protected ResourceLocation getBaseRegistryKey(IWandComponent base) {
         return PrimalMagick.resource(base.getTag());
-    }
-
-    public WandComponentLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
     }
 }

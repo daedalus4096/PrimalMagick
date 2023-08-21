@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block> {
+public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block, BlockLanguageBuilder> {
     public BlockLanguageBuilder(Block block, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(block, block::getDescriptionId, untracker, adder);
     }
@@ -32,11 +32,6 @@ public class BlockLanguageBuilder extends AbstractLanguageBuilder<Block> {
         return Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(base));
     }
 
-    public BlockLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
-    }
-    
     public BlockLanguageBuilder tooltip(String value) {
         this.add(this.getKey(TooltipHelper.SUFFIX), value);
         return this;

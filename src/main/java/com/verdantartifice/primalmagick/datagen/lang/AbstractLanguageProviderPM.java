@@ -76,14 +76,18 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         }
     }
     
+    private <T extends ILanguageBuilder> T createBuilder(Supplier<T> builderFactory) {
+        T builder = builderFactory.get();
+        this.track(builder);
+        return builder;
+    }
+    
     public BlockLanguageBuilder block(Supplier<? extends Block> block) {
         return this.block(block.get());
     }
     
     public BlockLanguageBuilder block(Block block) {
-        BlockLanguageBuilder builder = new BlockLanguageBuilder(block, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new BlockLanguageBuilder(block, this::untrack, this::add));
     }
     
     public ItemLanguageBuilder item(Supplier<? extends Item> item) {
@@ -91,9 +95,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ItemLanguageBuilder item(Item item) {
-        ItemLanguageBuilder builder = new ItemLanguageBuilder(item, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new ItemLanguageBuilder(item, this::untrack, this::add));
     }
     
     public EntityTypeLanguageBuilder entity(Supplier<? extends EntityType<?>> entity) {
@@ -101,9 +103,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public EntityTypeLanguageBuilder entity(EntityType<?> entity) {
-        EntityTypeLanguageBuilder builder = new EntityTypeLanguageBuilder(entity, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new EntityTypeLanguageBuilder(entity, this::untrack, this::add));
     }
     
     public EnchantmentLanguageBuilder enchantment(Supplier<? extends Enchantment> ench) {
@@ -111,32 +111,22 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public EnchantmentLanguageBuilder enchantment(Enchantment ench) {
-        EnchantmentLanguageBuilder builder = new EnchantmentLanguageBuilder(ench, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new EnchantmentLanguageBuilder(ench, this::untrack, this::add));
     }
     
     public SourceLanguageBuilder source(Source source) {
-        SourceLanguageBuilder builder = new SourceLanguageBuilder(source, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new SourceLanguageBuilder(source, this::untrack, this::add));
     }
     
     public WandComponentLanguageBuilder wandComponent(IWandComponent component) {
-        WandComponentLanguageBuilder builder = new WandComponentLanguageBuilder(component, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new WandComponentLanguageBuilder(component, this::untrack, this::add));
     }
     
     public KnowledgeTypeLanguageBuilder knowledgeType(KnowledgeType type) {
-        KnowledgeTypeLanguageBuilder builder = new KnowledgeTypeLanguageBuilder(type, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new KnowledgeTypeLanguageBuilder(type, this::untrack, this::add));
     }
     
     public ResearchDisciplineLanguageBuilder researchDiscipline(ResearchDiscipline disc) {
-        ResearchDisciplineLanguageBuilder builder = new ResearchDisciplineLanguageBuilder(disc, this::untrack, this::add);
-        this.track(builder);
-        return builder;
+        return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(disc, this::untrack, this::add));
     }
 }

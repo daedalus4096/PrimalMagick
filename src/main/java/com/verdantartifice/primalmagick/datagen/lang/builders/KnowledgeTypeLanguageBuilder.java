@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class KnowledgeTypeLanguageBuilder extends AbstractLanguageBuilder<KnowledgeType> {
+public class KnowledgeTypeLanguageBuilder extends AbstractLanguageBuilder<KnowledgeType, KnowledgeTypeLanguageBuilder> {
     public KnowledgeTypeLanguageBuilder(KnowledgeType type, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(type, type::getNameTranslationKey, untracker, adder);
     }
@@ -26,10 +26,5 @@ public class KnowledgeTypeLanguageBuilder extends AbstractLanguageBuilder<Knowle
     @Override
     protected ResourceLocation getBaseRegistryKey(KnowledgeType base) {
         return PrimalMagick.resource(base.getSerializedName());
-    }
-
-    public KnowledgeTypeLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
     }
 }

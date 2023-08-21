@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractLanguageBuilder<T> implements ILanguageBuilder {
+public abstract class AbstractLanguageBuilder<T, U extends AbstractLanguageBuilder<T, U>> implements ILanguageBuilder {
     protected final T base;
     protected final Supplier<String> keyExtractor;
     protected final Consumer<ILanguageBuilder> untracker;
@@ -29,6 +29,11 @@ public abstract class AbstractLanguageBuilder<T> implements ILanguageBuilder {
         this.keyExtractor = Preconditions.checkNotNull(keyExtractor);
         this.untracker = Preconditions.checkNotNull(untracker);
         this.adder = Preconditions.checkNotNull(adder);
+    }
+    
+    @SuppressWarnings("unchecked")
+    private U self() {
+        return (U)this;
     }
 
     protected ResourceLocation getBaseRegistryKey() {
@@ -65,5 +70,10 @@ public abstract class AbstractLanguageBuilder<T> implements ILanguageBuilder {
         tokens.add(this.keyExtractor.get());
         tokens.addAll(List.of(suffixes));
         return String.join(".", tokens);
+    }
+
+    public U name(String value) {
+        this.add(this.getKey(), value);
+        return self();
     }
 }

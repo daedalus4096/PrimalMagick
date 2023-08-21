@@ -17,7 +17,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item> {
+public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLanguageBuilder> {
     public ItemLanguageBuilder(Item item, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(item, item::getDescriptionId, untracker, adder);
     }
@@ -32,11 +32,6 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item> {
         return Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(base));
     }
 
-    public ItemLanguageBuilder name(String value) {
-        this.add(this.getKey(), value);
-        return this;
-    }
-    
     public ItemLanguageBuilder tooltip(String value) {
         this.add(this.getKey(TooltipHelper.SUFFIX), value);
         return this;
