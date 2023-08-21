@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
+import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -26,5 +27,10 @@ public class AttunementThresholdLanguageBuilder extends AbstractLanguageBuilder<
     @Override
     protected ResourceLocation getBaseRegistryKey(AttunementThreshold base) {
         return PrimalMagick.resource(base.getSerializedName());
+    }
+    
+    public AttunementThresholdLanguageBuilder effect(Source source, String value) {
+        this.add(this.getKey(source.getTag()), value);
+        return this;
     }
 }

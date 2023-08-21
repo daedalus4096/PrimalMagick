@@ -74,9 +74,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.attunementType(AttunementType.TEMPORARY).name("Temporary").build();
         
         // Generate attunement threshold localizations
-        this.attunementThreshold(AttunementThreshold.MINOR).name("Minor").build();
-        this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser").build();
-        this.attunementThreshold(AttunementThreshold.GREATER).name("Greater").build();
+        this.attunementThreshold(AttunementThreshold.MINOR).name("Minor")
+            .effect(Source.EARTH, "5% Earth mana discount")
+            .build();
+        this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser")
+            .effect(Source.EARTH, "Increased attack/mining speed")
+            .build();
+        this.attunementThreshold(AttunementThreshold.GREATER).name("Greater")
+            .effect(Source.EARTH, "Step height increase")
+            .build();
         
         // Generate research entry localizations
         this.researchEntry("CONCOCTING_BOMBS").name("Concocting: Bombs")
