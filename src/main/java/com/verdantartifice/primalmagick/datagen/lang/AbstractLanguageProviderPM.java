@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementThreshol
 import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.CommandLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.ConcoctionLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuilder;
@@ -221,5 +222,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public RitualLanguageBuilder ritual(String id) {
         return this.createBuilder(() -> new RitualLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public ConcoctionLanguageBuilder concoction(String id) {
+        return this.createBuilder(() -> new ConcoctionLanguageBuilder(id, this::untrack, this::add));
     }
 }

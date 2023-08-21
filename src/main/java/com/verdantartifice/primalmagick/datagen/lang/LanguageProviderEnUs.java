@@ -136,6 +136,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.ritual("instability").sub("header").output("Instability").end().build();
         this.ritual("instability").sub("rating").output(0, "Trivial", "Low", "Moderate", "High", "Very High", "Extreme").end().build();
         
+        // Generate concoction localizations
+        this.concoction("doses_remaining").name("Doses: %1$d").build();
+        this.concoction("fuse").sub("impact").output("Impact").end().build();
+        
         // Generate key mapping localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
