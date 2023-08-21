@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
@@ -15,6 +16,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguag
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
@@ -122,6 +124,12 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public WandComponentLanguageBuilder wandComponent(IWandComponent component) {
         WandComponentLanguageBuilder builder = new WandComponentLanguageBuilder(component, this::untrack, this::add);
+        this.track(builder);
+        return builder;
+    }
+    
+    public KnowledgeTypeLanguageBuilder knowledgeType(KnowledgeType type) {
+        KnowledgeTypeLanguageBuilder builder = new KnowledgeTypeLanguageBuilder(type, this::untrack, this::add);
         this.track(builder);
         return builder;
     }
