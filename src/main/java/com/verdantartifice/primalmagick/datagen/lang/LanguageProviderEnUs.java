@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
@@ -65,5 +66,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate knowledge type localizations
         this.knowledgeType(KnowledgeType.OBSERVATION).name("Observation").build();
         this.knowledgeType(KnowledgeType.THEORY).name("Theory").build();
+        
+        // Generate attunement type localizations
+        this.attunementType(AttunementType.PERMANENT).name("Permanent").build();
+        this.attunementType(AttunementType.INDUCED).name("Induced").build();
+        this.attunementType(AttunementType.TEMPORARY).name("Temporary").build();
     }
 }

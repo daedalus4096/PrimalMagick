@@ -7,10 +7,12 @@ import java.util.function.Supplier;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
+import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
@@ -124,6 +126,10 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public KnowledgeTypeLanguageBuilder knowledgeType(KnowledgeType type) {
         return this.createBuilder(() -> new KnowledgeTypeLanguageBuilder(type, this::untrack, this::add));
+    }
+    
+    public AttunementTypeLanguageBuilder attunementType(AttunementType type) {
+        return this.createBuilder(() -> new AttunementTypeLanguageBuilder(type, this::untrack, this::add));
     }
     
     public ResearchDisciplineLanguageBuilder researchDiscipline(ResearchDiscipline disc) {
