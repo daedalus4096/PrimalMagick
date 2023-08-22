@@ -700,7 +700,28 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate research project localizations
         this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();
-        
+        this.researchProject("mundane_tinkering").name("Mundane Tinkering").text("You spend some time working with your tools, creating paraphernalia to help with your magickal pursuits.").build();
+        this.researchProject("redstone_tinkering").name("Redstone Tinkering").text("You spend some time tinkering with your redstone devices, seeing if their principles will help your magitech studies.").build();
+        this.researchProject("expedition").name("Expedition").text("Who knows what arcane secrets lie hidden in the dungeons of the world?  You prepare an expedition to find some.").build();
+        this.researchProject("nether_expedition").name("Nether Expedition").text("The fortresses of the Nether are surely filled with forbidden knowledge.  You prepare an expedition to find some.").build();
+        this.researchProject("recuperation").name("Rest and Recuperation").text("Too much work dulls the mind.  Perhaps an idea will strike you if you take some time to stop and smell the roses.").build();
+        this.researchProject("essence_analysis").name("Essence Analysis").text("Magickal essence has many amazing properties.  You study some to see how it reacts with other substances.").build();
+        this.researchProject("brewing_experiments").name("Brewing Experiments").text("There are many similarities between brewing and wizardly alchemy.  Perhaps studying the former will give you insight into the latter.").build();
+        this.researchProject("wand_tinkering").name("Wand Tinkering").text("You experiment with different methods and materials for constructing wands, hoping to refine your understanding of the process.").build();
+        this.researchProject("spellwork").name("Spellwork").text("You devise and cast some simple spells, hoping to refine your technique.  Practice makes perfect, after all.").build();
+        this.researchProject("advanced_essence_analysis").name("Adv. Essence Analysis").text("Analysis of basic magickal essence was rewarding.  It stands to reason that more advanced essence structures will teach you even more.").build();
+        this.researchProject("enchanting_studies").name("Enchanting Studies").text("Enchanting and manaweaving are close siblings.  Studying their similarities and differences could be enlightening.").build();
+        this.researchProject("observation_analysis").name("Observation Analysis").text("A more thorough analysis of your observations may yield surprising discoveries.").build();
+        this.researchProject("hit_the_books").name("Hit the Books").text("There's bound to be something in all of this reading material that would be useful in your studies.").build();
+        this.researchProject("beacon_emanations").name("Beacon Emanations").text("While they're not of the wizardly arts, Beacons are clearly more than just mundane objects.  Studying their emanations could be valuable.").build();
+        this.researchProject("portal_detritus").name("Portal Detritus").text("Strange things sometimes come back through Nether portals.  You could learn much by studying them.").build();
+        this.researchProject("draconic_energies").name("Draconic Energies").text("This egg seems to harmonize with ender pearls, releasing intriguing energies.  Is this really such a good idea, though?").build();
+        this.researchProject("piglin_barter").name("Piglin Bartering").text("The piglins of the Nether must surely know secrets about that infernal place.  Exploit their craving for gold.").build();
+        this.researchProject("apiamancy").name("Apiamancy").text("Some say you can see the future in the movement of bees.  It's probably overstated, but you might still learn something.").build();
+        this.researchProject("end_expedition").name("End Expedition").text("The cities of The End reek of secrets.  You prepare an expedition to brave their dangers and bring some home.").build();
+        this.researchProject("master_essence_analysis").name("Master Essence Analysis").text("Study of magickal essence has been profitable for you.  It's time to learn what the purest samples have to teach.").build();
+        this.researchProject("draconic_memories").name("Draconic Memories").text("This dragon hoarded experiences, not gold.  Even in death it hungers for more.  Feed it, and see what it can teach you.").build();
+
         // Generate research requirement localizations
         this.researchRequirement("m_dummy").name("Location Discovery").build();
         this.researchRequirement(Source.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
