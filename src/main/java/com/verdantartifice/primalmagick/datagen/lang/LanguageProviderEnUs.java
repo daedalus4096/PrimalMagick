@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -435,6 +436,156 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .partialRuneText("The Magick Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magick damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.")
             .build();
 
+        // Generate vanilla enchantment localization extensions
+        this.enchantment(Enchantments.ALL_DAMAGE_PROTECTION)
+            .fullRuneText("The Protection enchantment can be imbued through the use of Protect, Self, and Earth runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
+            .partialRuneText("The Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage.  It is incompatible with other Protection enchantments.")
+            .build();
+        this.enchantment(Enchantments.FIRE_PROTECTION)
+            .fullRuneText("The Fire Protection enchantment can be imbued through the use of Protect, Self, and Infernal runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
+            .partialRuneText("The Fire Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming fire damage as well as the amount of time that the wearer is engulfed in flames.  It is incompatible with other Protection enchantments.")
+            .build();
+        this.enchantment(Enchantments.FALL_PROTECTION)
+            .fullRuneText("The Feather Falling enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
+            .partialRuneText("The Feather Falling enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it greatly reduces all damage sustained from falling.")
+            .build();
+        this.enchantment(Enchantments.BLAST_PROTECTION)
+            .fullRuneText("The Blast Protection enchantment can be imbued through the use of Protect, Self, and Moon runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming explosion damage as well as the distance that the wearer is knocked back by explosions.  It is incompatible with other Protection enchantments.")
+            .partialRuneText("The Blast Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming explosion damage as well as the distance that the wearer is knocked back by explosions.  It is incompatible with other Protection enchantments.")
+            .build();
+        this.enchantment(Enchantments.PROJECTILE_PROTECTION)
+            .fullRuneText("The Projectile Protection enchantment can be imbued through the use of Protect, Self, and Sky runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming damage from projectiles, such as arrows.  It is incompatible with other Protection enchantments.")
+            .partialRuneText("The Projectile Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming damage from projectiles, such as arrows.  It is incompatible with other Protection enchantments.")
+            .build();
+        this.enchantment(Enchantments.RESPIRATION)
+            .fullRuneText("The Respiration enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any helmet.  When applied, it increases the amount of time the wearer can remain underwater before drowning.")
+            .partialRuneText("The Respiration enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any helmet.  When applied, it increases the amount of time the wearer can remain underwater before drowning.")
+            .build();
+        this.enchantment(Enchantments.AQUA_AFFINITY)
+            .fullRuneText("The Aqua Affinity enchantment can be imbued through the use of Project, Item, and Sea runes.  It can be applied to any helmet.  When applied, it increases the speed at which the wearer can dig while underwater.")
+            .partialRuneText("The Aqua Affinity enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any helmet.  When applied, it increases the speed at which the wearer can dig while underwater.")
+            .build();
+        this.enchantment(Enchantments.THORNS)
+            .fullRuneText("The Thorns enchantment can be imbued through the use of Project, Creature, and Blood runes.  It can be applied to any piece of armor.  When applied, it reflects a portion of incoming damage onto the attacker, at the cost of durability.")
+            .partialRuneText("The Thorns enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reflects a portion of incoming damage onto the attacker, at the cost of durability.")
+            .build();
+        this.enchantment(Enchantments.DEPTH_STRIDER)
+            .fullRuneText("The Depth Strider enchantment can be imbued through the use of Project, Item, and Sea runes.  It can be applied to any pair of boots.  When applied, it increases the wearer's underwater movement speed.  It is incompatible with the Frost Walker enchantment.")
+            .partialRuneText("The Depth Strider enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it increases the wearer's underwater movement speed.  It is incompatible with the Frost Walker enchantment.")
+            .build();
+        this.enchantment(Enchantments.FROST_WALKER)
+            .fullRuneText("The Frost Walker enchantment can be imbued through the use of Project, Area, and Sea runes.  It can be applied to any pair of boots.  When applied, it freezes water beneath the wearer into frosted ice, allowing the wearer to walk on it.  It is incompatible with the Depth Strider enchantment.")
+            .partialRuneText("The Frost Walker enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it freezes water beneath the wearer into frosted ice, allowing the wearer to walk on it.  It is incompatible with the Depth Strider enchantment.")
+            .build();
+        this.enchantment(Enchantments.SHARPNESS)
+            .fullRuneText("The Sharpness enchantment can be imbued through the use of Project, Item, and Earth runes.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder.  It is incompatible with other damage-increasing enchantments.")
+            .partialRuneText("The Sharpness enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder.  It is incompatible with other damage-increasing enchantments.")
+            .build();
+        this.enchantment(Enchantments.KNOCKBACK)
+            .fullRuneText("The Knockback enchantment can be imbued through the use of Project, Creature, and Earth runes.  It can be applied to any sword.  When applied, it increases the distance which a creature struck by the wielder is knocked back.")
+            .partialRuneText("The Knockback enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the distance which a creature struck by the wielder is knocked back.")
+            .build();
+        this.enchantment(Enchantments.FIRE_ASPECT)
+            .fullRuneText("The Fire Aspect enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
+            .partialRuneText("The Fire Aspect enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, creatures struck by the wielder will be set on fire.")
+            .build();
+        this.enchantment(Enchantments.MOB_LOOTING)
+            .fullRuneText("The Looting enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
+            .partialRuneText("The Looting enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the amount of loot dropped by creatures slain by the wielder.")
+            .build();
+        this.enchantment(Enchantments.SWEEPING_EDGE)
+            .fullRuneText("The Sweeping Edge enchantment can be imbued through the use of Project, Area, and Sky runes.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
+            .partialRuneText("The Sweeping Edge enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword.  When applied, it increases the damage done by the wielder with sweep attacks.")
+            .build();
+        this.enchantment(Enchantments.BLOCK_EFFICIENCY)
+            .fullRuneText("The Efficiency enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
+            .partialRuneText("The Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shears, or shovel.  When applied, it increases the speed with which the wielder may use the tool.")
+            .build();
+        this.enchantment(Enchantments.SILK_TOUCH)
+            .fullRuneText("The Silk Touch enchantment can be imbued through the use of Project, Item, and Sea runes.  It can be applied to any axe, pickaxe, or shovel.  When applied, it causes any blocks broken by the wielder to be dropped intact and without damage.  It is incompatible with the Fortune enchantment.")
+            .partialRuneText("The Silk Touch enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, or shovel.  When applied, it causes any blocks broken by the wielder to be dropped intact and without damage.  It is incompatible with the Fortune enchantment.")
+            .build();
+        this.enchantment(Enchantments.UNBREAKING)
+            .fullRuneText("The Unbreaking enchantment can be imbued through the use of Protect, Item, and Earth runes.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
+            .partialRuneText("The Unbreaking enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any item that may be damaged or broken.  When applied, it increases the durability of the item, making it harder to damage.")
+            .build();
+        this.enchantment(Enchantments.BLOCK_FORTUNE)
+            .fullRuneText("The Fortune enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
+            .partialRuneText("The Fortune enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, or shovel.  When applied, it increases the drops yielded by certain blocks.  It is incompatible with the Silk Touch enchantment.")
+            .build();
+        this.enchantment(Enchantments.POWER_ARROWS)
+            .fullRuneText("The Power enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
+            .partialRuneText("The Power enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the damage done by arrows fired by the wielder.")
+            .build();
+        this.enchantment(Enchantments.PUNCH_ARROWS)
+            .fullRuneText("The Punch enchantment can be imbued through the use of Project, Creature, and Earth runes.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
+            .partialRuneText("The Punch enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it increases the distance which a creature struck by the wielder's arrows is knocked back.")
+            .build();
+        this.enchantment(Enchantments.FLAMING_ARROWS)
+            .fullRuneText("The Flame enchantment can be imbued through the use of Project, Item, and Infernal runes.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
+            .partialRuneText("The Flame enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it causes arrows fired by the wielder to set their targets on fire.")
+            .build();
+        this.enchantment(Enchantments.INFINITY_ARROWS)
+            .fullRuneText("The Infinity enchantment can be imbued through the use of Summon, Item, and Sky runes.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
+            .partialRuneText("The Infinity enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow.  When applied, it prevents regular arrows from being consumed when the wielder fires.  It is incompatible with the Mending enchantment.")
+            .build();
+        this.enchantment(Enchantments.FISHING_LUCK)
+            .fullRuneText("The Luck of the Sea enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
+            .partialRuneText("The Luck of the Sea enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it increases the quality of the items that the wielder fishes up.")
+            .build();
+        this.enchantment(Enchantments.FISHING_SPEED)
+            .fullRuneText("The Lure enchantment can be imbued through the use of Summon, Creature, and Sea runes.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
+            .partialRuneText("The Lure enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod.  When applied, it decreases the time until the wielder gets a bite when fishing.")
+            .build();
+        this.enchantment(Enchantments.LOYALTY)
+            .fullRuneText("The Loyalty enchantment can be imbued through the use of Summon, Item, and Sea runes.  It can be applied to any trident.  When applied, it causes the trident to return to the wielder when thrown.  It is incompatible with the Riptide enchantment.")
+            .partialRuneText("The Loyalty enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any trident.  When applied, it causes the trident to return to the wielder when thrown.  It is incompatible with the Riptide enchantment.")
+            .build();
+        this.enchantment(Enchantments.IMPALING)
+            .fullRuneText("The Impaling enchantment can be imbued through the use of Project, Item, and Sea runes.  It can be applied to any trident.  When applied, it causes the wielder to deal additional damage to oceanic creatures.")
+            .partialRuneText("The Impaling enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any trident.  When applied, it causes the wielder to deal additional damage to oceanic creatures.")
+            .build();
+        this.enchantment(Enchantments.RIPTIDE)
+            .fullRuneText("The Riptide enchantment can be imbued through the use of Summon, Self, and Sea runes.  It can be applied to any trident.  When applied, it causes the wielder to be launched along with the trident upon throwing it.  This effect only functions in water or rain.  It is incompatible with the Channeling and Loyalty enchantments.")
+            .partialRuneText("The Riptide enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any trident.  When applied, it causes the wielder to be launched along with the trident upon throwing it.  This effect only functions in water or rain.  It is incompatible with the Channeling and Loyalty enchantments.")
+            .build();
+        this.enchantment(Enchantments.CHANNELING)
+            .fullRuneText("The Channeling enchantment can be imbued through the use of Summon, Area, and Sky runes.  It can be applied to any trident.  When applied, it causes bolts of lightning to be channeled toward struck creatures.  This effect only functions during thunderstorms, when the target has a clear view of the sky.  It is incompatible with the Riptide enchantment.")
+            .partialRuneText("The Channeling enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any trident.  When applied, it causes bolts of lightning to be channeled toward struck creatures.  This effect only functions during thunderstorms, when the target has a clear view of the sky.  It is incompatible with the Riptide enchantment.")
+            .build();
+        this.enchantment(Enchantments.MULTISHOT)
+            .fullRuneText("The Multishot enchantment can be imbued through the use of Summon, Item, and Sky runes.  It can be applied to any crossbow.  When applied, it causes the wielder to fire three arrows at the cost of one, simultaneously.  It is incompatible with the Piercing enchantment.")
+            .partialRuneText("The Multishot enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any crossbow.  When applied, it causes the wielder to fire three arrows at the cost of one, simultaneously.  It is incompatible with the Piercing enchantment.")
+            .build();
+        this.enchantment(Enchantments.QUICK_CHARGE)
+            .fullRuneText("The Quick Charge enchantment can be imbued through the use of Project, Item, and Sky runes.  It can be applied to any crossbow.  When applied, it decreases the time it takes for the wielder to reload the crossbow.")
+            .partialRuneText("The Quick Charge enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any crossbow.  When applied, it decreases the time it takes for the wielder to reload the crossbow.")
+            .build();
+        this.enchantment(Enchantments.PIERCING)
+            .fullRuneText("The Piercing enchantment can be imbued through the use of Project, Item, and Earth runes.  It can be applied to any crossbow.  When applied, it causes arrows fired by the wielder to pass through multiple enemies.  It is incompatible with the Multishot enchantment.")
+            .partialRuneText("The Piercing enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any crossbow.  When applied, it causes arrows fired by the wielder to pass through multiple enemies.  It is incompatible with the Multishot enchantment.")
+            .build();
+        this.enchantment(Enchantments.MENDING)
+            .fullRuneText("The Mending enchantment can be imbued through the use of Absorb, Item, and Sun runes.  It can be applied to any item that may be damaged or broken.  When applied, it causes the item to repair itself when the wielder collects experience orbs.  It is incompatible with the Infinity enchantment.")
+            .partialRuneText("The Mending enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any item that may be damaged or broken.  When applied, it causes the item to repair itself when the wielder collects experience orbs.  It is incompatible with the Infinity enchantment.")
+            .build();
+        this.enchantment(Enchantments.BANE_OF_ARTHROPODS)
+            .fullRuneText("The Bane of Arthropods enchantment can be imbued through the use of Project, Item, and Blood runes.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder to insect-like creatures.  It is incompatible with other damage-increasing enchantments.")
+            .partialRuneText("The Bane of Arthropods enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder to insect-like creatures.  It is incompatible with other damage-increasing enchantments.")
+            .build();
+        this.enchantment(Enchantments.SMITE)
+            .fullRuneText("The Smite enchantment can be imbued through the use of Project, Creature, and Sun runes.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder to undead creatures.  It is incompatible with other damage-increasing enchantments.")
+            .partialRuneText("The Smite enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the damage done by the wielder to undead creatures.  It is incompatible with other damage-increasing enchantments.")
+            .build();
+        this.enchantment(Enchantments.SOUL_SPEED)
+            .fullRuneText("The Soul Speed enchantment can be imbued through the use of Project, Self, and Infernal runes.  It can be applied to any pair of boots.  When applied, it increases the wearer's movement speed when standing on soul sand or soul soil.")
+            .partialRuneText("The Soul Speed enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of boots.  When applied, it increases the wearer's movement speed when standing on soul sand or soul soil.")
+            .build();
+        this.enchantment(Enchantments.SWIFT_SNEAK)
+            .fullRuneText("The Swift Sneak enchantment can be imbued through the use of Project, Self, and Sky runes.  It can be applied to any pair of pants.  When applied, it increases the wearer's movement speed when sneaking.")
+            .partialRuneText("The Swift Sneak enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any pair of pants.  When applied, it increases the wearer's movement speed when sneaking.")
+            .build();
+
         // Generate armor trim localizations
         this.trimMaterial("runic_trim_materials", List.of(TrimMaterialsPM.RUNE_EARTH, TrimMaterialsPM.RUNE_SEA, TrimMaterialsPM.RUNE_SKY, TrimMaterialsPM.RUNE_SUN, TrimMaterialsPM.RUNE_MOON, TrimMaterialsPM.RUNE_BLOOD, TrimMaterialsPM.RUNE_INFERNAL, TrimMaterialsPM.RUNE_VOID, TrimMaterialsPM.RUNE_HALLOWED))
             .namePattern("%s Rune Material").build();
@@ -443,6 +594,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate death message localizations for damage types
         this.damageType(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
         this.damageType(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_EARTH).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_SEA).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_SKY).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_SUN).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_MOON).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_BLOOD).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_INFERNAL).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_VOID).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.damageType(DamageTypesPM.SORCERY_HALLOWED).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
         
         // Generate wand component localizations
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
