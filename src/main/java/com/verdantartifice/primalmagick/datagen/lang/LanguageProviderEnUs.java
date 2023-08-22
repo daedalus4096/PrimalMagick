@@ -523,7 +523,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate concoction localizations
         this.concoction("doses_remaining").name("Doses: %1$d").build();
+        this.concoction("charges_remaining").name("Charges: %1$d").build();
+        this.concoction("fuse_length").name("Fuse: %1$s").build();
+        this.concoction("fuse_set").name("Bomb fuse set to %1$s").build();
         this.concoction("fuse").sub("impact").output("Impact").end().build();
+        this.concoction("fuse").sub("short").output("1s").end().build();
+        this.concoction("fuse").sub("medium").output("3s").end().build();
+        this.concoction("fuse").sub("long").output("5s").end().build();
         
         // Generate keybind localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
