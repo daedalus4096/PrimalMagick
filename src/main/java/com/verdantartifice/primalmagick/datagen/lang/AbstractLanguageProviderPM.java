@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.AttunementTypeLang
 import com.verdantartifice.primalmagick.datagen.lang.builders.BlockLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.CommandLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ConcoctionLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.DamageTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EnchantmentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EntityTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuilder;
@@ -47,6 +48,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguag
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
@@ -239,5 +241,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public TrimPatternLanguageBuilder trimPattern(ResourceKey<TrimPattern> key) {
         return this.createBuilder(() -> new TrimPatternLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public DamageTypeLanguageBuilder damageType(ResourceKey<DamageType> key) {
+        return this.createBuilder(() -> new DamageTypeLanguageBuilder(key, this::untrack, this::add));
     }
 }

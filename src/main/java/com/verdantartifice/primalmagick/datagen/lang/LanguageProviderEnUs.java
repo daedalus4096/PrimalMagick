@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -68,6 +69,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate armor trim localizations
         this.trimMaterial(TrimMaterialsPM.RUNE_EARTH).name("Earth Rune Material").build();
         this.trimPattern(TrimPatternsPM.RUNIC).name("Runic Armor Trim").build();
+        
+        // Generate death message localizations for damage types
+        this.damageType(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
+        this.damageType(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
         
         // Generate wand component localizations
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
