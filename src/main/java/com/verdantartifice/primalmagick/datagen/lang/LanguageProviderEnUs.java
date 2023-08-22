@@ -333,13 +333,108 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         RegistryObject<MobEffect> stolenEssence = EffectsPM.STOLEN_ESSENCE;
         this.mobEffect(stolenEssence).name("Stolen Essence").build();
         
-        // Generate enchantment localizations
+        // Generate mod enchantment localizations
         this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")
             .description("Grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .fullRuneText("The Lifesteal enchantment can be imbued through the use of Absorb, Self, and Blood runes.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .partialRuneText("The Lifesteal enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .build();
-        
+        this.enchantment(EnchantmentsPM.ENDERLOCK).name("Enderlock")
+            .description("Causes creatures struck by the wielder to be unable to teleport for a short time.")
+            .fullRuneText("The Enderlock enchantment can be imbued through the use of Dispel, Creature, and Void runes.  It can be applied to any sword, axe, or trident.  When applied, it causes creatures struck by the wielder to be unable to teleport for a short time.")
+            .partialRuneText("The Enderlock enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it causes creatures struck by the wielder to be unable to teleport for a short time.")
+            .build();
+        this.enchantment(EnchantmentsPM.JUDGMENT).name("Judgment")
+            .description("Increases the damage done by the wielder, with even more damage dealt to undead creatures.")
+            .fullRuneText("The Judgment enchantment can be imbued through the use of Project, Item, and Hallowed runes.  It can be applied to any sword, axe, or trident.  When applied, it increases the damage done by the wielder, with even more damage dealt to undead creatures.  It is incompatible with other damage-increasing enchantments.")
+            .partialRuneText("The Judgment enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it increases the damage done by the wielder, with even more damage dealt to undead creatures.  It is incompatible with other damage-increasing enchantments.")
+            .build();
+        this.enchantment(EnchantmentsPM.ENDERPORT).name("Enderport")
+            .description("Causes the wielder to teleport to the location that any arrow they fire strikes.")
+            .fullRuneText("The Enderport enchantment can be imbued through the use of Summon, Self, and Void runes.  It can be applied to any bow or crossbow.  When applied, it causes the wielder to teleport to the location that any arrow they fire strikes.")
+            .partialRuneText("The Enderport enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow or crossbow.  When applied, it causes the wielder to teleport to the location that any arrow they fire strikes.")
+            .build();
+        this.enchantment(EnchantmentsPM.REGROWTH).name("Regrowth")
+            .description("Causes the item to slowly repair itself while the wielder wears it or holds it in hand.")
+            .fullRuneText("The Regrowth enchantment can be imbued through the use of Absorb, Item, and Hallowed runes.  It can be applied to any item that may be damaged or broken.  When applied, it causes the item to slowly repair itself while the wielder wears it or holds it in hand.")
+            .partialRuneText("The Regrowth enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any item that may be damaged or broken.  When applied, it causes the item to slowly repair itself while the wielder wears it or holds it in hand.")
+            .build();
+        this.enchantment(EnchantmentsPM.AEGIS).name("Aegis")
+            .description("Reduces all incoming damage, with greater effect for fire, explosion, projectile, or falling damage.")
+            .fullRuneText("The Aegis enchantment can be imbued through the use of Protect, Self, and Hallowed runes.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage, with greater effect for fire, explosion, projectile, or falling damage.  It does not, however, reduce the amount of time that the wearer is engulfed in flames, or the distance that the wearer is knocked back by explosions.  It is incompatible with other damage-reducing enchantments.")
+            .partialRuneText("The Aegis enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it reduces all incoming damage, with greater effect for fire, explosion, projectile, or falling damage.  It does not, however, reduce the amount of time that the wearer is engulfed in flames, or the distance that the wearer is knocked back by explosions.  It is incompatible with other damage-reducing enchantments.")
+            .build();
+        this.enchantment(EnchantmentsPM.MANA_EFFICIENCY).name("Mana Efficiency")
+            .description("Reduces all mana costs when crafting or casting a spell.")
+            .fullRuneText("The Mana Efficiency enchantment can be imbued through the use of Dispel, Item, and Void runes.  It can be applied to any wand or staff.  When applied, it reduces all mana costs when crafting or casting a spell.")
+            .partialRuneText("The Mana Efficiency enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any wand or staff.  When applied, it reduces all mana costs when crafting or casting a spell.")
+            .build();
+        this.enchantment(EnchantmentsPM.SPELL_POWER).name("Spell Power")
+            .description("Increases the Power and Duration traits of spell payloads and mods by one per level when cast.")
+            .fullRuneText("The Spell Power enchantment can be imbued through the use of Project, Item, and Void runes.  It can be applied to any wand or staff.  When applied, it increases the Power and Duration traits of spell payloads and mods by one per level when cast.")
+            .partialRuneText("The Spell Power enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any wand or staff.  When applied, it increases the Power and Duration traits of spell payloads and mods by one per level when cast.")
+            .build();
+        this.enchantment(EnchantmentsPM.TREASURE).name("Treasure")
+            .description("Increases the amount of loot dropped by creatures slain by the wielder, as well as the drops yielded by certain blocks, when using magick.")
+            .fullRuneText("The Treasure enchantment can be imbued through the use of Project, Item, and Moon runes.  It can be applied to any wand or staff.  When applied, it increases the amount of loot dropped by creatures slain by the wielder, as well as the drops yielded by certain blocks, when using magick.")
+            .partialRuneText("The Treasure enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any wand or staff.  When applied, it increases the amount of loot dropped by creatures slain by the wielder, as well as the drops yielded by certain blocks, when using magick.")
+            .build();
+        this.enchantment(EnchantmentsPM.BLUDGEONING).name("Bludgeoning")
+            .description("Increases the damage done by the wielder when using the staff as a melee weapon.")
+            .fullRuneText("The Bludgeoning enchantment can be imbued through the use of Project, Item, and Earth runes.  It can be applied to any staff.  When applied, it increases the damage done by the wielder when using the staff as a melee weapon.")
+            .partialRuneText("The Bludgeoning enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any staff.  When applied, it increases the damage done by the wielder when using the staff as a melee weapon.")
+            .build();
+        this.enchantment(EnchantmentsPM.REVERBERATION).name("Reverberation")
+            .description("Increases the tool's area of effect when digging.")
+            .fullRuneText("The Reverberation enchantment can be imbued through the use of Project, Area, and Earth runes.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it increases the tool's area of effect when digging.  It is incompatible with the Disintegration enchantment.")
+            .partialRuneText("The Reverberation enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it increases the tool's area of effect when digging.  It is incompatible with the Disintegration enchantment.")
+            .build();
+        this.enchantment(EnchantmentsPM.BOUNTY).name("Bounty")
+            .description("Increases yields when fishing or harvesting crops.")
+            .fullRuneText("The Bounty enchantment can be imbued through the use of Summon, Area, and Sea runes.  It can be applied to any fishing rod or hoe.  When applied, it increases yields when fishing or harvesting crops.")
+            .partialRuneText("The Bounty enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any fishing rod or hoe.  When applied, it increases yields when fishing or harvesting crops.")
+            .build();
+        this.enchantment(EnchantmentsPM.DISINTEGRATION).name("Disintegration")
+            .description("Breaks all blocks of the same type connected to the original target within a certain range.")
+            .fullRuneText("The Disintegration enchantment can be imbued through the use of Project, Area, and Sky runes.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it causes a wave of destruction to radiate out from the broken block, breaking all blocks of the same type connected to the original.  It is incompatible with the Reverberation enchantment.")
+            .partialRuneText("The Disintegration enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it causes a wave of destruction to radiate out from the broken block, breaking all blocks of the same type connected to the original.  It is incompatible with the Reverberation enchantment.")
+            .build();
+        this.enchantment(EnchantmentsPM.VERDANT).name("Verdant")
+            .description("Stimulates rapid growth when used on a plant or fungus, similar to bone meal, at the cost of durability.")
+            .fullRuneText("The Verdant enchantment can be imbued through the use of Summon, Creature, and Sun runes.  It can be applied to any hoe.  When applied, it causes the hoe to stimulate rapid growth when used on a plant or fungus, similar to bone meal, at the cost of durability.  Higher levels reduce the durability cost.")
+            .partialRuneText("The Verdant enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any hoe.  When applied, it causes the hoe to stimulate rapid growth when used on a plant or fungus, similar to bone meal, at the cost of durability.  Higher levels reduce the durability cost.")
+            .build();
+        this.enchantment(EnchantmentsPM.LUCKY_STRIKE).name("Lucky Strike")
+            .description("Yields bonus nuggets when harvesting certain valuable minerals.")
+            .fullRuneText("The Lucky Strike enchantment can be imbued through the use of Summon, Item, and Moon runes.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it yields bonus nuggets when harvesting valuable minerals such as iron, gold, and quartz.")
+            .partialRuneText("The Lucky Strike enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any axe, pickaxe, shovel, or hoe.  When applied, it yields bonus nuggets when harvesting valuable minerals such as iron, gold, and quartz.")
+            .build();
+        this.enchantment(EnchantmentsPM.RENDING).name("Rending")
+            .description("Causes the victim to bleed for additional damage, with subsequent strikes increasing the severity of the bleed effect.")
+            .fullRuneText("The Rending enchantment can be imbued through the use of Project, Creature, and Blood runes.  It can be applied to any sword, axe, or trident.  When applied, it causes the victim to bleed for additional damage, with subsequent strikes increasing the severity of the bleed effect.")
+            .partialRuneText("The Rending enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it causes the victim to bleed for additional damage, with subsequent strikes increasing the severity of the bleed effect.")
+            .build();
+        this.enchantment(EnchantmentsPM.SOULPIERCING).name("Soulpiercing")
+            .description("Causes the first strike against a target to drop soul gem slivers.")
+            .fullRuneText("The Soulpiercing enchantment can be imbued through the use of Absorb, Creature, and Infernal runes.  It can be applied to any bow or crossbow.  When applied, the first strike against a target causes it to drop soul gem slivers.")
+            .partialRuneText("The Soulpiercing enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any bow or crossbow.  When applied, the first strike against a target causes it to drop soul gem slivers.")
+            .build();
+        this.enchantment(EnchantmentsPM.ESSENCE_THIEF).name("Essence Thief")
+            .description("Steals a portion of the victim's essence, causing them to drop essence dust when slain.")
+            .fullRuneText("The Essence Thief enchantment can be imbued through the use of Summon, Item, and Void runes.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence dust when slain.")
+            .partialRuneText("The Essence Thief enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, trident, or wand.  When applied, it steals a portion of the victim's essence, causing them to drop essence dust when slain.")
+            .build();
+        this.enchantment(EnchantmentsPM.BULWARK).name("Bulwark")
+            .description("Causes the wielder to take less damage from all sources while blocking.")
+            .fullRuneText("The Bulwark enchantment can be imbued through the use of Protect, Self, and Hallowed runes.  It can be applied to any shield.  When applied, it causes the wielder to take less damage from all sources while blocking, even sources that a shield could not normally protect against.")
+            .partialRuneText("The Bulwark enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any shield.  When applied, it causes the wielder to take less damage from all sources while blocking, even sources that a shield could not normally protect against.")
+            .build();
+        this.enchantment(EnchantmentsPM.MAGICK_PROTECTION).name("Magick Protection")
+            .description("Significantly reduces all incoming magick damage, such as from sorcerous spells.")
+            .fullRuneText("The Magick Protection enchantment can be imbued through the use of Protect, Self, and Void runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magick damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.")
+            .partialRuneText("The Magick Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magick damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.")
+            .build();
+
         // Generate armor trim localizations
         this.trimMaterial("runic_trim_materials", List.of(TrimMaterialsPM.RUNE_EARTH, TrimMaterialsPM.RUNE_SEA, TrimMaterialsPM.RUNE_SKY, TrimMaterialsPM.RUNE_SUN, TrimMaterialsPM.RUNE_MOON, TrimMaterialsPM.RUNE_BLOOD, TrimMaterialsPM.RUNE_INFERNAL, TrimMaterialsPM.RUNE_VOID, TrimMaterialsPM.RUNE_HALLOWED))
             .namePattern("%s Rune Material").build();
