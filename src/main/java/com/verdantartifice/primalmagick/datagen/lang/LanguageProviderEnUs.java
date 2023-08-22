@@ -697,6 +697,43 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate statistics localizations
         this.stat(StatsPM.GRIMOIRE_READ).name("Times Grimoire consulted").build();
+        this.stat(StatsPM.ITEMS_ANALYZED).name("Item types analyzed").build();
+        this.stat(StatsPM.ENTITIES_ANALYZED).name("Creature types analyzed").build();
+        this.stat(StatsPM.MANA_SIPHONED).name("Mana siphoned from fonts").build();
+        this.stat(StatsPM.OBSERVATIONS_MADE).name("Observations made").build();
+        this.stat(StatsPM.THEORIES_FORMED).name("Theories formed").build();
+        this.stat(StatsPM.CRAFTED_MANAWEAVING).name("Manaweaving items crafted").build();
+        this.stat(StatsPM.CRAFTED_ALCHEMY).name("Alchemy items crafted").build();
+        this.stat(StatsPM.CRAFTED_SORCERY).name("Sorcery items crafted").build();
+        this.stat(StatsPM.CRAFTED_RUNEWORKING).name("Runeworking items crafted").build();
+        this.stat(StatsPM.CRAFTED_RITUAL).name("Ritual Magick items crafted").build();
+        this.stat(StatsPM.CRAFTED_MAGITECH).name("Magitech items crafted").build();
+        this.stat(StatsPM.SPELLS_CAST).name("Spells cast").build();
+        this.stat(StatsPM.SPELLS_CRAFTED).name("Spells crafted").build();
+        this.stat(StatsPM.SPELLS_CRAFTED_MAX_COST).name("Cost of most expensive spell crafted").build();
+        this.stat(StatsPM.RESEARCH_PROJECTS_COMPLETED).name("Research projects completed").build();
+        this.stat(StatsPM.ITEMS_RUNESCRIBED).name("Items runescribed").build();
+        this.stat(StatsPM.RITUALS_COMPLETED).name("Rituals conducted").build();
+        this.stat(StatsPM.RITUAL_MISHAPS).name("Ritual mishaps endured").build();
+        this.stat(StatsPM.CONCOCTIONS_USED).name("Concoctions used").build();
+        this.stat(StatsPM.DISTANCE_TELEPORTED_CM).name("Distance teleported").build();
+        this.stat(StatsPM.MANA_SPENT_TOTAL).name("Total mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_EARTH).name("Earth mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_SEA).name("Sea mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_SKY).name("Sky mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_SUN).name("Sun mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_MOON).name("Moon mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_BLOOD).name("Blood mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_INFERNAL).name("Infernal mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_VOID).name("Void mana spent").build();
+        this.stat(StatsPM.MANA_SPENT_HALLOWED).name("Hallowed mana spent").build();
+        this.stat(StatsPM.SHRINE_FOUND_EARTH).name("Earth shrines found").build();
+        this.stat(StatsPM.SHRINE_FOUND_SEA).name("Sea shrines found").build();
+        this.stat(StatsPM.SHRINE_FOUND_SKY).name("Sky shrines found").build();
+        this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
+        this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
+        this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
+        this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
         // Generate research project localizations
         this.researchProject("trade").name("Trade").text("Perhaps some nearby villagers have magickal knowledge to trade.  You assemble some goods they'll find valuable.").build();
