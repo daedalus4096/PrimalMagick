@@ -670,7 +670,46 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate grimoire GUI localizations
         this.grimoire("index_header").name("Disciplines").build();
+        this.grimoire("other_header").name("Other Topics").build();
+        this.grimoire("stats_header").name("Statistics").build();
+        this.grimoire("attunement_header").name("Attunements").build();
+        this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
+        this.grimoire("recipe_index_header").name("Recipes").build();
+        this.grimoire("attunement_gain_header").name("Attunements Gained").build();
+        this.grimoire("addendum_header").name("Addendum %1$d").build();
+        this.grimoire("requirements_header").name("Requirements").build();
+        this.grimoire("shapeless_arcane_recipe_header").name("Arcane Workbench recipe (Shapeless)").build();
+        this.grimoire("shaped_arcane_recipe_header").name("Arcane Workbench recipe").build();
+        this.grimoire("shapeless_recipe_header").name("Workbench recipe (Shapeless)").build();
+        this.grimoire("shaped_recipe_header").name("Workbench recipe").build();
+        this.grimoire("ritual_recipe_header").name("Ritual Altar recipe").build();
+        this.grimoire("runecarving_recipe_header").name("Runecarving Table recipe").build();
+        this.grimoire("concocting_recipe_header").name("Concocter recipe (Shapeless)").build();
+        this.grimoire("smelting_recipe_header").name("Smelting recipe").build();
+        this.grimoire("dissolution_recipe_header").name("Dissolution recipe").build();
+        this.grimoire("must_obtain_header").name("Will be consumed:").build();
+        this.grimoire("must_craft_header").name("Must craft:").build();
+        this.grimoire("required_knowledge_header").name("Required knowledge:").build();
+        this.grimoire("required_research_header").name("Must be discovered:").build();
+        this.grimoire("ritual_offerings_header").name("Offerings:").build();
+        this.grimoire("ritual_props_header").name("Props:").build();
+        this.grimoire("complete_button").name("Complete").build();
+        this.grimoire("completing_text").name("Completing...").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
+        this.grimoire("section_header").sub("updated").output("Updated").end().build();
+        this.grimoire("section_header").sub("complete").output("Complete").end().build();
+        this.grimoire("section_header").sub("in_progress").output("In Progress").end().build();
+        this.grimoire("section_header").sub("available").output("Available").end().build();
+        this.grimoire("section_header").sub("upcoming").output("Upcoming").end().build();
+        this.grimoire("section_header").sub("unavailable").output("Unavailable").end().build();
+        this.grimoire("missing_block").name("Missing block!").build();
+        this.grimoire("upcoming_tooltip_header").name("Missing requirements:").build();
+        this.grimoire("recipe_metadata").sub("discipline").output("Discipline:").end().build();
+        this.grimoire("recipe_metadata").sub("entry").output("Research entry:").end().build();
+        this.grimoire("attunement_meter").sub("tooltip").sub("header").output("%1$s attunement:").end().build();
+        this.grimoire("attunement_meter").sub("tooltip").sub("permanent").output("Permanent: %1$d").end().build();
+        this.grimoire("attunement_meter").sub("tooltip").sub("induced").output("Induced: %1$d").end().build();
+        this.grimoire("attunement_meter").sub("tooltip").sub("temporary").output("Temporary: %1$d").end().build();
         
         // Generate JEI GUI localizations
         this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();
