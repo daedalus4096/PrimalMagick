@@ -39,13 +39,18 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPayloadLangua
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPropertyLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.StatLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.TrimPatternLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.armortrim.TrimMaterial;
+import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.LanguageProvider;
@@ -226,5 +231,13 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public ConcoctionLanguageBuilder concoction(String id) {
         return this.createBuilder(() -> new ConcoctionLanguageBuilder(id, this::untrack, this::add));
+    }
+    
+    public TrimMaterialLanguageBuilder trimMaterial(ResourceKey<TrimMaterial> key) {
+        return this.createBuilder(() -> new TrimMaterialLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public TrimPatternLanguageBuilder trimPattern(ResourceKey<TrimPattern> key) {
+        return this.createBuilder(() -> new TrimPatternLanguageBuilder(key, this::untrack, this::add));
     }
 }

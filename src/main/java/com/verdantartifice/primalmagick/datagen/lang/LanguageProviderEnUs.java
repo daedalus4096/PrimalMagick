@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
+import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
+import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -62,6 +64,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Lifesteal enchantment can be imbued through the use of Absorb, Self, and Blood runes.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .partialRuneText("The Lifesteal enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword, axe, or trident.  When applied, it grants a chance for the wielder to heal themselves a small amount when striking a creature.")
             .build();
+        
+        // Generate armor trim localizations
+        this.trimMaterial(TrimMaterialsPM.RUNE_EARTH).name("Earth Rune Material").build();
+        this.trimPattern(TrimPatternsPM.RUNIC).name("Runic Armor Trim").build();
         
         // Generate wand component localizations
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
