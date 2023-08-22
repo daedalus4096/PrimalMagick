@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
+import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -24,6 +25,8 @@ import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Language data provider for US English.
@@ -315,6 +318,20 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.entity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE).name("Majestic Hallowed Pixie").build();
         this.entity(EntityTypesPM.FLYING_CARPET).name("Flying Carpet").build();
         this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
+        
+        // Generate status effect localizations
+        this.mobEffect(EffectsPM.FLYING).name("Flying").build();
+        this.mobEffect(EffectsPM.POLYMORPH).name("Polymorph").build();
+        this.mobEffect(EffectsPM.BLEEDING).name("Bleeding").build();
+        this.mobEffect(EffectsPM.WEAKENED_SOUL).name("Weakened Soul").build();
+        this.mobEffect(EffectsPM.MANAFRUIT).name("Manafruit").build();
+        this.mobEffect(EffectsPM.DRAIN_SOUL).name("Drain Soul").build();
+        this.mobEffect(EffectsPM.MANA_IMPEDANCE).name("Mana Impedance").build();
+        this.mobEffect(EffectsPM.ENDERLOCK).name("Enderlock").build();
+        this.mobEffect(EffectsPM.SOULPIERCED).name("Soulpierced").build();
+        @SuppressWarnings("removal")
+        RegistryObject<MobEffect> stolenEssence = EffectsPM.STOLEN_ESSENCE;
+        this.mobEffect(stolenEssence).name("Stolen Essence").build();
         
         // Generate enchantment localizations
         this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")

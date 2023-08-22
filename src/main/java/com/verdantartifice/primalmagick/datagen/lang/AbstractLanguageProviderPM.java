@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilde
 import com.verdantartifice.primalmagick.datagen.lang.builders.JeiLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KeyMappingLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.MobEffectLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchProjectLanguageBuilder;
@@ -53,6 +54,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimMaterial;
@@ -150,6 +152,14 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public EntityTypeLanguageBuilder entity(EntityType<?> entity) {
         return this.createBuilder(() -> new EntityTypeLanguageBuilder(entity, this::untrack, this::add));
+    }
+    
+    public MobEffectLanguageBuilder mobEffect(Supplier<? extends MobEffect> effect) {
+        return this.mobEffect(effect.get());
+    }
+    
+    public MobEffectLanguageBuilder mobEffect(MobEffect effect) {
+        return this.createBuilder(() -> new MobEffectLanguageBuilder(effect, this::untrack, this::add));
     }
     
     public EnchantmentLanguageBuilder enchantment(Supplier<? extends Enchantment> ench) {
