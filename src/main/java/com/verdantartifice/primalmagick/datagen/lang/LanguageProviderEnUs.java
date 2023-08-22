@@ -680,6 +680,26 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.ritual("instability").name("%1$s: %2$s").build();
         this.ritual("instability").sub("header").output("Instability").end().build();
         this.ritual("instability").sub("rating").output(0, "Trivial", "Low", "Moderate", "High", "Very High", "Extreme").end().build();
+        this.ritual("prop").sub("ritual_candle").output("The ritual requires you to light a candle now!").end().build();
+        this.ritual("prop").sub("incense_brazier").output("The ritual requires you to burn some incense now!").end().build();
+        this.ritual("prop").sub("ritual_lectern").output("The ritual requires you to place an enchanted book now!").end().build();
+        this.ritual("prop").sub("ritual_bell").output("The ritual requires you to ring a bell now!").end().build();
+        this.ritual("prop").sub("bloodletter").output("The ritual requires you to shed your blood now!").end().build();
+        this.ritual("prop").sub("soul_anvil").output("The ritual requires you to smash a soul gem now!").end().build();
+        this.ritual("prop").sub("celestial_harp").output("The ritual requires you to play a celestial harp now!").end().build();
+        this.ritual("prop").sub("entropy_sink").output("The ritual requires you to feed essence to an entropy sink now!").end().build();
+        this.ritual("warning").sub("missing_offering").output("The ritual cannot find the required %1$s offering!").end().build();
+        this.ritual("warning").sub("missing_offering").sub("empty").output("The ritual cannot find a required offering!").end().build();
+        this.ritual("warning").sub("missing_prop").output("The ritual cannot find the required %1$s prop!").end().build();
+        this.ritual("warning").sub("missing_prop").sub("empty").output("The ritual cannot find a required prop!").end().build();
+        this.ritual("warning").sub("channel_interrupt").output("The channeling of the required offering %1$s has been interrupted!").end().build();
+        this.ritual("warning").sub("channel_interrupt").sub("empty").output("The channeling of a required offering has been interrupted!").end().build();
+        this.ritual("warning").sub("prop_interrupt").output("The activation of the required prop %1$s has been interrupted!").end().build();
+        this.ritual("warning").sub("prop_interrupt").sub("empty").output("The activation of a required prop has been interrupted!").end().build();
+        this.ritual("warning").sub("obstructed").output("The area above the ritual altar is obstructed").end().build();
+        this.ritual("info").sub("started").output("Ritual started!").end().build();
+        this.ritual("info").sub("complete").output("Ritual complete!").end().build();
+        this.ritual("info").sub("canceled").output("Ritual canceled").end().build();
         
         // Generate concoction localizations
         this.concoction("doses_remaining").name("Doses: %1$d").build();
