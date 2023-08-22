@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Supplier;
@@ -42,6 +44,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPropertyLangu
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.StatLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialSourceMultipliedLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimPatternLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
@@ -65,6 +68,7 @@ import net.minecraftforge.common.data.LanguageProvider;
  */
 public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     protected final Map<String, ILanguageBuilder> tracking = new TreeMap<>();
+    protected final Map<Source, String> sourceNames = new HashMap<>();
     
     public AbstractLanguageProviderPM(PackOutput output, String locale) {
         super(output, PrimalMagick.MODID, locale);
@@ -103,6 +107,18 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         });
         if (count.intValue() > 0) {
             throw new IllegalStateException("Found " + count.intValue() + " unbuilt language builders for " + this.getName());
+        }
+    }
+    
+    protected void saveSourceName(Source source, String name) {
+        this.sourceNames.put(source, name);
+    }
+    
+    protected String getSourceName(Source source) {
+        if (this.sourceNames.containsKey(source)) {
+            return this.sourceNames.get(source);
+        } else {
+            throw new IllegalStateException("No source name found for " + source.getTag());
         }
     }
     
@@ -145,7 +161,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public SourceLanguageBuilder source(Source source) {
-        return this.createBuilder(() -> new SourceLanguageBuilder(source, this::untrack, this::add));
+        return this.createBuilder(() -> new SourceLanguageBuilder(source, this::untrack, this::add, this::saveSourceName));
     }
     
     public WandComponentLanguageBuilder wandComponent(IWandComponent component) {
@@ -238,6 +254,10 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public TrimMaterialLanguageBuilder trimMaterial(ResourceKey<TrimMaterial> key) {
         return this.createBuilder(() -> new TrimMaterialLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public TrimMaterialSourceMultipliedLanguageBuilder trimMaterial(String name, List<ResourceKey<TrimMaterial>> keys) {
+        return this.createBuilder(() -> new TrimMaterialSourceMultipliedLanguageBuilder(name, keys, this::getSourceName, this::untrack, this::add));
     }
     
     public TrimPatternLanguageBuilder trimPattern(ResourceKey<TrimPattern> key) {

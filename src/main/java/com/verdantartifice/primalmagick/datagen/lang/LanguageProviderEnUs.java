@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
@@ -35,7 +37,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
 
     @Override
     protected void addLocalizations() {
-        // Generate magickal source localizations
+        // Generate magickal source localizations; it's important to do these first so that the language provider has access to
+        // the localized source names for the source-multiplied language builders used later.
         this.source(Source.EARTH).name("Earth")
             .attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.")
             .build();
@@ -70,7 +73,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         
         // Generate armor trim localizations
-        this.trimMaterial(TrimMaterialsPM.RUNE_EARTH).name("Earth Rune Material").build();
+        this.trimMaterial("runic_trim_materials", List.of(TrimMaterialsPM.RUNE_EARTH, TrimMaterialsPM.RUNE_SEA, TrimMaterialsPM.RUNE_SKY, TrimMaterialsPM.RUNE_SUN, TrimMaterialsPM.RUNE_MOON, TrimMaterialsPM.RUNE_BLOOD, TrimMaterialsPM.RUNE_INFERNAL, TrimMaterialsPM.RUNE_VOID, TrimMaterialsPM.RUNE_HALLOWED))
+            .namePattern("%s Rune Material").build();
         this.trimPattern(TrimPatternsPM.RUNIC).name("Runic Armor Trim").build();
         
         // Generate death message localizations for damage types

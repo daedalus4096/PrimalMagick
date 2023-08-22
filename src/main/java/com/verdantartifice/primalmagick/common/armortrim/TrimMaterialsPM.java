@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.armortrim;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -21,18 +22,25 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
  * @author Daedalus4096
  */
 public class TrimMaterialsPM {
-    public static final ResourceKey<TrimMaterial> RUNE_EARTH = registryKey("rune_earth");
-    public static final ResourceKey<TrimMaterial> RUNE_SEA = registryKey("rune_sea");
-    public static final ResourceKey<TrimMaterial> RUNE_SKY = registryKey("rune_sky");
-    public static final ResourceKey<TrimMaterial> RUNE_SUN = registryKey("rune_sun");
-    public static final ResourceKey<TrimMaterial> RUNE_MOON = registryKey("rune_moon");
-    public static final ResourceKey<TrimMaterial> RUNE_BLOOD = registryKey("rune_blood");
-    public static final ResourceKey<TrimMaterial> RUNE_INFERNAL = registryKey("rune_infernal");
-    public static final ResourceKey<TrimMaterial> RUNE_VOID = registryKey("rune_void");
-    public static final ResourceKey<TrimMaterial> RUNE_HALLOWED = registryKey("rune_hallowed");
+    protected static final Map<ResourceKey<TrimMaterial>, Source> SOURCE_MAPPING = new HashMap<>();
     
-    private static ResourceKey<TrimMaterial> registryKey(String name) {
-        return ResourceKey.create(Registries.TRIM_MATERIAL, PrimalMagick.resource(name));
+    public static final ResourceKey<TrimMaterial> RUNE_EARTH = registryKey("rune_earth", Source.EARTH);
+    public static final ResourceKey<TrimMaterial> RUNE_SEA = registryKey("rune_sea", Source.SEA);
+    public static final ResourceKey<TrimMaterial> RUNE_SKY = registryKey("rune_sky", Source.SKY);
+    public static final ResourceKey<TrimMaterial> RUNE_SUN = registryKey("rune_sun", Source.SUN);
+    public static final ResourceKey<TrimMaterial> RUNE_MOON = registryKey("rune_moon", Source.MOON);
+    public static final ResourceKey<TrimMaterial> RUNE_BLOOD = registryKey("rune_blood", Source.BLOOD);
+    public static final ResourceKey<TrimMaterial> RUNE_INFERNAL = registryKey("rune_infernal", Source.INFERNAL);
+    public static final ResourceKey<TrimMaterial> RUNE_VOID = registryKey("rune_void", Source.VOID);
+    public static final ResourceKey<TrimMaterial> RUNE_HALLOWED = registryKey("rune_hallowed", Source.HALLOWED);
+    
+    private static ResourceKey<TrimMaterial> registryKey(String name, Source source) {
+        ResourceKey<TrimMaterial> key = ResourceKey.create(Registries.TRIM_MATERIAL, PrimalMagick.resource(name));
+        if (SOURCE_MAPPING.containsKey(key)) {
+            throw new IllegalStateException("Source mapping already set for trim material " + name);
+        }
+        SOURCE_MAPPING.put(key, source);
+        return key;
     }
     
     private static void register(BootstapContext<TrimMaterial> context, ResourceKey<TrimMaterial> materialKey, Item item, Style textStyle, float itemModelIndex) {
@@ -41,6 +49,14 @@ public class TrimMaterialsPM {
     
     private static Style getStyle(Source source) {
         return Style.EMPTY.withColor(source.getColor());
+    }
+    
+    public static Source getSource(ResourceKey<TrimMaterial> key) {
+        if (!SOURCE_MAPPING.containsKey(key)) {
+            throw new IllegalArgumentException("No source mapping found for trim material " + key.toString());
+        } else {
+            return SOURCE_MAPPING.get(key);
+        }
     }
     
     public static void bootstrap(BootstapContext<TrimMaterial> context) {

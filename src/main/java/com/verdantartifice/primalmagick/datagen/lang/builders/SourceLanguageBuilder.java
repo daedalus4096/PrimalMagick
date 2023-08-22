@@ -14,8 +14,11 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class SourceLanguageBuilder extends AbstractLanguageBuilder<Source, SourceLanguageBuilder> {
-    public SourceLanguageBuilder(Source source, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
+    protected final BiConsumer<Source, String> saver;
+    
+    public SourceLanguageBuilder(Source source, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder, BiConsumer<Source, String> saver) {
         super(source, source::getNameTranslationKey, untracker, adder);
+        this.saver = saver;
     }
 
     @Override
@@ -28,6 +31,12 @@ public class SourceLanguageBuilder extends AbstractLanguageBuilder<Source, Sourc
         return PrimalMagick.resource(base.getTag());
     }
     
+    @Override
+    public SourceLanguageBuilder name(String value) {
+        this.saver.accept(this.base, value);
+        return super.name(value);
+    }
+
     public SourceLanguageBuilder attunement(String value) {
         this.add(this.getKey("attunement", "text"), value);
         return this;
