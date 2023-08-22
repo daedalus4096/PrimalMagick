@@ -49,6 +49,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.source(Source.HALLOWED).name("Hallowed").build();
         this.add(Source.getUnknownTranslationKey(), "Unknown");
         
+        // Generate item group (i.e. creative tab) localizations
+        this.add("itemGroup.primalmagick", "Primal Magick");
+        
         // Generate block localizations
         this.block(BlocksPM.MARBLE_RAW).name("Marble").build();
         
@@ -142,6 +145,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("index_header").name("Disciplines").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
         
+        // Generate JEI GUI localizations
+        this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();
+        this.jei("ritual").sub("props").sub("header").output("Props").end().build();
+        
         // Generate ritual feedback localizations
         this.ritual("instability").name("%1$s: %2$s").build();
         this.ritual("instability").sub("header").output("Instability").end().build();
@@ -151,7 +158,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.concoction("doses_remaining").name("Doses: %1$d").build();
         this.concoction("fuse").sub("impact").output("Impact").end().build();
         
-        // Generate key mapping localizations
+        // Generate keybind localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
         

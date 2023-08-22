@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.EventLanguageBuild
 import com.verdantartifice.primalmagick.datagen.lang.builders.GrimoireLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ILanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.JeiLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KeyMappingLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
@@ -245,5 +246,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public DamageTypeLanguageBuilder damageType(ResourceKey<DamageType> key) {
         return this.createBuilder(() -> new DamageTypeLanguageBuilder(key, this::untrack, this::add));
+    }
+    
+    public JeiLanguageBuilder jei(String id) {
+        return this.createBuilder(() -> new JeiLanguageBuilder(id, this::untrack, this::add));
     }
 }
