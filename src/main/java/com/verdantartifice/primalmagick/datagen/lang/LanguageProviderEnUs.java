@@ -281,6 +281,40 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
+        this.entity(EntityTypesPM.INNER_DEMON).name("Inner Demon").build();
+        this.entity(EntityTypesPM.FRIENDLY_WITCH).name("Witch").build();
+        this.entity(EntityTypesPM.PRIMALITE_GOLEM).name("Primalite Golem").build();
+        this.entity(EntityTypesPM.HEXIUM_GOLEM).name("Hexium Golem").build();
+        this.entity(EntityTypesPM.HALLOWSTEEL_GOLEM).name("Hallowsteel Golem").build();
+        this.entity(EntityTypesPM.BASIC_EARTH_PIXIE).name("Earth Pixie").build();
+        this.entity(EntityTypesPM.GRAND_EARTH_PIXIE).name("Grand Earth Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_EARTH_PIXIE).name("Majestic Earth Pixie").build();
+        this.entity(EntityTypesPM.BASIC_SEA_PIXIE).name("Sea Pixie").build();
+        this.entity(EntityTypesPM.GRAND_SEA_PIXIE).name("Grand Sea Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_SEA_PIXIE).name("Majestic Sea Pixie").build();
+        this.entity(EntityTypesPM.BASIC_SKY_PIXIE).name("Sky Pixie").build();
+        this.entity(EntityTypesPM.GRAND_SKY_PIXIE).name("Grand Sky Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_SKY_PIXIE).name("Majestic Sky Pixie").build();
+        this.entity(EntityTypesPM.BASIC_SUN_PIXIE).name("Sun Pixie").build();
+        this.entity(EntityTypesPM.GRAND_SUN_PIXIE).name("Grand Sun Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_SUN_PIXIE).name("Majestic Sun Pixie").build();
+        this.entity(EntityTypesPM.BASIC_MOON_PIXIE).name("Moon Pixie").build();
+        this.entity(EntityTypesPM.GRAND_MOON_PIXIE).name("Grand Moon Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_MOON_PIXIE).name("Majestic Moon Pixie").build();
+        this.entity(EntityTypesPM.BASIC_BLOOD_PIXIE).name("Blood Pixie").build();
+        this.entity(EntityTypesPM.GRAND_BLOOD_PIXIE).name("Grand Blood Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_BLOOD_PIXIE).name("Majestic Blood Pixie").build();
+        this.entity(EntityTypesPM.BASIC_INFERNAL_PIXIE).name("Infernal Pixie").build();
+        this.entity(EntityTypesPM.GRAND_INFERNAL_PIXIE).name("Grand Infernal Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_INFERNAL_PIXIE).name("Majestic Infernal Pixie").build();
+        this.entity(EntityTypesPM.BASIC_VOID_PIXIE).name("Void Pixie").build();
+        this.entity(EntityTypesPM.GRAND_VOID_PIXIE).name("Grand Void Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_VOID_PIXIE).name("Majestic Void Pixie").build();
+        this.entity(EntityTypesPM.BASIC_HALLOWED_PIXIE).name("Hallowed Pixie").build();
+        this.entity(EntityTypesPM.GRAND_HALLOWED_PIXIE).name("Grand Hallowed Pixie").build();
+        this.entity(EntityTypesPM.MAJESTIC_HALLOWED_PIXIE).name("Majestic Hallowed Pixie").build();
+        this.entity(EntityTypesPM.FLYING_CARPET).name("Flying Carpet").build();
+        this.entity(EntityTypesPM.SIN_CRYSTAL).name("Sin Crystal").build();
         
         // Generate enchantment localizations
         this.enchantment(EnchantmentsPM.LIFESTEAL).name("Lifesteal")
