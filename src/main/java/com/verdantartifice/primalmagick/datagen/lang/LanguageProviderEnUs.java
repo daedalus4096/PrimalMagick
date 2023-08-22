@@ -694,6 +694,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate keybind localizations
         this.add(KeyBindings.KEY_CATEGORY, "Primal Magick");
         this.keyMapping(KeyBindings.CHANGE_SPELL_KEY, "change_spell").name("Change Active Spell").build();
+        this.keyMapping(KeyBindings.CARPET_FORWARD_KEY, "carpet_forward").name("Flying Carpet Forward").build();
+        this.keyMapping(KeyBindings.CARPET_BACKWARD_KEY, "carpet_backward").name("Flying Carpet Backward").build();
+        this.keyMapping(KeyBindings.GRIMOIRE_NEXT_PAGE, "grimoire_next_page").name("Grimoire Next Page").build();
+        this.keyMapping(KeyBindings.GRIMOIRE_PREV_PAGE, "grimoire_prev_page").name("Grimoire Previous Page").build();
+        this.keyMapping(KeyBindings.GRIMOIRE_PREV_TOPIC, "grimoire_prev_topic").name("Grimoire Previous Topic").build();
+        this.keyMapping(KeyBindings.VIEW_AFFINITY_KEY, "view_affinity").name("View Item Affinities").build();
         
         // Generate statistics localizations
         this.stat(StatsPM.GRIMOIRE_READ).name("Times Grimoire consulted").build();
