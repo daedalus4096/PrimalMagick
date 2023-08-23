@@ -850,6 +850,21 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$d / %3$d").end().build();
         this.tooltip("source").sub("mana_container").output("%1$s mana: %2$d").end().build();
         this.tooltip("source").sub("mana_summary_fragment").output("%1$s/%2$s").end().build();
+        this.tooltip("spells").sub("wand_header").output("Inscribed Spells (Capacity %1$s):").end().build();
+        this.tooltip("spells").sub("none").output("   None").end().build();
+        this.tooltip("spells").sub("no_spell_selection").output("No spell").end().build();
+        this.tooltip("spells").sub("name_unselected").output("   %1$s").end().build();
+        this.tooltip("spells").sub("name_selected").output("  *%1$s").end().build();
+        this.tooltip("spells").sub("short_wand_header").output("Active Spell: %1$s").end().build();
+        this.tooltip("spells").sub("capacity").output("%1$d").end().build();
+        this.tooltip("spells").sub("capacity_with_bonus").output("%1$d + 1 %2$s").end().build();
+        this.tooltip("spells").sub("details").sub("vehicle").output("Type: %1$s").end().build();
+        this.tooltip("spells").sub("details").sub("payload").output("Effect: %1$s").end().build();
+        this.tooltip("spells").sub("details").sub("mods").sub("single").output("Mod: %1$s").end().build();
+        this.tooltip("spells").sub("details").sub("mods").sub("double").output("Mods: %1$s, %2$s").end().build();
+        this.tooltip("spells").sub("details").sub("cooldown").output("Cooldown: %1$s sec").end().build();
+        this.tooltip("spells").sub("details").sub("mana_cost").output("Mana Cost: %1$s").end().build();
+        this.tooltip("spells").sub("details").sub("mana_cost").sub("piece").output("%1$d %2$s").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
