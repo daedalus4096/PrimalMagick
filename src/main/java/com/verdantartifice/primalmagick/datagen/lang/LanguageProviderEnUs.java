@@ -894,6 +894,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("spells").sub("details").sub("cooldown").output("Cooldown: %1$s sec").end().build();
         this.tooltip("spells").sub("details").sub("mana_cost").output("Mana Cost: %1$s").end().build();
         this.tooltip("spells").sub("details").sub("mana_cost").sub("piece").output("%1$d %2$s").end().build();
+        this.tooltip("affinities").sub("label").output("Affinities:").end().build();
+        this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
+        this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -917,6 +920,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();
         this.label("toast").sub("completed").output("Research Complete!").end().build();
         this.label("toast").sub("revealed").output("Research Revealed!").end().build();
+        this.label("attunement_gain").sub("0").output("None").end().build();
+        this.label("attunement_gain").sub("1").output("Trivial").end().build();
+        this.label("attunement_gain").sub("2").output("Minor").end().build();
+        this.label("attunement_gain").sub("3").output("Moderate").end().build();
+        this.label("attunement_gain").sub("4").output("Major").end().build();
+        this.label("attunement_gain").sub("5").output("Extreme").end().build();
+        this.label("attunement_gain").sub("text").output("%1$s: %2$s").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
