@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.util.TooltipHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -42,6 +43,11 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
         for (String value : values) {
             this.add(this.getKey(TooltipHelper.SUFFIX, Integer.toString(index++)), value);
         }
+        return this;
+    }
+    
+    public ItemLanguageBuilder coloredName(DyeColor color, String value) {
+        this.add(this.getKey(color.getName()), value);
         return this;
     }
 }

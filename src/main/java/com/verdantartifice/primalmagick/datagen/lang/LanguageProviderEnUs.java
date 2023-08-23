@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -320,7 +321,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ESSENCE_CLUSTER_VOID).name("Void Cluster").build();
         this.item(ItemsPM.ESSENCE_CLUSTER_HALLOWED).name("Hallowed Cluster").build();
         this.item(ItemsPM.ALCHEMICAL_WASTE).name("Alchemical Waste").build();
-        this.item(ItemsPM.BLOODY_FLESH).name("Bloody Flesh").build();
+        this.item(ItemsPM.BLOODY_FLESH).name("Bloody Flesh").tooltip("A dark hunger comes over you", "as you look at this...").build();
         this.item(ItemsPM.HALLOWED_ORB).name("Hallowed Orb").tooltip("A sense of peace washes over", "you as you hold this").build();
         this.item(ItemsPM.HEARTWOOD).name("Heartwood").build();
         this.item(ItemsPM.ENCHANTED_INK).name("Enchanted Ink").build();
@@ -362,26 +363,26 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SAINTSWOOL).name("Saintswool").build();
         this.item(ItemsPM.RUNE_UNATTUNED).name("Unattuned Source Rune").build();
         this.item(ItemsPM.RUNE_EARTH).name("Earth Rune").tooltip("\"Teq\"").build();
-        this.item(ItemsPM.RUNE_SEA).name("Sea Rune").build();
-        this.item(ItemsPM.RUNE_SKY).name("Sky Rune").build();
-        this.item(ItemsPM.RUNE_SUN).name("Sun Rune").build();
-        this.item(ItemsPM.RUNE_MOON).name("Moon Rune").build();
-        this.item(ItemsPM.RUNE_BLOOD).name("Blood Rune").build();
-        this.item(ItemsPM.RUNE_INFERNAL).name("Infernal Rune").build();
-        this.item(ItemsPM.RUNE_VOID).name("Void Rune").build();
-        this.item(ItemsPM.RUNE_HALLOWED).name("Hallowed Rune").build();
-        this.item(ItemsPM.RUNE_ABSORB).name("Absorb Rune").build();
-        this.item(ItemsPM.RUNE_DISPEL).name("Dispel Rune").build();
-        this.item(ItemsPM.RUNE_PROJECT).name("Project Rune").build();
-        this.item(ItemsPM.RUNE_PROTECT).name("Protect Rune").build();
-        this.item(ItemsPM.RUNE_SUMMON).name("Summon Rune").build();
-        this.item(ItemsPM.RUNE_AREA).name("Area Rune").build();
-        this.item(ItemsPM.RUNE_CREATURE).name("Creature Rune").build();
-        this.item(ItemsPM.RUNE_ITEM).name("Item Rune").build();
-        this.item(ItemsPM.RUNE_SELF).name("Self Rune").build();
-        this.item(ItemsPM.RUNE_INSIGHT).name("Insight Rune").build();
-        this.item(ItemsPM.RUNE_POWER).name("Power Rune").build();
-        this.item(ItemsPM.RUNE_GRACE).name("Grace Rune").build();
+        this.item(ItemsPM.RUNE_SEA).name("Sea Rune").tooltip("\"Ald\"").build();
+        this.item(ItemsPM.RUNE_SKY).name("Sky Rune").tooltip("\"Der\"").build();
+        this.item(ItemsPM.RUNE_SUN).name("Sun Rune").tooltip("\"Sid\"").build();
+        this.item(ItemsPM.RUNE_MOON).name("Moon Rune").tooltip("\"Lun\"").build();
+        this.item(ItemsPM.RUNE_BLOOD).name("Blood Rune").tooltip("\"Hem\"").build();
+        this.item(ItemsPM.RUNE_INFERNAL).name("Infernal Rune").tooltip("\"Cey\"").build();
+        this.item(ItemsPM.RUNE_VOID).name("Void Rune").tooltip("\"Zir\"").build();
+        this.item(ItemsPM.RUNE_HALLOWED).name("Hallowed Rune").tooltip("\"Phal\"").build();
+        this.item(ItemsPM.RUNE_ABSORB).name("Absorb Rune").tooltip("\"Kath\"").build();
+        this.item(ItemsPM.RUNE_DISPEL).name("Dispel Rune").tooltip("\"Neth\"").build();
+        this.item(ItemsPM.RUNE_PROJECT).name("Project Rune").tooltip("\"Bok\"").build();
+        this.item(ItemsPM.RUNE_PROTECT).name("Protect Rune").tooltip("\"Kor\"").build();
+        this.item(ItemsPM.RUNE_SUMMON).name("Summon Rune").tooltip("\"Tir\"").build();
+        this.item(ItemsPM.RUNE_AREA).name("Area Rune").tooltip("\"Rem\"").build();
+        this.item(ItemsPM.RUNE_CREATURE).name("Creature Rune").tooltip("\"Tak\"").build();
+        this.item(ItemsPM.RUNE_ITEM).name("Item Rune").tooltip("\"Mag\"").build();
+        this.item(ItemsPM.RUNE_SELF).name("Self Rune").tooltip("\"San\"").build();
+        this.item(ItemsPM.RUNE_INSIGHT).name("Insight Rune").tooltip("\"Nif\"").build();
+        this.item(ItemsPM.RUNE_POWER).name("Power Rune").tooltip("\"Par\"").build();
+        this.item(ItemsPM.RUNE_GRACE).name("Grace Rune").tooltip("\"Fyr\"").build();
         this.item(ItemsPM.IMBUED_WOOL_HEAD).name("Apprentice's Hood").build();
         this.item(ItemsPM.IMBUED_WOOL_CHEST).name("Apprentice's Robes").build();
         this.item(ItemsPM.IMBUED_WOOL_LEGS).name("Apprentice's Leggings").build();
@@ -410,7 +411,24 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.PRIMALITE_CHEST).name("Primalite Chestplate").build();
         this.item(ItemsPM.PRIMALITE_LEGS).name("Primalite Greaves").build();
         this.item(ItemsPM.PRIMALITE_FEET).name("Primalite Boots").build();
-        this.item(ItemsPM.PRIMALITE_SHIELD).name("Primalite Shield").build();       // TODO Shield colors
+        this.item(ItemsPM.PRIMALITE_SHIELD).name("Primalite Shield")
+            .coloredName(DyeColor.WHITE, "White Primalite Shield")
+            .coloredName(DyeColor.ORANGE, "Orange Primalite Shield")
+            .coloredName(DyeColor.MAGENTA, "Magenta Primalite Shield")
+            .coloredName(DyeColor.LIGHT_BLUE, "Light Blue Primalite Shield")
+            .coloredName(DyeColor.YELLOW, "Yellow Primalite Shield")
+            .coloredName(DyeColor.LIME, "Lime Primalite Shield")
+            .coloredName(DyeColor.PINK, "Pink Primalite Shield")
+            .coloredName(DyeColor.GRAY, "Gray Primalite Shield")
+            .coloredName(DyeColor.LIGHT_GRAY, "Light Gray Primalite Shield")
+            .coloredName(DyeColor.CYAN, "Cyan Primalite Shield")
+            .coloredName(DyeColor.PURPLE, "Purple Primalite Shield")
+            .coloredName(DyeColor.BLUE, "Blue Primalite Shield")
+            .coloredName(DyeColor.BROWN, "Brown Primalite Shield")
+            .coloredName(DyeColor.GREEN, "Green Primalite Shield")
+            .coloredName(DyeColor.RED, "Red Primalite Shield")
+            .coloredName(DyeColor.BLACK, "Black Primalite Shield")
+            .build();
         this.item(ItemsPM.HEXIUM_SWORD).name("Hexium Sword").build();
         this.item(ItemsPM.HEXIUM_TRIDENT).name("Hexium Trident").build();
         this.item(ItemsPM.HEXIUM_BOW).name("Hexium Bow").build();
@@ -423,7 +441,24 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.HEXIUM_CHEST).name("Hexium Chestplate").build();
         this.item(ItemsPM.HEXIUM_LEGS).name("Hexium Greaves").build();
         this.item(ItemsPM.HEXIUM_FEET).name("Hexium Boots").build();
-        this.item(ItemsPM.HEXIUM_SHIELD).name("Hexium Shield").build();             // TODO Shield colors
+        this.item(ItemsPM.HEXIUM_SHIELD).name("Hexium Shield")
+            .coloredName(DyeColor.WHITE, "White Hexium Shield")
+            .coloredName(DyeColor.ORANGE, "Orange Hexium Shield")
+            .coloredName(DyeColor.MAGENTA, "Magenta Hexium Shield")
+            .coloredName(DyeColor.LIGHT_BLUE, "Light Blue Hexium Shield")
+            .coloredName(DyeColor.YELLOW, "Yellow Hexium Shield")
+            .coloredName(DyeColor.LIME, "Lime Hexium Shield")
+            .coloredName(DyeColor.PINK, "Pink Hexium Shield")
+            .coloredName(DyeColor.GRAY, "Gray Hexium Shield")
+            .coloredName(DyeColor.LIGHT_GRAY, "Light Gray Hexium Shield")
+            .coloredName(DyeColor.CYAN, "Cyan Hexium Shield")
+            .coloredName(DyeColor.PURPLE, "Purple Hexium Shield")
+            .coloredName(DyeColor.BLUE, "Blue Hexium Shield")
+            .coloredName(DyeColor.BROWN, "Brown Hexium Shield")
+            .coloredName(DyeColor.GREEN, "Green Hexium Shield")
+            .coloredName(DyeColor.RED, "Red Hexium Shield")
+            .coloredName(DyeColor.BLACK, "Black Hexium Shield")
+            .build();
         this.item(ItemsPM.HALLOWSTEEL_SWORD).name("Hallowsteel Sword").build();
         this.item(ItemsPM.HALLOWSTEEL_TRIDENT).name("Hallowsteel Trident").build();
         this.item(ItemsPM.HALLOWSTEEL_BOW).name("Hallowsteel Bow").build();
@@ -436,7 +471,24 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.HALLOWSTEEL_CHEST).name("Hallowsteel Chestplate").build();
         this.item(ItemsPM.HALLOWSTEEL_LEGS).name("Hallowsteel Greaves").build();
         this.item(ItemsPM.HALLOWSTEEL_FEET).name("Hallowsteel Boots").build();
-        this.item(ItemsPM.HALLOWSTEEL_SHIELD).name("Hallowsteel Shield").build();   // TODO Shield colors
+        this.item(ItemsPM.HALLOWSTEEL_SHIELD).name("Hallowsteel Shield")
+            .coloredName(DyeColor.WHITE, "White Hallowsteel Shield")
+            .coloredName(DyeColor.ORANGE, "Orange Hallowsteel Shield")
+            .coloredName(DyeColor.MAGENTA, "Magenta Hallowsteel Shield")
+            .coloredName(DyeColor.LIGHT_BLUE, "Light Blue Hallowsteel Shield")
+            .coloredName(DyeColor.YELLOW, "Yellow Hallowsteel Shield")
+            .coloredName(DyeColor.LIME, "Lime Hallowsteel Shield")
+            .coloredName(DyeColor.PINK, "Pink Hallowsteel Shield")
+            .coloredName(DyeColor.GRAY, "Gray Hallowsteel Shield")
+            .coloredName(DyeColor.LIGHT_GRAY, "Light Gray Hallowsteel Shield")
+            .coloredName(DyeColor.CYAN, "Cyan Hallowsteel Shield")
+            .coloredName(DyeColor.PURPLE, "Purple Hallowsteel Shield")
+            .coloredName(DyeColor.BLUE, "Blue Hallowsteel Shield")
+            .coloredName(DyeColor.BROWN, "Brown Hallowsteel Shield")
+            .coloredName(DyeColor.GREEN, "Green Hallowsteel Shield")
+            .coloredName(DyeColor.RED, "Red Hallowsteel Shield")
+            .coloredName(DyeColor.BLACK, "Black Hallowsteel Shield")
+            .build();
         this.item(ItemsPM.MAGITECH_PARTS_BASIC).name("Basic Magitech Parts").build();
         this.item(ItemsPM.MAGITECH_PARTS_ENCHANTED).name("Enchanted Magitech Parts").build();
         this.item(ItemsPM.MAGITECH_PARTS_FORBIDDEN).name("Forbidden Magitech Parts").build();
@@ -659,25 +711,25 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.MANA_ARROW_VOID).name("Void-Tinged Arrow").build();
         this.item(ItemsPM.MANA_ARROW_HALLOWED).name("Hallowed-Tinged Arrow").build();
         this.item(ItemsPM.DREAM_VISION_TALISMAN).name("Dream Vision Talisman").build();
-        this.item(ItemsPM.OBSERVATION_NOTES).name("Field Research Report").build();
-        this.item(ItemsPM.THEORY_NOTES).name("Arcane Thesis").build();
-        this.item(ItemsPM.MYSTICAL_RELIC).name("Mystical Relic").build();
+        this.item(ItemsPM.OBSERVATION_NOTES).name("Field Research Report").tooltip("Use to gain an arcane observation").build();
+        this.item(ItemsPM.THEORY_NOTES).name("Arcane Thesis").tooltip("Use to gain an arcane theory").build();
+        this.item(ItemsPM.MYSTICAL_RELIC).name("Mystical Relic").tooltip("Use to gain an arcane theory, or keep to trade").build();
         this.item(ItemsPM.MYSTICAL_RELIC_FRAGMENT).name("Mystical Relic Fragment").build();
-        this.item(ItemsPM.BLOOD_NOTES).name("Blood-Scrawled Ravings").build();
+        this.item(ItemsPM.BLOOD_NOTES).name("Blood-Scrawled Ravings").tooltip("Dare you decipher it?").build();
         this.item(ItemsPM.IGNYX).name("Ignyx").build();
         this.item(ItemsPM.DOWSING_ROD).name("Dowsing Rod").build();
         this.item(ItemsPM.FOUR_LEAF_CLOVER).name("Four-Leaf Clover").build();
         this.item(ItemsPM.SHEEP_TOME).name("Tome of Polymorph: Sheep").build();
         this.item(ItemsPM.HUMMING_ARTIFACT_UNATTUNED).name("Humming Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_EARTH).name("Earth-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_SEA).name("Sea-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_SKY).name("Sky-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_SUN).name("Sun-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_MOON).name("Moon-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_BLOOD).name("Blood-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_INFERNAL).name("Infernal-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_VOID).name("Void-Attuned Artifact").build();
-        this.item(ItemsPM.HUMMING_ARTIFACT_HALLOWED).name("Hallowed-Attuned Artifact").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_EARTH).name("Earth-Attuned Artifact").tooltip("Use to gain a point of permanent Earth attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_SEA).name("Sea-Attuned Artifact").tooltip("Use to gain a point of permanent Sea attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_SKY).name("Sky-Attuned Artifact").tooltip("Use to gain a point of permanent Sky attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_SUN).name("Sun-Attuned Artifact").tooltip("Use to gain a point of permanent Sun attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_MOON).name("Moon-Attuned Artifact").tooltip("Use to gain a point of permanent Moon attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_BLOOD).name("Blood-Attuned Artifact").tooltip("Use to gain a point of permanent Blood attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_INFERNAL).name("Infernal-Attuned Artifact").tooltip("Use to gain a point of permanent Infernal attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_VOID).name("Void-Attuned Artifact").tooltip("Use to gain a point of permanent Void attunement").build();
+        this.item(ItemsPM.HUMMING_ARTIFACT_HALLOWED).name("Hallowed-Attuned Artifact").tooltip("Use to gain a point of permanent Hallowed attunement").build();
         this.item(ItemsPM.RECALL_STONE).name("Recall Stone").build();
         this.item(ItemsPM.TREEFOLK_SEED).name("Treefolk Seed").build();
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_EARTH).name("Earth Attunement Shackles").build();
