@@ -904,6 +904,19 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("analysis").sub("no_item").output("No item analyzed").end().build();
         this.label("analysis").sub("no_affinities").output("No affinities detected").end().build();
         this.label("analysis").sub("affinity_report_header").output("%1$s affinities:").end().build();
+        this.label("research_table").sub("missing_writing_supplies").output("Missing writing supplies!").end().build();
+        this.label("research_table").sub("ready").output("Ready to begin!").end().build();
+        this.label("research_table").sub("starting").output("Starting...").end().build();
+        this.label("research_table").sub("start").output("Start Project").end().build();
+        this.label("research_table").sub("completing").output("Completing...").end().build();
+        this.label("research_table").sub("complete").output("Complete Project (%1$s%%)").end().build();
+        this.label("research_table").sub("unlock").output("Unlocked by: %1$s").end().build();
+        this.label("research_table").sub("aid_header").output("Active research aids:").end().build();
+        this.label("essence_cask").sub("contents").output("Contents: %1$d / %2$d").end().build();
+        this.label("essence_cask").sub("left_click").output("Left-click to withdraw one stack").end().build();
+        this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();
+        this.label("toast").sub("completed").output("Research Complete!").end().build();
+        this.label("toast").sub("revealed").output("Research Revealed!").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
