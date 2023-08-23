@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.util.TooltipHelper;
 
 import net.minecraft.core.registries.Registries;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -48,6 +50,15 @@ public class ItemLanguageBuilder extends AbstractLanguageBuilder<Item, ItemLangu
     
     public ItemLanguageBuilder coloredName(DyeColor color, String value) {
         this.add(this.getKey(color.getName()), value);
+        return this;
+    }
+    
+    public ItemLanguageBuilder concoctionName(ConcoctionType type, Potion potion, String name) {
+        return this.concoctionName(type, ForgeRegistries.POTIONS.getKey(potion).getPath(), name);
+    }
+    
+    public ItemLanguageBuilder concoctionName(ConcoctionType type, String effectName, String name) {
+        this.add(this.getKey(type.getSerializedName(), "effect", effectName), name);
         return this;
     }
 }

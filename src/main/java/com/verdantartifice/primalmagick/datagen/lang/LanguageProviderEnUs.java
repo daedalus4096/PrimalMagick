@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -27,6 +28,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -689,9 +691,86 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SANGUINE_CORE_TREEFOLK).name("Sanguine Core: Treefolk").build();
         this.item(ItemsPM.SANGUINE_CORE_INNER_DEMON).name("Sanguine Core: Inner Demon").build();
         this.item(ItemsPM.SKYGLASS_FLASK).name("Skyglass Flask").build();
-        // TODO Concoctions
+        this.item(ItemsPM.CONCOCTION)
+            .concoctionName(ConcoctionType.WATER, Potions.EMPTY, "Uncraftable Concoction")
+            .concoctionName(ConcoctionType.WATER, Potions.WATER, "Water Flask")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.EMPTY, "Uncraftable Tincture")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.NIGHT_VISION, "Tincture of Night Vision")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.INVISIBILITY, "Tincture of Invisibility")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.LEAPING, "Tincture of Leaping")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.FIRE_RESISTANCE, "Tincture of Fire Resistance")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.SWIFTNESS, "Tincture of Swiftness")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.SLOWNESS, "Tincture of Slowness")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.WATER_BREATHING, "Tincture of Water Breathing")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.HEALING, "Tincture of Healing")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.HARMING, "Tincture of Harming")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.POISON, "Tincture of Poison")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.REGENERATION, "Tincture of Regeneration")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.STRENGTH, "Tincture of Strength")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.WEAKNESS, "Tincture of Weakness")
+            .concoctionName(ConcoctionType.TINCTURE, "levitation", "Tincture of Levitation")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.LUCK, "Tincture of Luck")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.TURTLE_MASTER, "Tincture of the Turtle Master")
+            .concoctionName(ConcoctionType.TINCTURE, Potions.SLOW_FALLING, "Tincture of Slow Falling")
+            .concoctionName(ConcoctionType.PHILTER, Potions.EMPTY, "Uncraftable Philter")
+            .concoctionName(ConcoctionType.PHILTER, Potions.NIGHT_VISION, "Philter of Night Vision")
+            .concoctionName(ConcoctionType.PHILTER, Potions.INVISIBILITY, "Philter of Invisibility")
+            .concoctionName(ConcoctionType.PHILTER, Potions.LEAPING, "Philter of Leaping")
+            .concoctionName(ConcoctionType.PHILTER, Potions.FIRE_RESISTANCE, "Philter of Fire Resistance")
+            .concoctionName(ConcoctionType.PHILTER, Potions.SWIFTNESS, "Philter of Swiftness")
+            .concoctionName(ConcoctionType.PHILTER, Potions.SLOWNESS, "Philter of Slowness")
+            .concoctionName(ConcoctionType.PHILTER, Potions.WATER_BREATHING, "Philter of Water Breathing")
+            .concoctionName(ConcoctionType.PHILTER, Potions.HEALING, "Philter of Healing")
+            .concoctionName(ConcoctionType.PHILTER, Potions.HARMING, "Philter of Harming")
+            .concoctionName(ConcoctionType.PHILTER, Potions.POISON, "Philter of Poison")
+            .concoctionName(ConcoctionType.PHILTER, Potions.REGENERATION, "Philter of Regeneration")
+            .concoctionName(ConcoctionType.PHILTER, Potions.STRENGTH, "Philter of Strength")
+            .concoctionName(ConcoctionType.PHILTER, Potions.WEAKNESS, "Philter of Weakness")
+            .concoctionName(ConcoctionType.PHILTER, "levitation", "Philter of Levitation")
+            .concoctionName(ConcoctionType.PHILTER, Potions.LUCK, "Philter of Luck")
+            .concoctionName(ConcoctionType.PHILTER, Potions.TURTLE_MASTER, "Philter of the Turtle Master")
+            .concoctionName(ConcoctionType.PHILTER, Potions.SLOW_FALLING, "Philter of Slow Falling")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.EMPTY, "Uncraftable Elixir")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.NIGHT_VISION, "Elixir of Night Vision")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.INVISIBILITY, "Elixir of Invisibility")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.LEAPING, "Elixir of Leaping")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.FIRE_RESISTANCE, "Elixir of Fire Resistance")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.SWIFTNESS, "Elixir of Swiftness")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.SLOWNESS, "Elixir of Slowness")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.WATER_BREATHING, "Elixir of Water Breathing")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.HEALING, "Elixir of Healing")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.HARMING, "Elixir of Harming")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.POISON, "Elixir of Poison")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.REGENERATION, "Elixir of Regeneration")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.STRENGTH, "Elixir of Strength")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.WEAKNESS, "Elixir of Weakness")
+            .concoctionName(ConcoctionType.ELIXIR, "levitation", "Elixir of Levitation")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.LUCK, "Elixir of Luck")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.TURTLE_MASTER, "Elixir of the Turtle Master")
+            .concoctionName(ConcoctionType.ELIXIR, Potions.SLOW_FALLING, "Elixir of Slow Falling")
+            .build();
         this.item(ItemsPM.BOMB_CASING).name("Bomb Casing").build();
-        // TODO Alchemical bombs
+        this.item(ItemsPM.ALCHEMICAL_BOMB)
+            .concoctionName(ConcoctionType.BOMB, Potions.EMPTY, "Uncraftable Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.WATER, "Water Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.NIGHT_VISION, "Night Vision Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.INVISIBILITY, "Invisibility Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.LEAPING, "Leaping Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.FIRE_RESISTANCE, "Fire Resistance Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.SWIFTNESS, "Swiftness Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.SLOWNESS, "Slowness Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.WATER_BREATHING, "Water Breathing Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.HEALING, "Healing Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.HARMING, "Harming Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.POISON, "Poison Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.REGENERATION, "Regeneration Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.STRENGTH, "Strength Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.WEAKNESS, "Weakness Bomb")
+            .concoctionName(ConcoctionType.BOMB, "levitation", "Levitation Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.LUCK, "Luck Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.TURTLE_MASTER, "Turtle Master Bomb")
+            .concoctionName(ConcoctionType.BOMB, Potions.SLOW_FALLING, "Slow Falling Bomb")
+            .build();
         this.item(ItemsPM.PRIMAL_SHOVEL).name("Shovel of the Quaking Earth").build();
         this.item(ItemsPM.PRIMAL_FISHING_ROD).name("Fishing Rod of the Bountiful Sea").build();
         this.item(ItemsPM.PRIMAL_AXE).name("Axe of the Lightning Crash").build();
