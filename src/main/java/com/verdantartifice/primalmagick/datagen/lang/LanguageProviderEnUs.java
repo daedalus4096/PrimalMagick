@@ -17,8 +17,39 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.spells.mods.AmplifySpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.EmptySpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.ForkSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
+import com.verdantartifice.primalmagick.common.spells.mods.QuickenSpellMod;
+import com.verdantartifice.primalmagick.common.spells.payloads.BloodDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.BreakSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConjureAnimalSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConjureLavaSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConjureLightSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConjureStoneSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConjureWaterSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ConsecrateSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.DrainSoulSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.EarthDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.EmptySpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.FlameDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.FlightSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.FrostDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.HealingSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.HolyDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.LightningDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.LunarDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphSheepSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphWolfSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.SolarDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.TeleportSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.VoidDamageSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.EmptySpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.ProjectileSpellVehicle;
+import com.verdantartifice.primalmagick.common.spells.vehicles.SelfSpellVehicle;
 import com.verdantartifice.primalmagick.common.spells.vehicles.TouchSpellVehicle;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
@@ -1346,19 +1377,62 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate spell vehicle localizations
         this.add("spells.primalmagick.vehicle.header", "Spell Type");
+        this.spellVehicle(EmptySpellVehicle.TYPE).name("None").defaultName("").build();
         this.spellVehicle(TouchSpellVehicle.TYPE).name("Touch").defaultName("Hand").build();
+        this.spellVehicle(ProjectileSpellVehicle.TYPE).name("Projectile").defaultName("Missle").build();
+        this.spellVehicle(BoltSpellVehicle.TYPE).name("Bolt").defaultName("Bolt").detailTooltip("Bolt (%1$d blocks)").build();
+        this.spellVehicle(SelfSpellVehicle.TYPE).name("Self").defaultName("Self").build();
         
         // Generate spell payload localizations
         this.add("spells.primalmagick.payload.header", "Spell Payload");
+        this.spellPayload(EmptySpellPayload.TYPE).name("None").defaultName("").build();
         this.spellPayload(EarthDamageSpellPayload.TYPE).name("Earth Damage").defaultName("Earthen").detailTooltip("Earth Damage (%1$s damage)").build();
+        this.spellPayload(FrostDamageSpellPayload.TYPE).name("Frost Damage").defaultName("Frost").detailTooltip("Frost Damage (%1$s damage, %2$s sec)").build();
+        this.spellPayload(LightningDamageSpellPayload.TYPE).name("Lightning Damage").defaultName("Lightning").detailTooltip("Lightning Damage (%1$s damage)").build();
+        this.spellPayload(SolarDamageSpellPayload.TYPE).name("Solar Damage").defaultName("Solar").detailTooltip("Solar Damage (%1$s damage, %2$s sec)").build();
+        this.spellPayload(LunarDamageSpellPayload.TYPE).name("Lunar Damage").defaultName("Lunar").detailTooltip("Lunar Damage (%1$s damage, %2$s sec)").build();
+        this.spellPayload(BloodDamageSpellPayload.TYPE).name("Blood Damage").defaultName("Blood").detailTooltip("Blood Damage (%1$s damage)").build();
+        this.spellPayload(FlameDamageSpellPayload.TYPE).name("Flame Damage").defaultName("Flame").detailTooltip("Flame Damage (%1$s damage, %2$s sec)").build();
+        this.spellPayload(VoidDamageSpellPayload.TYPE).name("Void Damage").defaultName("Void").detailTooltip("Void Damage (%1$s damage, %2$s sec)").build();
+        this.spellPayload(HolyDamageSpellPayload.TYPE).name("Holy Damage").defaultName("Holy").detailTooltip("Holy Damage (%1$s damage)").build();
+        this.spellPayload(BreakSpellPayload.TYPE).name("Break").defaultName("Shattering").build();
+        this.spellPayload(ConjureStoneSpellPayload.TYPE).name("Conjure Stone").defaultName("Stone").build();
+        this.spellPayload(ConjureWaterSpellPayload.TYPE).name("Conjure Water").defaultName("Water").build();
+        this.spellPayload(FlightSpellPayload.TYPE).name("Flight").defaultName("Flight").detailTooltip("Flight (%1$s sec)").build();
+        this.spellPayload(ConjureLightSpellPayload.TYPE).name("Conjure Light").defaultName("Illuminating").build();
+        this.spellPayload(HealingSpellPayload.TYPE).name("Healing").defaultName("Healing").detailTooltip("Healing (%1$s health)").build();
+        this.spellPayload(PolymorphWolfSpellPayload.TYPE).name("Polymorph").defaultName("Morphing").detailTooltip("Polymorph (%1$s sec)").build();
+        this.spellPayload(PolymorphSheepSpellPayload.TYPE).name("Polymorph: Sheep").defaultName("Sheeping").detailTooltip("Polymorph (%1$s sec)").build();
+        this.spellPayload(ConjureAnimalSpellPayload.TYPE).name("Conjure Animal").defaultName("Beast").build();
+        this.spellPayload(ConjureLavaSpellPayload.TYPE).name("Conjure Lava").defaultName("Lava").build();
+        this.spellPayload(DrainSoulSpellPayload.TYPE).name("Drain Soul").defaultName("Soul-Draining").detailTooltip("Drain Soul (%1$s sec)").build();
+        this.spellPayload(TeleportSpellPayload.TYPE).name("Teleport").defaultName("Teleport").build();
+        this.spellPayload(ConsecrateSpellPayload.TYPE).name("Consecrate").defaultName("Consecration").build();
         
         // Generate spell mod localizations
         this.add("spells.primalmagick.primary_mod.header", "Primary Mod");
         this.add("spells.primalmagick.secondary_mod.header", "Secondary Mod");
         this.spellMod(EmptySpellMod.TYPE).name("None").defaultName("").build();
-        
+        this.spellMod(AmplifySpellMod.TYPE).name("Amplify").defaultName("Amplified").build();
+        this.spellMod(BurstSpellMod.TYPE).name("Burst").defaultName("Bursting").detailTooltip("Burst (%1$d blocks, %2$d penetration)").build();
+        this.spellMod(QuickenSpellMod.TYPE).name("Quicken").defaultName("Quickened").build();
+        this.spellMod(MineSpellMod.TYPE).name("Mine").defaultName("Delayed").detailTooltip("Mine (%1$d minutes)").build();
+        this.spellMod(ForkSpellMod.TYPE).name("Fork").defaultName("Forked").detailTooltip("Fork (%1$d copies, %2$s spread)").build();
+
         // Generate spell property localizations
         this.spellProperty("power").name("Power").build();
+        this.spellProperty("duration").name("Duration").build();
+        this.spellProperty("haste").name("Haste").build();
+        this.spellProperty("radius").name("Radius").build();
+        this.spellProperty("range").name("Range").build();
+        this.spellProperty("forks").name("Forks").build();
+        this.spellProperty("precision").name("Precision").build();
+        this.spellProperty("silk_touch").name("Silk Touch").build();
+
+        // Generate other spell localizations
+        this.add("primalmagick.spell.default_name_format.mods.0", "%2$s %1$s");
+        this.add("primalmagick.spell.default_name_format.mods.1", "%3$s %2$s %1$s");
+        this.add("primalmagick.spell.default_name_format.mods.2", "%4$s %3$s %2$s %1$s");
         
         // Generate grimoire GUI localizations
         this.grimoire("index_header").name("Disciplines").build();
