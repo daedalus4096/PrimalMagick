@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 
 import net.minecraft.ChatFormatting;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Item definition for a rune.  May be used in combinations to enchant items.
@@ -50,7 +52,7 @@ public class RuneItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         if (stack != null && stack.getItem() instanceof RuneItem runeItem) {
-            String key = runeItem.rune.getTooltipTranslationKey();
+            String key = String.join(".", "item", PrimalMagick.MODID, ForgeRegistries.ITEMS.getKey(this).getPath(), "tooltip");
             tooltip.add(Component.translatable(key).withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));
             
             if (runeItem.rune.hasLimit()) {

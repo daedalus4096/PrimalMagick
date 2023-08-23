@@ -23,7 +23,8 @@ public class HallowedOrbItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("tooltip.primalmagick.hallowed_orb.1").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("tooltip.primalmagick.hallowed_orb.2").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.add(Component.translatable("item.primalmagick.hallowed_orb.tooltip.1").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.primalmagick.hallowed_orb.tooltip.2").withStyle(ChatFormatting.WHITE, ChatFormatting.ITALIC));
     }
 }

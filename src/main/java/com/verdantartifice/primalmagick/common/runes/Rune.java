@@ -97,11 +97,6 @@ public abstract class Rune {
     }
     
     @Nonnull
-    public String getTooltipTranslationKey() {
-        return "tooltip." + this.id.getNamespace() + ".rune." + this.id.getPath();
-    }
-    
-    @Nonnull
     public abstract RuneType getType();
     
     @Nonnull
