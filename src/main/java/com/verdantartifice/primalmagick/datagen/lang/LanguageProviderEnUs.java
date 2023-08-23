@@ -1236,12 +1236,36 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         // Generate attunement threshold localizations
         this.attunementThreshold(AttunementThreshold.MINOR).name("Minor")
             .effect(Source.EARTH, "5% Earth mana discount")
+            .effect(Source.SEA, "5% Sea mana discount")
+            .effect(Source.SKY, "5% Sky mana discount")
+            .effect(Source.SUN, "5% Sun mana discount")
+            .effect(Source.MOON, "5% Moon mana discount")
+            .effect(Source.BLOOD, "5% Blood mana discount")
+            .effect(Source.INFERNAL, "5% Infernal mana discount")
+            .effect(Source.VOID, "5% Void mana discount")
+            .effect(Source.HALLOWED, "5% Hallowed mana discount")
             .build();
         this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser")
             .effect(Source.EARTH, "Increased attack/mining speed")
+            .effect(Source.SEA, "Greatly increased swim speed")
+            .effect(Source.SKY, "Increased movement speed, greatly reduced fall damage")
+            .effect(Source.SUN, "Photosynthesis")
+            .effect(Source.MOON, "Chance to become invisible on taking damage")
+            .effect(Source.BLOOD, "Exsanguination")
+            .effect(Source.INFERNAL, "Hellish chain")
+            .effect(Source.VOID, "Reduced damage taken")
+            .effect(Source.HALLOWED, "Smite undead")
             .build();
         this.attunementThreshold(AttunementThreshold.GREATER).name("Greater")
             .effect(Source.EARTH, "Step height increase")
+            .effect(Source.SEA, "Underwater breathing")
+            .effect(Source.SKY, "Increased jump height, double jump")
+            .effect(Source.SUN, "Chance to create light in dark areas")
+            .effect(Source.MOON, "Night vision")
+            .effect(Source.BLOOD, "Lifesteal")
+            .effect(Source.INFERNAL, "Fire immunity")
+            .effect(Source.VOID, "Increased damage dealt")
+            .effect(Source.HALLOWED, "Prevent death when fatally wounded")
             .build();
         
         // Generate command output localizations
