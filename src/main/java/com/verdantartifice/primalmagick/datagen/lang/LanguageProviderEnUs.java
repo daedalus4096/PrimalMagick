@@ -846,6 +846,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("base_slot_description").output("Add a piece of robe armor").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("ingredients").output("Source Runes").end().build();
+        this.tooltip("source").sub("mana").output("%1$s: %2$d / %3$d (%4$d%% mana cost)").end().build();
+        this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$d / %3$d").end().build();
+        this.tooltip("source").sub("mana_container").output("%1$s mana: %2$d").end().build();
+        this.tooltip("source").sub("mana_summary_fragment").output("%1$s/%2$s").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
