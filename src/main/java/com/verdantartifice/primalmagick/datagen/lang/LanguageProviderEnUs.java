@@ -1156,17 +1156,17 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.trimPattern(TrimPatternsPM.RUNIC).name("Runic Armor Trim").build();
         
         // Generate death message localizations for damage types
-        this.damageType(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
-        this.damageType(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_EARTH).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_SEA).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_SKY).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_SUN).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_MOON).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_BLOOD).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_INFERNAL).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_VOID).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
-        this.damageType(DamageTypesPM.SORCERY_HALLOWED).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
+        this.deathMessage(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_EARTH).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_SEA).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_SKY).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_SUN).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_MOON).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_BLOOD).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_INFERNAL).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_VOID).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
+        this.deathMessage(DamageTypesPM.SORCERY_HALLOWED).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
         
         // Generate wand component localizations
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
@@ -1197,6 +1197,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate research discipline localizations
         this.researchDiscipline(ResearchDisciplines.BASICS).name("Fundamentals").build();
+        this.researchDiscipline(ResearchDisciplines.ALCHEMY).name("Alchemy").build();
+        this.researchDiscipline(ResearchDisciplines.SORCERY).name("Sorcery").build();
+        this.researchDiscipline(ResearchDisciplines.MANAWEAVING).name("Manaweaving").build();
+        this.researchDiscipline(ResearchDisciplines.RUNEWORKING).name("Runeworking").build();
+        this.researchDiscipline(ResearchDisciplines.RITUAL).name("Ritual Magick").build();
+        this.researchDiscipline(ResearchDisciplines.MAGITECH).name("Magitech").build();
+        this.researchDiscipline(ResearchDisciplines.SCANS).name("Scans").build();
         
         // Generate knowledge type localizations
         this.knowledgeType(KnowledgeType.OBSERVATION).name("Observation").build();

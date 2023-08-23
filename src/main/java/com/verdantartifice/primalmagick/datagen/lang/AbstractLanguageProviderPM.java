@@ -279,7 +279,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         return this.createBuilder(() -> new TrimPatternLanguageBuilder(key, this::untrack, this::add));
     }
     
-    public DamageTypeLanguageBuilder damageType(ResourceKey<DamageType> key) {
+    public DamageTypeLanguageBuilder deathMessage(ResourceKey<DamageType> key) {
         return this.createBuilder(() -> new DamageTypeLanguageBuilder(key, this::untrack, this::add));
     }
     
