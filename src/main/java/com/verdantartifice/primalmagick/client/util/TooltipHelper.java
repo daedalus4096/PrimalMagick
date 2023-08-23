@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.util;
+package com.verdantartifice.primalmagick.client.util;
 
 public class TooltipHelper {
     public static final String SUFFIX = "tooltip";

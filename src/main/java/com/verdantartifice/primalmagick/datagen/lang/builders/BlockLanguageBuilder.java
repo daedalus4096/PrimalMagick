@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.verdantartifice.primalmagick.common.util.TooltipHelper;
+import com.verdantartifice.primalmagick.client.util.TooltipHelper;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
