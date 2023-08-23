@@ -894,14 +894,16 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("spells").sub("details").sub("cooldown").output("Cooldown: %1$s sec").end().build();
         this.tooltip("spells").sub("details").sub("mana_cost").output("Mana Cost: %1$s").end().build();
         this.tooltip("spells").sub("details").sub("mana_cost").sub("piece").output("%1$d %2$s").end().build();
-        this.tooltip("crafting").sub("mana").output("%1$d %2$s mana").end().build();
-        this.tooltip("crafting").sub("mana_cost_header").output("Mana cost:").end().build();
-        this.tooltip("crafting").sub("no_mana").output("No mana cost").end().build();
-        this.tooltip("crafting").sub("research_header").output("Required research:").end().build();
-        this.tooltip("analysis").sub("affinity").output("%1$d %2$s affinity").end().build();
-        this.tooltip("analysis").sub("no_item").output("No item analyzed").end().build();
-        this.tooltip("analysis").sub("no_affinities").output("No affinities detected").end().build();
-        this.tooltip("analysis").sub("affinity_report_header").output("%1$s affinities:").end().build();
+        
+        // Generate miscellaneous GUI label localizations
+        this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
+        this.label("crafting").sub("mana_cost_header").output("Mana cost:").end().build();
+        this.label("crafting").sub("no_mana").output("No mana cost").end().build();
+        this.label("crafting").sub("research_header").output("Required research:").end().build();
+        this.label("analysis").sub("affinity").output("%1$d %2$s affinity").end().build();
+        this.label("analysis").sub("no_item").output("No item analyzed").end().build();
+        this.label("analysis").sub("no_affinities").output("No affinities detected").end().build();
+        this.label("analysis").sub("affinity_report_header").output("%1$s affinities:").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();

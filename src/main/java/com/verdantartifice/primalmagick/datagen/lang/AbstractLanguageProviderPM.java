@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.ItemLanguageBuilde
 import com.verdantartifice.primalmagick.datagen.lang.builders.JeiLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KeyMappingLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.KnowledgeTypeLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.LabelLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.MobEffectLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
@@ -225,6 +226,10 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public EventLanguageBuilder event(String token) {
         return this.createBuilder(() -> new EventLanguageBuilder(token, this::untrack, this::add));
+    }
+    
+    public LabelLanguageBuilder label(String token) {
+        return this.createBuilder(() -> new LabelLanguageBuilder(token, this::untrack, this::add));
     }
     
     public WrittenBookLanguageBuilder book(String id) {
