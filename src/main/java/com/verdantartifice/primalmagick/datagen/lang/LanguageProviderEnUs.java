@@ -820,6 +820,32 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL).name("Infernal Attunement Shackles").build();
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_VOID).name("Void Attunement Shackles").build();
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED).name("Hallowed Attunement Shackles").build();
+        
+        // Generate miscellaneous tooltip localizations
+        this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
+        this.tooltip("sanguine_core").sub("2").output("Souls per spawn: %1$d").end().build();
+        this.tooltip("mana_discount").name("Mana discount: %1$d%%").build();
+        this.tooltip("mana_discount_attuned").name("%2$s mana discount: %1$d%%").build();
+        this.tooltip("glamoured").name("Glamoured").build();
+        this.tooltip("runescribed").name("Runescribed").build();
+        this.tooltip("rune_limit").name("Limit %1$d per runescribe").build();
+        this.tooltip("none").name("None").build();
+        this.tooltip("question_marks").name("???").build();
+        this.tooltip("more_info").name("Hold Shift for more information").build();
+        this.tooltip("analyze_button").sub("1").output("Analyze item affinities").end().build();
+        this.tooltip("analyze_button").sub("2").output("Item will be destroyed").end().build();
+        this.tooltip("spell_scroll").name("Right-click to cast; will consume scroll").build();
+        this.tooltip("dream_vision_talisman.exp").name("Experience: %1$d / %2$d").build();
+        this.tooltip("active").name("Active").build();
+        this.tooltip("inactive").name("Inactive").build();
+        this.tooltip("research_item").name("Use to gain arcane research").build();
+        this.tooltip("research_table").sub("material").sub("consumed").output("This material will be consumed").end().build();
+        this.tooltip("research_table").sub("material").sub("has_bonus").output("This material will grant bonus research progress").end().build();
+        this.tooltip("attunement_shackles").sub("shackled").output("Shackled").end().build();
+        this.tooltip("smithing_template").sub("runic_armor_trim").sub("additions_slot_description").output("Add source rune").end().build();
+        this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
+        this.tooltip("smithing_template").sub("runic_armor_trim").sub("base_slot_description").output("Add a piece of robe armor").end().build();
+        this.tooltip("smithing_template").sub("runic_armor_trim").sub("ingredients").output("Source Runes").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
@@ -1144,8 +1170,30 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate wand component localizations
         this.wandComponent(WandCore.HEARTWOOD).name("Heartwood").build();
+        this.wandComponent(WandCore.OBSIDIAN).name("Obsidian").build();
+        this.wandComponent(WandCore.CORAL).name("Coral").build();
+        this.wandComponent(WandCore.BAMBOO).name("Bamboo").build();
+        this.wandComponent(WandCore.SUNWOOD).name("Sunwood").build();
+        this.wandComponent(WandCore.MOONWOOD).name("Moonwood").build();
+        this.wandComponent(WandCore.BONE).name("Bone").build();
+        this.wandComponent(WandCore.BLAZE_ROD).name("Blaze Rod").build();
+        this.wandComponent(WandCore.PURPUR).name("Purpur").build();
+        this.wandComponent(WandCore.PRIMAL).name("Primal").build();
+        this.wandComponent(WandCore.DARK_PRIMAL).name("Dark Primal").build();
+        this.wandComponent(WandCore.PURE_PRIMAL).name("Pure Primal").build();
+        this.add("primalmagick.wand_core.unknown.name", "Unknown");
         this.wandComponent(WandCap.IRON).name("Iron-Shod").build();
+        this.wandComponent(WandCap.GOLD).name("Gold-Capped").build();
+        this.wandComponent(WandCap.PRIMALITE).name("Primalite-Bossed").build();
+        this.wandComponent(WandCap.HEXIUM).name("Hexium-Bound").build();
+        this.wandComponent(WandCap.HALLOWSTEEL).name("Hallowsteel-Crowned").build();
+        this.add("primalmagick.wand_cap.unknown.name", "Unknown");
         this.wandComponent(WandGem.APPRENTICE).name("Apprentice's").build();
+        this.wandComponent(WandGem.ADEPT).name("Adept's").build();
+        this.wandComponent(WandGem.WIZARD).name("Wizard's").build();
+        this.wandComponent(WandGem.ARCHMAGE).name("Archmage's").build();
+        this.wandComponent(WandGem.CREATIVE).name("Creative").build();
+        this.add("primalmagick.wand_gem.unknown.name", "Unknown");
         
         // Generate research discipline localizations
         this.researchDiscipline(ResearchDisciplines.BASICS).name("Fundamentals").build();

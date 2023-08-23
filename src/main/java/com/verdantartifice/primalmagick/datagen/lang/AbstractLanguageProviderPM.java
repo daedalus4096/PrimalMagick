@@ -44,6 +44,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPayloadLangua
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellPropertyLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellVehicleLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.StatLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.TooltipLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialSourceMultipliedLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimPatternLanguageBuilder;
@@ -144,6 +145,10 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     
     public ItemLanguageBuilder item(Item item) {
         return this.createBuilder(() -> new ItemLanguageBuilder(item, this::untrack, this::add));
+    }
+    
+    public TooltipLanguageBuilder tooltip(String id) {
+        return this.createBuilder(() -> new TooltipLanguageBuilder(id, this::untrack, this::add));
     }
     
     public EntityTypeLanguageBuilder entity(Supplier<? extends EntityType<?>> entity) {
