@@ -1286,7 +1286,57 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("scan").sub("fail").output("You are unable to scan that").end().build();
         this.event("scan").sub("repeat").output("You learn nothing new from scanning that").end().build();
         this.event("scan").sub("toobig").output("There are too many items there to scan completely").end().build();
-        
+        this.event("found_shrine").name("A peculiar energy fills the air in this shrine, and you're not sure what to make of it. Perhaps some sleep will grant inspiration.").build();
+        this.event("got_dream").name("You awaken with a start from a particularly vivid dream. You manage to write it down before it fades from your memory.").build();
+        this.event("siphon_prompt").name("It feels like your wand is tugging you toward the strange device in the center of the shrine. What if you use the wand on it?").build();
+        this.event("env_earth").name("You have visited the dark depths of the earth and feel enlightened.").build();
+        this.event("env_sea").name("You have beheld the vast blue of the ocean and feel enlightened.").build();
+        this.event("env_sky").name("You have traveled to the peak of the world and feel enlightened.").build();
+        this.event("env_sun").name("You have felt the scorching rays of the desert sun and feel enlightened.").build();
+        this.event("env_moon").name("You have seen the moonlight filtered through the forest trees and feel enlightened.").build();
+        this.event("discover_source").sub("blood").output("Your blood sings with power as warmth spreads through you. You believe this may be a new primal source!").end().build();
+        this.event("discover_source").sub("blood").sub("alternate").output("Your blood sings with power as you absorb the knowledge within. You believe this may be a new primal source!").end().build();
+        this.event("discover_source").sub("infernal").output("The fiery aura of this place seethes with magick. You believe this may be a new primal source!").end().build();
+        this.event("discover_source").sub("void").output("The emptiness of this place nonetheless teems with magick. You believe this may be a new primal source!").end().build();
+        this.event("discover_source").sub("hallowed").output("This object seems to radiate a magick of harmony. You believe this may be a new primal source!").end().build();
+        this.event("cycle_spell").name("Active spell changed to: %1$s").build();
+        this.event("cycle_spell").sub("none").output("Active spell changed to: none").end().build();
+        this.event("golem").sub("stay").output("I will stay here, Master").end().build();
+        this.event("golem").sub("follow").output("I will follow you, Master").end().build();
+        this.event("ambrosia").sub("success").output("You feel a tingling sensation as the magick courses through you").end().build();
+        this.event("ambrosia").sub("failure").output("This item cannot help you attune further").end().build();
+        this.event("ambrosia").sub("not_wizard").output("This stuff tastes funny. What is it?").end().build();
+        this.event("dream_vision_talisman").sub("drained").output("You awake from a vision-filled dream and record your newfound observations.").end().build();
+        this.event("dream_vision_talisman").sub("break").output("Your Dream Vision Talisman crumbles to dust as you wake.").end().build();
+        this.event("dream_vision_talisman").sub("set_active").output("The talisman will now absorb experience.").end().build();
+        this.event("dream_vision_talisman").sub("set_inactive").output("The talisman will no longer absorb experience.").end().build();
+        this.event("wand_transform_hint").name("That seemed to do something, but apparently it wasn't enough. Try waving your wand for longer!").build();
+        this.event("knowledge_item").sub("success").output("You have gained valuable arcane knowledge").end().build();
+        this.event("knowledge_item").sub("failure").output("You can't make heads or tails of this").end().build();
+        this.event("knowledge_item").sub("already_known").output("You already know everything this has to teach").end().build();
+        this.event("dowsing_rod").sub("altar_stability").sub("very_good").output("Altar layout stability: very good").end().build();
+        this.event("dowsing_rod").sub("altar_stability").sub("good").output("Altar layout stability: good").end().build();
+        this.event("dowsing_rod").sub("altar_stability").sub("neutral").output("Altar layout stability: neutral").end().build();
+        this.event("dowsing_rod").sub("altar_stability").sub("poor").output("Altar layout stability: poor").end().build();
+        this.event("dowsing_rod").sub("altar_stability").sub("very_poor").output("Altar layout stability: very poor").end().build();
+        this.event("dowsing_rod").sub("salt_connection").sub("active").output("Salt connection active!").end().build();
+        this.event("dowsing_rod").sub("salt_connection").sub("inactive").output("No salt connection found").end().build();
+        this.event("dowsing_rod").sub("symmetry").sub("found").output("Symmetric match found!").end().build();
+        this.event("dowsing_rod").sub("symmetry").sub("not_found").output("No symmetric match found").end().build();
+        this.event("dowsing_rod").sub("symmetry").sub("marking_pos").output("Marking position where symmetric match is expected").end().build();
+        this.event("friendly_witch").sub("spawn").output("%1$s says, \"BAH! Fine! Whaddaya want?\"").end().build();
+        this.event("research").sub("gain").output("You have learned a new arcane secret! Check your Grimoire!").end().build();
+        this.event("attunement_item").sub("success").output("You feel a tingling sensation as the magick courses through you").end().build();
+        this.event("attunement_item").sub("failure").output("This thing makes your fingers tingle. What is it?").end().build();
+        this.event("recall_stone").sub("failure").output("No respawn location found").end().build();
+        this.event("recall_stone").sub("cannot_cross_dimensions").output("The stone cannot take you across dimensional boundaries").end().build();
+        this.event("analysis_table").sub("forbidden").output("This item is too precious to destroy in the Analysis Table; you must find another way to analyze it.").end().build();
+        this.event("runic_grindstone").sub("hints_granted").output("You have gleaned a fragment of runic knowledge.").end().build();
+        this.event("attunement").sub("threshold_gain").output("You have gained %2$s attunement to the %1$s").end().build();
+        this.event("attunement").sub("threshold_loss").output("You have lost %2$s attunement to the %1$s").end().build();
+        this.event("attunement").sub("suppression_gain").output("Your attunement to the %1$s has been suppressed").end().build();
+        this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
+
         // Generate written book localizations
         this.book("dream_journal").name("Dream Journal")
             .text("\"I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of\"")
