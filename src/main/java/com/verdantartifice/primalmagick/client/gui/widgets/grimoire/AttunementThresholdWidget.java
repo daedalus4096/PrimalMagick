@@ -53,7 +53,7 @@ public class AttunementThresholdWidget extends AbstractWidget {
         this.suppressed = AttunementManager.isSuppressed(mc.player, source);
         this.texture = PrimalMagick.resource("textures/attunements/threshold_" + source.getTag() + "_" + threshold.getTag() + ".png");
         List<Component> lines = new ArrayList<>();
-        lines.add(Component.translatable("primalmagick.attunement.threshold." + source.getTag() + "." + threshold.getTag()));
+        lines.add(Component.translatable(String.join(".", "attunement_threshold", PrimalMagick.MODID, threshold.getTag(), source.getTag())));
         if (this.suppressed) {
             lines.add(Component.translatable("tooltip.primalmagick.attunement_shackles.shackled").withStyle(ChatFormatting.RED));
         }

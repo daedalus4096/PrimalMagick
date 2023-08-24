@@ -73,11 +73,11 @@ public class ClientRenderEvents {
         if (gui instanceof AbstractContainerScreen && (InputEvents.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
             if (sources == null || sources.isEmpty()) {
-                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.none")));
+                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));
             } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
-                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.unknown")));
+                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.unknown")));
             } else {
-                event.getTooltipElements().add(Either.left(Component.translatable("primalmagick.affinities.label")));
+                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));
                 event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
             }
         }
