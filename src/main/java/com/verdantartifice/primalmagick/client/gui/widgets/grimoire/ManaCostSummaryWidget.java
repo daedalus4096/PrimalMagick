@@ -33,15 +33,15 @@ public class ManaCostSummaryWidget extends AbstractWidget {
         Minecraft mc = Minecraft.getInstance();
         MutableComponent tooltip = Component.empty();
         if (this.manaCosts.isEmpty()) {
-            tooltip.append(Component.translatable("primalmagick.crafting.no_mana"));
+            tooltip.append(Component.translatable("label.primalmagick.crafting.no_mana"));
         } else {
-            tooltip.append(Component.translatable("primalmagick.crafting.mana_cost_header"));
+            tooltip.append(Component.translatable("label.primalmagick.crafting.mana_cost_header"));
             for (Source source : this.manaCosts.getSourcesSorted()) {
                 boolean discovered = source.isDiscovered(mc.player);
                 Component sourceText = discovered ? 
                         source.getNameText() :
                         Component.translatable(Source.getUnknownTranslationKey());
-                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("primalmagick.crafting.mana_tooltip", this.manaCosts.getAmount(source), sourceText));
+                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("label.primalmagick.crafting.mana", this.manaCosts.getAmount(source), sourceText));
             }
         }
         this.setTooltip(Tooltip.create(tooltip));
