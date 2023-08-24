@@ -147,6 +147,6 @@ public class BurstSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getRadiusBlocks(), this.getBlastPower(spell, spellSource));
     }
 }

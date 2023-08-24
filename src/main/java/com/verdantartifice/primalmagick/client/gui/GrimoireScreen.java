@@ -669,7 +669,7 @@ public class GrimoireScreen extends Screen {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        String rawText = (Component.translatable("primalmagick.attunement." + source.getTag() + ".text")).getString();
+        String rawText = (Component.translatable("source.primalmagick." + source.getTag() + ".attunement.text")).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

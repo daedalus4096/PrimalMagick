@@ -65,6 +65,6 @@ public class MineSpellMod extends AbstractSpellMod {
 
     @Override
     public Component getDetailTooltip(SpellPackage spell, ItemStack spellSource) {
-        return Component.translatable("primalmagick.spell.mod.detail_tooltip." + this.getModType(), this.getDurationMinutes(spell, spellSource));
+        return Component.translatable("spells.primalmagick.mod." + this.getModType() + ".detail_tooltip", this.getDurationMinutes(spell, spellSource));
     }
 }

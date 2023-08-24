@@ -69,7 +69,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
 
     @Override
     public Component getDetailTooltip() {
-        return Component.translatable("primalmagick.spell.vehicle.detail_tooltip." + this.getVehicleType(), this.getRangeBlocks());
+        return Component.translatable("spells.primalmagick.vehicle." + this.getVehicleType() + ".detail_tooltip", this.getRangeBlocks());
     }
 
     @Override
