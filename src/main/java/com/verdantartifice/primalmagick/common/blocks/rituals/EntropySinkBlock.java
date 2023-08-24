@@ -131,7 +131,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagick.ritual.prop.entropy_sink";
+        return "ritual.primalmagick.prop.entropy_sink";
     }
 
     public float getUsageStabilityBonus(EssenceItem item) {

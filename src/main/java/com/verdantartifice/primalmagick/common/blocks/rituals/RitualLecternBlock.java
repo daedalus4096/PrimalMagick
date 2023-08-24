@@ -209,7 +209,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagick.ritual.prop.ritual_lectern";
+        return "ritual.primalmagick.prop.ritual_lectern";
     }
 
     public float getUsageStabilityBonus() {

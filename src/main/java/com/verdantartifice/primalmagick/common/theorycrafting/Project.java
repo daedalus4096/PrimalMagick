@@ -86,12 +86,12 @@ public class Project implements INBTSerializable<CompoundTag> {
 
     @Nonnull
     public String getNameTranslationKey() {
-        return this.templateKey.getNamespace() + ".research_project.name." + this.templateKey.getPath();
+        return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "name");
     }
     
     @Nonnull
     public String getTextTranslationKey() {
-        return this.templateKey.getNamespace() + ".research_project.text." + this.templateKey.getPath();
+        return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "text");
     }
 
     @Nonnull

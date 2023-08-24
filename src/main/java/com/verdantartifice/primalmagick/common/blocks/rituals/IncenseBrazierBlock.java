@@ -152,7 +152,7 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagick.ritual.prop.incense_brazier";
+        return "ritual.primalmagick.prop.incense_brazier";
     }
 
     public float getUsageStabilityBonus() {

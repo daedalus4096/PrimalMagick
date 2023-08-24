@@ -133,10 +133,10 @@ public class RitualRecipePage extends AbstractRecipePage {
         }
         
         // Render instability rating line
-        Component headerComponent = Component.translatable("primalmagick.ritual.instability.header").withStyle(ChatFormatting.UNDERLINE);
+        Component headerComponent = Component.translatable("ritual.primalmagick.instability.header").withStyle(ChatFormatting.UNDERLINE);
         int rating = Mth.clamp(this.recipe.getInstability() / 2, 0, 5);
-        Component valueComponent = Component.translatable("primalmagick.ritual.instability.rating." + rating);
-        Component lineComponent = Component.translatable("primalmagick.ritual.instability", headerComponent, valueComponent);
+        Component valueComponent = Component.translatable("ritual.primalmagick.instability.rating." + rating);
+        Component lineComponent = Component.translatable("ritual.primalmagick.instability", headerComponent, valueComponent);
         guiGraphics.drawString(mc.font, lineComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
 
