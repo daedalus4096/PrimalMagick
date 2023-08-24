@@ -27,7 +27,7 @@ public class AidListWidget extends AbstractWidget {
         super(x, y, 8, 8, Component.empty());
         this.aidNames = aidNames;
         if (!this.aidNames.isEmpty()) {
-            MutableComponent tooltip = Component.translatable("primalmagick.research_table.aid_header");
+            MutableComponent tooltip = Component.translatable("label.primalmagick.research_table.aid_header");
             aidNames.forEach(name -> tooltip.append(CommonComponents.NEW_LINE).append(name));
             this.setTooltip(Tooltip.create(tooltip));
         }
