@@ -309,7 +309,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
                     int modifier = (int)Math.round(100.0D * this.getTotalCostModifier(stack, player, source));
-                    Component line = Component.translatable("primalmagick.source.mana_tooltip", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
+                    Component line = Component.translatable("tooltip.primalmagick.source.mana", nameComp, this.getManaText(stack, source), this.getMaxManaText(stack), modifier);
                     tooltip.add(line);
                 }
             }
@@ -342,7 +342,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (first) {
                         summaryText = manaText;
                     } else {
-                        summaryText = Component.translatable("primalmagick.source.mana_summary_fragment", summaryText, manaText);
+                        summaryText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", summaryText, manaText);
                     }
                     first = false;
                 }
