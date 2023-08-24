@@ -948,9 +948,9 @@
     "primalmagick.attunement_threshold.LESSER": "较少的",
     "primalmagick.attunement_threshold.GREATER": "崇高的",
     
-    "primalmagick.affinities.label": "亲和力:",
-    "primalmagick.affinities.none": "亲和力: 无",
-    "primalmagick.affinities.unknown": "亲和力: 未知",
+    "tooltip.primalmagick.affinities.label": "亲和力:",
+    "tooltip.primalmagick.affinities.none": "亲和力: 无",
+    "tooltip.primalmagick.affinities.unknown": "亲和力: 未知",
     
     "primalmagick.spells.wand_header": "刻有咒语 (能力 %1$s):",
     "primalmagick.spells.none": "   无",
@@ -2615,6 +2615,6 @@
     
     "itemGroup.primalmagick": "原初魔法",
     
-    "gui.primalmagick.jei.ritual.offerings.header": "献祭",
-    "gui.primalmagick.jei.ritual.props.header": "道具"
+    "jei.primalmagick.ritual.offerings.header": "献祭",
+    "jei.primalmagick.ritual.props.header": "道具"
 }
