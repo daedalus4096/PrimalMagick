@@ -41,7 +41,7 @@ public class AttunementIndexPage extends AbstractPage {
     
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagick.grimoire.attunement_header";
+        return "grimoire.primalmagick.attunement_header";
     }
 
     @Override

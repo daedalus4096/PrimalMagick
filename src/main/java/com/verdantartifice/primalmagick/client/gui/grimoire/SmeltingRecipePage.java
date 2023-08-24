@@ -33,7 +33,7 @@ public class SmeltingRecipePage extends AbstractRecipePage {
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagick.grimoire.smelting_recipe_header";
+        return "grimoire.primalmagick.smelting_recipe_header";
     }
 
     @Override

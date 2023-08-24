@@ -33,7 +33,7 @@ public class OtherIndexPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagick.grimoire.other_header";
+        return "grimoire.primalmagick.other_header";
     }
 
     @Override
@@ -46,7 +46,7 @@ public class OtherIndexPage extends AbstractPage {
         
         // Add attunements button if attunements are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
-            text = Component.translatable("primalmagick.grimoire.attunement_header");
+            text = Component.translatable("grimoire.primalmagick.attunement_header");
             Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
@@ -54,14 +54,14 @@ public class OtherIndexPage extends AbstractPage {
         // Add recipes button
         ResearchEntry firstSteps = ResearchEntries.getEntry(SimpleResearchKey.FIRST_STEPS);
         if (firstSteps != null && (firstSteps.isComplete(mc.player) || firstSteps.isInProgress(mc.player))) {
-            text = Component.translatable("primalmagick.grimoire.recipe_index_header");
+            text = Component.translatable("grimoire.primalmagick.recipe_index_header");
             Button button = screen.addWidgetToScreen(new RecipeIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
         
         // Add rune enchantments button if rune enchantments are unlocked
         if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
-            text = Component.translatable("primalmagick.grimoire.rune_enchantment_header");
+            text = Component.translatable("grimoire.primalmagick.rune_enchantment_header");
             Button button = screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
@@ -75,7 +75,7 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add statistics button
-        text = Component.translatable("primalmagick.grimoire.stats_header");
+        text = Component.translatable("grimoire.primalmagick.stats_header");
         Button button = screen.addWidgetToScreen(new StatisticsButton(x + 12 + (side * 140), y, text, screen));
         y += button.getHeight();
     }

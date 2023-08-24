@@ -52,7 +52,7 @@ public class AttunementGainPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagick.grimoire.attunement_gain_header";
+        return "grimoire.primalmagick.attunement_gain_header";
     }
 
     @Override

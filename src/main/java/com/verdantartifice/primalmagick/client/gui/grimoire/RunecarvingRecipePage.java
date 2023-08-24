@@ -32,7 +32,7 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagick.grimoire.runecarving_recipe_header";
+        return "grimoire.primalmagick.runecarving_recipe_header";
     }
 
     @Override

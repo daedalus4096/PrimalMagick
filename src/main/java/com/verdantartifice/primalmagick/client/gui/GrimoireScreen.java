@@ -373,7 +373,7 @@ public class GrimoireScreen extends Screen {
     
     protected void parseDisciplinePageSection(List<ResearchEntry> researchList, String headerName, ResearchDiscipline discipline, DisciplinePageProperties properties) {
         // Append the section header and spacer
-        Component headerText = Component.translatable("primalmagick.grimoire.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
+        Component headerText = Component.translatable("grimoire.primalmagick.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
             properties.heightRemaining = 155;
@@ -479,7 +479,7 @@ public class GrimoireScreen extends Screen {
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
             if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
-                Component headerText = Component.translatable("primalmagick.grimoire.addendum_header", ++addendumCount);
+                Component headerText = Component.translatable("grimoire.primalmagick.addendum_header", ++addendumCount);
                 Component addendumText = Component.translatable(addendum.getTextTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
             }
