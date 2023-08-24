@@ -7,7 +7,7 @@
     "location": "minecraft:quartz"
   },
   "key": "QUARTZ",
-  "name": "primalmagick.research.quartz.title",
+  "name": "research.primalmagick.quartz.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -18,7 +18,7 @@
         "primalmagick:quartz_from_nuggets",
         "primalmagick:quartz_from_smelting"
       ],
-      "text": "primalmagick.research.quartz.text.stage.1"
+      "text": "research.primalmagick.quartz.text.stage.1"
     }
   ]
 }

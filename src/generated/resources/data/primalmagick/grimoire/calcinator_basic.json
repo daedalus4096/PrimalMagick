@@ -6,7 +6,7 @@
     "location": "primalmagick:calcinator_basic"
   },
   "key": "CALCINATOR_BASIC",
-  "name": "primalmagick.research.calcinator_basic.title",
+  "name": "research.primalmagick.calcinator_basic.title",
   "parents": [
     "BASIC_ALCHEMY"
   ],
@@ -22,13 +22,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.calcinator_basic.text.stage.1"
+      "text": "research.primalmagick.calcinator_basic.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:calcinator_basic"
       ],
-      "text": "primalmagick.research.calcinator_basic.text.stage.2"
+      "text": "research.primalmagick.calcinator_basic.text.stage.2"
     }
   ]
 }

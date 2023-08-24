@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_sorcery.png"
   },
   "key": "EXPERT_SORCERY",
-  "name": "primalmagick.research.expert_sorcery.title",
+  "name": "research.primalmagick.expert_sorcery.title",
   "parents": [
     "SPELL_PAYLOAD_LIGHTNING",
     "SPELL_PAYLOAD_FROST"
@@ -17,10 +17,10 @@
         "t_spells_crafted_expert",
         "t_spells_cast_expert"
       ],
-      "text": "primalmagick.research.expert_sorcery.text.stage.1"
+      "text": "research.primalmagick.expert_sorcery.text.stage.1"
     },
     {
-      "text": "primalmagick.research.expert_sorcery.text.stage.2"
+      "text": "research.primalmagick.expert_sorcery.text.stage.2"
     }
   ]
 }

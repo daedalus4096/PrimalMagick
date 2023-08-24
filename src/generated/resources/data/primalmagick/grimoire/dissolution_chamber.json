@@ -6,7 +6,7 @@
     "location": "primalmagick:dissolution_chamber"
   },
   "key": "DISSOLUTION_CHAMBER",
-  "name": "primalmagick.research.dissolution_chamber.title",
+  "name": "research.primalmagick.dissolution_chamber.title",
   "parents": [
     "MASTER_MAGITECH",
     "MASTER_MANAWEAVING",
@@ -22,7 +22,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.dissolution_chamber.text.stage.1"
+      "text": "research.primalmagick.dissolution_chamber.text.stage.1"
     },
     {
       "attunements": {
@@ -45,7 +45,7 @@
         "primalmagick:quartz_from_dissolving_quartz_block",
         "primalmagick:glowstone_dust_from_dissolving_glowstone_block"
       ],
-      "text": "primalmagick.research.dissolution_chamber.text.stage.2"
+      "text": "research.primalmagick.dissolution_chamber.text.stage.2"
     }
   ]
 }

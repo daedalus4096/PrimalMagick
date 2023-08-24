@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:lucky_strike"
       ],
-      "text": "primalmagick.research.primal_pickaxe.text.addenda.1"
+      "text": "research.primalmagick.primal_pickaxe.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:primal_pickaxe"
   },
   "key": "PRIMAL_PICKAXE",
-  "name": "primalmagick.research.primal_pickaxe.title",
+  "name": "research.primalmagick.primal_pickaxe.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.primal_pickaxe.text.stage.1"
+      "text": "research.primalmagick.primal_pickaxe.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:primal_pickaxe"
       ],
-      "text": "primalmagick.research.primal_pickaxe.text.stage.2"
+      "text": "research.primalmagick.primal_pickaxe.text.stage.2"
     }
   ]
 }

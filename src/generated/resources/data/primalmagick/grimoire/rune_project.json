@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_project"
   },
   "key": "RUNE_PROJECT",
-  "name": "primalmagick.research.rune_project.title",
+  "name": "research.primalmagick.rune_project.title",
   "parents": [
     "BASIC_RUNEWORKING"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_project.text.stage.1"
+      "text": "research.primalmagick.rune_project.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_project"
       ],
-      "text": "primalmagick.research.rune_project.text.stage.2"
+      "text": "research.primalmagick.rune_project.text.stage.2"
     }
   ]
 }

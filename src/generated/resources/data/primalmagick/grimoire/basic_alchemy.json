@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
   "key": "BASIC_ALCHEMY",
-  "name": "primalmagick.research.basic_alchemy.title",
+  "name": "research.primalmagick.basic_alchemy.title",
   "parents": [
     "UNLOCK_ALCHEMY"
   ],
@@ -15,10 +15,10 @@
       "required_craft": [
         "primalmagick:essence_furnace"
       ],
-      "text": "primalmagick.research.basic_alchemy.text.stage.1"
+      "text": "research.primalmagick.basic_alchemy.text.stage.1"
     },
     {
-      "text": "primalmagick.research.basic_alchemy.text.stage.2"
+      "text": "research.primalmagick.basic_alchemy.text.stage.2"
     }
   ]
 }

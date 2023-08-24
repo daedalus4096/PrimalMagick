@@ -6,7 +6,7 @@
     "location": "primalmagick:manafruit"
   },
   "key": "MANAFRUIT",
-  "name": "primalmagick.research.manafruit.title",
+  "name": "research.primalmagick.manafruit.title",
   "parents": [
     "BASIC_RITUAL",
     "MANA_SALTS",
@@ -17,13 +17,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.manafruit.text.stage.1"
+      "text": "research.primalmagick.manafruit.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:manafruit"
       ],
-      "text": "primalmagick.research.manafruit.text.stage.2"
+      "text": "research.primalmagick.manafruit.text.stage.2"
     }
   ]
 }

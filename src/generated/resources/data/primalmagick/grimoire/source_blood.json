@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/blood.png"
   },
   "key": "SOURCE_BLOOD",
-  "name": "primalmagick.research.source_blood.title",
+  "name": "research.primalmagick.source_blood.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_blood"
@@ -23,13 +23,13 @@
       "required_research": [
         "t_mana_spent_blood_expert"
       ],
-      "text": "primalmagick.research.source_blood.text.stage.1"
+      "text": "research.primalmagick.source_blood.text.stage.1"
     },
     {
       "attunements": {
         "blood": 5
       },
-      "text": "primalmagick.research.source_blood.text.stage.2"
+      "text": "research.primalmagick.source_blood.text.stage.2"
     }
   ]
 }

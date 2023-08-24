@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sky.png"
   },
   "key": "SOURCE_SKY",
-  "name": "primalmagick.research.source_sky.title",
+  "name": "research.primalmagick.source_sky.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
@@ -24,13 +24,13 @@
         "m_env_sky",
         "t_mana_spent_sky_expert"
       ],
-      "text": "primalmagick.research.source_sky.text.stage.1"
+      "text": "research.primalmagick.source_sky.text.stage.1"
     },
     {
       "attunements": {
         "sky": 5
       },
-      "text": "primalmagick.research.source_sky.text.stage.2"
+      "text": "research.primalmagick.source_sky.text.stage.2"
     }
   ]
 }

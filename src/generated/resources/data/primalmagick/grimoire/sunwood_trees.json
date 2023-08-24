@@ -7,7 +7,7 @@
     "location": "primalmagick:sunwood_sapling"
   },
   "key": "SUNWOOD_TREES",
-  "name": "primalmagick.research.sunwood_trees.title",
+  "name": "research.primalmagick.sunwood_trees.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -21,7 +21,7 @@
         "primalmagick:sunwood_stairs",
         "primalmagick:sunwood_pillar"
       ],
-      "text": "primalmagick.research.sunwood_trees.text.stage.1"
+      "text": "research.primalmagick.sunwood_trees.text.stage.1"
     }
   ]
 }

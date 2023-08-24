@@ -7,13 +7,13 @@
     "location": "primalmagick:sanguine_core_blank"
   },
   "key": "INNER_DEMON",
-  "name": "primalmagick.research.inner_demon.title",
+  "name": "research.primalmagick.inner_demon.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.inner_demon.text.stage.1"
+      "text": "research.primalmagick.inner_demon.text.stage.1"
     }
   ]
 }

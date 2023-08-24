@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/earth.png"
   },
   "key": "SOURCE_EARTH",
-  "name": "primalmagick.research.source_earth.title",
+  "name": "research.primalmagick.source_earth.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
@@ -24,13 +24,13 @@
         "m_env_earth",
         "t_mana_spent_earth_expert"
       ],
-      "text": "primalmagick.research.source_earth.text.stage.1"
+      "text": "research.primalmagick.source_earth.text.stage.1"
     },
     {
       "attunements": {
         "earth": 5
       },
-      "text": "primalmagick.research.source_earth.text.stage.2"
+      "text": "research.primalmagick.source_earth.text.stage.2"
     }
   ]
 }

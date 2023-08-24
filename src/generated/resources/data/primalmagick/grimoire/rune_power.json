@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_power"
   },
   "key": "RUNE_POWER",
-  "name": "primalmagick.research.rune_power.title",
+  "name": "research.primalmagick.rune_power.title",
   "parents": [
     "MASTER_RUNEWORKING",
     "CRYSTAL_SYNTHESIS",
@@ -20,7 +20,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.rune_power.text.stage.1"
+      "text": "research.primalmagick.rune_power.text.stage.1"
     },
     {
       "recipes": [
@@ -29,7 +29,7 @@
       "siblings": [
         "t_sotu_research_power_rune"
       ],
-      "text": "primalmagick.research.rune_power.text.stage.2"
+      "text": "research.primalmagick.rune_power.text.stage.2"
     }
   ]
 }

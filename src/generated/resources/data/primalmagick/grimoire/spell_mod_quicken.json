@@ -2,7 +2,7 @@
   "addenda": [],
   "discipline": "SORCERY",
   "key": "SPELL_MOD_QUICKEN",
-  "name": "primalmagick.research.spell_mod_quicken.title",
+  "name": "research.primalmagick.spell_mod_quicken.title",
   "parents": [
     "MASTER_SORCERY",
     "SPELL_MOD_AMPLIFY"
@@ -12,10 +12,10 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.spell_mod_quicken.text.stage.1"
+      "text": "research.primalmagick.spell_mod_quicken.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_mod_quicken.text.stage.2"
+      "text": "research.primalmagick.spell_mod_quicken.text.stage.2"
     }
   ]
 }

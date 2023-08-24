@@ -6,7 +6,7 @@
     "location": "primalmagick:apprentice_wand_gem_item"
   },
   "key": "WAND_GEM_APPRENTICE",
-  "name": "primalmagick.research.wand_gem_apprentice.title",
+  "name": "research.primalmagick.wand_gem_apprentice.title",
   "parents": [
     "ADVANCED_WANDMAKING"
   ],
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.wand_gem_apprentice.text.stage.1"
+      "text": "research.primalmagick.wand_gem_apprentice.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:apprentice_wand_gem_item"
       ],
-      "text": "primalmagick.research.wand_gem_apprentice.text.stage.2"
+      "text": "research.primalmagick.wand_gem_apprentice.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sun.png"
   },
   "key": "SPELL_PAYLOAD_HEALING",
-  "name": "primalmagick.research.spell_payload_healing.title",
+  "name": "research.primalmagick.spell_payload_healing.title",
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_SOLAR"
@@ -22,13 +22,13 @@
       "required_research": [
         "m_near_death_experience"
       ],
-      "text": "primalmagick.research.spell_payload_healing.text.stage.1"
+      "text": "research.primalmagick.spell_payload_healing.text.stage.1"
     },
     {
       "attunements": {
         "sun": 3
       },
-      "text": "primalmagick.research.spell_payload_healing.text.stage.2"
+      "text": "research.primalmagick.spell_payload_healing.text.stage.2"
     }
   ]
 }

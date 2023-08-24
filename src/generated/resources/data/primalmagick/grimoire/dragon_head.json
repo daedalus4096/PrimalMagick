@@ -7,13 +7,13 @@
     "location": "minecraft:dragon_head"
   },
   "key": "DRAGON_HEAD",
-  "name": "primalmagick.research.dragon_head.title",
+  "name": "research.primalmagick.dragon_head.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.dragon_head.text.stage.1"
+      "text": "research.primalmagick.dragon_head.text.stage.1"
     }
   ]
 }

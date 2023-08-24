@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_self"
   },
   "key": "RUNE_SELF",
-  "name": "primalmagick.research.rune_self.title",
+  "name": "research.primalmagick.rune_self.title",
   "parents": [
     "RUNE_ITEM"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_self.text.stage.1"
+      "text": "research.primalmagick.rune_self.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_self"
       ],
-      "text": "primalmagick.research.rune_self.text.stage.2"
+      "text": "research.primalmagick.rune_self.text.stage.2"
     }
   ]
 }

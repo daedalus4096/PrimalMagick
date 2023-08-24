@@ -6,7 +6,7 @@
     "location": "primalmagick:seascribe_pen"
   },
   "key": "SEASCRIBE_PEN",
-  "name": "primalmagick.research.seascribe_pen.title",
+  "name": "research.primalmagick.seascribe_pen.title",
   "parents": [
     "BASIC_MAGITECH",
     "THEORYCRAFTING"
@@ -22,13 +22,13 @@
       "required_research": [
         "t_research_projects_completed"
       ],
-      "text": "primalmagick.research.seascribe_pen.text.stage.1"
+      "text": "research.primalmagick.seascribe_pen.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:seascribe_pen"
       ],
-      "text": "primalmagick.research.seascribe_pen.text.stage.2"
+      "text": "research.primalmagick.seascribe_pen.text.stage.2"
     }
   ]
 }

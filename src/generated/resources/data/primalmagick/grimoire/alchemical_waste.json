@@ -7,13 +7,13 @@
     "location": "primalmagick:alchemical_waste"
   },
   "key": "ALCHEMICAL_WASTE",
-  "name": "primalmagick.research.alchemical_waste.title",
+  "name": "research.primalmagick.alchemical_waste.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.alchemical_waste.text.stage.1"
+      "text": "research.primalmagick.alchemical_waste.text.stage.1"
     }
   ]
 }

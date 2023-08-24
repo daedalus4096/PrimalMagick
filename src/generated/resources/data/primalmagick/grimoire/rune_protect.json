@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_protect"
   },
   "key": "RUNE_PROTECT",
-  "name": "primalmagick.research.rune_protect.title",
+  "name": "research.primalmagick.rune_protect.title",
   "parents": [
     "RUNE_PROJECT"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_protect.text.stage.1"
+      "text": "research.primalmagick.rune_protect.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_protect"
       ],
-      "text": "primalmagick.research.rune_protect.text.stage.2"
+      "text": "research.primalmagick.rune_protect.text.stage.2"
     }
   ]
 }

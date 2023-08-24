@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
   "key": "UNLOCK_RITUAL",
-  "name": "primalmagick.research.unlock_ritual.title",
+  "name": "research.primalmagick.unlock_ritual.title",
   "parents": [
     "WAND_INSCRIPTION",
     "RUNE_PROJECT"
@@ -16,10 +16,10 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.unlock_ritual.text.stage.1"
+      "text": "research.primalmagick.unlock_ritual.text.stage.1"
     },
     {
-      "text": "primalmagick.research.unlock_ritual.text.stage.2"
+      "text": "research.primalmagick.unlock_ritual.text.stage.2"
     }
   ]
 }

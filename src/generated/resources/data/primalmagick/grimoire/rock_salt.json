@@ -7,7 +7,7 @@
     "location": "primalmagick:refined_salt"
   },
   "key": "ROCK_SALT",
-  "name": "primalmagick.research.rock_salt.title",
+  "name": "research.primalmagick.rock_salt.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -30,7 +30,7 @@
         "primalmagick:salted_mushroom_stew",
         "primalmagick:salted_rabbit_stew"
       ],
-      "text": "primalmagick.research.rock_salt.text.stage.1"
+      "text": "research.primalmagick.rock_salt.text.stage.1"
     }
   ]
 }

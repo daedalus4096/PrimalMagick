@@ -6,7 +6,7 @@
     "location": "primalmagick:primalite_ingot"
   },
   "key": "PRIMALITE",
-  "name": "primalmagick.research.primalite.title",
+  "name": "research.primalmagick.primalite.title",
   "parents": [
     "EXPERT_ALCHEMY"
   ],
@@ -22,7 +22,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.primalite.text.stage.1"
+      "text": "research.primalmagick.primalite.text.stage.1"
     },
     {
       "attunements": {
@@ -52,7 +52,7 @@
         "primalmagick:primalite_feet",
         "primalmagick:primalite_shield"
       ],
-      "text": "primalmagick.research.primalite.text.stage.2"
+      "text": "research.primalmagick.primalite.text.stage.2"
     }
   ]
 }

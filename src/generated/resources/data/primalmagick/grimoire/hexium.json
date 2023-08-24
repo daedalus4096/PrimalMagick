@@ -6,7 +6,7 @@
     "location": "primalmagick:hexium_ingot"
   },
   "key": "HEXIUM",
-  "name": "primalmagick.research.hexium.title",
+  "name": "research.primalmagick.hexium.title",
   "parents": [
     "MASTER_ALCHEMY",
     "PRIMALITE",
@@ -28,7 +28,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.hexium.text.stage.1"
+      "text": "research.primalmagick.hexium.text.stage.1"
     },
     {
       "attunements": {
@@ -59,7 +59,7 @@
       "siblings": [
         "t_sotu_research_hexium"
       ],
-      "text": "primalmagick.research.hexium.text.stage.2"
+      "text": "research.primalmagick.hexium.text.stage.2"
     }
   ]
 }

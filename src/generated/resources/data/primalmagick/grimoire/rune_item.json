@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_item"
   },
   "key": "RUNE_ITEM",
-  "name": "primalmagick.research.rune_item.title",
+  "name": "research.primalmagick.rune_item.title",
   "parents": [
     "BASIC_RUNEWORKING"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_item.text.stage.1"
+      "text": "research.primalmagick.rune_item.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_item"
       ],
-      "text": "primalmagick.research.rune_item.text.stage.2"
+      "text": "research.primalmagick.rune_item.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_infernal"
   },
   "key": "RUNE_INFERNAL",
-  "name": "primalmagick.research.rune_infernal.title",
+  "name": "research.primalmagick.rune_infernal.title",
   "parents": [
     "EXPERT_RUNEWORKING",
     "t_discover_infernal"
@@ -16,7 +16,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.rune_infernal.text.stage.1"
+      "text": "research.primalmagick.rune_infernal.text.stage.1"
     },
     {
       "attunements": {
@@ -25,7 +25,7 @@
       "recipes": [
         "primalmagick:rune_infernal"
       ],
-      "text": "primalmagick.research.rune_infernal.text.stage.2"
+      "text": "research.primalmagick.rune_infernal.text.stage.2"
     }
   ]
 }

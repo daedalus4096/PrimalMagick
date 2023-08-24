@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/void.png"
   },
   "key": "SPELL_PAYLOAD_TELEPORT",
-  "name": "primalmagick.research.spell_payload_teleport.title",
+  "name": "research.primalmagick.spell_payload_teleport.title",
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_VOID"
@@ -19,13 +19,13 @@
       "required_research": [
         "m_teleport_a_lot"
       ],
-      "text": "primalmagick.research.spell_payload_teleport.text.stage.1"
+      "text": "research.primalmagick.spell_payload_teleport.text.stage.1"
     },
     {
       "attunements": {
         "void": 3
       },
-      "text": "primalmagick.research.spell_payload_teleport.text.stage.2"
+      "text": "research.primalmagick.spell_payload_teleport.text.stage.2"
     }
   ]
 }

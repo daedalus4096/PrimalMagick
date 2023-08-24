@@ -10,7 +10,7 @@
       "required_research": [
         "HEXIUM"
       ],
-      "text": "primalmagick.research.sunlamp.text.addenda.1"
+      "text": "research.primalmagick.sunlamp.text.addenda.1"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -19,7 +19,7 @@
     "location": "primalmagick:sunlamp"
   },
   "key": "SUNLAMP",
-  "name": "primalmagick.research.sunlamp.title",
+  "name": "research.primalmagick.sunlamp.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "PRIMALITE"
@@ -32,7 +32,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.sunlamp.text.stage.1"
+      "text": "research.primalmagick.sunlamp.text.stage.1"
     },
     {
       "attunements": {
@@ -41,7 +41,7 @@
       "recipes": [
         "primalmagick:sunlamp"
       ],
-      "text": "primalmagick.research.sunlamp.text.stage.2"
+      "text": "research.primalmagick.sunlamp.text.stage.2"
     }
   ]
 }

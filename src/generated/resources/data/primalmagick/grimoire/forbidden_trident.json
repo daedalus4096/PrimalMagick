@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:rending"
       ],
-      "text": "primalmagick.research.forbidden_trident.text.addenda.1"
+      "text": "research.primalmagick.forbidden_trident.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:forbidden_trident"
   },
   "key": "FORBIDDEN_TRIDENT",
-  "name": "primalmagick.research.forbidden_trident.title",
+  "name": "research.primalmagick.forbidden_trident.title",
   "parents": [
     "t_discover_blood",
     "MASTER_RITUAL",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.forbidden_trident.text.stage.1"
+      "text": "research.primalmagick.forbidden_trident.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:forbidden_trident"
       ],
-      "text": "primalmagick.research.forbidden_trident.text.stage.2"
+      "text": "research.primalmagick.forbidden_trident.text.stage.2"
     }
   ]
 }

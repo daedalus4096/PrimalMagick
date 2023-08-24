@@ -10,7 +10,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.addenda.1"
+      "text": "research.primalmagick.crystal_desynthesis.text.addenda.1"
     },
     {
       "attunements": {
@@ -22,7 +22,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.addenda.2"
+      "text": "research.primalmagick.crystal_desynthesis.text.addenda.2"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.addenda.3"
+      "text": "research.primalmagick.crystal_desynthesis.text.addenda.3"
     },
     {
       "attunements": {
@@ -46,7 +46,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.addenda.4"
+      "text": "research.primalmagick.crystal_desynthesis.text.addenda.4"
     }
   ],
   "discipline": "ALCHEMY",
@@ -55,7 +55,7 @@
     "location": "primalmagick:essence_crystal_earth"
   },
   "key": "CRYSTAL_DESYNTHESIS",
-  "name": "primalmagick.research.crystal_desynthesis.title",
+  "name": "research.primalmagick.crystal_desynthesis.title",
   "parents": [
     "CRYSTAL_SYNTHESIS"
   ],
@@ -64,7 +64,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.stage.1"
+      "text": "research.primalmagick.crystal_desynthesis.text.stage.1"
     },
     {
       "attunements": {
@@ -81,7 +81,7 @@
         "primalmagick:essence_shard_sun_from_crystal",
         "primalmagick:essence_shard_moon_from_crystal"
       ],
-      "text": "primalmagick.research.crystal_desynthesis.text.stage.2"
+      "text": "research.primalmagick.crystal_desynthesis.text.stage.2"
     }
   ]
 }

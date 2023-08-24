@@ -7,7 +7,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.addenda.1"
+      "text": "research.primalmagick.artificial_mana_fonts.text.addenda.1"
     },
     {
       "recipes": [
@@ -16,7 +16,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.addenda.2"
+      "text": "research.primalmagick.artificial_mana_fonts.text.addenda.2"
     },
     {
       "recipes": [
@@ -25,7 +25,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.addenda.3"
+      "text": "research.primalmagick.artificial_mana_fonts.text.addenda.3"
     },
     {
       "recipes": [
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.addenda.4"
+      "text": "research.primalmagick.artificial_mana_fonts.text.addenda.4"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -43,7 +43,7 @@
     "location": "primalmagick:artificial_font_earth"
   },
   "key": "ARTIFICIAL_MANA_FONTS",
-  "name": "primalmagick.research.artificial_mana_fonts.title",
+  "name": "research.primalmagick.artificial_mana_fonts.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS",
@@ -58,7 +58,7 @@
       "required_research": [
         "t_mana_siphoned_expert"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.stage.1"
+      "text": "research.primalmagick.artificial_mana_fonts.text.stage.1"
     },
     {
       "recipes": [
@@ -68,7 +68,7 @@
         "primalmagick:artificial_font_sun",
         "primalmagick:artificial_font_moon"
       ],
-      "text": "primalmagick.research.artificial_mana_fonts.text.stage.2"
+      "text": "research.primalmagick.artificial_mana_fonts.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_insight"
   },
   "key": "RUNE_INSIGHT",
-  "name": "primalmagick.research.rune_insight.title",
+  "name": "research.primalmagick.rune_insight.title",
   "parents": [
     "EXPERT_RUNEWORKING",
     "SHARD_SYNTHESIS"
@@ -16,13 +16,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.rune_insight.text.stage.1"
+      "text": "research.primalmagick.rune_insight.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_insight"
       ],
-      "text": "primalmagick.research.rune_insight.text.stage.2"
+      "text": "research.primalmagick.rune_insight.text.stage.2"
     }
   ]
 }

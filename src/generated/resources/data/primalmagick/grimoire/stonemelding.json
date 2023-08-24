@@ -6,7 +6,7 @@
     "location": "minecraft:stone"
   },
   "key": "STONEMELDING",
-  "name": "primalmagick.research.stonemelding.title",
+  "name": "research.primalmagick.stonemelding.title",
   "parents": [
     "BASIC_ALCHEMY"
   ],
@@ -21,7 +21,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.stonemelding.text.stage.1"
+      "text": "research.primalmagick.stonemelding.text.stage.1"
     },
     {
       "attunements": {
@@ -30,7 +30,7 @@
       "recipes": [
         "primalmagick:stone_from_stonemelding"
       ],
-      "text": "primalmagick.research.stonemelding.text.stage.2"
+      "text": "research.primalmagick.stonemelding.text.stage.2"
     }
   ]
 }

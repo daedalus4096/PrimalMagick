@@ -11,7 +11,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.pixies.text.addenda.1"
+      "text": "research.primalmagick.pixies.text.addenda.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.pixies.text.addenda.2"
+      "text": "research.primalmagick.pixies.text.addenda.2"
     },
     {
       "attunements": {
@@ -37,7 +37,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.pixies.text.addenda.3"
+      "text": "research.primalmagick.pixies.text.addenda.3"
     },
     {
       "attunements": {
@@ -50,7 +50,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.pixies.text.addenda.4"
+      "text": "research.primalmagick.pixies.text.addenda.4"
     }
   ],
   "discipline": "RITUAL",
@@ -59,7 +59,7 @@
     "location": "primalmagick:pixie_basic_earth"
   },
   "key": "PIXIES",
-  "name": "primalmagick.research.pixies.title",
+  "name": "research.primalmagick.pixies.title",
   "parents": [
     "EXPERT_RITUAL",
     "MANA_SALTS",
@@ -78,7 +78,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.pixies.text.stage.1"
+      "text": "research.primalmagick.pixies.text.stage.1"
     },
     {
       "attunements": {
@@ -100,7 +100,7 @@
         "primalmagick:pixie_basic_moon",
         "primalmagick:pixie_basic_moon_revive"
       ],
-      "text": "primalmagick.research.pixies.text.stage.2"
+      "text": "research.primalmagick.pixies.text.stage.2"
     }
   ]
 }

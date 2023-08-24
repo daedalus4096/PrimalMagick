@@ -2,13 +2,13 @@
   "addenda": [],
   "discipline": "BASICS",
   "key": "TERRESTRIAL_MAGICK",
-  "name": "primalmagick.research.terrestrial_magick.title",
+  "name": "research.primalmagick.terrestrial_magick.title",
   "parents": [
     "ATTUNEMENTS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.terrestrial_magick.text.stage.1"
+      "text": "research.primalmagick.terrestrial_magick.text.stage.1"
     }
   ]
 }

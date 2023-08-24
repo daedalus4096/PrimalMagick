@@ -7,7 +7,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.addenda.1"
+      "text": "research.primalmagick.attunement_shackles.text.addenda.1"
     },
     {
       "recipes": [
@@ -16,7 +16,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.addenda.2"
+      "text": "research.primalmagick.attunement_shackles.text.addenda.2"
     },
     {
       "recipes": [
@@ -25,7 +25,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.addenda.3"
+      "text": "research.primalmagick.attunement_shackles.text.addenda.3"
     },
     {
       "recipes": [
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.addenda.4"
+      "text": "research.primalmagick.attunement_shackles.text.addenda.4"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -43,7 +43,7 @@
     "location": "primalmagick:attunement_shackles_earth"
   },
   "key": "ATTUNEMENT_SHACKLES",
-  "name": "primalmagick.research.attunement_shackles.title",
+  "name": "research.primalmagick.attunement_shackles.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS",
@@ -54,7 +54,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.stage.1"
+      "text": "research.primalmagick.attunement_shackles.text.stage.1"
     },
     {
       "recipes": [
@@ -64,7 +64,7 @@
         "primalmagick:attunement_shackles_sun",
         "primalmagick:attunement_shackles_moon"
       ],
-      "text": "primalmagick.research.attunement_shackles.text.stage.2"
+      "text": "research.primalmagick.attunement_shackles.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/hallowed.png"
   },
   "key": "SPELL_PAYLOAD_HOLY",
-  "name": "primalmagick.research.spell_payload_holy.title",
+  "name": "research.primalmagick.spell_payload_holy.title",
   "parents": [
     "MASTER_SORCERY",
     "t_discover_hallowed"
@@ -16,13 +16,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.spell_payload_holy.text.stage.1"
+      "text": "research.primalmagick.spell_payload_holy.text.stage.1"
     },
     {
       "attunements": {
         "hallowed": 1
       },
-      "text": "primalmagick.research.spell_payload_holy.text.stage.2"
+      "text": "research.primalmagick.spell_payload_holy.text.stage.2"
     }
   ]
 }

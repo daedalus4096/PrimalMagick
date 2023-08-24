@@ -6,7 +6,7 @@
     "location": "primalmagick:sanguine_core_blank"
   },
   "key": "SANGUINE_CORE_PLANTS",
-  "name": "primalmagick.research.sanguine_core_plants.title",
+  "name": "research.primalmagick.sanguine_core_plants.title",
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.sanguine_core_plants.text.stage.1"
+      "text": "research.primalmagick.sanguine_core_plants.text.stage.1"
     },
     {
       "attunements": {
@@ -26,7 +26,7 @@
         "primalmagick:sanguine_core_mooshroom",
         "primalmagick:sanguine_core_treefolk"
       ],
-      "text": "primalmagick.research.sanguine_core_plants.text.stage.2"
+      "text": "research.primalmagick.sanguine_core_plants.text.stage.2"
     }
   ]
 }

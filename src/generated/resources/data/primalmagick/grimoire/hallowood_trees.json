@@ -7,7 +7,7 @@
     "location": "primalmagick:hallowood_sapling"
   },
   "key": "HALLOWOOD_TREES",
-  "name": "primalmagick.research.hallowood_trees.title",
+  "name": "research.primalmagick.hallowood_trees.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -21,7 +21,7 @@
         "primalmagick:hallowood_stairs",
         "primalmagick:hallowood_pillar"
       ],
-      "text": "primalmagick.research.hallowood_trees.text.stage.1"
+      "text": "research.primalmagick.hallowood_trees.text.stage.1"
     }
   ]
 }

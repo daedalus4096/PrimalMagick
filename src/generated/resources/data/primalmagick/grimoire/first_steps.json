@@ -6,7 +6,7 @@
     "location": "primalmagick:grimoire"
   },
   "key": "FIRST_STEPS",
-  "name": "primalmagick.research.first_steps.title",
+  "name": "research.primalmagick.first_steps.title",
   "parents": [],
   "stages": [
     {
@@ -16,7 +16,7 @@
       "required_craft": [
         "primalmagick:arcane_workbench"
       ],
-      "text": "primalmagick.research.first_steps.text.stage.1"
+      "text": "research.primalmagick.first_steps.text.stage.1"
     },
     {
       "recipes": [
@@ -25,7 +25,7 @@
       "required_research": [
         "t_mana_siphoned_basics"
       ],
-      "text": "primalmagick.research.first_steps.text.stage.2"
+      "text": "research.primalmagick.first_steps.text.stage.2"
     },
     {
       "recipes": [
@@ -37,7 +37,7 @@
       "required_research": [
         "t_observations_made_basics"
       ],
-      "text": "primalmagick.research.first_steps.text.stage.3"
+      "text": "research.primalmagick.first_steps.text.stage.3"
     },
     {
       "recipes": [
@@ -46,7 +46,7 @@
         "primalmagick:magnifying_glass",
         "primalmagick:analysis_table"
       ],
-      "text": "primalmagick.research.first_steps.text.stage.4"
+      "text": "research.primalmagick.first_steps.text.stage.4"
     }
   ]
 }

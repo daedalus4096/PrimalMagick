@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/blood.png"
   },
   "key": "SPELL_PAYLOAD_CONJURE_ANIMAL",
-  "name": "primalmagick.research.spell_payload_conjure_animal.title",
+  "name": "research.primalmagick.spell_payload_conjure_animal.title",
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_BLOOD"
@@ -22,13 +22,13 @@
       "required_research": [
         "m_breed_animal"
       ],
-      "text": "primalmagick.research.spell_payload_conjure_animal.text.stage.1"
+      "text": "research.primalmagick.spell_payload_conjure_animal.text.stage.1"
     },
     {
       "attunements": {
         "blood": 3
       },
-      "text": "primalmagick.research.spell_payload_conjure_animal.text.stage.2"
+      "text": "research.primalmagick.spell_payload_conjure_animal.text.stage.2"
     }
   ]
 }

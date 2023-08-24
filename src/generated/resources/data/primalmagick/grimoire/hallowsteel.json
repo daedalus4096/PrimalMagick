@@ -6,7 +6,7 @@
     "location": "primalmagick:hallowsteel_ingot"
   },
   "key": "HALLOWSTEEL",
-  "name": "primalmagick.research.hallowsteel.title",
+  "name": "research.primalmagick.hallowsteel.title",
   "parents": [
     "SUPREME_ALCHEMY",
     "HEXIUM",
@@ -24,7 +24,7 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.hallowsteel.text.stage.1"
+      "text": "research.primalmagick.hallowsteel.text.stage.1"
     },
     {
       "attunements": {
@@ -50,7 +50,7 @@
         "primalmagick:hallowsteel_feet",
         "primalmagick:hallowsteel_shield"
       ],
-      "text": "primalmagick.research.hallowsteel.text.stage.2"
+      "text": "research.primalmagick.hallowsteel.text.stage.2"
     }
   ]
 }

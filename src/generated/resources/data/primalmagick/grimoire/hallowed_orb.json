@@ -7,7 +7,7 @@
     "location": "primalmagick:hallowed_orb"
   },
   "key": "HALLOWED_ORB",
-  "name": "primalmagick.research.hallowed_orb.title",
+  "name": "research.primalmagick.hallowed_orb.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -16,7 +16,7 @@
       "recipes": [
         "primalmagick:hallowood_sapling"
       ],
-      "text": "primalmagick.research.hallowed_orb.text.stage.1"
+      "text": "research.primalmagick.hallowed_orb.text.stage.1"
     }
   ]
 }

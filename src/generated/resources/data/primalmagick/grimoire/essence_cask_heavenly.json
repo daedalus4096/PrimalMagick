@@ -6,7 +6,7 @@
     "location": "primalmagick:essence_cask_heavenly"
   },
   "key": "ESSENCE_CASK_HEAVENLY",
-  "name": "primalmagick.research.essence_cask_heavenly.title",
+  "name": "research.primalmagick.essence_cask_heavenly.title",
   "parents": [
     "SUPREME_MANAWEAVING",
     "ESSENCE_CASK_FORBIDDEN",
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.essence_cask_heavenly.text.stage.1"
+      "text": "research.primalmagick.essence_cask_heavenly.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:essence_cask_heavenly"
       ],
-      "text": "primalmagick.research.essence_cask_heavenly.text.stage.2"
+      "text": "research.primalmagick.essence_cask_heavenly.text.stage.2"
     }
   ]
 }

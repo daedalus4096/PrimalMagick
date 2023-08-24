@@ -2,14 +2,14 @@
   "addenda": [],
   "discipline": "BASICS",
   "key": "HEAVENLY_MAGICK",
-  "name": "primalmagick.research.heavenly_magick.title",
+  "name": "research.primalmagick.heavenly_magick.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_hallowed"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.heavenly_magick.text.stage.1"
+      "text": "research.primalmagick.heavenly_magick.text.stage.1"
     }
   ]
 }

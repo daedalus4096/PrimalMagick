@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
   "key": "EXPERT_RITUAL",
-  "name": "primalmagick.research.expert_ritual.title",
+  "name": "research.primalmagick.expert_ritual.title",
   "parents": [
     "RITUAL_CANDLES",
     "INCENSE_BRAZIER"
@@ -16,10 +16,10 @@
       "required_research": [
         "t_rituals_completed_expert"
       ],
-      "text": "primalmagick.research.expert_ritual.text.stage.1"
+      "text": "research.primalmagick.expert_ritual.text.stage.1"
     },
     {
-      "text": "primalmagick.research.expert_ritual.text.stage.2"
+      "text": "research.primalmagick.expert_ritual.text.stage.2"
     }
   ]
 }

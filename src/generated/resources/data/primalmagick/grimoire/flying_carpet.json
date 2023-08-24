@@ -6,7 +6,7 @@
     "location": "primalmagick:flying_carpet"
   },
   "key": "FLYING_CARPET",
-  "name": "primalmagick.research.flying_carpet.title",
+  "name": "research.primalmagick.flying_carpet.title",
   "parents": [
     "MASTER_RITUAL",
     "CRYSTAL_SYNTHESIS",
@@ -26,7 +26,7 @@
       "required_research": [
         "t_flying_creature"
       ],
-      "text": "primalmagick.research.flying_carpet.text.stage.1"
+      "text": "research.primalmagick.flying_carpet.text.stage.1"
     },
     {
       "attunements": {
@@ -35,7 +35,7 @@
       "recipes": [
         "primalmagick:flying_carpet"
       ],
-      "text": "primalmagick.research.flying_carpet.text.stage.2"
+      "text": "research.primalmagick.flying_carpet.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:spellcloth_head"
   },
   "key": "SPELLCLOTH",
-  "name": "primalmagick.research.spellcloth.title",
+  "name": "research.primalmagick.spellcloth.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "IMBUED_WOOL",
@@ -17,7 +17,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.spellcloth.text.stage.1"
+      "text": "research.primalmagick.spellcloth.text.stage.1"
     },
     {
       "recipes": [
@@ -27,7 +27,7 @@
         "primalmagick:spellcloth_legs",
         "primalmagick:spellcloth_feet"
       ],
-      "text": "primalmagick.research.spellcloth.text.stage.2"
+      "text": "research.primalmagick.spellcloth.text.stage.2"
     }
   ]
 }

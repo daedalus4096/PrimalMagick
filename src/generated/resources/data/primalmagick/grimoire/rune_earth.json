@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_earth"
   },
   "key": "RUNE_EARTH",
-  "name": "primalmagick.research.rune_earth.title",
+  "name": "research.primalmagick.rune_earth.title",
   "parents": [
     "BASIC_RUNEWORKING"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_earth.text.stage.1"
+      "text": "research.primalmagick.rune_earth.text.stage.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "recipes": [
         "primalmagick:rune_earth"
       ],
-      "text": "primalmagick.research.rune_earth.text.stage.2"
+      "text": "research.primalmagick.rune_earth.text.stage.2"
     }
   ]
 }

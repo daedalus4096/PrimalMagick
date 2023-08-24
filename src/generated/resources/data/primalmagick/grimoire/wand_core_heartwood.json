@@ -7,7 +7,7 @@
       "required_research": [
         "STAVES"
       ],
-      "text": "primalmagick.research.wand_core_heartwood.text.addenda.1"
+      "text": "research.primalmagick.wand_core_heartwood.text.addenda.1"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -16,7 +16,7 @@
     "location": "primalmagick:heartwood_wand_core_item"
   },
   "key": "WAND_CORE_HEARTWOOD",
-  "name": "primalmagick.research.wand_core_heartwood.title",
+  "name": "research.primalmagick.wand_core_heartwood.title",
   "parents": [
     "ADVANCED_WANDMAKING"
   ],
@@ -28,14 +28,14 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.wand_core_heartwood.text.stage.1"
+      "text": "research.primalmagick.wand_core_heartwood.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:heartwood_wand_core_item",
         "primalmagick:charcoal_from_smelting_heartwood"
       ],
-      "text": "primalmagick.research.wand_core_heartwood.text.stage.2"
+      "text": "research.primalmagick.wand_core_heartwood.text.stage.2"
     }
   ]
 }

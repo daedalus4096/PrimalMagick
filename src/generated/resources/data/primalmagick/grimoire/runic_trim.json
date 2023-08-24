@@ -6,7 +6,7 @@
     "location": "primalmagick:runic_armor_trim_smithing_template"
   },
   "key": "RUNIC_TRIM",
-  "name": "primalmagick.research.runic_trim.title",
+  "name": "research.primalmagick.runic_trim.title",
   "parents": [
     "EXPERT_RUNEWORKING",
     "IMBUED_WOOL",
@@ -28,13 +28,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.runic_trim.text.stage.1"
+      "text": "research.primalmagick.runic_trim.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:runic_armor_trim_smithing_template"
       ],
-      "text": "primalmagick.research.runic_trim.text.stage.2"
+      "text": "research.primalmagick.runic_trim.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sea.png"
   },
   "key": "SPELL_PAYLOAD_CONJURE_WATER",
-  "name": "primalmagick.research.spell_payload_conjure_water.title",
+  "name": "research.primalmagick.spell_payload_conjure_water.title",
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_FROST"
@@ -22,13 +22,13 @@
       "required_research": [
         "m_drown_a_little"
       ],
-      "text": "primalmagick.research.spell_payload_conjure_water.text.stage.1"
+      "text": "research.primalmagick.spell_payload_conjure_water.text.stage.1"
     },
     {
       "attunements": {
         "sea": 3
       },
-      "text": "primalmagick.research.spell_payload_conjure_water.text.stage.2"
+      "text": "research.primalmagick.spell_payload_conjure_water.text.stage.2"
     }
   ]
 }

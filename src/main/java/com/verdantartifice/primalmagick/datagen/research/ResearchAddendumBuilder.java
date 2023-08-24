@@ -126,7 +126,7 @@ public class ResearchAddendumBuilder {
         }
 
         private String getTextTranslationKey() {
-            return this.modId.toLowerCase() + ".research." + this.entryKey.toLowerCase() + ".text.addenda." + this.stageIndex;
+            return String.join(".", "research", this.modId.toLowerCase(), this.entryKey.toLowerCase(), "text", "addenda", Integer.toString(this.stageIndex));
         }
 
         @Override

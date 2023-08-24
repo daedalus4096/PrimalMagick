@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:bounty"
       ],
-      "text": "primalmagick.research.primal_fishing_rod.text.addenda.1"
+      "text": "research.primalmagick.primal_fishing_rod.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:primal_fishing_rod"
   },
   "key": "PRIMAL_FISHING_ROD",
-  "name": "primalmagick.research.primal_fishing_rod.title",
+  "name": "research.primalmagick.primal_fishing_rod.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.primal_fishing_rod.text.stage.1"
+      "text": "research.primalmagick.primal_fishing_rod.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:primal_fishing_rod"
       ],
-      "text": "primalmagick.research.primal_fishing_rod.text.stage.2"
+      "text": "research.primalmagick.primal_fishing_rod.text.stage.2"
     }
   ]
 }

@@ -7,7 +7,7 @@
       "required_research": [
         "STAVES"
       ],
-      "text": "primalmagick.research.wand_core_purpur.text.addenda.1"
+      "text": "research.primalmagick.wand_core_purpur.text.addenda.1"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -16,7 +16,7 @@
     "location": "primalmagick:purpur_wand_core_item"
   },
   "key": "WAND_CORE_PURPUR",
-  "name": "primalmagick.research.wand_core_purpur.title",
+  "name": "research.primalmagick.wand_core_purpur.title",
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",
@@ -30,7 +30,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.wand_core_purpur.text.stage.1"
+      "text": "research.primalmagick.wand_core_purpur.text.stage.1"
     },
     {
       "attunements": {
@@ -39,7 +39,7 @@
       "recipes": [
         "primalmagick:purpur_wand_core_item"
       ],
-      "text": "primalmagick.research.wand_core_purpur.text.stage.2"
+      "text": "research.primalmagick.wand_core_purpur.text.stage.2"
     }
   ]
 }

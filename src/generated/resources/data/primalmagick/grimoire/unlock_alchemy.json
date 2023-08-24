@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
   "key": "UNLOCK_ALCHEMY",
-  "name": "primalmagick.research.unlock_alchemy.title",
+  "name": "research.primalmagick.unlock_alchemy.title",
   "parents": [
     "MANA_ARROWS"
   ],
@@ -15,10 +15,10 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.unlock_alchemy.text.stage.1"
+      "text": "research.primalmagick.unlock_alchemy.text.stage.1"
     },
     {
-      "text": "primalmagick.research.unlock_alchemy.text.stage.2"
+      "text": "research.primalmagick.unlock_alchemy.text.stage.2"
     }
   ]
 }

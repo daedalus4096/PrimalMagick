@@ -10,7 +10,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.1"
+      "text": "research.primalmagick.supreme_ambrosia.text.addenda.1"
     },
     {
       "attunements": {
@@ -22,7 +22,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.2"
+      "text": "research.primalmagick.supreme_ambrosia.text.addenda.2"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.3"
+      "text": "research.primalmagick.supreme_ambrosia.text.addenda.3"
     },
     {
       "attunements": {
@@ -46,7 +46,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.addenda.4"
+      "text": "research.primalmagick.supreme_ambrosia.text.addenda.4"
     }
   ],
   "discipline": "RITUAL",
@@ -55,7 +55,7 @@
     "location": "primalmagick:ambrosia_supreme_earth"
   },
   "key": "SUPREME_AMBROSIA",
-  "name": "primalmagick.research.supreme_ambrosia.title",
+  "name": "research.primalmagick.supreme_ambrosia.title",
   "parents": [
     "SUPREME_RITUAL",
     "GREATER_AMBROSIA",
@@ -70,7 +70,7 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.stage.1"
+      "text": "research.primalmagick.supreme_ambrosia.text.stage.1"
     },
     {
       "attunements": {
@@ -87,7 +87,7 @@
         "primalmagick:ambrosia_supreme_sun",
         "primalmagick:ambrosia_supreme_moon"
       ],
-      "text": "primalmagick.research.supreme_ambrosia.text.stage.2"
+      "text": "research.primalmagick.supreme_ambrosia.text.stage.2"
     }
   ]
 }

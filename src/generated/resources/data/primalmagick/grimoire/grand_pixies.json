@@ -11,7 +11,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.grand_pixies.text.addenda.1"
+      "text": "research.primalmagick.grand_pixies.text.addenda.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.grand_pixies.text.addenda.2"
+      "text": "research.primalmagick.grand_pixies.text.addenda.2"
     },
     {
       "attunements": {
@@ -37,7 +37,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.grand_pixies.text.addenda.3"
+      "text": "research.primalmagick.grand_pixies.text.addenda.3"
     },
     {
       "attunements": {
@@ -50,7 +50,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.grand_pixies.text.addenda.4"
+      "text": "research.primalmagick.grand_pixies.text.addenda.4"
     }
   ],
   "discipline": "RITUAL",
@@ -59,7 +59,7 @@
     "location": "primalmagick:pixie_grand_earth"
   },
   "key": "GRAND_PIXIES",
-  "name": "primalmagick.research.grand_pixies.title",
+  "name": "research.primalmagick.grand_pixies.title",
   "parents": [
     "MASTER_RITUAL",
     "PIXIES",
@@ -75,7 +75,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.grand_pixies.text.stage.1"
+      "text": "research.primalmagick.grand_pixies.text.stage.1"
     },
     {
       "attunements": {
@@ -97,7 +97,7 @@
         "primalmagick:pixie_grand_moon",
         "primalmagick:pixie_grand_moon_revive"
       ],
-      "text": "primalmagick.research.grand_pixies.text.stage.2"
+      "text": "research.primalmagick.grand_pixies.text.stage.2"
     }
   ]
 }

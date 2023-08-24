@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
   "key": "BASIC_MAGITECH",
-  "name": "primalmagick.research.basic_magitech.title",
+  "name": "research.primalmagick.basic_magitech.title",
   "parents": [
     "UNLOCK_MAGITECH"
   ],
@@ -15,7 +15,7 @@
       "recipes": [
         "primalmagick:magitech_parts_basic"
       ],
-      "text": "primalmagick.research.basic_magitech.text.stage.1"
+      "text": "research.primalmagick.basic_magitech.text.stage.1"
     }
   ]
 }

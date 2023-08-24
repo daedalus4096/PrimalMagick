@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:soulpiercing"
       ],
-      "text": "primalmagick.research.forbidden_bow.text.addenda.1"
+      "text": "research.primalmagick.forbidden_bow.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:forbidden_bow"
   },
   "key": "FORBIDDEN_BOW",
-  "name": "primalmagick.research.forbidden_bow.title",
+  "name": "research.primalmagick.forbidden_bow.title",
   "parents": [
     "t_discover_infernal",
     "MASTER_RITUAL",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.forbidden_bow.text.stage.1"
+      "text": "research.primalmagick.forbidden_bow.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:forbidden_bow"
       ],
-      "text": "primalmagick.research.forbidden_bow.text.stage.2"
+      "text": "research.primalmagick.forbidden_bow.text.stage.2"
     }
   ]
 }

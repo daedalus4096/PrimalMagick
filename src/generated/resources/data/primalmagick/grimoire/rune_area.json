@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_area"
   },
   "key": "RUNE_AREA",
-  "name": "primalmagick.research.rune_area.title",
+  "name": "research.primalmagick.rune_area.title",
   "parents": [
     "RUNE_CREATURE"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.rune_area.text.stage.1"
+      "text": "research.primalmagick.rune_area.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_area"
       ],
-      "text": "primalmagick.research.rune_area.text.stage.2"
+      "text": "research.primalmagick.rune_area.text.stage.2"
     }
   ]
 }

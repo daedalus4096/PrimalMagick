@@ -6,7 +6,7 @@
     "location": "primalmagick:hallowsteel_golem_controller"
   },
   "key": "HALLOWSTEEL_GOLEM",
-  "name": "primalmagick.research.hallowsteel_golem.title",
+  "name": "research.primalmagick.hallowsteel_golem.title",
   "parents": [
     "SUPREME_MAGITECH",
     "HEXIUM_GOLEM",
@@ -17,13 +17,13 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.hallowsteel_golem.text.stage.1"
+      "text": "research.primalmagick.hallowsteel_golem.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:hallowsteel_golem_controller"
       ],
-      "text": "primalmagick.research.hallowsteel_golem.text.stage.2"
+      "text": "research.primalmagick.hallowsteel_golem.text.stage.2"
     }
   ]
 }

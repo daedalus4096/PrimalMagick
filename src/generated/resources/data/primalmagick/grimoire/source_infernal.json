@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/infernal.png"
   },
   "key": "SOURCE_INFERNAL",
-  "name": "primalmagick.research.source_infernal.title",
+  "name": "research.primalmagick.source_infernal.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_infernal"
@@ -23,13 +23,13 @@
       "required_research": [
         "t_mana_spent_infernal_expert"
       ],
-      "text": "primalmagick.research.source_infernal.text.stage.1"
+      "text": "research.primalmagick.source_infernal.text.stage.1"
     },
     {
       "attunements": {
         "infernal": 5
       },
-      "text": "primalmagick.research.source_infernal.text.stage.2"
+      "text": "research.primalmagick.source_infernal.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:dream_vision_talisman"
   },
   "key": "DREAM_VISION_TALISMAN",
-  "name": "primalmagick.research.dream_vision_talisman.title",
+  "name": "research.primalmagick.dream_vision_talisman.title",
   "parents": [
     "EXPERT_RITUAL",
     "RITUAL_CANDLES",
@@ -21,13 +21,13 @@
       "required_research": [
         "t_observations_made_expert"
       ],
-      "text": "primalmagick.research.dream_vision_talisman.text.stage.1"
+      "text": "research.primalmagick.dream_vision_talisman.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:dream_vision_talisman"
       ],
-      "text": "primalmagick.research.dream_vision_talisman.text.stage.2"
+      "text": "research.primalmagick.dream_vision_talisman.text.stage.2"
     }
   ]
 }

@@ -2,7 +2,7 @@
   "addenda": [],
   "discipline": "SORCERY",
   "key": "SPELL_MOD_AMPLIFY",
-  "name": "primalmagick.research.spell_mod_amplify.title",
+  "name": "research.primalmagick.spell_mod_amplify.title",
   "parents": [
     "EXPERT_SORCERY"
   ],
@@ -11,10 +11,10 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.spell_mod_amplify.text.stage.1"
+      "text": "research.primalmagick.spell_mod_amplify.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_mod_amplify.text.stage.2"
+      "text": "research.primalmagick.spell_mod_amplify.text.stage.2"
     }
   ]
 }

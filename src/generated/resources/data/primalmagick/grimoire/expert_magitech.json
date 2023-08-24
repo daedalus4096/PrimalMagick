@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
   "key": "EXPERT_MAGITECH",
-  "name": "primalmagick.research.expert_magitech.title",
+  "name": "research.primalmagick.expert_magitech.title",
   "parents": [
     "HONEY_EXTRACTOR",
     "SEASCRIBE_PEN"
@@ -20,13 +20,13 @@
         "b_crafted_magitech_expert",
         "b_scan_primalite"
       ],
-      "text": "primalmagick.research.expert_magitech.text.stage.1"
+      "text": "research.primalmagick.expert_magitech.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:magitech_parts_enchanted"
       ],
-      "text": "primalmagick.research.expert_magitech.text.stage.2"
+      "text": "research.primalmagick.expert_magitech.text.stage.2"
     }
   ]
 }

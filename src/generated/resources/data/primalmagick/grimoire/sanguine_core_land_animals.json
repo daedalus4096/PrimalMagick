@@ -6,7 +6,7 @@
     "location": "primalmagick:sanguine_core_blank"
   },
   "key": "SANGUINE_CORE_LAND_ANIMALS",
-  "name": "primalmagick.research.sanguine_core_land_animals.title",
+  "name": "research.primalmagick.sanguine_core_land_animals.title",
   "parents": [
     "SANGUINE_CRUCIBLE"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.sanguine_core_land_animals.text.stage.1"
+      "text": "research.primalmagick.sanguine_core_land_animals.text.stage.1"
     },
     {
       "attunements": {
@@ -41,7 +41,7 @@
         "primalmagick:sanguine_core_spider",
         "primalmagick:sanguine_core_wolf"
       ],
-      "text": "primalmagick.research.sanguine_core_land_animals.text.stage.2"
+      "text": "research.primalmagick.sanguine_core_land_animals.text.stage.2"
     }
   ]
 }

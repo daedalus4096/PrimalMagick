@@ -6,7 +6,7 @@
     "location": "primalmagick:hexium_wand_cap_item"
   },
   "key": "WAND_CAP_HEXIUM",
-  "name": "primalmagick.research.wand_cap_hexium.title",
+  "name": "research.primalmagick.wand_cap_hexium.title",
   "parents": [
     "MASTER_MANAWEAVING",
     "WAND_CAP_PRIMALITE",
@@ -20,13 +20,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.wand_cap_hexium.text.stage.1"
+      "text": "research.primalmagick.wand_cap_hexium.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:hexium_wand_cap_item"
       ],
-      "text": "primalmagick.research.wand_cap_hexium.text.stage.2"
+      "text": "research.primalmagick.wand_cap_hexium.text.stage.2"
     }
   ]
 }

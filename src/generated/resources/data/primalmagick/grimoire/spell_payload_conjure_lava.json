@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/infernal.png"
   },
   "key": "SPELL_PAYLOAD_CONJURE_LAVA",
-  "name": "primalmagick.research.spell_payload_conjure_lava.title",
+  "name": "research.primalmagick.spell_payload_conjure_lava.title",
   "parents": [
     "MASTER_SORCERY",
     "SPELL_PAYLOAD_CONJURE_WATER",
@@ -23,13 +23,13 @@
       "required_research": [
         "m_feel_the_burn"
       ],
-      "text": "primalmagick.research.spell_payload_conjure_lava.text.stage.1"
+      "text": "research.primalmagick.spell_payload_conjure_lava.text.stage.1"
     },
     {
       "attunements": {
         "infernal": 3
       },
-      "text": "primalmagick.research.spell_payload_conjure_lava.text.stage.2"
+      "text": "research.primalmagick.spell_payload_conjure_lava.text.stage.2"
     }
   ]
 }

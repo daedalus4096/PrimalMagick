@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:essence_thief"
       ],
-      "text": "primalmagick.research.forbidden_sword.text.addenda.1"
+      "text": "research.primalmagick.forbidden_sword.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:forbidden_sword"
   },
   "key": "FORBIDDEN_SWORD",
-  "name": "primalmagick.research.forbidden_sword.title",
+  "name": "research.primalmagick.forbidden_sword.title",
   "parents": [
     "t_discover_void",
     "MASTER_RITUAL",
@@ -35,13 +35,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.forbidden_sword.text.stage.1"
+      "text": "research.primalmagick.forbidden_sword.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:forbidden_sword"
       ],
-      "text": "primalmagick.research.forbidden_sword.text.stage.2"
+      "text": "research.primalmagick.forbidden_sword.text.stage.2"
     }
   ]
 }

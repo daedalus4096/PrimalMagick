@@ -6,7 +6,7 @@
     "location": "primalmagick:arcanometer"
   },
   "key": "ARCANOMETER",
-  "name": "primalmagick.research.arcanometer.title",
+  "name": "research.primalmagick.arcanometer.title",
   "parents": [
     "EXPERT_MAGITECH"
   ],
@@ -18,7 +18,7 @@
       "required_research": [
         "t_items_analyzed"
       ],
-      "text": "primalmagick.research.arcanometer.text.stage.1"
+      "text": "research.primalmagick.arcanometer.text.stage.1"
     },
     {
       "recipes": [
@@ -27,7 +27,7 @@
       "siblings": [
         "t_sotu_research_arcanometer"
       ],
-      "text": "primalmagick.research.arcanometer.text.stage.2"
+      "text": "research.primalmagick.arcanometer.text.stage.2"
     }
   ]
 }

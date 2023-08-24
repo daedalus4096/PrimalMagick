@@ -6,7 +6,7 @@
     "location": "primalmagick:ignyx"
   },
   "key": "IGNYX",
-  "name": "primalmagick.research.ignyx.title",
+  "name": "research.primalmagick.ignyx.title",
   "parents": [
     "EXPERT_ALCHEMY",
     "CALCINATOR_BASIC",
@@ -21,7 +21,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.ignyx.text.stage.1"
+      "text": "research.primalmagick.ignyx.text.stage.1"
     },
     {
       "attunements": {
@@ -32,7 +32,7 @@
         "primalmagick:ignyx_block",
         "primalmagick:ignyx_from_storage_block"
       ],
-      "text": "primalmagick.research.ignyx.text.stage.2"
+      "text": "research.primalmagick.ignyx.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:imbued_wool_head"
   },
   "key": "IMBUED_WOOL",
-  "name": "primalmagick.research.imbued_wool.title",
+  "name": "research.primalmagick.imbued_wool.title",
   "parents": [
     "MANA_ARROWS"
   ],
@@ -18,7 +18,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.imbued_wool.text.stage.1"
+      "text": "research.primalmagick.imbued_wool.text.stage.1"
     },
     {
       "recipes": [
@@ -27,7 +27,7 @@
         "primalmagick:imbued_wool_legs",
         "primalmagick:imbued_wool_feet"
       ],
-      "text": "primalmagick.research.imbued_wool.text.stage.2"
+      "text": "research.primalmagick.imbued_wool.text.stage.2"
     }
   ]
 }

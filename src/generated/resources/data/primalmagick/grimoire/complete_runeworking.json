@@ -10,14 +10,14 @@
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
   "key": "COMPLETE_RUNEWORKING",
-  "name": "primalmagick.research.complete_runeworking.title",
+  "name": "research.primalmagick.complete_runeworking.title",
   "parents": [],
   "stages": [
     {
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.complete_runeworking.text.stage.1"
+      "text": "research.primalmagick.complete_runeworking.text.stage.1"
     },
     {
       "attunements": {
@@ -31,7 +31,7 @@
         "sun": 1,
         "void": 1
       },
-      "text": "primalmagick.research.complete_runeworking.text.stage.2"
+      "text": "research.primalmagick.complete_runeworking.text.stage.2"
     }
   ]
 }
