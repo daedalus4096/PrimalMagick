@@ -317,17 +317,17 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add inscribed spell listing
             List<SpellPackage> spells = this.getSpells(stack);
             int activeIndex = this.getActiveSpellIndex(stack);
-            tooltip.add(Component.translatable("primalmagick.spells.wand_header", this.getSpellCapacityText(stack)));
+            tooltip.add(Component.translatable("tooltip.primalmagick.spells.wand_header", this.getSpellCapacityText(stack)));
             if (spells.isEmpty()) {
-                tooltip.add(Component.translatable("primalmagick.spells.none"));
+                tooltip.add(Component.translatable("tooltip.primalmagick.spells.none"));
             } else {
                 for (int index = 0; index < spells.size(); index++) {
                     SpellPackage spell = spells.get(index);
                     if (index == activeIndex) {
-                        tooltip.add(Component.translatable("primalmagick.spells.name_selected", spell.getName()));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_selected", spell.getName()));
                         tooltip.addAll(SpellManager.getSpellPackageDetailTooltip(spell, stack, true));
                     } else {
-                        tooltip.add(Component.translatable("primalmagick.spells.name_unselected", spell.getName()));
+                        tooltip.add(Component.translatable("tooltip.primalmagick.spells.name_unselected", spell.getName()));
                     }
                 }
             }
@@ -354,7 +354,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             Component activeSpellName = (activeSpell == null) ?
                     Component.translatable("tooltip.primalmagick.none") :
                     activeSpell.getName();
-            tooltip.add(Component.translatable("primalmagick.spells.short_wand_header", activeSpellName));
+            tooltip.add(Component.translatable("tooltip.primalmagick.spells.short_wand_header", activeSpellName));
             
             // Add more info tooltip
             tooltip.add(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.ITALIC, ChatFormatting.GRAY));

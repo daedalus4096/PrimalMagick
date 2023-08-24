@@ -78,13 +78,13 @@ public class ResearchWidget extends AbstractWidget {
         MutableComponent tooltip = Component.empty();
         if (this.hasHint) {
             if (Screen.hasShiftDown()) {
-                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".hint"));
+                tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".hint"));
             } else {
-                tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text")).append(CommonComponents.NEW_LINE);
+                tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text")).append(CommonComponents.NEW_LINE);
                 tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
         } else {
-            tooltip.append(Component.translatable("primalmagick.research." + this.key.getRootKey() + ".text"));
+            tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text"));
         }
         this.setTooltip(Tooltip.create(tooltip));
     }

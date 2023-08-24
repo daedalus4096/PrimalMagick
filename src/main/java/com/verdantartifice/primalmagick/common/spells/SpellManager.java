@@ -263,28 +263,28 @@ public class SpellManager {
         if (spell != null) {
             ISpellVehicle vehicle = spell.getVehicle();
             if (vehicle != null) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.vehicle", vehicle.getDetailTooltip())));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.vehicle", vehicle.getDetailTooltip())));
             }
             
             ISpellPayload payload = spell.getPayload();
             if (payload != null) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.payload", payload.getDetailTooltip(spell, spellSource))));
             }
             
             ISpellMod primary = spell.getPrimaryMod();
             ISpellMod secondary = spell.getSecondaryMod();
             if (primary != null && primary.isActive() && secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.double", primary.getDetailTooltip(spell, spellSource), secondary.getDetailTooltip(spell, spellSource))));
             } else if (primary != null && primary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.mods.single", primary.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", primary.getDetailTooltip(spell, spellSource))));
             } else if (secondary != null && secondary.isActive()) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.mods.single", secondary.getDetailTooltip(spell, spellSource))));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mods.single", secondary.getDetailTooltip(spell, spellSource))));
             }
             
-            retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
+            retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.cooldown", COOLDOWN_FORMATTER.format(spell.getCooldownTicks() / 20.0D))));
             
             if (!spellSource.is(ItemsPM.SPELL_SCROLL_FILLED.get())) {
-                retVal.add(leader.copy().append(Component.translatable("primalmagick.spells.details.mana_cost", spell.getManaCost().getText())));
+                retVal.add(leader.copy().append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost", spell.getManaCost().getText())));
             }
         }
         return retVal;

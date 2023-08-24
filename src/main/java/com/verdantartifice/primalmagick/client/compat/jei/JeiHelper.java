@@ -157,7 +157,7 @@ public class JeiHelper implements IModPlugin {
         for (SimpleResearchKey key : compoundResearch.getKeys()) {
             ResearchEntry entry = ResearchEntries.getEntry(key);
             if (entry == null) {
-                tooltip.add(Component.translatable("primalmagick.research." + key.getRootKey() + ".text"));
+                tooltip.add(Component.translatable("research.primalmagick." + key.getRootKey() + ".text"));
             } else {
                 MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
                 ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());

@@ -322,19 +322,19 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public Component getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
-            return Component.translatable("primalmagick.spells.capacity", 0);
+            return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
         } else {
             WandCore core = this.getWandCore(stack);
             if (core == null) {
-                return Component.translatable("primalmagick.spells.capacity", 0);
+                return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
             } else {
                 int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
-                    return Component.translatable("primalmagick.spells.capacity", baseSlots);
+                    return Component.translatable("tooltip.primalmagick.spells.capacity", baseSlots);
                 } else {
                     Component bonusText = Component.translatable(bonusSlot.getNameTranslationKey());
-                    return Component.translatable("primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
+                    return Component.translatable("tooltip.primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
                 }
             }
         }
