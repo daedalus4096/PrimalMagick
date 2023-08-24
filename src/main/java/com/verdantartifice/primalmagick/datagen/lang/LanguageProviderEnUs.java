@@ -1515,9 +1515,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.spellProperty("silk_touch").name("Silk Touch").build();
 
         // Generate other spell localizations
-        this.add("primalmagick.spell.default_name_format.mods.0", "%2$s %1$s");
-        this.add("primalmagick.spell.default_name_format.mods.1", "%3$s %2$s %1$s");
-        this.add("primalmagick.spell.default_name_format.mods.2", "%4$s %3$s %2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.0", "%2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.1", "%3$s %2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.2", "%4$s %3$s %2$s %1$s");
         
         // Generate grimoire GUI localizations
         this.grimoire("index_header").name("Disciplines").build();
