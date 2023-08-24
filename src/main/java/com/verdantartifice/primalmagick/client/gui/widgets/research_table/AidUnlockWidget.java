@@ -25,7 +25,7 @@ public class AidUnlockWidget extends AbstractWidget {
     public AidUnlockWidget(int x, int y, @Nonnull Block aidBlock) {
         super(x, y, 8, 8, Component.empty());
         this.aidBlock = aidBlock;
-        this.setTooltip(Tooltip.create(Component.translatable("primalmagick.research_table.unlock", this.aidBlock.getName())));
+        this.setTooltip(Tooltip.create(Component.translatable("label.primalmagick.research_table.unlock", this.aidBlock.getName())));
     }
     
     @Override
