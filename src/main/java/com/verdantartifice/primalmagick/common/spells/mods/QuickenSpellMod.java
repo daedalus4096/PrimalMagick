@@ -32,7 +32,7 @@ public class QuickenSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("haste", new SpellProperty("haste", "primalmagick.spell.property.haste", 1, 5));
+        propMap.put("haste", new SpellProperty("haste", "spells.primalmagick.property.haste", 1, 5));
         return propMap;
     }
 

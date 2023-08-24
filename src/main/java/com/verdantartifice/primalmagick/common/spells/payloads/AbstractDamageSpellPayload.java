@@ -39,7 +39,7 @@ public abstract class AbstractDamageSpellPayload extends AbstractSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 1, 5));
+        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 1, 5));
         return propMap;
     }
     

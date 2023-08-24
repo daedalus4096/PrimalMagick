@@ -48,7 +48,7 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "primalmagick.spell.property.duration", 0, 5));
+        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 0, 5));
         return propMap;
     }
 

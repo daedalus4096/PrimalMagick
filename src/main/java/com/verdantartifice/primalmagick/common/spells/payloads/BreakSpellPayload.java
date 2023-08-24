@@ -51,8 +51,8 @@ public class BreakSpellPayload extends AbstractSpellPayload {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 1, 5));
-        propMap.put("silk_touch", new SpellProperty("silk_touch", "primalmagick.spell.property.silk_touch", 0, 1));
+        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 1, 5));
+        propMap.put("silk_touch", new SpellProperty("silk_touch", "spells.primalmagick.property.silk_touch", 0, 1));
         return propMap;
     }
     

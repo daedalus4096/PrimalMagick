@@ -57,8 +57,8 @@ public class BurstSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("radius", new SpellProperty("radius", "primalmagick.spell.property.radius", 1, 5));
-        propMap.put("power", new SpellProperty("power", "primalmagick.spell.property.power", 0, 5));
+        propMap.put("radius", new SpellProperty("radius", "spells.primalmagick.property.radius", 1, 5));
+        propMap.put("power", new SpellProperty("power", "spells.primalmagick.property.power", 0, 5));
         return propMap;
     }
     

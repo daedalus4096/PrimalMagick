@@ -46,8 +46,8 @@ public class ForkSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("forks", new SpellProperty("forks", "primalmagick.spell.property.forks", 2, 5));
-        propMap.put("precision", new SpellProperty("precision", "primalmagick.spell.property.precision", 0, 5));
+        propMap.put("forks", new SpellProperty("forks", "spells.primalmagick.property.forks", 2, 5));
+        propMap.put("precision", new SpellProperty("precision", "spells.primalmagick.property.precision", 0, 5));
         return propMap;
     }
 

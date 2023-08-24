@@ -40,7 +40,7 @@ public class MineSpellMod extends AbstractSpellMod {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("duration", new SpellProperty("duration", "primalmagick.spell.property.duration", 1, 5));
+        propMap.put("duration", new SpellProperty("duration", "spells.primalmagick.property.duration", 1, 5));
         return propMap;
     }
     

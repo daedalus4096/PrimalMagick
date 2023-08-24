@@ -42,7 +42,7 @@ public class BoltSpellVehicle extends AbstractRaycastSpellVehicle {
     @Override
     protected Map<String, SpellProperty> initProperties() {
         Map<String, SpellProperty> propMap = super.initProperties();
-        propMap.put("range", new SpellProperty("range", "primalmagick.spell.property.range", 1, 5));
+        propMap.put("range", new SpellProperty("range", "spells.primalmagick.property.range", 1, 5));
         return propMap;
     }
     
