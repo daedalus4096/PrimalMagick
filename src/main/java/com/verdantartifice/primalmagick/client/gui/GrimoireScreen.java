@@ -742,9 +742,10 @@ public class GrimoireScreen extends Screen {
     
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
         Minecraft mc = Minecraft.getInstance();
+        ResourceLocation enchantKey = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
         String rawText = ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parseRuneEnchantment(enchant)) ?
-                (Component.translatable(Util.makeDescriptionId("rune_enchantment.text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString() :
-                (Component.translatable(Util.makeDescriptionId("rune_enchantment.partial_text", ForgeRegistries.ENCHANTMENTS.getKey(enchant)))).getString();
+                (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "text"))).getString() :
+                (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "partial_text"))).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
