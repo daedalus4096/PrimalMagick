@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,6 +18,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,7 +33,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -137,9 +141,94 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
     
-    public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
-        // TODO
+    private boolean isLit() {
+        return this.processTime > 0;
     }
+    
+    private boolean isCharged() {
+        return this.getMana(Source.INFERNAL) >= getManaNeeded(this.getLevel(), this);
+    }
+    
+    private boolean isSupercharged() {
+        return this.superchargeTime > 0;
+    }
+    
+    public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
+        boolean shouldMarkDirty = false;
+        boolean startedLit = entity.isLit();
+        
+        if (!level.isClientSide) {
+            // Fill up internal mana storage with that from any inserted wands
+            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
+            if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
+                if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                    shouldMarkDirty = true;
+                }
+            }
+        }
+         
+        if (entity.isSupercharged()) {
+            --entity.superchargeTime;
+        }
+        
+        ItemStack fuelStack = entity.items.get(IGNYX_SLOT_INDEX);
+        boolean inputPopulated = !entity.items.get(INPUT_SLOT_INDEX).isEmpty();
+        boolean fuelPopulated = !fuelStack.isEmpty();
+        if (entity.isCharged() && inputPopulated) {
+            Recipe<?> recipe = inputPopulated ? entity.quickCheck.getRecipeFor(entity, level).orElse(null) : null;
+            int furnaceMaxStackSize = entity.getMaxStackSize();
+            
+            // Handle supercharge burn
+            if (!entity.isSupercharged() && fuelPopulated && entity.canBurn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+                entity.superchargeTimeTotal = entity.getSuperchargeDuration(fuelStack);
+                entity.superchargeTime = entity.superchargeTimeTotal;
+                if (entity.isSupercharged()) {
+                    shouldMarkDirty = true;
+                    if (fuelStack.hasCraftingRemainingItem()) {
+                        entity.items.set(IGNYX_SLOT_INDEX, fuelStack.getCraftingRemainingItem());
+                    } else {
+                        fuelStack.shrink(1);
+                        if (fuelStack.isEmpty()) {
+                            entity.items.set(IGNYX_SLOT_INDEX, ItemStack.EMPTY);
+                        }
+                    }
+                }
+            }
+            
+            // Process the item being smelted
+            if (entity.isCharged() && entity.canBurn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+                entity.processTime += (entity.isSupercharged() ? SUPERCHARGE_MULTIPLIER : 1);
+                if (entity.processTime >= entity.processTimeTotal) {
+                    entity.processTime = 0;
+                    entity.processTimeTotal = getTotalCookTime(level, entity);
+                    if (entity.burn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+                        // TODO Set recipe used
+                    }
+                    shouldMarkDirty = true;
+                }
+            } else {
+                entity.processTime = 0;
+            }
+        } else if (!entity.isCharged() && entity.processTime > 0) {
+            // Decay progress if not enough mana is available
+            entity.processTime = Mth.clamp(entity.processTime - 2, 0, entity.processTimeTotal);
+        }
+        
+        // Update the block's LIT blockstate property if needed
+        if (startedLit != entity.isLit()) {
+            shouldMarkDirty = true;
+            state = state.setValue(BlockStateProperties.LIT, entity.isLit());
+            level.setBlock(pos, state, Block.UPDATE_ALL);
+        }
+        
+        // Notify the world a block change has occurred if needed
+        if (shouldMarkDirty) {
+            setChanged(level, pos, state);
+        }
+   }
     
     private boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
         // TODO
@@ -162,6 +251,11 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
 
     private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
         return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+    }
+    
+    private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
+        // Return one centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
+        return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
