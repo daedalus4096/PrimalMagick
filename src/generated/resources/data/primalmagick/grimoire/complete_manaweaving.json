@@ -10,14 +10,14 @@
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
   "key": "COMPLETE_MANAWEAVING",
-  "name": "primalmagick.research.complete_manaweaving.title",
+  "name": "research.primalmagick.complete_manaweaving.title",
   "parents": [],
   "stages": [
     {
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.complete_manaweaving.text.stage.1"
+      "text": "research.primalmagick.complete_manaweaving.text.stage.1"
     },
     {
       "attunements": {
@@ -31,7 +31,7 @@
         "sun": 1,
         "void": 1
       },
-      "text": "primalmagick.research.complete_manaweaving.text.stage.2"
+      "text": "research.primalmagick.complete_manaweaving.text.stage.2"
     }
   ]
 }

@@ -11,7 +11,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.concocting_philters.text.addenda.1"
+      "text": "research.primalmagick.concocting_philters.text.addenda.1"
     },
     {
       "recipes": [
@@ -21,7 +21,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.concocting_philters.text.addenda.2"
+      "text": "research.primalmagick.concocting_philters.text.addenda.2"
     }
   ],
   "discipline": "MAGITECH",
@@ -30,7 +30,7 @@
     "location": "primalmagick:concocter"
   },
   "key": "CONCOCTING_PHILTERS",
-  "name": "primalmagick.research.concocting_philters.title",
+  "name": "research.primalmagick.concocting_philters.title",
   "parents": [
     "MASTER_MAGITECH",
     "CONCOCTING_TINCTURES",
@@ -41,7 +41,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.concocting_philters.text.stage.1"
+      "text": "research.primalmagick.concocting_philters.text.stage.1"
     },
     {
       "recipes": [
@@ -67,7 +67,7 @@
         "primalmagick:long_slow_falling_philter",
         "primalmagick:luck_philter"
       ],
-      "text": "primalmagick.research.concocting_philters.text.stage.2"
+      "text": "research.primalmagick.concocting_philters.text.stage.2"
     }
   ]
 }

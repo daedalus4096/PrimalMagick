@@ -10,7 +10,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.ambrosia.text.addenda.1"
+      "text": "research.primalmagick.ambrosia.text.addenda.1"
     },
     {
       "attunements": {
@@ -22,7 +22,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.ambrosia.text.addenda.2"
+      "text": "research.primalmagick.ambrosia.text.addenda.2"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.ambrosia.text.addenda.3"
+      "text": "research.primalmagick.ambrosia.text.addenda.3"
     },
     {
       "attunements": {
@@ -46,7 +46,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.ambrosia.text.addenda.4"
+      "text": "research.primalmagick.ambrosia.text.addenda.4"
     }
   ],
   "discipline": "RITUAL",
@@ -55,7 +55,7 @@
     "location": "primalmagick:ambrosia_basic_earth"
   },
   "key": "AMBROSIA",
-  "name": "primalmagick.research.ambrosia.title",
+  "name": "research.primalmagick.ambrosia.title",
   "parents": [
     "EXPERT_RITUAL",
     "ATTUNEMENTS",
@@ -74,7 +74,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.ambrosia.text.stage.1"
+      "text": "research.primalmagick.ambrosia.text.stage.1"
     },
     {
       "attunements": {
@@ -91,7 +91,7 @@
         "primalmagick:ambrosia_basic_sun",
         "primalmagick:ambrosia_basic_moon"
       ],
-      "text": "primalmagick.research.ambrosia.text.stage.2"
+      "text": "research.primalmagick.ambrosia.text.stage.2"
     }
   ]
 }

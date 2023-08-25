@@ -10,7 +10,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.addenda.1"
+      "text": "research.primalmagick.crystal_synthesis.text.addenda.1"
     },
     {
       "attunements": {
@@ -22,7 +22,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.addenda.2"
+      "text": "research.primalmagick.crystal_synthesis.text.addenda.2"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.addenda.3"
+      "text": "research.primalmagick.crystal_synthesis.text.addenda.3"
     },
     {
       "attunements": {
@@ -46,7 +46,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.addenda.4"
+      "text": "research.primalmagick.crystal_synthesis.text.addenda.4"
     }
   ],
   "discipline": "ALCHEMY",
@@ -55,7 +55,7 @@
     "location": "primalmagick:essence_crystal_earth"
   },
   "key": "CRYSTAL_SYNTHESIS",
-  "name": "primalmagick.research.crystal_synthesis.title",
+  "name": "research.primalmagick.crystal_synthesis.title",
   "parents": [
     "MASTER_ALCHEMY",
     "SHARD_SYNTHESIS"
@@ -65,7 +65,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.stage.1"
+      "text": "research.primalmagick.crystal_synthesis.text.stage.1"
     },
     {
       "attunements": {
@@ -82,7 +82,7 @@
         "primalmagick:essence_crystal_sun_from_shard",
         "primalmagick:essence_crystal_moon_from_shard"
       ],
-      "text": "primalmagick.research.crystal_synthesis.text.stage.2"
+      "text": "research.primalmagick.crystal_synthesis.text.stage.2"
     }
   ]
 }

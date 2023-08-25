@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
   "key": "EXPERT_MANAWEAVING",
-  "name": "primalmagick.research.expert_manaweaving.title",
+  "name": "research.primalmagick.expert_manaweaving.title",
   "parents": [
     "MANA_ARROWS",
     "WAND_CHARGER"
@@ -16,7 +16,7 @@
       "required_research": [
         "b_crafted_manaweaving_expert"
       ],
-      "text": "primalmagick.research.expert_manaweaving.text.stage.1"
+      "text": "research.primalmagick.expert_manaweaving.text.stage.1"
     },
     {
       "recipes": [
@@ -32,7 +32,7 @@
         "primalmagick:marble_enchanted_stairs",
         "primalmagick:marble_enchanted_wall"
       ],
-      "text": "primalmagick.research.expert_manaweaving.text.stage.2"
+      "text": "research.primalmagick.expert_manaweaving.text.stage.2"
     }
   ]
 }

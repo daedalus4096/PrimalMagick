@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:bulwark"
       ],
-      "text": "primalmagick.research.sacred_shield.text.addenda.1"
+      "text": "research.primalmagick.sacred_shield.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:sacred_shield"
   },
   "key": "SACRED_SHIELD",
-  "name": "primalmagick.research.sacred_shield.title",
+  "name": "research.primalmagick.sacred_shield.title",
   "parents": [
     "t_discover_hallowed",
     "SUPREME_RITUAL",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.sacred_shield.text.stage.1"
+      "text": "research.primalmagick.sacred_shield.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:sacred_shield"
       ],
-      "text": "primalmagick.research.sacred_shield.text.stage.2"
+      "text": "research.primalmagick.sacred_shield.text.stage.2"
     }
   ]
 }

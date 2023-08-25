@@ -6,7 +6,7 @@
     "location": "primalmagick:honey_extractor"
   },
   "key": "HONEY_EXTRACTOR",
-  "name": "primalmagick.research.honey_extractor.title",
+  "name": "research.primalmagick.honey_extractor.title",
   "parents": [
     "BASIC_MAGITECH"
   ],
@@ -19,13 +19,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.honey_extractor.text.stage.1"
+      "text": "research.primalmagick.honey_extractor.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:honey_extractor"
       ],
-      "text": "primalmagick.research.honey_extractor.text.stage.2"
+      "text": "research.primalmagick.honey_extractor.text.stage.2"
     }
   ]
 }

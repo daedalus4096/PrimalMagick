@@ -7,7 +7,7 @@
     "location": "primalmagick:mystical_relic"
   },
   "key": "MYSTICAL_RELIC",
-  "name": "primalmagick.research.mystical_relic.title",
+  "name": "research.primalmagick.mystical_relic.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -16,7 +16,7 @@
       "recipes": [
         "primalmagick:mystical_relic"
       ],
-      "text": "primalmagick.research.mystical_relic.text.stage.1"
+      "text": "research.primalmagick.mystical_relic.text.stage.1"
     }
   ]
 }

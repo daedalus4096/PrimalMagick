@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/knowledge_theory.png"
   },
   "key": "THEORYCRAFTING",
-  "name": "primalmagick.research.theorycrafting.title",
+  "name": "research.primalmagick.theorycrafting.title",
   "parents": [
     "FIRST_STEPS"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.theorycrafting.text.stage.1"
+      "text": "research.primalmagick.theorycrafting.text.stage.1"
     },
     {
       "recipes": [
@@ -27,7 +27,7 @@
         "primalmagick:research_table",
         "primalmagick:enchanted_ink_and_quill;1;{Damage:0}"
       ],
-      "text": "primalmagick.research.theorycrafting.text.stage.2"
+      "text": "research.primalmagick.theorycrafting.text.stage.2"
     },
     {
       "recipes": [
@@ -38,7 +38,7 @@
       "required_research": [
         "t_theories_formed_basics"
       ],
-      "text": "primalmagick.research.theorycrafting.text.stage.3"
+      "text": "research.primalmagick.theorycrafting.text.stage.3"
     },
     {
       "recipes": [
@@ -46,7 +46,7 @@
         "primalmagick:enchanted_ink",
         "primalmagick:enchanted_ink_and_quill"
       ],
-      "text": "primalmagick.research.theorycrafting.text.stage.4"
+      "text": "research.primalmagick.theorycrafting.text.stage.4"
     }
   ]
 }

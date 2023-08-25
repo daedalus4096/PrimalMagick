@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/hallowed.png"
   },
   "key": "SOURCE_HALLOWED",
-  "name": "primalmagick.research.source_hallowed.title",
+  "name": "research.primalmagick.source_hallowed.title",
   "parents": [
     "HEAVENLY_MAGICK"
   ],
@@ -21,13 +21,13 @@
       "required_research": [
         "t_mana_spent_hallowed_expert"
       ],
-      "text": "primalmagick.research.source_hallowed.text.stage.1"
+      "text": "research.primalmagick.source_hallowed.text.stage.1"
     },
     {
       "attunements": {
         "hallowed": 5
       },
-      "text": "primalmagick.research.source_hallowed.text.stage.2"
+      "text": "research.primalmagick.source_hallowed.text.stage.2"
     }
   ]
 }

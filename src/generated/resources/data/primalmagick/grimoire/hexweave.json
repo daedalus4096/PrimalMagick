@@ -6,7 +6,7 @@
     "location": "primalmagick:hexweave_head"
   },
   "key": "HEXWEAVE",
-  "name": "primalmagick.research.hexweave.title",
+  "name": "research.primalmagick.hexweave.title",
   "parents": [
     "MASTER_MANAWEAVING",
     "SPELLCLOTH",
@@ -20,7 +20,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.hexweave.text.stage.1"
+      "text": "research.primalmagick.hexweave.text.stage.1"
     },
     {
       "recipes": [
@@ -30,7 +30,7 @@
         "primalmagick:hexweave_legs",
         "primalmagick:hexweave_feet"
       ],
-      "text": "primalmagick.research.hexweave.text.stage.2"
+      "text": "research.primalmagick.hexweave.text.stage.2"
     }
   ]
 }

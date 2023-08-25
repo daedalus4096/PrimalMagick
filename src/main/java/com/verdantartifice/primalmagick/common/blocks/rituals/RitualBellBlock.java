@@ -295,7 +295,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
 
     @Override
     public String getPropTranslationKey() {
-        return "primalmagick.ritual.prop.ritual_bell";
+        return "ritual.primalmagick.prop.ritual_bell";
     }
 
     public float getUsageStabilityBonus() {

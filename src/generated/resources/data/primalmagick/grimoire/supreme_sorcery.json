@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_sorcery.png"
   },
   "key": "SUPREME_SORCERY",
-  "name": "primalmagick.research.supreme_sorcery.title",
+  "name": "research.primalmagick.supreme_sorcery.title",
   "parents": [
     "SPELL_VEHICLE_BOLT",
     "SPELL_MOD_QUICKEN"
@@ -21,10 +21,10 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_sorcery.text.stage.1"
+      "text": "research.primalmagick.supreme_sorcery.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_sorcery.text.stage.2"
+      "text": "research.primalmagick.supreme_sorcery.text.stage.2"
     }
   ]
 }

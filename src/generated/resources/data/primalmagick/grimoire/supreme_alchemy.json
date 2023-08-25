@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
   "key": "SUPREME_ALCHEMY",
-  "name": "primalmagick.research.supreme_alchemy.title",
+  "name": "research.primalmagick.supreme_alchemy.title",
   "parents": [
     "CALCINATOR_FORBIDDEN",
     "HEXIUM"
@@ -20,10 +20,10 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_alchemy.text.stage.1"
+      "text": "research.primalmagick.supreme_alchemy.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_alchemy.text.stage.2"
+      "text": "research.primalmagick.supreme_alchemy.text.stage.2"
     }
   ]
 }

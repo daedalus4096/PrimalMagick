@@ -7,7 +7,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.1"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.addenda.1"
     },
     {
       "recipes": [
@@ -16,7 +16,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.2"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.addenda.2"
     },
     {
       "recipes": [
@@ -25,7 +25,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.3"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.addenda.3"
     },
     {
       "recipes": [
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.addenda.4"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.addenda.4"
     }
   ],
   "discipline": "MANAWEAVING",
@@ -43,7 +43,7 @@
     "location": "primalmagick:heavenly_font_earth"
   },
   "key": "HEAVENLY_MANA_FONTS",
-  "name": "primalmagick.research.heavenly_mana_fonts.title",
+  "name": "research.primalmagick.heavenly_mana_fonts.title",
   "parents": [
     "FORBIDDEN_MANA_FONTS",
     "SUPREME_MANAWEAVING",
@@ -55,7 +55,7 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.stage.1"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.stage.1"
     },
     {
       "recipes": [
@@ -65,7 +65,7 @@
         "primalmagick:heavenly_font_sun",
         "primalmagick:heavenly_font_moon"
       ],
-      "text": "primalmagick.research.heavenly_mana_fonts.text.stage.2"
+      "text": "research.primalmagick.heavenly_mana_fonts.text.stage.2"
     }
   ]
 }

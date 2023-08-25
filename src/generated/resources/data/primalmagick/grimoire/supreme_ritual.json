@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
   "key": "SUPREME_RITUAL",
-  "name": "primalmagick.research.supreme_ritual.title",
+  "name": "research.primalmagick.supreme_ritual.title",
   "parents": [
     "BLOODLETTER",
     "SOUL_ANVIL"
@@ -20,10 +20,10 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_ritual.text.stage.1"
+      "text": "research.primalmagick.supreme_ritual.text.stage.1"
     },
     {
-      "text": "primalmagick.research.supreme_ritual.text.stage.2"
+      "text": "research.primalmagick.supreme_ritual.text.stage.2"
     }
   ]
 }

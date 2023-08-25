@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/moon.png"
   },
   "key": "SOURCE_MOON",
-  "name": "primalmagick.research.source_moon.title",
+  "name": "research.primalmagick.source_moon.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
@@ -24,13 +24,13 @@
         "m_env_moon",
         "t_mana_spent_moon_expert"
       ],
-      "text": "primalmagick.research.source_moon.text.stage.1"
+      "text": "research.primalmagick.source_moon.text.stage.1"
     },
     {
       "attunements": {
         "moon": 5
       },
-      "text": "primalmagick.research.source_moon.text.stage.2"
+      "text": "research.primalmagick.source_moon.text.stage.2"
     }
   ]
 }

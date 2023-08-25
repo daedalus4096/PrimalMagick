@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sun.png"
   },
   "key": "SPELL_PAYLOAD_CONJURE_LIGHT",
-  "name": "primalmagick.research.spell_payload_conjure_light.title",
+  "name": "research.primalmagick.spell_payload_conjure_light.title",
   "parents": [
     "EXPERT_SORCERY",
     "SPELL_PAYLOAD_SOLAR"
@@ -19,13 +19,13 @@
       "required_research": [
         "b_place_torch_expert"
       ],
-      "text": "primalmagick.research.spell_payload_conjure_light.text.stage.1"
+      "text": "research.primalmagick.spell_payload_conjure_light.text.stage.1"
     },
     {
       "attunements": {
         "sun": 3
       },
-      "text": "primalmagick.research.spell_payload_conjure_light.text.stage.2"
+      "text": "research.primalmagick.spell_payload_conjure_light.text.stage.2"
     }
   ]
 }

@@ -209,7 +209,7 @@ public class ResearchStageBuilder {
         }
 
         private String getTextTranslationKey() {
-            return this.modId.toLowerCase() + ".research." + this.entryKey.toLowerCase() + ".text.stage." + this.stageIndex;
+            return String.join(".", "research", this.modId.toLowerCase(), this.entryKey.toLowerCase(), "text", "stage", Integer.toString(this.stageIndex));
         }
 
         @Override

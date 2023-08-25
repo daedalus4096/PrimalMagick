@@ -6,7 +6,7 @@
     "location": "primalmagick:entropy_sink"
   },
   "key": "ENTROPY_SINK",
-  "name": "primalmagick.research.entropy_sink.title",
+  "name": "research.primalmagick.entropy_sink.title",
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING",
@@ -20,13 +20,13 @@
       "required_research": [
         "t_ritual_mishaps_basic"
       ],
-      "text": "primalmagick.research.entropy_sink.text.stage.1"
+      "text": "research.primalmagick.entropy_sink.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:entropy_sink"
       ],
-      "text": "primalmagick.research.entropy_sink.text.stage.2"
+      "text": "research.primalmagick.entropy_sink.text.stage.2"
     }
   ]
 }

@@ -116,12 +116,12 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
             }
         } else if (!this.menu.isWritingReady()) {
             // Render missing writing materials text
-            Component text = Component.translatable("primalmagick.research_table.missing_writing_supplies");
+            Component text = Component.translatable("label.primalmagick.research_table.missing_writing_supplies");
             int width = mc.font.width(text.getString());
             guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         } else {
             // Render ready to start text
-            Component text = Component.translatable("primalmagick.research_table.ready");
+            Component text = Component.translatable("label.primalmagick.research_table.ready");
             int width = mc.font.width(text.getString());
             guiGraphics.drawString(mc.font, text, 34 + ((162 - width) / 2), 7 + ((128 - mc.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         }
@@ -168,17 +168,17 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
         if (this.project == null && this.menu.isWritingReady()) {
             if (this.progressing) {
                 // Render starting widget
-                Component text = Component.translatable("primalmagick.research_table.starting");
+                Component text = Component.translatable("label.primalmagick.research_table.starting");
                 this.addRenderableWidget(new InactiveWidget(this.leftPos + 38, this.topPos + 111, 154, 20, text));
             } else {
                 // Render start project button
-                Component text = Component.translatable("primalmagick.research_table.start");
+                Component text = Component.translatable("label.primalmagick.research_table.start");
                 this.addRenderableWidget(new StartProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
             }
         } else if (this.isProjectReady()) {
             if (this.progressing) {
                 // Render completing widget
-                Component text = Component.translatable("primalmagick.research_table.completing");
+                Component text = Component.translatable("label.primalmagick.research_table.completing");
                 this.addRenderableWidget(new InactiveWidget(this.leftPos + 38, this.topPos + 111, 154, 20, text));
             } else {
                 this.menu.getWorldPosCallable().execute((level, tablePos) -> {
@@ -186,7 +186,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
                     Player player = this.minecraft.player;
                     double chance = 100.0D * this.project.getSuccessChance();
                     Set<Block> surroundings = TheorycraftManager.getSurroundings(level, tablePos);
-                    Component text = Component.translatable("primalmagick.research_table.complete", FORMATTER.format(chance));
+                    Component text = Component.translatable("label.primalmagick.research_table.complete", FORMATTER.format(chance));
                     
                     this.completeProjectButton = this.addRenderableWidget(new CompleteProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
                     this.completeProjectButton.active = this.project.isSatisfied(player, surroundings);

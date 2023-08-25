@@ -35,12 +35,12 @@ public class UpcomingEntryWidget extends AbstractWidget {
         
         Minecraft mc = Minecraft.getInstance();
         MutableComponent tooltip = Component.empty();
-        tooltip.append(Component.translatable("primalmagick.grimoire.upcoming_tooltip_header"));
+        tooltip.append(Component.translatable("grimoire.primalmagick.upcoming_tooltip_header"));
         
         for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
             ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
             if (parentEntry == null) {
-                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("primalmagick.research." + parent.getRootKey() + ".text"));
+                tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("research.primalmagick." + parent.getRootKey() + ".text"));
             } else if (!parentEntry.getKey().isKnownByStrict(mc.player)) {
                 MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
                 if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {

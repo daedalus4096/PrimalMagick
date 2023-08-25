@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_absorb"
   },
   "key": "RUNE_ABSORB",
-  "name": "primalmagick.research.rune_absorb.title",
+  "name": "research.primalmagick.rune_absorb.title",
   "parents": [
     "EXPERT_RUNEWORKING"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.rune_absorb.text.stage.1"
+      "text": "research.primalmagick.rune_absorb.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_absorb"
       ],
-      "text": "primalmagick.research.rune_absorb.text.stage.2"
+      "text": "research.primalmagick.rune_absorb.text.stage.2"
     }
   ]
 }

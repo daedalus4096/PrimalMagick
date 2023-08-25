@@ -7,13 +7,13 @@
     "location": "minecraft:dragon_egg"
   },
   "key": "DRAGON_EGG",
-  "name": "primalmagick.research.dragon_egg.title",
+  "name": "research.primalmagick.dragon_egg.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.dragon_egg.text.stage.1"
+      "text": "research.primalmagick.dragon_egg.text.stage.1"
     }
   ]
 }

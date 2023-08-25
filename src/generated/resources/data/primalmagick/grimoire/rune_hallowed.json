@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_hallowed"
   },
   "key": "RUNE_HALLOWED",
-  "name": "primalmagick.research.rune_hallowed.title",
+  "name": "research.primalmagick.rune_hallowed.title",
   "parents": [
     "MASTER_RUNEWORKING",
     "t_discover_hallowed"
@@ -16,13 +16,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.rune_hallowed.text.stage.1"
+      "text": "research.primalmagick.rune_hallowed.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_hallowed"
       ],
-      "text": "primalmagick.research.rune_hallowed.text.stage.2"
+      "text": "research.primalmagick.rune_hallowed.text.stage.2"
     }
   ]
 }

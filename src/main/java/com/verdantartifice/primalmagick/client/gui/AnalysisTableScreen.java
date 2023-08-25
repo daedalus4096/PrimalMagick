@@ -69,11 +69,11 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
         
         // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
-            text = Component.translatable("primalmagick.analysis.no_item");
+            text = Component.translatable("label.primalmagick.analysis.no_item");
         } else {
             SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
             if (sources == null || sources.isEmpty()) {
-                text = Component.translatable("primalmagick.analysis.no_affinities");
+                text = Component.translatable("label.primalmagick.analysis.no_affinities");
             }
         }
         

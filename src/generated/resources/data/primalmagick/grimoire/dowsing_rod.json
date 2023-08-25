@@ -6,7 +6,7 @@
     "location": "primalmagick:dowsing_rod"
   },
   "key": "DOWSING_ROD",
-  "name": "primalmagick.research.dowsing_rod.title",
+  "name": "research.primalmagick.dowsing_rod.title",
   "parents": [
     "BASIC_RITUAL"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.dowsing_rod.text.stage.1"
+      "text": "research.primalmagick.dowsing_rod.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:dowsing_rod"
       ],
-      "text": "primalmagick.research.dowsing_rod.text.stage.2"
+      "text": "research.primalmagick.dowsing_rod.text.stage.2"
     }
   ]
 }

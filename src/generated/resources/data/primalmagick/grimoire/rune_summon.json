@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_summon"
   },
   "key": "RUNE_SUMMON",
-  "name": "primalmagick.research.rune_summon.title",
+  "name": "research.primalmagick.rune_summon.title",
   "parents": [
     "RUNE_ABSORB"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.rune_summon.text.stage.1"
+      "text": "research.primalmagick.rune_summon.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_summon"
       ],
-      "text": "primalmagick.research.rune_summon.text.stage.2"
+      "text": "research.primalmagick.rune_summon.text.stage.2"
     }
   ]
 }

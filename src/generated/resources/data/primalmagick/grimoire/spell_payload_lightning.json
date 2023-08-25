@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sky.png"
   },
   "key": "SPELL_PAYLOAD_LIGHTNING",
-  "name": "primalmagick.research.spell_payload_lightning.title",
+  "name": "research.primalmagick.spell_payload_lightning.title",
   "parents": [
     "BASIC_SORCERY"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.spell_payload_lightning.text.stage.1"
+      "text": "research.primalmagick.spell_payload_lightning.text.stage.1"
     },
     {
       "attunements": {
         "sky": 1
       },
-      "text": "primalmagick.research.spell_payload_lightning.text.stage.2"
+      "text": "research.primalmagick.spell_payload_lightning.text.stage.2"
     }
   ]
 }

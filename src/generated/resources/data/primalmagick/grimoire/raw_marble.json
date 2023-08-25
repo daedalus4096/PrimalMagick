@@ -7,7 +7,7 @@
     "location": "primalmagick:marble_raw"
   },
   "key": "RAW_MARBLE",
-  "name": "primalmagick.research.raw_marble.title",
+  "name": "research.primalmagick.raw_marble.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -26,7 +26,7 @@
         "primalmagick:marble_tiles",
         "primalmagick:marble_runed"
       ],
-      "text": "primalmagick.research.raw_marble.text.stage.1"
+      "text": "research.primalmagick.raw_marble.text.stage.1"
     }
   ]
 }

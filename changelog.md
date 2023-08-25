@@ -1,3 +1,8 @@
+v4.0.3
+------
+* Fixed a bug causing some attunement buffs to fall off upon player death
+* Converted localization strings to a code-generated asset
+
 v4.0.2
 ------
 * Added Attunement Shackles, for those who don't want to embrace magickal attunement

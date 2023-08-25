@@ -6,7 +6,7 @@
     "location": "primalmagick:zephyr_engine"
   },
   "key": "ZEPHYR_ENGINE",
-  "name": "primalmagick.research.zephyr_engine.title",
+  "name": "research.primalmagick.zephyr_engine.title",
   "parents": [
     "EXPERT_MAGITECH",
     "PRIMALITE",
@@ -20,7 +20,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.zephyr_engine.text.stage.1"
+      "text": "research.primalmagick.zephyr_engine.text.stage.1"
     },
     {
       "attunements": {
@@ -29,7 +29,7 @@
       "recipes": [
         "primalmagick:zephyr_engine"
       ],
-      "text": "primalmagick.research.zephyr_engine.text.stage.2"
+      "text": "research.primalmagick.zephyr_engine.text.stage.2"
     }
   ]
 }

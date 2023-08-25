@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
   "key": "BASIC_RITUAL",
-  "name": "primalmagick.research.basic_ritual.title",
+  "name": "research.primalmagick.basic_ritual.title",
   "parents": [
     "UNLOCK_RITUAL"
   ],
@@ -16,7 +16,7 @@
         "primalmagick:ritual_altar",
         "primalmagick:offering_pedestal"
       ],
-      "text": "primalmagick.research.basic_ritual.text.stage.1"
+      "text": "research.primalmagick.basic_ritual.text.stage.1"
     }
   ]
 }

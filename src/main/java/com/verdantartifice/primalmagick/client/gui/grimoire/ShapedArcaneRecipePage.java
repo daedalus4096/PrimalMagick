@@ -31,6 +31,6 @@ public class ShapedArcaneRecipePage extends AbstractShapedRecipePage<ShapedArcan
 
     @Override
     protected String getRecipeTypeTranslationKey() {
-        return "primalmagick.grimoire.shaped_arcane_recipe_header";
+        return "grimoire.primalmagick.shaped_arcane_recipe_header";
     }
 }

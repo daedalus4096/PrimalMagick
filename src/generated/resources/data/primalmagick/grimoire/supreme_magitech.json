@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
   "key": "SUPREME_MAGITECH",
-  "name": "primalmagick.research.supreme_magitech.title",
+  "name": "research.primalmagick.supreme_magitech.title",
   "parents": [
     "HEXIUM_GOLEM"
   ],
@@ -23,13 +23,13 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_magitech.text.stage.1"
+      "text": "research.primalmagick.supreme_magitech.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:magitech_parts_heavenly"
       ],
-      "text": "primalmagick.research.supreme_magitech.text.stage.2"
+      "text": "research.primalmagick.supreme_magitech.text.stage.2"
     }
   ]
 }

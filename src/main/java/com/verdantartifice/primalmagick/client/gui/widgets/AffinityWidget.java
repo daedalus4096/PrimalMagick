@@ -14,6 +14,6 @@ public class AffinityWidget extends AbstractSourceWidget {
 
     @Override
     protected String getTooltipTranslationKey() {
-        return "primalmagick.analysis.affinity_tooltip";
+        return "label.primalmagick.analysis.affinity";
     }
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:wand_inscription_table"
   },
   "key": "WAND_INSCRIPTION",
-  "name": "primalmagick.research.wand_inscription.title",
+  "name": "research.primalmagick.wand_inscription.title",
   "parents": [
     "BASIC_SORCERY",
     "ADVANCED_WANDMAKING"
@@ -19,13 +19,13 @@
       "required_research": [
         "t_spells_crafted_expert"
       ],
-      "text": "primalmagick.research.wand_inscription.text.stage.1"
+      "text": "research.primalmagick.wand_inscription.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:wand_inscription_table"
       ],
-      "text": "primalmagick.research.wand_inscription.text.stage.2"
+      "text": "research.primalmagick.wand_inscription.text.stage.2"
     }
   ]
 }

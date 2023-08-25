@@ -10,7 +10,7 @@
       "siblings": [
         "&primalmagick:disintegration"
       ],
-      "text": "primalmagick.research.primal_axe.text.addenda.1"
+      "text": "research.primalmagick.primal_axe.text.addenda.1"
     }
   ],
   "discipline": "RITUAL",
@@ -19,7 +19,7 @@
     "location": "primalmagick:primal_axe"
   },
   "key": "PRIMAL_AXE",
-  "name": "primalmagick.research.primal_axe.title",
+  "name": "research.primalmagick.primal_axe.title",
   "parents": [
     "EXPERT_RITUAL",
     "PRIMALITE",
@@ -34,13 +34,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.primal_axe.text.stage.1"
+      "text": "research.primalmagick.primal_axe.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:primal_axe"
       ],
-      "text": "primalmagick.research.primal_axe.text.stage.2"
+      "text": "research.primalmagick.primal_axe.text.stage.2"
     }
   ]
 }

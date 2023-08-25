@@ -7,13 +7,13 @@
     "location": "minecraft:beehive"
   },
   "key": "BEEHIVE",
-  "name": "primalmagick.research.beehive.title",
+  "name": "research.primalmagick.beehive.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.beehive.text.stage.1"
+      "text": "research.primalmagick.beehive.text.stage.1"
     }
   ]
 }

@@ -1262,19 +1262,19 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.wandComponent(WandCore.PRIMAL).name("Primal").build();
         this.wandComponent(WandCore.DARK_PRIMAL).name("Dark Primal").build();
         this.wandComponent(WandCore.PURE_PRIMAL).name("Pure Primal").build();
-        this.add("primalmagick.wand_core.unknown.name", "Unknown");
+        this.add("wand_core.primalmagick.unknown", "Unknown");
         this.wandComponent(WandCap.IRON).name("Iron-Shod").build();
         this.wandComponent(WandCap.GOLD).name("Gold-Capped").build();
         this.wandComponent(WandCap.PRIMALITE).name("Primalite-Bossed").build();
         this.wandComponent(WandCap.HEXIUM).name("Hexium-Bound").build();
         this.wandComponent(WandCap.HALLOWSTEEL).name("Hallowsteel-Crowned").build();
-        this.add("primalmagick.wand_cap.unknown.name", "Unknown");
+        this.add("wand_cap.primalmagick.unknown", "Unknown");
         this.wandComponent(WandGem.APPRENTICE).name("Apprentice's").build();
         this.wandComponent(WandGem.ADEPT).name("Adept's").build();
         this.wandComponent(WandGem.WIZARD).name("Wizard's").build();
         this.wandComponent(WandGem.ARCHMAGE).name("Archmage's").build();
         this.wandComponent(WandGem.CREATIVE).name("Creative").build();
-        this.add("primalmagick.wand_gem.unknown.name", "Unknown");
+        this.add("wand_gem.primalmagick.unknown", "Unknown");
         
         // Generate research discipline localizations
         this.researchDiscipline(ResearchDisciplines.BASICS).name("Fundamentals").build();
@@ -1515,9 +1515,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.spellProperty("silk_touch").name("Silk Touch").build();
 
         // Generate other spell localizations
-        this.add("primalmagick.spell.default_name_format.mods.0", "%2$s %1$s");
-        this.add("primalmagick.spell.default_name_format.mods.1", "%3$s %2$s %1$s");
-        this.add("primalmagick.spell.default_name_format.mods.2", "%4$s %3$s %2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.0", "%2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.1", "%3$s %2$s %1$s");
+        this.add("spells.primalmagick.default_name_format.mods.2", "%4$s %3$s %2$s %1$s");
         
         // Generate grimoire GUI localizations
         this.grimoire("index_header").name("Disciplines").build();

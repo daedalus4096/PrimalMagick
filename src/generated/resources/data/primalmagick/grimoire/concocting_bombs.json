@@ -16,7 +16,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.concocting_bombs.text.addenda.1"
+      "text": "research.primalmagick.concocting_bombs.text.addenda.1"
     },
     {
       "recipes": [
@@ -26,7 +26,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.concocting_bombs.text.addenda.2"
+      "text": "research.primalmagick.concocting_bombs.text.addenda.2"
     },
     {
       "recipes": [
@@ -39,7 +39,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.concocting_bombs.text.addenda.3"
+      "text": "research.primalmagick.concocting_bombs.text.addenda.3"
     }
   ],
   "discipline": "MAGITECH",
@@ -48,7 +48,7 @@
     "location": "primalmagick:concocter"
   },
   "key": "CONCOCTING_BOMBS",
-  "name": "primalmagick.research.concocting_bombs.title",
+  "name": "research.primalmagick.concocting_bombs.title",
   "parents": [
     "MASTER_MAGITECH",
     "CONCOCTING_TINCTURES",
@@ -59,7 +59,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.concocting_bombs.text.stage.1"
+      "text": "research.primalmagick.concocting_bombs.text.stage.1"
     },
     {
       "recipes": [
@@ -86,7 +86,7 @@
         "primalmagick:long_slow_falling_bomb",
         "primalmagick:luck_bomb"
       ],
-      "text": "primalmagick.research.concocting_bombs.text.stage.2"
+      "text": "research.primalmagick.concocting_bombs.text.stage.2"
     }
   ]
 }

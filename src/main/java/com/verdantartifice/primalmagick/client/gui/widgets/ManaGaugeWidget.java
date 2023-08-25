@@ -74,7 +74,7 @@ public class ManaGaugeWidget extends AbstractWidget {
         
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();
-            Component labelText = Component.translatable("primalmagick.source.mana_gauge_tooltip", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
+            Component labelText = Component.translatable("tooltip.primalmagick.source.mana_gauge", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
             GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }

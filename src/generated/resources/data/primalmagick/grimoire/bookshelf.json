@@ -7,13 +7,13 @@
     "location": "minecraft:bookshelf"
   },
   "key": "BOOKSHELF",
-  "name": "primalmagick.research.bookshelf.title",
+  "name": "research.primalmagick.bookshelf.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.bookshelf.text.stage.1"
+      "text": "research.primalmagick.bookshelf.text.stage.1"
     }
   ]
 }

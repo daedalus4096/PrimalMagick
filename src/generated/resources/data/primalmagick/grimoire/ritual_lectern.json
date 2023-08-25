@@ -6,7 +6,7 @@
     "location": "primalmagick:ritual_lectern"
   },
   "key": "RITUAL_LECTERN",
-  "name": "primalmagick.research.ritual_lectern.title",
+  "name": "research.primalmagick.ritual_lectern.title",
   "parents": [
     "EXPERT_RITUAL"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.ritual_lectern.text.stage.1"
+      "text": "research.primalmagick.ritual_lectern.text.stage.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "recipes": [
         "primalmagick:ritual_lectern"
       ],
-      "text": "primalmagick.research.ritual_lectern.text.stage.2"
+      "text": "research.primalmagick.ritual_lectern.text.stage.2"
     }
   ]
 }

@@ -56,7 +56,7 @@ public class WandHudOverlay implements IGuiOverlay {
             Component curText = wand.getManaText(stack, source);
             
             double ratio = (double)curMana / (double)maxMana;
-            Component ratioText = Component.translatable("primalmagick.source.mana_summary_fragment", curText, maxText);
+            Component ratioText = Component.translatable("tooltip.primalmagick.source.mana_summary_fragment", curText, maxText);
             
             posY += this.renderManaGauge(guiGraphics, 0, posY, ratioText, ratio, source.getColor(), (++index == discoveredSources.size()), partialTick, mc.font);
         }

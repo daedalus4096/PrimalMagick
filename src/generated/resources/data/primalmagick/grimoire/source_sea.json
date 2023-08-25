@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sea.png"
   },
   "key": "SOURCE_SEA",
-  "name": "primalmagick.research.source_sea.title",
+  "name": "research.primalmagick.source_sea.title",
   "parents": [
     "TERRESTRIAL_MAGICK"
   ],
@@ -24,13 +24,13 @@
         "m_env_sea",
         "t_mana_spent_sea_expert"
       ],
-      "text": "primalmagick.research.source_sea.text.stage.1"
+      "text": "research.primalmagick.source_sea.text.stage.1"
     },
     {
       "attunements": {
         "sea": 5
       },
-      "text": "primalmagick.research.source_sea.text.stage.2"
+      "text": "research.primalmagick.source_sea.text.stage.2"
     }
   ]
 }

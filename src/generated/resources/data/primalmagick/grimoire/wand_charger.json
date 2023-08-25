@@ -6,7 +6,7 @@
     "location": "primalmagick:wand_charger"
   },
   "key": "WAND_CHARGER",
-  "name": "primalmagick.research.wand_charger.title",
+  "name": "research.primalmagick.wand_charger.title",
   "parents": [
     "BASIC_MANAWEAVING"
   ],
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.wand_charger.text.stage.1"
+      "text": "research.primalmagick.wand_charger.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:wand_charger"
       ],
-      "text": "primalmagick.research.wand_charger.text.stage.2"
+      "text": "research.primalmagick.wand_charger.text.stage.2"
     }
   ]
 }

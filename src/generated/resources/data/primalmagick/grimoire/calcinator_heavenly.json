@@ -6,7 +6,7 @@
     "location": "primalmagick:calcinator_heavenly"
   },
   "key": "CALCINATOR_HEAVENLY",
-  "name": "primalmagick.research.calcinator_heavenly.title",
+  "name": "research.primalmagick.calcinator_heavenly.title",
   "parents": [
     "SUPREME_ALCHEMY",
     "SUPREME_MANAWEAVING",
@@ -19,13 +19,13 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.calcinator_heavenly.text.stage.1"
+      "text": "research.primalmagick.calcinator_heavenly.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:calcinator_heavenly"
       ],
-      "text": "primalmagick.research.calcinator_heavenly.text.stage.2"
+      "text": "research.primalmagick.calcinator_heavenly.text.stage.2"
     }
   ]
 }

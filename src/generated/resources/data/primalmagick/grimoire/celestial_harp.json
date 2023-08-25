@@ -6,7 +6,7 @@
     "location": "primalmagick:celestial_harp"
   },
   "key": "CELESTIAL_HARP",
-  "name": "primalmagick.research.celestial_harp.title",
+  "name": "research.primalmagick.celestial_harp.title",
   "parents": [
     "SUPREME_RITUAL",
     "t_discover_hallowed"
@@ -20,7 +20,7 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.celestial_harp.text.stage.1"
+      "text": "research.primalmagick.celestial_harp.text.stage.1"
     },
     {
       "attunements": {
@@ -29,7 +29,7 @@
       "recipes": [
         "primalmagick:celestial_harp"
       ],
-      "text": "primalmagick.research.celestial_harp.text.stage.2"
+      "text": "research.primalmagick.celestial_harp.text.stage.2"
     }
   ]
 }

@@ -30,7 +30,7 @@ public class ResearchEntryBuilder {
     
     protected ResearchEntryBuilder(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
         this.key = key.stripStage();
-        this.nameTranslationKey = modId.toLowerCase() + ".research." + this.key.getRootKey().toLowerCase() + ".title";
+        this.nameTranslationKey = String.join(".", "research", modId.toLowerCase(), this.key.getRootKey().toLowerCase(), "title");
         this.disciplineName = discipline;
         this.hidden = false;
         this.finaleExempt = false;

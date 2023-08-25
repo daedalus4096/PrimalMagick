@@ -6,7 +6,7 @@
     "location": "primalmagick:skyglass"
   },
   "key": "SKYGLASS",
-  "name": "primalmagick.research.skyglass.title",
+  "name": "research.primalmagick.skyglass.title",
   "parents": [
     "STONEMELDING"
   ],
@@ -21,7 +21,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.skyglass.text.stage.1"
+      "text": "research.primalmagick.skyglass.text.stage.1"
     },
     {
       "attunements": {
@@ -79,7 +79,7 @@
         "primalmagick:stained_skyglass_pane_yellow_from_blocks",
         "primalmagick:stained_skyglass_pane_yellow_from_panes"
       ],
-      "text": "primalmagick.research.skyglass.text.stage.2"
+      "text": "research.primalmagick.skyglass.text.stage.2"
     }
   ]
 }

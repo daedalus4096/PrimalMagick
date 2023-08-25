@@ -7,7 +7,7 @@
     "location": "primalmagick:moonwood_sapling"
   },
   "key": "MOONWOOD_TREES",
-  "name": "primalmagick.research.moonwood_trees.title",
+  "name": "research.primalmagick.moonwood_trees.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
@@ -21,7 +21,7 @@
         "primalmagick:moonwood_stairs",
         "primalmagick:moonwood_pillar"
       ],
-      "text": "primalmagick.research.moonwood_trees.text.stage.1"
+      "text": "research.primalmagick.moonwood_trees.text.stage.1"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_manaweaving.png"
   },
   "key": "SUPREME_MANAWEAVING",
-  "name": "primalmagick.research.supreme_manaweaving.title",
+  "name": "research.primalmagick.supreme_manaweaving.title",
   "parents": [
     "WAND_CAP_HEXIUM",
     "WAND_GEM_WIZARD"
@@ -20,7 +20,7 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_manaweaving.text.stage.1"
+      "text": "research.primalmagick.supreme_manaweaving.text.stage.1"
     },
     {
       "recipes": [
@@ -36,7 +36,7 @@
         "primalmagick:marble_hallowed_stairs",
         "primalmagick:marble_hallowed_wall"
       ],
-      "text": "primalmagick.research.supreme_manaweaving.text.stage.2"
+      "text": "research.primalmagick.supreme_manaweaving.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_grace"
   },
   "key": "RUNE_GRACE",
-  "name": "primalmagick.research.rune_grace.title",
+  "name": "research.primalmagick.rune_grace.title",
   "parents": [
     "SUPREME_RUNEWORKING",
     "CLUSTER_SYNTHESIS",
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.rune_grace.text.stage.1"
+      "text": "research.primalmagick.rune_grace.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:rune_grace"
       ],
-      "text": "primalmagick.research.rune_grace.text.stage.2"
+      "text": "research.primalmagick.rune_grace.text.stage.2"
     }
   ]
 }

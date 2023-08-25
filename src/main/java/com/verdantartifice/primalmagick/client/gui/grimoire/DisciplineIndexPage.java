@@ -45,7 +45,7 @@ public class DisciplineIndexPage extends AbstractPage {
     
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagick.grimoire.index_header";
+        return "grimoire.primalmagick.index_header";
     }
 
     @Override

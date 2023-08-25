@@ -6,7 +6,7 @@
     "location": "primalmagick:primalite_golem_controller"
   },
   "key": "PRIMALITE_GOLEM",
-  "name": "primalmagick.research.primalite_golem.title",
+  "name": "research.primalmagick.primalite_golem.title",
   "parents": [
     "EXPERT_MAGITECH",
     "PRIMALITE"
@@ -19,13 +19,13 @@
       "required_research": [
         "t_golem"
       ],
-      "text": "primalmagick.research.primalite_golem.text.stage.1"
+      "text": "research.primalmagick.primalite_golem.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:primalite_golem_controller"
       ],
-      "text": "primalmagick.research.primalite_golem.text.stage.2"
+      "text": "research.primalmagick.primalite_golem.text.stage.2"
     }
   ]
 }

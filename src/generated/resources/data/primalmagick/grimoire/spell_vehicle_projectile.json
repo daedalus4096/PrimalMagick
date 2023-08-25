@@ -2,7 +2,7 @@
   "addenda": [],
   "discipline": "SORCERY",
   "key": "SPELL_VEHICLE_PROJECTILE",
-  "name": "primalmagick.research.spell_vehicle_projectile.title",
+  "name": "research.primalmagick.spell_vehicle_projectile.title",
   "parents": [
     "EXPERT_SORCERY"
   ],
@@ -11,10 +11,10 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.spell_vehicle_projectile.text.stage.1"
+      "text": "research.primalmagick.spell_vehicle_projectile.text.stage.1"
     },
     {
-      "text": "primalmagick.research.spell_vehicle_projectile.text.stage.2"
+      "text": "research.primalmagick.spell_vehicle_projectile.text.stage.2"
     }
   ]
 }

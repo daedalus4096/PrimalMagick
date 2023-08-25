@@ -10,7 +10,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.addenda.1"
+      "text": "research.primalmagick.shard_desynthesis.text.addenda.1"
     },
     {
       "attunements": {
@@ -22,7 +22,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.addenda.2"
+      "text": "research.primalmagick.shard_desynthesis.text.addenda.2"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       "required_research": [
         "t_discover_void"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.addenda.3"
+      "text": "research.primalmagick.shard_desynthesis.text.addenda.3"
     },
     {
       "attunements": {
@@ -46,7 +46,7 @@
       "required_research": [
         "t_discover_hallowed"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.addenda.4"
+      "text": "research.primalmagick.shard_desynthesis.text.addenda.4"
     }
   ],
   "discipline": "ALCHEMY",
@@ -55,7 +55,7 @@
     "location": "primalmagick:essence_shard_earth"
   },
   "key": "SHARD_DESYNTHESIS",
-  "name": "primalmagick.research.shard_desynthesis.title",
+  "name": "research.primalmagick.shard_desynthesis.title",
   "parents": [
     "SHARD_SYNTHESIS"
   ],
@@ -64,7 +64,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.stage.1"
+      "text": "research.primalmagick.shard_desynthesis.text.stage.1"
     },
     {
       "attunements": {
@@ -81,7 +81,7 @@
         "primalmagick:essence_dust_sun_from_shard",
         "primalmagick:essence_dust_moon_from_shard"
       ],
-      "text": "primalmagick.research.shard_desynthesis.text.stage.2"
+      "text": "research.primalmagick.shard_desynthesis.text.stage.2"
     }
   ]
 }

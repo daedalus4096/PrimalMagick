@@ -7,13 +7,13 @@
     "location": "minecraft:beacon"
   },
   "key": "BEACON",
-  "name": "primalmagick.research.beacon.title",
+  "name": "research.primalmagick.beacon.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.beacon.text.stage.1"
+      "text": "research.primalmagick.beacon.text.stage.1"
     }
   ]
 }

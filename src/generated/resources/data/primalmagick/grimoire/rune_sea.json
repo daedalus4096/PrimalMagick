@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_sea"
   },
   "key": "RUNE_SEA",
-  "name": "primalmagick.research.rune_sea.title",
+  "name": "research.primalmagick.rune_sea.title",
   "parents": [
     "RUNE_EARTH"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_sea.text.stage.1"
+      "text": "research.primalmagick.rune_sea.text.stage.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "recipes": [
         "primalmagick:rune_sea"
       ],
-      "text": "primalmagick.research.rune_sea.text.stage.2"
+      "text": "research.primalmagick.rune_sea.text.stage.2"
     }
   ]
 }

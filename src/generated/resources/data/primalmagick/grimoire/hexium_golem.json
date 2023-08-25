@@ -6,7 +6,7 @@
     "location": "primalmagick:hexium_golem_controller"
   },
   "key": "HEXIUM_GOLEM",
-  "name": "primalmagick.research.hexium_golem.title",
+  "name": "research.primalmagick.hexium_golem.title",
   "parents": [
     "MASTER_MAGITECH",
     "PRIMALITE_GOLEM",
@@ -17,13 +17,13 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.hexium_golem.text.stage.1"
+      "text": "research.primalmagick.hexium_golem.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:hexium_golem_controller"
       ],
-      "text": "primalmagick.research.hexium_golem.text.stage.2"
+      "text": "research.primalmagick.hexium_golem.text.stage.2"
     }
   ]
 }

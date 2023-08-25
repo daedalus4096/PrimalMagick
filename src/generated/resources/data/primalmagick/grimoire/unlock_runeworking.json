@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
   "key": "UNLOCK_RUNEWORKING",
-  "name": "primalmagick.research.unlock_runeworking.title",
+  "name": "research.primalmagick.unlock_runeworking.title",
   "parents": [
     "CALCINATOR_BASIC"
   ],
@@ -15,10 +15,10 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.unlock_runeworking.text.stage.1"
+      "text": "research.primalmagick.unlock_runeworking.text.stage.1"
     },
     {
-      "text": "primalmagick.research.unlock_runeworking.text.stage.2"
+      "text": "research.primalmagick.unlock_runeworking.text.stage.2"
     }
   ]
 }

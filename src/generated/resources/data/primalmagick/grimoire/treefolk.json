@@ -7,13 +7,13 @@
     "location": "primalmagick:heartwood"
   },
   "key": "TREEFOLK",
-  "name": "primalmagick.research.treefolk.title",
+  "name": "research.primalmagick.treefolk.title",
   "parents": [
     "UNLOCK_SCANS"
   ],
   "stages": [
     {
-      "text": "primalmagick.research.treefolk.text.stage.1"
+      "text": "research.primalmagick.treefolk.text.stage.1"
     }
   ]
 }

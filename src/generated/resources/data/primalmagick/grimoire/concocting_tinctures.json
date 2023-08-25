@@ -11,7 +11,7 @@
       "required_research": [
         "t_discover_blood"
       ],
-      "text": "primalmagick.research.concocting_tinctures.text.addenda.1"
+      "text": "research.primalmagick.concocting_tinctures.text.addenda.1"
     },
     {
       "recipes": [
@@ -21,7 +21,7 @@
       "required_research": [
         "t_discover_infernal"
       ],
-      "text": "primalmagick.research.concocting_tinctures.text.addenda.2"
+      "text": "research.primalmagick.concocting_tinctures.text.addenda.2"
     }
   ],
   "discipline": "MAGITECH",
@@ -30,7 +30,7 @@
     "location": "primalmagick:concocter"
   },
   "key": "CONCOCTING_TINCTURES",
-  "name": "primalmagick.research.concocting_tinctures.title",
+  "name": "research.primalmagick.concocting_tinctures.title",
   "parents": [
     "EXPERT_MAGITECH",
     "SKYGLASS",
@@ -41,7 +41,7 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.concocting_tinctures.text.stage.1"
+      "text": "research.primalmagick.concocting_tinctures.text.stage.1"
     },
     {
       "recipes": [
@@ -69,7 +69,7 @@
         "primalmagick:long_slow_falling_tincture",
         "primalmagick:luck_tincture"
       ],
-      "text": "primalmagick.research.concocting_tinctures.text.stage.2"
+      "text": "research.primalmagick.concocting_tinctures.text.stage.2"
     }
   ]
 }

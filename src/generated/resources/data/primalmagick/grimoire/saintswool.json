@@ -6,7 +6,7 @@
     "location": "primalmagick:saintswool_head"
   },
   "key": "SAINTSWOOL",
-  "name": "primalmagick.research.saintswool.title",
+  "name": "research.primalmagick.saintswool.title",
   "parents": [
     "SUPREME_MANAWEAVING",
     "HEXWEAVE",
@@ -17,7 +17,7 @@
       "required_knowledge": [
         "THEORY;3"
       ],
-      "text": "primalmagick.research.saintswool.text.stage.1"
+      "text": "research.primalmagick.saintswool.text.stage.1"
     },
     {
       "recipes": [
@@ -27,7 +27,7 @@
         "primalmagick:saintswool_legs",
         "primalmagick:saintswool_feet"
       ],
-      "text": "primalmagick.research.saintswool.text.stage.2"
+      "text": "research.primalmagick.saintswool.text.stage.2"
     }
   ]
 }

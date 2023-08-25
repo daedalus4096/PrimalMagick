@@ -6,7 +6,7 @@
     "location": "primalmagick:runic_grindstone"
   },
   "key": "RUNIC_GRINDSTONE",
-  "name": "primalmagick.research.runic_grindstone.title",
+  "name": "research.primalmagick.runic_grindstone.title",
   "parents": [
     "RUNE_DISPEL"
   ],
@@ -15,13 +15,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.runic_grindstone.text.stage.1"
+      "text": "research.primalmagick.runic_grindstone.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:runic_grindstone"
       ],
-      "text": "primalmagick.research.runic_grindstone.text.stage.2"
+      "text": "research.primalmagick.runic_grindstone.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_alchemy.png"
   },
   "key": "MASTER_ALCHEMY",
-  "name": "primalmagick.research.master_alchemy.title",
+  "name": "research.primalmagick.master_alchemy.title",
   "parents": [
     "CALCINATOR_ENCHANTED",
     "PRIMALITE"
@@ -17,10 +17,10 @@
         "t_discover_forbidden",
         "b_crafted_alchemy_master"
       ],
-      "text": "primalmagick.research.master_alchemy.text.stage.1"
+      "text": "research.primalmagick.master_alchemy.text.stage.1"
     },
     {
-      "text": "primalmagick.research.master_alchemy.text.stage.2"
+      "text": "research.primalmagick.master_alchemy.text.stage.2"
     }
   ]
 }

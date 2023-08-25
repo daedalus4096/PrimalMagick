@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_magitech.png"
   },
   "key": "MASTER_MAGITECH",
-  "name": "primalmagick.research.master_magitech.title",
+  "name": "research.primalmagick.master_magitech.title",
   "parents": [
     "ARCANOMETER",
     "PRIMALITE_GOLEM"
@@ -21,13 +21,13 @@
         "b_crafted_magitech_master",
         "b_scan_hexium"
       ],
-      "text": "primalmagick.research.master_magitech.text.stage.1"
+      "text": "research.primalmagick.master_magitech.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:magitech_parts_forbidden"
       ],
-      "text": "primalmagick.research.master_magitech.text.stage.2"
+      "text": "research.primalmagick.master_magitech.text.stage.2"
     }
   ]
 }

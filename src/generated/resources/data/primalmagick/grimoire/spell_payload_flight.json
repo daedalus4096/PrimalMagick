@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/sky.png"
   },
   "key": "SPELL_PAYLOAD_FLIGHT",
-  "name": "primalmagick.research.spell_payload_flight.title",
+  "name": "research.primalmagick.spell_payload_flight.title",
   "parents": [
     "SUPREME_SORCERY",
     "SPELL_PAYLOAD_LIGHTNING"
@@ -19,13 +19,13 @@
       "required_research": [
         "m_fly_elytra"
       ],
-      "text": "primalmagick.research.spell_payload_flight.text.stage.1"
+      "text": "research.primalmagick.spell_payload_flight.text.stage.1"
     },
     {
       "attunements": {
         "sky": 3
       },
-      "text": "primalmagick.research.spell_payload_flight.text.stage.2"
+      "text": "research.primalmagick.spell_payload_flight.text.stage.2"
     }
   ]
 }

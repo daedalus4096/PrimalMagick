@@ -6,7 +6,7 @@
     "location": "primalmagick:essence_cask_enchanted"
   },
   "key": "ESSENCE_CASK_ENCHANTED",
-  "name": "primalmagick.research.essence_cask_enchanted.title",
+  "name": "research.primalmagick.essence_cask_enchanted.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_CORE_HEARTWOOD",
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.essence_cask_enchanted.text.stage.1"
+      "text": "research.primalmagick.essence_cask_enchanted.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:essence_cask_enchanted"
       ],
-      "text": "primalmagick.research.essence_cask_enchanted.text.stage.2"
+      "text": "research.primalmagick.essence_cask_enchanted.text.stage.2"
     }
   ]
 }

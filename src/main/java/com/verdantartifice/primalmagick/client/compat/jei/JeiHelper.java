@@ -144,20 +144,20 @@ public class JeiHelper implements IModPlugin {
     
     public static List<Component> getManaCostTooltipStrings(SourceList manaCosts) {
         List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable("primalmagick.crafting.mana_cost_header"));
+        tooltip.add(Component.translatable("label.primalmagick.crafting.mana_cost_header"));
         for (Source source : manaCosts.getSourcesSorted()) {
-            tooltip.add(Component.translatable("primalmagick.crafting.mana_tooltip", manaCosts.getAmount(source), source.getNameText()));
+            tooltip.add(Component.translatable("label.primalmagick.crafting.mana", manaCosts.getAmount(source), source.getNameText()));
         }
         return tooltip;
     }
     
     public static List<Component> getRequiredResearchTooltipStrings(CompoundResearchKey compoundResearch) {
         List<Component> tooltip = new ArrayList<>();
-        tooltip.add(Component.translatable("primalmagick.crafting.research_header"));
+        tooltip.add(Component.translatable("label.primalmagick.crafting.research_header"));
         for (SimpleResearchKey key : compoundResearch.getKeys()) {
             ResearchEntry entry = ResearchEntries.getEntry(key);
             if (entry == null) {
-                tooltip.add(Component.translatable("primalmagick.research." + key.getRootKey() + ".text"));
+                tooltip.add(Component.translatable("research.primalmagick." + key.getRootKey() + ".text"));
             } else {
                 MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
                 ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());

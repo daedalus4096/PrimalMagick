@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
   "key": "SUPREME_RUNEWORKING",
-  "name": "primalmagick.research.supreme_runeworking.title",
+  "name": "research.primalmagick.supreme_runeworking.title",
   "parents": [
     "RUNE_POWER"
   ],
@@ -20,13 +20,13 @@
       "revelations": [
         "SECRETS_OF_THE_UNIVERSE"
       ],
-      "text": "primalmagick.research.supreme_runeworking.text.stage.1"
+      "text": "research.primalmagick.supreme_runeworking.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:runescribing_altar_heavenly"
       ],
-      "text": "primalmagick.research.supreme_runeworking.text.stage.2"
+      "text": "research.primalmagick.supreme_runeworking.text.stage.2"
     }
   ]
 }

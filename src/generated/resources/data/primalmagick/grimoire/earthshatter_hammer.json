@@ -6,7 +6,7 @@
     "location": "primalmagick:earthshatter_hammer"
   },
   "key": "EARTHSHATTER_HAMMER",
-  "name": "primalmagick.research.earthshatter_hammer.title",
+  "name": "research.primalmagick.earthshatter_hammer.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "SHARD_SYNTHESIS"
@@ -21,7 +21,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.earthshatter_hammer.text.stage.1"
+      "text": "research.primalmagick.earthshatter_hammer.text.stage.1"
     },
     {
       "attunements": {
@@ -42,7 +42,7 @@
         "primalmagick:gravel_from_earthshatter_hammer",
         "primalmagick:sand_from_earthshatter_hammer"
       ],
-      "text": "primalmagick.research.earthshatter_hammer.text.stage.2"
+      "text": "research.primalmagick.earthshatter_hammer.text.stage.2"
     }
   ]
 }

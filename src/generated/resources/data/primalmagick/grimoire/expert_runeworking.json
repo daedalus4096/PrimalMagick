@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_runeworking.png"
   },
   "key": "EXPERT_RUNEWORKING",
-  "name": "primalmagick.research.expert_runeworking.title",
+  "name": "research.primalmagick.expert_runeworking.title",
   "parents": [
     "RUNE_EARTH",
     "RUNE_PROJECT",
@@ -18,13 +18,13 @@
         "b_crafted_runeworking_expert",
         "t_items_runescribed_expert"
       ],
-      "text": "primalmagick.research.expert_runeworking.text.stage.1"
+      "text": "research.primalmagick.expert_runeworking.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:runescribing_altar_enchanted"
       ],
-      "text": "primalmagick.research.expert_runeworking.text.stage.2"
+      "text": "research.primalmagick.expert_runeworking.text.stage.2"
     }
   ]
 }

@@ -44,7 +44,7 @@ public class RequirementsPage extends AbstractPage {
 
     @Override
     protected String getTitleTranslationKey() {
-        return "primalmagick.grimoire.requirements_header";
+        return "grimoire.primalmagick.requirements_header";
     }
     
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
@@ -140,10 +140,10 @@ public class RequirementsPage extends AbstractPage {
         // Init progress button if applicable
         y = startY + 141;
         if (screen.isProgressing()) {
-            Component text = Component.translatable("primalmagick.grimoire.completing_text");
+            Component text = Component.translatable("grimoire.primalmagick.completing_text");
             screen.addWidgetToScreen(new InactiveWidget(startX + 16 + (side * 136), y, 119, 20, text));
         } else if (this.stage.arePrerequisitesMet(mc.player)) {
-            Component text = Component.translatable("primalmagick.grimoire.complete_button");
+            Component text = Component.translatable("grimoire.primalmagick.complete_button");
             screen.addWidgetToScreen(new ProgressButton(this.stage, startX + 16 + (side * 136), y, text, screen));
         }
     }
@@ -162,7 +162,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render obtain requirement section
         if (!this.stage.getMustObtain().isEmpty()) {
-            Component leadComponent = Component.translatable("primalmagick.grimoire.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("grimoire.primalmagick.must_obtain_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getMustObtain().size() / ITEMS_PER_ROW)));  // Make room for obtain widgets
@@ -170,7 +170,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render craft requirement section
         if (!this.stage.getMustCraft().isEmpty()) {
-            Component leadComponent = Component.translatable("primalmagick.grimoire.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("grimoire.primalmagick.must_craft_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getMustCraft().size() / ITEMS_PER_ROW)));   // Make room for craft widgets
@@ -178,7 +178,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render knowledge requirement section
         if (!this.stage.getRequiredKnowledge().isEmpty()) {
-            Component leadComponent = Component.translatable("primalmagick.grimoire.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("grimoire.primalmagick.required_knowledge_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getRequiredKnowledge().size() / ITEMS_PER_ROW)));   // Make room for knowledge widgets
@@ -186,7 +186,7 @@ public class RequirementsPage extends AbstractPage {
         
         // Render research requirement section
         if (this.stage.getRequiredResearch() != null) {
-            Component leadComponent = Component.translatable("primalmagick.grimoire.required_research_header").withStyle(ChatFormatting.UNDERLINE);
+            Component leadComponent = Component.translatable("grimoire.primalmagick.required_research_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
             y += (18 * (1 + (this.stage.getRequiredResearch().getKeys().size() / ITEMS_PER_ROW)));  // Make room for research widgets

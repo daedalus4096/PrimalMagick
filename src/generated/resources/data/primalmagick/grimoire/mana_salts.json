@@ -6,7 +6,7 @@
     "location": "primalmagick:mana_salts"
   },
   "key": "MANA_SALTS",
-  "name": "primalmagick.research.mana_salts.title",
+  "name": "research.primalmagick.mana_salts.title",
   "parents": [
     "WAND_CHARGER"
   ],
@@ -22,13 +22,13 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.mana_salts.text.stage.1"
+      "text": "research.primalmagick.mana_salts.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:mana_salts"
       ],
-      "text": "primalmagick.research.mana_salts.text.stage.2"
+      "text": "research.primalmagick.mana_salts.text.stage.2"
     }
   ]
 }

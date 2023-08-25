@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/sources/void.png"
   },
   "key": "SOURCE_VOID",
-  "name": "primalmagick.research.source_void.title",
+  "name": "research.primalmagick.source_void.title",
   "parents": [
     "FORBIDDEN_MAGICK",
     "t_discover_void"
@@ -23,13 +23,13 @@
       "required_research": [
         "t_mana_spent_void_expert"
       ],
-      "text": "primalmagick.research.source_void.text.stage.1"
+      "text": "research.primalmagick.source_void.text.stage.1"
     },
     {
       "attunements": {
         "void": 5
       },
-      "text": "primalmagick.research.source_void.text.stage.2"
+      "text": "research.primalmagick.source_void.text.stage.2"
     }
   ]
 }

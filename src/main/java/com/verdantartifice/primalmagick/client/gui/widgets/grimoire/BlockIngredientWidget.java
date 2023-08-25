@@ -42,7 +42,7 @@ public class BlockIngredientWidget extends AbstractWidget {
                 Block block = matching[index];
                 this.toDisplay = (block != null) ? 
                         new ItemStack(block) : 
-                        new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("primalmagick.grimoire.missing_block"));
+                        new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("grimoire.primalmagick.missing_block"));
                 GuiUtils.renderItemStack(guiGraphics, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
             } else {
                 this.toDisplay = ItemStack.EMPTY;

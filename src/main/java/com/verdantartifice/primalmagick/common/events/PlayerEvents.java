@@ -451,6 +451,11 @@ public class PlayerEvents {
         }
         
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
+        
+        // If the player died, refresh any attunement attribute modifiers they may have had
+        if (event.isWasDeath()) {
+            AttunementManager.refreshAttributeModifiers(event.getEntity());
+        }
     }
     
     @SubscribeEvent
@@ -520,12 +525,12 @@ public class PlayerEvents {
         ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
         CompoundTag contents = new CompoundTag();
         contents.putInt("generation", 3);
-        contents.putString("title", Component.translatable("primalmagick.dream_journal.title").getString());
+        contents.putString("title", Component.translatable("written_book.primalmagick.dream_journal.title").getString());
         contents.putString("author", player.getName().getString());
         ListTag pages = new ListTag();
-        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.1").getString()));
-        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.2").getString()));
-        pages.add(StringTag.valueOf(Component.translatable("primalmagick.dream_journal.text.3").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.1").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.2").getString()));
+        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.3").getString()));
         contents.put("pages", pages);
         journal.setTag(contents);
         

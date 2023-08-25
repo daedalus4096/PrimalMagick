@@ -6,7 +6,7 @@
     "location": "primalmagick:rune_sun"
   },
   "key": "RUNE_SUN",
-  "name": "primalmagick.research.rune_sun.title",
+  "name": "research.primalmagick.rune_sun.title",
   "parents": [
     "RUNE_SKY"
   ],
@@ -15,7 +15,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.rune_sun.text.stage.1"
+      "text": "research.primalmagick.rune_sun.text.stage.1"
     },
     {
       "attunements": {
@@ -24,7 +24,7 @@
       "recipes": [
         "primalmagick:rune_sun"
       ],
-      "text": "primalmagick.research.rune_sun.text.stage.2"
+      "text": "research.primalmagick.rune_sun.text.stage.2"
     }
   ]
 }

@@ -6,7 +6,7 @@
     "location": "primalmagick:textures/research/discipline_ritual.png"
   },
   "key": "MASTER_RITUAL",
-  "name": "primalmagick.research.master_ritual.title",
+  "name": "research.primalmagick.master_ritual.title",
   "parents": [
     "RITUAL_LECTERN",
     "RITUAL_BELL"
@@ -17,10 +17,10 @@
         "t_discover_forbidden",
         "t_rituals_completed_master"
       ],
-      "text": "primalmagick.research.master_ritual.text.stage.1"
+      "text": "research.primalmagick.master_ritual.text.stage.1"
     },
     {
-      "text": "primalmagick.research.master_ritual.text.stage.2"
+      "text": "research.primalmagick.master_ritual.text.stage.2"
     }
   ]
 }

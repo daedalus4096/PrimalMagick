@@ -44,8 +44,8 @@ public class EssenceCaskWidget extends AbstractWidget {
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = EssenceItem.getEssence(this.essenceType, this.source);
         List<Component> lines = stack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
-        lines.add(Component.translatable("primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-        lines.add(Component.translatable("primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        lines.add(Component.translatable("label.primalmagick.essence_cask.left_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+        lines.add(Component.translatable("label.primalmagick.essence_cask.right_click").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
     

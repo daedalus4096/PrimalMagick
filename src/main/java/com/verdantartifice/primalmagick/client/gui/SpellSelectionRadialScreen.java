@@ -73,7 +73,7 @@ public class SpellSelectionRadialScreen extends Screen {
                 close();
             }
         };
-        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, new ResourceLocation("textures/item/barrier.png"), Component.translatable("primalmagick.spells.no_spell_selection")) {
+        this.noSpellMenuItem = new ImageRadialMenuItem(this.menu, -1, new ResourceLocation("textures/item/barrier.png"), Component.translatable("tooltip.primalmagick.spells.no_spell_selection")) {
             @Override
             public boolean onClick() {
                 return SpellSelectionRadialScreen.this.trySwitch(getSlot());

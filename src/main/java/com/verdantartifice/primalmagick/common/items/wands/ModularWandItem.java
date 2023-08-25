@@ -200,11 +200,11 @@ public class ModularWandItem extends AbstractWandItem {
     public Component getName(ItemStack stack) {
         // A modular wand's display name is determined by its components (e.g. "Apprentice's Iron-Shod Heartwood Wand")
         WandCore core = this.getWandCore(stack);
-        Component coreName = (core == null) ? Component.translatable("primalmagick.wand_core.unknown.name") : Component.translatable(core.getNameTranslationKey());
+        Component coreName = (core == null) ? Component.translatable("wand_core.primalmagick.unknown") : Component.translatable(core.getNameTranslationKey());
         WandCap cap = this.getWandCap(stack);
-        Component capName = (cap == null) ? Component.translatable("primalmagick.wand_cap.unknown.name") : Component.translatable(cap.getNameTranslationKey());
+        Component capName = (cap == null) ? Component.translatable("wand_cap.primalmagick.unknown") : Component.translatable(cap.getNameTranslationKey());
         WandGem gem = this.getWandGem(stack);
-        Component gemName = (gem == null) ? Component.translatable("primalmagick.wand_gem.unknown.name") : Component.translatable(gem.getNameTranslationKey());
+        Component gemName = (gem == null) ? Component.translatable("wand_gem.primalmagick.unknown") : Component.translatable(gem.getNameTranslationKey());
         return Component.translatable("item.primalmagick.modular_wand", gemName, capName, coreName);
     }
     
@@ -322,19 +322,19 @@ public class ModularWandItem extends AbstractWandItem {
     @Override
     public Component getSpellCapacityText(ItemStack stack) {
         if (stack == null) {
-            return Component.translatable("primalmagick.spells.capacity", 0);
+            return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
         } else {
             WandCore core = this.getWandCore(stack);
             if (core == null) {
-                return Component.translatable("primalmagick.spells.capacity", 0);
+                return Component.translatable("tooltip.primalmagick.spells.capacity", 0);
             } else {
                 int baseSlots = this.getCoreSpellSlotCount(core);
                 Source bonusSlot = core.getBonusSlot();
                 if (bonusSlot == null) {
-                    return Component.translatable("primalmagick.spells.capacity", baseSlots);
+                    return Component.translatable("tooltip.primalmagick.spells.capacity", baseSlots);
                 } else {
                     Component bonusText = Component.translatable(bonusSlot.getNameTranslationKey());
-                    return Component.translatable("primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
+                    return Component.translatable("tooltip.primalmagick.spells.capacity_with_bonus", baseSlots, bonusText);
                 }
             }
         }

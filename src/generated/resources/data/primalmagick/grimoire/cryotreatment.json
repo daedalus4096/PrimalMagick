@@ -6,7 +6,7 @@
     "location": "minecraft:ice"
   },
   "key": "CRYOTREATMENT",
-  "name": "primalmagick.research.cryotreatment.title",
+  "name": "research.primalmagick.cryotreatment.title",
   "parents": [
     "STONEMELDING"
   ],
@@ -18,7 +18,7 @@
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.cryotreatment.text.stage.1"
+      "text": "research.primalmagick.cryotreatment.text.stage.1"
     },
     {
       "attunements": {
@@ -28,7 +28,7 @@
         "primalmagick:ice_from_cryotreatment",
         "primalmagick:obsidian_from_cryotreatment"
       ],
-      "text": "primalmagick.research.cryotreatment.text.stage.2"
+      "text": "research.primalmagick.cryotreatment.text.stage.2"
     }
   ]
 }

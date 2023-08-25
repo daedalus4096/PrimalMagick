@@ -16,14 +16,14 @@
     "location": "primalmagick:grimoire"
   },
   "key": "THEORY_OF_EVERYTHING",
-  "name": "primalmagick.research.theory_of_everything.title",
+  "name": "research.primalmagick.theory_of_everything.title",
   "parents": [],
   "stages": [
     {
       "required_knowledge": [
         "OBSERVATION;1"
       ],
-      "text": "primalmagick.research.theory_of_everything.text.stage.1"
+      "text": "research.primalmagick.theory_of_everything.text.stage.1"
     },
     {
       "attunements": {
@@ -37,7 +37,7 @@
         "sun": 2,
         "void": 2
       },
-      "text": "primalmagick.research.theory_of_everything.text.stage.2"
+      "text": "research.primalmagick.theory_of_everything.text.stage.2"
     }
   ]
 }

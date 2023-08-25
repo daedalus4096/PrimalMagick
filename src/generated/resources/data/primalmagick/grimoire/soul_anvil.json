@@ -6,7 +6,7 @@
     "location": "primalmagick:soul_anvil"
   },
   "key": "SOUL_ANVIL",
-  "name": "primalmagick.research.soul_anvil.title",
+  "name": "research.primalmagick.soul_anvil.title",
   "parents": [
     "MASTER_RITUAL",
     "HEXIUM",
@@ -17,7 +17,7 @@
       "required_knowledge": [
         "THEORY;2"
       ],
-      "text": "primalmagick.research.soul_anvil.text.stage.1"
+      "text": "research.primalmagick.soul_anvil.text.stage.1"
     },
     {
       "attunements": {
@@ -26,7 +26,7 @@
       "recipes": [
         "primalmagick:soul_anvil"
       ],
-      "text": "primalmagick.research.soul_anvil.text.stage.2"
+      "text": "research.primalmagick.soul_anvil.text.stage.2"
     }
   ]
 }

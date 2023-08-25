@@ -2,7 +2,7 @@
   "addenda": [],
   "discipline": "MANAWEAVING",
   "key": "STAVES",
-  "name": "primalmagick.research.staves.title",
+  "name": "research.primalmagick.staves.title",
   "parents": [
     "EXPERT_MANAWEAVING",
     "WAND_GEM_ADEPT",
@@ -14,10 +14,10 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.staves.text.stage.1"
+      "text": "research.primalmagick.staves.text.stage.1"
     },
     {
-      "text": "primalmagick.research.staves.text.stage.2"
+      "text": "research.primalmagick.staves.text.stage.2"
     }
   ]
 }

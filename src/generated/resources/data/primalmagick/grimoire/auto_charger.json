@@ -6,7 +6,7 @@
     "location": "primalmagick:auto_charger"
   },
   "key": "AUTO_CHARGER",
-  "name": "primalmagick.research.auto_charger.title",
+  "name": "research.primalmagick.auto_charger.title",
   "parents": [
     "EXPERT_MAGITECH",
     "EXPERT_MANAWEAVING",
@@ -18,13 +18,13 @@
       "required_knowledge": [
         "THEORY;1"
       ],
-      "text": "primalmagick.research.auto_charger.text.stage.1"
+      "text": "research.primalmagick.auto_charger.text.stage.1"
     },
     {
       "recipes": [
         "primalmagick:auto_charger"
       ],
-      "text": "primalmagick.research.auto_charger.text.stage.2"
+      "text": "research.primalmagick.auto_charger.text.stage.2"
     }
   ]
 }
