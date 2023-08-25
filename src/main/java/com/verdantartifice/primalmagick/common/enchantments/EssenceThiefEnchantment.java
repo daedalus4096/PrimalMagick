@@ -40,9 +40,4 @@ public class EssenceThiefEnchantment extends AbstractRuneEnchantment {
         Item item = stack.getItem();
         return item instanceof TridentItem || item instanceof AxeItem || item instanceof IWand ? true : super.canEnchant(stack);
     }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
 }

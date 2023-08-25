@@ -55,9 +55,4 @@ public class RendingEnchantment extends AbstractRuneEnchantment {
             livingTarget.addEffect(new MobEffectInstance(EffectsPM.BLEEDING.get(), 120, amplifier));
         }
     }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
 }

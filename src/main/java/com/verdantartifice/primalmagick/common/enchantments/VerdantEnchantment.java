@@ -30,9 +30,4 @@ public class VerdantEnchantment extends AbstractRuneEnchantment {
     public int getMaxLevel() {
         return 4;
     }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
 }

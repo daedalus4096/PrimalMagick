@@ -55,7 +55,7 @@ public class JudgmentEnchantment extends DamageEnchantment {
     }
     
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isTradeable() {
         return false;
     }
 }

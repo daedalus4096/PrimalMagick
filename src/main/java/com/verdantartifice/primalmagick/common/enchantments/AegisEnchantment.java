@@ -49,7 +49,7 @@ public class AegisEnchantment extends ProtectionEnchantment {
     }
     
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isTradeable() {
         return false;
     }
 }

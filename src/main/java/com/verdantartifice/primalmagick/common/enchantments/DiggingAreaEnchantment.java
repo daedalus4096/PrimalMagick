@@ -33,9 +33,4 @@ public class DiggingAreaEnchantment extends AbstractRuneEnchantment {
     protected boolean checkCompatibility(Enchantment ench) {
         return super.checkCompatibility(ench) && !(ench instanceof DiggingAreaEnchantment);
     }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
 }

@@ -2,6 +2,7 @@ v4.0.3
 ------
 * Fixed a bug causing some attunement buffs to fall off upon player death
 * Converted localization strings to a code-generated asset
+* Allowed ritual-enhancement and Hallowed enchantments to be placed on books
 
 v4.0.2
 ------

@@ -37,9 +37,4 @@ public class SoulpiercingEnchantment extends AbstractRuneEnchantment {
         Item item = stack.getItem();
         return item instanceof CrossbowItem ? true : super.canEnchant(stack);
     }
-
-    @Override
-    public boolean isTradeable() {
-        return false;
-    }
 }

@@ -7,8 +7,8 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 /**
  * Base class definition for a rune enchantment.  Rune enchantments can only be applied to items by
- * socketing the appropriate rune combination into them, not at the enchanting table.  They cannot
- * be applied to books.
+ * socketing the appropriate rune combination into them, not at the enchanting table.  They can
+ * be applied to books, but are not available through villager trading.
  * 
  * @author Daedalus4096
  */
@@ -28,7 +28,7 @@ public abstract class AbstractRuneEnchantment extends Enchantment {
     }
     
     @Override
-    public boolean isAllowedOnBooks() {
+    public boolean isTradeable() {
         return false;
     }
 }
