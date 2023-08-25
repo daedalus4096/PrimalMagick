@@ -303,4 +303,10 @@ public class AttunementManager {
             MODIFIERS.stream().forEach(modifier -> modifier.removeFromEntity(player));
         }
     }
+    
+    public static void refreshAttributeModifiers(@Nullable Player player) {
+        if (player instanceof ServerPlayer) {
+            MODIFIERS.stream().filter(mod -> meetsThreshold(player, mod.getSource(), mod.getThreshold())).forEach(mod -> mod.applyToEntity(player));
+        }
+    }
 }

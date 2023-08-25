@@ -451,6 +451,11 @@ public class PlayerEvents {
         }
         
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
+        
+        // If the player died, refresh any attunement attribute modifiers they may have had
+        if (event.isWasDeath()) {
+            AttunementManager.refreshAttributeModifiers(event.getEntity());
+        }
     }
     
     @SubscribeEvent
