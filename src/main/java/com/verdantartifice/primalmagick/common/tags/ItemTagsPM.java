@@ -23,6 +23,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final TagKey<Item> ESSENCES = tag("essences");
     public static final TagKey<Item> HALLOWOOD_LOGS = tag("hallowood_logs");
+    public static final TagKey<Item> INFERNAL_SUPERCHARGE_FUEL = tag("infernal_supercharge_fuel");
     public static final TagKey<Item> MAGICKAL_CLOTH = tag("magickal_cloth");
     public static final TagKey<Item> MOONWOOD_LOGS = tag("moonwood_logs");
     public static final TagKey<Item> RITUAL_CANDLES = tag("ritual_candles");
