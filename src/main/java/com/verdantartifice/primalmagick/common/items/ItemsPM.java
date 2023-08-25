@@ -361,6 +361,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_FORBIDDEN = registerSupplier("essence_cask_forbidden", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), 300, new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<BurnableBlockItem> ESSENCE_CASK_HEAVENLY = registerSupplier("essence_cask_heavenly", () -> new BurnableBlockItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get(), 300, new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<BurnableBlockItem> WAND_GLAMOUR_TABLE = registerSupplier("wand_glamour_table", () -> new BurnableBlockItem(BlocksPM.WAND_GLAMOUR_TABLE.get(), 300, new Item.Properties()));
+    public static final RegistryObject<BlockItem> INFERNAL_FURNACE = registerSupplier("infernal_furnace", () -> new BlockItem(BlocksPM.INFERNAL_FURNACE.get(), new Item.Properties()));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));

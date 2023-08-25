@@ -310,6 +310,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.ESSENCE_CASK_HEAVENLY).name("Heavenly Essence Cask").build();
         this.block(BlocksPM.WAND_GLAMOUR_TABLE).name("Wand Glamour Table").build();
         this.block(BlocksPM.TREEFOLK_SPROUT).name("Treefolk Sprout").build();
+        this.block(BlocksPM.INFERNAL_FURNACE).name("Infernal Furnace").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
