@@ -97,6 +97,10 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
         int j = this.furnaceData.get(5);
         return j != 0 && i != 0 ? i * 24 / j : 0;
     }
+    
+    public boolean isSupercharged() {
+        return this.furnaceData.get(4) > 0;
+    }
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents contents) {
