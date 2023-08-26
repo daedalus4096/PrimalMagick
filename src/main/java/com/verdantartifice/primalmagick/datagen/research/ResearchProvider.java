@@ -1397,6 +1397,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).requiredItemStack(Items.STICKY_PISTON).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).recipe(ItemsPM.VOID_TURBINE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("INFERNAL_FURNACE", discipline).icon(ItemsPM.INFERNAL_FURNACE.get()).parent("MASTER_MAGITECH").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.INFERNAL_FURNACE.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("IGNYX").build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {

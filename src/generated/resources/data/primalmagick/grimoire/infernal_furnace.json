@@ -1,0 +1,39 @@
+{
+  "addenda": [
+    {
+      "required_research": [
+        "IGNYX"
+      ],
+      "text": "research.primalmagick.infernal_furnace.text.addenda.1"
+    }
+  ],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:infernal_furnace"
+  },
+  "key": "INFERNAL_FURNACE",
+  "name": "research.primalmagick.infernal_furnace.title",
+  "parents": [
+    "MASTER_MAGITECH",
+    "HEXIUM",
+    "CRYSTAL_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "research.primalmagick.infernal_furnace.text.stage.1"
+    },
+    {
+      "attunements": {
+        "infernal": 3
+      },
+      "recipes": [
+        "primalmagick:infernal_furnace"
+      ],
+      "text": "research.primalmagick.infernal_furnace.text.stage.2"
+    }
+  ]
+}
