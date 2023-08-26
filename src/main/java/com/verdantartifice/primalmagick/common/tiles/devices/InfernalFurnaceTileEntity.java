@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -76,7 +77,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     private final RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> quickCheck;
 
     // Define a container-trackable representation of this tile's relevant data
-    protected final ContainerData chamberData = new ContainerData() {
+    protected final ContainerData furnaceData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -161,8 +162,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        // TODO Auto-generated method stub
-        return null;
+        return new InfernalFurnaceMenu(pContainerId, pPlayerInventory, this, this.furnaceData);
     }
 
     @Override
