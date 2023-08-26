@@ -1,9 +1,15 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
+
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -12,21 +18,28 @@ import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.RecipeHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
@@ -37,11 +50,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
-public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, StackedContentsCompatible {
-    protected static final int SUPERCHARGE_MULTIPLIER = 4;
+public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
+    protected static final int SUPERCHARGE_MULTIPLIER = 5;
     protected static final int OUTPUT_SLOT_INDEX = 0;
     protected static final int INPUT_SLOT_INDEX = 1;
     protected static final int IGNYX_SLOT_INDEX = 2;
@@ -56,6 +71,8 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     protected int processTimeTotal;
     protected ManaStorage manaStorage;
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+
+    private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
     private final RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> quickCheck;
 
     // Define a container-trackable representation of this tile's relevant data
@@ -119,6 +136,11 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         this.superchargeTime = compound.getInt("SuperchargeTime");
         this.superchargeTimeTotal = compound.getInt("SuperchargeTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
+        
+        CompoundTag recipesUsedTag = compound.getCompound("RecipesUsed");
+        for (String key : recipesUsedTag.getAllKeys()) {
+            this.recipesUsed.put(new ResourceLocation(key), recipesUsedTag.getInt(key));
+        }
     }
 
     @Override
@@ -129,6 +151,12 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         compound.putInt("SuperchargeTime", this.superchargeTime);
         compound.putInt("SuperchargeTimeTotal", this.superchargeTimeTotal);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
+        
+        CompoundTag recipesUsedTag = new CompoundTag();
+        this.recipesUsed.forEach((key, value) -> {
+            recipesUsedTag.putInt(key.toString(), value);
+        });
+        compound.put("RecipesUsed", recipesUsedTag);
     }
 
     @Override
@@ -307,6 +335,21 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
 
     @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if (!this.remove && cap == PrimalMagickCapabilities.MANA_STORAGE) {
+            return this.manaStorageOpt.cast();
+        } else {
+            return super.getCapability(cap, side);
+        }
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.manaStorageOpt.invalidate();
+    }
+
+    @Override
     public int getMana(Source source) {
         return this.manaStorage.getManaStored(source);
     }
@@ -362,5 +405,49 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return true;
+    }
+
+    @Override
+    public void setRecipeUsed(Recipe<?> pRecipe) {
+        if (pRecipe != null) {
+            this.recipesUsed.addTo(pRecipe.getId(), 1);
+        }
+    }
+
+    @Override
+    public Recipe<?> getRecipeUsed() {
+        return null;
+    }
+
+    @Override
+    public void awardUsedRecipes(Player player, List<ItemStack> stacks) {
+        // Skip the default implementation and do nothing
+    }
+    
+    public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
+        List<Recipe<?>> recipes = this.getRecipesToAwardAndPopExperience(pPlayer.serverLevel(), pPlayer.position());
+        pPlayer.awardRecipes(recipes);
+        recipes.stream().filter(Predicate.not(Objects::isNull)).forEach(r -> pPlayer.triggerRecipeCrafted(r, this.items));
+        this.recipesUsed.clear();
+    }
+    
+    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
+        List<Recipe<?>> retVal = new ArrayList<>();
+        for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
+            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
+                retVal.add(recipe);
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)recipe).getExperience());
+            });
+        }
+        return retVal;
+    }
+    
+    private static void createExperience(ServerLevel pLevel, Vec3 pPopVec, int pRecipeIndex, float pExperience) {
+        int i = Mth.floor((float)pRecipeIndex * pExperience);
+        float f = Mth.frac((float)pRecipeIndex * pExperience);
+        if (f != 0.0F && Math.random() < (double)f) {
+            i++;
+        }
+        ExperienceOrb.award(pLevel, pPopVec, i);
     }
 }
