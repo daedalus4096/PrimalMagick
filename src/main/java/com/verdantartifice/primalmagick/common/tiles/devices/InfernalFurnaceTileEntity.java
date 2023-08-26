@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -31,8 +32,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
-import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
@@ -45,8 +46,8 @@ import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -74,7 +75,6 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
     private final Object2IntOpenHashMap<ResourceLocation> recipesUsed = new Object2IntOpenHashMap<>();
-    private final RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> quickCheck;
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData furnaceData = new ContainerData() {
@@ -126,7 +126,6 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.INFERNAL_FURNACE.get(), pos, state, 4);
         this.manaStorage = new ManaStorage(10000, 100, 100, Source.INFERNAL);
-        this.quickCheck = RecipeManager.createCheck(RecipeType.SMELTING);
     }
 
     @Override
@@ -183,6 +182,11 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         return this.superchargeTime > 0;
     }
     
+    private static Optional<SmeltingRecipe> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
+        SimpleContainer testInv = new SimpleContainer(entity.items.get(INPUT_SLOT_INDEX));
+        return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
+    }
+    
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
         boolean shouldMarkDirty = false;
         boolean startedLit = entity.isLit();
@@ -208,7 +212,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         boolean inputPopulated = !entity.items.get(INPUT_SLOT_INDEX).isEmpty();
         boolean fuelPopulated = !fuelStack.isEmpty();
         if (entity.isCharged() && inputPopulated) {
-            Recipe<?> recipe = inputPopulated ? entity.quickCheck.getRecipeFor(entity, level).orElse(null) : null;
+            Recipe<?> recipe = getActiveRecipe(level, entity).orElse(null);
             int furnaceMaxStackSize = entity.getMaxStackSize();
             
             // Handle supercharge burn
@@ -315,12 +319,12 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
 
     private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
-        return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+        return getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(200);
     }
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
         // Return one centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
-        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
+        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
