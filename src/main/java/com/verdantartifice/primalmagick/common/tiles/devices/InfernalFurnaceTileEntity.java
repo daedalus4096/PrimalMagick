@@ -21,6 +21,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -146,7 +147,8 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
     
     private boolean isCharged() {
-        return this.getMana(Source.INFERNAL) >= getManaNeeded(this.getLevel(), this);
+        int current = this.getMana(Source.INFERNAL);
+        return current > 0 && current >= getManaNeeded(this.getLevel(), this);
     }
     
     private boolean isSupercharged() {
@@ -231,13 +233,48 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
    }
     
     private boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
-        // TODO
-        return false;
+        if (!items.get(INPUT_SLOT_INDEX).isEmpty() && recipe != null) {
+            @SuppressWarnings("unchecked")
+            ItemStack recipeOutput = ((Recipe<WorldlyContainer>)recipe).assemble(this, registryAccess);
+            if (recipeOutput.isEmpty()) {
+                return false;
+            } else {
+                ItemStack existingOutput = items.get(OUTPUT_SLOT_INDEX);
+                if (existingOutput.isEmpty()) {
+                    return true;
+                } else if (!ItemStack.isSameItem(recipeOutput, existingOutput)) {
+                    return false;
+                } else if (existingOutput.getCount() + recipeOutput.getCount() <= maxFurnaceStackSize && existingOutput.getCount() + recipeOutput.getCount() <= existingOutput.getMaxStackSize()) {
+                    return true;
+                } else {
+                    return existingOutput.getCount() + recipeOutput.getCount() <= recipeOutput.getMaxStackSize();
+                }
+            }
+        } else {
+            return false;
+        }
     }
     
     private boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
-        // TODO
-        return false;
+        if (recipe != null && this.canBurn(registryAccess, recipe, items, maxFurnaceStackSize)) {
+            ItemStack inputStack = items.get(INPUT_SLOT_INDEX);
+            @SuppressWarnings("unchecked")
+            ItemStack recipeOutput = ((Recipe<WorldlyContainer>)recipe).assemble(this, registryAccess);
+            ItemStack existingOutput = items.get(OUTPUT_SLOT_INDEX);
+            if (existingOutput.isEmpty()) {
+                items.set(OUTPUT_SLOT_INDEX, recipeOutput.copy());
+            } else if (ItemStack.isSameItem(recipeOutput, existingOutput)) {
+                existingOutput.grow(recipeOutput.getCount());
+            }
+            
+            if (this.manaStorage.canExtract(Source.INFERNAL)) {
+                this.manaStorage.extractMana(Source.INFERNAL, getManaNeeded(this.getLevel(), this), false);
+            }
+            inputStack.shrink(1);
+            return true;
+        } else {
+            return false;
+        }
     }
     
     protected int getSuperchargeDuration(ItemStack pFuel) {
@@ -255,7 +292,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
         // Return one centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
-        return pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
+        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : pBlockEntity.quickCheck.getRecipeFor(pBlockEntity, pLevel).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
