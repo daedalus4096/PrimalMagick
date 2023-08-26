@@ -133,10 +133,10 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
             // Add smoke and infernal flame at furnace front
             Direction direction = pState.getValue(FACING);
             Direction.Axis axis = direction.getAxis();
-            double d3 = 0.5D;
+            double d3 = 0.52D;
             double d4 = pRandom.nextDouble() * 0.6D - 0.3D;
             double d5 = axis == Direction.Axis.X ? (double)direction.getStepX() * d3 : d4;
-            double d6 = ((pRandom.nextDouble() * 3.0D) + 3.0D) / 16.0D;
+            double d6 = pRandom.nextDouble() * 6.0D / 16.0D;
             double d7 = axis == Direction.Axis.Z ? (double)direction.getStepZ() * d3 : d4;
             pLevel.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
             pLevel.addParticle(ParticleTypesPM.INFERNAL_FLAME.get(), d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
