@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
@@ -49,7 +49,7 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
         this.level = playerInv.player.level();
         
         // Slot 0: chamber output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.furnaceInv, 0, 125, 35)); // FIXME Should this be a special slot type instead for handling XP drops?
+        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.furnaceInv, 0, 125, 35));
         
         // Slot 1: material input
         this.inputSlot = this.addSlot(new Slot(this.furnaceInv, 1, 44, 17));
