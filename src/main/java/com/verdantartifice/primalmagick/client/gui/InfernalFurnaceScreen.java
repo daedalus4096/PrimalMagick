@@ -106,7 +106,7 @@ public class InfernalFurnaceScreen extends AbstractContainerScreen<InfernalFurna
 
         // Animate progress indicator
         int cook = this.menu.getProcessProgressionScaled();
-        guiGraphics.blit(TEXTURE, this.leftPos + 78, this.topPos + 34, 176, 0, cook + 1, 16);
+        guiGraphics.blit(TEXTURE, this.leftPos + 78, this.topPos + 34, 176, 14, cook + 1, 16);
     }
 
     @Override

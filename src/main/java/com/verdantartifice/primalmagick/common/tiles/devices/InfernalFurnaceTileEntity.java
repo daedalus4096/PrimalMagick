@@ -59,6 +59,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
+    protected static final int MANA_PER_HALF_SECOND = 10;
     protected static final int OUTPUT_SLOT_INDEX = 0;
     protected static final int INPUT_SLOT_INDEX = 1;
     protected static final int IGNYX_SLOT_INDEX = 2;
@@ -323,8 +324,8 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
-        // Return one centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
-        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100;
+        // Return centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
+        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : (getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100) * MANA_PER_HALF_SECOND;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
@@ -421,6 +422,17 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     @Override
     public Recipe<?> getRecipeUsed() {
         return null;
+    }
+
+    @Override
+    public void setItem(int index, ItemStack stack) {
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.items.get(index), stack);
+        super.setItem(index, stack);
+        if (index == INPUT_SLOT_INDEX && !flag) {
+            this.processTimeTotal = getTotalCookTime(this.level, this);
+            this.processTime = 0;
+            this.setChanged();
+        }
     }
 
     @Override
