@@ -46,6 +46,10 @@
     },
     {
       "type": "minecraft:single",
+      "resource": "primalmagick:item/empty_ignyx_slot"
+    },
+    {
+      "type": "minecraft:single",
       "resource": "primalmagick:entity/mana_font_core"
     },
     {
