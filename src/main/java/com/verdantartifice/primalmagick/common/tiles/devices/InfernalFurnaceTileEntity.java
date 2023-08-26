@@ -235,7 +235,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
                     entity.processTime = 0;
                     entity.processTimeTotal = getTotalCookTime(level, entity);
                     if (entity.burn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
-                        // TODO Set recipe used
+                        entity.setRecipeUsed(recipe);
                     }
                     shouldMarkDirty = true;
                 }
