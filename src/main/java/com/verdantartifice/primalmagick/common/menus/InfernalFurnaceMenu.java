@@ -138,8 +138,7 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
 
     @Override
     public ArcaneRecipeBookType getRecipeBookType() {
-        // TODO Auto-generated method stub
-        return null;
+        return ArcaneRecipeBookType.FURNACE;
     }
 
     @Override

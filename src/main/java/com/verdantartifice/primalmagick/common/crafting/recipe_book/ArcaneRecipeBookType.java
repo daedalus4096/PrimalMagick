@@ -8,5 +8,6 @@ package com.verdantartifice.primalmagick.common.crafting.recipe_book;
 public enum ArcaneRecipeBookType {
     CRAFTING,
     CONCOCTER,
-    DISSOLUTION
+    DISSOLUTION,
+    FURNACE
 }
