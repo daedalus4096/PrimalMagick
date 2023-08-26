@@ -60,6 +60,7 @@ import net.minecraftforge.common.util.LazyOptional;
 public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
     protected static final int MANA_PER_HALF_SECOND = 10;
+    protected static final int LIT_GRACE_TICKS_MAX = 5;
     protected static final int OUTPUT_SLOT_INDEX = 0;
     protected static final int INPUT_SLOT_INDEX = 1;
     protected static final int IGNYX_SLOT_INDEX = 2;
@@ -72,6 +73,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     protected int superchargeTimeTotal;
     protected int processTime;
     protected int processTimeTotal;
+    protected int litGraceTicks;
     protected ManaStorage manaStorage;
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
 
@@ -171,7 +173,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
     
     private boolean isLit() {
-        return this.processTime > 0;
+        return this.processTime > 0 || this.litGraceTicks > 0;
     }
     
     private boolean isCharged() {
@@ -191,6 +193,8 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
         boolean shouldMarkDirty = false;
         boolean startedLit = entity.isLit();
+        
+        entity.litGraceTicks = Mth.clamp(entity.litGraceTicks - 1, 0, LIT_GRACE_TICKS_MAX);
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
@@ -239,6 +243,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = getTotalCookTime(level, entity);
+                    entity.litGraceTicks = LIT_GRACE_TICKS_MAX;
                     if (entity.burn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
                         entity.setRecipeUsed(recipe);
                     }
