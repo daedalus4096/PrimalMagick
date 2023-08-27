@@ -16,6 +16,11 @@ public class ArtificialManaFontTileEntity extends AbstractManaFontTileEntity {
         super(TileEntityTypesPM.ARTIFICIAL_MANA_FONT.get(), pos, state);
     }
     
+    @Override
+    protected int getInitialMana() {
+        return 0;
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, ArtificialManaFontTileEntity entity) {
         entity.ticksExisted++;
         if (!level.isClientSide && entity.ticksExisted % RECHARGE_TICKS == 0) {

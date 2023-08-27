@@ -31,13 +31,12 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
         super(TileEntityTypesPM.ANCIENT_MANA_FONT.get(), pos, state);
     }
     
+    @Override
+    protected int getInitialMana() {
+        return this.getManaCapacity();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, AncientManaFontTileEntity entity) {
-        if (!level.isClientSide && entity.ticksExisted == 0) {
-            // TODO Move this code to onLoad once Forge is fixed to call it again
-            entity.mana = entity.getManaCapacity();
-            entity.setChanged();
-            entity.syncTile(true);
-        }
         entity.ticksExisted++;
         if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
@@ -53,8 +52,8 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
                     ResearchManager.completeResearch(player, siphonResearch);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.siphon_prompt").withStyle(ChatFormatting.GREEN));
                 }
-                if (state.getBlock() instanceof AncientManaFontBlock) {
-                    StatsManager.discoverShrine(player, ((AncientManaFontBlock)state.getBlock()).getSource(), pos);
+                if (state.getBlock() instanceof AncientManaFontBlock fontBlock) {
+                    StatsManager.discoverShrine(player, fontBlock.getSource(), pos);
                 }
             }
         }

@@ -31,10 +31,11 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
     protected static final int RECHARGE_TICKS = 20;
     
     protected int ticksExisted = 0;
-    protected int mana = 0;
+    protected int mana;
     
     public AbstractManaFontTileEntity(BlockEntityType<? extends AbstractManaFontTileEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        this.mana = this.getInitialMana();
     }
 
     @Override
@@ -54,8 +55,10 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
     }
     
     public int getManaCapacity() {
-        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock ? ((AbstractManaFontBlock)this.getBlockState().getBlock()).getManaCapacity() : 0;
+        return this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock ? fontBlock.getManaCapacity() : 0;
     }
+    
+    protected abstract int getInitialMana();
 
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
@@ -70,10 +73,9 @@ public abstract class AbstractManaFontTileEntity extends TilePM implements IInte
 
     @Override
     public void onWandUseTick(ItemStack wandStack, Level level, Player player, Vec3 targetPos, int count) {
-        if (count % 5 == 0 && wandStack.getItem() instanceof IWand) {
-            IWand wand = (IWand)wandStack.getItem();
-            if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock) {
-                Source source = ((AbstractManaFontBlock)this.getBlockState().getBlock()).getSource();
+        if (count % 5 == 0 && wandStack.getItem() instanceof IWand wand) {
+            if (this.getBlockState().getBlock() instanceof AbstractManaFontBlock fontBlock) {
+                Source source = fontBlock.getSource();
                 if (source != null) {
                     // Transfer mana from the font to the wand
                     int tap = Math.min(this.mana, wand.getSiphonAmount(wandStack));

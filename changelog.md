@@ -5,6 +5,7 @@ v4.0.3
 * Allowed ritual-enhancement and Hallowed enchantments to be placed on books
 * Added Infernal Furnace, to really heat things up
 * Fixed a crash that could occur when changing game language
+* Fixed a bug causing Ancient Mana Fonts to refill on every server restart
 
 v4.0.2
 ------
