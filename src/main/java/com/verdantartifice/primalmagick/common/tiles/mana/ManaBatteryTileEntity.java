@@ -19,6 +19,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -144,7 +145,12 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
                     entity.chargeTime = 0;
                 }
                 
-                // TODO Siphon from input if it's a wand
+                // Siphon from input if it's a wand
+                for (Source source : Source.SORTED_SOURCES) {
+                    if (entity.canSiphonWand(inputStack, source) && entity.doWandSiphon(inputStack, source)) {
+                        shouldMarkDirty = true;
+                    }
+                }
             }
             
             if (!chargeStack.isEmpty()) {
@@ -175,6 +181,30 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
             this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent() * 100);
             inputStack.shrink(1);
         }
+    }
+    
+    protected boolean canSiphonWand(ItemStack inputStack, Source source) {
+        return !inputStack.isEmpty() && 
+                inputStack.getItem() instanceof IWand wand &&
+                wand.containsMana(inputStack, null, source, 1) &&
+                this.manaStorage.getManaStored(source) < this.manaStorage.getMaxManaStored(source);
+    }
+    
+    protected boolean doWandSiphon(ItemStack inputStack, Source source) {
+        if (this.canSiphonWand(inputStack, source) && inputStack.getItem() instanceof IWand wand) {
+            int maxTransferRate = Math.min(this.getBatteryTransferCap(), 100 * wand.getSiphonAmount(inputStack));
+            int centimanaMissingInBattery = this.manaStorage.getMaxManaStored(source) - this.manaStorage.getManaStored(source);
+            int centimanaPresentInWand = wand.getMana(inputStack, source);
+            if (centimanaPresentInWand == -1) {
+                centimanaPresentInWand = centimanaMissingInBattery;
+            }
+            int centimanaToTransfer = Mth.clamp(Math.min(centimanaPresentInWand, centimanaMissingInBattery), 0, maxTransferRate);
+            if (wand.consumeMana(inputStack, null, source, centimanaToTransfer)) {
+                this.manaStorage.receiveMana(source, centimanaToTransfer, false);
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override
