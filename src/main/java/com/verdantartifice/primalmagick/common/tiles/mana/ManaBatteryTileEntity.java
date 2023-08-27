@@ -182,6 +182,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         super.load(compound);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
+        this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
     }
     
     @Override
@@ -189,6 +190,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         super.saveAdditional(compound);
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
+        compound.put("ManaStorage", this.manaStorage.serializeNBT());
     }
 
     @Override
