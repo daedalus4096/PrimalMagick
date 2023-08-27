@@ -11,6 +11,19 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_nbt",
+              "ops": [
+                {
+                  "op": "replace",
+                  "source": "ManaStorage.Mana.Sources",
+                  "target": "ManaContainerTag.Sources"
+                }
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "primalmagick:infernal_furnace"
         }
       ],
