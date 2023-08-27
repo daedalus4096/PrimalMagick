@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.items.armor;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +23,7 @@ public interface IManaDiscountGear {
      * @param source the source being queried
      * @return the mana discount for the given stack and player, in whole percentage points
      */
-    public int getManaDiscount(ItemStack stack, Player player, Source source);
+    public int getManaDiscount(ItemStack stack, @Nullable Player player, Source source);
     
     /**
      * Gets the best mana discount for the given stack and player, taking into account source attunement, in whole percentage points.
@@ -30,7 +32,7 @@ public interface IManaDiscountGear {
      * @param player the player wearing the item stack
      * @return the best mana discount for the given stack and player, taking into account source attunement, in whole percentage points
      */
-    public int getBestManaDiscount(ItemStack stack, Player player);
+    public int getBestManaDiscount(ItemStack stack, @Nullable Player player);
     
     /**
      * Gets the source to which the given stack is attuned, if any.
@@ -39,5 +41,5 @@ public interface IManaDiscountGear {
      * @param player the player wearing the item stack
      * @return the source to which the given stack is attuned, if any
      */
-    public Optional<Source> getAttunedSource(ItemStack stack, Player player);
+    public Optional<Source> getAttunedSource(ItemStack stack, @Nullable Player player);
 }

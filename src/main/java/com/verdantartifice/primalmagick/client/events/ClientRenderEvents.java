@@ -42,12 +42,10 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientRenderEvents {
     @SubscribeEvent
     public static void renderTooltip(ItemTooltipEvent event) {
-        Minecraft mc = Minecraft.getInstance();
-        
         // Show a tooltip entry if the item stack grants a mana discount
         if (event.getItemStack().getItem() instanceof IManaDiscountGear discountItem) {
-            int discount = discountItem.getBestManaDiscount(event.getItemStack(), mc.player);
-            Optional<Source> attunedSource = discountItem.getAttunedSource(event.getItemStack(), mc.player);
+            int discount = discountItem.getBestManaDiscount(event.getItemStack(), event.getEntity());
+            Optional<Source> attunedSource = discountItem.getAttunedSource(event.getItemStack(), event.getEntity());
             attunedSource.ifPresentOrElse(
                     source -> event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount_attuned", discount, source.getNameText(ChatFormatting.DARK_AQUA)).withStyle(ChatFormatting.DARK_AQUA)), 
                     () -> event.getToolTip().add(Component.translatable("tooltip.primalmagick.mana_discount", discount).withStyle(ChatFormatting.DARK_AQUA)));

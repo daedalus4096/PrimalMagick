@@ -4,6 +4,7 @@ v4.0.3
 * Converted localization strings to a code-generated asset
 * Allowed ritual-enhancement and Hallowed enchantments to be placed on books
 * Added Infernal Furnace, to really heat things up
+* Fixed a crash that could occur when changing game language
 
 v4.0.2
 ------
