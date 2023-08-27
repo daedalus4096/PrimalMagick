@@ -173,6 +173,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     protected void breakDownEssence(ItemStack inputStack) {
         if (this.canBreakDownEssence(inputStack) && inputStack.getItem() instanceof EssenceItem essenceItem) {
             this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent() * 100);
+            inputStack.shrink(1);
         }
     }
     
