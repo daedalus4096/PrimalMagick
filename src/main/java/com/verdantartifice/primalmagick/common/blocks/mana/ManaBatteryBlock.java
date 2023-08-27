@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import java.util.List;
 
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
+import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 
 import net.minecraft.core.BlockPos;
@@ -31,9 +33,12 @@ import net.minecraft.world.phys.BlockHitResult;
  * 
  * @author Daedalus4096
  */
-public class ManaBatteryBlock extends BaseEntityBlock {
-    public ManaBatteryBlock(Block.Properties properties) {
+public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
+    protected final DeviceTier tier;
+    
+    public ManaBatteryBlock(DeviceTier tier, Block.Properties properties) {
         super(properties);
+        this.tier = tier;
     }
     
     @Override
@@ -83,5 +88,10 @@ public class ManaBatteryBlock extends BaseEntityBlock {
 //            }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
         }
+    }
+
+    @Override
+    public DeviceTier getDeviceTier() {
+        return this.tier;
     }
 }
