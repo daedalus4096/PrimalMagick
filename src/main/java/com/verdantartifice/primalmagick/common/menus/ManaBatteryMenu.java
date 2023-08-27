@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.world.Container;
@@ -125,5 +126,15 @@ public class ManaBatteryMenu extends AbstractContainerMenu {
         int i = this.data.get(0);
         int j = this.data.get(1);
         return j != 0 && i != 0 ? i * 24 / j : 0;
+    }
+    
+    public int getCurrentMana(Source source) {
+        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        return this.data.get(2 + (2 * sourceIndex));
+    }
+    
+    public int getMaxMana(Source source) {
+        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        return this.data.get(3 + (2 * sourceIndex));
     }
 }

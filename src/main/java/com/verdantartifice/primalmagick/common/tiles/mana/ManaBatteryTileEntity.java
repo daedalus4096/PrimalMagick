@@ -46,18 +46,34 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     protected final ContainerData chargerData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-            case 0:
-                return ManaBatteryTileEntity.this.chargeTime;
-            case 1:
-                return ManaBatteryTileEntity.this.chargeTimeTotal;
-            default:
-                return 0;
-            }
+            return switch (index) {
+                case 0 -> ManaBatteryTileEntity.this.chargeTime;
+                case 1 -> ManaBatteryTileEntity.this.chargeTimeTotal;
+                case 2 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.EARTH);
+                case 3 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.EARTH);
+                case 4 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SEA);
+                case 5 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SEA);
+                case 6 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SKY);
+                case 7 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SKY);
+                case 8 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.SUN);
+                case 9 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.SUN);
+                case 10 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.MOON);
+                case 11 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.MOON);
+                case 12 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.BLOOD);
+                case 13 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.BLOOD);
+                case 14 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.INFERNAL);
+                case 15 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.INFERNAL);
+                case 16 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.VOID);
+                case 17 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.VOID);
+                case 18 -> ManaBatteryTileEntity.this.manaStorage.getManaStored(Source.HALLOWED);
+                case 19 -> ManaBatteryTileEntity.this.manaStorage.getMaxManaStored(Source.HALLOWED);
+                default -> 0;
+            };
         }
 
         @Override
         public void set(int index, int value) {
+            // Don't set mana storage values
             switch (index) {
             case 0:
                 ManaBatteryTileEntity.this.chargeTime = value;
@@ -70,7 +86,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
         @Override
         public int getCount() {
-            return 2;
+            return 20;
         }
     };
     

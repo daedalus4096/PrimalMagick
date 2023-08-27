@@ -1,7 +1,12 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
+import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -16,13 +21,31 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_battery.png");
+    
+    protected final Map<Source, ManaGaugeWidget> manaGauges = new HashMap<>();
 
     public ManaBatteryScreen(ManaBatteryMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
+        this.imageWidth = 230;
+        this.imageHeight = 144;
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        int xOffset = 57;
+        for (Source source : Source.SORTED_SOURCES) {
+            this.manaGauges.put(source, this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + xOffset, this.topPos + 6, source, this.menu.getCurrentMana(source), this.menu.getMaxMana(source))));
+            xOffset += 13;
+        }
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.manaGauges.forEach((source, gauge) -> {
+            gauge.setCurrentMana(this.menu.getCurrentMana(source));
+            gauge.setMaxMana(this.menu.getMaxMana(source));
+        });
         this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
