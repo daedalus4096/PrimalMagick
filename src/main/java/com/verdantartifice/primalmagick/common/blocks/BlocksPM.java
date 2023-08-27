@@ -30,6 +30,7 @@ import com.verdantartifice.primalmagick.common.blocks.golems.PrimaliteGolemContr
 import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ArtificialManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock;
+import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock;
@@ -337,6 +338,7 @@ public class BlocksPM {
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_HEAVENLY = BLOCKS.register("essence_cask_heavenly", () -> new EssenceCaskBlock(DeviceTier.HEAVENLY));
     public static final RegistryObject<WandGlamourTableBlock> WAND_GLAMOUR_TABLE = BLOCKS.register("wand_glamour_table", WandGlamourTableBlock::new);
     public static final RegistryObject<InfernalFurnaceBlock> INFERNAL_FURNACE = BLOCKS.register("infernal_furnace", InfernalFurnaceBlock::new);
+    public static final RegistryObject<ManaBatteryBlock> MANA_NEXUS = BLOCKS.register("mana_nexus", () -> new ManaBatteryBlock(Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

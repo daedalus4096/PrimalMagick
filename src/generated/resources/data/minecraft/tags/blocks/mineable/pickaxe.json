@@ -110,6 +110,7 @@
     "primalmagick:ignyx_block",
     "primalmagick:salt_block",
     "primalmagick:essence_transmuter",
-    "primalmagick:infernal_furnace"
+    "primalmagick:infernal_furnace",
+    "primalmagick:mana_nexus"
   ]
 }

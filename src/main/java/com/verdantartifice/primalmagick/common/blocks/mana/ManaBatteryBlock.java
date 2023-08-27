@@ -1,0 +1,87 @@
+package com.verdantartifice.primalmagick.common.blocks.mana;
+
+import java.util.List;
+
+import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+
+/**
+ * Block definition for a mana battery, such as the Mana Nexus.  A mana battery will automatically
+ * siphon mana from nearby fonts and use that to charge its internal storage, which can then in turn
+ * be used to charge wands or other devices.  Also accepts input mana from essence, breaking it down
+ * like the Wand Charger does.
+ * 
+ * @author Daedalus4096
+ */
+public class ManaBatteryBlock extends BaseEntityBlock {
+    public ManaBatteryBlock(Block.Properties properties) {
+        super(properties);
+    }
+    
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
+        // TODO Auto-generated method stub
+        return super.getTicker(pLevel, pState, pBlockEntityType);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        ManaContainerHelper.appendHoverText(pStack, pTooltip);
+    }
+
+    @Override
+    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+        if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+            // TODO Open the GUI for the battery
+            BlockEntity tile = pLevel.getBlockEntity(pPos);
+//            if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
+//                NetworkHooks.openScreen(serverPlayer, furnaceTile);
+//            }
+        }
+        return InteractionResult.SUCCESS;
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        // TODO Drop the tile entity's inventory into the world when the block is replaced
+        if (pState.getBlock() != pNewState.getBlock()) {
+            BlockEntity tile = pLevel.getBlockEntity(pPos);
+//            if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
+//                Containers.dropContents(pLevel, pPos, furnaceTile);
+//                pLevel.updateNeighbourForOutputSignal(pPos, this);
+//            }
+            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        }
+    }
+}

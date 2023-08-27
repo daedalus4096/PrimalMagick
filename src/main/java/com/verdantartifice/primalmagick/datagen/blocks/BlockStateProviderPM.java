@@ -233,6 +233,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
         this.infernalFurnaceBlockWithItem();
+        this.simpleExistingBlockWithItem(BlocksPM.MANA_NEXUS.get());
         
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
