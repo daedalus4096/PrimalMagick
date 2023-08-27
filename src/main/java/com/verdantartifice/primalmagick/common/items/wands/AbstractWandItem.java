@@ -158,7 +158,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the wand stack contains enough mana, process the consumption and return success
             if (this.getMaxMana(stack) != -1) {
                 // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - (int)(this.getTotalCostModifier(stack, player, source) * amount));
+                this.setMana(stack, source, this.getMana(stack, source) - amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source) * amount)));
             }
             
             if (player != null) {
