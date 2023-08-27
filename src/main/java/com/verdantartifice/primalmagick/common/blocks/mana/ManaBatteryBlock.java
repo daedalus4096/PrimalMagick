@@ -5,10 +5,13 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
+import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -24,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a mana battery, such as the Mana Nexus.  A mana battery will automatically
@@ -48,14 +52,12 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        // TODO Auto-generated method stub
-        return null;
+        return new ManaBatteryTileEntity(pPos, pState);
     }
 
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
-        // TODO Auto-generated method stub
-        return super.getTicker(pLevel, pState, pBlockEntityType);
+        return createTickerHelper(pBlockEntityType, TileEntityTypesPM.MANA_BATTERY.get(), ManaBatteryTileEntity::tick);
     }
 
     @Override
@@ -67,11 +69,11 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            // TODO Open the GUI for the battery
+            // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
-//            if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-//                NetworkHooks.openScreen(serverPlayer, furnaceTile);
-//            }
+            if (tile instanceof ManaBatteryTileEntity batteryTile) {
+                NetworkHooks.openScreen(serverPlayer, batteryTile);
+            }
         }
         return InteractionResult.SUCCESS;
     }
@@ -79,13 +81,13 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
     @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        // TODO Drop the tile entity's inventory into the world when the block is replaced
+        // Drop the tile entity's inventory into the world when the block is replaced
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
-//            if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-//                Containers.dropContents(pLevel, pPos, furnaceTile);
-//                pLevel.updateNeighbourForOutputSignal(pPos, this);
-//            }
+            if (tile instanceof ManaBatteryTileEntity batteryTile) {
+                Containers.dropContents(pLevel, pPos, batteryTile);
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
         }
     }

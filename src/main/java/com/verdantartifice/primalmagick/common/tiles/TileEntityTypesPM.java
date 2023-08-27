@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEn
 import com.verdantartifice.primalmagick.common.tiles.mana.AncientManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.ArtificialManaFontTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.BloodletterTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.rituals.CelestialHarpTileEntity;
@@ -79,4 +80,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<WindGeneratorTileEntity>> WIND_GENERATOR = TILE_ENTITIES.register("wind_generator", () -> BlockEntityType.Builder.of(WindGeneratorTileEntity::new, BlocksPM.ZEPHYR_ENGINE.get(), BlocksPM.VOID_TURBINE.get()).build(null));
     public static final RegistryObject<BlockEntityType<EssenceCaskTileEntity>> ESSENCE_CASK = TILE_ENTITIES.register("essence_cask", () -> BlockEntityType.Builder.of(EssenceCaskTileEntity::new, BlocksPM.ESSENCE_CASK_ENCHANTED.get(), BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), BlocksPM.ESSENCE_CASK_HEAVENLY.get()).build(null));
     public static final RegistryObject<BlockEntityType<InfernalFurnaceTileEntity>> INFERNAL_FURNACE = TILE_ENTITIES.register("infernal_furnace", () -> BlockEntityType.Builder.of(InfernalFurnaceTileEntity::new, BlocksPM.INFERNAL_FURNACE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ManaBatteryTileEntity>> MANA_BATTERY = TILE_ENTITIES.register("mana_battery", () -> BlockEntityType.Builder.of(ManaBatteryTileEntity::new, BlocksPM.MANA_NEXUS.get()).build(null));
 }
