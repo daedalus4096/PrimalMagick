@@ -27,7 +27,7 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
     public ManaBatteryScreen(ManaBatteryMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
         this.imageWidth = 230;
-        this.imageHeight = 144;
+        this.imageHeight = 164;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
         super.init();
         int xOffset = 57;
         for (Source source : Source.SORTED_SOURCES) {
-            this.manaGauges.put(source, this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + xOffset, this.topPos + 6, source, this.menu.getCurrentMana(source), this.menu.getMaxMana(source))));
+            this.manaGauges.put(source, this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + xOffset, this.topPos + 16, source, this.menu.getCurrentMana(source), this.menu.getMaxMana(source))));
             xOffset += 13;
         }
     }
@@ -58,6 +58,6 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
         
         // Animate charge progress indicator
         int charge = this.menu.getChargeProgressionScaled();
-        guiGraphics.blit(TEXTURE, this.leftPos + 23, this.topPos + 23, 230, 0, charge + 1, 16);
+        guiGraphics.blit(TEXTURE, this.leftPos + 29, this.topPos + 34, 230, 0, charge + 1, 16);
     }
 }

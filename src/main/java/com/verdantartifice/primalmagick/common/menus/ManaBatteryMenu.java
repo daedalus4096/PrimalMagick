@@ -28,32 +28,32 @@ public class ManaBatteryMenu extends AbstractContainerMenu {
     protected final Slot chargeSlot;
     
     public ManaBatteryMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(2), new SimpleContainerData(2));
+        this(id, playerInv, new SimpleContainer(2), new SimpleContainerData(20));
     }
     
     public ManaBatteryMenu(int id, Inventory playerInv, Container inv, ContainerData data) {
         super(MenuTypesPM.MANA_BATTERY.get(), id);
         checkContainerSize(inv, 2);
-        checkContainerDataCount(data, 2);
+        checkContainerDataCount(data, 20);
         this.inv = inv;
         this.data = data;
         
         // Slot 0: input slot
-        this.inputSlot = this.addSlot(new FilteredSlot(this.inv, 0, 8, 24, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.inv, 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class)));
         
         // Slot 1: charge slot
-        this.chargeSlot = this.addSlot(new WandSlot(this.inv, 1, 206, 24, true));
+        this.chargeSlot = this.addSlot(new WandSlot(this.inv, 1, 206, 34, true));
 
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 35 + j * 18, 82 + i * 18));
             }
         }
 
         // Slots 29-37: player hotbar
         for (int k = 0; k < 9; k++) {
-            this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
+            this.addSlot(new Slot(playerInv, k, 35 + k * 18, 140));
         }
 
         this.addDataSlots(this.data);
