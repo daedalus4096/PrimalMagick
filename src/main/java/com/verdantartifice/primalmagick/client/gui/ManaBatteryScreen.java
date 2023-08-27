@@ -28,6 +28,7 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
         super(screenMenu, inv, titleIn);
         this.imageWidth = 230;
         this.imageHeight = 164;
+        this.inventoryLabelX = 34;
     }
 
     @Override
