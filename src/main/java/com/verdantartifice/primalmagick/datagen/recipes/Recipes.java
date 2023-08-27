@@ -583,6 +583,16 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GLAMOUR_TABLE")))
             .manaCost(new SourceList().add(Source.MOON, 40))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INFERNAL_FURNACE.get())
+            .patternLine("MMM")
+            .patternLine("MCM")
+            .patternLine("MPM")
+            .key('M', ItemsPM.MARBLE_SMOKED.get())
+            .key('C', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INFERNAL_FURNACE")))
+            .manaCost(new SourceList().add(Source.INFERNAL, 50))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

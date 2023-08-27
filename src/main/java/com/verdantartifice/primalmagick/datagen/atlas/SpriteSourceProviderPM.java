@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.client.renderers.tile.SpellcraftingAltar
 import com.verdantartifice.primalmagick.common.items.tools.SacredShieldItem;
 import com.verdantartifice.primalmagick.common.menus.AbstractRunescribingAltarMenu;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
+import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
@@ -72,6 +73,7 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         this.addSingle(blockAtlas, RunecarvingTableMenu.ETCHING_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.HONEYCOMB_SLOT_TEXTURE);
         this.addSingle(blockAtlas, HoneyExtractorMenu.BOTTLE_SLOT_TEXTURE);
+        this.addSingle(blockAtlas, InfernalFurnaceMenu.IGNYX_SLOT_TEXTURE);
         
         // Add block entity renderer textures to the block atlas
         this.addSingle(blockAtlas, ManaFontTER.TEXTURE);

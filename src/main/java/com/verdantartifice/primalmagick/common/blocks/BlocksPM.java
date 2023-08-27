@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamber
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceTransmuterBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
@@ -335,6 +336,7 @@ public class BlocksPM {
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_FORBIDDEN = BLOCKS.register("essence_cask_forbidden", () -> new EssenceCaskBlock(DeviceTier.FORBIDDEN));
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_HEAVENLY = BLOCKS.register("essence_cask_heavenly", () -> new EssenceCaskBlock(DeviceTier.HEAVENLY));
     public static final RegistryObject<WandGlamourTableBlock> WAND_GLAMOUR_TABLE = BLOCKS.register("wand_glamour_table", WandGlamourTableBlock::new);
+    public static final RegistryObject<InfernalFurnaceBlock> INFERNAL_FURNACE = BLOCKS.register("infernal_furnace", InfernalFurnaceBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);

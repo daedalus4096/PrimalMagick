@@ -22,10 +22,10 @@ import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombI
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -99,17 +99,19 @@ public class ClientArcaneRecipeBook {
         } else if (type == RecipeTypesPM.DISSOLUTION.get()) {
             return recipe.getResultItem(registryAccess).is(Tags.Items.DUSTS) ? ArcaneRecipeBookCategories.DISSOLUTION_ORES : ArcaneRecipeBookCategories.DISSOLUTION_MISC;
         } else if (type == RecipeType.CRAFTING && recipe instanceof CraftingRecipe craftingRecipe) {
-            CraftingBookCategory category = craftingRecipe.category();
-            if (category == CraftingBookCategory.BUILDING) {
-                return ArcaneRecipeBookCategories.CRAFTING_BUILDING_BLOCKS;
-            } else if (category == CraftingBookCategory.EQUIPMENT) {
-                return ArcaneRecipeBookCategories.CRAFTING_EQUIPMENT;
-            } else if (category == CraftingBookCategory.REDSTONE) {
-                return ArcaneRecipeBookCategories.CRAFTING_REDSTONE;
-            } else {
-                return ArcaneRecipeBookCategories.CRAFTING_MISC;
-            }
-        } else if (type == RecipeType.SMELTING || type == RecipeType.BLASTING || type == RecipeType.SMOKING || type == RecipeType.STONECUTTING || 
+            return switch (craftingRecipe.category()) {
+                case BUILDING -> ArcaneRecipeBookCategories.CRAFTING_BUILDING_BLOCKS;
+                case EQUIPMENT -> ArcaneRecipeBookCategories.CRAFTING_EQUIPMENT;
+                case REDSTONE -> ArcaneRecipeBookCategories.CRAFTING_REDSTONE;
+                case MISC -> ArcaneRecipeBookCategories.CRAFTING_MISC;
+            };
+        } else if (type == RecipeType.SMELTING && recipe instanceof SmeltingRecipe smeltingRecipe) {
+            return switch (smeltingRecipe.category()) {
+                case BLOCKS -> ArcaneRecipeBookCategories.FURNACE_BLOCKS;
+                case FOOD -> ArcaneRecipeBookCategories.FURNACE_FOOD;
+                case MISC -> ArcaneRecipeBookCategories.FURNACE_MISC;
+            };
+        } else if (type == RecipeType.BLASTING || type == RecipeType.SMOKING || type == RecipeType.STONECUTTING || 
                 type == RecipeType.CAMPFIRE_COOKING || type == RecipeType.SMITHING) {
             // We don't deal with these crafting types
             return ArcaneRecipeBookCategories.UNKNOWN;

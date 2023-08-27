@@ -232,6 +232,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_FORBIDDEN.get());
         this.essenceCaskBlockWithItem(BlocksPM.ESSENCE_CASK_HEAVENLY.get());
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
+        this.infernalFurnaceBlockWithItem();
         
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
@@ -609,6 +610,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void calcinatorBlockWithItem(AbstractCalcinatorBlock block, Function<BlockState, ModelFile> modelFunc) {
+        this.horizontalBlock(block, modelFunc);
+        this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
+    
+    private void infernalFurnaceBlockWithItem() {
+        Block block = BlocksPM.INFERNAL_FURNACE.get();
+        ResourceLocation texture = this.blockTexture(block);
+        Function<BlockState, ModelFile> modelFunc = state -> this.models().orientableWithBottom(
+                this.name(block) + (state.getValue(BlockStateProperties.LIT) ? "_on" : ""), 
+                texture.withSuffix("_side"), 
+                texture.withSuffix("_front" + (state.getValue(BlockStateProperties.LIT) ? "_on" : "")), 
+                texture.withSuffix("_top"), 
+                texture.withSuffix("_top"));
         this.horizontalBlock(block, modelFunc);
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
     }

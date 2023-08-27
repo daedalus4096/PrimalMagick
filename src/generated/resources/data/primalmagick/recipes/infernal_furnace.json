@@ -1,0 +1,26 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "C": {
+      "item": "primalmagick:essence_crystal_infernal"
+    },
+    "M": {
+      "item": "primalmagick:marble_smoked"
+    },
+    "P": {
+      "item": "primalmagick:magitech_parts_forbidden"
+    }
+  },
+  "mana": {
+    "infernal": 50
+  },
+  "pattern": [
+    "MMM",
+    "MCM",
+    "MPM"
+  ],
+  "research": "INFERNAL_FURNACE",
+  "result": {
+    "item": "primalmagick:infernal_furnace"
+  }
+}

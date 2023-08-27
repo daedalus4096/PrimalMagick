@@ -19,7 +19,8 @@ public class ArcaneRecipeBookSettings {
     private static final Map<ArcaneRecipeBookType, Pair<String, String>> TAG_FIELDS = ImmutableMap.of(
             ArcaneRecipeBookType.CRAFTING, Pair.of("isArcaneWorkbenchGuiOpen", "isArcaneWorkbenchFilteringCraftable"), 
             ArcaneRecipeBookType.CONCOCTER, Pair.of("isConcocterGuiOpen", "isConcocterFilteringCraftable"),
-            ArcaneRecipeBookType.DISSOLUTION, Pair.of("isDissolutionGuiOpen", "isDissolutionFilteringCraftable"));
+            ArcaneRecipeBookType.DISSOLUTION, Pair.of("isDissolutionGuiOpen", "isDissolutionFilteringCraftable"),
+            ArcaneRecipeBookType.FURNACE, Pair.of("isInfernalFurnaceGuiOpen", "isInfernalFurnaceFilteringCraftable"));
     private final Map<ArcaneRecipeBookType, ArcaneRecipeBookSettings.TypeSettings> states;
 
     private ArcaneRecipeBookSettings(Map<ArcaneRecipeBookType, ArcaneRecipeBookSettings.TypeSettings> states) {
