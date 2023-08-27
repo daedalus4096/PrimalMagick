@@ -4,10 +4,10 @@ import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -105,11 +105,58 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, ManaBatteryTileEntity entity) {
-        // TODO
+        boolean shouldMarkDirty = false;
+        
+        if (!level.isClientSide) {
+            ItemStack inputStack = entity.items.get(INPUT_SLOT_INDEX);
+            ItemStack chargeStack = entity.items.get(CHARGE_SLOT_INDEX);
+            
+            // TODO Siphon from nearby fonts
+            
+            if (!inputStack.isEmpty()) {
+                // Break down input if it's essence
+                if (entity.canBreakDownEssence(inputStack)) {
+                    entity.chargeTime++;
+                    if (entity.chargeTime >= entity.chargeTimeTotal) {
+                        entity.chargeTime = 0;
+                        entity.chargeTimeTotal = entity.getChargeTimeTotal();
+                        entity.breakDownEssence(inputStack);
+                        shouldMarkDirty = true;
+                    }
+                } else {
+                    entity.chargeTime = 0;
+                }
+                
+                // TODO Siphon from input if it's a wand
+            }
+            
+            if (!chargeStack.isEmpty()) {
+                // TODO Output mana to wand
+            }
+        }
+        
+        if (shouldMarkDirty) {
+            entity.setChanged();
+            entity.syncTile(true);
+        }
     }
     
     protected int getChargeTimeTotal() {
         return 100;
+    }
+    
+    protected boolean canBreakDownEssence(ItemStack inputStack) {
+        if (!inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem essenceItem) {
+            return this.manaStorage.getManaStored(essenceItem.getSource()) < this.manaStorage.getMaxManaStored(essenceItem.getSource());
+        } else {
+            return false;
+        }
+    }
+    
+    protected void breakDownEssence(ItemStack inputStack) {
+        if (this.canBreakDownEssence(inputStack) && inputStack.getItem() instanceof EssenceItem essenceItem) {
+            this.manaStorage.setMana(essenceItem.getSource(), this.manaStorage.getManaStored(essenceItem.getSource()) + essenceItem.getEssenceType().getManaEquivalent() * 100);
+        }
     }
     
     @Override
@@ -204,7 +251,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     @Override
     public boolean canPlaceItem(int slotIndex, ItemStack stack) {
         if (slotIndex == INPUT_SLOT_INDEX) {
-            return stack.is(ItemTagsPM.ESSENCES) || stack.getItem() instanceof IWand;
+            return stack.getItem() instanceof EssenceItem || stack.getItem() instanceof IWand;
         } else if (slotIndex == CHARGE_SLOT_INDEX) {
             return stack.getItem() instanceof IWand;
         } else {

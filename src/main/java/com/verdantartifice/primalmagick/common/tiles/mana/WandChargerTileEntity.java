@@ -4,7 +4,6 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
-import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
@@ -160,26 +159,11 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
         if (this.canCharge()) {
             EssenceItem essence = (EssenceItem)inputStack.getItem();
             IWand wand = (IWand)wandStack.getItem();
-            wand.addRealMana(wandStack, essence.getSource(), this.getManaForEssenceType(essence.getEssenceType()));
+            wand.addRealMana(wandStack, essence.getSource(), essence.getEssenceType().getManaEquivalent());
             inputStack.shrink(1);
         }
     }
     
-    protected int getManaForEssenceType(EssenceType type) {
-        switch (type) {
-        case DUST:
-            return 1;
-        case SHARD:
-            return 10;
-        case CRYSTAL:
-            return 100;
-        case CLUSTER:
-            return 1000;
-        default:
-            return 0;
-        }
-    }
-
     @Override
     public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
