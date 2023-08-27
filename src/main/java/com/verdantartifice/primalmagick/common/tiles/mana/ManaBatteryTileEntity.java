@@ -1,5 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
@@ -28,10 +32,12 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+    protected static final int FONT_RANGE = 5;
     protected static final int INPUT_SLOT_INDEX = 0;
     protected static final int CHARGE_SLOT_INDEX = 1;
     protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
@@ -40,8 +46,11 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     
     protected int chargeTime;
     protected int chargeTimeTotal;
+    protected int fontSiphonTime;
     protected ManaStorage manaStorage;
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
+
+    protected final Set<BlockPos> fontLocations = new HashSet<>();
 
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData chargerData = new ContainerData() {
@@ -129,8 +138,22 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
             ItemStack inputStack = entity.items.get(INPUT_SLOT_INDEX);
             ItemStack chargeStack = entity.items.get(CHARGE_SLOT_INDEX);
             
-            // TODO Siphon from nearby fonts
-            
+            // Scan surroundings for mana fonts once a second
+            if (entity.fontSiphonTime % 20 == 0) {
+                entity.scanSurroundings();
+            }
+
+            // Siphon from nearby fonts
+            Vec3 chargerCenter = Vec3.atCenterOf(pos);
+            for (BlockPos fontPos : entity.fontLocations) {
+                if (entity.fontSiphonTime % 5 == 0 && 
+                        level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity fontEntity && 
+                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock fontBlock) {
+                    fontEntity.doSiphon(entity.manaStorage, level, null, chargerCenter, entity.getBatteryTransferCap());
+                }
+            }
+            entity.fontSiphonTime++;
+
             if (!inputStack.isEmpty()) {
                 // Break down input if it's essence
                 if (entity.canBreakDownEssence(inputStack)) {
@@ -207,11 +230,26 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         return false;
     }
     
+    @SuppressWarnings("deprecation")
+    protected void scanSurroundings() {
+        BlockPos pos = this.getBlockPos();
+        if (this.level.isAreaLoaded(pos, FONT_RANGE)) {
+            this.fontLocations.clear();
+            Iterable<BlockPos> positions = BlockPos.betweenClosed(pos.offset(-FONT_RANGE, -FONT_RANGE, -FONT_RANGE), pos.offset(FONT_RANGE, FONT_RANGE, FONT_RANGE));
+            for (BlockPos searchPos : positions) {
+                if (this.level.getBlockState(searchPos).getBlock() instanceof AbstractManaFontBlock) {
+                    this.fontLocations.add(searchPos.immutable());
+                }
+            }
+        }
+    }
+    
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
         this.chargeTime = compound.getInt("ChargeTime");
         this.chargeTimeTotal = compound.getInt("ChargeTimeTotal");
+        this.fontSiphonTime = compound.getInt("FontSiphonTime");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
     }
     
@@ -220,6 +258,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         super.saveAdditional(compound);
         compound.putInt("ChargeTime", this.chargeTime);
         compound.putInt("ChargeTimeTotal", this.chargeTimeTotal);
+        compound.putInt("FontSiphonTime", this.fontSiphonTime);
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
     }
 
