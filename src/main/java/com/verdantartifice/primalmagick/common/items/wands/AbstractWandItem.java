@@ -158,7 +158,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // If the wand stack contains enough mana, process the consumption and return success
             if (this.getMaxMana(stack) != -1) {
                 // Only actually consume something if the wand doesn't have infinite mana
-                this.setMana(stack, source, this.getMana(stack, source) - amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source) * amount)));
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)(this.getTotalCostModifier(stack, player, source) * amount))));
             }
             
             if (player != null) {
@@ -227,6 +227,25 @@ public abstract class AbstractWandItem extends Item implements IWand {
     }
     
     @Override
+    public boolean removeManaRaw(ItemStack stack, Source source, int amount) {
+        if (stack == null || source == null) {
+            return false;
+        }
+        if (this.containsManaRaw(stack, source, amount)) {
+            // If the wand stack contains enough mana, process the consumption and return success
+            if (this.getMaxMana(stack) != -1) {
+                // Only actually consume something if the wand doesn't have infinite mana
+                this.setMana(stack, source, this.getMana(stack, source) - (amount == 0 ? 0 : Math.max(1, (int)amount)));
+            }
+            
+            return true;
+        } else {
+            // Otherwise return failure
+            return false;
+        }
+    }
+
+    @Override
     public boolean containsMana(ItemStack stack, Player player, Source source, int amount) {
         // A wand stack with infinite mana always contains the requested amount of mana
         return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= (int)Math.floor(this.getTotalCostModifier(stack, player, source) * amount);
@@ -252,6 +271,12 @@ public abstract class AbstractWandItem extends Item implements IWand {
         return this.containsMana(stack, player, sources.copy().multiply(100));
     }
     
+    @Override
+    public boolean containsManaRaw(ItemStack stack, Source source, int amount) {
+        // A wand stack with infinite mana always contains the requested amount of mana
+        return this.getMaxMana(stack) == -1 || this.getMana(stack, source) >= amount;
+    }
+
     @Override
     public double getTotalCostModifier(ItemStack stack, @Nullable Player player, Source source) {
         // Start with the base modifier, as determined by wand cap

@@ -85,7 +85,7 @@ public interface IWand {
      * @param player the player doing the consuming, if applicable
      * @param source the type of mana to be consumed
      * @param amount the amount of centimana to be consumed
-     * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
+     * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
     public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
@@ -96,7 +96,7 @@ public interface IWand {
      * @param stack the wand stack to be modified
      * @param player the player doing the consuming, if applicable
      * @param sources the amount of each type of centimana to be consumed
-     * @return true if sufficient centimana was present in the wand and successfully removed, false otherwise
+     * @return true if sufficient centimana was present in the wand and successfully consumed, false otherwise
      */
     public boolean consumeMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
     
@@ -108,7 +108,7 @@ public interface IWand {
      * @param player the player doing the consuming, if applicable
      * @param source the type of mana to be consumed
      * @param amount the amount of mana to be consumed
-     * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
+     * @return true if sufficient mana was present in the wand and successfully consumed, false otherwise
      */
     public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable Source source, int amount);
     
@@ -119,9 +119,19 @@ public interface IWand {
      * @param stack the wand stack to be modified
      * @param player the player doing the consuming, if applicable
      * @param sources the amount of each type of mana to be consumed
-     * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
+     * @return true if sufficient mana was present in the wand and successfully consumed, false otherwise
      */
     public boolean consumeRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
+    
+    /**
+     * Remove the given amount of the given type of centimana from the given wand stack.  Ignores any cost modifiers.
+     * 
+     * @param stack the wand stack to be modified
+     * @param source the type of mana to be removed
+     * @param amount the amount of mana to be removed
+     * @return true if sufficient mana was present in the wand and successfully removed, false otherwise
+     */
+    public boolean removeManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Determine if the given wand stack contains the given amount of the given type of centimana for the given player.  Takes
@@ -168,6 +178,17 @@ public interface IWand {
      * @return true if sufficient mana is present, false otherwise
      */
     public boolean containsRealMana(@Nullable ItemStack stack, @Nullable Player player, @Nullable SourceList sources);
+    
+    /**
+     * Determine if the given wand stack contains the given amount of the given type of centimana.  Ignores any cost
+     * modifiers.
+     * 
+     * @param stack the wand stack to be queried
+     * @param source the type of mana being queried
+     * @param amount the amount of mana required
+     * @return true if sufficient mana is present, false otherwise
+     */
+    public boolean containsManaRaw(@Nullable ItemStack stack, @Nullable Source source, int amount);
     
     /**
      * Get the base mana cost modifier to be applied to mana consumption, as determined by the cap of the wand, if any.

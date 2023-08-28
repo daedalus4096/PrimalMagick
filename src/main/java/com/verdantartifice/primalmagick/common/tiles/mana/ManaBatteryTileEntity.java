@@ -215,7 +215,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     protected boolean canSiphonWand(ItemStack inputStack, Source source) {
         return !inputStack.isEmpty() && 
                 inputStack.getItem() instanceof IWand wand &&
-                wand.containsMana(inputStack, null, source, 1) &&
+                wand.containsManaRaw(inputStack, source, 1) &&
                 this.manaStorage.getManaStored(source) < this.manaStorage.getMaxManaStored(source);
     }
     
@@ -228,7 +228,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
                 centimanaPresentInWand = centimanaMissingInBattery;
             }
             int centimanaToTransfer = Mth.clamp(Math.min(centimanaPresentInWand, centimanaMissingInBattery), 0, maxTransferRate);
-            if (wand.consumeMana(inputStack, null, source, centimanaToTransfer)) {
+            if (wand.removeManaRaw(inputStack, source, centimanaToTransfer)) {
                 this.manaStorage.receiveMana(source, centimanaToTransfer, false);
                 return true;
             }
