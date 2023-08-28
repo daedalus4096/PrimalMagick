@@ -9,6 +9,7 @@ v4.0.3
 * Updated wand charger texture
 * Added Mana Nexus, to better keep your arcane power
 * Added Sanguine Core types for camels and sniffers
+* Made Grimoires placeable on chiseled bookshelves
 
 v4.0.2
 ------
