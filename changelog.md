@@ -7,6 +7,7 @@ v4.0.3
 * Fixed a crash that could occur when changing game language
 * Fixed a bug causing Ancient Mana Fonts to refill on every server restart
 * Updated wand charger texture
+* Added Mana Nexus, to better keep your arcane power
 
 v4.0.2
 ------
