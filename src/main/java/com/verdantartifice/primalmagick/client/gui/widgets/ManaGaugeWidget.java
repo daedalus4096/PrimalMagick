@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Collections;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -11,6 +12,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -20,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class ManaGaugeWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_gauge.png");
+    protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
 
     protected final Source source;
     protected int maxAmount;
@@ -74,19 +77,41 @@ public class ManaGaugeWidget extends AbstractWidget {
         
         if (this.isHoveredOrFocused()) {
             Component sourceText = this.source.getNameText();
-            Component labelText = Component.translatable("tooltip.primalmagick.source.mana_gauge", sourceText, (this.curAmount / 100.0D), (this.maxAmount / 100.0D));
+            Component labelText = Component.translatable("tooltip.primalmagick.source.mana_gauge", sourceText, this.getManaText(), this.getMaxManaText());
             GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
         }
     }
     
     protected int getScaledMana() {
-        if (this.maxAmount != 0 && this.curAmount != 0) {
+        if (this.maxAmount == -1) {
+            return 50;
+        } else if (this.maxAmount != 0 && this.curAmount != 0) {
             return (this.curAmount * 50 / this.maxAmount);
         } else {
             return 0;
         }
     }
 
+    protected MutableComponent getManaText() {
+        if (this.maxAmount == -1) {
+            // If the given source has infinte mana, show the infinity symbol
+            return Component.literal(Character.toString('\u221E'));
+        } else {
+            // Otherwise show the current real mana for that source
+            return Component.literal(MANA_FORMATTER.format(this.curAmount / 100.0D));
+        }
+    }
+
+    public MutableComponent getMaxManaText() {
+        if (this.maxAmount == -1) {
+            // If the given source has infinte mana, show the infinity symbol
+            return Component.literal(Character.toString('\u221E'));
+        } else {
+            // Otherwise show the max real for that source
+            return Component.literal(MANA_FORMATTER.format(this.maxAmount / 100.0D));
+        }
+    }
+    
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
     }

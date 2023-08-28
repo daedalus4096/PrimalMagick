@@ -593,6 +593,28 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("INFERNAL_FURNACE")))
             .manaCost(new SourceList().add(Source.INFERNAL, 50))
             .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_NEXUS.get())
+            .patternLine("APA")
+            .patternLine("MGM")
+            .patternLine("APA")
+            .key('A', Tags.Items.GEMS_AMETHYST)
+            .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .key('M', ItemsPM.MARBLE_SMOKED.get())
+            .key('G', ItemsPM.WIZARD_WAND_GEM_ITEM.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_NEXUS")))
+            .manaCost(new SourceList().add(Source.EARTH, 250).add(Source.SEA, 250).add(Source.SKY, 250).add(Source.SUN, 250).add(Source.MOON, 250))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_SINGULARITY.get())
+            .patternLine("APA")
+            .patternLine("MGM")
+            .patternLine("APA")
+            .key('A', Tags.Items.GEMS_AMETHYST)
+            .key('P', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
+            .key('M', ItemsPM.MARBLE_HALLOWED.get())
+            .key('G', ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_SINGULARITY")))
+            .manaCost(new SourceList().add(Source.EARTH, 750).add(Source.SEA, 750).add(Source.SKY, 750).add(Source.SUN, 750).add(Source.MOON, 750))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.EssenceCaskScreen;
 import com.verdantartifice.primalmagick.client.gui.EssenceTransmuterScreen;
 import com.verdantartifice.primalmagick.client.gui.HoneyExtractorScreen;
 import com.verdantartifice.primalmagick.client.gui.InfernalFurnaceScreen;
+import com.verdantartifice.primalmagick.client.gui.ManaBatteryScreen;
 import com.verdantartifice.primalmagick.client.gui.ResearchTableScreen;
 import com.verdantartifice.primalmagick.client.gui.RunecarvingTableScreen;
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarBasicScreen;
@@ -96,6 +97,7 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(MenuTypesPM.WAND_GLAMOUR_TABLE.get(), WandGlamourTableScreen::new);
         MenuScreens.register(MenuTypesPM.RUNIC_GRINDSTONE.get(), RunicGrindstoneScreen::new);
         MenuScreens.register(MenuTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceScreen::new);
+        MenuScreens.register(MenuTypesPM.MANA_BATTERY.get(), ManaBatteryScreen::new);
     }
     
     private static void registerTERs() {

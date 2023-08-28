@@ -40,19 +40,13 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     protected int getCookTimeTotal() {
         Block block = this.getBlockState().getBlock();
         if (block instanceof CalcinatorBlock calcinatorBlock) {
-            DeviceTier tier = calcinatorBlock.getDeviceTier();
-            switch (tier) {
-            case BASIC:
-                return 160;
-            case ENCHANTED:
-                return 120;
-            case FORBIDDEN:
-                return 80;
-            case HEAVENLY:
-                return 40;
-            default:
-                throw new IllegalStateException("Unknown device tier " + tier);
-            }
+            return switch (calcinatorBlock.getDeviceTier()) {
+                case BASIC -> 160;
+                case ENCHANTED -> 120;
+                case FORBIDDEN -> 80;
+                case HEAVENLY -> 40;
+                default -> 200;
+            };
         } else {
             throw new IllegalStateException("Unknown block type " + block);
         }
@@ -99,19 +93,13 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     protected EssenceType getMaxOutputEssenceType() {
         Block block = this.getBlockState().getBlock();
         if (block instanceof CalcinatorBlock calcinatorBlock) {
-            DeviceTier tier = calcinatorBlock.getDeviceTier();
-            switch (tier) {
-            case BASIC:
-                return EssenceType.DUST;
-            case ENCHANTED:
-                return EssenceType.SHARD;
-            case FORBIDDEN:
-                return EssenceType.CRYSTAL;
-            case HEAVENLY:
-                return EssenceType.CLUSTER;
-            default:
-                throw new IllegalStateException("Unknown device tier " + tier);
-            }
+            return switch (calcinatorBlock.getDeviceTier()) {
+                case BASIC -> EssenceType.DUST;
+                case ENCHANTED -> EssenceType.SHARD;
+                case FORBIDDEN -> EssenceType.CRYSTAL;
+                case HEAVENLY -> EssenceType.CLUSTER;
+                default -> EssenceType.DUST;
+            };
         } else {
             throw new IllegalStateException("Unknown block type " + block);
         }

@@ -1,0 +1,30 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_nexus"
+  },
+  "key": "MANA_NEXUS",
+  "name": "research.primalmagick.mana_nexus.title",
+  "parents": [
+    "MASTER_MAGITECH",
+    "AUTO_CHARGER",
+    "HEXIUM",
+    "WAND_GEM_WIZAR"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "research.primalmagick.mana_nexus.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:mana_nexus"
+      ],
+      "text": "research.primalmagick.mana_nexus.text.stage.2"
+    }
+  ]
+}

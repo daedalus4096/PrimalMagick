@@ -1,0 +1,30 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:mana_singularity"
+  },
+  "key": "MANA_SINGULARITY",
+  "name": "research.primalmagick.mana_singularity.title",
+  "parents": [
+    "SUPREME_MAGITECH",
+    "MANA_NEXUS",
+    "HALLOWSTEEL",
+    "WAND_GEM_ARCHMAGE"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;3"
+      ],
+      "text": "research.primalmagick.mana_singularity.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:mana_singularity"
+      ],
+      "text": "research.primalmagick.mana_singularity.text.stage.2"
+    }
+  ]
+}

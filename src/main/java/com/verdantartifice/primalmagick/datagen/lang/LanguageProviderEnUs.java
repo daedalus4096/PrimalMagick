@@ -311,6 +311,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.WAND_GLAMOUR_TABLE).name("Wand Glamour Table").build();
         this.block(BlocksPM.TREEFOLK_SPROUT).name("Treefolk Sprout").build();
         this.block(BlocksPM.INFERNAL_FURNACE).name("Infernal Furnace").build();
+        this.block(BlocksPM.MANA_NEXUS).name("Mana Nexus").build();
+        this.block(BlocksPM.MANA_SINGULARITY).name("Mana Singularity").build();
+        this.block(BlocksPM.MANA_SINGULARITY_CREATIVE).name("Creative Mana Singularity").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -877,7 +880,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("base_slot_description").output("Add a piece of robe armor").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("ingredients").output("Source Runes").end().build();
         this.tooltip("source").sub("mana").output("%1$s: %2$d / %3$d (%4$d%% mana cost)").end().build();
-        this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$d / %3$d").end().build();
+        this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$s / %3$s").end().build();
         this.tooltip("source").sub("mana_container").output("%1$s mana: %2$d").end().build();
         this.tooltip("source").sub("mana_summary_fragment").output("%1$s/%2$s").end().build();
         this.tooltip("spells").sub("wand_header").output("Inscribed Spells (Capacity %1$s):").end().build();
@@ -3252,6 +3255,18 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .end()
             .addenda()
                 .add("Ignyx, of course!  This infernally infused fuel will be perfect for supercharging my Infernal Furnace.<BR>If I supplement the Infernal mana injected into the furnace with a unit of Ignyx, the smelting process will go several times faster than normal.  Though I suppose that means I'm back to shoveling coal.  Alas.  At least it's optional now.")
+                .end()
+            .build();
+        this.researchEntry("MANA_NEXUS").name("Mana Nexus")
+            .stages()
+                .add("I grow tired of carting around wands like batteries.  There must be a better way to store mana for long periods of time for quick charging.")
+                .add("With careful study of the flows of mana and practice in its applications, I have created the Mana Nexus.<BR>Like the Auto-Charger before it, the Mana Nexus will siphon mana directly from any nearby mana fonts.  This improved model, however, will keep that mana in internal storage indefinitely, rather than requiring immediate application to a wand.<BR>This allow me to keep greater reserves of power on hand.  In addition, the Mana Nexus will also accept mana from any essence or spare wands I have lying around.")
+                .end()
+            .build();
+        this.researchEntry("MANA_SINGULARITY").name("Mana Singularity")
+            .stages()
+                .add("The Mana Nexus is an admirable effort, but I believe I can do better.")
+                .add("The universe sings its blessings once more.  With sanctified parts and a core infused with more potent essence, this new Mana Singularity can store more mana than ever.")
                 .end()
             .build();
         this.researchEntry("RAW_MARBLE").name("Marble")

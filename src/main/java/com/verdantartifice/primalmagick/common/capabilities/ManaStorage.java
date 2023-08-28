@@ -16,6 +16,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class ManaStorage implements IManaStorage {
+    protected static final int INFINITE = -1;
+    
     protected Set<Source> allowedSources;
     protected SourceList mana;
     protected int capacity;
@@ -65,14 +67,14 @@ public class ManaStorage implements IManaStorage {
     }
     
     public void setMana(Source source, int amount) {
-        if (this.allowedSources.contains(source)) {
+        if (this.allowedSources.contains(source) && this.capacity != INFINITE) {
             this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
         }
     }
 
     @Override
     public int receiveMana(Source source, int maxReceive, boolean simulate) {
-        if (!this.canReceive(source)) {
+        if (!this.canReceive(source) || this.capacity == INFINITE) {
             return 0;
         }
         int manaReceived = Math.min(this.capacity - this.mana.getAmount(source), Math.min(this.maxReceive, maxReceive));
@@ -88,6 +90,9 @@ public class ManaStorage implements IManaStorage {
         if (!this.canExtract(source)) {
             return 0;
         }
+        if (this.capacity == INFINITE) {
+            return maxExtract;
+        }
         int manaExtracted = Math.min(this.mana.getAmount(source), Math.min(this.maxExtract, maxExtract));
         if (!simulate) {
             this.mana.reduce(source, manaExtracted);
@@ -98,7 +103,7 @@ public class ManaStorage implements IManaStorage {
 
     @Override
     public int getManaStored(Source source) {
-        return this.mana.getAmount(source);
+        return this.capacity == INFINITE ? Integer.MAX_VALUE : this.mana.getAmount(source);
     }
 
     @Override

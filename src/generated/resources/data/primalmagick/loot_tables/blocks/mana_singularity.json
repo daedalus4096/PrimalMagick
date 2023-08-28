@@ -24,11 +24,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "primalmagick:infernal_furnace"
+          "name": "primalmagick:mana_singularity"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "primalmagick:blocks/infernal_furnace"
+  "random_sequence": "primalmagick:blocks/mana_singularity"
 }

@@ -18,10 +18,10 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public enum EssenceType implements StringRepresentable {
-    DUST("dust", Rarity.COMMON, 5),
-    SHARD("shard", Rarity.UNCOMMON, 20),
-    CRYSTAL("crystal", Rarity.RARE, 50),
-    CLUSTER("cluster", Rarity.EPIC, 100);
+    DUST("dust", Rarity.COMMON, 5, 1),
+    SHARD("shard", Rarity.UNCOMMON, 20, 10),
+    CRYSTAL("crystal", Rarity.RARE, 50, 100),
+    CLUSTER("cluster", Rarity.EPIC, 100, 1000);
     
     private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.parse("SHARD_SYNTHESIS");
     private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.parse("CRYSTAL_SYNTHESIS");
@@ -30,11 +30,13 @@ public enum EssenceType implements StringRepresentable {
     private final String name;
     private final Rarity rarity;
     private final int affinity;
+    private final int mana;
     
-    private EssenceType(@Nonnull String name, @Nonnull Rarity rarity, int affinity) {
+    private EssenceType(@Nonnull String name, @Nonnull Rarity rarity, int affinity, int mana) {
         this.name = name;
         this.rarity = rarity;
         this.affinity = affinity;
+        this.mana = mana;
     }
 
     @Override
@@ -50,6 +52,16 @@ public enum EssenceType implements StringRepresentable {
     
     public int getAffinity() {
         return this.affinity;
+    }
+    
+    /**
+     * Gets the amount of real mana this essence type is worth when broken down in a machine such
+     * as the Wand Charger.
+     * 
+     * @return the mana equivalent of this essence type
+     */
+    public int getManaEquivalent() {
+        return this.mana;
     }
     
     @Nullable
