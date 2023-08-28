@@ -177,7 +177,13 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
             }
             
             if (!chargeStack.isEmpty()) {
-                // TODO Output mana to wand
+                // Output mana to wand
+                for (Source source : Source.SORTED_SOURCES) {
+                    if (entity.canOutputToWand(chargeStack, source)) {
+                        entity.doOutput(chargeStack, source);
+                        shouldMarkDirty = true;
+                    }
+                }
             }
         }
         
@@ -241,6 +247,23 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
                     this.fontLocations.add(searchPos.immutable());
                 }
             }
+        }
+    }
+    
+    protected boolean canOutputToWand(ItemStack outputStack, Source source) {
+        return !outputStack.isEmpty() &&
+                outputStack.getItem() instanceof IWand wand &&
+                wand.getMana(outputStack, source) < wand.getMaxMana(outputStack) &&
+                this.manaStorage.getManaStored(source) > 0;
+    }
+    
+    protected void doOutput(ItemStack outputStack, Source source) {
+        if (this.canOutputToWand(outputStack, source) && outputStack.getItem() instanceof IWand wand) {
+            int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
+            int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
+            int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
+            int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
+            this.manaStorage.extractMana(source, transferedCentimana, false);
         }
     }
     
