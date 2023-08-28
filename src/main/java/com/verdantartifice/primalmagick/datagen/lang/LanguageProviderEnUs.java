@@ -312,6 +312,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.TREEFOLK_SPROUT).name("Treefolk Sprout").build();
         this.block(BlocksPM.INFERNAL_FURNACE).name("Infernal Furnace").build();
         this.block(BlocksPM.MANA_NEXUS).name("Mana Nexus").build();
+        this.block(BlocksPM.MANA_SINGULARITY).name("Mana Singularity").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();

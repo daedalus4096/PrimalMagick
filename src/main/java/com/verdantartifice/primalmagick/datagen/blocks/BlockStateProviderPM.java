@@ -234,6 +234,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.horizontalExistingBlockWithItem(BlocksPM.WAND_GLAMOUR_TABLE.get());
         this.infernalFurnaceBlockWithItem();
         this.simpleExistingBlockWithItem(BlocksPM.MANA_NEXUS.get());
+        this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY.get());
         
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
