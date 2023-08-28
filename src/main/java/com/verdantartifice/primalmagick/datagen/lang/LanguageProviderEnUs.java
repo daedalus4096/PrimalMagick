@@ -880,7 +880,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("base_slot_description").output("Add a piece of robe armor").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("ingredients").output("Source Runes").end().build();
         this.tooltip("source").sub("mana").output("%1$s: %2$d / %3$d (%4$d%% mana cost)").end().build();
-        this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$d / %3$d").end().build();
+        this.tooltip("source").sub("mana_gauge").output("%1$s mana: %2$s / %3$s").end().build();
         this.tooltip("source").sub("mana_container").output("%1$s mana: %2$d").end().build();
         this.tooltip("source").sub("mana_summary_fragment").output("%1$s/%2$s").end().build();
         this.tooltip("spells").sub("wand_header").output("Inscribed Spells (Capacity %1$s):").end().build();
