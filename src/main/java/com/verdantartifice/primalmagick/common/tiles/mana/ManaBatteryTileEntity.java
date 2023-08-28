@@ -110,7 +110,8 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
                 case FORBIDDEN -> 400 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY, CREATIVE -> 400 * WandGem.ARCHMAGE.getCapacity();
+                case HEAVENLY -> 400 * WandGem.ARCHMAGE.getCapacity();
+                case CREATIVE -> -1;
                 default -> 0;
             };
         } else {
@@ -254,7 +255,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         return !outputStack.isEmpty() &&
                 outputStack.getItem() instanceof IWand wand &&
                 wand.getMana(outputStack, source) < wand.getMaxMana(outputStack) &&
-                this.manaStorage.getManaStored(source) > 0;
+                (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0);
     }
     
     protected void doOutput(ItemStack outputStack, Source source) {
