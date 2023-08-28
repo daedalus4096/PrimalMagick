@@ -2419,7 +2419,7 @@
   "tooltip.primalmagick.smithing_template.runic_armor_trim.ingredients": "Source Runes",
   "tooltip.primalmagick.source.mana": "%1$s: %2$d / %3$d (%4$d%% 魔力消耗)",
   "tooltip.primalmagick.source.mana_container": "%1$s 魔力: %2$d",
-  "tooltip.primalmagick.source.mana_gauge": "%1$s mana: %2$s / %3$s",
+  "tooltip.primalmagick.source.mana_gauge": "%1$s 魔力: %2$s / %3$s",
   "tooltip.primalmagick.source.mana_summary_fragment": "%1$s/%2$s",
   "tooltip.primalmagick.spell_scroll": "右键单击以进行转换；这将消耗卷轴",
   "tooltip.primalmagick.spells.capacity": "%1$d",
