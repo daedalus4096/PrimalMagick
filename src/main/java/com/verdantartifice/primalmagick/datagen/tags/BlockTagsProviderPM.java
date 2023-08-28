@@ -40,7 +40,7 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
         this.tag(BlockTags.PIGLIN_REPELLENTS).add(BlocksPM.SPIRIT_LANTERN.get(), BlocksPM.SOUL_GLOW_FIELD.get());
         this.tag(BlockTags.PLANKS).add(BlocksPM.MOONWOOD_PLANKS.get(), BlocksPM.SUNWOOD_PLANKS.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.tag(BlockTags.SAPLINGS).add(BlocksPM.MOONWOOD_SAPLING.get(), BlocksPM.SUNWOOD_SAPLING.get(), BlocksPM.HALLOWOOD_SAPLING.get());
-        this.tag(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get());
+        this.tag(BlockTags.WALLS).add(BlocksPM.MARBLE_WALL.get(), BlocksPM.MARBLE_BRICK_WALL.get(), BlocksPM.MARBLE_ENCHANTED_WALL.get(), BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get(), BlocksPM.MARBLE_SMOKED_WALL.get(), BlocksPM.MARBLE_SMOKED_BRICK_WALL.get(), BlocksPM.MARBLE_HALLOWED_WALL.get(), BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get());
         this.tag(BlockTags.WOODEN_SLABS).add(BlocksPM.MOONWOOD_SLAB.get(), BlocksPM.SUNWOOD_SLAB.get(), BlocksPM.HALLOWOOD_SLAB.get());
         this.tag(BlockTags.WOODEN_STAIRS).add(BlocksPM.MOONWOOD_STAIRS.get(), BlocksPM.SUNWOOD_STAIRS.get(), BlocksPM.HALLOWOOD_STAIRS.get());
         this.tag(BlockTags.MINEABLE_WITH_AXE).add(BlocksPM.SUNWOOD_PILLAR.get(), BlocksPM.MOONWOOD_PILLAR.get(), BlocksPM.HALLOWOOD_PILLAR.get(), BlocksPM.ARCANE_WORKBENCH.get(), BlocksPM.WOOD_TABLE.get(), BlocksPM.ANALYSIS_TABLE.get(), BlocksPM.WAND_INSCRIPTION_TABLE.get(), BlocksPM.RESEARCH_TABLE.get(), BlocksPM.RITUAL_LECTERN.get(), BlocksPM.RUNECARVING_TABLE.get(), BlocksPM.CELESTIAL_HARP.get());

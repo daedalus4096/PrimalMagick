@@ -12,6 +12,7 @@ v4.0.3
 * Made Grimoires placeable on chiseled bookshelves
 * Fixed a bug with several devices causing their first input to be processed instantly
 * Added GUI labels to some devices missing them
+* Fixed a connectivity bug with Hallowed Marble Walls
 
 v4.0.2
 ------
