@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -8,6 +9,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -21,6 +23,9 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_battery.png");
+    protected static final int AVAILABLE_GAUGE_WIDTH = 116;
+    protected static final int GAUGE_START_X = 57;
+    protected static final int GAUGE_WIDTH = 12;
     
     protected final Map<Source, ManaGaugeWidget> manaGauges = new HashMap<>();
 
@@ -34,10 +39,14 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
     @Override
     protected void init() {
         super.init();
-        int xOffset = 57;
-        for (Source source : Source.SORTED_SOURCES) {
+        Minecraft mc = Minecraft.getInstance();
+        List<Source> knownSources = Source.SORTED_SOURCES.stream().filter(s -> s.isDiscovered(mc.player)).toList();
+        int gapWidth = (AVAILABLE_GAUGE_WIDTH - (GAUGE_WIDTH * knownSources.size())) / (knownSources.size() - 1);
+        int bonusEdge = AVAILABLE_GAUGE_WIDTH - (GAUGE_WIDTH * knownSources.size()) - (gapWidth * (knownSources.size() - 1));
+        int xOffset = GAUGE_START_X + (bonusEdge / 2);
+        for (Source source : knownSources) {
             this.manaGauges.put(source, this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + xOffset, this.topPos + 16, source, this.menu.getCurrentMana(source), this.menu.getMaxMana(source))));
-            xOffset += 13;
+            xOffset += (GAUGE_WIDTH + gapWidth);
         }
     }
 
