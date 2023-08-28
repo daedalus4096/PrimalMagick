@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.blocks.crafting.CalcinatorBlock;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
