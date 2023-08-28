@@ -3257,6 +3257,18 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Ignyx, of course!  This infernally infused fuel will be perfect for supercharging my Infernal Furnace.<BR>If I supplement the Infernal mana injected into the furnace with a unit of Ignyx, the smelting process will go several times faster than normal.  Though I suppose that means I'm back to shoveling coal.  Alas.  At least it's optional now.")
                 .end()
             .build();
+        this.researchEntry("MANA_NEXUS").name("Mana Nexus")
+            .stages()
+                .add("I grow tired of carting around wands like batteries.  There must be a better way to store mana for long periods of time for quick charging.")
+                .add("With careful study of the flows of mana and practice in its applications, I have created the Mana Nexus.<BR>Like the Auto-Charger before it, the Mana Nexus will siphon mana directly from any nearby mana fonts.  This improved model, however, will keep that mana in internal storage indefinitely, rather than requiring immediate application to a wand.<BR>This allow me to keep greater reserves of power on hand.  In addition, the Mana Nexus will also accept mana from any essence or spare wands I have lying around.")
+                .end()
+            .build();
+        this.researchEntry("MANA_SINGULARITY").name("Mana Singularity")
+            .stages()
+                .add("The Mana Nexus is an admirable effort, but I believe I can do better.")
+                .add("The universe sings its blessings once more.  With sanctified parts and a core infused with more potent essence, this new Mana Singularity can store more mana than ever.")
+                .end()
+            .build();
         this.researchEntry("RAW_MARBLE").name("Marble")
             .stages()
                 .add("Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magick, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.")

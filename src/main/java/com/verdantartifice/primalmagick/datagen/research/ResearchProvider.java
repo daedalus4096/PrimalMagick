@@ -1402,6 +1402,14 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 3).recipe(ItemsPM.INFERNAL_FURNACE.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("IGNYX").build())
             .build(consumer);
+        ResearchEntryBuilder.entry("MANA_NEXUS", discipline).icon(ItemsPM.MANA_NEXUS.get()).parent("MASTER_MAGITECH").parent("AUTO_CHARGER").parent("HEXIUM").parent("WAND_GEM_WIZAR")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_NEXUS.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("MANA_SINGULARITY", discipline).icon(ItemsPM.MANA_SINGULARITY.get()).parent("SUPREME_MAGITECH").parent("MANA_NEXUS").parent("HALLOWSTEEL").parent("WAND_GEM_ARCHMAGE")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_SINGULARITY.get()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
