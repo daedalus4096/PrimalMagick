@@ -125,6 +125,12 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         return 200;
     }
     
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.processTimeTotal = this.getProcessTimeTotal();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, DissolutionChamberTileEntity entity) {
         boolean shouldMarkDirty = false;
         

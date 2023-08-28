@@ -122,6 +122,12 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
         return 10;
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.spinTimeTotal = this.getSpinTimeTotal();
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, HoneyExtractorTileEntity entity) {
         boolean shouldMarkDirty = false;
 

@@ -203,6 +203,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch(this.level);
         }
+        this.cookTimeTotal = this.getCookTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, ConcocterTileEntity entity) {

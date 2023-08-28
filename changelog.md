@@ -10,6 +10,7 @@ v4.0.3
 * Added Mana Nexus, to better keep your arcane power
 * Added Sanguine Core types for camels and sniffers
 * Made Grimoires placeable on chiseled bookshelves
+* Fixed a bug with several devices causing their first input to be processed instantly
 
 v4.0.2
 ------

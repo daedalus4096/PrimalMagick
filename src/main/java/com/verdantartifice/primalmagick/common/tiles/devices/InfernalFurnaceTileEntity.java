@@ -190,6 +190,12 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
     }
     
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.processTimeTotal = getTotalCookTime(this.level, this);
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
         boolean shouldMarkDirty = false;
         boolean startedLit = entity.isLit();

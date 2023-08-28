@@ -159,6 +159,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch();
         }
+        this.cookTimeTotal = this.getCookTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AbstractCalcinatorTileEntity entity) {

@@ -176,6 +176,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
         if (!this.level.isClientSide) {
             this.relevantResearch = assembleRelevantResearch();
         }
+        this.processTimeTotal = this.getProcessTimeTotal();
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceTransmuterTileEntity entity) {
