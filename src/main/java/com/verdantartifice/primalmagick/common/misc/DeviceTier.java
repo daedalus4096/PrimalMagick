@@ -12,7 +12,8 @@ public enum DeviceTier implements StringRepresentable {
     BASIC("basic"),
     ENCHANTED("enchanted"),
     FORBIDDEN("forbidden"),
-    HEAVENLY("heavenly");
+    HEAVENLY("heavenly"),
+    CREATIVE("creative");
     
     private final String name;
     

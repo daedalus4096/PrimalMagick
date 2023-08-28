@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.menus.RunescribingAltarBasicMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
-import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
 
@@ -29,20 +28,14 @@ public class RunescribingAltarTileEntity extends TilePM implements MenuProvider 
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        if (this.getBlockState().getBlock() instanceof RunescribingAltarBlock) {
-            DeviceTier tier = ((RunescribingAltarBlock)this.getBlockState().getBlock()).getDeviceTier();
-            switch (tier) {
-            case BASIC:
-                return new RunescribingAltarBasicMenu(windowId, playerInv);
-            case ENCHANTED:
-                return new RunescribingAltarEnchantedMenu(windowId, playerInv);
-            case FORBIDDEN:
-                return new RunescribingAltarForbiddenMenu(windowId, playerInv);
-            case HEAVENLY:
-                return new RunescribingAltarHeavenlyMenu(windowId, playerInv);
-            default:
-                return null;
-            }
+        if (this.getBlockState().getBlock() instanceof RunescribingAltarBlock altarBlock) {
+            return switch (altarBlock.getDeviceTier()) {
+                case BASIC -> new RunescribingAltarBasicMenu(windowId, playerInv);
+                case ENCHANTED -> new RunescribingAltarEnchantedMenu(windowId, playerInv);
+                case FORBIDDEN -> new RunescribingAltarForbiddenMenu(windowId, playerInv);
+                case HEAVENLY -> new RunescribingAltarHeavenlyMenu(windowId, playerInv);
+                default -> throw new IllegalStateException("Unsupported device tier for runescribing altar menu");
+            };
         } else {
             return null;
         }

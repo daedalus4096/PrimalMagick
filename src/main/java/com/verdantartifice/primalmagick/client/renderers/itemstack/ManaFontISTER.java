@@ -51,18 +51,13 @@ public class ManaFontISTER extends BlockEntityWithoutLevelRenderer {
     }
     
     protected ModelResourceLocation getModelResourceLocation(DeviceTier tier) {
-        switch (tier) {
-        case BASIC:
-            return MRL_BASIC;
-        case ENCHANTED:
-            return MRL_ENCHANTED;
-        case FORBIDDEN:
-            return MRL_FORBIDDEN;
-        case HEAVENLY:
-            return MRL_HEAVENLY;
-        default:
-            return MRL_BASIC;
-        }
+        return switch (tier) {
+            case BASIC -> MRL_BASIC;
+            case ENCHANTED -> MRL_ENCHANTED;
+            case FORBIDDEN -> MRL_FORBIDDEN;
+            case HEAVENLY -> MRL_HEAVENLY;
+            default -> MRL_BASIC;
+        };
     }
     
     @Override

@@ -69,19 +69,13 @@ public abstract class AbstractManaFontBlock extends BaseEntityBlock implements I
     }
     
     public int getManaCapacity() {
-        switch (this.tier) {
-        case BASIC:
+        return switch (this.tier) {
             // The "basic" tier refers to ancient mana fonts, which cannot be constructed
-            return 100;
-        case ENCHANTED:
-            return 10;
-        case FORBIDDEN:
-            return 100;
-        case HEAVENLY:
-            return 1000;
-        default:
-            return 0;
-        }
+            case BASIC, FORBIDDEN -> 100;
+            case ENCHANTED -> 10;
+            case HEAVENLY -> 1000;
+            default -> 0;
+        };
     }
     
     public static Collection<AbstractManaFontBlock> getAllManaFontsForTier(DeviceTier tier) {
