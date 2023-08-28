@@ -112,6 +112,7 @@
     "primalmagick:essence_transmuter",
     "primalmagick:infernal_furnace",
     "primalmagick:mana_nexus",
-    "primalmagick:mana_singularity"
+    "primalmagick:mana_singularity",
+    "primalmagick:mana_singularity_creative"
   ]
 }

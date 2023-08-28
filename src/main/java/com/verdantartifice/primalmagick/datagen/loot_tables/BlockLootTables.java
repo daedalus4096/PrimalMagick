@@ -80,6 +80,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerManaBearingDeviceTable(BlocksPM.INFERNAL_FURNACE.get());
         this.registerManaBearingDeviceTable(BlocksPM.MANA_NEXUS.get());
         this.registerManaBearingDeviceTable(BlocksPM.MANA_SINGULARITY.get());
+        this.registerBasicTable(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
 
         // Register misc loot tables
         this.registerBasicTable(BlocksPM.SALT_TRAIL.get());

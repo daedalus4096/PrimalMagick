@@ -110,7 +110,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
                 case FORBIDDEN -> 400 * WandGem.WIZARD.getCapacity();
-                case HEAVENLY -> 400 * WandGem.ARCHMAGE.getCapacity();
+                case HEAVENLY, CREATIVE -> 400 * WandGem.ARCHMAGE.getCapacity();
                 default -> 0;
             };
         } else {
@@ -123,7 +123,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         if (this.getBlockState().getBlock() instanceof ManaBatteryBlock batteryBlock) {
             return switch (batteryBlock.getDeviceTier()) {
                 case FORBIDDEN -> 100 * WandCap.HEXIUM.getSiphonAmount();
-                case HEAVENLY -> 100 * WandCap.HALLOWSTEEL.getSiphonAmount();
+                case HEAVENLY, CREATIVE -> 100 * WandCap.HALLOWSTEEL.getSiphonAmount();
                 default -> 0;
             };
         } else {
