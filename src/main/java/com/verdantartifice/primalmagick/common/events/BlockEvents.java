@@ -6,16 +6,18 @@ import java.util.Queue;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.fx.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,14 +31,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Handlers for block related events.
@@ -177,11 +177,9 @@ public class BlockEvents {
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
                 // Open the grimoire menu
-                if (!level.isClientSide) {
+                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);
-                }
-                if (level.isClientSide && FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openGrimoireScreen();
+                    PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             }
