@@ -7,22 +7,32 @@ import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.fx.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.LecternBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -135,5 +145,51 @@ public class BlockEvents {
         if (!event.isCanceled() && event.getState().getDestroySpeed(event.getLevel(), event.getPos()) >= 2.0F && event.getPlayer().getMainHandItem().isEmpty()) {
             StatsManager.incrementValue(event.getPlayer(), StatsPM.BLOCKS_BROKEN_BAREHANDED);
         }
+    }
+    
+    @SubscribeEvent
+    public static void onBlockRightClick(PlayerInteractEvent.RightClickBlock event) {
+        InteractionResult result = InteractionResult.PASS;
+        BlockPos pos = event.getHitVec().getBlockPos();
+        BlockEntity tileEntity = event.getLevel().getBlockEntity(pos);
+        
+        if (tileEntity instanceof LecternBlockEntity lecternEntity) {
+            result = handleLecternRightClick(lecternEntity, event.getEntity(), event.getHand());
+        }
+        
+        if (result.consumesAction()) {
+            event.setCanceled(true);
+            event.setCancellationResult(result);
+        }
+    }
+    
+    private static InteractionResult handleLecternRightClick(LecternBlockEntity lecternEntity, Player player, InteractionHand hand) {
+        Level level = lecternEntity.getLevel();
+        if (lecternEntity.getBlockState().getValue(LecternBlock.HAS_BOOK)) {
+            if (player.isSecondaryUseActive()) {
+                // Take the book
+                ItemStack bookStack = lecternEntity.getBook();
+                lecternEntity.setBook(ItemStack.EMPTY);
+                LecternBlock.resetBookState(player, level, lecternEntity.getBlockPos(), lecternEntity.getBlockState(), false);
+                if (!player.getInventory().add(bookStack)) {
+                    player.drop(bookStack, false);
+                }
+                return InteractionResult.SUCCESS;
+            } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
+                // Open the grimoire menu
+                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                    StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);
+                    PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
+                }
+                return InteractionResult.SUCCESS;
+            }
+        } else {
+            // Place the grimoire
+            ItemStack handStack = player.getItemInHand(hand);
+            if (handStack.is(ItemsPM.GRIMOIRE.get()) && LecternBlock.tryPlaceBook(player, level, lecternEntity.getBlockPos(), lecternEntity.getBlockState(), handStack)) {
+                return InteractionResult.SUCCESS;
+            }
+        }
+        return InteractionResult.PASS;
     }
 }
