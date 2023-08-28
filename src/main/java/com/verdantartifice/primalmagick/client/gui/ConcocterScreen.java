@@ -35,7 +35,7 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterMenu> impl
 
     public ConcocterScreen(ConcocterMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
-        this.titleLabelX = 44;
+        this.titleLabelX = 27;
         this.inventoryLabelX = 27;
     }
 
@@ -74,7 +74,6 @@ public class ConcocterScreen extends AbstractContainerScreen<ConcocterMenu> impl
         }));
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
-        this.titleLabelX = 29;
     }
 
     @Override

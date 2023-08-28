@@ -11,6 +11,7 @@ v4.0.3
 * Added Sanguine Core types for camels and sniffers
 * Made Grimoires placeable on chiseled bookshelves
 * Fixed a bug with several devices causing their first input to be processed instantly
+* Added GUI labels to some devices missing them
 
 v4.0.2
 ------

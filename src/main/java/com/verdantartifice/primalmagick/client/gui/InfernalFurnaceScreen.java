@@ -35,7 +35,7 @@ public class InfernalFurnaceScreen extends AbstractContainerScreen<InfernalFurna
 
     public InfernalFurnaceScreen(InfernalFurnaceMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
-        this.titleLabelX = 44;
+        this.titleLabelX = 27;
         this.inventoryLabelX = 27;
     }
 
@@ -56,7 +56,6 @@ public class InfernalFurnaceScreen extends AbstractContainerScreen<InfernalFurna
         }));
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
-        this.titleLabelX = 29;
     }
 
     @Override

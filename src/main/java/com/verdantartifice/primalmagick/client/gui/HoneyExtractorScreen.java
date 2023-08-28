@@ -23,6 +23,8 @@ public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractor
 
     public HoneyExtractorScreen(HoneyExtractorMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
+        this.titleLabelX = 27;
+        this.inventoryLabelX = 27;
     }
 
     @Override
@@ -38,11 +40,6 @@ public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractor
     protected void init() {
         super.init();
         this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
-    }
-
-    @Override
-    protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
-        // Don't draw title text
     }
 
     @Override

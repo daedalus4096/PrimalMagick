@@ -35,7 +35,7 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
 
     public DissolutionChamberScreen(DissolutionChamberMenu screenMenu, Inventory inv, Component titleIn) {
         super(screenMenu, inv, titleIn);
-        this.titleLabelX = 44;
+        this.titleLabelX = 27;
         this.inventoryLabelX = 27;
     }
 
@@ -73,7 +73,6 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
         }));
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
-        this.titleLabelX = 29;
     }
 
     @Override
