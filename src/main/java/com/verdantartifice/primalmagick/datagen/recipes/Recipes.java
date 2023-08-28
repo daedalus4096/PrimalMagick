@@ -3881,6 +3881,13 @@ public class Recipes extends RecipeProvider {
             .setGroup("attuned_sanguine_cores")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAMEL.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SADDLE)
+            .addIngredient(Items.CACTUS)
+            .setGroup("attuned_sanguine_cores")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemTags.FISHES)
@@ -4186,6 +4193,13 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.SLIMEBALLS)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .setGroup("attuned_sanguine_cores")
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SNIFFER.get())
+            .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
+            .addIngredient(Items.SNIFFER_EGG)
+            .addIngredient(Items.TORCHFLOWER_SEEDS)
             .setGroup("attuned_sanguine_cores")
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);

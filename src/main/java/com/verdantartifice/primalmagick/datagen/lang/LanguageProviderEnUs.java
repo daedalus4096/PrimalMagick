@@ -660,6 +660,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SANGUINE_CORE_BAT).name("Sanguine Core: Bat").build();
         this.item(ItemsPM.SANGUINE_CORE_BEE).name("Sanguine Core: Bee").build();
         this.item(ItemsPM.SANGUINE_CORE_BLAZE).name("Sanguine Core: Blaze").build();
+        this.item(ItemsPM.SANGUINE_CORE_CAMEL).name("Sanguine Core: Camel").build();
         this.item(ItemsPM.SANGUINE_CORE_CAT).name("Sanguine Core: Cat").build();
         this.item(ItemsPM.SANGUINE_CORE_CAVE_SPIDER).name("Sanguine Core: Cave Spider").build();
         this.item(ItemsPM.SANGUINE_CORE_CHICKEN).name("Sanguine Core: Chicken").build();
@@ -704,6 +705,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SANGUINE_CORE_SKELETON).name("Sanguine Core: Skeleton").build();
         this.item(ItemsPM.SANGUINE_CORE_SKELETON_HORSE).name("Sanguine Core: Skeleton Horse").build();
         this.item(ItemsPM.SANGUINE_CORE_SLIME).name("Sanguine Core: Slime").build();
+        this.item(ItemsPM.SANGUINE_CORE_SNIFFER).name("Sanguine Core: Sniffer").build();
         this.item(ItemsPM.SANGUINE_CORE_SPIDER).name("Sanguine Core: Spider").build();
         this.item(ItemsPM.SANGUINE_CORE_SQUID).name("Sanguine Core: Squid").build();
         this.item(ItemsPM.SANGUINE_CORE_STRAY).name("Sanguine Core: Stray").build();

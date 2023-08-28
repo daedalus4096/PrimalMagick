@@ -8,6 +8,7 @@ v4.0.3
 * Fixed a bug causing Ancient Mana Fonts to refill on every server restart
 * Updated wand charger texture
 * Added Mana Nexus, to better keep your arcane power
+* Added Sanguine Core types for camels and sniffers
 
 v4.0.2
 ------

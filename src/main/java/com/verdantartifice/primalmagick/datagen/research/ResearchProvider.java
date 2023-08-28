@@ -663,11 +663,12 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CORE_LAND_ANIMALS", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("SANGUINE_CRUCIBLE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.SANGUINE_CORE_CAT.get()).recipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get()).recipe(ItemsPM.SANGUINE_CORE_COW.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_DONKEY.get()).recipe(ItemsPM.SANGUINE_CORE_FOX.get()).recipe(ItemsPM.SANGUINE_CORE_GOAT.get()).recipe(ItemsPM.SANGUINE_CORE_HORSE.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_LLAMA.get()).recipe(ItemsPM.SANGUINE_CORE_OCELOT.get()).recipe(ItemsPM.SANGUINE_CORE_PANDA.get()).recipe(ItemsPM.SANGUINE_CORE_PIG.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_RABBIT.get()).recipe(ItemsPM.SANGUINE_CORE_RAVAGER.get()).recipe(ItemsPM.SANGUINE_CORE_SHEEP.get()).recipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get())
-                    .recipe(ItemsPM.SANGUINE_CORE_SLIME.get()).recipe(ItemsPM.SANGUINE_CORE_SPIDER.get()).recipe(ItemsPM.SANGUINE_CORE_WOLF.get()).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 2).recipe(ItemsPM.SANGUINE_CORE_CAT.get()).recipe(ItemsPM.SANGUINE_CORE_CAMEL.get()).recipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
+                    .recipe(ItemsPM.SANGUINE_CORE_COW.get()) .recipe(ItemsPM.SANGUINE_CORE_DONKEY.get()).recipe(ItemsPM.SANGUINE_CORE_FOX.get()).recipe(ItemsPM.SANGUINE_CORE_GOAT.get())
+                    .recipe(ItemsPM.SANGUINE_CORE_HORSE.get()) .recipe(ItemsPM.SANGUINE_CORE_LLAMA.get()).recipe(ItemsPM.SANGUINE_CORE_OCELOT.get()).recipe(ItemsPM.SANGUINE_CORE_PANDA.get())
+                    .recipe(ItemsPM.SANGUINE_CORE_PIG.get()).recipe(ItemsPM.SANGUINE_CORE_RABBIT.get()).recipe(ItemsPM.SANGUINE_CORE_RAVAGER.get()).recipe(ItemsPM.SANGUINE_CORE_SHEEP.get())
+                    .recipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get()).recipe(ItemsPM.SANGUINE_CORE_SLIME.get()).recipe(ItemsPM.SANGUINE_CORE_SNIFFER.get()).recipe(ItemsPM.SANGUINE_CORE_SPIDER.get())
+                    .recipe(ItemsPM.SANGUINE_CORE_WOLF.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SANGUINE_CORE_SEA_CREATURES", discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("SANGUINE_CRUCIBLE")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
