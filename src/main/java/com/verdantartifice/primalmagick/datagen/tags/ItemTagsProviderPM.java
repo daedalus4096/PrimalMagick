@@ -145,6 +145,8 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         this.tag(ItemTagsPM.TREEFOLK_LOVED).add(Items.BONE_MEAL);
         
+        this.tag(ItemTagsPM.WARDABLE_ARMOR).add(Items.IRON_CHESTPLATE, ItemsPM.PRIMALITE_CHEST.get());
+        
         this.tag(ItemTagsPM.ROBES).addTag(ItemTagsPM.ROBES_HELMETS).addTag(ItemTagsPM.ROBES_CHESTPLATES).addTag(ItemTagsPM.ROBES_LEGGINGS).addTag(ItemTagsPM.ROBES_BOOTS);
         this.tag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.SAINTSWOOL_HEAD.get());
         this.tag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.IMBUED_WOOL_CHEST.get(), ItemsPM.SPELLCLOTH_CHEST.get(), ItemsPM.HEXWEAVE_CHEST.get(), ItemsPM.SAINTSWOOL_CHEST.get());

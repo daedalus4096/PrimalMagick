@@ -39,6 +39,8 @@ public class ItemTagsPM {
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
     
+    public static final TagKey<Item> WARDABLE_ARMOR = tag("wardable_armor");
+    
     public static final TagKey<Item> ROBES = tag("robes");
     public static final TagKey<Item> ROBES_HELMETS = tag("robes/helmets");
     public static final TagKey<Item> ROBES_CHESTPLATES = tag("robes/chestplates");
