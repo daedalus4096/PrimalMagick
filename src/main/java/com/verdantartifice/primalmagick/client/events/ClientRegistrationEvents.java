@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle
 import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
+import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -97,6 +98,7 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
         event.registerAbove(VanillaGuiOverlay.HOTBAR.id(), "wand_hud", new WandHudOverlay());
+        event.registerAbove(VanillaGuiOverlay.PLAYER_HEALTH.id(), "warding_hud", new WardingHudOverlay());
     }
     
     @SubscribeEvent
