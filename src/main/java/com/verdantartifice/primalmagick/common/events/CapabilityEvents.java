@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
@@ -8,9 +9,12 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -39,5 +43,13 @@ public class CapabilityEvents {
     @SubscribeEvent
     public static void attachWorldCapability(AttachCapabilitiesEvent<Level> event) {
         event.addCapability(WorldEntitySwappers.Provider.NAME, new WorldEntitySwappers.Provider());
+    }
+    
+    @SubscribeEvent
+    public static void attachItemStackCapability(AttachCapabilitiesEvent<ItemStack> event) {
+        if (event.getObject().is(ItemTagsPM.WARDABLE_ARMOR)) {
+            // Only attach these capabilities to certain item stacks, not all of them
+            event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(10000, 100, 100, Source.EARTH));
+        }
     }
 }

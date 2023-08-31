@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
@@ -16,6 +17,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
@@ -59,6 +61,14 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item is a glamoured wand (this code is here instead of in AbstractWandItem for tooltip ordering reasons)
         if (event.getItemStack().getItem() instanceof IWand wand && wand.isGlamoured(event.getItemStack())) {
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.glamoured").withStyle(ChatFormatting.DARK_AQUA));
+        }
+        
+        // Show a tooltip entry if the item is warded armor
+        if (event.getItemStack().is(ItemTagsPM.WARDABLE_ARMOR)) {
+            event.getItemStack().getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaStorage -> {
+                Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(event.getEntity()) /* && manaStorage.getManaStored(source) > 0 */).forEach(source ->
+                    event.getToolTip().add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
+            });
         }
     }
     

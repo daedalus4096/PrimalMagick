@@ -4,11 +4,20 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
 
 /**
  * Default implementation of the mana storage capability.
@@ -123,5 +132,42 @@ public class ManaStorage implements IManaStorage {
     
     protected void onManaChanged() {
         // Do nothing by default
+    }
+    
+    /**
+     * Capability provider for the mana storage capability.  Used to attach capability data to the owner.
+     * 
+     * @author Daedalus4096
+     * @see {@link com.verdantartifice.primalmagick.common.events.CapabilityEvents}
+     */
+    public static class Provider implements ICapabilitySerializable<CompoundTag> {
+        public static final ResourceLocation NAME = PrimalMagick.resource("capability_mana_storage");
+        
+        private final IManaStorage instance;
+        private final LazyOptional<IManaStorage> holder;
+        
+        public Provider(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
+            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
+            this.holder = LazyOptional.of(() -> this.instance);  // Cache a lazy optional of the capability instance
+        }
+
+        @Override
+        public <T> @NotNull LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+            if (cap == PrimalMagickCapabilities.MANA_STORAGE) {
+                return this.holder.cast();
+            } else {
+                return LazyOptional.empty();
+            }
+        }
+
+        @Override
+        public CompoundTag serializeNBT() {
+            return this.instance.serializeNBT();
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag nbt) {
+            this.instance.deserializeNBT(nbt);
+        }
     }
 }
