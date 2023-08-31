@@ -252,19 +252,31 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
-        return !outputStack.isEmpty() &&
-                outputStack.getItem() instanceof IWand wand &&
-                wand.getMana(outputStack, source) < wand.getMaxMana(outputStack) &&
-                (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0);
+        if (!outputStack.isEmpty() && (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0)) {
+            if (outputStack.getItem() instanceof IWand wand) {
+                return wand.getMana(outputStack, source) < wand.getMaxMana(outputStack);
+            } else {
+                return outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+            }
+        }
+        return false;
     }
     
     protected void doOutput(ItemStack outputStack, Source source) {
-        if (this.canOutputToWand(outputStack, source) && outputStack.getItem() instanceof IWand wand) {
-            int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
-            int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
-            int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
-            int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
-            this.manaStorage.extractMana(source, transferedCentimana, false);
+        if (this.canOutputToWand(outputStack, source)) {
+            if (outputStack.getItem() instanceof IWand wand) {
+                int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
+                int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
+                int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
+                int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
+                this.manaStorage.extractMana(source, transferedCentimana, false);
+            } else {
+                outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(stackManaStorage -> {
+                    int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
+                    int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
+                    this.manaStorage.extractMana(source, transferedCentimana, false);
+                });
+            }
         }
     }
     
