@@ -450,6 +450,13 @@ public class PlayerEvents {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
         }
         
+        try {
+            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtWard);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
+        }
+        
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
         
         // If the player died, refresh any attunement attribute modifiers they may have had
