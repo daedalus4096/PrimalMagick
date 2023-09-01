@@ -64,7 +64,7 @@ public class ClientRenderEvents {
         
         // Show a tooltip entry if the item is warded armor
         event.getItemStack().getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaStorage -> {
-            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source) ).forEach(source ->
+            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source)).forEach(source ->
                 event.getToolTip().add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
         });
     }

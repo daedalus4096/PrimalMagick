@@ -47,7 +47,7 @@ public class CapabilityEvents {
     
     @SubscribeEvent
     public static void attachItemStackCapability(AttachCapabilitiesEvent<ItemStack> event) {
-        if (event.getObject().is(ItemTagsPM.WARDABLE_ARMOR)) {
+        if (event.getObject().is(ItemTagsPM.WARDABLE_ARMOR) && event.getObject().isEnchanted()) {
             // Only attach these capabilities to certain item stacks, not all of them
             event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(10000, 100, 100, Source.EARTH));
         }
