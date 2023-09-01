@@ -121,13 +121,18 @@ public class ManaStorage implements IManaStorage {
     }
 
     @Override
+    public boolean canStore(Source source) {
+        return this.allowedSources.contains(source);
+    }
+
+    @Override
     public boolean canExtract(Source source) {
-        return this.allowedSources.contains(source) && this.maxExtract > 0;
+        return this.canStore(source) && this.maxExtract > 0;
     }
 
     @Override
     public boolean canReceive(Source source) {
-        return this.allowedSources.contains(source) && this.maxReceive > 0;
+        return this.canStore(source) && this.maxReceive > 0;
     }
     
     protected void onManaChanged() {
