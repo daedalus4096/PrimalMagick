@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -136,8 +137,8 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         boolean shouldMarkDirty = false;
         
         if (!level.isClientSide) {
-            ItemStack inputStack = entity.items.get(INPUT_SLOT_INDEX);
-            ItemStack chargeStack = entity.items.get(CHARGE_SLOT_INDEX);
+            ItemStack inputStack = entity.getItem(INPUT_SLOT_INDEX);
+            ItemStack chargeStack = entity.getItem(CHARGE_SLOT_INDEX);
             
             // Scan surroundings for mana fonts once a second
             if (entity.fontSiphonTime % 20 == 0) {
@@ -276,6 +277,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
                     int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
                     this.manaStorage.extractMana(source, transferedCentimana, false);
                 });
+                outputStack.getOrCreateTag().put("LastUpdated", LongTag.valueOf(System.currentTimeMillis()));   // FIXME Is there a better way of marking this stack as dirty?
             }
         }
     }
@@ -362,7 +364,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
+        ItemStack slotStack = this.getItem(index);
         super.setItem(index, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index == 0 && !flag) {
