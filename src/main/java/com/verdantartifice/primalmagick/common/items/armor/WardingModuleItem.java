@@ -24,11 +24,15 @@ public class WardingModuleItem extends Item implements ITieredDevice {
         return this.tier;
     }
     
+    public boolean hasWard() {
+        return this.getWardLevel() > 0;
+    }
+    
     public int getWardLevel() {
         return switch (this.getDeviceTier()) {
-            case ENCHANTED -> 2;
-            case FORBIDDEN -> 3;
-            case HEAVENLY -> 4;
+            case ENCHANTED -> 1;
+            case FORBIDDEN -> 2;
+            case HEAVENLY -> 3;
             default -> 0;
         };
     }
