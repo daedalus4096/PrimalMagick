@@ -865,6 +865,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("mana_discount").name("Mana discount: %1$d%%").build();
         this.tooltip("mana_discount_attuned").name("%2$s mana discount: %1$d%%").build();
         this.tooltip("glamoured").name("Glamoured").build();
+        this.tooltip("warded").name("Warded").build();
         this.tooltip("runescribed").name("Runescribed").build();
         this.tooltip("rune_limit").name("Limit %1$d per runescribe").build();
         this.tooltip("none").name("None").build();

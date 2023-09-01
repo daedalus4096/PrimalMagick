@@ -13,16 +13,19 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -60,6 +63,12 @@ public class ClientRenderEvents {
         // Show a tooltip entry if the item is a glamoured wand (this code is here instead of in AbstractWandItem for tooltip ordering reasons)
         if (event.getItemStack().getItem() instanceof IWand wand && wand.isGlamoured(event.getItemStack())) {
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.glamoured").withStyle(ChatFormatting.DARK_AQUA));
+        }
+        
+        // Show a tooltip entry if the item has a warding module attached
+        if (event.getItemStack().is(ItemTagsPM.WARDABLE_ARMOR) && WardingModuleItem.hasWardAttached(event.getItemStack())) {
+            Component levelComponent = Component.translatable("enchantment.level." + WardingModuleItem.getAttachedWardLevel(event.getItemStack()));
+            event.getToolTip().add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
         }
         
         // Show a tooltip entry if the item is warded armor

@@ -33,4 +33,5 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SimpleCraftingRecipeSerializer<TieredShieldDecorationRecipe>> TIERED_SHIELD_DECORATION = RECIPE_SERIALIZERS.register("tiered_shield_decoration", () -> new SimpleCraftingRecipeSerializer<>(TieredShieldDecorationRecipe::new));
     public static final RegistryObject<RecipeSerializer<DissolutionRecipe>> DISSOLUTION = RECIPE_SERIALIZERS.register("dissolution", DissolutionRecipe.Serializer::new);
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WandGlamourRecipe>> WAND_GLAMOUR_SPECIAL = RECIPE_SERIALIZERS.register("wand_glamour_special", () -> new SimpleCraftingRecipeSerializer<>(WandGlamourRecipe::new));
+    public static final RegistryObject<SimpleCraftingRecipeSerializer<WardingModuleApplicationRecipe>> WARDING_MODULE_APPLICATION = RECIPE_SERIALIZERS.register("warding_module_application", () -> new SimpleCraftingRecipeSerializer<>(WardingModuleApplicationRecipe::new));
 }

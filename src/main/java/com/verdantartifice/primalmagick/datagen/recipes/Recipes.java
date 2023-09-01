@@ -646,6 +646,8 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.MODID + ":tiered_shield_decoration");
         SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_GLAMOUR_SPECIAL.get())
             .save(consumer, PrimalMagick.MODID + ":wand_glamour");
+        SpecialRecipeBuilder.special(RecipeSerializersPM.WARDING_MODULE_APPLICATION.get())
+            .save(consumer, PrimalMagick.MODID + ":warding_module_application");
     }
 
     protected void registerMarbleRecipes(Consumer<FinishedRecipe> consumer) {

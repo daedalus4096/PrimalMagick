@@ -2440,6 +2440,7 @@
   "tooltip.primalmagick.spells.none": "   None",
   "tooltip.primalmagick.spells.short_wand_header": "Active Spell: %1$s",
   "tooltip.primalmagick.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
+  "tooltip.primalmagick.warded": "Warded",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",
   "trim_material.primalmagick.rune_earth": "Earth Rune Material",
   "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
