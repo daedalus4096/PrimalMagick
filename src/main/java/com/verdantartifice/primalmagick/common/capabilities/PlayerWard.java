@@ -52,6 +52,11 @@ public class PlayerWard implements IPlayerWard {
     }
 
     @Override
+    public List<EquipmentSlot> getApplicableSlots() {
+        return APPLICABLE_SLOTS;
+    }
+
+    @Override
     public int getCurrentWard() {
         return this.current;
     }

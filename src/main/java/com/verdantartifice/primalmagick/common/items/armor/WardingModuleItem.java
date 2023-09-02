@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.items.armor;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,7 +43,7 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     }
     
     public static boolean hasWardAttached(ItemStack stack) {
-        return stack.hasTag() && stack.getTag().contains(TAG_NAME) && getAttachedWardLevel(stack) > 0;
+        return stack.is(ItemTagsPM.WARDABLE_ARMOR) && stack.hasTag() && stack.getTag().contains(TAG_NAME) && getAttachedWardLevel(stack) > 0;
     }
     
     public static int getAttachedWardLevel(ItemStack stack) {

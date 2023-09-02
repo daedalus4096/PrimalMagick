@@ -1,14 +1,17 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -25,6 +28,7 @@ import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -130,6 +134,20 @@ public class EntityEvents {
             if (caster != null && caster instanceof LivingEntity living) {
                 event.setLootingLevel(Math.max(event.getLootingLevel(), EnchantmentHelper.getEnchantmentLevel(EnchantmentsPM.TREASURE.get(), living)));
             }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
+        // If a player is donning or removing a warded piece of armor, update their max ward level
+        if (event.getEntity() instanceof ServerPlayer serverPlayer &&
+                (WardingModuleItem.hasWardAttached(event.getFrom()) || WardingModuleItem.hasWardAttached(event.getTo()) ) ) {
+            PrimalMagickCapabilities.getWard(serverPlayer).ifPresent(playerWard -> {
+                int newMax = playerWard.getApplicableSlots().stream().map(slot -> serverPlayer.getItemBySlot(slot)).filter(WardingModuleItem::hasWardAttached)
+                        .mapToInt(stack -> 1 + WardingModuleItem.getAttachedWardLevel(stack)).sum();
+                playerWard.setMaxWard(newMax);
+                playerWard.sync(serverPlayer);
+            });
         }
     }
 }

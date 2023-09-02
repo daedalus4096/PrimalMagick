@@ -18,7 +18,6 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
@@ -66,7 +65,7 @@ public class ClientRenderEvents {
         }
         
         // Show a tooltip entry if the item has a warding module attached
-        if (event.getItemStack().is(ItemTagsPM.WARDABLE_ARMOR) && WardingModuleItem.hasWardAttached(event.getItemStack())) {
+        if (WardingModuleItem.hasWardAttached(event.getItemStack())) {
             Component levelComponent = Component.translatable("enchantment.level." + WardingModuleItem.getAttachedWardLevel(event.getItemStack()));
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
         }

@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -50,7 +49,7 @@ public class CapabilityEvents {
     
     @SubscribeEvent
     public static void attachItemStackCapability(AttachCapabilitiesEvent<ItemStack> event) {
-        if (event.getObject().is(ItemTagsPM.WARDABLE_ARMOR) && WardingModuleItem.hasWardAttached(event.getObject())) {
+        if (WardingModuleItem.hasWardAttached(event.getObject())) {
             // Only attach these capabilities to certain item stacks, not all of them
             event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(10000, 100, 100, Source.EARTH));
         }

@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -12,6 +15,13 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 public interface IPlayerWard extends INBTSerializable<CompoundTag> {
+    /**
+     * Gets the list of equipment slots which count toward player maximum ward.
+     * 
+     * @return the list of applicable equipment slots
+     */
+    List<EquipmentSlot> getApplicableSlots();
+
     /**
      * Gets the player's current ward level, in health points.
      * 
