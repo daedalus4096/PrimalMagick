@@ -53,12 +53,26 @@ public interface IPlayerWard extends INBTSerializable<CompoundTag> {
     }
     
     /**
+     * Increments the player's current ward level by one, in health points.
+     */
+    default void incrementCurrentWard() {
+        this.incrementCurrentWard(1);
+    }
+    
+    /**
      * Decrements the player's current ward level by the given amount, in health points.
      * 
      * @param delta the amount to decrease the player's current ward level
      */
     default void decrementCurrentWard(int delta) {
         this.incrementCurrentWard(-delta);
+    }
+    
+    /**
+     * Decrements the player's current ward level by one, in health points.
+     */
+    default void decrementCurrentWard() {
+        this.decrementCurrentWard(1);
     }
     
     /**

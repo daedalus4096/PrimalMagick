@@ -1,16 +1,18 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
+import net.minecraftforge.common.util.LazyOptional;
 
 public class WardingHudOverlay implements IGuiOverlay {
     protected static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
@@ -25,26 +27,30 @@ public class WardingHudOverlay implements IGuiOverlay {
             RenderSystem.enableBlend();
             
             Player player = (Player)mc.getCameraEntity();
-            int ward = 5; // FIXME Get current ward value
-            int wardLast = 5;   // FIXME Get the last ward value
+            LazyOptional<IPlayerWard> wardCapOpt = PrimalMagickCapabilities.getWard(player);
+            
+            int ward = wardCapOpt.<Integer>lazyMap(wardCap -> wardCap.getCurrentWard()).orElse(0);
+            int wardLast = ward;    // FIXME Get the last ward value
             boolean highlight = false;
 
-            float wardMax = 8.0F;   // FIXME Get the actual maximum ward value
+            float wardMax = wardCapOpt.<Integer>lazyMap(wardCap -> wardCap.getMaxWard()).orElse(0);
             int absorb = 0; // Not relevant to wards
             int wardRows = Mth.ceil(wardMax / 2.0F / 10.0F);
             int rowHeight = Math.max(10 - (wardRows - 2), 3);
             
-            int left = screenWidth / 2 - 91;
-            int top = screenHeight - gui.leftHeight;
-            gui.leftHeight += (wardRows * rowHeight);
-            if (rowHeight != 10) gui.leftHeight += 10 - rowHeight;
+            if (wardMax > 0F) {
+                int left = screenWidth / 2 - 91;
+                int top = screenHeight - gui.leftHeight;
+                gui.leftHeight += (wardRows * rowHeight);
+                if (rowHeight != 10) gui.leftHeight += 10 - rowHeight;
 
-            int regen = -1;
-            if (player.hasEffect(MobEffects.REGENERATION)) {    // FIXME Test if player ward is regenerating instead of health
-                regen = gui.getGuiTicks() % Mth.ceil(wardMax + 5.0F);
+                int regen = -1;
+                if (wardCapOpt.<Boolean>lazyMap(wardCap -> wardCap.isRegenerating()).orElse(false)) {
+                    regen = gui.getGuiTicks() % Mth.ceil(wardMax + 5.0F);
+                }
+
+                this.renderPentacles(gui, guiGraphics, player, left, top, rowHeight, regen, wardMax, ward, wardLast, absorb, highlight, RandomSource.create());
             }
-
-            this.renderPentacles(gui, guiGraphics, player, left, top, rowHeight, regen, wardMax, ward, wardLast, absorb, highlight, RandomSource.create());
 
             RenderSystem.disableBlend();
             mc.getProfiler().pop();
@@ -63,9 +69,6 @@ public class WardingHudOverlay implements IGuiOverlay {
             int col = index % 10;
             int xPos = left + col * 8;
             int yPos = top - row * rowHeight;
-            if (ward + absorb <= 4) {
-                yPos += random.nextInt(2);
-            }
             if (index < maxHealthHearts && index == regen) {
                 yPos -= 2;
             }

@@ -129,6 +129,7 @@ public class PlayerEvents {
                 // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
                 handleLightDrop(player);
                 handleRegrowth(player);
+                handleWardRegeneration(player);
             }
             if (player.tickCount % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
@@ -225,11 +226,14 @@ public class PlayerEvents {
             });
         }
         if (immediate) {
-            // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
+            // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
             IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
+            PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+                wardCap.sync(player);
+            });
         }
     }
     
@@ -389,6 +393,16 @@ public class PlayerEvents {
                 stack.hurtAndBreak(-1, player, p -> {});
             }
         }
+    }
+    
+    protected static void handleWardRegeneration(ServerPlayer player) {
+        PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+            if (wardCap.isRegenerating()) {
+                // TODO Consume mana from warded armor stacks
+                wardCap.incrementCurrentWard();
+                wardCap.sync(player);
+            }
+        });
     }
     
     @SubscribeEvent
