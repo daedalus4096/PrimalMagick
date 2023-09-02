@@ -25,16 +25,16 @@ public class PlayerWard implements IPlayerWard {
     protected static final List<EquipmentSlot> APPLICABLE_SLOTS = List.of(EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.HEAD, EquipmentSlot.FEET);
     protected static final int PAUSE_DURATION_MILLIS = 10000;
     
-    private int current = 0;
-    private int max = 0;
+    private float current = 0;
+    private float max = 0;
     private long lastPaused = 0;        // Last timestamp at which regeneration was paused
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag rootTag = new CompoundTag();
-        rootTag.putInt("Current", this.current);
-        rootTag.putInt("Max", this.max);
+        rootTag.putFloat("Current", this.current);
+        rootTag.putFloat("Max", this.max);
         rootTag.putLong("LastPaused", this.lastPaused);
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         return rootTag;
@@ -46,8 +46,8 @@ public class PlayerWard implements IPlayerWard {
             return;
         }
         this.clear();
-        this.current = nbt.getInt("Current");
-        this.max = nbt.getInt("Max");
+        this.current = nbt.getFloat("Current");
+        this.max = nbt.getFloat("Max");
         this.lastPaused = nbt.getLong("LastPaused");
     }
 
@@ -57,22 +57,22 @@ public class PlayerWard implements IPlayerWard {
     }
 
     @Override
-    public int getCurrentWard() {
+    public float getCurrentWard() {
         return this.current;
     }
 
     @Override
-    public int getMaxWard() {
+    public float getMaxWard() {
         return this.max;
     }
 
     @Override
-    public void setCurrentWard(int ward) {
+    public void setCurrentWard(float ward) {
         this.current = Mth.clamp(ward, 0, this.getMaxWard());
     }
 
     @Override
-    public void setMaxWard(int ward) {
+    public void setMaxWard(float ward) {
         this.max = ward;
         this.current = Mth.clamp(this.current, 0, this.getMaxWard());
     }

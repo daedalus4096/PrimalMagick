@@ -27,28 +27,28 @@ public interface IPlayerWard extends INBTSerializable<CompoundTag> {
      * 
      * @return the player's current ward level
      */
-    int getCurrentWard();
+    float getCurrentWard();
     
     /**
      * Gets the player's maximum ward level, in health points.
      * 
      * @return the player's maximum ward level
      */
-    int getMaxWard();
+    float getMaxWard();
     
     /**
      * Sets the player's current ward level, in health points.
      * 
      * @param ward the new current ward level
      */
-    void setCurrentWard(int ward);
+    void setCurrentWard(float ward);
     
     /**
      * Increments the player's current ward level by the given amount, in health points.
      * 
      * @param delta the amount to increase the player's current ward level
      */
-    default void incrementCurrentWard(int delta) {
+    default void incrementCurrentWard(float delta) {
         this.setCurrentWard(this.getCurrentWard() + delta);
     }
     
@@ -64,7 +64,7 @@ public interface IPlayerWard extends INBTSerializable<CompoundTag> {
      * 
      * @param delta the amount to decrease the player's current ward level
      */
-    default void decrementCurrentWard(int delta) {
+    default void decrementCurrentWard(float delta) {
         this.incrementCurrentWard(-delta);
     }
     
@@ -80,7 +80,7 @@ public interface IPlayerWard extends INBTSerializable<CompoundTag> {
      * 
      * @param ward the new maximum ward level
      */
-    void setMaxWard(int ward);
+    void setMaxWard(float ward);
     
     /**
      * Gets whether the player's current ward level is regenerating over time.

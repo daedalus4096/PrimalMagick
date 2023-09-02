@@ -29,11 +29,11 @@ public class WardingHudOverlay implements IGuiOverlay {
             Player player = (Player)mc.getCameraEntity();
             LazyOptional<IPlayerWard> wardCapOpt = PrimalMagickCapabilities.getWard(player);
             
-            int ward = wardCapOpt.<Integer>lazyMap(wardCap -> wardCap.getCurrentWard()).orElse(0);
+            int ward = Mth.ceil(wardCapOpt.<Float>lazyMap(wardCap -> wardCap.getCurrentWard()).orElse(0F));
             int wardLast = ward;    // FIXME Get the last ward value
             boolean highlight = false;
 
-            float wardMax = wardCapOpt.<Integer>lazyMap(wardCap -> wardCap.getMaxWard()).orElse(0);
+            float wardMax = wardCapOpt.<Float>lazyMap(wardCap -> wardCap.getMaxWard()).orElse(0F);
             int absorb = 0; // Not relevant to wards
             int wardRows = Mth.ceil(wardMax / 2.0F / 10.0F);
             int rowHeight = Math.max(10 - (wardRows - 2), 3);
