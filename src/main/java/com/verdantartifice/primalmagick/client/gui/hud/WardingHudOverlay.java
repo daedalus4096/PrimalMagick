@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.hud;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
@@ -15,7 +16,7 @@ import net.minecraftforge.client.gui.overlay.IGuiOverlay;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class WardingHudOverlay implements IGuiOverlay {
-    protected static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
+    protected static final ResourceLocation GUI_ICONS_LOCATION = PrimalMagick.resource("textures/gui/hud.png");
 
     @Override
     public void render(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int screenWidth, int screenHeight) {
@@ -59,8 +60,6 @@ public class WardingHudOverlay implements IGuiOverlay {
 
     private void renderPentacles(ForgeGui gui, GuiGraphics guiGraphics, Player player, int left, int top, int rowHeight,
             int regen, float wardMax, int ward, int wardLast, int absorb, boolean highlight, RandomSource random) {
-        int frozenX = 178;   // TODO Calculate from heart type
-        int textureY = 0;
         int maxHealthHearts = Mth.ceil((double)wardMax / 2.0D);
         int maxAbsorbHearts = Mth.ceil((double)absorb / 2.0D);
         
@@ -73,14 +72,14 @@ public class WardingHudOverlay implements IGuiOverlay {
                 yPos -= 2;
             }
             
-            this.renderPentacle(guiGraphics, xPos, yPos, 16, 0, highlight, false); // Render container
+            this.renderPentacle(guiGraphics, xPos, yPos, 87, 0, highlight, false); // Render container
             int doubleIndex = index * 2;    // ???
             
             if (highlight && doubleIndex < wardLast) {
-                this.renderPentacle(guiGraphics, xPos, yPos, frozenX, textureY, true, (doubleIndex + 1 == wardLast));
+                this.renderPentacle(guiGraphics, xPos, yPos, 96, 0, true, (doubleIndex + 1 == wardLast));
             }
             if (doubleIndex < ward) {
-                this.renderPentacle(guiGraphics, xPos, yPos, frozenX, textureY, false, (doubleIndex + 1 == ward));
+                this.renderPentacle(guiGraphics, xPos, yPos, 96, 0, false, (doubleIndex + 1 == ward));
             }
         }
     }
