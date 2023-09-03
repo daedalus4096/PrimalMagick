@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.client.events;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
@@ -13,25 +16,31 @@ import com.verdantartifice.primalmagick.client.fx.particles.SpellBoltParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.SpellcraftingRuneParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
+import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.IItemDecorator;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RegisterItemDecorationsEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Respond to client-only Forge registration events.
@@ -40,6 +49,8 @@ import net.minecraftforge.fml.common.Mod;
  */
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID, value=Dist.CLIENT, bus=Mod.EventBusSubscriber.Bus.MOD)
 public class ClientRegistrationEvents {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     @SubscribeEvent
     public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
         event.registerSpriteSet(ParticleTypesPM.WAND_POOF.get(), WandPoofParticle.Factory::new);
@@ -104,5 +115,14 @@ public class ClientRegistrationEvents {
     @SubscribeEvent
     public static void onRegisterClientTooltipComponentFactories(RegisterClientTooltipComponentFactoriesEvent event) {
         event.register(AffinityTooltipComponent.class, ClientAffinityTooltipComponent::new);
+    }
+    
+    @SubscribeEvent
+    public static void onRegisterItemDecorations(RegisterItemDecorationsEvent event) {
+        IItemDecorator wardDecorator = new ManaStorageItemDecorator(Source.EARTH);
+        ForgeRegistries.ITEMS.tags().getTag(ItemTagsPM.WARDABLE_ARMOR).forEach(item -> {
+            LOGGER.debug("Attaching ward item decorator for {}", item.getDescriptionId());
+            event.register(item, wardDecorator);
+        });
     }
 }
