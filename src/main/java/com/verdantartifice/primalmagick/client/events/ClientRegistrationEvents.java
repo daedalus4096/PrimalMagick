@@ -22,8 +22,8 @@ import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -40,7 +40,6 @@ import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Respond to client-only Forge registration events.
@@ -119,10 +118,8 @@ public class ClientRegistrationEvents {
     
     @SubscribeEvent
     public static void onRegisterItemDecorations(RegisterItemDecorationsEvent event) {
+        // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
         IItemDecorator wardDecorator = new ManaStorageItemDecorator(Source.EARTH);
-        ForgeRegistries.ITEMS.tags().getTag(ItemTagsPM.WARDABLE_ARMOR).forEach(item -> {
-            LOGGER.debug("Attaching ward item decorator for {}", item.getDescriptionId());
-            event.register(item, wardDecorator);
-        });
+        WardingModuleItem.getApplicableItems().forEach(itemSupplier -> event.register(itemSupplier.get(), wardDecorator));
     }
 }

@@ -4,6 +4,7 @@ import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
@@ -145,7 +146,9 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsPM.SUNWOOD_LOGS).add(ItemsPM.SUNWOOD_LOG.get(), ItemsPM.STRIPPED_SUNWOOD_LOG.get(), ItemsPM.SUNWOOD_WOOD.get(), ItemsPM.STRIPPED_SUNWOOD_WOOD.get());
         this.tag(ItemTagsPM.TREEFOLK_LOVED).add(Items.BONE_MEAL);
         
-        this.tag(ItemTagsPM.WARDABLE_ARMOR).add(Items.IRON_CHESTPLATE, ItemsPM.PRIMALITE_CHEST.get());
+        // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
+        var wardableArmorTag = this.tag(ItemTagsPM.WARDABLE_ARMOR);
+        WardingModuleItem.getApplicableItems().forEach(itemSupplier -> wardableArmorTag.add(itemSupplier.get()));
         
         this.tag(ItemTagsPM.ROBES).addTag(ItemTagsPM.ROBES_HELMETS).addTag(ItemTagsPM.ROBES_CHESTPLATES).addTag(ItemTagsPM.ROBES_LEGGINGS).addTag(ItemTagsPM.ROBES_BOOTS);
         this.tag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.SAINTSWOOL_HEAD.get());

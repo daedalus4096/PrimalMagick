@@ -1,6 +1,11 @@
 package com.verdantartifice.primalmagick.common.items.armor;
 
+import java.util.List;
+import java.util.function.Supplier;
+
+import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -31,6 +36,13 @@ public class WardingModuleItem extends Item implements ITieredDevice {
      * The amount of centimana needed to regenerate one point of ward.
      */
     public static final int REGEN_COST = 500;
+    
+    // FIXME Use the WARDABLE_ARMOR tag as the source of truth if/when the RegisterItemDecorationsEvent is made to fire *after* tag data loads
+    @SuppressWarnings("unchecked")
+    protected static final List<Supplier<? extends Item>> APPLICABLE_ITEMS = ImmutableList.<Supplier<? extends Item>>builder().add(
+            ItemsPM.PRIMALITE_HEAD, ItemsPM.PRIMALITE_CHEST, ItemsPM.PRIMALITE_LEGS, ItemsPM.PRIMALITE_FEET,
+            ItemsPM.HEXIUM_HEAD, ItemsPM.HEXIUM_CHEST, ItemsPM.HEXIUM_LEGS, ItemsPM.HEXIUM_FEET,
+            ItemsPM.HALLOWSTEEL_HEAD, ItemsPM.HALLOWSTEEL_CHEST, ItemsPM.HALLOWSTEEL_LEGS, ItemsPM.HALLOWSTEEL_FEET).build();
     
     protected final DeviceTier tier;
     
@@ -63,5 +75,9 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     
     public static int getAttachedWardLevel(ItemStack stack) {
         return stack.getTag().getInt(TAG_NAME);
+    }
+    
+    public static List<Supplier<? extends Item>> getApplicableItems() {
+        return APPLICABLE_ITEMS;
     }
 }
