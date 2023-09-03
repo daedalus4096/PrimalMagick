@@ -51,7 +51,7 @@ public class CapabilityEvents {
     public static void attachItemStackCapability(AttachCapabilitiesEvent<ItemStack> event) {
         if (WardingModuleItem.hasWardAttached(event.getObject())) {
             // Only attach these capabilities to certain item stacks, not all of them
-            event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(10000, 100, 100, Source.EARTH));
+            event.addCapability(ManaStorage.Provider.NAME, new ManaStorage.Provider(WardingModuleItem.MANA_CAPACITY, WardingModuleItem.CHARGE_RATE, WardingModuleItem.REGEN_COST, Source.EARTH));
         }
     }
 }

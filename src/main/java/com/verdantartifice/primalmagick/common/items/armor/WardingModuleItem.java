@@ -17,6 +17,21 @@ import net.minecraft.world.item.ItemStack;
 public class WardingModuleItem extends Item implements ITieredDevice {
     public static final String TAG_NAME = String.join(":", PrimalMagick.MODID, "WardingModule");
     
+    /**
+     * The total amount of centimana that can be infused into a warded armor stack at once.
+     */
+    public static final int MANA_CAPACITY = 10000;
+    
+    /**
+     * The amount of centimana that can be infused into the warded armor per tick.
+     */
+    public static final int CHARGE_RATE = 100;
+    
+    /**
+     * The amount of centimana needed to regenerate one point of ward.
+     */
+    public static final int REGEN_COST = 500;
+    
     protected final DeviceTier tier;
     
     public WardingModuleItem(DeviceTier tier, Item.Properties properties) {
