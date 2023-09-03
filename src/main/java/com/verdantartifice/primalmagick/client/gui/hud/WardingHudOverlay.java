@@ -9,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.IGuiOverlay;
@@ -50,7 +49,7 @@ public class WardingHudOverlay implements IGuiOverlay {
                     regen = gui.getGuiTicks() % Mth.ceil(wardMax + 5.0F);
                 }
 
-                this.renderPentacles(gui, guiGraphics, player, left, top, rowHeight, regen, wardMax, ward, wardLast, absorb, highlight, RandomSource.create());
+                this.renderPentacles(gui, guiGraphics, player, left, top, rowHeight, regen, wardMax, ward, wardLast, absorb, highlight);
             }
 
             RenderSystem.disableBlend();
@@ -59,7 +58,7 @@ public class WardingHudOverlay implements IGuiOverlay {
     }
 
     private void renderPentacles(ForgeGui gui, GuiGraphics guiGraphics, Player player, int left, int top, int rowHeight,
-            int regen, float wardMax, int ward, int wardLast, int absorb, boolean highlight, RandomSource random) {
+            int regen, float wardMax, int ward, int wardLast, int absorb, boolean highlight) {
         int maxHealthHearts = Mth.ceil((double)wardMax / 2.0D);
         int maxAbsorbHearts = Mth.ceil((double)absorb / 2.0D);
         
