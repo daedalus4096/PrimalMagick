@@ -48,7 +48,7 @@ public class StaticBookItem extends Item {
         return Optional.empty();
     }
     
-    public void setBookId(ItemStack stack, ResourceLocation bookId) {
+    public static void setBookId(ItemStack stack, ResourceLocation bookId) {
         stack.getOrCreateTag().putString(TAG_BOOK_ID, bookId.toString());
     }
 
@@ -79,7 +79,7 @@ public class StaticBookItem extends Item {
         return getStaticAttribute(bookId, "author");
     }
     
-    public void setAuthorOverride(ItemStack stack, String name) {
+    public static void setAuthorOverride(ItemStack stack, String name) {
         stack.getOrCreateTag().putString(TAG_AUTHOR_OVERRIDE, name);
     }
 
