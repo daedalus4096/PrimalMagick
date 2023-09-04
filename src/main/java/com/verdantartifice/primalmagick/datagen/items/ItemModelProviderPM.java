@@ -287,6 +287,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate pixie and drained pixie items
         PixieItem.getAllPixies().forEach(this::pixieItem);
+        
+        // Generate book items
+        this.basicItem(ItemsPM.STATIC_BOOK.get());
     }
     
     private ResourceLocation key(Item item) {

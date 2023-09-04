@@ -858,6 +858,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.BASIC_WARDING_MODULE).name("Warding Module").build();
         this.item(ItemsPM.GREATER_WARDING_MODULE).name("Greater Warding Module").build();
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
+        this.item(ItemsPM.STATIC_BOOK).name("Unknown Book").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
