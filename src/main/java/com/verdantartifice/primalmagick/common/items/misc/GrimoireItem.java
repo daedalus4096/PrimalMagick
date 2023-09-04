@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
-import com.verdantartifice.primalmagick.common.network.packets.fx.OpenGrimoireScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 

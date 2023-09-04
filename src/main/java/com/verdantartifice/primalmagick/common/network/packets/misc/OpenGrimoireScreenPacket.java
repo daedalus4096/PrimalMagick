@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.network.packets.fx;
+package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import java.util.function.Supplier;
 

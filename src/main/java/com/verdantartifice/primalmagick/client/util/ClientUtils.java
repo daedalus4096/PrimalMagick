@@ -85,4 +85,15 @@ public class ClientUtils {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new GrimoireScreen());
     }
+    
+    /**
+     * Opens the static book GUI on the client for the given book ID.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @param bookId the ID of the static book whose resources to load
+     */
+    public static void openStaticBookScreen(ResourceLocation bookId) {
+        // TODO Set the screen
+    }
 }

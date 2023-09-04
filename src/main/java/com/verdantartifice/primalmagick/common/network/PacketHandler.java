@@ -21,7 +21,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEn
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
-import com.verdantartifice.primalmagick.common.network.packets.fx.OpenGrimoireScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PotionExplosionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PropMarkerPacket;
@@ -34,6 +33,8 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.TeleportArriva
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.CycleActiveSpellPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanItemPacket;
@@ -125,6 +126,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket::encode, UpdateRuneEnchantmentsPacket::decode, UpdateRuneEnchantmentsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket::encode, OpenGrimoireScreenPacket::decode, OpenGrimoireScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncWardPacket.class, SyncWardPacket::encode, SyncWardPacket::decode, SyncWardPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
