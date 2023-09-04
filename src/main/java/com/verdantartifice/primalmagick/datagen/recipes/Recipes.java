@@ -86,6 +86,7 @@ public class Recipes extends RecipeProvider {
         this.registerHummingArtifactRecipes(consumer);
         this.registerEssenceCaskRecipes(consumer);
         this.registerAttunementShacklesRecipes(consumer);
+        this.registerWardingModuleRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6485,6 +6486,45 @@ public class Recipes extends RecipeProvider {
             .key('S', ItemsPM.ESSENCE_SHARD_HALLOWED.get())
             .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(new SourceList().add(Source.HALLOWED, 40))
+            .build(consumer);
+    }
+    
+    protected void registerWardingModuleRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BASIC_WARDING_MODULE.get())
+            .patternLine(" R ")
+            .patternLine("PES")
+            .patternLine(" M ")
+            .key('R', ItemsPM.RUNE_INSIGHT.get())
+            .key('P', ItemsPM.RUNE_PROTECT.get())
+            .key('E', Tags.Items.GEMS_EMERALD)
+            .key('S', ItemsPM.RUNE_SELF.get())
+            .key('M', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WARDING_MODULE")))
+            .manaCost(new SourceList().add(Source.EARTH, 100))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.GREATER_WARDING_MODULE.get())
+            .patternLine(" R ")
+            .patternLine("PES")
+            .patternLine(" M ")
+            .key('R', ItemsPM.RUNE_POWER.get())
+            .key('P', ItemsPM.RUNE_PROTECT.get())
+            .key('E', Tags.Items.GEMS_EMERALD)
+            .key('S', ItemsPM.RUNE_SELF.get())
+            .key('M', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_WARDING_MODULE")))
+            .manaCost(new SourceList().add(Source.EARTH, 200))
+            .build(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUPREME_WARDING_MODULE.get())
+            .patternLine(" R ")
+            .patternLine("PES")
+            .patternLine(" M ")
+            .key('R', ItemsPM.RUNE_GRACE.get())
+            .key('P', ItemsPM.RUNE_PROTECT.get())
+            .key('E', Tags.Items.GEMS_EMERALD)
+            .key('S', ItemsPM.RUNE_SELF.get())
+            .key('M', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_WARDING_MODULE")))
+            .manaCost(new SourceList().add(Source.EARTH, 400))
             .build(consumer);
     }
 }

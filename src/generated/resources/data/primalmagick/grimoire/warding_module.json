@@ -1,0 +1,32 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:warding_module_basic"
+  },
+  "key": "WARDING_MODULE",
+  "name": "research.primalmagick.warding_module.title",
+  "parents": [
+    "EXPERT_MAGITECH",
+    "RUNE_PROTECT",
+    "RUNE_SELF",
+    "RUNE_INSIGHT",
+    "PRIMALITE",
+    "WAND_CHARGER"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "research.primalmagick.warding_module.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:warding_module_basic"
+      ],
+      "text": "research.primalmagick.warding_module.text.stage.2"
+    }
+  ]
+}

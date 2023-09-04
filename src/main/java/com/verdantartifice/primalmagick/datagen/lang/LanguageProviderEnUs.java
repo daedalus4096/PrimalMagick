@@ -3275,6 +3275,24 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("The universe sings its blessings once more.  With sanctified parts and a core infused with more potent essence, this new Mana Singularity can store more mana than ever.")
                 .end()
             .build();
+        this.researchEntry("WARDING_MODULE").name("Warding Module")
+            .stages()
+                .add("Primalite armor is pretty potent, but nobody likes getting hit in the face, even while armored.  I wonder if there's something I can do to protect myself further?")
+                .add("Nice!  A little runescribing here, a little magitech there, and I've got a device which will generate a magickal barrier around me!<BR>This Warding Module can be attached to any piece of magickal metal armor by combining them at a crafting table.  While attached, it will protect me by granting extra temporary health.<BR>This protection isn't free, though.  The ward requires Earth mana to generate, and I can't just siphon it from my wand directly.  I'll need to infuse the armor with mana using a Mana Charger or similar device befor the ward will activate.")
+                .end()
+            .build();
+        this.researchEntry("GREATER_WARDING_MODULE").name("Greater Warding Module")
+            .stages()
+                .add("As the threats facing my person grow in power, so must my protection.  A more potent Warding Module is required.")
+                .add("This will do for now.  By using more powerful runes and more potent magickal metal parts, I've designed a new warding module that's half again as powerful as the base model.<BR>It still requires Earth mana to function and must be attached to magickal metal armor, but that's a small price to pay for life and limb.")
+                .end()
+            .build();
+        this.researchEntry("SUPREME_WARDING_MODULE").name("Supreme Warding Module")
+            .stages()
+                .add("Life is a gift that must not be squandered.  It must be cherished and protected.  With magickal barriers.")
+                .add("Further upgrades have yielded a new warding module design fully twice as effective as the base model.  My confidence in my safety is higher than ever.")
+                .end()
+            .build();
         this.researchEntry("RAW_MARBLE").name("Marble")
             .stages()
                 .add("Marble is a lovely variety of stone, but that's not what makes it so special.  It synergizes with magick, reflecting, absorbing, or redirecting it at the will of the mage.<BR>I can see why the ancients used marble to build their shrines.  It will be very important in many of my workings.")

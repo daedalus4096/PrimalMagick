@@ -1,0 +1,29 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:warding_module_greater"
+  },
+  "key": "GREATER_WARDING_MODULE",
+  "name": "research.primalmagick.greater_warding_module.title",
+  "parents": [
+    "MASTER_MAGITECH",
+    "RUNE_POWER",
+    "WARDING_MODULE"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "research.primalmagick.greater_warding_module.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:warding_module_greater"
+      ],
+      "text": "research.primalmagick.greater_warding_module.text.stage.2"
+    }
+  ]
+}

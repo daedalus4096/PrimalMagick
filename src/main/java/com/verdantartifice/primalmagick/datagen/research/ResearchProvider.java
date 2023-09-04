@@ -1411,6 +1411,19 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_SINGULARITY.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("WARDING_MODULE", discipline).icon(ItemsPM.BASIC_WARDING_MODULE.get()).parent("EXPERT_MAGITECH").parent("RUNE_PROTECT").parent("RUNE_SELF").parent("RUNE_INSIGHT")
+            .parent("PRIMALITE").parent("WAND_CHARGER")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.BASIC_WARDING_MODULE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("GREATER_WARDING_MODULE", discipline).icon(ItemsPM.GREATER_WARDING_MODULE.get()).parent("MASTER_MAGITECH").parent("RUNE_POWER").parent("WARDING_MODULE")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.GREATER_WARDING_MODULE.get()).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SUPREME_WARDING_MODULE", discipline).icon(ItemsPM.SUPREME_WARDING_MODULE.get()).parent("SUPREME_MAGITECH").parent("RUNE_GRACE").parent("GREATER_WARDING_MODULE")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
+            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).build())
+            .build(consumer);
     }
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
