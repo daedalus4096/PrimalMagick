@@ -16,6 +16,7 @@ v4.0.3
 * Fixed a connectivity bug with Hallowed Marble Walls
 * Added Warding Modules, to provide some extra magickal protection
 * Renamed Wand Charger to Mana Charger to reflect its expanded scope of purpose
+* Fixed a localization bug in JEI integration
 
 v4.0.2
 ------
