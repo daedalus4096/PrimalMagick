@@ -12,11 +12,13 @@ import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookLecternScreenPacket;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -176,17 +178,23 @@ public class BlockEvents {
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(ItemsPM.GRIMOIRE.get())) {
-                // Open the grimoire menu
+                // Open the grimoire screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
                     StatsManager.incrementValue(player, StatsPM.GRIMOIRE_READ);
                     PacketHandler.sendToPlayer(new OpenGrimoireScreenPacket(), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
+            } else if (lecternEntity.getBook().is(ItemsPM.STATIC_BOOK.get())) {
+                // Open the static book lectern screen
+                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                    PacketHandler.sendToPlayer(new OpenStaticBookLecternScreenPacket(serverPlayer.containerCounter, Component.empty()), serverPlayer);
+                }
             }
         } else {
             // Place the grimoire
             ItemStack handStack = player.getItemInHand(hand);
-            if (handStack.is(ItemsPM.GRIMOIRE.get()) && LecternBlock.tryPlaceBook(player, level, lecternEntity.getBlockPos(), lecternEntity.getBlockState(), handStack)) {
+            if ((handStack.is(ItemsPM.GRIMOIRE.get()) || handStack.is(ItemsPM.STATIC_BOOK.get())) && 
+                    LecternBlock.tryPlaceBook(player, level, lecternEntity.getBlockPos(), lecternEntity.getBlockState(), handStack)) {
                 return InteractionResult.SUCCESS;
             }
         }

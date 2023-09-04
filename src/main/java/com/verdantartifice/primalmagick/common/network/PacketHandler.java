@@ -34,6 +34,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.CycleActiveSpellPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenGrimoireScreenPacket;
+import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookLecternScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ScanEntityPacket;
@@ -127,6 +128,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket::encode, OpenGrimoireScreenPacket::decode, OpenGrimoireScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncWardPacket.class, SyncWardPacket::encode, SyncWardPacket::decode, SyncWardPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, OpenStaticBookLecternScreenPacket.class, OpenStaticBookLecternScreenPacket::encode, OpenStaticBookLecternScreenPacket::decode, OpenStaticBookLecternScreenPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

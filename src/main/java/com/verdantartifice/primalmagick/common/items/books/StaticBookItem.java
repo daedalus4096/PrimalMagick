@@ -36,16 +36,11 @@ public class StaticBookItem extends Item {
         super(properties);
     }
     
-    public static int getPageCount(ItemStack stack) {
-        // TODO Retrieve NBT cached page count if present, otherwise process text and return calculated page count
-        return 0;
-    }
-    
     protected static MutableComponent getStaticAttribute(ResourceLocation bookId, String attrName) {
         return Component.translatable(String.join(".", "written_book", bookId.getNamespace(), bookId.getPath(), attrName));
     }
     
-    protected Optional<ResourceLocation> getBookId(ItemStack stack) {
+    public static Optional<ResourceLocation> getBookId(ItemStack stack) {
         CompoundTag rootTag = stack.getTag();
         if (rootTag != null) {
             String str = rootTag.getString(TAG_BOOK_ID);
@@ -62,7 +57,7 @@ public class StaticBookItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        return this.getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
+        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
     }
     
     protected static Component getNameFromBookId(ResourceLocation bookId) {
@@ -80,7 +75,7 @@ public class StaticBookItem extends Item {
         }
         
         // Otherwise, fetch the author from lang data
-        return this.getBookId(stack).map(StaticBookItem::getAuthorFromBookId).orElse(Component.translatable("tooltip.written_book.author.unknown"));
+        return getBookId(stack).map(StaticBookItem::getAuthorFromBookId).orElse(Component.translatable("tooltip.written_book.author.unknown"));
     }
     
     protected static MutableComponent getAuthorFromBookId(ResourceLocation bookId) {
@@ -101,7 +96,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            this.getBookId(stack).ifPresent(bookId -> PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(bookId), serverPlayer));
+            getBookId(stack).ifPresent(bookId -> PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(bookId), serverPlayer));
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
