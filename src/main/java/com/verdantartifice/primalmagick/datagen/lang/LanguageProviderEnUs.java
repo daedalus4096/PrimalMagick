@@ -907,6 +907,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("affinities").sub("label").output("Affinities:").end().build();
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
+        this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
