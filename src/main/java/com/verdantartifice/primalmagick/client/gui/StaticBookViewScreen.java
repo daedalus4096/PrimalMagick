@@ -11,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 /**
  * GUI screen for reading static books.
@@ -32,6 +33,7 @@ public class StaticBookViewScreen extends Screen {
     private PageButton forwardButton;
     private PageButton backButton;
     private int currentPage;
+    private int cachedPage = -1;
 
     public StaticBookViewScreen() {
         this(PrimalMagick.resource("unknown"), false);
@@ -51,14 +53,22 @@ public class StaticBookViewScreen extends Screen {
         this.bookId = bookId;
         // TODO Update current page number
         // TODO Update button visibility
+        this.cachedPage = -1;
     }
     
     /**
      * Moves the book to the specified page and returns true if it exists, {@code false} otherwise.
      */
     public boolean setPage(int newPage) {
-        // TODO Stub
-        return false;
+        int clampedPage = Mth.clamp(newPage, 0, 0); // FIXME Use page count - 1 for max
+        if (clampedPage != this.currentPage) {
+            this.currentPage = clampedPage;
+            this.updateButtonVisibility();
+            this.cachedPage = -1;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -131,7 +141,16 @@ public class StaticBookViewScreen extends Screen {
         int yPos = 2;
         guiGraphics.blit(BG_TEXTURE, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         
-        // TODO Parse and draw book text
+        if (this.cachedPage != this.currentPage) {
+            // TODO Get and split the book text
+            // TODO Set the page indicator text
+        }
+        
+        this.cachedPage = this.currentPage;
+        
+        // TODO Draw the page indicator text
+        
+        // TODO Draw the text lines for the current page
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
