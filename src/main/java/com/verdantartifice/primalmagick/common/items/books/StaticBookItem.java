@@ -47,6 +47,10 @@ public class StaticBookItem extends Item {
         }
         return Optional.empty();
     }
+    
+    public void setBookId(ItemStack stack, ResourceLocation bookId) {
+        stack.getOrCreateTag().putString(TAG_BOOK_ID, bookId.toString());
+    }
 
     @Override
     public Component getName(ItemStack pStack) {
