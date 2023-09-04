@@ -14,6 +14,8 @@ v4.0.3
 * Fixed a bug with several devices causing their first input to be processed instantly
 * Added GUI labels to some devices missing them
 * Fixed a connectivity bug with Hallowed Marble Walls
+* Added Warding Modules, to provide some extra magickal protection
+* Renamed Wand Charger to Mana Charger to reflect its expanded scope of purpose
 
 v4.0.2
 ------
