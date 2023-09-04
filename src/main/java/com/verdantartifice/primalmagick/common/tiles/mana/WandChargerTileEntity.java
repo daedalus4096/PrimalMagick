@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.tiles.mana;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -12,6 +14,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -109,8 +112,8 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
         
         if (!level.isClientSide) {
             ItemStack inputStack = entity.items.get(0);
-            ItemStack wandStack = entity.items.get(1);
-            if (!inputStack.isEmpty() && !wandStack.isEmpty()) {
+            ItemStack chargeStack = entity.items.get(1);
+            if (!inputStack.isEmpty() && !chargeStack.isEmpty()) {
                 if (entity.canCharge()) {
                     // If there's an essence in the input slot and the slotted wand isn't full, do the charge
                     entity.chargeTime++;
@@ -141,25 +144,32 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     
     protected boolean canCharge() {
         ItemStack inputStack = this.items.get(0);
-        ItemStack wandStack = this.items.get(1);
-        if (inputStack != null && !inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem &&
-            wandStack != null && !wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
-            // The wand can be charged if it and an essence are slotted, and the wand is not at max mana for the essence's source
-            EssenceItem essence = (EssenceItem)inputStack.getItem();
-            IWand wand = (IWand)wandStack.getItem();
-            return (wand.getMana(wandStack, essence.getSource()) < wand.getMaxMana(wandStack));
-        } else {
-            return false;
+        ItemStack chargeStack = this.items.get(1);
+        if (inputStack != null && !inputStack.isEmpty() && inputStack.getItem() instanceof EssenceItem essence && chargeStack != null && !chargeStack.isEmpty()) {
+            if (chargeStack.getItem() instanceof IWand wand) {
+                // The wand can be charged if it and an essence are slotted, and the wand is not at max mana for the essence's source
+                return (wand.getMana(chargeStack, essence.getSource()) < wand.getMaxMana(chargeStack));
+            } else if (chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent()) {
+                // The mana storage item can be charged if it and an essence are slotted, and the storage is not at max mana for the essence's source
+                IManaStorage manaCap = chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).orElseThrow(IllegalArgumentException::new);
+                return (manaCap.getManaStored(essence.getSource()) < manaCap.getMaxManaStored(essence.getSource()));
+            }
         }
+        return false;
     }
     
     protected void doCharge() {
         ItemStack inputStack = this.items.get(0);
-        ItemStack wandStack = this.items.get(1);
+        ItemStack chargeStack = this.items.get(1);
         if (this.canCharge()) {
             EssenceItem essence = (EssenceItem)inputStack.getItem();
-            IWand wand = (IWand)wandStack.getItem();
-            wand.addRealMana(wandStack, essence.getSource(), essence.getEssenceType().getManaEquivalent());
+            if (chargeStack.getItem() instanceof IWand wand) {
+                wand.addRealMana(chargeStack, essence.getSource(), essence.getEssenceType().getManaEquivalent());
+            } else {
+                IManaStorage manaCap = chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).orElseThrow(IllegalArgumentException::new);
+                manaCap.receiveMana(essence.getSource(), 100 * essence.getEssenceType().getManaEquivalent(), false);
+                chargeStack.getOrCreateTag().put("LastUpdated", LongTag.valueOf(System.currentTimeMillis()));   // FIXME Is there a better way of marking this stack as dirty?
+            }
             inputStack.shrink(1);
         }
     }

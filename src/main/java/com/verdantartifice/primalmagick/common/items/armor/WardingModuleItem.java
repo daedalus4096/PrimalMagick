@@ -30,7 +30,7 @@ public class WardingModuleItem extends Item implements ITieredDevice {
     /**
      * The amount of centimana that can be infused into the warded armor per tick.
      */
-    public static final int CHARGE_RATE = 100;
+    public static final int CHARGE_RATE = 10000;
     
     /**
      * The amount of centimana needed to regenerate one point of ward.

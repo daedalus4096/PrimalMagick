@@ -210,7 +210,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.CALCINATOR_HEAVENLY).name("Heavenly Calcinator").build();
         this.block(BlocksPM.WAND_INSCRIPTION_TABLE).name("Wand Inscription Table").build();
         this.block(BlocksPM.SPELLCRAFTING_ALTAR).name("Spellcrafting Altar").build();
-        this.block(BlocksPM.WAND_CHARGER).name("Wand Charger").build();
+        this.block(BlocksPM.WAND_CHARGER).name("Mana Charger").build();
         this.block(BlocksPM.CONSECRATION_FIELD).name("Consecration Field").build();
         this.block(BlocksPM.INFUSED_STONE_EARTH).name("Earth-Infused Stone").build();
         this.block(BlocksPM.INFUSED_STONE_SEA).name("Sea-Infused Stone").build();
@@ -2373,7 +2373,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.")
                 .end()
             .build();
-        this.researchEntry("WAND_CHARGER").name("Wand Charger")
+        this.researchEntry("WAND_CHARGER").name("Mana Charger")
             .stages()
                 .add("Running back and forth between shrines to charge my wand at the ancient fonts is getting really old, really fast.  There has to be a better way to do this.")
                 .add("I've created a simple device that will break down magickal essence and convert it into raw mana, which I can in turn feed into my wand.<BR>I just need to place my wand inside and deposit some essence.  The essence will slowly be broken down into mana.<BR>It's not a fast process, but I think this will let me get a lot more work done.")
@@ -3227,7 +3227,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry("AUTO_CHARGER").name("Auto-Charger")
             .stages()
                 .add("As my wands can hold more mana, keeping them charged has become a challenge.  Even with mana fonts at home, it can take minutes of channeling to get one to full.<BR>I have an idea for something to ease this process...")
-                .add("My newest device is similar to a Wand Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
+                .add("My newest device is similar to a Mana Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
                 .end()
             .build();
         this.researchEntry("ESSENCE_TRANSMUTER").name("Essence Transmuter")
