@@ -231,6 +231,9 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.basicItem(ItemsPM.FOUR_LEAF_CLOVER.get());
         this.basicItem(ItemsPM.RECALL_STONE.get());
         this.basicItem(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get());
+        this.basicItem(ItemsPM.BASIC_WARDING_MODULE.get());
+        this.basicItem(ItemsPM.GREATER_WARDING_MODULE.get());
+        this.basicItem(ItemsPM.SUPREME_WARDING_MODULE.get());
         
         // Generate knowledge items
         this.basicItem(ItemsPM.OBSERVATION_NOTES.get());

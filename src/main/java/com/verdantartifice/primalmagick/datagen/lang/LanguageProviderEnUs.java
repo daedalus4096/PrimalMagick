@@ -210,7 +210,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.CALCINATOR_HEAVENLY).name("Heavenly Calcinator").build();
         this.block(BlocksPM.WAND_INSCRIPTION_TABLE).name("Wand Inscription Table").build();
         this.block(BlocksPM.SPELLCRAFTING_ALTAR).name("Spellcrafting Altar").build();
-        this.block(BlocksPM.WAND_CHARGER).name("Wand Charger").build();
+        this.block(BlocksPM.WAND_CHARGER).name("Mana Charger").build();
         this.block(BlocksPM.CONSECRATION_FIELD).name("Consecration Field").build();
         this.block(BlocksPM.INFUSED_STONE_EARTH).name("Earth-Infused Stone").build();
         this.block(BlocksPM.INFUSED_STONE_SEA).name("Sea-Infused Stone").build();
@@ -855,6 +855,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL).name("Infernal Attunement Shackles").build();
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_VOID).name("Void Attunement Shackles").build();
         this.item(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED).name("Hallowed Attunement Shackles").build();
+        this.item(ItemsPM.BASIC_WARDING_MODULE).name("Warding Module").build();
+        this.item(ItemsPM.GREATER_WARDING_MODULE).name("Greater Warding Module").build();
+        this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -862,6 +865,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("mana_discount").name("Mana discount: %1$d%%").build();
         this.tooltip("mana_discount_attuned").name("%2$s mana discount: %1$d%%").build();
         this.tooltip("glamoured").name("Glamoured").build();
+        this.tooltip("warded").name("Warded").build();
         this.tooltip("runescribed").name("Runescribed").build();
         this.tooltip("rune_limit").name("Limit %1$d per runescribe").build();
         this.tooltip("none").name("None").build();
@@ -2369,7 +2373,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("My completion of this discipline has attuned me further to the ways of magick.  I should turn my eye to the other disciplines and see if there remains anything for me to glean.")
                 .end()
             .build();
-        this.researchEntry("WAND_CHARGER").name("Wand Charger")
+        this.researchEntry("WAND_CHARGER").name("Mana Charger")
             .stages()
                 .add("Running back and forth between shrines to charge my wand at the ancient fonts is getting really old, really fast.  There has to be a better way to do this.")
                 .add("I've created a simple device that will break down magickal essence and convert it into raw mana, which I can in turn feed into my wand.<BR>I just need to place my wand inside and deposit some essence.  The essence will slowly be broken down into mana.<BR>It's not a fast process, but I think this will let me get a lot more work done.")
@@ -3223,7 +3227,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry("AUTO_CHARGER").name("Auto-Charger")
             .stages()
                 .add("As my wands can hold more mana, keeping them charged has become a challenge.  Even with mana fonts at home, it can take minutes of channeling to get one to full.<BR>I have an idea for something to ease this process...")
-                .add("My newest device is similar to a Wand Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
+                .add("My newest device is similar to a Mana Charger, but rather than consuming essence it will automatically siphon from nearby fonts.<BR>Only one wand can be held in the charger at a time, and it only has a range of five blocks, but it can pull from multiple fonts at once.<BR>Best of all, I can just drop the wand in and walk away to do other things while it works.  I think this is going to save me a lot of time.")
                 .end()
             .build();
         this.researchEntry("ESSENCE_TRANSMUTER").name("Essence Transmuter")
@@ -3269,6 +3273,24 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("The Mana Nexus is an admirable effort, but I believe I can do better.")
                 .add("The universe sings its blessings once more.  With sanctified parts and a core infused with more potent essence, this new Mana Singularity can store more mana than ever.")
+                .end()
+            .build();
+        this.researchEntry("WARDING_MODULE").name("Warding Module")
+            .stages()
+                .add("Primalite armor is pretty potent, but nobody likes getting hit in the face, even while armored.  I wonder if there's something I can do to protect myself further?")
+                .add("Nice!  A little runescribing here, a little magitech there, and I've got a device which will generate a magickal barrier around me!<BR>This Warding Module can be attached to any piece of magickal metal armor by combining them at a crafting table.  While attached, it will protect me by granting extra temporary health.<BR>This protection isn't free, though.  The ward requires Earth mana to generate, and I can't just siphon it from my wand directly.  I'll need to infuse the armor with mana using a Mana Charger or similar device befor the ward will activate.")
+                .end()
+            .build();
+        this.researchEntry("GREATER_WARDING_MODULE").name("Greater Warding Module")
+            .stages()
+                .add("As the threats facing my person grow in power, so must my protection.  A more potent Warding Module is required.")
+                .add("This will do for now.  By using more powerful runes and more potent magickal metal parts, I've designed a new warding module that's half again as powerful as the base model.<BR>It still requires Earth mana to function and must be attached to magickal metal armor, but that's a small price to pay for life and limb.")
+                .end()
+            .build();
+        this.researchEntry("SUPREME_WARDING_MODULE").name("Supreme Warding Module")
+            .stages()
+                .add("Life is a gift that must not be squandered.  It must be cherished and protected.  With magickal barriers.")
+                .add("Further upgrades have yielded a new warding module design fully twice as effective as the base model.  My confidence in my safety is higher than ever.")
                 .end()
             .build();
         this.researchEntry("RAW_MARBLE").name("Marble")

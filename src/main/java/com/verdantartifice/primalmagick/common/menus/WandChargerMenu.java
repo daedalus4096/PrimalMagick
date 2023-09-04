@@ -1,8 +1,9 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -40,7 +41,8 @@ public class WandChargerMenu extends AbstractContainerMenu {
         this.essenceSlot = this.addSlot(new FilteredSlot(this.chargerInv, 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slot 1: wand input/output
-        this.wandSlot = this.addSlot(new WandSlot(this.chargerInv, 1, 108, 35, true));
+        this.wandSlot = this.addSlot(new FilteredSlot(this.chargerInv, 1, 108, 35, 
+                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

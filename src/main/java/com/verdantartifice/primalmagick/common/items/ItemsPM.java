@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.ConcoctionItem;
@@ -67,6 +68,7 @@ import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
@@ -516,6 +518,9 @@ public class ItemsPM {
     public static final RegistryObject<Item> FOUR_LEAF_CLOVER = registerSupplier("four_leaf_clover", () -> new Item(new Item.Properties()));
     public static final RegistryObject<RecallStoneItem> RECALL_STONE = registerSupplier("recall_stone", () -> new RecallStoneItem(new Item.Properties()));
     public static final RegistryObject<SmithingTemplateItem> RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE = registerSupplier("runic_armor_trim_smithing_template", () -> TrimPatternsPM.createRunicArmorTrimTemplate(TrimPatternsPM.RUNIC));
+    public static final RegistryObject<WardingModuleItem> BASIC_WARDING_MODULE = registerSupplier("warding_module_basic", () -> new WardingModuleItem(DeviceTier.ENCHANTED, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<WardingModuleItem> GREATER_WARDING_MODULE = registerSupplier("warding_module_greater", () -> new WardingModuleItem(DeviceTier.FORBIDDEN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<WardingModuleItem> SUPREME_WARDING_MODULE = registerSupplier("warding_module_supreme", () -> new WardingModuleItem(DeviceTier.HEAVENLY, new Item.Properties().rarity(Rarity.EPIC)));
     
     // Register knowledge items
     public static final RegistryObject<KnowledgeGainItem> OBSERVATION_NOTES = registerSupplier("observation_notes", () -> new KnowledgeGainItem(KnowledgeType.OBSERVATION, KnowledgeType.OBSERVATION.getProgression(), new Item.Properties()));

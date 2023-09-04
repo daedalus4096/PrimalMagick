@@ -9,9 +9,11 @@ import com.verdantartifice.primalmagick.client.gui.SpellSelectionRadialScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -22,6 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -60,6 +63,18 @@ public class ClientRenderEvents {
         if (event.getItemStack().getItem() instanceof IWand wand && wand.isGlamoured(event.getItemStack())) {
             event.getToolTip().add(Component.translatable("tooltip.primalmagick.glamoured").withStyle(ChatFormatting.DARK_AQUA));
         }
+        
+        // Show a tooltip entry if the item has a warding module attached
+        if (WardingModuleItem.hasWardAttached(event.getItemStack())) {
+            Component levelComponent = Component.translatable("enchantment.level." + WardingModuleItem.getAttachedWardLevel(event.getItemStack()));
+            event.getToolTip().add(Component.translatable("tooltip.primalmagick.warded").append(CommonComponents.SPACE).append(levelComponent).withStyle(ChatFormatting.DARK_AQUA));
+        }
+        
+        // Show a tooltip entry if the item is warded armor
+        event.getItemStack().getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaStorage -> {
+            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(event.getEntity()) && manaStorage.canStore(source)).forEach(source ->
+                event.getToolTip().add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (manaStorage.getManaStored(source) / 100.0D))));
+        });
     }
     
     @SubscribeEvent

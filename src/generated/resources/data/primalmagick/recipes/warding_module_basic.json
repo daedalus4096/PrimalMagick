@@ -1,0 +1,32 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "E": {
+      "tag": "forge:gems/emerald"
+    },
+    "M": {
+      "item": "primalmagick:magitech_parts_enchanted"
+    },
+    "P": {
+      "item": "primalmagick:rune_protect"
+    },
+    "R": {
+      "item": "primalmagick:rune_insight"
+    },
+    "S": {
+      "item": "primalmagick:rune_self"
+    }
+  },
+  "mana": {
+    "earth": 100
+  },
+  "pattern": [
+    " R ",
+    "PES",
+    " M "
+  ],
+  "research": "WARDING_MODULE",
+  "result": {
+    "item": "primalmagick:warding_module_basic"
+  }
+}

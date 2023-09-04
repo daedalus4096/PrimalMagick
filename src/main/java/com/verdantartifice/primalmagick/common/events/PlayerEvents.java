@@ -11,12 +11,14 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.mojang.datafixers.util.Pair;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCooldowns;
@@ -32,6 +34,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
@@ -56,6 +59,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -67,6 +71,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -85,6 +90,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -129,6 +135,7 @@ public class PlayerEvents {
                 // Periodically check to see if attuned players should drop a light source or if regrowing equipment should mend
                 handleLightDrop(player);
                 handleRegrowth(player);
+                handleWardRegeneration(player);
             }
             if (player.tickCount % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
@@ -225,11 +232,14 @@ public class PlayerEvents {
             });
         }
         if (immediate) {
-            // Cooldowns don't do scheduled syncs, so only sync if it needs to be done immediately
+            // Cooldowns and wards don't do scheduled syncs, so only sync if it needs to be done immediately
             IPlayerCooldowns cooldowns = PrimalMagickCapabilities.getCooldowns(player);
             if (cooldowns != null) {
                 cooldowns.sync(player);
             }
+            PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+                wardCap.sync(player);
+            });
         }
     }
     
@@ -391,6 +401,30 @@ public class PlayerEvents {
         }
     }
     
+    protected static void handleWardRegeneration(ServerPlayer player) {
+        PrimalMagickCapabilities.getWard(player).ifPresent(wardCap -> {
+            if (wardCap.isRegenerating()) {
+                for (EquipmentSlot slot : wardCap.getApplicableSlots()) {
+                    ItemStack slotStack = player.getItemBySlot(slot);
+                    if (!slotStack.isEmpty()) {
+                        LazyOptional<IManaStorage> manaCapOpt = slotStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE);
+                        if (manaCapOpt.isPresent()) {
+                            IManaStorage manaCap = manaCapOpt.orElseThrow(IllegalArgumentException::new);
+                            if (manaCap.getManaStored(Source.EARTH) >= WardingModuleItem.REGEN_COST) {
+                                // Consume mana from warded armor stacks to regenerate a single point of ward
+                                manaCap.extractMana(Source.EARTH, WardingModuleItem.REGEN_COST, false);
+                                wardCap.incrementCurrentWard();
+                                wardCap.sync(player);
+                                player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
     @SubscribeEvent
     public static void playerJoinEvent(EntityJoinLevelEvent event) {
         Level world = event.getLevel();
@@ -448,6 +482,13 @@ public class PlayerEvents {
             PrimalMagickCapabilities.getArcaneRecipeBook(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtRecipeBook, event.getEntity().level().getRecipeManager());
         } catch (Exception e) {
             LOGGER.error("Failed to clone player {} arcane recipe book", event.getOriginal().getName().getString());
+        }
+        
+        try {
+            CompoundTag nbtWard = PrimalMagickCapabilities.getWard(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagickCapabilities.getWard(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtWard);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
         }
         
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed

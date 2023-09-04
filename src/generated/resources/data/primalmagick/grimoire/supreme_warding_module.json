@@ -1,0 +1,29 @@
+{
+  "addenda": [],
+  "discipline": "MAGITECH",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:warding_module_supreme"
+  },
+  "key": "SUPREME_WARDING_MODULE",
+  "name": "research.primalmagick.supreme_warding_module.title",
+  "parents": [
+    "SUPREME_MAGITECH",
+    "RUNE_GRACE",
+    "GREATER_WARDING_MODULE"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;3"
+      ],
+      "text": "research.primalmagick.supreme_warding_module.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:warding_module_supreme"
+      ],
+      "text": "research.primalmagick.supreme_warding_module.text.stage.2"
+    }
+  ]
+}

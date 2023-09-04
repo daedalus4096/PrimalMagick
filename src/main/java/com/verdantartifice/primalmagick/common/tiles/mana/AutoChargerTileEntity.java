@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -53,8 +54,8 @@ public class AutoChargerTileEntity extends TileInventoryPM {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        ItemStack wandStack = entity.getItem(0);
-        if (!level.isClientSide && wandStack.getItem() instanceof IWand) {
+        ItemStack chargeStack = entity.getItem(0);
+        if (!level.isClientSide) {
             if (entity.chargeTime % 20 == 0) {
                 // Scan surroundings for mana fonts once a second
                 entity.scanSurroundings();
@@ -64,8 +65,16 @@ public class AutoChargerTileEntity extends TileInventoryPM {
             Vec3 chargerCenter = Vec3.atCenterOf(pos);
             for (BlockPos fontPos : entity.fontLocations) {
                 if (level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity tile) {
-                    // NOTE: Normally this method is called with a count that's descending, but the method doesn't actually care
-                    tile.onWandUseTick(wandStack, level, null, chargerCenter, entity.chargeTime);
+                    if (chargeStack.getItem() instanceof IWand) {
+                        // NOTE: Normally this method is called with a count that's descending, but the method doesn't actually care
+                        tile.onWandUseTick(chargeStack, level, null, chargerCenter, entity.chargeTime);
+                    } else {
+                        chargeStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(manaCap -> {
+                            if (entity.chargeTime % 5 == 0) {
+                                tile.doSiphon(manaCap, level, null, chargerCenter, 100);    // TODO Get the stack's max charge rate somehow
+                            }
+                        });
+                    }
                 }
             }
             
@@ -100,7 +109,7 @@ public class AutoChargerTileEntity extends TileInventoryPM {
 
     @Override
     public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        return stack.getItem() instanceof IWand;
+        return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
     }
 
     @Override

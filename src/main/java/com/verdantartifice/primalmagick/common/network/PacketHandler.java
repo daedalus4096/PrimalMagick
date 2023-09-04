@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledg
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
@@ -123,6 +124,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode, WithdrawCaskEssencePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket::encode, UpdateRuneEnchantmentsPacket::decode, UpdateRuneEnchantmentsPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket::encode, OpenGrimoireScreenPacket::decode, OpenGrimoireScreenPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncWardPacket.class, SyncWardPacket::encode, SyncWardPacket::decode, SyncWardPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

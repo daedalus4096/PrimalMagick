@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
@@ -127,6 +128,23 @@ public class CombatEvents {
             // Reduce all non-absolute (e.g. starvation) damage taken players with lesser void attunement
             if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && AttunementManager.meetsThreshold(target, Source.VOID, AttunementThreshold.LESSER)) {
                 event.setAmount(0.9F * event.getAmount());
+            }
+            
+            // Consume ward before health if damage is non-absolute (e.g. starvation)
+            if (!event.getSource().is(DamageTypeTags.BYPASSES_EFFECTS) && event.getAmount() > 0) {
+                PrimalMagickCapabilities.getWard(target).ifPresent(wardCap -> {
+                    if (event.getAmount() >= wardCap.getCurrentWard()) {
+                        event.setAmount(event.getAmount() - wardCap.getCurrentWard());
+                        wardCap.setCurrentWard(0);
+                    } else {
+                        wardCap.decrementCurrentWard(event.getAmount());
+                        event.setAmount(0);
+                    }
+                    wardCap.pauseRegeneration();
+                    if (target instanceof ServerPlayer serverTarget) {
+                        wardCap.sync(serverTarget);
+                    }
+                });
             }
         }
         

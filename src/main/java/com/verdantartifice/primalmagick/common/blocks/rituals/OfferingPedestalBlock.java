@@ -71,7 +71,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+        if (handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof OfferingPedestalTileEntity) {
                 OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;

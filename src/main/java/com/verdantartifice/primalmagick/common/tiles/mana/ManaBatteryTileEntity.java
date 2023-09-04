@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.wands.WandGem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -136,8 +137,8 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         boolean shouldMarkDirty = false;
         
         if (!level.isClientSide) {
-            ItemStack inputStack = entity.items.get(INPUT_SLOT_INDEX);
-            ItemStack chargeStack = entity.items.get(CHARGE_SLOT_INDEX);
+            ItemStack inputStack = entity.getItem(INPUT_SLOT_INDEX);
+            ItemStack chargeStack = entity.getItem(CHARGE_SLOT_INDEX);
             
             // Scan surroundings for mana fonts once a second
             if (entity.fontSiphonTime % 20 == 0) {
@@ -252,19 +253,32 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     protected boolean canOutputToWand(ItemStack outputStack, Source source) {
-        return !outputStack.isEmpty() &&
-                outputStack.getItem() instanceof IWand wand &&
-                wand.getMana(outputStack, source) < wand.getMaxMana(outputStack) &&
-                (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0);
+        if (!outputStack.isEmpty() && (this.manaStorage.getMaxManaStored(source) == -1 || this.manaStorage.getManaStored(source) > 0)) {
+            if (outputStack.getItem() instanceof IWand wand) {
+                return wand.getMana(outputStack, source) < wand.getMaxMana(outputStack);
+            } else {
+                return outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+            }
+        }
+        return false;
     }
     
     protected void doOutput(ItemStack outputStack, Source source) {
-        if (this.canOutputToWand(outputStack, source) && outputStack.getItem() instanceof IWand wand) {
-            int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
-            int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
-            int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
-            int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
-            this.manaStorage.extractMana(source, transferedCentimana, false);
+        if (this.canOutputToWand(outputStack, source)) {
+            if (outputStack.getItem() instanceof IWand wand) {
+                int realMaxTransferRate = Math.min(this.getBatteryTransferCap() / 100, wand.getSiphonAmount(outputStack));
+                int realManaToTransfer = Mth.clamp(this.manaStorage.getManaStored(source) / 100, 0, realMaxTransferRate);
+                int leftoverRealMana = wand.addRealMana(outputStack, source, realManaToTransfer);
+                int transferedCentimana = 100 * (realManaToTransfer - leftoverRealMana);
+                this.manaStorage.extractMana(source, transferedCentimana, false);
+            } else {
+                outputStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).ifPresent(stackManaStorage -> {
+                    int centimanaToTransfer = Math.min(this.getBatteryTransferCap(), this.manaStorage.getManaStored(source));
+                    int transferedCentimana = stackManaStorage.receiveMana(source, centimanaToTransfer, false);
+                    this.manaStorage.extractMana(source, transferedCentimana, false);
+                });
+                outputStack.getOrCreateTag().put("LastUpdated", LongTag.valueOf(System.currentTimeMillis()));   // FIXME Is there a better way of marking this stack as dirty?
+            }
         }
     }
     
@@ -350,7 +364,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
+        ItemStack slotStack = this.getItem(index);
         super.setItem(index, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index == 0 && !flag) {

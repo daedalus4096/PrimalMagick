@@ -48,6 +48,14 @@ public interface IManaStorage extends INBTSerializable<CompoundTag> {
     public int getMaxManaStored(Source source);
     
     /**
+     * Returns whether this storage can contain mana of the given source.
+     * 
+     * @param source source of mana to be queried
+     * @return whether this storage can contain the given type of mana
+     */
+    public boolean canStore(Source source);
+    
+    /**
      * Returns whether this storage can have mana of the given source extracted.
      * 
      * @param source source of mana to be queried
