@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.List;
+
 import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.books.BookHelper;
 
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
@@ -10,7 +13,9 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
 /**
@@ -23,8 +28,9 @@ public class StaticBookViewScreen extends Screen {
     public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
     public static final int PAGE_TEXT_X_OFFSET = 36;
     public static final int PAGE_TEXT_Y_OFFSET = 30;
-    protected static final int TEXT_WIDTH = 114;
-    protected static final int TEXT_HEIGHT = 128;
+    protected static final int TEXT_WIDTH = BookHelper.TEXT_WIDTH;
+    protected static final int TEXT_HEIGHT = BookHelper.TEXT_HEIGHT;
+    protected static final int LINE_HEIGHT = BookHelper.LINE_HEIGHT;
     protected static final int IMAGE_WIDTH = 192;
     protected static final int IMAGE_HEIGHT = 192;
 
@@ -34,6 +40,7 @@ public class StaticBookViewScreen extends Screen {
     private PageButton backButton;
     private int currentPage;
     private int cachedPage = -1;
+    private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
         this(PrimalMagick.resource("unknown"), false);
@@ -51,8 +58,8 @@ public class StaticBookViewScreen extends Screen {
     
     public void setBookId(ResourceLocation bookId) {
         this.bookId = bookId;
-        // TODO Update current page number
-        // TODO Update button visibility
+        this.currentPage = Mth.clamp(this.currentPage, 0, this.getNumPages());
+        this.updateButtonVisibility();
         this.cachedPage = -1;
     }
     
@@ -60,7 +67,7 @@ public class StaticBookViewScreen extends Screen {
      * Moves the book to the specified page and returns true if it exists, {@code false} otherwise.
      */
     public boolean setPage(int newPage) {
-        int clampedPage = Mth.clamp(newPage, 0, 0); // FIXME Use page count - 1 for max
+        int clampedPage = Mth.clamp(newPage, 0, this.getNumPages() - 1);
         if (clampedPage != this.currentPage) {
             this.currentPage = clampedPage;
             this.updateButtonVisibility();
@@ -93,8 +100,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     private int getNumPages() {
-        // TODO Stub
-        return 0;
+        return BookHelper.getNumPages(this.bookId, this.font);
     }
     
     protected void pageBack() {
@@ -142,15 +148,21 @@ public class StaticBookViewScreen extends Screen {
         guiGraphics.blit(BG_TEXTURE, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         
         if (this.cachedPage != this.currentPage) {
-            // TODO Get and split the book text
-            // TODO Set the page indicator text
+            // Set the page indicator text
+            this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
         }
         
         this.cachedPage = this.currentPage;
         
-        // TODO Draw the page indicator text
-        
-        // TODO Draw the text lines for the current page
+        // Draw the page indicator text
+        int pageMsgWidth = this.font.width(this.pageMsg);
+        guiGraphics.drawString(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
+
+        // Draw the text lines for the current page
+        List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookId, this.cachedPage, this.font);
+        for (int index = 0; index < page.size(); index++) {
+            guiGraphics.drawString(this.font, page.get(index), xPos + PAGE_TEXT_X_OFFSET, yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT), 0, false);
+        }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.util;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 
 import net.minecraft.client.Minecraft;
@@ -94,6 +95,7 @@ public class ClientUtils {
      * @param bookId the ID of the static book whose resources to load
      */
     public static void openStaticBookScreen(ResourceLocation bookId) {
-        // TODO Set the screen
+        Minecraft mc = Minecraft.getInstance();
+        mc.setScreen(new StaticBookViewScreen(bookId));
     }
 }
