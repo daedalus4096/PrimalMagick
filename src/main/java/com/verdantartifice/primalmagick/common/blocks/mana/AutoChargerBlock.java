@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -54,11 +55,11 @@ public class AutoChargerBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+        if (handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 ItemStack stack = player.getItemInHand(handIn);
-                if (charger.getItem(0).isEmpty() && stack.getItem() instanceof IWand wand) {
+                if (charger.getItem(0).isEmpty() && (stack.getItem() instanceof IWand wand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(0, stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
