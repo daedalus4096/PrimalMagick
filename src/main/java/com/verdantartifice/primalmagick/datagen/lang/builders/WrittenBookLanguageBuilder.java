@@ -13,8 +13,6 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<String, WrittenBookLanguageBuilder> {
-    private int index = 1;
-    
     public WrittenBookLanguageBuilder(String title, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
         super(title, () -> String.join(".", "written_book", PrimalMagick.MODID, title.toLowerCase()), untracker, adder);
     }
@@ -36,8 +34,7 @@ public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<String, 
     }
     
     public WrittenBookLanguageBuilder text(String value) {
-        this.add(this.getKey("text", Integer.toString(this.index)), value);
-        this.index++;
+        this.add(this.getKey("text"), value);
         return this;
     }
 }
