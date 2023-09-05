@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
@@ -32,6 +34,7 @@ import net.minecraft.world.level.Level;
  */
 public class StaticBookItem extends Item {
     public static final String TAG_BOOK_ID = "BookId";
+    public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
     public static final String TAG_GENERATION = "Generation";
     public static final int MAX_GENERATION = 2;
@@ -61,6 +64,25 @@ public class StaticBookItem extends Item {
     
     public static void setBookId(ItemStack stack, ResourceLocation bookId) {
         stack.getOrCreateTag().putString(TAG_BOOK_ID, bookId.toString());
+    }
+    
+    protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {
+        CompoundTag rootTag = stack.getTag();
+        if (rootTag != null) {
+            String str = rootTag.getString(TAG_BOOK_LANGUAGE_ID);
+            if (!StringUtil.isNullOrEmpty(str)) {
+                return Optional.ofNullable(ResourceLocation.tryParse(str));
+            }
+        }
+        return Optional.empty();
+    }
+    
+    public static BookLanguage getBookLanguage(ItemStack stack) {
+        return getBookLanguageId(stack).map(BookLanguagesPM.LANGUAGES.get()::getValue).orElse(BookLanguagesPM.DEFAULT.get());
+    }
+    
+    public static void setBookLanguage(ItemStack stack, BookLanguage lang) {
+        stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.languageId().toString());
     }
 
     @Override
@@ -106,6 +128,7 @@ public class StaticBookItem extends Item {
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", getBookLanguage(pStack).getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
     }
 
