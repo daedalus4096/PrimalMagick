@@ -263,6 +263,7 @@
   "commands.primalmagick.attunements.set.success.capped": "设置 %2$s %3$s 的共鸣，以 %1$s 至 %4$d （限制为 %5$d）",
   "commands.primalmagick.attunements.set.target": "%1$s 已将你的 %2$s %3$s 共鸣为 %4$d",
   "commands.primalmagick.attunements.set.target.capped": "%1$s 已将你的 %2$s %3$s 共鸣为 %4$d （限制 %5$d）",
+  "commands.primalmagick.books.noexist": "Book type does not exist",
   "commands.primalmagick.discipline.noexist": "研究 %1$s 不存在",
   "commands.primalmagick.error": "错误执行命令",
   "commands.primalmagick.knowledge.add.failure": "未能将知识添加到％1 $ s",
