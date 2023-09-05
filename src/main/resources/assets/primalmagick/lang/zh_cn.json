@@ -1208,6 +1208,7 @@
   "item.primalmagick.spellcloth_feet": "专家布靴",
   "item.primalmagick.spellcloth_head": "专家兜帽",
   "item.primalmagick.spellcloth_legs": "专家护腿",
+  "item.primalmagick.static_book": "Unknown Book",
   "item.primalmagick.sunwood_staff_core_item": "太阳木权杖杖芯",
   "item.primalmagick.sunwood_wand_core_item": "太阳木魔杖杖芯",
   "item.primalmagick.tallow": "炼金术脂",
@@ -2450,6 +2451,7 @@
   "tooltip.primalmagick.spells.short_wand_header": "激活咒语: %1$s",
   "tooltip.primalmagick.spells.wand_header": "刻有咒语 (能力 %1$s):",
   "tooltip.primalmagick.warded": "Warded",
+  "tooltip.primalmagick.written_book.author.unknown": "Unknown",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",
   "trim_material.primalmagick.rune_earth": "Earth Rune Material",
   "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
@@ -2485,8 +2487,6 @@
   "wand_gem.primalmagick.creative": "创造",
   "wand_gem.primalmagick.unknown": "未知",
   "wand_gem.primalmagick.wizard": "巫师",
-  "written_book.primalmagick.dream_journal.text.1": "\"我昨晚梦见了神殿。空气中仍然弥漫着同样的奇异能量，但这次我知道它的名称了。\n\n魔法。\n\n如果这个词打开了我脑海中的某些东西，我就知道该怎么做了。在梦里，我在地下挖\"",
-  "written_book.primalmagick.dream_journal.text.2": "\"神殿里发现石头上有一层奇怪的魔力尘。我感觉到里面有更多的魔力，抓起一把魔力尘，在一根普通的木棍上摩擦。\n因此，这根木棍变得更有意义。在梦里，我拿起它，朝一个书架挥了挥。\"",
-  "written_book.primalmagick.dream_journal.text.3": "\"在我看到结果之前，梦想就结束了，但我觉得这将是一件奇妙的事情。\n\n我觉得这可能是开启奇迹的钥匙，只要我有勇气迈出第一步。\"",
+  "written_book.primalmagick.dream_journal.text": "I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of the shrine and found stone laced with a curious dust. Sensing more magick within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase. The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.",
   "written_book.primalmagick.dream_journal.title": "幻梦日记"
 }
