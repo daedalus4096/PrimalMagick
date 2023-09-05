@@ -1410,6 +1410,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("stats").sub("noexist").output("Statistic %1$s does not exist").end().build();
         this.command("attunement_type").sub("noexist").output("Attunement type does not exist").end().build();
         this.command("books").sub("noexist").output("Book type does not exist").end().build();
+        this.command("books").sub("nolanguage").output("Book language does not exist").end().build();
         this.command("error").name("Error executing command").build();
         
         // Generate event output localizations
