@@ -1,3 +1,8 @@
+v4.0.4
+------
+* Refactored how the Dream Journal's text data is stored
+* Made the Dream Journal able to be cloned
+
 v4.0.3
 ------
 * Fixed a bug causing some attunement buffs to fall off upon player death
