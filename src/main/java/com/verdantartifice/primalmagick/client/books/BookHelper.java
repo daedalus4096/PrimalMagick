@@ -10,7 +10,10 @@ import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,6 +30,8 @@ public class BookHelper {
     public static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     
     private static final BiFunction<ResourceKey<?>, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
+    private static final ResourceLocation ALT_FONT = new ResourceLocation("minecraft", "alt");
+    private static final Style GALACTIC_STYLE = Style.EMPTY.withFont(ALT_FONT);
 
     private static String getTextTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
@@ -53,7 +58,10 @@ public class BookHelper {
     
     private static List<FormattedCharSequence> getTextLinesInner(ResourceKey<?> bookKey, Font font) {
         String textTranslationKey = getTextTranslationKey(bookKey);
-        Component fullText = Component.translatable(textTranslationKey);
+        MutableComponent fullText = Component.translatable(textTranslationKey);
+        if (bookKey.isFor(ForgeRegistries.Keys.ENCHANTMENTS)) {
+            fullText = fullText.withStyle(GALACTIC_STYLE);
+        }
         return font.split(fullText, TEXT_WIDTH);
     }
     
