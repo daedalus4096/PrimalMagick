@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -563,7 +564,7 @@ public class PlayerEvents {
         
         // Construct the dream journal item
         ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());
-        StaticBookItem.setBookId(journal, PrimalMagick.resource("dream_journal"));
+        StaticBookItem.setBookId(journal, BooksPM.DREAM_JOURNAL.get().bookId());
         StaticBookItem.setAuthorOverride(journal, player.getName().getString());
         
         // Give the dream journal to the player and announce it
