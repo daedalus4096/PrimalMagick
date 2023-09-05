@@ -1707,7 +1707,7 @@
   "research.primalmagick.ritual_candles.text.stage.2": "显然，在准备仪式蜡烛的过程中有一个特殊的圣化过程。它需要在处理牛油时用特殊祝福的语调，以及神秘的符文。没有魔力,虽然。没有什么能阻止我把它们用作有品位的装饰，而且它们有各种各样的颜色。要在仪式中激活这个道具，我必须用燧石和钢点燃它。很重要的一点是，在我开始仪式的时候，蜡烛还没有点燃;新光的闪烁具有象征意义。要重置道具，我可以用我的指尖掐掉它。",
   "research.primalmagick.ritual_candles.title": "仪式蜡烛",
   "research.primalmagick.ritual_lectern.text.stage.1": "更高等的仪式需要更高等的道具来推动。书是知识的象征，在平凡的魅力中很重要。也许它们也可以在仪式中使用？",
-  "research.primalmagick.ritual_lectern.text.stage.2": "不是随便一本书都能作为仪式，我也不能把它带在身上。毕竟，我需要腾出双手来进行仪式。\n为了对仪式有用，这本书必须先在迷人的台子上施魔力。书上的精确魔力并不重要，它只需要携带着伴随着经验而来的魔力能量。为了拿这本书，我需要一个特制的神圣的讲台。Moonwood在这方面应该做得更好。要在仪式中激活这个道具，我只需将附魔书放在上面。当我开始仪式的时候，讲台要空着，这很重要;知识的放弃是象征性的。要重置道具，我只需要用空手取回书。",
+  "research.primalmagick.ritual_lectern.text.stage.2": "Not just any book will do for a ritual, and I can't just be carrying it on my person.  After all, I need my hands free in order to conduct the ritual.<BR>To be useful for a ritual, the book must be enchanted first at an enchanting table.  The precise enchantment on the book doesn't matter, it just needs to be carrying the magickal energies that come with experience.<BR>As for holding the book, I'll need a specially constructed and sanctified lectern.  Moonwood should do nicely for this.<BR>To activate this prop during a ritual, I simply place the enchanted book upon it.  It's very important that the lectern be empty when I start the ritual; the surrendering of knowledge is symbolic.<BR>To reset the prop, I just retrieve the book by shift-right-clicking the lectern.",
   "research.primalmagick.ritual_lectern.title": "仪式灯笼",
   "research.primalmagick.rock_salt.text.stage.1": "啊,盐。这种美味的矿物质随处可见。不过，岩盐在发挥作用之前需要在熔炉中提纯。魔导书似乎暗示它与魔力有有趣的互动，但没有详细说明。假以时日，也许我会了解更多。在那之前，我可以用它来调味我的食物，让它更美味，更有饱腹感！",
   "research.primalmagick.rock_salt.title": "岩盐",
@@ -2488,5 +2488,10 @@
   "wand_gem.primalmagick.unknown": "未知",
   "wand_gem.primalmagick.wizard": "巫师",
   "written_book.primalmagick.dream_journal.text": "我昨晚梦见了神殿。空气中仍然弥漫着同样的奇异能量，但这次我知道它的名称了。\n\n魔法。\n\n如果这个词打开了我脑海中的某些东西，我就知道该怎么做了。在梦里，我在地下挖神殿里发现石头上有一层奇怪的魔力尘。我感觉到里面有更多的魔力，抓起一把魔力尘，在一根普通的木棍上摩擦。\n\n因此，这根木棍变得更有意义。在梦里，我拿起它，朝一个书架挥了挥。在我看到结果之前，梦想就结束了，但我觉得这将是一件奇妙的事情。\n\n我觉得这可能是开启奇迹的钥匙，只要我有勇气迈出第一步。",
-  "written_book.primalmagick.dream_journal.title": "幻梦日记"
+  "written_book.primalmagick.dream_journal.title": "幻梦日记",
+  "written_book.primalmagick.test.afterword": "(Test afterword)",
+  "written_book.primalmagick.test.author": "Steve",
+  "written_book.primalmagick.test.foreword": "[Test foreword]",
+  "written_book.primalmagick.test.text": "Sphinx of black quartz, judge my vow! 1234567890.",
+  "written_book.primalmagick.test.title": "Test Book"
 }
