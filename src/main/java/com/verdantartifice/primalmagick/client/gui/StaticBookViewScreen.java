@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -26,8 +24,6 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class StaticBookViewScreen extends Screen {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     public static final ResourceLocation BG_TEXTURE = new ResourceLocation("textures/gui/book.png");
     public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
     public static final int PAGE_TEXT_X_OFFSET = 36;
@@ -58,7 +54,6 @@ public class StaticBookViewScreen extends Screen {
         super(GameNarrator.NO_TITLE);
         this.bookId = bookId;
         this.playTurnSound = playTurnSound;
-        LOGGER.info("Creating static book screen for ID {}", bookId.toString());
     }
     
     public void setBookId(ResourceLocation bookId) {
@@ -147,8 +142,6 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        LOGGER.info("Rendering static book {}", this.bookId.toString());
-        
         this.renderBackground(guiGraphics);
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
