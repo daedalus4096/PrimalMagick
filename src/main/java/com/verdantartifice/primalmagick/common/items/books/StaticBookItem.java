@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.items.books;
 import java.util.List;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 
@@ -51,6 +53,10 @@ public class StaticBookItem extends Item {
             }
         }
         return Optional.empty();
+    }
+    
+    public static Optional<BookDefinition> getBookDefinition(ItemStack stack) {
+        return getBookId(stack).map(BooksPM.BOOKS.get()::getValue);
     }
     
     public static void setBookId(ItemStack stack, ResourceLocation bookId) {
@@ -107,7 +113,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            getBookId(stack).ifPresent(bookId -> PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(bookId), serverPlayer));
+            getBookDefinition(stack).ifPresent(bookDef -> PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(bookDef), serverPlayer));
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }

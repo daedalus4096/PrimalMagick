@@ -2,13 +2,13 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.NetworkEvent;
@@ -19,24 +19,22 @@ import net.minecraftforge.network.NetworkEvent;
  * @author Daedalus4096
  */
 public class OpenStaticBookScreenPacket implements IMessageToClient {
-    protected ResourceLocation bookId;
+    protected final ResourceKey<?> bookKey;
     
-    public OpenStaticBookScreenPacket() {
-        this.bookId = null;
+    public OpenStaticBookScreenPacket(BookDefinition bookDef) {
+        this.bookKey = BooksPM.BOOKS.get().getResourceKey(bookDef).orElseThrow();
     }
     
-    public OpenStaticBookScreenPacket(@Nonnull ResourceLocation bookId) {
-        this.bookId = bookId;
+    private OpenStaticBookScreenPacket(ResourceKey<?> bookKey) {
+        this.bookKey = bookKey;
     }
     
     public static void encode(OpenStaticBookScreenPacket message, FriendlyByteBuf buf) {
-        buf.writeResourceLocation(message.bookId);
+        buf.writeResourceKey(message.bookKey);
     }
     
     public static OpenStaticBookScreenPacket decode(FriendlyByteBuf buf) {
-        OpenStaticBookScreenPacket message = new OpenStaticBookScreenPacket();
-        message.bookId = buf.readResourceLocation();
-        return message;
+        return new OpenStaticBookScreenPacket(buf.readResourceKey(BooksPM.BOOKS.get().getRegistryKey()));
     }
     
     public static class Handler {
@@ -44,7 +42,7 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openStaticBookScreen(message.bookId);
+                    ClientUtils.openStaticBookScreen(message.bookKey);
                 }
             });
             

@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
@@ -23,30 +24,33 @@ public class BookHelper {
     public static final int LINE_HEIGHT = 9;
     public static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     
-    private static final BiFunction<ResourceLocation, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
+    private static final BiFunction<ResourceKey<?>, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
 
-    public static String getTranslationKey(ResourceLocation bookId, String sectionName) {
-        return String.join(".", "written_book", bookId.getNamespace(), bookId.getPath(), sectionName);
+    private static String getTextTranslationKey(ResourceKey<?> bookKey) {
+        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "text");
+        }
+        return "tooltip.primalmagick.question_marks";
     }
     
-    public static List<FormattedCharSequence> getTextLines(ResourceLocation bookId, Font font) {
-        return MEMOIZED_TEXT_LINES.apply(bookId, font);
+    public static List<FormattedCharSequence> getTextLines(ResourceKey<?> bookKey, Font font) {
+        return MEMOIZED_TEXT_LINES.apply(bookKey, font);
     }
     
-    private static List<FormattedCharSequence> getTextLinesInner(ResourceLocation bookId, Font font) {
-        String textTranslationKey = getTranslationKey(bookId, "text");
+    private static List<FormattedCharSequence> getTextLinesInner(ResourceKey<?> bookKey, Font font) {
+        String textTranslationKey = getTextTranslationKey(bookKey);
         Component fullText = Component.translatable(textTranslationKey);
         return font.split(fullText, TEXT_WIDTH);
     }
     
-    public static List<FormattedCharSequence> getTextPage(ResourceLocation bookId, int page, Font font) {
-        List<FormattedCharSequence> lines = getTextLines(bookId, font);
+    public static List<FormattedCharSequence> getTextPage(ResourceKey<?> bookKey, int page, Font font) {
+        List<FormattedCharSequence> lines = getTextLines(bookKey, font);
         int lowLine = Mth.clamp(page * MAX_LINES_PER_PAGE, 0, lines.size());
         int highLine = Mth.clamp((page + 1) * MAX_LINES_PER_PAGE, 0, lines.size());
         return ImmutableList.copyOf(lines.subList(lowLine, highLine));
     }
     
-    public static int getNumPages(ResourceLocation bookId, Font font) {
-        return Mth.ceil((float)getTextLines(bookId, font).size() / (float)MAX_LINES_PER_PAGE);
+    public static int getNumPages(ResourceKey<?> bookKey, Font font) {
+        return Mth.ceil((float)getTextLines(bookKey, font).size() / (float)MAX_LINES_PER_PAGE);
     }
 }

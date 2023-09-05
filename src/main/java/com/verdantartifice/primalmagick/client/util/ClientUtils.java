@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdat
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -94,8 +95,8 @@ public class ClientUtils {
      * 
      * @param bookId the ID of the static book whose resources to load
      */
-    public static void openStaticBookScreen(ResourceLocation bookId) {
+    public static void openStaticBookScreen(ResourceKey<?> bookKey) {
         Minecraft mc = Minecraft.getInstance();
-        mc.setScreen(new StaticBookViewScreen(bookId));
+        mc.setScreen(new StaticBookViewScreen(bookKey));
     }
 }
