@@ -263,6 +263,7 @@
   "commands.primalmagick.attunements.set.success.capped": "Set %2$s %3$s attunement for %1$s to %4$d (capped from %5$d)",
   "commands.primalmagick.attunements.set.target": "%1$s has set your %2$s %3$s attunement to %4$d",
   "commands.primalmagick.attunements.set.target.capped": "%1$s has set your %2$s %3$s attunement to %4$d (capped from %5$d)",
+  "commands.primalmagick.books.noexist": "Book type does not exist",
   "commands.primalmagick.discipline.noexist": "Discipline %1$s does not exist",
   "commands.primalmagick.error": "Error executing command",
   "commands.primalmagick.knowledge.add.failure": "Failed to add knowledge to %1$s",
