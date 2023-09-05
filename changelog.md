@@ -2,6 +2,9 @@ v4.0.4
 ------
 * Refactored how the Dream Journal's text data is stored
 * Made the Dream Journal able to be cloned
+* Made enchanted books readable, at least if you're fluent in Standard Galactic
+* Made enchanted books placeable on vanilla lecterns
+* Changed ritual lectern to now retrieve books by shift-right-clicking
 
 v4.0.3
 ------
