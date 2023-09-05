@@ -8,10 +8,12 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Helper methods for dealing with static books on the client side.
@@ -29,6 +31,18 @@ public class BookHelper {
     private static String getTextTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
             return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "text");
+        } else if (bookKey.isFor(ForgeRegistries.Keys.ENCHANTMENTS)) {
+            String key = String.join(".", "enchantment", bookKey.location().getNamespace(), bookKey.location().getPath(), "desc");
+            if (I18n.exists(key)) {
+                return key;
+            } else {
+                key = String.join(".", "enchantment", bookKey.location().getNamespace(), bookKey.location().getPath(), "rune_enchantment", "text");
+                if (I18n.exists(key)) {
+                    return key;
+                } else {
+                    return String.join(".", "enchantment", bookKey.location().getNamespace(), bookKey.location().getPath());
+                }
+            }
         }
         return "tooltip.primalmagick.question_marks";
     }
