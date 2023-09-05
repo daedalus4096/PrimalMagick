@@ -5,6 +5,7 @@ v4.0.4
 * Made enchanted books readable, at least if you're fluent in Standard Galactic
 * Made enchanted books placeable on vanilla lecterns
 * Changed ritual lectern to now retrieve books by shift-right-clicking
+* Added debug command to grant mod books
 
 v4.0.3
 ------
