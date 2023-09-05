@@ -33,8 +33,23 @@ public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<String, 
         return this;
     }
     
+    public WrittenBookLanguageBuilder author(String value) {
+        this.add(this.getKey("author"), value);
+        return this;
+    }
+    
     public WrittenBookLanguageBuilder text(String value) {
         this.add(this.getKey("text"), value);
+        return this;
+    }
+    
+    public WrittenBookLanguageBuilder foreword(String value) {
+        this.add(this.getKey("foreword"), value);
+        return this;
+    }
+    
+    public WrittenBookLanguageBuilder afterword(String value) {
+        this.add(this.getKey("afterword"), value);
         return this;
     }
 }

@@ -30,5 +30,6 @@ public class BooksPM {
     }
     
     // Register static books
+    public static final RegistryObject<BookDefinition> TEST_BOOK = register("test", () -> new BookDefinition(PrimalMagick.resource("test")));
     public static final RegistryObject<BookDefinition> DREAM_JOURNAL = register("dream_journal", () -> new BookDefinition(PrimalMagick.resource("dream_journal")));
 }
