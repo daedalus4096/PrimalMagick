@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.ConcoctionItem;
@@ -831,4 +832,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> DRAINED_BASIC_HALLOWED_PIXIE = registerWithoutTab("drained_pixie_basic_hallowed", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
     public static final RegistryObject<Item> DRAINED_GRAND_HALLOWED_PIXIE = registerWithoutTab("drained_pixie_grand_hallowed", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> DRAINED_MAJESTIC_HALLOWED_PIXIE = registerWithoutTab("drained_pixie_majestic_hallowed", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    
+    // Register book items
+    public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(new Item.Properties().stacksTo(16)));
 }

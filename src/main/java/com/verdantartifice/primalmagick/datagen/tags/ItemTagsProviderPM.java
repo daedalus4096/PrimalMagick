@@ -40,7 +40,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.ARROWS).add(ItemsPM.MANA_ARROW_EARTH.get(), ItemsPM.MANA_ARROW_SEA.get(), ItemsPM.MANA_ARROW_SKY.get(), ItemsPM.MANA_ARROW_SUN.get(), ItemsPM.MANA_ARROW_MOON.get(), ItemsPM.MANA_ARROW_BLOOD.get(), ItemsPM.MANA_ARROW_INFERNAL.get(), ItemsPM.MANA_ARROW_VOID.get(), ItemsPM.MANA_ARROW_HALLOWED.get());
         this.tag(ItemTags.AXES).add(ItemsPM.PRIMALITE_AXE.get(), ItemsPM.HEXIUM_AXE.get(), ItemsPM.HALLOWSTEEL_AXE.get(), ItemsPM.PRIMAL_AXE.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
-        this.tag(ItemTags.BOOKSHELF_BOOKS).add(ItemsPM.GRIMOIRE.get());
+        this.tag(ItemTags.BOOKSHELF_BOOKS).add(ItemsPM.GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
         this.tag(ItemTags.FREEZE_IMMUNE_WEARABLES).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTags.HOES).add(ItemsPM.PRIMALITE_HOE.get(), ItemsPM.HEXIUM_HOE.get(), ItemsPM.HALLOWSTEEL_HOE.get(), ItemsPM.PRIMAL_HOE.get());
         this.tag(ItemTags.LOGS_THAT_BURN).addTag(ItemTagsPM.MOONWOOD_LOGS).addTag(ItemTagsPM.SUNWOOD_LOGS).addTag(ItemTagsPM.HALLOWOOD_LOGS);

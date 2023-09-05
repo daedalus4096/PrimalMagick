@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.util;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
 
 import net.minecraft.client.Minecraft;
@@ -84,5 +85,17 @@ public class ClientUtils {
     public static void openGrimoireScreen() {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new GrimoireScreen());
+    }
+    
+    /**
+     * Opens the static book GUI on the client for the given book ID.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @param bookId the ID of the static book whose resources to load
+     */
+    public static void openStaticBookScreen(ResourceLocation bookId) {
+        Minecraft mc = Minecraft.getInstance();
+        mc.setScreen(new StaticBookViewScreen(bookId));
     }
 }

@@ -35,6 +35,7 @@ import com.verdantartifice.primalmagick.common.entities.companions.CompanionMana
 import com.verdantartifice.primalmagick.common.entities.misc.FriendlyWitchEntity;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.misc.DreamVisionTalismanItem;
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
@@ -56,8 +57,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -563,17 +562,9 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_got_dream"));
         
         // Construct the dream journal item
-        ItemStack journal = new ItemStack(Items.WRITTEN_BOOK);
-        CompoundTag contents = new CompoundTag();
-        contents.putInt("generation", 3);
-        contents.putString("title", Component.translatable("written_book.primalmagick.dream_journal.title").getString());
-        contents.putString("author", player.getName().getString());
-        ListTag pages = new ListTag();
-        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.1").getString()));
-        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.2").getString()));
-        pages.add(StringTag.valueOf(Component.translatable("written_book.primalmagick.dream_journal.text.3").getString()));
-        contents.put("pages", pages);
-        journal.setTag(contents);
+        ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());
+        StaticBookItem.setBookId(journal, PrimalMagick.resource("dream_journal"));
+        StaticBookItem.setAuthorOverride(journal, player.getName().getString());
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
