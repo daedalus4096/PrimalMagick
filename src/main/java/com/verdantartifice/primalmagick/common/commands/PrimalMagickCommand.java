@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.commands;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -29,6 +31,8 @@ import com.verdantartifice.primalmagick.common.commands.arguments.SourceInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.StatValueArgument;
 import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -49,6 +53,7 @@ import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -182,6 +187,13 @@ public class PrimalMagickCommand {
                     .then(Commands.literal("remove")
                         // /pm recipes <target> remove <recipe>
                         .then(Commands.argument("recipe", ResourceLocationArgument.id()).suggests(SuggestionProviders.ALL_RECIPES).executes((context) -> { return removeArcaneRecipe(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getRecipe(context, "recipe")); }))
+                    )
+                )
+            )
+            .then(Commands.literal("books")
+                .then(Commands.argument("target", EntityArgument.players())
+                    .then(Commands.literal("give")
+                        .then(Commands.argument("bookId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BooksPM.BOOKS.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "target"), ResourceLocationArgument.getId(context, "bookId"))))
                     )
                 )
             )
@@ -629,5 +641,33 @@ public class PrimalMagickCommand {
             target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.getId().toString()));
         }
         return 0;
+    }
+
+    private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, ResourceLocation bookId) {
+        if (!BooksPM.BOOKS.get().containsKey(bookId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.noexist", bookId.toString()));
+        } else {
+            ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
+            StaticBookItem.setBookId(bookStack, BooksPM.BOOKS.get().getValue(bookId).bookId());
+            // TODO Set book language
+            
+            for (ServerPlayer serverPlayer : targets) {
+                ItemStack bookCopy = bookStack.copy();
+                if (!serverPlayer.getInventory().add(bookCopy)) {
+                    ItemEntity bookEntity = serverPlayer.drop(bookCopy, false);
+                    if (bookEntity != null) {
+                        bookEntity.setNoPickUpDelay();
+                        bookEntity.setTarget(serverPlayer.getUUID());
+                    }
+                }
+            }
+            
+            if (targets.size() == 1) {
+                source.sendSuccess(() -> Component.translatable("commands.give.success.single", 1, bookStack.getDisplayName(), targets.iterator().next().getDisplayName()), true);
+            } else {
+                source.sendSuccess(() -> Component.translatable("commands.give.success.multiple", 1, bookStack.getDisplayName(), targets.size()), true);
+            }
+        }
+        return targets.size();
     }
 }
