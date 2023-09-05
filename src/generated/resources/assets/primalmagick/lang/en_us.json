@@ -2453,6 +2453,7 @@
   "tooltip.primalmagick.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
   "tooltip.primalmagick.warded": "Warded",
   "tooltip.primalmagick.written_book.author.unknown": "Unknown",
+  "tooltip.primalmagick.written_language.header": "Language: %1$s",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",
   "trim_material.primalmagick.rune_earth": "Earth Rune Material",
   "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
@@ -2494,5 +2495,8 @@
   "written_book.primalmagick.test.author": "Steve",
   "written_book.primalmagick.test.foreword": "[Test foreword]",
   "written_book.primalmagick.test.text": "Sphinx of black quartz, judge my vow! 1234567890.",
-  "written_book.primalmagick.test.title": "Test Book"
+  "written_book.primalmagick.test.title": "Test Book",
+  "written_language.primalmagick.default": "Modern Minecraftian",
+  "written_language.primalmagick.galactic": "Standard Galactic",
+  "written_language.primalmagick.illager": "Illager"
 }

@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -909,6 +910,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
         this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
+        this.tooltip("written_language").sub("header").output("Language: %1$s").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -1465,6 +1467,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("attunement").sub("threshold_loss").output("You have lost %2$s attunement to the %1$s").end().build();
         this.event("attunement").sub("suppression_gain").output("Your attunement to the %1$s has been suppressed").end().build();
         this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
+        
+        // Generate written language localizations
+        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
+        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
+        this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
 
         // Generate written book localizations
         this.book("test").name("Test Book").author("Steve")
