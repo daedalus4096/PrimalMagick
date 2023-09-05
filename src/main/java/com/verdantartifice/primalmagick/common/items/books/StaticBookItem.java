@@ -31,6 +31,8 @@ import net.minecraft.world.level.Level;
 public class StaticBookItem extends Item {
     public static final String TAG_BOOK_ID = "BookId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
+    public static final String TAG_GENERATION = "Generation";
+    public static final int MAX_GENERATION = 2;
     
     public StaticBookItem(Item.Properties properties) {
         super(properties);
@@ -64,7 +66,7 @@ public class StaticBookItem extends Item {
         return getStaticAttribute(bookId, "title");
     }
     
-    public Component getAuthor(ItemStack stack) {
+    public static Component getAuthor(ItemStack stack) {
         // Use the author override if there's one set
         CompoundTag rootTag = stack.getTag();
         if (rootTag != null) {
@@ -85,11 +87,20 @@ public class StaticBookItem extends Item {
     public static void setAuthorOverride(ItemStack stack, String name) {
         stack.getOrCreateTag().putString(TAG_AUTHOR_OVERRIDE, name);
     }
+    
+    public static int getGeneration(ItemStack stack) {
+        return stack.getTag().getInt(TAG_GENERATION);
+    }
+    
+    public static void setGeneration(ItemStack stack, int newGeneration) {
+        stack.getOrCreateTag().putInt(TAG_GENERATION, newGeneration);
+    }
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable("book.byAuthor", this.getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
     }
 
     @Override
