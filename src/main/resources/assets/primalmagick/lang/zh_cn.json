@@ -264,6 +264,7 @@
   "commands.primalmagick.attunements.set.target": "%1$s 已将你的 %2$s %3$s 共鸣为 %4$d",
   "commands.primalmagick.attunements.set.target.capped": "%1$s 已将你的 %2$s %3$s 共鸣为 %4$d （限制 %5$d）",
   "commands.primalmagick.books.noexist": "Book type does not exist",
+  "commands.primalmagick.books.nolanguage": "Book language does not exist",
   "commands.primalmagick.discipline.noexist": "研究 %1$s 不存在",
   "commands.primalmagick.error": "错误执行命令",
   "commands.primalmagick.knowledge.add.failure": "未能将知识添加到％1 $ s",
@@ -2453,6 +2454,7 @@
   "tooltip.primalmagick.spells.wand_header": "刻有咒语 (能力 %1$s):",
   "tooltip.primalmagick.warded": "Warded",
   "tooltip.primalmagick.written_book.author.unknown": "Unknown",
+  "tooltip.primalmagick.written_language.header": "Language: %1$s",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",
   "trim_material.primalmagick.rune_earth": "Earth Rune Material",
   "trim_material.primalmagick.rune_hallowed": "Hallowed Rune Material",
@@ -2494,5 +2496,8 @@
   "written_book.primalmagick.test.author": "Steve",
   "written_book.primalmagick.test.foreword": "[Test foreword]",
   "written_book.primalmagick.test.text": "Sphinx of black quartz, judge my vow! 1234567890.",
-  "written_book.primalmagick.test.title": "Test Book"
+  "written_book.primalmagick.test.title": "Test Book",
+  "written_language.primalmagick.default": "Modern Minecraftian",
+  "written_language.primalmagick.galactic": "Standard Galactic",
+  "written_language.primalmagick.illager": "Illager"
 }
