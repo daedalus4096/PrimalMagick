@@ -136,7 +136,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            getBookDefinition(stack).ifPresent(bookDef -> PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(bookDef), serverPlayer));
+            PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack), serverPlayer);
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
