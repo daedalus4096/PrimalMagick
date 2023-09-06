@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.lang.builders;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -12,19 +16,19 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<String, WrittenBookLanguageBuilder> {
-    public WrittenBookLanguageBuilder(String title, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(title, () -> String.join(".", "written_book", PrimalMagick.MODID, title.toLowerCase()), untracker, adder);
+public class WrittenBookLanguageBuilder extends AbstractLanguageBuilder<BookDefinition, WrittenBookLanguageBuilder> {
+    public WrittenBookLanguageBuilder(BookDefinition bookDef, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
+        super(bookDef, bookDef::getDescriptionId, untracker, adder);
     }
 
     @Override
     public String getBuilderKey() {
-        return this.getBaseRegistryKey().withPrefix("written_book/").toString();
+        return ResourceKey.create(RegistryKeysPM.BOOKS, this.getBaseRegistryKey()).toString();
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(String base) {
-        return PrimalMagick.resource(base.toLowerCase());
+    protected ResourceLocation getBaseRegistryKey(BookDefinition base) {
+        return Objects.requireNonNull(BooksPM.BOOKS.get().getKey(base));
     }
 
     @Override

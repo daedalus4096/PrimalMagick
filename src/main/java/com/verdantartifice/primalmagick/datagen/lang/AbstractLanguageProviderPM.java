@@ -11,6 +11,8 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -51,6 +53,7 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.TrimMaterialSource
 import com.verdantartifice.primalmagick.datagen.lang.builders.TrimPatternLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WandComponentLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguageBuilder;
+import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenLanguageLanguageBuilder;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
@@ -232,8 +235,20 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         return this.createBuilder(() -> new LabelLanguageBuilder(token, this::untrack, this::add));
     }
     
-    public WrittenBookLanguageBuilder book(String id) {
-        return this.createBuilder(() -> new WrittenBookLanguageBuilder(id, this::untrack, this::add));
+    public WrittenBookLanguageBuilder book(Supplier<? extends BookDefinition> book) {
+        return this.book(book.get());
+    }
+    
+    public WrittenBookLanguageBuilder book(BookDefinition book) {
+        return this.createBuilder(() -> new WrittenBookLanguageBuilder(book, this::untrack, this::add));
+    }
+    
+    public WrittenLanguageLanguageBuilder language(Supplier<? extends BookLanguage> lang) {
+        return this.language(lang.get());
+    }
+    
+    public WrittenLanguageLanguageBuilder language(BookLanguage lang) {
+        return this.createBuilder(() -> new WrittenLanguageLanguageBuilder(lang, this::untrack, this::add));
     }
     
     public SpellVehicleLanguageBuilder spellVehicle(String id) {

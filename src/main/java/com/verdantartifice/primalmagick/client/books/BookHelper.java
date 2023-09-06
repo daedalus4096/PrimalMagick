@@ -1,19 +1,20 @@
 package com.verdantartifice.primalmagick.client.books;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -29,9 +30,26 @@ public class BookHelper {
     public static final int LINE_HEIGHT = 9;
     public static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     
-    private static final BiFunction<ResourceKey<?>, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
-    private static final ResourceLocation ALT_FONT = new ResourceLocation("minecraft", "alt");
-    private static final Style GALACTIC_STYLE = Style.EMPTY.withFont(ALT_FONT);
+    private static final BiFunction<BookView, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
+    private static final Style BASE_TEXT_STYLE = Style.EMPTY;
+    private static final Style FOREWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
+    private static final Style AFTERWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
+    
+    private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
+        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "foreword");
+        } else {
+            return "tooltip.primalmagick.question_marks";
+        }
+    }
+
+    private static String getAfterwordTranslationKey(ResourceKey<?> bookKey) {
+        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "afterword");
+        } else {
+            return "tooltip.primalmagick.question_marks";
+        }
+    }
 
     private static String getTextTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
@@ -52,27 +70,51 @@ public class BookHelper {
         return "tooltip.primalmagick.question_marks";
     }
     
-    public static List<FormattedCharSequence> getTextLines(ResourceKey<?> bookKey, Font font) {
-        return MEMOIZED_TEXT_LINES.apply(bookKey, font);
+    public static List<FormattedCharSequence> getTextLines(BookView view, Font font) {
+        return MEMOIZED_TEXT_LINES.apply(view, font);
     }
     
-    private static List<FormattedCharSequence> getTextLinesInner(ResourceKey<?> bookKey, Font font) {
-        String textTranslationKey = getTextTranslationKey(bookKey);
-        MutableComponent fullText = Component.translatable(textTranslationKey);
-        if (bookKey.isFor(ForgeRegistries.Keys.ENCHANTMENTS)) {
-            fullText = fullText.withStyle(GALACTIC_STYLE);
+    private static List<FormattedCharSequence> getTextLinesInner(BookView view, Font font) {
+        List<FormattedCharSequence> retVal = new ArrayList<>();
+        String textTranslationKey = getTextTranslationKey(view.bookKey());
+
+        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(view.languageId());
+        if (lang == null) {
+            lang = BookLanguagesPM.DEFAULT.get();
         }
-        return font.split(fullText, TEXT_WIDTH);
+
+        // Add the un-encoded foreword
+        if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
+            String key = getForewordTranslationKey(view.bookKey());
+            if (I18n.exists(key)) {
+                retVal.addAll(font.split(Component.translatable(key).withStyle(FOREWORD_TEXT_STYLE), TEXT_WIDTH));
+                retVal.add(FormattedCharSequence.EMPTY);
+            }
+        }
+        
+        // Add the encoded main text
+        retVal.addAll(font.split(Component.translatable(textTranslationKey).withStyle(BASE_TEXT_STYLE.withFont(lang.font())), TEXT_WIDTH));
+        
+        // Add the un-encoded afterword
+        if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
+            String key = getAfterwordTranslationKey(view.bookKey());
+            if (I18n.exists(key)) {
+                retVal.add(FormattedCharSequence.EMPTY);
+                retVal.addAll(font.split(Component.translatable(key).withStyle(AFTERWORD_TEXT_STYLE), TEXT_WIDTH));
+            }
+        }
+        
+        return retVal;
     }
     
-    public static List<FormattedCharSequence> getTextPage(ResourceKey<?> bookKey, int page, Font font) {
-        List<FormattedCharSequence> lines = getTextLines(bookKey, font);
+    public static List<FormattedCharSequence> getTextPage(BookView view, int page, Font font) {
+        List<FormattedCharSequence> lines = getTextLines(view, font);
         int lowLine = Mth.clamp(page * MAX_LINES_PER_PAGE, 0, lines.size());
         int highLine = Mth.clamp((page + 1) * MAX_LINES_PER_PAGE, 0, lines.size());
         return ImmutableList.copyOf(lines.subList(lowLine, highLine));
     }
     
-    public static int getNumPages(ResourceKey<?> bookKey, Font font) {
-        return Mth.ceil((float)getTextLines(bookKey, font).size() / (float)MAX_LINES_PER_PAGE);
+    public static int getNumPages(BookView view, Font font) {
+        return Mth.ceil((float)getTextLines(view, font).size() / (float)MAX_LINES_PER_PAGE);
     }
 }

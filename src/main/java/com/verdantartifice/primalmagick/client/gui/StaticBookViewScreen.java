@@ -6,6 +6,8 @@ import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
+import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.client.GameNarrator;
@@ -37,7 +39,7 @@ public class StaticBookViewScreen extends Screen {
     protected static final int IMAGE_HEIGHT = 192;
 
     protected final boolean playTurnSound;
-    protected ResourceKey<?> bookKey;
+    protected final BookView bookView;
     private PageButton forwardButton;
     private PageButton backButton;
     private int currentPage;
@@ -45,24 +47,17 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource("unknown")), false);
+        this(ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource("unknown")), BookLanguagesPM.DEFAULT.getId(), false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey) {
-        this(bookKey, true);
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId) {
+        this(bookKey, languageId, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
-        this.bookKey = bookKey;
+        this.bookView = new BookView(bookKey, languageId);
         this.playTurnSound = playTurnSound;
-    }
-    
-    public void setBookKey(ResourceKey<?> bookKey) {
-        this.bookKey = bookKey;
-        this.currentPage = Mth.clamp(this.currentPage, 0, this.getNumPages());
-        this.updateButtonVisibility();
-        this.cachedPage = -1;
     }
     
     /**
@@ -102,7 +97,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     private int getNumPages() {
-        return BookHelper.getNumPages(this.bookKey, this.font);
+        return BookHelper.getNumPages(this.bookView, this.font);
     }
     
     protected void pageBack() {
@@ -161,7 +156,7 @@ public class StaticBookViewScreen extends Screen {
         guiGraphics.drawString(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
 
         // Draw the text lines for the current page
-        List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookKey, this.cachedPage, this.font);
+        List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
         for (int index = 0; index < page.size(); index++) {
             guiGraphics.drawString(this.font, page.get(index), xPos + PAGE_TEXT_X_OFFSET, yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT), 0, false);
         }
