@@ -3,6 +3,11 @@ package com.verdantartifice.primalmagick.client.books;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.regex.Pattern;
+import java.util.stream.Stream;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -12,11 +17,14 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringDecomposer;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -25,6 +33,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class BookHelper {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     public static final int TEXT_WIDTH = 114;
     public static final int TEXT_HEIGHT = 128;
     public static final int LINE_HEIGHT = 9;
@@ -34,6 +44,9 @@ public class BookHelper {
     private static final Style BASE_TEXT_STYLE = Style.EMPTY;
     private static final Style FOREWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     private static final Style AFTERWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
+    
+    private static final Pattern WORD_BOUNDARY = Pattern.compile("\\b");
+    private static final Pattern SEPARATOR_ONLY = Pattern.compile("^[\\p{P} ]+$");
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
@@ -77,11 +90,10 @@ public class BookHelper {
     private static List<FormattedCharSequence> getTextLinesInner(BookView view, Font font) {
         List<FormattedCharSequence> retVal = new ArrayList<>();
         String textTranslationKey = getTextTranslationKey(view.bookKey());
-
-        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(view.languageId());
-        if (lang == null) {
-            lang = BookLanguagesPM.DEFAULT.get();
-        }
+        
+        final BookLanguage lang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
+                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
+                BookLanguagesPM.DEFAULT.get();
 
         // Add the un-encoded foreword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
@@ -93,7 +105,17 @@ public class BookHelper {
         }
         
         // Add the encoded main text
-        retVal.addAll(font.split(Component.translatable(textTranslationKey).withStyle(BASE_TEXT_STYLE.withFont(lang.font())), TEXT_WIDTH));
+        font.getSplitter().splitLines(Component.translatable(textTranslationKey), TEXT_WIDTH, Style.EMPTY).forEach(line -> {
+            List<Component> words = new ArrayList<>();
+            Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(line))).forEach(word -> {
+                if (SEPARATOR_ONLY.matcher(word).matches()) {
+                    words.add(Component.literal(word));
+                } else {
+                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
+                }
+            });
+            retVal.add(Language.getInstance().getVisualOrder(FormattedText.composite(words)));
+        });
         
         // Add the un-encoded afterword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
