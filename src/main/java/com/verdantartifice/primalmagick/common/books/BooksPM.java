@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.tags.TagKey;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -27,6 +28,10 @@ public class BooksPM {
     
     protected static RegistryObject<BookDefinition> register(String name, Supplier<BookDefinition> bookSupplier) {
         return DEFERRED_BOOKS.register(name, bookSupplier);
+    }
+    
+    public static TagKey<BookDefinition> createTagKey(String name) {
+        return DEFERRED_BOOKS.createTagKey(name);
     }
     
     // Register static books

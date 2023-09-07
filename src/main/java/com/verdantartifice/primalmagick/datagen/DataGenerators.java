@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.BookDefinitionTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
@@ -63,6 +64,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
+        generator.addProvider(event.includeServer(), new BookDefinitionTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
     }
 }
