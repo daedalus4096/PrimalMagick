@@ -20,7 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BookLanguagesPM {
     private static final DeferredRegister<BookLanguage> DEFERRED_LANGUAGES = DeferredRegister.create(RegistryKeysPM.BOOK_LANGUAGES, PrimalMagick.MODID);
 
-    public static final Supplier<IForgeRegistry<BookLanguage>> LANGUAGES = DEFERRED_LANGUAGES.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<BookLanguage>> LANGUAGES = DEFERRED_LANGUAGES.makeRegistry(() -> new RegistryBuilder<BookLanguage>().hasTags());
     
     public static void init() {
         DEFERRED_LANGUAGES.register(FMLJavaModLoadingContext.get().getModEventBus());

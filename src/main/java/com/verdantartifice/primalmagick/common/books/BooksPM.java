@@ -20,7 +20,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class BooksPM {
     private static final DeferredRegister<BookDefinition> DEFERRED_BOOKS = DeferredRegister.create(RegistryKeysPM.BOOKS, PrimalMagick.MODID);
     
-    public static final Supplier<IForgeRegistry<BookDefinition>> BOOKS = DEFERRED_BOOKS.makeRegistry(RegistryBuilder::new);
+    public static final Supplier<IForgeRegistry<BookDefinition>> BOOKS = DEFERRED_BOOKS.makeRegistry(() -> new RegistryBuilder<BookDefinition>().hasTags());
     
     public static void init() {
         DEFERRED_BOOKS.register(FMLJavaModLoadingContext.get().getModEventBus());
