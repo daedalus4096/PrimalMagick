@@ -6,13 +6,14 @@ import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 
 /**
  * Definition for a language in which a static book can be written/encoded.
  * 
  * @author Daedalus4096
  */
-public record BookLanguage(ResourceLocation languageId, ResourceLocation font, int complexity) {
+public record BookLanguage(ResourceLocation languageId, ResourceLocation font, int complexity, TagKey<BookDefinition> booksTag) {
     private static final Function<BookLanguage, String> MEMOIZED_DESCRIPTION_ID = Util.memoize(BookLanguage::getDescriptionIdInner);
     
     public boolean isTranslatable() {

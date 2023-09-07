@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.tags.BookDefinitionTagsPM;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -31,7 +32,7 @@ public class BookLanguagesPM {
     }
     
     // Register book languages
-    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), new ResourceLocation("default"), -1));
-    public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), new ResourceLocation("alt"), -1));
-    public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), new ResourceLocation("illageralt"), 20));
+    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), new ResourceLocation("default"), -1, BookDefinitionTagsPM.DEFAULT_BOOKS));
+    public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), new ResourceLocation("alt"), -1, BookDefinitionTagsPM.GALACTIC_BOOKS));
+    public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), new ResourceLocation("illageralt"), 20, BookDefinitionTagsPM.ILLAGER_BOOKS));
 }
