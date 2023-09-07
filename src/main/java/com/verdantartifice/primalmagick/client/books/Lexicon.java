@@ -9,7 +9,11 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Suppliers;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import net.minecraft.Util;
 
@@ -40,6 +44,10 @@ public class Lexicon {
         this.invalidate();
     }
     
+    public static Lexicon parse(@Nonnull JsonObject json) throws Exception {
+        return new Lexicon(json.get("words").getAsJsonArray().asList().stream().map(JsonElement::getAsString).toList());
+    }
+    
     public void clear() {
         this.entries.clear();
         this.invalidate();
@@ -48,6 +56,10 @@ public class Lexicon {
     public void invalidate() {
         this.cachedMostFrequent = Suppliers.memoize(this::getWordsByMostFrequentInner);
         this.cachedOfLength = Util.memoize(this::getWordsOfLengthInner);
+    }
+    
+    public int size() {
+        return this.entries.size();
     }
     
     public void addWord(String word) {
