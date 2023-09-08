@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -138,5 +139,13 @@ public class BookHelper {
     
     public static int getNumPages(BookView view, Font font) {
         return Mth.ceil((float)getTextLines(view, font).size() / (float)MAX_LINES_PER_PAGE);
+    }
+    
+    public static List<String> getUnencodedWords(BookDefinition bookDef) {
+        List<String> words = new ArrayList<>();
+        String textTranslationKey = getTextTranslationKey(ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId()));
+        Component fullText = Component.translatable(textTranslationKey);
+        WORD_BOUNDARY.splitAsStream(StringDecomposer.getPlainText(fullText)).filter(word -> !SEPARATOR_ONLY.matcher(word).matches()).forEach(words::add);
+        return words;
     }
 }

@@ -20,17 +20,13 @@ public class LexiconManager {
     protected static final Map<ResourceLocation, Lexicon> REGISTRY = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
     
-    public static void clear() {
-        REGISTRY.clear();
-    }
-    
-    public static void register(ResourceLocation id, Lexicon lexicon) {
+    public static void setLexicon(ResourceLocation id, Lexicon lexicon) {
         if (REGISTRY.containsKey(id)) {
-            throw new IllegalStateException("Duplicate lexicon for " + id.toString() + " is not allowed!");
+            LOGGER.info("Replacing lexicon for {} with {} entries", id.toString(), lexicon.size());
         } else {
-            REGISTRY.put(id, lexicon);
             LOGGER.info("Registered {} lexicon with {} entries", id.toString(), lexicon.size());
         }
+        REGISTRY.put(id, lexicon);
     }
     
     public static Optional<Lexicon> getLexicon(ResourceLocation id) {
