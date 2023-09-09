@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCompanions;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerCooldowns;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerKnowledge;
+import com.verdantartifice.primalmagick.common.capabilities.PlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PlayerWard;
 import com.verdantartifice.primalmagick.common.capabilities.WorldEntitySwappers;
@@ -39,6 +40,7 @@ public class CapabilityEvents {
             event.addCapability(PlayerCompanions.Provider.NAME, new PlayerCompanions.Provider());
             event.addCapability(PlayerArcaneRecipeBook.Provider.NAME, new PlayerArcaneRecipeBook.Provider(player.level().getRecipeManager()));
             event.addCapability(PlayerWard.Provider.NAME, new PlayerWard.Provider());
+            event.addCapability(PlayerLinguistics.Provider.NAME, new PlayerLinguistics.Provider());
         }
     }
     
