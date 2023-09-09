@@ -108,22 +108,20 @@ public class BookHelper {
         }
         
         // Add the encoded main text
-        font.getSplitter().splitLines(Component.translatable(textTranslationKey), TEXT_WIDTH, Style.EMPTY).forEach(line -> {
-            List<Component> words = new ArrayList<>();
-            Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(line))).forEach(word -> {
-                if (SEPARATOR_ONLY.matcher(word).matches()) {
-                    // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
-                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-                } else if (lang.isTranslatable() && langLex.isWordTranslated(word, 0, lang.complexity())) { // TODO Get comprehension from player capability
-                    // If the word has been translated, then add it directly
-                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-                } else {
-                    // If the word has not been translated, then add an encoded replacement word
-                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
-                }
-            });
-            retVal.add(Language.getInstance().getVisualOrder(FormattedText.composite(words)));
+        List<Component> words = new ArrayList<>();
+        Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(Component.translatable(textTranslationKey)))).forEach(word -> {
+            if (SEPARATOR_ONLY.matcher(word).matches()) {
+                // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
+                words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, 0, lang.complexity())) { // TODO Get comprehension from player capability
+                // If the word has been translated, then add it directly
+                words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else {
+                // If the word has not been translated, then add an encoded replacement word
+                words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
+            }
         });
+        retVal.addAll(Language.getInstance().getVisualOrder(font.getSplitter().splitLines(FormattedText.composite(words), TEXT_WIDTH, Style.EMPTY)));
         
         // Add the un-encoded afterword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
