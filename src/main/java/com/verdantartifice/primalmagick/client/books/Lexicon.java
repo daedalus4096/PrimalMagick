@@ -16,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.minecraft.Util;
+import net.minecraft.util.Mth;
 
 /**
  * Maps the full set of words used in a book language, plus metadata.
@@ -122,8 +123,36 @@ public class Lexicon {
         if (candidates.isEmpty()) {
             return "a".repeat(original.length());
         } else {
-            return candidates.get(original.hashCode() % candidates.size());
+            return candidates.get(Math.abs(original.hashCode()) % candidates.size());
         }
+    }
+    
+    /**
+     * Returns whether the given word has been translated, based on the given language comprehension,
+     * and should be rendered un-encoded.  Words not in the lexicon always return false.
+     * 
+     * @param word the word to test
+     * @param comprehension the player's comprehension score for this lexicon's language
+     * @param complexity the complexity of this lexicon's language
+     * @return
+     */
+    public boolean isWordTranslated(String word, int comprehension, int complexity) {
+        return this.getTranslatedWords(comprehension, complexity).contains(word);
+    }
+    
+    protected List<String> getTranslatedWords(int comprehension, int complexity) {
+        List<String> words = this.getWordsByMostFrequent();
+        if (complexity == 0) {
+            // If the language has no complexity, then all words are automatically translated
+            return words;
+        } else if (complexity < 0) {
+            // If the language is not translatable, then no words are translated ever
+            return List.of();
+        }
+        
+        double progress = (double)comprehension / (double)complexity;
+        int wordCount = Mth.ceil(progress * words.size());
+        return words.subList(0, wordCount);
     }
 
     protected static class Entry {

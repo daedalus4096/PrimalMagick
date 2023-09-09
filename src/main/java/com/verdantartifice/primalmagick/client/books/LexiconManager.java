@@ -9,6 +9,8 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
+
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -17,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class LexiconManager {
+    public static final ResourceLocation LOREM_IPSUM = PrimalMagick.resource("lorem_ipsum");
     protected static final Map<ResourceLocation, Lexicon> REGISTRY = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
     

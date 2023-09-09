@@ -32,7 +32,7 @@ public class BookLanguagesPM {
     }
     
     // Register book languages
-    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), new ResourceLocation("default"), -1, BookDefinitionTagsPM.DEFAULT_BOOKS));
+    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), new ResourceLocation("default"), 0, BookDefinitionTagsPM.DEFAULT_BOOKS));
     public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), new ResourceLocation("alt"), -1, BookDefinitionTagsPM.GALACTIC_BOOKS));
     public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), new ResourceLocation("illageralt"), 20, BookDefinitionTagsPM.ILLAGER_BOOKS));
 }

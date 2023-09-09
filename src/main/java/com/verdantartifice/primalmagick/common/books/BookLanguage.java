@@ -17,7 +17,7 @@ public record BookLanguage(ResourceLocation languageId, ResourceLocation font, i
     private static final Function<BookLanguage, String> MEMOIZED_DESCRIPTION_ID = Util.memoize(BookLanguage::getDescriptionIdInner);
     
     public boolean isTranslatable() {
-        return this.complexity() > 0;
+        return this.complexity() >= 0;
     }
     
     public String getDescriptionId() {

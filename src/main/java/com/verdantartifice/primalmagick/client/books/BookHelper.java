@@ -95,6 +95,8 @@ public class BookHelper {
         final BookLanguage lang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
                 BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
                 BookLanguagesPM.DEFAULT.get();
+        final Lexicon langLex = LexiconManager.getLexicon(lang.languageId()).orElseThrow();
+        final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
 
         // Add the un-encoded foreword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
@@ -110,9 +112,14 @@ public class BookHelper {
             List<Component> words = new ArrayList<>();
             Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(line))).forEach(word -> {
                 if (SEPARATOR_ONLY.matcher(word).matches()) {
-                    words.add(Component.literal(word));
+                    // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
+                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+                } else if (lang.isTranslatable() && langLex.isWordTranslated(word, 0, lang.complexity())) { // TODO Get comprehension from player capability
+                    // If the word has been translated, then add it directly
+                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
                 } else {
-                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
+                    // If the word has not been translated, then add an encoded replacement word
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
                 }
             });
             retVal.add(Language.getInstance().getVisualOrder(FormattedText.composite(words)));
