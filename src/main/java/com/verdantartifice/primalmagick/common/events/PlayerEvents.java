@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -229,6 +230,11 @@ public class PlayerEvents {
         if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
             PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.sync(player);
+            });
+        }
+        if (immediate || LinguisticsManager.isSyncScheduled(player)) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.sync(player);
             });
         }
         if (immediate) {

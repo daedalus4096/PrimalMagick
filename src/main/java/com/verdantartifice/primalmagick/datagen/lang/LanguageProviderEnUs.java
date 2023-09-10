@@ -1411,6 +1411,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("attunement_type").sub("noexist").output("Attunement type does not exist").end().build();
         this.command("books").sub("noexist").output("Book type does not exist").end().build();
         this.command("books").sub("nolanguage").output("Book language does not exist").end().build();
+        this.command("linguistics").sub("reset").output("Resetting all linguistics knowledge for %1$s").end().build();
+        this.command("linguistics").sub("reset").sub("target").output("%1$s has reset all your linguistics knowledge").end().build();
+        this.command("linguistics").sub("comprehension").sub("get").output("%1$s has %3$d comprehension for language %2$s").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("success").output("Set %2$s language comprehension for %1$s to %3$d").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("target").output("%1$s has set your %2$s language comprehension to %3$d").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("success").sub("capped").output("Set %2$s language comprehension for %1$s to %3$d (capped from %4$d)").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s language comprehension to %3$d (capped from %4$d)").end().build();
         this.command("error").name("Error executing command").build();
         
         // Generate event output localizations
