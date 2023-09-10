@@ -27,8 +27,6 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class Lexicon {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
     protected static final Comparator<Entry> BY_HASH_CODE = Comparator.comparingInt(Entry::hashCode);
     protected static final Comparator<Entry> BY_MOST_FREQUENT = Comparator.comparingInt(Entry::getCount).reversed().thenComparing(BY_HASH_CODE);
     
@@ -98,9 +96,6 @@ public class Lexicon {
     }
     
     private List<String> getWordsByMostFrequentInner() {
-        LOGGER.debug("Lexicon contents:");
-        this.entries.values().stream().sorted(BY_MOST_FREQUENT).forEach(entry -> LOGGER.debug("    Word: {}, count: {}", entry.getWord(), entry.getCount()));
-
         return this.entries.values().stream().sorted(BY_MOST_FREQUENT).map(Entry::getWord).toList();
     }
     
@@ -146,9 +141,7 @@ public class Lexicon {
      * @return
      */
     public boolean isWordTranslated(String word, int comprehension, int complexity) {
-        boolean retVal = this.getTranslatedWords(comprehension, complexity).contains(word.toLowerCase());
-        LOGGER.debug("Word {} translated at {}/{}: {}", word.toLowerCase(), comprehension, complexity, retVal);
-        return retVal;
+        return this.getTranslatedWords(comprehension, complexity).contains(word.toLowerCase());
     }
     
     protected List<String> getTranslatedWords(int comprehension, int complexity) {

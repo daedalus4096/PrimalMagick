@@ -47,7 +47,7 @@ public class BookHelper {
     private static final Style AFTERWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     
     private static final Pattern WORD_BOUNDARY = Pattern.compile("\\b");
-    private static final Pattern SEPARATOR_ONLY = Pattern.compile("^[\\p{P} ]+$");
+    private static final Pattern SEPARATOR_ONLY = Pattern.compile("^[\\p{P} \\n]+$");
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
