@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -85,8 +87,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
 
     @Override
     public void sync(ServerPlayer player) {
-        // TODO Auto-generated method stub
-
+        if (player != null) {
+            PacketHandler.sendToPlayer(new SyncLinguisticsPacket(player), player);
+        }
     }
 
     /**
