@@ -89,6 +89,7 @@ public class BookHelper {
     }
     
     private static List<FormattedCharSequence> getTextLinesInner(BookView view, Font font) {
+        LOGGER.debug("Calculating text lines for book {}, lang {}, comprehension {}", view.bookKey(), view.languageId(), view.comprehension());
         List<FormattedCharSequence> retVal = new ArrayList<>();
         String textTranslationKey = getTextTranslationKey(view.bookKey());
         
@@ -113,7 +114,7 @@ public class BookHelper {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
-            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, 0, lang.complexity())) { // TODO Get comprehension from player capability
+            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.complexity())) {
                 // If the word has been translated, then add it directly
                 words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else {

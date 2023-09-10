@@ -2,12 +2,16 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.client.GameNarrator;
@@ -28,6 +32,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class StaticBookViewScreen extends Screen {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     public static final ResourceLocation BG_TEXTURE = new ResourceLocation("textures/gui/book.png");
     public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
     public static final int PAGE_TEXT_X_OFFSET = 36;
@@ -39,7 +45,9 @@ public class StaticBookViewScreen extends Screen {
     protected static final int IMAGE_HEIGHT = 192;
 
     protected final boolean playTurnSound;
-    protected final BookView bookView;
+    protected final ResourceKey<?> requestedBookKey;
+    protected final ResourceLocation requestedLanguageId;
+    protected BookView bookView;
     private PageButton forwardButton;
     private PageButton backButton;
     private int currentPage;
@@ -56,8 +64,9 @@ public class StaticBookViewScreen extends Screen {
     
     private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
-        this.bookView = new BookView(bookKey, languageId);
         this.playTurnSound = playTurnSound;
+        this.requestedBookKey = bookKey;
+        this.requestedLanguageId = languageId;
     }
     
     /**
@@ -77,6 +86,13 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     protected void init() {
+        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(this.requestedLanguageId);
+        if (lang == null) {
+            lang = BookLanguagesPM.DEFAULT.get();
+        }
+        int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
+        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), comp);
+
         this.createMenuControls();
         this.createPageControlButtons();
     }

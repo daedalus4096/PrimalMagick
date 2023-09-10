@@ -731,12 +731,13 @@ public class PrimalMagickCommand {
         } else {
             BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
             LinguisticsManager.setComprehension(target, lang, value);
+            int newValue = LinguisticsManager.getComprehension(target, lang);
             if (value > lang.complexity()) {
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success.capped", target.getName(), bookLanguageId, lang.complexity(), value), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), bookLanguageId, lang.complexity(), value));
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success.capped", target.getName(), bookLanguageId, lang.complexity(), newValue), true);
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), bookLanguageId, lang.complexity(), newValue));
             } else {
-                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), bookLanguageId, value), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, value));
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), bookLanguageId, newValue), true);
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, newValue));
             }
         }
         return 0;

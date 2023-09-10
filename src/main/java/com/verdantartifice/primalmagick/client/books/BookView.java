@@ -8,6 +8,6 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public record BookView(ResourceKey<?> bookKey, ResourceLocation languageId) {
+public record BookView(ResourceKey<?> bookKey, ResourceLocation languageId, int comprehension) {
 
 }
