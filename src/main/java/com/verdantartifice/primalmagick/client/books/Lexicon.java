@@ -11,6 +11,9 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Suppliers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,6 +27,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class Lexicon {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected static final Comparator<Entry> BY_HASH_CODE = Comparator.comparingInt(Entry::hashCode);
     protected static final Comparator<Entry> BY_MOST_FREQUENT = Comparator.comparingInt(Entry::getCount).reversed().thenComparing(BY_HASH_CODE);
     
@@ -74,10 +79,11 @@ public class Lexicon {
     }
     
     private void addWordInner(String word) {
-        if (this.entries.containsKey(word)) {
-            this.entries.get(word).incrementCount();
+        String toAdd = word.toLowerCase();
+        if (this.entries.containsKey(toAdd)) {
+            this.entries.get(toAdd).incrementCount();
         } else {
-            this.entries.put(word, new Entry(word));
+            this.entries.put(toAdd, new Entry(toAdd));
         }
     }
     
@@ -92,6 +98,9 @@ public class Lexicon {
     }
     
     private List<String> getWordsByMostFrequentInner() {
+        LOGGER.debug("Lexicon contents:");
+        this.entries.values().stream().sorted(BY_MOST_FREQUENT).forEach(entry -> LOGGER.debug("    Word: {}, count: {}", entry.getWord(), entry.getCount()));
+
         return this.entries.values().stream().sorted(BY_MOST_FREQUENT).map(Entry::getWord).toList();
     }
     
@@ -137,7 +146,9 @@ public class Lexicon {
      * @return
      */
     public boolean isWordTranslated(String word, int comprehension, int complexity) {
-        return this.getTranslatedWords(comprehension, complexity).contains(word);
+        boolean retVal = this.getTranslatedWords(comprehension, complexity).contains(word.toLowerCase());
+        LOGGER.debug("Word {} translated at {}/{}: {}", word.toLowerCase(), comprehension, complexity, retVal);
+        return retVal;
     }
     
     protected List<String> getTranslatedWords(int comprehension, int complexity) {
@@ -150,7 +161,7 @@ public class Lexicon {
             return List.of();
         }
         
-        double progress = (double)comprehension / (double)complexity;
+        double progress = Mth.clamp((double)comprehension / (double)complexity, 0, 1);
         int wordCount = Mth.ceil(progress * words.size());
         return words.subList(0, wordCount);
     }
