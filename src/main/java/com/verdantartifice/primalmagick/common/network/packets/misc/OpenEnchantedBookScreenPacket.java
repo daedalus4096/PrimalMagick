@@ -43,7 +43,7 @@ public class OpenEnchantedBookScreenPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId());
+                    ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId(), 0);
                 }
             });
             

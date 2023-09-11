@@ -47,6 +47,7 @@ public class StaticBookViewScreen extends Screen {
     protected final boolean playTurnSound;
     protected final ResourceKey<?> requestedBookKey;
     protected final ResourceLocation requestedLanguageId;
+    protected final int requestedTranslatedComprehension;
     protected BookView bookView;
     private PageButton forwardButton;
     private PageButton backButton;
@@ -55,18 +56,19 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource("unknown")), BookLanguagesPM.DEFAULT.getId(), false);
+        this(ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource("unknown")), BookLanguagesPM.DEFAULT.getId(), 0, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId) {
-        this(bookKey, languageId, true);
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension) {
+        this(bookKey, languageId, translatedComprehension, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.playTurnSound = playTurnSound;
         this.requestedBookKey = bookKey;
         this.requestedLanguageId = languageId;
+        this.requestedTranslatedComprehension = translatedComprehension;
     }
     
     /**
@@ -91,7 +93,7 @@ public class StaticBookViewScreen extends Screen {
             lang = BookLanguagesPM.DEFAULT.get();
         }
         int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
-        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), comp);
+        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), Math.max(comp, this.requestedTranslatedComprehension));
 
         this.createMenuControls();
         this.createPageControlButtons();

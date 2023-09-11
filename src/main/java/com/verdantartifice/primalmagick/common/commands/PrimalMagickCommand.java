@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.commands;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -199,9 +200,12 @@ public class PrimalMagickCommand {
                 .then(Commands.argument("targets", EntityArgument.players())
                     .then(Commands.literal("give")
                         // /pm books <targets> give <bookId>
-                        .then(Commands.argument("bookId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BooksPM.BOOKS.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), BookLanguagesPM.DEFAULT.getId()))
+                        .then(Commands.argument("bookId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BooksPM.BOOKS.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), BookLanguagesPM.DEFAULT.getId(), OptionalInt.empty()))
                             // /pm books <targets> give <bookId> [<languageId>]
-                            .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"))))
+                            .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), OptionalInt.empty()))
+                                // /pm books <targets> give <bookId> [<languageId>] [<comprehension>]
+                                .then(Commands.argument("comprehension", LanguageComprehensionArgument.value()).executes((context) -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), OptionalInt.of(IntegerArgumentType.getInteger(context, "comprehension")))))
+                            )
                         )
                     )
                 )
@@ -671,7 +675,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, ResourceLocation bookId, ResourceLocation bookLanguageId) {
+    private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, ResourceLocation bookId, ResourceLocation bookLanguageId, OptionalInt comprehension) {
         if (!BooksPM.BOOKS.get().containsKey(bookId)) {
             source.sendFailure(Component.translatable("commands.primalmagick.books.noexist", bookId.toString()));
         } else if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) { 
@@ -680,6 +684,7 @@ public class PrimalMagickCommand {
             ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
             StaticBookItem.setBookDefinition(bookStack, BooksPM.BOOKS.get().getValue(bookId));
             StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId));
+            StaticBookItem.setTranslatedComprehension(bookStack, comprehension);
             
             for (ServerPlayer serverPlayer : targets) {
                 ItemStack bookCopy = bookStack.copy();

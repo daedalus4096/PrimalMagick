@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.items.books;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
@@ -43,6 +44,7 @@ public class StaticBookItem extends Item {
     public static final String TAG_BOOK_ID = "BookId";
     public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
+    public static final String TAG_COMPREHENSION = "Comprehension";
     public static final String TAG_GENERATION = "Generation";
     public static final int MAX_GENERATION = 2;
     
@@ -125,6 +127,15 @@ public class StaticBookItem extends Item {
         stack.getOrCreateTag().putString(TAG_AUTHOR_OVERRIDE, name);
     }
     
+    public static OptionalInt getTranslatedComprehension(ItemStack stack) {
+        CompoundTag rootTag = stack.getTag();
+        return (rootTag == null) ? OptionalInt.empty() : OptionalInt.of(rootTag.getInt(TAG_COMPREHENSION));
+    }
+    
+    public static void setTranslatedComprehension(ItemStack stack, OptionalInt comprehensionOpt) {
+        comprehensionOpt.ifPresentOrElse(comprehension -> stack.getOrCreateTag().putInt(TAG_COMPREHENSION, comprehension), () -> stack.getOrCreateTag().remove(TAG_COMPREHENSION));
+    }
+    
     public static int getGeneration(ItemStack stack) {
         return stack.getTag().getInt(TAG_GENERATION);
     }
@@ -143,9 +154,17 @@ public class StaticBookItem extends Item {
         if (lang.isComplex()) {
             Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
             BookDefinition def = getBookDefinition(pStack);
-            int comprehension = LinguisticsManager.getComprehension(player, lang);
+            OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
+            int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, lang));
             double percentage = BookHelper.getBookComprehension(new BookView(BooksPM.BOOKS.get().getResourceKey(def).orElseThrow(), lang.languageId(), comprehension));
             pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
+            if (translatedComprehension.isPresent()) {
+                if (translatedComprehension.getAsInt() >= lang.complexity()) {
+                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
+                } else if (translatedComprehension.getAsInt() > 0) {
+                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
+                }
+            }
         }
     }
 

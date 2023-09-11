@@ -913,6 +913,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
         this.tooltip("written_language").sub("header").output("Language: %1$s").end().build();
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
+        this.tooltip("written_language").sub("translated").sub("full").output("Fully translated").end().build();
+        this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
