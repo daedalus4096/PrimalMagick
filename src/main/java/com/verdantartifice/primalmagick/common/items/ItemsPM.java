@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
+import com.verdantartifice.primalmagick.common.items.books.LinguisticsGainItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
@@ -835,4 +836,6 @@ public class ItemsPM {
     
     // Register book items
     public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<LinguisticsGainItem> CODEX = registerCustom("codex", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(1, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerCustom("codex_creative", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(Short.MAX_VALUE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
 }

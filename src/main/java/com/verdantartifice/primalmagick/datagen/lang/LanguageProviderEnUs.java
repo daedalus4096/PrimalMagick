@@ -861,6 +861,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.GREATER_WARDING_MODULE).name("Greater Warding Module").build();
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
         this.item(ItemsPM.STATIC_BOOK).name("Unknown Book").build();
+        this.item(ItemsPM.CODEX).name("Codex: %1$s").build();
+        this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -915,6 +917,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
         this.tooltip("written_language").sub("translated").sub("full").output("Fully translated").end().build();
         this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
+        this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
+        this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -1479,6 +1483,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("attunement").sub("threshold_loss").output("You have lost %2$s attunement to the %1$s").end().build();
         this.event("attunement").sub("suppression_gain").output("Your attunement to the %1$s has been suppressed").end().build();
         this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
+        this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
+        this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();

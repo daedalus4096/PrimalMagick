@@ -73,8 +73,9 @@ public class StaticBookItem extends Item {
         return getBookId(stack).map(BooksPM.BOOKS.get()::getValue).orElse(BooksPM.TEST_BOOK.get());
     }
     
-    public static void setBookDefinition(ItemStack stack, BookDefinition def) {
+    public static ItemStack setBookDefinition(ItemStack stack, BookDefinition def) {
         stack.getOrCreateTag().putString(TAG_BOOK_ID, def.bookId().toString());
+        return stack;
     }
     
     protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {
@@ -92,8 +93,9 @@ public class StaticBookItem extends Item {
         return getBookLanguageId(stack).map(BookLanguagesPM.LANGUAGES.get()::getValue).orElse(BookLanguagesPM.DEFAULT.get());
     }
     
-    public static void setBookLanguage(ItemStack stack, BookLanguage lang) {
+    public static ItemStack setBookLanguage(ItemStack stack, BookLanguage lang) {
         stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.languageId().toString());
+        return stack;
     }
 
     @Override
@@ -123,8 +125,9 @@ public class StaticBookItem extends Item {
         return getStaticAttribute(bookId, "author");
     }
     
-    public static void setAuthorOverride(ItemStack stack, String name) {
+    public static ItemStack setAuthorOverride(ItemStack stack, String name) {
         stack.getOrCreateTag().putString(TAG_AUTHOR_OVERRIDE, name);
+        return stack;
     }
     
     public static OptionalInt getTranslatedComprehension(ItemStack stack) {
@@ -132,16 +135,18 @@ public class StaticBookItem extends Item {
         return (rootTag == null) ? OptionalInt.empty() : OptionalInt.of(rootTag.getInt(TAG_COMPREHENSION));
     }
     
-    public static void setTranslatedComprehension(ItemStack stack, OptionalInt comprehensionOpt) {
+    public static ItemStack setTranslatedComprehension(ItemStack stack, OptionalInt comprehensionOpt) {
         comprehensionOpt.ifPresentOrElse(comprehension -> stack.getOrCreateTag().putInt(TAG_COMPREHENSION, comprehension), () -> stack.getOrCreateTag().remove(TAG_COMPREHENSION));
+        return stack;
     }
     
     public static int getGeneration(ItemStack stack) {
         return stack.getTag().getInt(TAG_GENERATION);
     }
     
-    public static void setGeneration(ItemStack stack, int newGeneration) {
+    public static ItemStack setGeneration(ItemStack stack, int newGeneration) {
         stack.getOrCreateTag().putInt(TAG_GENERATION, newGeneration);
+        return stack;
     }
 
     @Override
