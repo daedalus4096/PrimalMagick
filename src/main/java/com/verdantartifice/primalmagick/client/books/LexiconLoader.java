@@ -62,7 +62,10 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
                 }
             }
         });
-        
+
+        // Invalidate book helper caches
+        BookHelper.invalidate();
+
         LOGGER.info("Loaded {} lexicons", LexiconManager.getAllLexicons().size());
     }
 

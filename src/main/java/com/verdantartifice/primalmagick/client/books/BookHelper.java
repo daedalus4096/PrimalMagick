@@ -41,13 +41,18 @@ public class BookHelper {
     public static final int LINE_HEIGHT = 9;
     public static final int MAX_LINES_PER_PAGE = TEXT_HEIGHT / LINE_HEIGHT;
     
-    private static final BiFunction<BookView, Font, List<FormattedCharSequence>> MEMOIZED_TEXT_LINES = Util.memoize(BookHelper::getTextLinesInner);
     private static final Style BASE_TEXT_STYLE = Style.EMPTY;
     private static final Style FOREWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     private static final Style AFTERWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     
     private static final Pattern WORD_BOUNDARY = Pattern.compile("\\b");
     private static final Pattern SEPARATOR_ONLY = Pattern.compile("^[\\p{P} \\n]+$");
+
+    private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
+    
+    public static void invalidate() {
+        memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
+    }
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
@@ -85,7 +90,7 @@ public class BookHelper {
     }
     
     public static List<FormattedCharSequence> getTextLines(BookView view, Font font) {
-        return MEMOIZED_TEXT_LINES.apply(view, font);
+        return memoizedTextLines.apply(view, font);
     }
     
     private static List<FormattedCharSequence> getTextLinesInner(BookView view, Font font) {
