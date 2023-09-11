@@ -577,7 +577,7 @@ public class PlayerEvents {
         
         // Construct the dream journal item
         ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());
-        StaticBookItem.setBookId(journal, BooksPM.DREAM_JOURNAL.get().bookId());
+        StaticBookItem.setBookDefinition(journal, BooksPM.DREAM_JOURNAL.get());
         StaticBookItem.setAuthorOverride(journal, player.getName().getString());
         
         // Give the dream journal to the player and announce it

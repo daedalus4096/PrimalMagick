@@ -678,7 +678,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
         } else {
             ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
-            StaticBookItem.setBookId(bookStack, BooksPM.BOOKS.get().getValue(bookId).bookId());
+            StaticBookItem.setBookDefinition(bookStack, BooksPM.BOOKS.get().getValue(bookId));
             StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId));
             
             for (ServerPlayer serverPlayer : targets) {

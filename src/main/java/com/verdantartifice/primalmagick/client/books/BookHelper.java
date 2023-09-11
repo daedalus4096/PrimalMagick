@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.books;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -13,6 +14,7 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
@@ -49,9 +51,13 @@ public class BookHelper {
     private static final Pattern SEPARATOR_ONLY = Pattern.compile("^[\\p{P} \\n]+$");
 
     private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
+    private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
+    private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
     
     public static void invalidate() {
         memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
+        memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
+        memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
     }
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
@@ -153,10 +159,50 @@ public class BookHelper {
     }
     
     public static List<String> getUnencodedWords(BookDefinition bookDef) {
+        return memoizedUnencodedWords.apply(bookDef);
+    }
+    
+    private static List<String> getUnencodedWordsInner(BookDefinition bookDef) {
         List<String> words = new ArrayList<>();
         String textTranslationKey = getTextTranslationKey(ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId()));
         Component fullText = Component.translatable(textTranslationKey);
         WORD_BOUNDARY.splitAsStream(StringDecomposer.getPlainText(fullText)).filter(word -> !SEPARATOR_ONLY.matcher(word).matches()).forEach(words::add);
         return words;
+    }
+    
+    /**
+     * Returns the percentage of the given book, in the given language, that the player understands with the given
+     * comprehension score, as a value between 0 and 1, inclusive.  Note that this may be different from the player's
+     * overall language comprehension, as the contents of the book may only be a subset of the language's overall
+     * lexicon.
+     * 
+     * @param view the book view whose contents are to be tested
+     * @return the percentage of the book that the player understands
+     */
+    public static double getBookComprehension(BookView view) {
+        return memoizedBookComprehension.apply(view);
+    }
+    
+    private static double getBookComprehensionInner(BookView view) {
+        final BookDefinition bookDef = BooksPM.BOOKS.get().containsKey(view.bookKey().location()) ?
+                BooksPM.BOOKS.get().getValue(view.bookKey().location()) :
+                BooksPM.TEST_BOOK.get();
+        final BookLanguage bookLang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
+                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
+                BookLanguagesPM.DEFAULT.get();
+
+        if (!bookLang.isTranslatable()) {
+            // Non-translatable languages are never understood
+            return 0;
+        } else if (bookLang.complexity() == 0) {
+            // Zero-complexity languages are always fully understood
+            return 1;
+        } else {
+            List<String> bookWords = getUnencodedWords(bookDef);
+            final Lexicon langLex = LexiconManager.getLexicon(bookLang.languageId()).orElseThrow();
+            int totalCount = bookWords.size();
+            int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.complexity())).count();
+            return Mth.clamp((double)translatedCount / (double)totalCount, 0, 1);
+        }
     }
 }

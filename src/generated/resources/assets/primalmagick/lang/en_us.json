@@ -2461,6 +2461,7 @@
   "tooltip.primalmagick.spells.wand_header": "Inscribed Spells (Capacity %1$s):",
   "tooltip.primalmagick.warded": "Warded",
   "tooltip.primalmagick.written_book.author.unknown": "Unknown",
+  "tooltip.primalmagick.written_language.comprehension": "Comprehension: %1$s%%",
   "tooltip.primalmagick.written_language.header": "Language: %1$s",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",
   "trim_material.primalmagick.rune_earth": "Earth Rune Material",

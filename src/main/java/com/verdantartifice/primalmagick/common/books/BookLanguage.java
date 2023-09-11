@@ -17,6 +17,10 @@ import net.minecraft.tags.TagKey;
 public record BookLanguage(ResourceLocation languageId, Style style, int complexity, TagKey<BookDefinition> booksTag) {
     private static final Function<BookLanguage, String> MEMOIZED_DESCRIPTION_ID = Util.memoize(BookLanguage::getDescriptionIdInner);
     
+    public boolean isComplex() {
+        return this.complexity() > 0;
+    }
+    
     public boolean isTranslatable() {
         return this.complexity() >= 0;
     }

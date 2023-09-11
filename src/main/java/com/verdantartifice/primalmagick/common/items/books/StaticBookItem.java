@@ -1,12 +1,17 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.client.books.BookHelper;
+import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
 
@@ -25,6 +30,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Item definition for a readable book populated by static, localized text rather than carrying
@@ -39,6 +46,8 @@ public class StaticBookItem extends Item {
     public static final String TAG_GENERATION = "Generation";
     public static final int MAX_GENERATION = 2;
     
+    protected static final DecimalFormat COMPREHENSION_FORMATTER = new DecimalFormat("###.#");
+
     public StaticBookItem(Item.Properties properties) {
         super(properties);
     }
@@ -58,12 +67,12 @@ public class StaticBookItem extends Item {
         return Optional.empty();
     }
     
-    public static Optional<BookDefinition> getBookDefinition(ItemStack stack) {
-        return getBookId(stack).map(BooksPM.BOOKS.get()::getValue);
+    public static BookDefinition getBookDefinition(ItemStack stack) {
+        return getBookId(stack).map(BooksPM.BOOKS.get()::getValue).orElse(BooksPM.TEST_BOOK.get());
     }
     
-    public static void setBookId(ItemStack stack, ResourceLocation bookId) {
-        stack.getOrCreateTag().putString(TAG_BOOK_ID, bookId.toString());
+    public static void setBookDefinition(ItemStack stack, BookDefinition def) {
+        stack.getOrCreateTag().putString(TAG_BOOK_ID, def.bookId().toString());
     }
     
     protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {
@@ -127,9 +136,17 @@ public class StaticBookItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
+        BookLanguage lang = getBookLanguage(pStack);
         pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", getBookLanguage(pStack).getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
+        if (lang.isComplex()) {
+            Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+            BookDefinition def = getBookDefinition(pStack);
+            int comprehension = PrimalMagickCapabilities.getLinguistics(player).<Integer>map(linguistics -> linguistics.getComprehension(lang.languageId())).orElse(0);
+            double percentage = BookHelper.getBookComprehension(new BookView(BooksPM.BOOKS.get().getResourceKey(def).orElseThrow(), lang.languageId(), comprehension));
+            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
+        }
     }
 
     @Override
