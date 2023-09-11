@@ -290,6 +290,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate book items
         this.basicItem(ItemsPM.STATIC_BOOK.get());
+        this.itemWithParent(ItemsPM.STATIC_TABLET.get(), ItemsPM.MYSTICAL_RELIC.get());
         this.basicItem(ItemsPM.CODEX.get());
         this.itemWithParent(ItemsPM.CODEX_CREATIVE.get(), ItemsPM.CODEX.get());
     }

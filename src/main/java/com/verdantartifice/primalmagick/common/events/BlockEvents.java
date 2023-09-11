@@ -8,6 +8,7 @@ import java.util.Set;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -190,7 +191,7 @@ public class BlockEvents {
             } else if (lecternEntity.getBook().is(ItemsPM.STATIC_BOOK.get())) {
                 // Open the static book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook()), serverPlayer);
+                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), StaticBookItem.BOOK_BACKGROUND), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(Items.ENCHANTED_BOOK)) {

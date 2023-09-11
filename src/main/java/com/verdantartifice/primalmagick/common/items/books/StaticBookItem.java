@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
@@ -41,6 +42,8 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class StaticBookItem extends Item {
+    public static final ResourceLocation BOOK_BACKGROUND = new ResourceLocation("textures/gui/book.png");
+    public static final ResourceLocation TABLET_BACKGROUND = PrimalMagick.resource("textures/gui/tablet.png");
     public static final String TAG_BOOK_ID = "BookId";
     public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
@@ -49,9 +52,12 @@ public class StaticBookItem extends Item {
     public static final int MAX_GENERATION = 2;
     
     protected static final DecimalFormat COMPREHENSION_FORMATTER = new DecimalFormat("###.#");
+    
+    protected final ResourceLocation bgTexture;
 
-    public StaticBookItem(Item.Properties properties) {
+    public StaticBookItem(ResourceLocation bgTexture, Item.Properties properties) {
         super(properties);
+        this.bgTexture = bgTexture;
     }
     
     protected static MutableComponent getStaticAttribute(ResourceLocation bookId, String attrName) {
@@ -118,7 +124,7 @@ public class StaticBookItem extends Item {
         }
         
         // Otherwise, fetch the author from lang data
-        return getBookId(stack).map(StaticBookItem::getAuthorFromBookId).orElse(Component.translatable("tooltip.written_book.author.unknown"));
+        return getBookId(stack).map(StaticBookItem::getAuthorFromBookId).orElse(Component.translatable("tooltip.primalmagick.written_book.author.unknown"));
     }
     
     protected static MutableComponent getAuthorFromBookId(ResourceLocation bookId) {
@@ -141,7 +147,8 @@ public class StaticBookItem extends Item {
     }
     
     public static int getGeneration(ItemStack stack) {
-        return stack.getTag().getInt(TAG_GENERATION);
+        CompoundTag rootTag = stack.getTag();
+        return rootTag == null ? 0 : rootTag.getInt(TAG_GENERATION);
     }
     
     public static ItemStack setGeneration(ItemStack stack, int newGeneration) {
@@ -177,7 +184,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack), serverPlayer);
+            PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bgTexture), serverPlayer);
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
