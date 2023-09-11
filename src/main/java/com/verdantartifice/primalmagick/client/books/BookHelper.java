@@ -119,7 +119,7 @@ public class BookHelper {
                 words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else {
                 // If the word has not been translated, then add an encoded replacement word
-                words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(BASE_TEXT_STYLE.withFont(lang.font())));
+                words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
             }
         });
         retVal.addAll(Language.getInstance().getVisualOrder(font.getSplitter().splitLines(FormattedText.composite(words), TEXT_WIDTH, Style.EMPTY)));
