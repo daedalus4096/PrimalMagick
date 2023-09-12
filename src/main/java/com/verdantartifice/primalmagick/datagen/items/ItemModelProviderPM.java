@@ -293,6 +293,8 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.itemWithParent(ItemsPM.STATIC_TABLET.get(), ItemsPM.MYSTICAL_RELIC.get());
         this.basicItem(ItemsPM.CODEX.get());
         this.itemWithParent(ItemsPM.CODEX_CREATIVE.get(), ItemsPM.CODEX.get());
+        this.itemWithParent(ItemsPM.LORE_TABLET_FRAGMENT.get(), ItemsPM.MYSTICAL_RELIC_FRAGMENT.get());
+        this.itemWithParent(ItemsPM.LORE_TABLET_DIRTY.get(), ItemsPM.MYSTICAL_RELIC.get());
     }
     
     private ResourceLocation key(Item item) {

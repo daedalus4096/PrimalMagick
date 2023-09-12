@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.items.books.LinguisticsGainItem;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookGeneratorItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
@@ -839,4 +840,6 @@ public class ItemsPM {
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(StaticBookItem.TABLET_BACKGROUND, new Item.Properties().stacksTo(16)));
     public static final RegistryObject<LinguisticsGainItem> CODEX = registerCustom("codex", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(1, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerCustom("codex_creative", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(Short.MAX_VALUE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
 }
