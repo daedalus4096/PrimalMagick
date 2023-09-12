@@ -8,6 +8,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
@@ -107,12 +108,12 @@ public class StaticBookViewScreen extends Screen {
 
     protected void createPageControlButtons() {
         int x = (this.width - IMAGE_WIDTH) / 2;
-        this.forwardButton = this.addRenderableWidget(new PageButton(x + 116, 159, true, (p_98297_) -> {
+        this.forwardButton = this.addRenderableWidget(new StaticBookPageButton(x + 116, 159, true, (p_98297_) -> {
             this.pageForward();
-        }, this.playTurnSound));
-        this.backButton = this.addRenderableWidget(new PageButton(x + 43, 159, false, (p_98287_) -> {
+        }, this.playTurnSound, this.requestedBgTexture));
+        this.backButton = this.addRenderableWidget(new StaticBookPageButton(x + 43, 159, false, (p_98287_) -> {
             this.pageBack();
-        }, this.playTurnSound));
+        }, this.playTurnSound, this.requestedBgTexture));
         this.updateButtonVisibility();
     }
 
