@@ -196,5 +196,35 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }));
+        this.add("lore_fragment_desert_well_archaeology", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_desert_pyramid_archaeology", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_trail_ruins_archaeology_common", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON).build(),
+                        LootItemRandomChanceCondition.randomChance(0.4F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_trail_ruins_archaeology_rare", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_ocean_ruin_warm_archaeology", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_ocean_ruin_cold_archaeology", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY).build(),
+                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
     }
 }
