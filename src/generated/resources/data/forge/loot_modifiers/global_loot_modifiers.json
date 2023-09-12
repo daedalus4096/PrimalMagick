@@ -3,6 +3,7 @@
     "primalmagick:bloody_flesh",
     "primalmagick:humming_artifact_pillager_outpost",
     "primalmagick:lucky_strike",
+    "primalmagick:lore_fragment_underwater_ruin_small_chest",
     "primalmagick:bounty_farming",
     "primalmagick:essence_thief",
     "primalmagick:lore_fragment_desert_pyramid_archaeology",
@@ -10,6 +11,7 @@
     "primalmagick:humming_artifact_woodland_mansion",
     "primalmagick:humming_artifact_stronghold_library",
     "primalmagick:four_leaf_clover_tall_grass",
+    "primalmagick:lore_fragment_underwater_ruin_big_chest",
     "primalmagick:four_leaf_clover_short_grass",
     "primalmagick:humming_artifact_jungle_temple",
     "primalmagick:humming_artifact_end_city_treasure",
@@ -29,8 +31,10 @@
     "primalmagick:humming_artifact_ancient_city",
     "primalmagick:lore_fragment_desert_well_archaeology",
     "primalmagick:lore_fragment_trail_ruins_archaeology_rare",
+    "primalmagick:lore_fragment_jungle_temple_chest",
     "primalmagick:humming_artifact_nether_fortress",
     "primalmagick:humming_artifact_bastion_treasure",
+    "primalmagick:lore_fragment_desert_pyramid_chest",
     "primalmagick:bounty_fishing"
   ],
   "replace": false

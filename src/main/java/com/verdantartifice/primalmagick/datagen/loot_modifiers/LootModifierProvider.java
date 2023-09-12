@@ -27,6 +27,7 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -227,5 +228,21 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY).build(),
                         LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
+        this.add("lore_fragment_underwater_ruin_small_chest", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_SMALL).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(1, 3)));
+        this.add("lore_fragment_underwater_ruin_big_chest", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.UNDERWATER_RUIN_BIG).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+        this.add("lore_fragment_desert_pyramid_chest", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+        this.add("lore_fragment_jungle_temple_chest", new AddItemModifier(
+                new LootItemCondition[] {
+                        LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE).build()
+                }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
     }
 }
