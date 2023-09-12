@@ -1,12 +1,12 @@
 {
-  "type": "primalmagick:add_item",
+  "type": "primalmagick:replace_item",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
       "loot_table_id": "minecraft:archaeology/trail_ruins_common"
     },
     {
-      "chance": 0.4,
+      "chance": 0.02,
       "condition": "minecraft:random_chance"
     }
   ],

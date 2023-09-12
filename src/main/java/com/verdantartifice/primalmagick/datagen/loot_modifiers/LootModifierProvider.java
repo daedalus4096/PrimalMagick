@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModif
 import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.ReplaceItemModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
@@ -196,35 +197,35 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }));
-        this.add("lore_fragment_desert_well_archaeology", new AddItemModifier(
+        this.add("lore_fragment_desert_well_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                        LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
-        this.add("lore_fragment_desert_pyramid_archaeology", new AddItemModifier(
+        this.add("lore_fragment_desert_pyramid_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                        LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
-        this.add("lore_fragment_trail_ruins_archaeology_common", new AddItemModifier(
+        this.add("lore_fragment_trail_ruins_archaeology_common", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON).build(),
-                        LootItemRandomChanceCondition.randomChance(0.4F).build()
+                        LootItemRandomChanceCondition.randomChance(0.02F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
-        this.add("lore_fragment_trail_ruins_archaeology_rare", new AddItemModifier(
+        this.add("lore_fragment_trail_ruins_archaeology_rare", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                        LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
-        this.add("lore_fragment_ocean_ruin_warm_archaeology", new AddItemModifier(
+        this.add("lore_fragment_ocean_ruin_warm_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                        LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
-        this.add("lore_fragment_ocean_ruin_cold_archaeology", new AddItemModifier(
+        this.add("lore_fragment_ocean_ruin_cold_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY).build(),
-                        LootItemRandomChanceCondition.randomChance(0.8F).build()
+                        LootItemRandomChanceCondition.randomChance(0.1F).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get()));
     }
 }
