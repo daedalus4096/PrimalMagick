@@ -920,6 +920,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
         this.tooltip("written_language").sub("translated").sub("full").output("Fully translated").end().build();
         this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
+        this.tooltip("written_language").sub("obfuscated_word").output("Your eyes seem to slide off this word, no matter how hard you try to focus.").end().build();
         this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
         this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
         

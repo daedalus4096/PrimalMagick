@@ -2473,6 +2473,7 @@
   "tooltip.primalmagick.written_book.author.unknown": "Unknown",
   "tooltip.primalmagick.written_language.comprehension": "Comprehension: %1$s%%",
   "tooltip.primalmagick.written_language.header": "Language: %1$s",
+  "tooltip.primalmagick.written_language.obfuscated_word": "Your eyes seem to slide off this word, no matter how hard you try to focus.",
   "tooltip.primalmagick.written_language.translated.full": "Fully translated",
   "tooltip.primalmagick.written_language.translated.partial": "Partially translated",
   "trim_material.primalmagick.rune_blood": "Blood Rune Material",

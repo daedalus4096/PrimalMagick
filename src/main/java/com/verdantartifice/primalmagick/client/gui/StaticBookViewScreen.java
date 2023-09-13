@@ -1,9 +1,13 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.client.books.BookHelper;
@@ -23,6 +27,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -50,6 +55,7 @@ public class StaticBookViewScreen extends Screen {
     protected final ResourceLocation requestedLanguageId;
     protected final int requestedTranslatedComprehension;
     protected final ResourceLocation requestedBgTexture;
+    protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
     protected BookView bookView;
     private PageButton forwardButton;
     private PageButton backButton;
@@ -160,6 +166,8 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderedLines.clear();
+        
         this.renderBackground(guiGraphics);
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
@@ -179,9 +187,33 @@ public class StaticBookViewScreen extends Screen {
         // Draw the text lines for the current page
         List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
         for (int index = 0; index < page.size(); index++) {
-            guiGraphics.drawString(this.font, page.get(index), xPos + PAGE_TEXT_X_OFFSET, yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT), 0, false);
+            int finalX = xPos + PAGE_TEXT_X_OFFSET;
+            int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
+            this.renderedLines.put(new Vector2i(finalX, finalY), page.get(index));
+            guiGraphics.drawString(this.font, page.get(index), finalX, finalY, 0, false);
         }
+        
+        // Draw any hover effects dictated by text style
+        this.getRenderedLineEntryAt(mouseX, mouseY).ifPresent(entry -> {
+            int startX = entry.getKey().x;
+            FormattedCharSequence line = entry.getValue();
+            Style style = this.font.getSplitter().componentStyleAtWidth(line, mouseX - startX);
+            if (style != null && style.getHoverEvent() != null) {
+                guiGraphics.renderComponentHoverEffect(this.font, style, mouseX, mouseY);
+            }
+        });
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+    
+    protected Optional<Map.Entry<Vector2i, FormattedCharSequence>> getRenderedLineEntryAt(int x, int y) {
+        for (Map.Entry<Vector2i, FormattedCharSequence> entry : this.renderedLines.entrySet()) {
+            Vector2i pos = entry.getKey();
+            int lineWidth = this.font.width(entry.getValue());
+            if (x >= pos.x && x <= pos.x + lineWidth && y >= pos.y && y <= pos.y + LINE_HEIGHT) {
+                return Optional.ofNullable(entry);
+            }
+        }
+        return Optional.empty();
     }
 }

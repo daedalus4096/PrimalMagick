@@ -3,16 +3,20 @@ package com.verdantartifice.primalmagick.client.books;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
+import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
+import net.minecraft.util.StringUtil;
 
 /**
  * Represents a mapping of translation keys of localized words to the text styles that should be
@@ -96,15 +100,19 @@ public class StyleGuide {
     public static class Entry {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("translationKey").forGetter(Entry::getTranslationKey), 
-                Style.FORMATTING_CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(Entry::getStyle)
+                Style.FORMATTING_CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(Entry::getStyle),
+                Codec.STRING.optionalFieldOf("hoverTranslationKey", "").forGetter(Entry::getHoverTranslationKey)
             ).apply(instance, Entry::new));
+        private final Supplier<Style> cachedStyle = Suppliers.memoize(this::getStyleInner);
         
         private final String translationKey;
         private final Style style;
+        private final String hoverTranslationKey;
         
-        public Entry(String translationKey, Style style) {
+        public Entry(String translationKey, Style style, String hoverTranslationKey) {
             this.translationKey = translationKey;
             this.style = style;
+            this.hoverTranslationKey = hoverTranslationKey;
         }
         
         public String getTranslationKey() {
@@ -112,7 +120,21 @@ public class StyleGuide {
         }
         
         public Style getStyle() {
+            return this.cachedStyle.get();
+        }
+        
+        private Style getStyleInner() {
+            return StringUtil.isNullOrEmpty(this.hoverTranslationKey) ?
+                    this.style :
+                    this.style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable(this.hoverTranslationKey)));
+        }
+        
+        protected Style getStyleRaw() {
             return this.style;
+        }
+        
+        public String getHoverTranslationKey() {
+            return this.hoverTranslationKey;
         }
         
         public boolean matches(String word) {
@@ -120,17 +142,18 @@ public class StyleGuide {
         }
         
         public Component getStylizedWord() {
-            return Component.translatable(this.translationKey).withStyle(this.style);
+            return Component.translatable(this.translationKey).withStyle(this.getStyle());
         }
         
         public Component getStylizedWord(Style encodingStyle) {
-            return Component.translatable(this.translationKey).withStyle(encodingStyle.applyTo(this.style));
+            return Component.translatable(this.translationKey).withStyle(encodingStyle.applyTo(this.getStyle()));
         }
         
         public static class Builder {
             private final StyleGuide.Builder parent;
             private final String translationKey;
             private Style style = Style.EMPTY;
+            private String hoverTranslationKey = "";
             
             protected Builder(String translationKey, StyleGuide.Builder parent) {
                 this.parent = parent;
@@ -147,8 +170,13 @@ public class StyleGuide {
                 return this;
             }
             
+            public Builder hoverText(String translationKey) {
+                this.hoverTranslationKey = translationKey;
+                return this;
+            }
+            
             public StyleGuide.Builder end() {
-                this.parent.addEntry(new Entry(this.translationKey, this.style));
+                this.parent.addEntry(new Entry(this.translationKey, this.style, this.hoverTranslationKey));
                 return this.parent;
             }
         }

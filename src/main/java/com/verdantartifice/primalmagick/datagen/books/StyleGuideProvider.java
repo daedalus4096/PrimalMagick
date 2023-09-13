@@ -59,9 +59,12 @@ public class StyleGuideProvider implements DataProvider {
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
                 .entry(Source.SUN.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SUN.getColor())).end()
                 .entry(Source.MOON.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.MOON.getColor())).end()
-                .entry(Source.BLOOD.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.BLOOD.getColor())).end()
-                .entry(Source.INFERNAL.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.INFERNAL.getColor())).end()
-                .entry(Source.VOID.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.VOID.getColor())).end()
+                .entry(Source.BLOOD.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.BLOOD.getColor()).withObfuscated(true))
+                    .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(Source.INFERNAL.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.INFERNAL.getColor()).withObfuscated(true))
+                    .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
+                .entry(Source.VOID.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.VOID.getColor()).withObfuscated(true))
+                    .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
     }
