@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringDecomposer;
 
 /**
  * Represents a mapping of translation keys of localized words to the text styles that should be
@@ -43,6 +44,55 @@ public class StyleGuide {
         return this.getEntries().size();
     }
     
+    /**
+     * Gets the style prescribed by this guide for the given word.  If no style is prescribed by
+     * this guide for the given word, then an empty style is returned.
+     * 
+     * @param word the word for which to query
+     * @return the style to be used with the word
+     */
+    public Style getStyle(String word) {
+        return this.getStyle(word, Style.EMPTY);
+    }
+    
+    /**
+     * Gets the style prescribed by this guide for the given word, merged with the given style.  The
+     * formatting elements of the given style take precedence in the merge.  If no style is prescribed
+     * by this guide for the given word, then the given style is returned unmodified.
+     * 
+     * @param word the word for which to query
+     * @param encodingStyle a second style to be merged with the word's prescribed style
+     * @return the style to be used with the word
+     */
+    public Style getStyle(String word, Style encodingStyle) {
+        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().<Style>map(entry -> encodingStyle.applyTo(entry.getStyle())).orElse(encodingStyle);
+    }
+    
+    /**
+     * Returns the given word with this guide's prescribed style applied to it as a renderable text component.
+     * 
+     * @param word the word to be styled, if applicable
+     * @return the stylized word
+     */
+    public Component getStylizedWord(String word) {
+        return this.getStylizedWord(word, Style.EMPTY);
+    }
+    
+    /**
+     * Returns the given word as a renderable text component with a merged style applied to it.  The
+     * merged style is a combination of the given style and the style prescribed for the word by this 
+     * guide, with formatting elements of the given style taking precedence.  Typically this is used in 
+     * cases where the given style specifies an encoding font in which the word should be rendered, 
+     * which should not be overridden.
+     * 
+     * @param word the word to be styled, if applicable
+     * @param encodingStyle a second style to be merged with the word's prescribed style
+     * @return the stylized word
+     */
+    public Component getStylizedWord(String word, Style encodingStyle) {
+        return this.entries.stream().filter(entry -> entry.matches(word)).findFirst().<Component>map(entry -> entry.getStylizedWord(encodingStyle)).orElse(Component.literal(word).withStyle(encodingStyle));
+    }
+    
     public static class Entry {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("translationKey").forGetter(Entry::getTranslationKey), 
@@ -65,24 +115,14 @@ public class StyleGuide {
             return this.style;
         }
         
-        /**
-         * Returns this entry's word with this entry's style applied to it as a renderable text component.
-         * 
-         * @return the stylized word
-         */
+        public boolean matches(String word) {
+            return word.equals(StringDecomposer.getPlainText(Component.translatable(this.translationKey)));
+        }
+        
         public Component getStylizedWord() {
             return Component.translatable(this.translationKey).withStyle(this.style);
         }
         
-        /**
-         * Returns this entry's word as a renderable text component with a merged style applied to it.  The
-         * merged style is a combination of the given style and this entry's style, with formatting elements
-         * of the given style taking precedence.  Typically this is used in cases where the given style
-         * specifies an encoding font in which the word should be rendered, which should not be overridden.
-         * 
-         * @param encodingStyle a second style to be merged with this entry's style
-         * @return the stylized word
-         */
         public Component getStylizedWord(Style encodingStyle) {
             return Component.translatable(this.translationKey).withStyle(encodingStyle.applyTo(this.style));
         }

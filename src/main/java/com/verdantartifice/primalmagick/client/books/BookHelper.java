@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.books;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Pattern;
@@ -109,6 +110,7 @@ public class BookHelper {
                 BookLanguagesPM.DEFAULT.get();
         final Lexicon langLex = LexiconManager.getLexicon(lang.languageId()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
+        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.languageId());
 
         // Add the un-encoded foreword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
@@ -130,7 +132,11 @@ public class BookHelper {
                 words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else {
                 // If the word has not been translated, then add an encoded replacement word
-                words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
+                langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(styleGuide.getStyle(word, lang.style())));
+                }, () -> {
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
+                });
             }
         });
         retVal.addAll(Language.getInstance().getVisualOrder(font.getSplitter().splitLines(FormattedText.composite(words), TEXT_WIDTH, Style.EMPTY)));
