@@ -51,6 +51,8 @@ public class StyleGuideProvider implements DataProvider {
     }
     
     protected void registerStyleGuides(BiConsumer<ResourceLocation, StyleGuide> consumer) {
+        StyleGuide.builder(BookLanguagesPM.DEFAULT.get()).save(consumer);   // No styling for default language
+        StyleGuide.builder(BookLanguagesPM.GALACTIC.get()).save(consumer);  // No styling for galactic language
         StyleGuide.builder(BookLanguagesPM.ILLAGER.get())
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
