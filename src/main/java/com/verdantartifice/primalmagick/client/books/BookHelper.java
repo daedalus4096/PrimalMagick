@@ -129,7 +129,11 @@ public class BookHelper {
                 words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else if (lang.isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.complexity())) {
                 // If the word has been translated, then add it directly
-                words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+                langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
+                    words.add(Component.literal(word).withStyle(styleGuide.getStyle(word, BASE_TEXT_STYLE)));
+                }, () -> {
+                    words.add(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+                });
             } else {
                 // If the word has not been translated, then add an encoded replacement word
                 langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
