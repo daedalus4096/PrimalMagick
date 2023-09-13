@@ -1,12 +1,17 @@
 package com.verdantartifice.primalmagick.client.books;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Represents a mapping of translation keys of localized words to the text styles that should be
@@ -22,18 +27,26 @@ public class StyleGuide {
     
     private final List<Entry> entries;
     
-    public StyleGuide(List<Entry> entries) {
-        this.entries = entries;
+    protected StyleGuide(List<Entry> entries) {
+        this.entries = ImmutableList.copyOf(entries);
     }
     
-    public List<Entry> getEntries() {
+    public static StyleGuide.Builder builder(BookLanguage language) {
+        return new StyleGuide.Builder(language.languageId());
+    }
+    
+    protected List<Entry> getEntries() {
         return this.entries;
+    }
+    
+    public int size() {
+        return this.getEntries().size();
     }
     
     public static class Entry {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("translationKey").forGetter(Entry::getTranslationKey), 
-                Style.FORMATTING_CODEC.fieldOf("style").forGetter(Entry::getStyle)
+                Style.FORMATTING_CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(Entry::getStyle)
             ).apply(instance, Entry::new));
         
         private final String translationKey;
@@ -72,6 +85,57 @@ public class StyleGuide {
          */
         public Component getStylizedWord(Style encodingStyle) {
             return Component.translatable(this.translationKey).withStyle(encodingStyle.applyTo(this.style));
+        }
+        
+        public static class Builder {
+            private final StyleGuide.Builder parent;
+            private final String translationKey;
+            private Style style = Style.EMPTY;
+            
+            protected Builder(String translationKey, StyleGuide.Builder parent) {
+                this.parent = parent;
+                this.translationKey = translationKey;
+            }
+            
+            public Builder setStyle(Style newStyle) {
+                this.style = newStyle;
+                return this;
+            }
+            
+            public Builder mergeStyle(Style newStyle) {
+                this.style = newStyle.applyTo(this.style);
+                return this;
+            }
+            
+            public StyleGuide.Builder end() {
+                this.parent.addEntry(new Entry(this.translationKey, this.style));
+                return this.parent;
+            }
+        }
+    }
+    
+    public static class Builder {
+        protected final ResourceLocation langId;
+        protected final List<Entry> entries = new ArrayList<>();
+        
+        protected Builder(ResourceLocation langId) {
+            this.langId = langId;
+        }
+        
+        protected void addEntry(Entry newEntry) {
+            this.entries.add(newEntry);
+        }
+        
+        public StyleGuide.Entry.Builder entry(String translationKey) {
+            return new StyleGuide.Entry.Builder(translationKey, this);
+        }
+        
+        public StyleGuide build() {
+            return new StyleGuide(this.entries);
+        }
+        
+        public void save(BiConsumer<ResourceLocation, StyleGuide> consumer) {
+            consumer.accept(this.langId, this.build());
         }
     }
 }

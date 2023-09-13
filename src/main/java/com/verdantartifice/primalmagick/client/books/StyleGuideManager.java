@@ -22,7 +22,7 @@ public class StyleGuideManager {
 
     public static void setStyleGuide(ResourceLocation id, StyleGuide guide) {
         if (REGISTRY.containsKey(id)) {
-            LOGGER.error("Style guide for language {} is already registered with {} entries", id.toString(), guide.getEntries().size());
+            LOGGER.error("Style guide for language {} is already registered with {} entries", id.toString(), guide.size());
         } else {
             REGISTRY.put(id, guide);
         }
