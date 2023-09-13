@@ -26,8 +26,8 @@ public class BookDefinitionTagsProviderPM extends IntrinsicHolderTagsProvider<Bo
 
     @Override
     protected void addTags(Provider pProvider) {
-        this.tag(BookDefinitionTagsPM.DEFAULT_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get());
+        this.tag(BookDefinitionTagsPM.DEFAULT_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
         this.tag(BookDefinitionTagsPM.GALACTIC_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get());
-        this.tag(BookDefinitionTagsPM.ILLAGER_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get());
+        this.tag(BookDefinitionTagsPM.ILLAGER_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
     }
 }
