@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.arcane_crafting.ArcaneCraftingRecipeCategory;
+import com.verdantartifice.primalmagick.client.compat.jei.books.CodexSubtypeInterpreter;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctingRecipeCategory;
 import com.verdantartifice.primalmagick.client.compat.jei.concocting.ConcoctionSubtypeInterpreter;
 import com.verdantartifice.primalmagick.client.compat.jei.dissolution.DissolutionRecipeCategory;
@@ -83,6 +84,8 @@ public class JeiHelper implements IModPlugin {
     public void registerItemSubtypes(ISubtypeRegistration registration) {
         registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CONCOCTION.get(), ConcoctionSubtypeInterpreter.INSTANCE);
         registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.ALCHEMICAL_BOMB.get(), ConcoctionSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CODEX.get(), CodexSubtypeInterpreter.INSTANCE);
+        registration.registerSubtypeInterpreter(VanillaTypes.ITEM_STACK, ItemsPM.CODEX_CREATIVE.get(), CodexSubtypeInterpreter.INSTANCE);
     }
 
     @Override
