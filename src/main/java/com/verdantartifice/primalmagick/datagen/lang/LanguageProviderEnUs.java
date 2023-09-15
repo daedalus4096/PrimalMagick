@@ -8,6 +8,8 @@ import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
@@ -859,6 +861,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.GREATER_WARDING_MODULE).name("Greater Warding Module").build();
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
         this.item(ItemsPM.STATIC_BOOK).name("Unknown Book").build();
+        this.item(ItemsPM.STATIC_TABLET).name("Unknown Tablet").build();
+        this.item(ItemsPM.CODEX).name("Codex: %1$s").build();
+        this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
+        this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();
+        this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -909,6 +916,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
         this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
+        this.tooltip("written_language").sub("header").output("Language: %1$s").end().build();
+        this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
+        this.tooltip("written_language").sub("translated").sub("full").output("Fully translated").end().build();
+        this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
+        this.tooltip("written_language").sub("obfuscated_word").output("Your eyes seem to slide off this word, no matter how hard you try to focus.").end().build();
+        this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
+        this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -1407,6 +1421,14 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("stats").sub("noexist").output("Statistic %1$s does not exist").end().build();
         this.command("attunement_type").sub("noexist").output("Attunement type does not exist").end().build();
         this.command("books").sub("noexist").output("Book type does not exist").end().build();
+        this.command("books").sub("nolanguage").output("Book language does not exist").end().build();
+        this.command("linguistics").sub("reset").output("Resetting all linguistics knowledge for %1$s").end().build();
+        this.command("linguistics").sub("reset").sub("target").output("%1$s has reset all your linguistics knowledge").end().build();
+        this.command("linguistics").sub("comprehension").sub("get").output("%1$s has %3$d comprehension for language %2$s").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("success").output("Set %2$s language comprehension for %1$s to %3$d").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("target").output("%1$s has set your %2$s language comprehension to %3$d").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("success").sub("capped").output("Set %2$s language comprehension for %1$s to %3$d (capped from %4$d)").end().build();
+        this.command("linguistics").sub("comprehension").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s language comprehension to %3$d (capped from %4$d)").end().build();
         this.command("error").name("Error executing command").build();
         
         // Generate event output localizations
@@ -1465,15 +1487,26 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("attunement").sub("threshold_loss").output("You have lost %2$s attunement to the %1$s").end().build();
         this.event("attunement").sub("suppression_gain").output("Your attunement to the %1$s has been suppressed").end().build();
         this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
+        this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
+        this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
+        
+        // Generate written language localizations
+        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
+        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
+        this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
 
         // Generate written book localizations
-        this.book("test").name("Test Book").author("Steve")
+        this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
             .foreword("[Test foreword]")
             .text("Sphinx of black quartz, judge my vow! 1234567890.")
             .afterword("(Test afterword)")
             .build();
-        this.book("dream_journal").name("Dream Journal")
+        this.book(BooksPM.DREAM_JOURNAL).name("Dream Journal").author("Unknown")
             .text("I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of the shrine and found stone laced with a curious dust. Sensing more magick within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase. The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.")
+            .build();
+        this.book(BooksPM.SOURCE_PRIMER).name("Source Primer").author("Unknown")
+            .foreword("[This book is printed very simply, as if intended for young children.]")
+            .text("The Earth abides.\nThe Sea flows.\nThe Sky drifts.\nThe Sun shines.\nThe Moon changes.\nThe Blood pumps.\nThe Infernal rages.\nThe Void hungers.\nThe Hallowed sings.")
             .build();
         
         // Generate spell vehicle localizations

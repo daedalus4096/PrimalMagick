@@ -25,6 +25,7 @@ public class PrimalMagickCapabilities {
     public static final Capability<IPlayerCompanions> COMPANIONS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerArcaneRecipeBook> ARCANE_RECIPE_BOOK = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IPlayerWard> WARD = CapabilityManager.get(new CapabilityToken<>(){});
+    public static final Capability<IPlayerLinguistics> LINGUISTICS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IWorldEntitySwappers> ENTITY_SWAPPERS = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<IManaStorage> MANA_STORAGE = CapabilityManager.get(new CapabilityToken<>(){});
     public static final Capability<ITileResearchCache> RESEARCH_CACHE = CapabilityManager.get(new CapabilityToken<>(){});
@@ -62,6 +63,11 @@ public class PrimalMagickCapabilities {
     @Nonnull
     public static LazyOptional<IPlayerWard> getWard(@Nullable Player player) {
         return player == null ? LazyOptional.empty() : player.getCapability(WARD);
+    }
+    
+    @Nonnull
+    public static LazyOptional<IPlayerLinguistics> getLinguistics(@Nullable Player player) {
+        return player == null ? LazyOptional.empty() : player.getCapability(LINGUISTICS);
     }
     
     @Nullable

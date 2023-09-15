@@ -616,6 +616,12 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_SINGULARITY")))
             .manaCost(new SourceList().add(Source.EARTH, 750).add(Source.SEA, 750).add(Source.SKY, 750).add(Source.SUN, 750).add(Source.MOON, 750))
             .build(consumer);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemsPM.LORE_TABLET_DIRTY.get())
+            .pattern("##")
+            .pattern("##")
+            .define('#', ItemsPM.LORE_TABLET_FRAGMENT.get())
+            .unlockedBy("has_lore_tablet_fragment", has(ItemsPM.LORE_TABLET_FRAGMENT.get()))
+            .save(consumer);
         
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerAttunements;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerCompanions;
@@ -229,6 +230,11 @@ public class PlayerEvents {
         if (immediate || ArcaneRecipeBookManager.isSyncScheduled(player)) {
             PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
                 recipeBook.sync(player);
+            });
+        }
+        if (immediate || LinguisticsManager.isSyncScheduled(player)) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.sync(player);
             });
         }
         if (immediate) {
@@ -491,6 +497,13 @@ public class PlayerEvents {
             LOGGER.error("Failed to clone player {} ward", event.getOriginal().getName().getString());
         }
         
+        try {
+            CompoundTag nbtLinguistics = PrimalMagickCapabilities.getLinguistics(event.getOriginal()).orElseThrow(IllegalArgumentException::new).serializeNBT();
+            PrimalMagickCapabilities.getLinguistics(event.getEntity()).orElseThrow(IllegalArgumentException::new).deserializeNBT(nbtLinguistics);
+        } catch (Exception e) {
+            LOGGER.error("Failed to clone player {} linguistics", event.getOriginal().getName().getString());
+        }
+        
         event.getOriginal().invalidateCaps();   // FIXME Remove when the reviveCaps call is removed
         
         // If the player died, refresh any attunement attribute modifiers they may have had
@@ -564,7 +577,7 @@ public class PlayerEvents {
         
         // Construct the dream journal item
         ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());
-        StaticBookItem.setBookId(journal, BooksPM.DREAM_JOURNAL.get().bookId());
+        StaticBookItem.setBookDefinition(journal, BooksPM.DREAM_JOURNAL.get());
         StaticBookItem.setAuthorOverride(journal, player.getName().getString());
         
         // Give the dream journal to the player and announce it

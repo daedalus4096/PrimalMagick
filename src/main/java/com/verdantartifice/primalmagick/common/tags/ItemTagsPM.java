@@ -36,6 +36,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> SKYGLASS_PANES = tag("skyglass_panes");
     public static final TagKey<Item> STAINED_SKYGLASS = tag("stained_skyglass");
     public static final TagKey<Item> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
+    public static final TagKey<Item> STATIC_BOOKS = tag("static_books");
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
     public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
     
