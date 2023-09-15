@@ -8,15 +8,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,6 +89,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     public static final int MAX_SCAN_COUNT = 108;   // Enough to scan a 9x12 inventory
     
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
+    
+    private final Map<AffinityType, Map<ResourceLocation, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
+    private final Object resultCacheLock = new Object();
 
     protected AffinityManager() {
         super(GSON, "affinities");
@@ -86,10 +99,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
 
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
-        event.addListener(createInstance());
+        event.addListener(getOrCreateInstance());
     }
     
-    public static AffinityManager createInstance() {
+    public static AffinityManager getOrCreateInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AffinityManager();
         }
@@ -111,6 +124,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         this.affinities.clear();
+        this.resultCache.clear();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
             if (location.getPath().startsWith("_")) {
@@ -136,6 +150,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     public void replaceAffinities(List<IAffinity> affinities) {
         this.affinities.clear();
+        this.resultCache.clear();
         for (IAffinity affinity : affinities) {
             this.registerAffinity(affinity);
         }
@@ -187,20 +202,19 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
     }
     
-    @Nullable
-    public IAffinity getAffinity(AffinityType type, ResourceLocation id) {
+    protected IAffinity getAffinity(AffinityType type, ResourceLocation id) {
         return this.affinities.getOrDefault(type, Collections.emptyMap()).get(id);
     }
     
     @Nullable
-    public IAffinity getOrGenerateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
             return new HashMap<>();
         });
         if (map.containsKey(id)) {
-            return map.get(id);
+            return CompletableFuture.completedFuture(map.get(id));
         } else {
-            return this.generateItemAffinity(id, recipeManager, registryAccess, history);
+            return this.generateItemAffinityAsync(id, recipeManager, registryAccess, history);
         }
     }
     
@@ -235,15 +249,71 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
     }
     
-    @Nullable
-    public SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull Level level) {
-        return this.getAffinityValues(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>());
+    private boolean isResultCached(ItemStack stack) {
+        synchronized (this.resultCacheLock) {
+            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).containsKey(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+        }
     }
     
     @Nullable
-    protected SourceList getAffinityValues(@Nullable ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
-        if (stack == null || stack.isEmpty()) {
-            return null;
+    private CompletableFuture<SourceList> getCachedResult(ItemStack stack) {
+        synchronized (this.resultCacheLock) {
+            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+        }
+    }
+    
+    private void setCachedResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
+        if (result != null) {
+            synchronized (this.resultCacheLock) {
+                this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
+            }
+        }
+    }
+    
+    /**
+     * Retrieves the affinity values for the given item stack, if they have already been calculated.  Triggers
+     * calculation if they have not.
+     * 
+     * @param stack the stack to be queried
+     * @param level the level in which to perform the query
+     * @return an optional containing the affinity values if they have been calculated already, or an empty
+     * optional if not
+     */
+    public Optional<SourceList> getAffinityValues(@Nullable ItemStack stack, @Nonnull Level level) {
+        Optional<SourceList> retVal;
+        try {
+            CompletableFuture<SourceList> cachedResult = this.getCachedResult(stack);
+            if (cachedResult == null) {
+                // If no result is cached for the stack, get one asynchronously and save it for later
+                this.setCachedResult(stack, this.getAffinityValuesAsync(stack, level));
+                retVal = Optional.empty();
+            } else if (cachedResult.isDone()) {
+                // If there is a cached result and it's done, fetch and return its value
+                retVal = Optional.ofNullable(cachedResult.get());
+            } else {
+                // If there is a cached result and it's not done (i.e. still working), return an empty optional
+                retVal = Optional.empty();
+            }
+        } catch (CancellationException e) {
+            LOGGER.warn("Affinity calculation for stack of item {} was cancelled before completion", ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            retVal = Optional.empty();
+        } catch (InterruptedException e) {
+            LOGGER.warn("Affinity calculation for stack of item {} was interrupted before completion", ForgeRegistries.ITEMS.getKey(stack.getItem()));
+            retVal = Optional.empty();
+        } catch (ExecutionException e) {
+            LOGGER.error("Failed to calculate item affinities", e);
+            retVal = Optional.empty();
+        }
+        return retVal;
+    }
+    
+    public CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull Level level) {
+        return this.getAffinityValuesAsync(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>());
+    }
+    
+    protected CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+        if (stack.isEmpty()) {
+            return CompletableFuture.completedFuture(new SourceList());
         }
 
         // First try looking up the affinity data from the registry
@@ -264,150 +334,158 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return this.capAffinities(this.addBonusAffinities(stack, retVal, recipeManager, registryAccess), MAX_AFFINITY);
     }
     
-    @Nullable
-    protected IAffinity generateItemAffinity(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    protected CompletableFuture<IAffinity> generateItemAffinityAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // If the affinity is already registered, just return that
         if (this.isRegistered(AffinityType.ITEM, id)) {
-            return this.getAffinity(AffinityType.ITEM, id);
+            return CompletableFuture.completedFuture(this.getAffinity(AffinityType.ITEM, id));
         }
         
         // Prevent cycles in affinity generation
         if (history.contains(id)) {
-            return null;
+            return CompletableFuture.completedFuture(null);
         }
         history.add(id);
 
         // If we haven't hit a complexity limit, scan recipes to compute affinities
         if (history.size() < HISTORY_LIMIT) {
-            SourceList values = this.generateItemAffinityValuesFromRecipes(id, recipeManager, registryAccess, history);
-            if (values == null) {
-                return null;
-            } else {
+            CompletableFuture<SourceList> valuesFuture = this.generateItemAffinityValuesFromRecipesAsync(id, recipeManager, registryAccess, history);
+            return valuesFuture.thenApply(values -> {
                 IAffinity retVal = new ItemAffinity(id, values);
                 this.registerAffinity(retVal);
                 return retVal;
-            }
+            });
         } else {
-            return null;
+            return CompletableFuture.completedFuture(null);
         }
     }
     
     @Nullable
-    protected SourceList generateItemAffinityValuesFromRecipes(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
-        SourceList retVal = null;
-        int maxValue = Integer.MAX_VALUE;
-        
+    protected CompletableFuture<SourceList> generateItemAffinityValuesFromRecipesAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // Look up all recipes with the given item as an output
-        for (Recipe<?> recipe : recipeManager.getRecipes().stream().filter(r -> r.getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.getResultItem(registryAccess).getItem()).equals(id)).collect(Collectors.toList())) {
-            // Compute the affinities from the recipe's ingredients
-            SourceList ingSources = this.generateItemAffinityValuesFromIngredients(recipe, recipeManager, registryAccess, history);
-            if (recipe instanceof IHasManaCost) {
-                // Add affinities from mana costs
-                IHasManaCost manaRecipe = (IHasManaCost)recipe;
-                SourceList manaCosts = manaRecipe.getManaCosts();
-                for (Source source : manaCosts.getSources()) {
-                    if (manaCosts.getAmount(source) > 0) {
-                        int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem(registryAccess).getCount());
-                        if (manaAmount > 0) {
-                            ingSources.add(source, manaAmount);
+        List<CompletableFuture<SourceList>> recipeSourceFutures = recipeManager.getRecipes().stream()
+                .filter(r -> r.getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.getResultItem(registryAccess).getItem()).equals(id))
+                .map(recipe -> {
+                    // Compute the affinities from the recipe's ingredients
+                    return this.generateItemAffinityValuesFromIngredientsAsync(recipe, recipeManager, registryAccess, history).thenApply(ingSources -> {
+                        // Add affinities from mana costs, if any
+                        if (recipe instanceof IHasManaCost manaRecipe) {
+                            SourceList manaCosts = manaRecipe.getManaCosts();
+                            for (Source source : manaCosts.getSources()) {
+                                if (manaCosts.getAmount(source) > 0) {
+                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem(registryAccess).getCount());
+                                    if (manaAmount > 0) {
+                                        ingSources.add(source, manaAmount);
+                                    }
+                                }
+                            }
                         }
+                        return ingSources;
+                    });
+                }).toList();
+        return CompletableFuture.allOf(recipeSourceFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+            MutableObject<SourceList> retVal = new MutableObject<>(new SourceList());
+            MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
+            recipeSourceFutures.forEach(recipeSourceFuture -> {
+                recipeSourceFuture.thenAccept(recipeSources -> {
+                    int manaSize = recipeSources.getManaSize();
+                    if (manaSize > 0 && manaSize < maxValue.intValue()) {
+                        // Keep the source list with the smallest non-zero mana footprint
+                        retVal.setValue(recipeSources);
+                        maxValue.setValue(manaSize);
                     }
-                }
-            }
-            int manaSize = ingSources.getManaSize();
-            if (manaSize > 0 && manaSize < maxValue) {
-                // Keep the source list with the smallest non-zero mana footprint
-                retVal = ingSources;
-                maxValue = manaSize;
-            }
-        }
-        return retVal;
+                });
+            });
+            return retVal.getValue();
+        });
     }
     
     @Nonnull
-    protected SourceList generateItemAffinityValuesFromIngredients(@Nonnull Recipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@Nonnull Recipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         NonNullList<Ingredient> ingredients = recipe.getIngredients();
         ItemStack output = recipe.getResultItem(registryAccess);
-        SourceList intermediate = new SourceList();
         
         // Populate a fake crafting inventory with ingredients to see what container items would be left behind
-        NonNullList<ItemStack> containerList = NonNullList.create();
-        if (recipe instanceof CraftingRecipe) {
-            CraftingRecipe craftingRecipe = (CraftingRecipe)recipe;
+        CompletableFuture<NonNullList<ItemStack>> containerFuture;
+        if (recipe instanceof CraftingRecipe craftingRecipe) {
             CraftingContainer inv = new TransientCraftingContainer(new FakeMenu(), ingredients.size(), 1);
-            int index = 0;
+            List<CompletableFuture<ItemStack>> ingFutures = new ArrayList<>();
             for (Ingredient ingredient : ingredients) {
-                ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);
-                if (!ingStack.isEmpty()) {
-                    inv.setItem(index, ingStack);
-                }
-                index++;
+                ingFutures.add(this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history));
             }
-            containerList = craftingRecipe.getRemainingItems(inv);
+            containerFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+                MutableInt index = new MutableInt(0);
+                for (CompletableFuture<ItemStack> ingFuture : ingFutures) {
+                    ingFuture.thenAccept(ingStack -> {
+                        if (!ingStack.isEmpty()) {
+                            inv.setItem(index.intValue(), ingStack);
+                        }
+                    });
+                    index.increment();
+                }
+                return craftingRecipe.getRemainingItems(inv);
+            });
+        } else {
+            containerFuture = CompletableFuture.completedFuture(NonNullList.create());
         }
 
         // Compute total affinities for each ingredient
-        for (Ingredient ingredient : ingredients) {
-            ItemStack ingStack = this.getMatchingItemStack(ingredient, recipeManager, registryAccess, history);
-            if (!ingStack.isEmpty()) {
-                SourceList ingSources = this.getAffinityValues(ingStack, recipeManager, registryAccess, history);
-                if (ingSources != null) {
-                    intermediate.add(ingSources);
-                }
-            }
-        }
+        SourceList intermediate = new SourceList();
+        List<CompletableFuture<SourceList>> ingFutures = ingredients.stream().map(ingredient -> this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history)
+                .thenCompose(ingStack -> this.getAffinityValuesAsync(ingStack, recipeManager, registryAccess, history))).toList();
+        CompletableFuture<SourceList> intermediateFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+            ingFutures.forEach(ingFuture -> ingFuture.thenAccept(intermediate::add));
+            return intermediate;
+        });
         
         // Subtract affinities for remaining containers
-        if (containerList != null) {
-            for (ItemStack containerStack : containerList) {
-                if (!containerStack.isEmpty()) {
-                    SourceList containerSources = this.getAffinityValues(containerStack, recipeManager, registryAccess, history);
-                    if (containerSources != null) {
-                        for (Source source : containerSources.getSources()) {
-                            intermediate.reduce(source, containerSources.getAmount(source));
-                        }
-                    }
-                }
-            }
-        }
+        CompletableFuture<SourceList> reducedFuture = containerFuture.thenCombine(intermediateFuture, (containerList, intermediateSources) -> {
+            List<CompletableFuture<SourceList>> reductionFutures = containerList.stream().filter(Predicate.not(ItemStack::isEmpty))
+                    .map(containerStack -> this.getAffinityValuesAsync(containerStack, recipeManager, registryAccess, history)).toList();
+            CompletableFuture.allOf(reductionFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
+                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(intermediateSources::remove));
+            });
+            return intermediateSources;
+        });
         
         // Scale down remaining affinities
-        SourceList retVal = new SourceList();
-        for (Source source : intermediate.getSources()) {
-            double amount = intermediate.getAmount(source) * 0.75D / output.getCount();
-            if (amount < 1.0D && amount > 0.75D) {
-                amount = 1.0D;
-            }
-            if ((int)amount > 0) {
-                retVal.add(source, (int)amount);
-            }
-        }
-        
-        return retVal;
+        return reducedFuture.thenApply(intermediateSources -> {
+            SourceList retVal = new SourceList();
+            intermediateSources.getSources().forEach(source -> {
+                double amount = intermediateSources.getAmount(source) * 0.75D / output.getCount();
+                if (amount < 1.0D && amount > 0.75D) {
+                    amount = 1.0D;
+                }
+                if ((int)amount > 0) {
+                    retVal.add(source, (int)amount);
+                }
+            });
+            return retVal;
+        });
     }
     
     @Nonnull
-    protected ItemStack getMatchingItemStack(@Nullable Ingredient ingredient, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    protected CompletableFuture<ItemStack> getMatchingItemStackAsync(@Nullable Ingredient ingredient, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (ingredient == null || ingredient.getItems() == null || ingredient.getItems().length <= 0) {
-            return ItemStack.EMPTY;
+            return CompletableFuture.completedFuture(ItemStack.EMPTY);
         }
-        
-        int maxValue = Integer.MAX_VALUE;
-        ItemStack retVal = ItemStack.EMPTY;
         
         // Scan through all of the ingredient's possible matches to determine which one to use for affinity computation
-        for (ItemStack stack : ingredient.getItems()) {
-            SourceList stackSources = this.getAffinityValues(stack, recipeManager, registryAccess, history);
-            if (stackSources != null) {
-                int manaSize = stackSources.getManaSize();
-                if (manaSize > 0 && manaSize < maxValue) {
-                    // Keep the ingredient match-stack with the smallest non-zero mana footprint
-                    retVal = stack;
-                    maxValue = manaSize;
-                }
-            }
-        }
-        return retVal;
+        var futuresMap = Stream.of(ingredient.getItems()).collect(Collectors.toMap(Functions.identity(), stack -> this.getAffinityValuesAsync(stack, recipeManager, registryAccess, history)));
+        return CompletableFuture.allOf(futuresMap.values().toArray(CompletableFuture[]::new)).thenApply($ -> {
+            MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
+            MutableObject<ItemStack> retVal = new MutableObject<>(ItemStack.EMPTY);
+            futuresMap.entrySet().forEach(entry -> {
+                entry.getValue().thenAccept(stackSources -> {
+                    int manaSize = stackSources.getManaSize();
+                    if (manaSize > 0 && manaSize < maxValue.intValue()) {
+                        // Keep the ingredient match-stack with the smallest non-zero mana footprint
+                        retVal.setValue(entry.getKey());
+                        maxValue.setValue(manaSize);
+                    }
+                });
+            });
+            return retVal.getValue();
+        });
     }
     
     @Nullable

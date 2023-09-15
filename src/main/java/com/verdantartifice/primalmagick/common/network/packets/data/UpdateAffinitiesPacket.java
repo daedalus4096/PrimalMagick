@@ -62,7 +62,7 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
         public static void onMessage(UpdateAffinitiesPacket message, Supplier<NetworkEvent.Context> ctx) {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
-                AffinityManager.createInstance().replaceAffinities(message.getAffinities());
+                AffinityManager.getOrCreateInstance().replaceAffinities(message.getAffinities());
             });
             
             // Mark the packet as handled so we don't get warning log spam
