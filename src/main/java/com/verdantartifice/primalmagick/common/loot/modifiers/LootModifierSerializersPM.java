@@ -28,6 +28,7 @@ public class LootModifierSerializersPM {
     public static final RegistryObject<Codec<BloodNotesModifier>> BLOOD_NOTES = SERIALIZERS.register("blood_notes", () -> BloodNotesModifier.CODEC);
     public static final RegistryObject<Codec<RelicFragmentsModifier>> RELIC_FRAGMENTS = SERIALIZERS.register("relic_fragments", () -> RelicFragmentsModifier.CODEC);
     public static final RegistryObject<Codec<FourLeafCloverModifier>> FOUR_LEAF_CLOVER = SERIALIZERS.register("four_leaf_clover", () -> FourLeafCloverModifier.CODEC);
-    public static final RegistryObject<Codec<HummingArtifactModifier>> HUMMING_ARTIFACT = SERIALIZERS.register("humming_artifact", () -> HummingArtifactModifier.CODEC);
+    public static final RegistryObject<Codec<AddItemModifier>> ADD_ITEM = SERIALIZERS.register("add_item", () -> AddItemModifier.CODEC);
     public static final RegistryObject<Codec<EssenceThiefModifier>> ESSENCE_THIEF = SERIALIZERS.register("essence_thief", () -> EssenceThiefModifier.CODEC);
+    public static final RegistryObject<Codec<ReplaceItemModifier>> REPLACE_ITEM = SERIALIZERS.register("replace_item", () -> ReplaceItemModifier.CODEC);
 }

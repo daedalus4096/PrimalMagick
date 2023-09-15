@@ -1,13 +1,23 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.client.GameNarrator;
@@ -17,6 +27,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
@@ -28,7 +39,8 @@ import net.minecraft.util.Mth;
  * @author Daedalus4096
  */
 public class StaticBookViewScreen extends Screen {
-    public static final ResourceLocation BG_TEXTURE = new ResourceLocation("textures/gui/book.png");
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
     public static final int PAGE_TEXT_X_OFFSET = 36;
     public static final int PAGE_TEXT_Y_OFFSET = 30;
@@ -39,7 +51,12 @@ public class StaticBookViewScreen extends Screen {
     protected static final int IMAGE_HEIGHT = 192;
 
     protected final boolean playTurnSound;
-    protected final BookView bookView;
+    protected final ResourceKey<?> requestedBookKey;
+    protected final ResourceLocation requestedLanguageId;
+    protected final int requestedTranslatedComprehension;
+    protected final ResourceLocation requestedBgTexture;
+    protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
+    protected BookView bookView;
     private PageButton forwardButton;
     private PageButton backButton;
     private int currentPage;
@@ -47,17 +64,20 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource("unknown")), BookLanguagesPM.DEFAULT.getId(), false);
+        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, StaticBookItem.BOOK_BACKGROUND, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId) {
-        this(bookKey, languageId, true);
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, ResourceLocation bgTexture) {
+        this(bookKey, languageId, translatedComprehension, bgTexture, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, ResourceLocation bgTexture, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
-        this.bookView = new BookView(bookKey, languageId);
         this.playTurnSound = playTurnSound;
+        this.requestedBookKey = bookKey;
+        this.requestedLanguageId = languageId;
+        this.requestedTranslatedComprehension = translatedComprehension;
+        this.requestedBgTexture = bgTexture;
     }
     
     /**
@@ -77,6 +97,13 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     protected void init() {
+        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(this.requestedLanguageId);
+        if (lang == null) {
+            lang = BookLanguagesPM.DEFAULT.get();
+        }
+        int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
+        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), Math.max(comp, this.requestedTranslatedComprehension));
+
         this.createMenuControls();
         this.createPageControlButtons();
     }
@@ -87,12 +114,12 @@ public class StaticBookViewScreen extends Screen {
 
     protected void createPageControlButtons() {
         int x = (this.width - IMAGE_WIDTH) / 2;
-        this.forwardButton = this.addRenderableWidget(new PageButton(x + 116, 159, true, (p_98297_) -> {
+        this.forwardButton = this.addRenderableWidget(new StaticBookPageButton(x + 116, 159, true, (p_98297_) -> {
             this.pageForward();
-        }, this.playTurnSound));
-        this.backButton = this.addRenderableWidget(new PageButton(x + 43, 159, false, (p_98287_) -> {
+        }, this.playTurnSound, this.requestedBgTexture));
+        this.backButton = this.addRenderableWidget(new StaticBookPageButton(x + 43, 159, false, (p_98287_) -> {
             this.pageBack();
-        }, this.playTurnSound));
+        }, this.playTurnSound, this.requestedBgTexture));
         this.updateButtonVisibility();
     }
 
@@ -139,10 +166,12 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        this.renderedLines.clear();
+        
         this.renderBackground(guiGraphics);
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
-        guiGraphics.blit(BG_TEXTURE, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+        guiGraphics.blit(this.requestedBgTexture, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         
         if (this.cachedPage != this.currentPage) {
             // Set the page indicator text
@@ -158,9 +187,33 @@ public class StaticBookViewScreen extends Screen {
         // Draw the text lines for the current page
         List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
         for (int index = 0; index < page.size(); index++) {
-            guiGraphics.drawString(this.font, page.get(index), xPos + PAGE_TEXT_X_OFFSET, yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT), 0, false);
+            int finalX = xPos + PAGE_TEXT_X_OFFSET;
+            int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
+            this.renderedLines.put(new Vector2i(finalX, finalY), page.get(index));
+            guiGraphics.drawString(this.font, page.get(index), finalX, finalY, 0, false);
         }
+        
+        // Draw any hover effects dictated by text style
+        this.getRenderedLineEntryAt(mouseX, mouseY).ifPresent(entry -> {
+            int startX = entry.getKey().x;
+            FormattedCharSequence line = entry.getValue();
+            Style style = this.font.getSplitter().componentStyleAtWidth(line, mouseX - startX);
+            if (style != null && style.getHoverEvent() != null) {
+                guiGraphics.renderComponentHoverEffect(this.font, style, mouseX, mouseY);
+            }
+        });
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+    
+    protected Optional<Map.Entry<Vector2i, FormattedCharSequence>> getRenderedLineEntryAt(int x, int y) {
+        for (Map.Entry<Vector2i, FormattedCharSequence> entry : this.renderedLines.entrySet()) {
+            Vector2i pos = entry.getKey();
+            int lineWidth = this.font.width(entry.getValue());
+            if (x >= pos.x && x <= pos.x + lineWidth && y >= pos.y && y <= pos.y + LINE_HEIGHT) {
+                return Optional.ofNullable(entry);
+            }
+        }
+        return Optional.empty();
     }
 }

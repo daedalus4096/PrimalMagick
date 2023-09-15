@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.books.LexiconLoader;
+import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
 import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
@@ -103,6 +105,8 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(ItemsPM.HEXIUM_SHIELD.get().getRenderProperties().getCustomRenderer());
         event.registerReloadListener(ItemsPM.HALLOWSTEEL_SHIELD.get().getRenderProperties().getCustomRenderer());
         event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
+        event.registerReloadListener(LexiconLoader.getOrCreateInstance());
+        event.registerReloadListener(StyleGuideLoader.getOrCreateInstance());
     }
     
     @SubscribeEvent

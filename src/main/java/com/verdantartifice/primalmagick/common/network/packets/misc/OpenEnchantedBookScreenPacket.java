@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -43,7 +44,7 @@ public class OpenEnchantedBookScreenPacket implements IMessageToClient {
             // Enqueue the handler work on the main game thread
             ctx.get().enqueueWork(() -> {
                 if (FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId());
+                    ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId(), 0, StaticBookItem.BOOK_BACKGROUND);
                 }
             });
             

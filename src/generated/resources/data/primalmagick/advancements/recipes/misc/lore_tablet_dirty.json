@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lore_tablet_fragment": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "primalmagick:lore_tablet_fragment"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "primalmagick:lore_tablet_dirty"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_lore_tablet_fragment",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "primalmagick:lore_tablet_dirty"
+    ]
+  },
+  "sends_telemetry_event": false
+}

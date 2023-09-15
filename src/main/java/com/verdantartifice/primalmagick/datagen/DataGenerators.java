@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
 import com.verdantartifice.primalmagick.datagen.atlas.SpriteSourceProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.BlockStateProviderPM;
 import com.verdantartifice.primalmagick.datagen.blocks.WandComponentBlockStateProvider;
+import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
@@ -20,6 +21,7 @@ import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.BookDefinitionTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
@@ -49,6 +51,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput()));
+        generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), EntityLootTables.getSubProviderEntry(), GameplayLootTables.getSubProviderEntry()))));
@@ -63,6 +66,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
+        generator.addProvider(event.includeServer(), new BookDefinitionTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
     }
 }

@@ -38,4 +38,6 @@ public class ArgumentTypesPM {
             () -> ArgumentTypeInfos.registerByClass(AttunementTypeArgument.class, SingletonArgumentInfo.contextFree(AttunementTypeArgument::attunementType)));
     public static final RegistryObject<SingletonArgumentInfo<AttunementValueArgument>> ATTUNEMENT_VALUE = COMMAND_ARGUMENT_TYPES.register("attunement_value", 
             () -> ArgumentTypeInfos.registerByClass(AttunementValueArgument.class, SingletonArgumentInfo.contextFree(AttunementValueArgument::value)));
+    public static final RegistryObject<SingletonArgumentInfo<LanguageComprehensionArgument>> LANGUAGE_COMPREHENSION = COMMAND_ARGUMENT_TYPES.register("language_comprehension", 
+            () -> ArgumentTypeInfos.registerByClass(LanguageComprehensionArgument.class, SingletonArgumentInfo.contextFree(LanguageComprehensionArgument::value)));
 }

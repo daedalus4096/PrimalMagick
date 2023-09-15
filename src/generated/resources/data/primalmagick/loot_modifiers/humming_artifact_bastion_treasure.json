@@ -1,5 +1,5 @@
 {
-  "type": "primalmagick:humming_artifact",
+  "type": "primalmagick:add_item",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
@@ -9,5 +9,6 @@
       "chance": 1.0,
       "condition": "minecraft:random_chance"
     }
-  ]
+  ],
+  "item": "primalmagick:humming_artifact_unattuned"
 }

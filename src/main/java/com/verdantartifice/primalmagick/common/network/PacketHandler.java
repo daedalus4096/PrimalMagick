@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttuneme
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCompanionsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncCooldownsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncProgressPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncResearchFlagsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncStatsPacket;
@@ -129,6 +130,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, SyncWardPacket.class, SyncWardPacket::encode, SyncWardPacket::decode, SyncWardPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode, OpenEnchantedBookScreenPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, SyncLinguisticsPacket.class, SyncLinguisticsPacket::encode, SyncLinguisticsPacket::decode, SyncLinguisticsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
