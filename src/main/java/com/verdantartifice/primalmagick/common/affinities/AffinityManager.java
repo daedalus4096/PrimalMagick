@@ -90,8 +90,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
     
-    private final Map<AffinityType, Map<ResourceLocation, CompletableFuture<SourceList>>> itemResultCache = new ConcurrentHashMap<>();
-    private final Object itemResultCacheLock = new Object();
+    private final Map<AffinityType, Map<ResourceLocation, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
+    private final Object resultCacheLock = new Object();
 
     protected AffinityManager() {
         super(GSON, "affinities");
@@ -124,7 +124,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         this.affinities.clear();
-        this.itemResultCache.clear();
+        this.clearCachedResults();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
             if (location.getPath().startsWith("_")) {
@@ -150,7 +150,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     public void replaceAffinities(List<IAffinity> affinities) {
         this.affinities.clear();
-        this.itemResultCache.clear();
+        this.clearCachedResults();
         for (IAffinity affinity : affinities) {
             this.registerAffinity(affinity);
         }
@@ -240,44 +240,76 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
     }
     
-    @Nullable
-    public Optional<SourceList> getAffinityValues(@Nullable EntityType<?> type, @Nonnull RegistryAccess registryAccess) {
-        Optional<SourceList> retVal;
-        try {
-            // TODO
-            retVal = Optional.empty();
-        } catch (CancellationException e) {
-            LOGGER.warn("Affinity calculation for entity type {} was cancelled before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
-            retVal = Optional.empty();
-//        } catch (InterruptedException e) {
-//            LOGGER.warn("Affinity calculation for entity type {} was interrupted before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
-//            retVal = Optional.empty();
-//        } catch (ExecutionException e) {
-//            LOGGER.error("Failed to calculate entity type affinities", e);
-//            retVal = Optional.empty();
+    private void clearCachedResults() {
+        synchronized (this.resultCacheLock) {
+            this.resultCache.clear();
         }
-        return retVal;
-
-//        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
-//        if (entityAffinity == null) {
-//            return null;
-//        } else {
-//            return this.capAffinities(entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()), MAX_AFFINITY);
-//        }
     }
     
     @Nullable
     private CompletableFuture<SourceList> getCachedItemResult(ItemStack stack) {
-        synchronized (this.itemResultCacheLock) {
-            return this.itemResultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+        synchronized (this.resultCacheLock) {
+            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
         }
     }
     
     private void setCachedItemResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
         if (result != null) {
-            synchronized (this.itemResultCacheLock) {
-                this.itemResultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
+            synchronized (this.resultCacheLock) {
+                this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
             }
+        }
+    }
+    
+    @Nullable
+    private CompletableFuture<SourceList> getCachedEntityResult(EntityType<?> entityType) {
+        synchronized (this.resultCacheLock) {
+            return this.resultCache.getOrDefault(AffinityType.ENTITY_TYPE, Collections.emptyMap()).get(ForgeRegistries.ENTITY_TYPES.getKey(entityType));
+        }
+    }
+    
+    private void setCachedEntityResult(EntityType<?> entityType, @Nullable CompletableFuture<SourceList> result) {
+        if (result != null) {
+            synchronized (this.resultCacheLock) {
+                this.resultCache.computeIfAbsent(AffinityType.ENTITY_TYPE, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ENTITY_TYPES.getKey(entityType), result);
+            }
+        }
+    }
+    
+    public Optional<SourceList> getAffinityValues(@Nullable EntityType<?> type, @Nonnull RegistryAccess registryAccess) {
+        Optional<SourceList> retVal;
+        try {
+            CompletableFuture<SourceList> cachedResult = this.getCachedEntityResult(type);
+            if (cachedResult == null) {
+                // If no result is cached for the entity type, get one asynchronously and save it for later
+                this.setCachedEntityResult(type, this.getAffinityValuesAsync(type, registryAccess));
+                retVal = Optional.empty();
+            } else if (cachedResult.isDone()) {
+                // If there is a cached result and it's done, fetch and return its value
+                retVal = Optional.ofNullable(cachedResult.get());
+            } else {
+                // If there is a cached result and it's not done (i.e. still working), return an empty optional
+                retVal = Optional.empty();
+            }
+        } catch (CancellationException e) {
+            LOGGER.warn("Affinity calculation for entity type {} was cancelled before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+            retVal = Optional.empty();
+        } catch (InterruptedException e) {
+            LOGGER.warn("Affinity calculation for entity type {} was interrupted before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+            retVal = Optional.empty();
+        } catch (ExecutionException e) {
+            LOGGER.error("Failed to calculate entity type affinities", e);
+            retVal = Optional.empty();
+        }
+        return retVal;
+    }
+    
+    public CompletableFuture<SourceList> getAffinityValuesAsync(EntityType<?> type, RegistryAccess registryAccess) {
+        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
+        if (entityAffinity == null) {
+            return CompletableFuture.completedFuture(new SourceList());
+        } else {
+            return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY));
         }
     }
     
