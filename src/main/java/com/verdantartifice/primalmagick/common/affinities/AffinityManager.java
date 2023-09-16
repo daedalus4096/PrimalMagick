@@ -90,8 +90,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     private Map<AffinityType, Map<ResourceLocation, IAffinity>> affinities = new HashMap<>();
     
-    private final Map<AffinityType, Map<ResourceLocation, CompletableFuture<SourceList>>> resultCache = new ConcurrentHashMap<>();
-    private final Object resultCacheLock = new Object();
+    private final Map<AffinityType, Map<ResourceLocation, CompletableFuture<SourceList>>> itemResultCache = new ConcurrentHashMap<>();
+    private final Object itemResultCacheLock = new Object();
 
     protected AffinityManager() {
         super(GSON, "affinities");
@@ -124,7 +124,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> objectIn, ResourceManager resourceManagerIn, ProfilerFiller profilerIn) {
         this.affinities.clear();
-        this.resultCache.clear();
+        this.itemResultCache.clear();
         for (Map.Entry<ResourceLocation, JsonElement> entry : objectIn.entrySet()) {
             ResourceLocation location = entry.getKey();
             if (location.getPath().startsWith("_")) {
@@ -150,7 +150,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     public void replaceAffinities(List<IAffinity> affinities) {
         this.affinities.clear();
-        this.resultCache.clear();
+        this.itemResultCache.clear();
         for (IAffinity affinity : affinities) {
             this.registerAffinity(affinity);
         }
@@ -202,6 +202,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
     }
     
+    @Nullable
     protected IAffinity getAffinity(AffinityType type, ResourceLocation id) {
         return this.affinities.getOrDefault(type, Collections.emptyMap()).get(id);
     }
@@ -240,32 +241,42 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    public SourceList getAffinityValues(@Nullable EntityType<?> type, @Nonnull RegistryAccess registryAccess) {
-        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
-        if (entityAffinity == null) {
-            return null;
-        } else {
-            return this.capAffinities(entityAffinity.getTotal(null, registryAccess, new ArrayList<>()), MAX_AFFINITY);
+    public Optional<SourceList> getAffinityValues(@Nullable EntityType<?> type, @Nonnull RegistryAccess registryAccess) {
+        Optional<SourceList> retVal;
+        try {
+            // TODO
+            retVal = Optional.empty();
+        } catch (CancellationException e) {
+            LOGGER.warn("Affinity calculation for entity type {} was cancelled before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+            retVal = Optional.empty();
+//        } catch (InterruptedException e) {
+//            LOGGER.warn("Affinity calculation for entity type {} was interrupted before completion", ForgeRegistries.ENTITY_TYPES.getKey(type));
+//            retVal = Optional.empty();
+//        } catch (ExecutionException e) {
+//            LOGGER.error("Failed to calculate entity type affinities", e);
+//            retVal = Optional.empty();
         }
-    }
-    
-    private boolean isResultCached(ItemStack stack) {
-        synchronized (this.resultCacheLock) {
-            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).containsKey(ForgeRegistries.ITEMS.getKey(stack.getItem()));
-        }
+        return retVal;
+
+//        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
+//        if (entityAffinity == null) {
+//            return null;
+//        } else {
+//            return this.capAffinities(entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()), MAX_AFFINITY);
+//        }
     }
     
     @Nullable
-    private CompletableFuture<SourceList> getCachedResult(ItemStack stack) {
-        synchronized (this.resultCacheLock) {
-            return this.resultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
+    private CompletableFuture<SourceList> getCachedItemResult(ItemStack stack) {
+        synchronized (this.itemResultCacheLock) {
+            return this.itemResultCache.getOrDefault(AffinityType.ITEM, Collections.emptyMap()).get(ForgeRegistries.ITEMS.getKey(stack.getItem()));
         }
     }
     
-    private void setCachedResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
+    private void setCachedItemResult(ItemStack stack, @Nullable CompletableFuture<SourceList> result) {
         if (result != null) {
-            synchronized (this.resultCacheLock) {
-                this.resultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
+            synchronized (this.itemResultCacheLock) {
+                this.itemResultCache.computeIfAbsent(AffinityType.ITEM, $ -> new ConcurrentHashMap<>()).put(ForgeRegistries.ITEMS.getKey(stack.getItem()), result);
             }
         }
     }
@@ -282,10 +293,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     public Optional<SourceList> getAffinityValues(@Nullable ItemStack stack, @Nonnull Level level) {
         Optional<SourceList> retVal;
         try {
-            CompletableFuture<SourceList> cachedResult = this.getCachedResult(stack);
+            CompletableFuture<SourceList> cachedResult = this.getCachedItemResult(stack);
             if (cachedResult == null) {
                 // If no result is cached for the stack, get one asynchronously and save it for later
-                this.setCachedResult(stack, this.getAffinityValuesAsync(stack, level));
+                this.setCachedItemResult(stack, this.getAffinityValuesAsync(stack, level));
                 retVal = Optional.empty();
             } else if (cachedResult.isDone()) {
                 // If there is a cached result and it's done, fetch and return its value
@@ -315,23 +326,30 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (stack.isEmpty()) {
             return CompletableFuture.completedFuture(new SourceList());
         }
+        
+        ResourceLocation stackItemLoc = ForgeRegistries.ITEMS.getKey(stack.getItem());
 
         // First try looking up the affinity data from the registry
-        IAffinity itemAffinity = this.getAffinity(AffinityType.ITEM, ForgeRegistries.ITEMS.getKey(stack.getItem()));
-        if (itemAffinity == null) {
+        CompletableFuture<IAffinity> itemAffinityFuture;
+        if (this.isRegistered(AffinityType.ITEM, stackItemLoc)) {
+            itemAffinityFuture = CompletableFuture.completedFuture(this.getAffinity(AffinityType.ITEM, stackItemLoc));
+        } else {
             // If that doesn't work, generate affinities for the item and use those
-            itemAffinity = this.generateItemAffinity(ForgeRegistries.ITEMS.getKey(stack.getItem()), recipeManager, registryAccess, history);
-            if (itemAffinity == null) {
-                // If that doesn't work either, return empty data
-                return null;
-            }
+            itemAffinityFuture = this.generateItemAffinityAsync(stackItemLoc, recipeManager, registryAccess, history);
         }
         
-        // Extract source values from the affinity data
-        SourceList retVal = itemAffinity.getTotal(recipeManager, registryAccess, history);
-        
-        // Append any needed bonus affinities for NBT data, then cap the result to a reasonable value
-        return this.capAffinities(this.addBonusAffinities(stack, retVal, recipeManager, registryAccess), MAX_AFFINITY);
+        return itemAffinityFuture.thenCompose(itemAffinity -> {
+            // Extract source values from the affinity data
+            return itemAffinity == null ? 
+                    CompletableFuture.completedFuture(new SourceList()) : 
+                    itemAffinity.getTotalAsync(recipeManager, registryAccess, history);
+        }).thenCompose(sources -> {
+            // Append any needed bonus affinities for NBT data
+            return this.addBonusAffinitiesAsync(stack, sources, recipeManager, registryAccess);
+        }).thenApply(sources -> {
+            // Finally, cap the result to a reasonable value
+            return this.capAffinities(sources, MAX_AFFINITY);
+        });
     }
     
     protected CompletableFuture<IAffinity> generateItemAffinityAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
@@ -501,11 +519,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    protected SourceList addBonusAffinities(@Nonnull ItemStack stack, @Nullable SourceList inputSources, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess) {
-        if (inputSources == null) {
-            return null;
-        }
-        
+    protected CompletableFuture<SourceList> addBonusAffinitiesAsync(@Nonnull ItemStack stack, @Nonnull SourceList inputSources, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess) {
+        List<CompletableFuture<SourceList>> bonusFutures = new ArrayList<>();
         SourceList retVal = inputSources.copy();
         
         // Determine bonus affinities from NBT-attached potion data
@@ -513,7 +528,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (potion != null && potion != Potions.EMPTY) {
             IAffinity bonus = this.getAffinity(AffinityType.POTION_BONUS, ForgeRegistries.POTIONS.getKey(potion));
             if (bonus != null) {
-                retVal.add(bonus.getTotal(recipeManager, registryAccess, new ArrayList<>()));
+                bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()));
             }
         }
         
@@ -523,11 +538,19 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             for (Enchantment enchant : enchants.keySet()) {
                 IAffinity bonus = this.getAffinity(AffinityType.ENCHANTMENT_BONUS, ForgeRegistries.ENCHANTMENTS.getKey(enchant));
                 if (bonus != null) {
-                    retVal.add(bonus.getTotal(recipeManager, registryAccess, new ArrayList<>()).multiply(enchants.get(enchant)));
+                    bonusFutures.add(bonus.getTotalAsync(recipeManager, registryAccess, new ArrayList<>()).thenApply(enchBonus -> enchBonus.multiply(enchants.get(enchant))));
                 }
             }
         }
         
-        return retVal;
+        // Add any detected bonus affinities to the original input
+        return CompletableFuture.allOf(bonusFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+            bonusFutures.forEach(bonusFuture -> {
+                bonusFuture.thenAccept(bonus -> {
+                    retVal.add(bonus);
+                });
+            });
+            return retVal;
+        });
     }
 }

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nonnull;
 
@@ -45,26 +46,21 @@ public class ItemAffinity extends AbstractAffinity {
     }
 
     @Override
-    protected SourceList calculateTotal(@Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    protected CompletableFuture<SourceList> calculateTotalAsync(@Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (this.setValues != null) {
-            return this.setValues;
+            return CompletableFuture.completedFuture(this.setValues);
         } else if (this.baseEntryId != null) {
-            if (this.baseEntry == null) {
-                this.baseEntry = AffinityManager.getInstance().getOrGenerateItemAffinity(this.baseEntryId, recipeManager, registryAccess, history);
-                if (this.baseEntry == null) {
-                    return null;
-                }
-            }
-            SourceList retVal = this.baseEntry.getTotal(recipeManager, registryAccess, history);
-            if (retVal != null) {
+            return AffinityManager.getInstance().getOrGenerateItemAffinityAsync(this.baseEntryId, recipeManager, registryAccess, history).thenCompose(baseEntry -> {
+                return baseEntry.getTotalAsync(recipeManager, registryAccess, history);
+            }).thenApply(baseSources -> {
                 if (this.addValues != null) {
-                    retVal = retVal.add(this.addValues);
+                    baseSources = baseSources.add(this.addValues);
                 }
                 if (this.removeValues != null) {
-                    retVal = retVal.remove(this.removeValues);
+                    baseSources = baseSources.remove(this.removeValues);
                 }
-            }
-            return retVal;
+                return baseSources;
+            });
         } else {
             throw new IllegalStateException("Item affinity has neither set values nor a base entry");
         }
