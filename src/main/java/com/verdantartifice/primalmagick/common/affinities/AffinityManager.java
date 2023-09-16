@@ -41,6 +41,7 @@ import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
@@ -305,12 +306,17 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     public CompletableFuture<SourceList> getAffinityValuesAsync(EntityType<?> type, RegistryAccess registryAccess) {
-        IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
-        if (entityAffinity == null) {
-            return CompletableFuture.completedFuture(new SourceList());
-        } else {
-            return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY));
-        }
+        return CompletableFuture.supplyAsync(() -> {
+            IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
+            if (entityAffinity == null) {
+                return new SourceList();
+            } else {
+                return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY)).join();
+            }
+        }, Util.backgroundExecutor()).exceptionally(e -> {
+            LOGGER.error("Failed to generate affinity values for entity", e);
+            return null;
+        });
     }
     
     /**
@@ -351,7 +357,12 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     public CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull Level level) {
-        return this.getAffinityValuesAsync(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>());
+        return CompletableFuture.supplyAsync(() -> {
+            return this.getAffinityValuesAsync(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>()).join();
+        }, Util.backgroundExecutor()).exceptionally(e -> {
+            LOGGER.error("Failed to generate affinity values for item stack", e);
+            return null;
+        });
     }
     
     protected CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
