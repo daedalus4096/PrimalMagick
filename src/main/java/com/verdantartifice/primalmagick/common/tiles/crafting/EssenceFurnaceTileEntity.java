@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -35,19 +36,13 @@ public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
-        if (sources != null && !sources.isEmpty()) {
-            for (Source source : Source.SORTED_SOURCES) {
-                int amount = sources.getAmount(source);
-                if (amount >= EssenceType.DUST.getAffinity()) {
-                    // Generate output for each affinity multiple in the input stack
-                    ItemStack stack = this.getOutputEssence(EssenceType.DUST, source, 1);
-                    if (!stack.isEmpty()) {
-                        output.add(stack);
-                    }
-                }
-            }
-        }
+        AffinityManager.getInstance().getAffinityValues(inputStack, this.level).filter(Predicate.not(SourceList::isEmpty)).ifPresent(sources -> {
+            Source.SORTED_SOURCES.stream()
+                    .filter(s -> sources.getAmount(s) >= EssenceType.DUST.getAffinity())
+                    .map(s -> this.getOutputEssence(EssenceType.DUST, s, 1))
+                    .filter(Predicate.not(ItemStack::isEmpty))
+                    .forEach(output::add);
+        });
         return output;
     }
 }

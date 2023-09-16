@@ -38,7 +38,8 @@ public class EssenceThiefModifier extends LootModifier {
         if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity victim) {
             int enchantLevel = getEnchantLevel(context);
             if (enchantLevel > 0) {
-                SourceList affinities = AffinityManager.getInstance().getAffinityValues(victim.getType(), victim.level().registryAccess());
+                // The affinity data is needed at the time of loot modification, so if it's not ready then we have no choice but to wait
+                SourceList affinities = AffinityManager.getInstance().getAffinityValuesAsync(victim.getType(), victim.level().registryAccess()).join();
                 if (affinities != null && !affinities.isEmpty()) {
                     WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
                     for (Source source : affinities.getSources()) {

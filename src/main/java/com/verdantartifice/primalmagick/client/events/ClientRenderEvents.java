@@ -17,7 +17,6 @@ import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.ChatFormatting;
@@ -84,15 +83,19 @@ public class ClientRenderEvents {
 
         // Assemble the tooltip components for showing primal affinities on an item stack
         if (gui instanceof AbstractContainerScreen && (InputEvents.isKeyDown(KeyBindings.VIEW_AFFINITY_KEY) != Config.SHOW_AFFINITIES.get().booleanValue()) && !mc.mouseHandler.isMouseGrabbed() && event.getItemStack() != null && !event.getItemStack().isEmpty()) {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level);
-            if (sources == null || sources.isEmpty()) {
-                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));
-            } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
-                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.unknown")));
-            } else {
-                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));
-                event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
-            }
+            AffinityManager.getInstance().getAffinityValues(event.getItemStack(), mc.level).ifPresentOrElse(sources -> {
+                if (sources.isEmpty()) {
+                    event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.none")));
+                } else if (!ResearchManager.isScanned(event.getItemStack(), mc.player) && !Config.SHOW_UNSCANNED_AFFINITIES.get()) {
+                    event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.unknown")));
+                } else {
+                    event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.label")));
+                    event.getTooltipElements().add(Either.right(new AffinityTooltipComponent(sources)));
+                }
+            }, () -> {
+                // If the optional is empty, that means the asynchronous calculation is still in progress
+                event.getTooltipElements().add(Either.left(Component.translatable("tooltip.primalmagick.affinities.calculating")));
+            });
         }
     }
     
@@ -101,15 +104,16 @@ public class ClientRenderEvents {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player.getMainHandItem().getItem() == ItemsPM.ARCANOMETER.get() || mc.player.getOffhandItem().getItem() == ItemsPM.ARCANOMETER.get()) {
             Entity entity = event.getTarget().getEntity();
-            SourceList affinities = AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess());
-            boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
-            if (isScanned && affinities != null && !affinities.isEmpty()) {
-                float partialTicks = event.getPartialTick();
-                double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
-                double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
-                double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
-                GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
-            }
+            AffinityManager.getInstance().getAffinityValues(entity.getType(), entity.level().registryAccess()).ifPresent(affinities -> {
+                boolean isScanned = ResearchManager.isScanned(entity.getType(), mc.player);
+                if (isScanned && affinities != null && !affinities.isEmpty()) {
+                    float partialTicks = event.getPartialTick();
+                    double interpolatedEntityX = entity.xo + (partialTicks * (entity.getX() - entity.xo));
+                    double interpolatedEntityY = entity.yo + (partialTicks * (entity.getY() - entity.yo));
+                    double interpolatedEntityZ = entity.zo + (partialTicks * (entity.getZ() - entity.zo));
+                    GuiUtils.renderSourcesBillboard(event.getPoseStack(), event.getMultiBufferSource(), interpolatedEntityX, interpolatedEntityY + entity.getBbHeight(), interpolatedEntityZ, affinities, partialTicks);
+                }
+            });
         }
     }
     

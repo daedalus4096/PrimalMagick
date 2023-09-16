@@ -7,8 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -593,22 +595,38 @@ public class ResearchManager {
         if (stack == null || stack.isEmpty() || player == null) {
             return false;
         }
-        SourceList affinities = AffinityManager.getInstance().getAffinityValues(stack, player.level());
-        if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
-            // If the given itemstack has no affinities, consider it already scanned
+        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(stack, player.level());
+        if (affinitiesOpt.isPresent()) {
+            SourceList affinities = affinitiesOpt.get();
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
+                // If the given itemstack has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
+            return (key != null && key.isKnownByStrict(player));
+        } else {
+            // If the affinities for the item are not ready yet, temporarily consider the item scanned
             return true;
         }
-        SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
-        return (key != null && key.isKnownByStrict(player));
     }
     
     public static boolean isScanned(@Nullable EntityType<?> type, @Nullable Player player) {
         if (type == null || player == null) {
             return false;
         }
-        // TODO Check entity type affinities
-        SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
-        return (key != null && key.isKnownByStrict(player));
+        Optional<SourceList> affinitiesOpt = AffinityManager.getInstance().getAffinityValues(type, player.level().registryAccess());
+        if (affinitiesOpt.isPresent()) {
+            SourceList affinities = affinitiesOpt.get();
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
+                // If the given entity has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
+            return (key != null && key.isKnownByStrict(player));
+        } else {
+            // If the affinities for the entity are not ready yet, temporarily consider the entity scanned
+            return true;
+        }
     }
 
     public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayer player) {
@@ -632,10 +650,11 @@ public class ResearchManager {
         SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
-            int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
-            if (obsPoints > 0) {
-                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
-            }
+            getObservationPointsAsync(stack, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
+                if (obsPoints > 0) {
+                    addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
+                }
+            });
             
             // Increment the items analyzed stat
             StatsManager.incrementValue(player, StatsPM.ITEMS_ANALYZED);
@@ -667,10 +686,11 @@ public class ResearchManager {
         SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the entity is worth and add those to the player's knowledge
-            int obsPoints = getObservationPoints(type);
-            if (obsPoints > 0) {
-                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
-            }
+            getObservationPointsAsync(type, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
+                if (obsPoints > 0) {
+                    addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
+                }
+            });
             
             // Increment the entities analyzed stat
             StatsManager.incrementValue(player, StatsPM.ENTITIES_ANALYZED);
@@ -701,6 +721,7 @@ public class ResearchManager {
         ItemStack stack;
         
         // Iterate over all registered items in the game
+        List<CompletableFuture<Integer>> obsPointsFutures = new ArrayList<>();
         for (Item item : ForgeRegistries.ITEMS) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
@@ -708,16 +729,24 @@ public class ResearchManager {
             if (key != null && knowledge.addResearch(key)) {
                 count++;
     
-                // Determine how many observation points the itemstack is worth and add those to the player's knowledge
-                int obsPoints = getObservationPoints(stack, player.getCommandSenderWorld());
-                if (obsPoints > 0) {
-                    addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
-                }
+                // Determine how many observation points the itemstack is worth and queue them up to add to the player's knowledge
+                obsPointsFutures.add(getObservationPointsAsync(stack, player.getCommandSenderWorld()));
                 
                 // Check to see if any scan triggers need to be run for the item
                 checkScanTriggers(player, item);
             }
         }
+        
+        // Once all items are processed, then add any accrued observation points to the player's knowledge
+        CompletableFuture.allOf(obsPointsFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
+            obsPointsFutures.forEach(future -> {
+                future.thenAccept(obsPoints -> {
+                    if (obsPoints > 0) {
+                        addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
+                    }
+                });
+            });
+        });
         
         // If any items were successfully scanned, sync the research/knowledge changes to the player's client
         if (count > 0) {
@@ -728,15 +757,14 @@ public class ResearchManager {
         return count;
     }
 
-    private static int getObservationPoints(@Nonnull ItemStack stack, @Nonnull Level world) {
+    private static CompletableFuture<Integer> getObservationPointsAsync(@Nonnull ItemStack stack, @Nonnull Level world) {
         // Calculate observation points for the itemstack based on its affinities
-        return getObservationPoints(AffinityManager.getInstance().getAffinityValues(stack, world));
+        return AffinityManager.getInstance().getAffinityValuesAsync(stack, world).thenApply(ResearchManager::getObservationPoints);
     }
     
-    private static int getObservationPoints(@Nonnull EntityType<?> type) {
-        // TODO Get affinities from affinity manager for entity type
-        SourceList affinities = new SourceList();
-        return getObservationPoints(affinities);
+    private static CompletableFuture<Integer> getObservationPointsAsync(@Nonnull EntityType<?> type, @Nonnull Level level) {
+        // Get affinities from affinity manager for entity type
+        return AffinityManager.getInstance().getAffinityValuesAsync(type, level.registryAccess()).thenApply(ResearchManager::getObservationPoints);
     }
     
     private static int getObservationPoints(@Nullable SourceList affinities) {
