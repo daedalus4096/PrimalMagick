@@ -915,6 +915,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("affinities").sub("label").output("Affinities:").end().build();
         this.tooltip("affinities").sub("none").output("Affinities: None").end().build();
         this.tooltip("affinities").sub("unknown").output("Affinities: Unknown").end().build();
+        this.tooltip("affinities").sub("calculating").output("Affinities: Calculating...").end().build();
         this.tooltip("written_book").sub("author").sub("unknown").output("Unknown").end().build();
         this.tooltip("written_language").sub("header").output("Language: %1$s").end().build();
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
@@ -932,6 +933,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("analysis").sub("affinity").output("%1$d %2$s affinity").end().build();
         this.label("analysis").sub("no_item").output("No item analyzed").end().build();
         this.label("analysis").sub("no_affinities").output("No affinities detected").end().build();
+        this.label("analysis").sub("calculating").output("Calculating affinities...").end().build();
         this.label("analysis").sub("affinity_report_header").output("%1$s affinities:").end().build();
         this.label("research_table").sub("missing_writing_supplies").output("Missing writing supplies!").end().build();
         this.label("research_table").sub("ready").output("Ready to begin!").end().build();

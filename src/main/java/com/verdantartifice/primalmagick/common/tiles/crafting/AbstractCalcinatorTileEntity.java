@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
@@ -22,7 +24,6 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -245,21 +246,20 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
 
     protected boolean canCalcinate(ItemStack inputStack) {
+        MutableBoolean retVal = new MutableBoolean(false);
         if (inputStack != null && !inputStack.isEmpty()) {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
-            if (sources == null || sources.isEmpty()) {
-                // An item without affinities cannot be melted
-                return false;
-            } else {
-                // Merge the items already in the output inventory with the new output items from the melting
-                List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
-                List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
-                List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
-                return (mergedOutputs.size() <= OUTPUT_CAPACITY);
-            }
-        } else {
-            return false;
+            // An item without affinities cannot be melted
+            AffinityManager.getInstance().getAffinityValues(inputStack, this.level).ifPresent(sources -> {
+                if (!sources.isEmpty()) {
+                    // Merge the items already in the output inventory with the new output items from the melting
+                    List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
+                    List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
+                    List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
+                    retVal.setValue(mergedOutputs.size() <= OUTPUT_CAPACITY);
+                }
+            });
         }
+        return retVal.booleanValue();
     }
     
     @Nonnull

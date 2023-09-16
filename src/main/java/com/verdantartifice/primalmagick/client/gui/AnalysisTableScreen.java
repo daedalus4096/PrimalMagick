@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.mutable.MutableObject;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.AffinityWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
@@ -13,7 +15,6 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.AnalysisActionPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -64,25 +65,28 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
     
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-        Component text = null;
+        MutableObject<Component> text = new MutableObject<>(null);
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
         
         // Generate text in the case that no item has been analyzed, or the item has no affinities
         if (lastScannedStack == null || lastScannedStack.isEmpty()) {
-            text = Component.translatable("label.primalmagick.analysis.no_item");
+            text.setValue(Component.translatable("label.primalmagick.analysis.no_item"));
         } else {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
-            if (sources == null || sources.isEmpty()) {
-                text = Component.translatable("label.primalmagick.analysis.no_affinities");
-            }
+            AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world).ifPresentOrElse(sources -> {
+                if (sources == null || sources.isEmpty()) {
+                    text.setValue(Component.translatable("label.primalmagick.analysis.no_affinities"));
+                }
+            }, () -> {
+                text.setValue(Component.translatable("label.primalmagick.analysis.calculating"));
+            });
         }
         
         // Render any generated text
-        if (text != null) {
-            int width = this.font.width(text.getString());
+        if (text.getValue() != null) {
+            int width = this.font.width(text.getValue().getString());
             int x = 1 + (this.getXSize() - width) / 2;
             int y = 10 + (16 - this.font.lineHeight) / 2;
-            guiGraphics.drawString(this.font, text, x, y, Color.BLACK.getRGB(), false);
+            guiGraphics.drawString(this.font, text.getValue(), x, y, Color.BLACK.getRGB(), false);
         }
     }
 
@@ -99,16 +103,17 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
         // Show affinity widgets, if the last scanned stack has affinities
         ItemStack lastScannedStack = this.menu.getLastScannedStack();
         if (lastScannedStack != null && !lastScannedStack.isEmpty()) {
-            SourceList sources = AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world);
-            if (sources != null && !sources.isEmpty()) {
-                int widgetSetWidth = sources.getSourcesSorted().size() * 18;
-                int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
-                int y = this.topPos + 10;
-                for (Source source : sources.getSourcesSorted()) {
-                    this.affinityWidgets.add(this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y)));
-                    x += 18;
+            AffinityManager.getInstance().getAffinityValues(lastScannedStack, this.world).ifPresent(sources -> {
+                if (!sources.isEmpty()) {
+                    int widgetSetWidth = sources.getSourcesSorted().size() * 18;
+                    int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
+                    int y = this.topPos + 10;
+                    for (Source source : sources.getSourcesSorted()) {
+                        this.affinityWidgets.add(this.addRenderableWidget(new AffinityWidget(source, sources.getAmount(source), x, y)));
+                        x += 18;
+                    }
                 }
-            }
+            });
         }
     }
     

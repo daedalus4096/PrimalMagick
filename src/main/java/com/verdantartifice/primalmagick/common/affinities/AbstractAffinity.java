@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 
 public abstract class AbstractAffinity implements IAffinity {
     protected ResourceLocation targetId;
-    protected SourceList totalCache;
+    protected CompletableFuture<SourceList> totalCache;
 
     protected AbstractAffinity(ResourceLocation target) {
         this.targetId = target;
@@ -25,12 +26,12 @@ public abstract class AbstractAffinity implements IAffinity {
     }
 
     @Override
-    public SourceList getTotal(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    public CompletableFuture<SourceList> getTotalAsync(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (this.totalCache == null) {
-            this.totalCache = this.calculateTotal(recipeManager, registryAccess, history);
+            this.totalCache = this.calculateTotalAsync(recipeManager, registryAccess, history);
         }
-        return this.totalCache == null ? null : this.totalCache.copy();
+        return this.totalCache;
     }
     
-    protected abstract SourceList calculateTotal(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history);
+    protected abstract CompletableFuture<SourceList> calculateTotalAsync(@Nullable RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history);
 }

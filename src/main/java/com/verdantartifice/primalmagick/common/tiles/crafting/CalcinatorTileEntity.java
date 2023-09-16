@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -55,9 +56,8 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
     @Nonnull
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
-        SourceList sources = AffinityManager.getInstance().getAffinityValues(inputStack, this.level);
         EssenceType maxEssenceType = this.getMaxOutputEssenceType();
-        if (sources != null && !sources.isEmpty()) {
+        AffinityManager.getInstance().getAffinityValues(inputStack, this.level).filter(Predicate.not(SourceList::isEmpty)).ifPresent(sources -> {
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = sources.getAmount(source);
                 if (amount > 0) {
@@ -84,7 +84,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
                     }
                 }
             }
-        }
+        });
         return output;
     }
     
