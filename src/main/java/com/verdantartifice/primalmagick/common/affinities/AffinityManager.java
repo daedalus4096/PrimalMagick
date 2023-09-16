@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
-import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,7 +32,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.crafting.IHasManaCost;
 import com.verdantartifice.primalmagick.common.menus.FakeMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -44,7 +40,6 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -53,7 +48,6 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.TransientCraftingContainer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -65,11 +59,9 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
@@ -158,40 +150,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         for (Map.Entry<AffinityType, Map<ResourceLocation, IAffinity>> entry : this.affinities.entrySet()) {
             LOGGER.info("Updated {} {} affinity definitions", entry.getValue().size(), entry.getKey().getSerializedName());
         }
-        // Now that we've accepted the upstream set of static affinities, populate the derived affinities.
-        // This is here to handle modpack QoL, where the expense of individual recipe derivation becomes noticeable
-        // client lag, particularly visible in JEI.
-        this.deriveAffinities();
     }
 
-    // Derives all current affinities proactively based on current AffinityManager state.
-    // In degenerate cases (400 mods! 30000 items!) takes 600ms or more to complete.
-    private void deriveAffinities() {
-        Level world = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentLevel() : null;
-        if (world == null) {
-            LOGGER.atWarn().log("Unable to derive affinities - no world available");
-            return;
-        }
-
-        Set<Entry<ResourceKey<Item>, Item>> itemEntries = ForgeRegistries.ITEMS.getEntries();
-        if (itemEntries == null ) {
-            LOGGER.atWarn().log("Unable to derive affinities - got null ItemRegistry from ForgeRegistries");
-            return;
-        }
-        Iterator<Entry<ResourceKey<Item>, Item>> itr = itemEntries.iterator();
-
-        LOGGER.atInfo().log("Starting affinity derivation for "+itemEntries.size()+" item entries");
-
-        while (itr.hasNext()) {
-            Entry<ResourceKey<Item>, Item> entry = itr.next();
-            this.getAffinityValues(
-              entry.getValue().getDefaultInstance(),
-              world);
-        }
-
-        LOGGER.atInfo().log("Completed affinity derivation with "+ this.getAllAffinities().size() + " entries");
-    }
-    
     protected IAffinity deserializeAffinity(ResourceLocation id, JsonObject json) {
         String s = GsonHelper.getAsString(json, "type");
         AffinityType type = AffinityType.parse(s);
