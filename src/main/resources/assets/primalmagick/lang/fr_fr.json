@@ -1269,6 +1269,7 @@
   "label.primalmagick.essence_cask.contents": "Contents: %1$d / %2$d",
   "label.primalmagick.essence_cask.left_click": "Left-click to withdraw one stack",
   "label.primalmagick.essence_cask.right_click": "Right-click to withdraw one item",
+  "label.primalmagick.recipe_book.loading": "Loading...",
   "label.primalmagick.research_table.aid_header": "Active research aids:",
   "label.primalmagick.research_table.complete": "Complete Project (%1$s%%)",
   "label.primalmagick.research_table.completing": "Completing...",

@@ -1269,6 +1269,7 @@
   "label.primalmagick.essence_cask.contents": "内容：%1$d / %2$d",
   "label.primalmagick.essence_cask.left_click": "左键单击可取回一组物品",
   "label.primalmagick.essence_cask.right_click": "右键单击以收回一个物品",
+  "label.primalmagick.recipe_book.loading": "Loading...",
   "label.primalmagick.research_table.aid_header": "积极的研究辅助工具：",
   "label.primalmagick.research_table.complete": "完成弹射 (%1$s%%)",
   "label.primalmagick.research_table.completing": "完成中...",
