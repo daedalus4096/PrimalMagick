@@ -14,14 +14,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
-import com.mojang.logging.LogUtils;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeCollection;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -89,7 +87,6 @@ public class ClientArcaneRecipeBook {
         return retVal;
     }
     
-    @SuppressWarnings("deprecation")
     protected static ArcaneRecipeBookCategories getCategory(Recipe<?> recipe, RegistryAccess registryAccess) {
         RecipeType<?> type = recipe.getType();
         if (type == RecipeTypesPM.ARCANE_CRAFTING.get()) {
@@ -111,14 +108,8 @@ public class ClientArcaneRecipeBook {
                 case FOOD -> ArcaneRecipeBookCategories.FURNACE_FOOD;
                 case MISC -> ArcaneRecipeBookCategories.FURNACE_MISC;
             };
-        } else if (type == RecipeType.BLASTING || type == RecipeType.SMOKING || type == RecipeType.STONECUTTING || 
-                type == RecipeType.CAMPFIRE_COOKING || type == RecipeType.SMITHING) {
-            // We don't deal with these crafting types
-            return ArcaneRecipeBookCategories.UNKNOWN;
         } else {
-            LOGGER.warn("Unknown recipe category: {}/{}", LogUtils.defer(() -> {
-                return BuiltInRegistries.RECIPE_TYPE.getKey(recipe.getType());
-            }), LogUtils.defer(recipe::getId));
+            // We don't deal with these crafting types
             return ArcaneRecipeBookCategories.UNKNOWN;
         }
     }

@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
+import net.minecraft.network.chat.Component;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -36,6 +37,7 @@ public class ArcaneRecipeBookPage {
     protected StateSwitchingButton backButton;
     protected int totalPages;
     protected int currentPage;
+    protected boolean isLoading = true;
     protected RecipeBook vanillaBook;
     protected ArcaneRecipeBook arcaneBook;
     @Nullable
@@ -56,12 +58,14 @@ public class ArcaneRecipeBookPage {
         
         for (int index = 0; index < this.buttons.size(); index++) {
             this.buttons.get(index).setPosition(xPos + 11 + 25 * (index % 5), yPos + 31 + 25 * (index / 5));
+            this.buttons.get(index).visible = false;
         }
         
         this.forwardButton = new StateSwitchingButton(xPos + 93, yPos + 137, 12, 17, false);
         this.forwardButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
         this.backButton = new StateSwitchingButton(xPos + 38, yPos + 137, 12, 17, true);
         this.backButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
+        this.updateArrowButtons();
     }
     
     public void addListener(ArcaneRecipeBookComponent component) {
@@ -75,6 +79,7 @@ public class ArcaneRecipeBookPage {
         if (this.totalPages <= this.currentPage || resetPage) {
             this.currentPage = 0;
         }
+        this.isLoading = false;
         this.updateButtonsForPage();
     }
     
@@ -103,6 +108,12 @@ public class ArcaneRecipeBookPage {
             String str = (this.currentPage + 1) + "/" + this.totalPages;
             int width = this.mc.font.width(str);
             guiGraphics.drawString(this.mc.font, str, parentX - width / 2 + 73, parentY + 141, -1);
+        }
+        
+        if (this.isLoading) {
+            Component loadingComponent = Component.translatable("label.primalmagick.recipe_book.loading");
+            int loadingWidth = this.mc.font.width(loadingComponent);
+            guiGraphics.drawString(this.mc.font, loadingComponent, parentX - loadingWidth / 2 + 73, parentY + 77, -1);
         }
         
         this.hoveredButton = null;
