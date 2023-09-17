@@ -144,10 +144,16 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.recipeBookPage.addListener(this);
         this.filterButton = new StateSwitchingButton(xPos + 110, yPos + 12, 26, 16, this.arcaneBook.getData().isFiltering(this.menu.getRecipeBookType()));
         this.initFilterButtonTextures();
+        
+        int tabPosX = (this.width - IMAGE_WIDTH) / 2 - this.xOffset - 30;
+        int tabPosY = (this.height - IMAGE_HEIGHT) / 2 + 3;
+        int tabCount = 0;
         this.tabButtons.clear();
-
         for (ArcaneRecipeBookCategories category : this.menu.getRecipeBookCategories()) {
-            this.tabButtons.add(new ArcaneRecipeBookTabButton(category));
+            ArcaneRecipeBookTabButton tab = new ArcaneRecipeBookTabButton(category);
+            tab.setPosition(tabPosX, tabPosY + 27 * tabCount++);
+            tab.visible = (category == ArcaneRecipeBookCategories.CRAFTING_SEARCH);
+            this.tabButtons.add(tab);
         }
         
         if (this.selectedTab != null) {
