@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
@@ -24,6 +28,7 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenA
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -51,6 +56,7 @@ import net.minecraft.world.item.crafting.Recipe;
  * @author Daedalus4096
  */
 public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, NarratableEntry, RecipeShownListener, PlaceRecipe<Ingredient> {
+    protected static final Logger LOGGER = LogManager.getLogger();
     protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
     public static final int IMAGE_WIDTH = 147;
@@ -81,6 +87,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected boolean visible;
     protected boolean widthTooNarrow;
     protected boolean useFurnaceStyle;
+    protected boolean isLoading = true;
 
     public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, AbstractArcaneRecipeBookMenu<?> menu) {
         this.mc = mc;
@@ -91,17 +98,30 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.useFurnaceStyle = useFurnaceStyle;
         mc.player.containerMenu = menu;
         this.vanillaBook = mc.player.getRecipeBook();
-        
         this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
-        this.arcaneBook.setupCollections(this.mc.level.getRecipeManager().getRecipes(), this.mc.level.registryAccess());
-        this.arcaneBook.getCollections().forEach(collection -> {
-            collection.updateKnownRecipes(this.vanillaBook, this.arcaneBook.getData());
-        });
         
         this.visible = this.isVisibleAccordingToBookData();
         if (this.visible) {
             this.initVisuals();
         }
+        
+        // Asynchronously set up the arcane recipe book collections
+        CompletableFuture.supplyAsync(() -> {
+            return this.mc.level.getRecipeManager().getRecipes();
+        }, Util.backgroundExecutor()).thenAccept(recipes -> {
+            this.arcaneBook.setupCollections(recipes, this.mc.level.registryAccess());
+        }).thenAccept($ -> {
+            this.arcaneBook.getCollections().forEach(collection -> collection.updateKnownRecipes(this.vanillaBook, this.arcaneBook.getData()));
+        }).thenAccept($ -> {
+            this.isLoading = false;
+        }).thenAccept($ -> {
+            if (this.visible) {
+                this.initVisuals();
+            }
+        }).exceptionally(e -> {
+            LOGGER.error("Failed to load arcane recipe book contents", e);
+            return null;
+        });
     }
     
     public void initVisuals() {
@@ -140,7 +160,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         }
         
         this.selectedTab.setStateTriggered(true);
-        this.updateCollections(false);
+        if (!this.isLoading) {
+            this.updateCollections(false);
+        }
         this.updateTabs();
     }
 
@@ -271,7 +293,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.stackedContents.clear();
         this.mc.player.getInventory().fillStackedContents(this.stackedContents);
         this.menu.fillCraftSlotsStackedContents(this.stackedContents);
-        this.updateCollections(false);
+        if (!this.isLoading) {
+            this.updateCollections(false);
+        }
     }
 
     @Override
@@ -362,7 +386,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                 if (this.filterButton.mouseClicked(mouseX, mouseY, buttonIndex)) {
                     this.filterButton.setStateTriggered(this.toggleFiltering());
                     this.sendUpdateSettings();
-                    this.updateCollections(false);
+                    if (!this.isLoading) {
+                        this.updateCollections(false);
+                    }
                     return true;
                 } else {
                     for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
@@ -373,7 +399,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                                 }
                                 this.selectedTab = tab;
                                 this.selectedTab.setStateTriggered(true);
-                                this.updateCollections(true);
+                                if (!this.isLoading) {
+                                    this.updateCollections(true);
+                                }
                             }
                             return true;
                         }
@@ -457,7 +485,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected void checkSearchStringUpdate() {
         String str = this.searchBox.getValue().toLowerCase(Locale.ROOT);
         if (!str.equals(this.lastSearch)) {
-            this.updateCollections(false);
+            if (!this.isLoading) {
+                this.updateCollections(false);
+            }
             this.lastSearch = str;
         }
     }
@@ -468,7 +498,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     
     public void recipesUpdated() {
         this.updateTabs();
-        if (this.isVisible()) {
+        if (this.isVisible() && !this.isLoading) {
             this.updateCollections(false);
         }
     }

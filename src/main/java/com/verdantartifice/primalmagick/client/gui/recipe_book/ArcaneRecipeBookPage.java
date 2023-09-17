@@ -65,6 +65,7 @@ public class ArcaneRecipeBookPage {
         this.forwardButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
         this.backButton = new StateSwitchingButton(xPos + 38, yPos + 137, 12, 17, true);
         this.backButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
+        this.updateArrowButtons();
     }
     
     public void addListener(ArcaneRecipeBookComponent component) {
