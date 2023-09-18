@@ -136,8 +136,7 @@ public class ItemAffinityBuilder {
             json.addProperty("target", this.targetId.toString());
             if (this.baseId != null) {
                 json.addProperty("base", this.baseId.toString());
-            }
-            if (this.setValues != null && !this.setValues.isEmpty()) {
+            } else if (this.setValues != null) {
                 json.add("set", this.setValues.serializeJson());
             }
             if (this.addValues != null && !this.addValues.isEmpty()) {
