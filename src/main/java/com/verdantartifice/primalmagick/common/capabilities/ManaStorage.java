@@ -63,9 +63,7 @@ public class ManaStorage implements IManaStorage {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        SourceList nbtMana = SourceList.EMPTY.copy();
-        nbtMana.deserializeNBT(nbt.getCompound("Mana"));
-        this.setMana(nbtMana);
+        this.setMana(SourceList.deserializeNBT(nbt.getCompound("Mana")));
     }
     
     public void setMana(SourceList mana) {

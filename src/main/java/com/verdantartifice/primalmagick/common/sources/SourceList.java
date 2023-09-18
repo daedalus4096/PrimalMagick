@@ -17,7 +17,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Definition of a list of primal sources and their respective amounts.  Used for anything requiring
@@ -25,7 +24,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-public class SourceList implements INBTSerializable<CompoundTag> {
+public class SourceList {
     public static final SourceList EMPTY = new SourceList();
 
     protected final Object2IntOpenHashMap<Source> sources;
@@ -367,7 +366,6 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         return new SourceList(this);
     }
     
-    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         ListTag tagList = new ListTag();
@@ -384,25 +382,18 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     }
 
     /**
-     * Deserializes source list data from the given tag into this object.  <strong>This method
-     * breaks the immutability contract of the class; only call it on a copy of an empty list
-     * object, not the original.</strong>
+     * Deserializes source list data from the given tag into a new object.
      */
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        // FIXME This method violates the immutability contract for the class; redesign
-        if (this == SourceList.EMPTY) {
-            // Reference comparison intended
-            throw new IllegalStateException("Attempting to modify a statically known source list!");
-        }
-        this.sources.clear();
+    public static SourceList deserializeNBT(CompoundTag nbt) {
+        SourceList.Builder retVal = SourceList.builder();
         ListTag tagList = nbt.getList("Sources", Tag.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
-                this.addInner(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
+                retVal.with(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
             }
         }
+        return retVal.build();
     }
     
     @Nonnull
