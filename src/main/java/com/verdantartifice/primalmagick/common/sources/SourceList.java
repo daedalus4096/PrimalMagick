@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.sources;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -9,6 +10,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +20,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.StringRepresentable;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -28,7 +32,11 @@ import net.minecraftforge.common.util.INBTSerializable;
 @Immutable
 public class SourceList implements INBTSerializable<CompoundTag> {
     public static final SourceList EMPTY = new SourceList();
-    
+    public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {
+        return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Source.SORTED_SOURCES.toArray(Source[]::new))).fieldOf("Sources").forGetter(obj -> obj.sources))
+                .apply(instance, SourceList::new);
+    });
+
     protected final Object2IntOpenHashMap<Source> sources;
     
     protected SourceList() {
@@ -37,6 +45,13 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     protected SourceList(SourceList other) {
         this.sources = new Object2IntOpenHashMap<>(other.sources);
+    }
+    
+    protected SourceList(Map<Source, Integer> values) {
+        this();
+        values.entrySet().forEach(entry -> {
+            this.sources.put(entry.getKey(), entry.getValue().intValue());
+        });
     }
     
     @Nonnull

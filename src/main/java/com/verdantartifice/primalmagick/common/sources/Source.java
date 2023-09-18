@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -26,7 +28,9 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class Source {
+public class Source implements StringRepresentable {
+    public static final Codec<Source> CODEC = Codec.STRING.xmap(Source::getSource, Source::getTag);
+    
     public static final Map<String, Source> SOURCES = new HashMap<>();
     protected static final Map<SimpleResearchKey, Source> DISCOVER_KEYS = new HashMap<>();
     
@@ -186,5 +190,10 @@ public class Source {
     @Nullable
     public static Source getSource(@Nullable SimpleResearchKey discoverKey) {
         return DISCOVER_KEYS.get(discoverKey);
+    }
+
+    @Override
+    public String getSerializedName() {
+        return this.getTag();
     }
 }
