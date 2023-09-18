@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 
 import com.google.gson.JsonObject;
 import com.mojang.serialization.Codec;
@@ -29,7 +28,6 @@ import net.minecraftforge.common.util.INBTSerializable;
  * 
  * @author Daedalus4096
  */
-@Immutable
 public class SourceList implements INBTSerializable<CompoundTag> {
     public static final SourceList EMPTY = new SourceList();
     public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {

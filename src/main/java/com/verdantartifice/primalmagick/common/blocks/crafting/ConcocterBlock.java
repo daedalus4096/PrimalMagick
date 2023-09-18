@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
+import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -98,22 +99,12 @@ public class ConcocterBlock extends BaseEntityBlock {
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
-        
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (tile instanceof IManaContainer) {
-            CompoundTag nbt = stack.getTagElement("ManaContainerTag");
-            if (nbt != null) {
-                SourceList mana = SourceList.EMPTY;
-                mana.deserializeNBT(nbt);
-                ((IManaContainer)tile).setMana(mana);
-            }
-        }
+        ManaContainerHelper.setManaOnPlace(worldIn, pos, stack);
 
         // Set the concocter tile entity's owner when placed by a player.  Needed so that the tile entity can do research checks.
-        if (!worldIn.isClientSide && placer instanceof Player) {
-            if (tile instanceof ConcocterTileEntity) {
-                ((ConcocterTileEntity)tile).setTileOwner((Player)placer);
-            }
+        BlockEntity tile = worldIn.getBlockEntity(pos);
+        if (!worldIn.isClientSide && placer instanceof Player placingPlayer && tile instanceof ConcocterTileEntity concocterTile) {
+            concocterTile.setTileOwner(placingPlayer);
         }
     }
 
@@ -146,19 +137,7 @@ public class ConcocterBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        CompoundTag nbt = stack.getTagElement("ManaContainerTag");
-        if (nbt != null) {
-            SourceList mana = SourceList.EMPTY;
-            mana.deserializeNBT(nbt);
-            for (Source source : Source.SORTED_SOURCES) {
-                int amount = mana.getAmount(source);
-                if (amount > 0) {
-                    Component nameComp = source.getNameText();
-                    Component line = Component.translatable("tooltip.primalmagick.source.mana_container", nameComp, (amount / 100.0D));
-                    tooltip.add(line);
-                }
-            }
-        }
+        ManaContainerHelper.appendHoverText(stack, tooltip);
     }
 
     @Override
