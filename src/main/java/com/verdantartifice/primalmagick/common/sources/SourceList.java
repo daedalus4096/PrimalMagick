@@ -52,6 +52,10 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         });
     }
     
+    public static Builder builder() {
+        return new Builder();
+    }
+    
     @Nonnull
     public static SourceList fromNetwork(@Nonnull FriendlyByteBuf buf) {
         SourceList retVal = SourceList.EMPTY;
@@ -419,5 +423,58 @@ public class SourceList implements INBTSerializable<CompoundTag> {
             output = output.append(Component.translatable("tooltip.primalmagick.spells.details.mana_cost.piece", this.getAmount(source), source.getNameText()));
         }
         return output;
+    }
+    
+    public static class Builder {
+        protected final Object2IntOpenHashMap<Source> sources;
+        
+        protected Builder() {
+            this.sources = new Object2IntOpenHashMap<>();
+        }
+        
+        public Builder with(Source source, int amount) {
+            this.sources.put(source, amount);
+            return this;
+        }
+        
+        public Builder withEarth(int amount) {
+            return this.with(Source.EARTH, amount);
+        }
+        
+        public Builder withSea(int amount) {
+            return this.with(Source.SEA, amount);
+        }
+        
+        public Builder withSky(int amount) {
+            return this.with(Source.SKY, amount);
+        }
+        
+        public Builder withSun(int amount) {
+            return this.with(Source.SUN, amount);
+        }
+        
+        public Builder withMoon(int amount) {
+            return this.with(Source.MOON, amount);
+        }
+        
+        public Builder withBlood(int amount) {
+            return this.with(Source.BLOOD, amount);
+        }
+        
+        public Builder withInfernal(int amount) {
+            return this.with(Source.INFERNAL, amount);
+        }
+        
+        public Builder withVoid(int amount) {
+            return this.with(Source.VOID, amount);
+        }
+        
+        public Builder withHallowed(int amount) {
+            return this.with(Source.HALLOWED, amount);
+        }
+        
+        public SourceList build() {
+            return new SourceList(this.sources);
+        }
     }
 }
