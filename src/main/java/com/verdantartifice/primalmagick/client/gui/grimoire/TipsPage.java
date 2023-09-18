@@ -80,6 +80,7 @@ public class TipsPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         if (this.isLastPage()) {
             screen.addWidgetToScreen(Button.builder(Component.translatable("grimoire.primalmagick.next_tip_button"), button -> {
+                screen.invalidateCurrentTip();
                 screen.gotoTopic(TOPIC, false);
             }).bounds(x + 16 + (side * 136), y + 116, 119, 20).build());
         }

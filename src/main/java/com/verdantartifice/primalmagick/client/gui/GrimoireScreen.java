@@ -108,6 +108,7 @@ public class GrimoireScreen extends Screen {
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
     protected NavigableMap<String, List<Recipe<?>>> indexMap;
+    protected Component cachedTip = null;
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
@@ -917,10 +918,20 @@ public class GrimoireScreen extends Screen {
         }
     }
     
+    protected Component getCurrentTip() {
+        if (this.cachedTip == null) {
+            Minecraft mc = Minecraft.getInstance();
+            this.cachedTip = TipManager.getRandomTipForPlayer(mc.player, mc.player.getRandom()).getText();
+        }
+        return this.cachedTip;
+    }
+    
+    public void invalidateCurrentTip() {
+        this.cachedTip = null;
+    }
+    
     protected void parseTipsPages() {
-        Minecraft mc = Minecraft.getInstance();
-        Component tip = TipManager.getRandomTipForPlayer(mc.player, mc.player.getRandom()).getText();
-        String rawText = StringDecomposer.getPlainText(tip);
+        String rawText = StringDecomposer.getPlainText(this.getCurrentTip());
         
         // Process text
         int lineHeight = this.font.lineHeight;

@@ -22,6 +22,7 @@ public class TipsButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof TipsButton gtb) {
                 // Set the new grimoire topic and open a new screen for it
+                gtb.getScreen().invalidateCurrentTip();
                 gtb.getScreen().gotoTopic(TipsPage.TOPIC, false);
             }
         }
