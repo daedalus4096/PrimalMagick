@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.datagen.tags.EntityTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.ItemTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectProvider;
+import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -52,6 +53,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
+        generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
                 BlockLootTables.getSubProviderEntry(), EntityLootTables.getSubProviderEntry(), GameplayLootTables.getSubProviderEntry()))));

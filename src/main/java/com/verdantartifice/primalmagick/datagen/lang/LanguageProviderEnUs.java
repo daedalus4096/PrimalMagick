@@ -1493,6 +1493,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
         this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
         
+        this.tip("more_tips").name("More tips will unlock as you progress through your arcane research, so keep checking back.").build();
+        this.tip("earth_shrine_loc").name("Earth shrines can be found in flatlands, such as plains and savannas.").build();
+        this.tip("sea_shrine_loc").name("Sea shrines can be found in wet or cold regions, such as beaches, swamps, or snowfields.").build();
+        this.tip("sky_shrine_loc").name("Sky shrines can be found in high places, such as mountains or extreme hills.").build();
+        this.tip("sun_shrine_loc").name("Sun shrines can be found in hot places, such as deserts or badlands.").build();
+        this.tip("moon_shrine_loc").name("Moon shrines can be found aboveground in dimly lit biomes, primarily forests.").build();
+        
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
         this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();

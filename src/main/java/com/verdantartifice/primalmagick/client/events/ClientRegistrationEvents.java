@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.client.fx.particles.WandPoofParticle;
 import com.verdantartifice.primalmagick.client.gui.hud.ManaStorageItemDecorator;
 import com.verdantartifice.primalmagick.client.gui.hud.WandHudOverlay;
 import com.verdantartifice.primalmagick.client.gui.hud.WardingHudOverlay;
+import com.verdantartifice.primalmagick.client.tips.TipLoader;
 import com.verdantartifice.primalmagick.client.tooltips.ClientAffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.affinities.AffinityTooltipComponent;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -107,6 +108,7 @@ public class ClientRegistrationEvents {
         event.registerReloadListener(ItemsPM.SPELLCRAFTING_ALTAR.get().getRenderProperties().getCustomRenderer());
         event.registerReloadListener(LexiconLoader.getOrCreateInstance());
         event.registerReloadListener(StyleGuideLoader.getOrCreateInstance());
+        event.registerReloadListener(TipLoader.getOrCreateInstance());
     }
     
     @SubscribeEvent

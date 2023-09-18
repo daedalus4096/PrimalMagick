@@ -1,12 +1,15 @@
 package com.verdantartifice.primalmagick.client.tips;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Contains the definition of a game hint that can be displayed to the user in the Grimoire if
@@ -22,5 +25,43 @@ public record TipDefinition(String translationKey, Optional<CompoundResearchKey>
     
     public Component getText() {
         return Component.translatable(this.translationKey);
+    }
+    
+    public static Builder builder(ResourceLocation id) {
+        return new Builder(id);
+    }
+    
+    public static Builder builder(String id) {
+        return new Builder(PrimalMagick.resource(id));
+    }
+    
+    public static class Builder {
+        protected final ResourceLocation id;
+        protected String translationKey;
+        protected Optional<CompoundResearchKey> requiredResearch;
+        
+        protected Builder(ResourceLocation id) {
+            this.id = id;
+            this.translationKey = String.join(".", "tip", id.getNamespace(), id.getPath());
+            this.requiredResearch = Optional.empty();
+        }
+        
+        public Builder translationKey(String key) {
+            this.translationKey = key;
+            return this;
+        }
+        
+        public Builder requiredResearch(CompoundResearchKey researchKey) {
+            this.requiredResearch = Optional.ofNullable(researchKey);
+            return this;
+        }
+        
+        public TipDefinition build() {
+            return new TipDefinition(this.translationKey, this.requiredResearch);
+        }
+        
+        public void save(BiConsumer<ResourceLocation, TipDefinition> consumer) {
+            consumer.accept(this.id, this.build());
+        }
     }
 }
