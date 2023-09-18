@@ -9,7 +9,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -29,8 +28,6 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class Source implements StringRepresentable {
-    public static final Codec<Source> CODEC = Codec.STRING.xmap(Source::getSource, Source::getTag);
-    
     public static final Map<String, Source> SOURCES = new HashMap<>();
     protected static final Map<SimpleResearchKey, Source> DISCOVER_KEYS = new HashMap<>();
     
