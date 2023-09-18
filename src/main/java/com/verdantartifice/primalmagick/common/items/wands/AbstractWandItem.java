@@ -224,7 +224,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public boolean consumeRealMana(ItemStack stack, Player player, SourceList sources) {
-        return this.consumeMana(stack, player, sources.copy().multiply(100));
+        return this.consumeMana(stack, player, sources.multiply(100));
     }
     
     @Override
@@ -269,7 +269,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     @Override
     public boolean containsRealMana(ItemStack stack, Player player, SourceList sources) {
-        return this.containsMana(stack, player, sources.copy().multiply(100));
+        return this.containsMana(stack, player, sources.multiply(100));
     }
     
     @Override
