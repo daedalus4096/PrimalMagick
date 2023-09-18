@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineBu
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantmentIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.StatisticsButton;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.TipsButton;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -68,7 +69,7 @@ public class OtherIndexPage extends AbstractPage {
         
         // Add scans button if at least one scan is unlocked
         ResearchDiscipline scans = ResearchDisciplines.getDiscipline("SCANS");
-        if (scans != null && scans.getUnlockResearchKey().isKnownBy(Minecraft.getInstance().player)) {
+        if (scans != null && scans.getUnlockResearchKey().isKnownBy(mc.player)) {
             text = Component.translatable(scans.getNameTranslationKey());
             Button button = screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, text, screen, scans, true, true));
             y += button.getHeight();
@@ -78,5 +79,10 @@ public class OtherIndexPage extends AbstractPage {
         text = Component.translatable("grimoire.primalmagick.stats_header");
         Button button = screen.addWidgetToScreen(new StatisticsButton(x + 12 + (side * 140), y, text, screen));
         y += button.getHeight();
+        
+        // Add tips button
+        text = Component.translatable("grimoire.primalmagick.tips_header");
+        Button tipsButton = screen.addWidgetToScreen(new TipsButton(x + 12 + (side * 140), y, text, screen));
+        y += tipsButton.getHeight();
     }
 }

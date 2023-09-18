@@ -1585,6 +1585,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("attunement_header").name("Attunements").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
         this.grimoire("recipe_index_header").name("Recipes").build();
+        this.grimoire("tips_header").name("Tips").build();
         this.grimoire("attunement_gain_header").name("Attunements Gained").build();
         this.grimoire("addendum_header").name("Addendum %1$d").build();
         this.grimoire("requirements_header").name("Requirements").build();
@@ -1605,6 +1606,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("ritual_props_header").name("Props:").build();
         this.grimoire("complete_button").name("Complete").build();
         this.grimoire("completing_text").name("Completing...").build();
+        this.grimoire("next_tip_button").name("Next Tip").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
         this.grimoire("section_header").sub("updated").output("Updated").end().build();
         this.grimoire("section_header").sub("complete").output("Complete").end().build();

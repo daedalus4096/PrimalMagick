@@ -33,9 +33,11 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.RuneEnchantmentIndex
 import com.verdantartifice.primalmagick.client.gui.grimoire.RuneEnchantmentPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StagePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.StatisticsPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.TipsPage;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
+import com.verdantartifice.primalmagick.client.tips.TipManager;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
@@ -74,6 +76,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -195,6 +198,8 @@ public class GrimoireScreen extends Screen {
                 this.parseRuneEnchantmentIndexPages();
             } else if (RecipeIndexPage.TOPIC.getData().equals(data)) {
                 this.parseRecipeIndexPages();
+            } else if (TipsPage.TOPIC.getData().equals(data)) {
+                this.parseTipsPages();
             }
         }
     }
@@ -910,6 +915,83 @@ public class GrimoireScreen extends Screen {
                 firstPage = false;
             }
         }
+    }
+    
+    protected void parseTipsPages() {
+        Minecraft mc = Minecraft.getInstance();
+        Component tip = TipManager.getRandomTipForPlayer(mc.player, mc.player.getRandom()).getText();
+        String rawText = StringDecomposer.getPlainText(tip);
+        
+        // Process text
+        int lineHeight = this.font.lineHeight;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
+        
+        // First page has less available space to account for title
+        int heightRemaining = 137;
+
+        // Break parsed text into pages
+        TipsPage tempPage = new TipsPage(true);
+        List<PageImage> tempImages = new ArrayList<>();
+        for (String line : parsedText) {
+            if (line.contains("~I")) {
+                if (!images.isEmpty()) {
+                    tempImages.add(images.remove(0));
+                }
+                line = "";
+            }
+            if (line.contains("~L")) {
+                tempImages.add(IMAGE_LINE);
+                line = "";
+            }
+            if (line.contains("~P")) {
+                this.pages.add(tempPage);
+                tempPage = new TipsPage();
+                heightRemaining = 165;
+                line = "";
+            }
+            if (!line.isEmpty()) {
+                line = line.trim();
+                tempPage.addElement(new PageString(line));
+                heightRemaining -= lineHeight;
+                if (line.endsWith("~B")) {
+                    heightRemaining -= (int)(lineHeight * 0.66D);
+                }
+            }
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new TipsPage();
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Deal with any remaining images
+        tempPage = new TipsPage();
+        heightRemaining = 165;
+        while (!tempImages.isEmpty()) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new TipsPage();
+            } else {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Flag the last page as such to show the refresh button
+        ((TipsPage)this.pages.get(this.pages.size() - 1)).setLastPage(true);
     }
     
     public int getCurrentPage() {
