@@ -375,7 +375,7 @@ public class GrimoireScreen extends Screen {
         Component headerText = Component.translatable("grimoire.primalmagick.section_header." + headerName).withStyle(ChatFormatting.UNDERLINE);
         if (properties.heightRemaining < 36 && !properties.page.getContents().isEmpty()) {
             // If there's not room for the spacer, the header, and a first entry, skip to the next page
-            properties.heightRemaining = 155;
+            properties.heightRemaining = 156;
             this.pages.add(properties.page);
             properties.page = new DisciplinePage(discipline);
             properties.page.addContent(headerText);
@@ -393,7 +393,7 @@ public class GrimoireScreen extends Screen {
             properties.page.addContent(entry);
             properties.heightRemaining -= 12;
             if (properties.heightRemaining < 12 && !properties.page.getContents().isEmpty()) {
-                properties.heightRemaining = 155;
+                properties.heightRemaining = 156;
                 this.pages.add(properties.page);
                 properties.page = new DisciplinePage(discipline);
             }
@@ -831,7 +831,7 @@ public class GrimoireScreen extends Screen {
                 tempPage.addEnchantment(enchant);
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getEnchantments().isEmpty()) {
-                    heightRemaining = 155;
+                    heightRemaining = 156;
                     this.pages.add(tempPage);
                     tempPage = new RuneEnchantmentIndexPage();
                 }
@@ -874,7 +874,7 @@ public class GrimoireScreen extends Screen {
             tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
             heightRemaining -= 12;
             if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
-                heightRemaining = 155;
+                heightRemaining = 156;
                 this.pages.add(tempPage);
                 tempPage = new RecipeIndexPage();
             }
