@@ -77,7 +77,7 @@ public class ManaStorage implements IManaStorage {
     
     public void setMana(Source source, int amount) {
         if (this.allowedSources.contains(source) && this.capacity != INFINITE) {
-            this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
+            this.mana = this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
         }
     }
 

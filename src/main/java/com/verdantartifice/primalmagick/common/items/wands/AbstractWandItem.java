@@ -102,7 +102,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         for (Source source : Source.SORTED_SOURCES) {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
-                retVal.set(source, -1);
+                retVal = retVal.set(source, -1);
             } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 // Otherwise, merge the current centimana into the returned source list
                 retVal = retVal.merge(source, stack.getTag().getInt(source.getTag()));
