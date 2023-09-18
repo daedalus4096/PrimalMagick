@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class EntityTypeAffinityBuilder {
     protected final ResourceLocation targetId;
-    protected SourceList values;
+    protected SourceList.Builder values = SourceList.builder();
 
     protected EntityTypeAffinityBuilder(@Nonnull EntityType<?> target) {
         this.targetId = ForgeRegistries.ENTITY_TYPES.getKey(target);
@@ -27,15 +27,12 @@ public class EntityTypeAffinityBuilder {
     }
     
     public EntityTypeAffinityBuilder values(SourceList values) {
-        this.values = values.copy();
+        this.values.with(values);
         return this;
     }
     
     public EntityTypeAffinityBuilder value(Source source, int amount) {
-        if (this.values == null) {
-            this.values = SourceList.EMPTY;
-        }
-        this.values.add(source, amount);
+        this.values.with(source, amount);
         return this;
     }
     
@@ -58,7 +55,7 @@ public class EntityTypeAffinityBuilder {
 
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new EntityTypeAffinityBuilder.Result(id, this.targetId, this.values));
+        consumer.accept(new EntityTypeAffinityBuilder.Result(id, this.targetId, this.values.build()));
     }
     
     public static class Result implements IFinishedAffinity {
@@ -85,7 +82,7 @@ public class EntityTypeAffinityBuilder {
         @Override
         public void serialize(JsonObject json) {
             json.addProperty("target", this.targetId.toString());
-            if (this.values != null) {
+            if (this.values != null && !this.values.isEmpty()) {
                 json.add("values", this.values.serializeJson());
             }
         }

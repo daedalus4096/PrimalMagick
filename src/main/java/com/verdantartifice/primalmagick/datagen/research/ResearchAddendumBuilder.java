@@ -22,7 +22,7 @@ public class ResearchAddendumBuilder {
     protected final List<SimpleResearchKey> requiredResearch = new ArrayList<>();
     protected final List<ResourceLocation> recipes = new ArrayList<>();
     protected final List<SimpleResearchKey> siblings = new ArrayList<>();
-    protected SourceList attunements;
+    protected final SourceList.Builder attunements = SourceList.builder();
 
     protected ResearchAddendumBuilder(@Nonnull String modId) {
         this.modId = modId;
@@ -46,15 +46,12 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder attunement(@Nonnull SourceList sources) {
-        this.attunements = sources.copy();
+        this.attunements.with(sources);
         return this;
     }
     
     public ResearchAddendumBuilder attunement(@Nonnull Source source, int amount) {
-        if (this.attunements == null) {
-            this.attunements = SourceList.EMPTY;
-        }
-        this.attunements.add(source, amount);
+        this.attunements.with(source, amount);
         return this;
     }
     
@@ -92,7 +89,7 @@ public class ResearchAddendumBuilder {
     
     public IFinishedResearchAddendum build() {
         this.validate();
-        return new ResearchAddendumBuilder.Result(this.modId, this.requiredResearch, this.recipes, this.siblings, this.attunements);
+        return new ResearchAddendumBuilder.Result(this.modId, this.requiredResearch, this.recipes, this.siblings, this.attunements.build());
     }
     
     public static class Result implements IFinishedResearchAddendum {

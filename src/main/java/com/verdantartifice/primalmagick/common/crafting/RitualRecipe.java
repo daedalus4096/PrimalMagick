@@ -181,10 +181,7 @@ public class RitualRecipe implements IRitualRecipe {
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             int instability = buffer.readVarInt();
             
-            SourceList manaCosts = SourceList.EMPTY;
-            for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
-                manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
-            }
+            SourceList manaCosts = SourceList.fromNetwork(buffer);
             
             int ingredientCount = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientCount, Ingredient.EMPTY);
@@ -207,9 +204,7 @@ public class RitualRecipe implements IRitualRecipe {
             buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.research.toString());
             buffer.writeVarInt(recipe.instability);
-            for (Source source : Source.SORTED_SOURCES) {
-                buffer.writeVarInt(recipe.manaCosts.getAmount(source));
-            }
+            SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);

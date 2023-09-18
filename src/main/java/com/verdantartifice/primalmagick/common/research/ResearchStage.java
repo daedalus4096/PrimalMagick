@@ -145,9 +145,7 @@ public class ResearchStage {
             stage.hints.add(SimpleResearchKey.parse(buf.readUtf()));
         }
         stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
-        for (Source source : Source.SORTED_SOURCES) {
-            stage.attunements.add(source, buf.readVarInt());
-        }
+        stage.attunements = SourceList.fromNetwork(buf);
         return stage;
     }
     
@@ -198,9 +196,7 @@ public class ResearchStage {
             buf.writeUtf(key.toString());
         }
         buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
-        for (Source source : Source.SORTED_SOURCES) {
-            buf.writeVarInt(stage.attunements.getAmount(source));
-        }
+        SourceList.toNetwork(buf, stage.attunements);
     }
     
     @Nonnull

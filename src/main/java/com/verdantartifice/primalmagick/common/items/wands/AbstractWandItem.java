@@ -187,7 +187,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (this.containsMana(stack, player, sources)) {
             // If the wand stack contains enough mana, process the consumption and return success
             boolean isInfinite = (this.getMaxMana(stack) == -1);
-            SourceList attunementDeltas = SourceList.EMPTY;
+            SourceList.Builder deltaBuilder = SourceList.builder();
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
                 int realAmount = amount / 100;
@@ -203,8 +203,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 }
                 
                 // Compute the amount of temporary attunement to be added to the player
-                attunementDeltas.add(source, Mth.floor(Math.sqrt(realAmount)));
+                deltaBuilder.with(source, Mth.floor(Math.sqrt(realAmount)));
             }
+            SourceList attunementDeltas = deltaBuilder.build();
             if (player != null && !attunementDeltas.isEmpty()) {
                 // Update attunements in a batch
                 AttunementManager.incrementAttunement(player, AttunementType.TEMPORARY, attunementDeltas);

@@ -149,10 +149,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             
-            SourceList manaCosts = SourceList.EMPTY;
-            for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
-                manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
-            }
+            SourceList manaCosts = SourceList.fromNetwork(buffer);
             
             int count = buffer.readVarInt();
             NonNullList<Ingredient> ingredients = NonNullList.withSize(count, Ingredient.EMPTY);
@@ -168,9 +165,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         public void toNetwork(FriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
             buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.research.toString());
-            for (Source source : Source.SORTED_SOURCES) {
-                buffer.writeVarInt(recipe.manaCosts.getAmount(source));
-            }
+            SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);

@@ -236,14 +236,14 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
     @Override
     public SourceList getAllMana() {
-        SourceList mana = SourceList.EMPTY;
+        SourceList.Builder mana = SourceList.builder();
         for (Source source : Source.SORTED_SOURCES) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
-                mana.add(source, amount);
+                mana.with(source, amount);
             }
         }
-        return mana;
+        return mana.build();
     }
 
     @Override

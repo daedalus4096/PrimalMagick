@@ -57,7 +57,7 @@ public class AffinityProvider implements DataProvider {
     }
     
     protected void registerAffinities(Consumer<IFinishedAffinity> consumer) {
-        SourceList auraUnit = SourceList.EMPTY.add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1);
+        SourceList auraUnit = SourceList.builder().withEarth(1).withSea(1).withSky(1).withSun(1).withMoon(1).build();
         
         // Define vanilla item affinities
         ItemAffinityBuilder.itemAffinity(Items.STONE).set(Source.EARTH, 5).build(consumer);

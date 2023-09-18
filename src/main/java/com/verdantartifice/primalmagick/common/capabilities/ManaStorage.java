@@ -88,7 +88,7 @@ public class ManaStorage implements IManaStorage {
         }
         int manaReceived = Math.min(this.capacity - this.mana.getAmount(source), Math.min(this.maxReceive, maxReceive));
         if (!simulate) {
-            this.mana.add(source, manaReceived);
+            this.mana = this.mana.add(source, manaReceived);
             this.onManaChanged();
         }
         return manaReceived;

@@ -58,17 +58,15 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     @Nonnull
     public static SourceList fromNetwork(@Nonnull FriendlyByteBuf buf) {
-        SourceList retVal = SourceList.EMPTY;
+        SourceList.Builder retVal = SourceList.builder();
         for (Source source : Source.SORTED_SOURCES) {
-            retVal = retVal.add(source, buf.readVarInt());
+            retVal.with(source, buf.readVarInt());
         }
-        return retVal;
+        return retVal.build();
     }
     
     public static void toNetwork(@Nonnull FriendlyByteBuf buf, @Nonnull SourceList sources) {
-        for (Source source : Source.SORTED_SOURCES) {
-            buf.writeVarInt(sources.getAmount(source));
-        }
+        Source.SORTED_SOURCES.stream().map(sources::getAmount).forEach(buf::writeVarInt);
     }
     
     public int getAmount(@Nullable Source source) {
@@ -91,7 +89,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
             throw new IllegalArgumentException("Amount may not be non-positive");
         } else if (source != null) {
             SourceList retVal = new SourceList(this);
-            retVal.sources.put(source, amount + this.getAmount(source));
+            retVal.addInner(source, amount);
             return retVal;
         } else {
             return this;
@@ -109,12 +107,16 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         if (list != null && !list.isEmpty()) {
             SourceList retVal = new SourceList(this);
             for (Source source : list.getSources()) {
-                retVal.sources.put(source, list.getAmount(source) + this.getAmount(source));
+                retVal.addInner(source, list.getAmount(source));
             }
             return retVal;
         } else {
             return this;
         }
+    }
+    
+    private void addInner(@Nonnull Source source, int amount) {
+        this.sources.put(source, this.getAmount(source) + amount);
     }
     
     /**
@@ -395,7 +397,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
-                this.add(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
+                this.addInner(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
             }
         }
     }
@@ -434,6 +436,11 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         
         public Builder with(Source source, int amount) {
             this.sources.put(source, amount);
+            return this;
+        }
+        
+        public Builder with(SourceList list) {
+            list.getSources().stream().forEach(source -> this.sources.put(source, list.getAmount(source)));
             return this;
         }
         

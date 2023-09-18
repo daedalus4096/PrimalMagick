@@ -150,7 +150,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemsPM.ENCHANTED_INK.get())
             .key('N', Tags.Items.NUGGETS_IRON)
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SEASCRIBE_PEN")))
-            .manaCost(SourceList.EMPTY.add(Source.SEA, 10))
+            .manaCost(SourceList.EMPTY.add(Source.SEA, 10)) // FIXME Replace immutable addition with builders
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
             .patternLine("SSS")

@@ -292,10 +292,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             int height = buffer.readVarInt();
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
-            SourceList manaCosts = SourceList.EMPTY;
-            for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
-                manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
-            }
+            SourceList manaCosts = SourceList.fromNetwork(buffer);
             NonNullList<Ingredient> list = NonNullList.withSize(width * height, Ingredient.EMPTY);
             for (int index = 0; index < list.size(); index++) {
                 list.set(index, Ingredient.fromNetwork(buffer));
@@ -310,9 +307,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             buffer.writeVarInt(recipe.recipeHeight);
             buffer.writeUtf(recipe.group);
             buffer.writeUtf(recipe.research.toString());
-            for (Source source : Source.SORTED_SOURCES) {
-                buffer.writeVarInt(recipe.manaCosts.getAmount(source));
-            }
+            SourceList.toNetwork(buffer, recipe.manaCosts);
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);
             }
