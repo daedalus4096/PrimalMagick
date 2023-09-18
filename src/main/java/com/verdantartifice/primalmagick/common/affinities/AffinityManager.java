@@ -463,12 +463,15 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         
         // Subtract affinities for remaining containers
         CompletableFuture<SourceList> reducedFuture = containerFuture.thenCombine(intermediateFuture, (containerList, intermediateSources) -> {
+            MutableObject<SourceList> toBeReduced = new MutableObject<>(intermediateSources.copy());
             List<CompletableFuture<SourceList>> reductionFutures = containerList.stream().filter(Predicate.not(ItemStack::isEmpty))
                     .map(containerStack -> this.getAffinityValuesAsync(containerStack, recipeManager, registryAccess, history)).toList();
             CompletableFuture.allOf(reductionFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
-                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(intermediateSources::remove));
+                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(values -> {
+                    toBeReduced.setValue(toBeReduced.getValue().remove(values));
+                }));
             });
-            return intermediateSources;
+            return toBeReduced.getValue();
         });
         
         // Scale down remaining affinities
