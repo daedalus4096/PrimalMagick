@@ -392,6 +392,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
+        // FIXME This method violates the immutability contract for the class; redesign
         this.sources.clear();
         ListTag tagList = nbt.getList("Sources", Tag.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {

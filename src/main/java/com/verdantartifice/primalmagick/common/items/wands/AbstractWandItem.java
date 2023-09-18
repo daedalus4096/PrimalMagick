@@ -105,9 +105,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
                 retVal.set(source, -1);
             } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
                 // Otherwise, merge the current centimana into the returned source list
-                retVal.merge(source, stack.getTag().getInt(source.getTag()));
+                retVal = retVal.merge(source, stack.getTag().getInt(source.getTag()));
             } else {
-                retVal.merge(source, 0);
+                retVal = retVal.merge(source, 0);
             }
         }
         return retVal;

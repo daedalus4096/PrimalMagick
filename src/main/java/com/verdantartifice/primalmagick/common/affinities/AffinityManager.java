@@ -519,7 +519,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         SourceList retVal = SourceList.EMPTY;
         for (Source source : sources.getSources()) {
-            retVal.merge(source, Math.min(maxAmount, sources.getAmount(source)));
+            retVal = retVal.merge(source, Math.min(maxAmount, sources.getAmount(source)));
         }
         return retVal;
     }
