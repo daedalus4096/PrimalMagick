@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Contains the definition of a game hint that can be displayed to the user in the Grimoire if
@@ -25,6 +26,14 @@ public record TipDefinition(String translationKey, Optional<CompoundResearchKey>
     
     public Component getText() {
         return Component.translatable(this.translationKey);
+    }
+    
+    public boolean shouldShow(Player player) {
+        if (this.requiredResearch().isPresent()) {
+            return this.requiredResearch().get().isKnownByStrict(player);
+        } else {
+            return true;
+        }
     }
     
     public static Builder builder(ResourceLocation id) {
