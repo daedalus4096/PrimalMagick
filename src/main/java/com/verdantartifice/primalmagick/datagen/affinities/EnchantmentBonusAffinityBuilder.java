@@ -33,7 +33,7 @@ public class EnchantmentBonusAffinityBuilder {
     
     public EnchantmentBonusAffinityBuilder multiplier(Source source, int amount) {
         if (this.multiplierValues == null) {
-            this.multiplierValues = new SourceList();
+            this.multiplierValues = SourceList.EMPTY;
         }
         this.multiplierValues.add(source, amount);
         return this;

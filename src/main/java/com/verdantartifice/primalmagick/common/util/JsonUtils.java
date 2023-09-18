@@ -120,7 +120,7 @@ public class JsonUtils {
      */
     @Nonnull
     public static SourceList toSourceList(@Nonnull JsonObject jsonObject) {
-        SourceList retVal = new SourceList();
+        SourceList retVal = SourceList.EMPTY;
         for (Source source : Source.SORTED_SOURCES) {
             retVal.add(source, GsonHelper.getAsInt(jsonObject, source.getTag(), 0));
         }

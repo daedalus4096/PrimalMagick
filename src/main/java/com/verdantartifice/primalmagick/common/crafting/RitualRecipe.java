@@ -181,7 +181,7 @@ public class RitualRecipe implements IRitualRecipe {
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             int instability = buffer.readVarInt();
             
-            SourceList manaCosts = new SourceList();
+            SourceList manaCosts = SourceList.EMPTY;
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
                 manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
             }

@@ -45,7 +45,7 @@ public class ResearchStage {
     protected List<SimpleResearchKey> revelations = new ArrayList<>();
     protected List<SimpleResearchKey> hints = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
-    protected SourceList attunements = new SourceList();
+    protected SourceList attunements = SourceList.EMPTY;
     
     protected ResearchStage(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;

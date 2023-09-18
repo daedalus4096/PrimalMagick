@@ -269,7 +269,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return CompletableFuture.supplyAsync(() -> {
             IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
             if (entityAffinity == null) {
-                return new SourceList();
+                return SourceList.EMPTY;
             } else {
                 return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY)).join();
             }
@@ -327,7 +327,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     protected CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (stack.isEmpty()) {
-            return CompletableFuture.completedFuture(new SourceList());
+            return CompletableFuture.completedFuture(SourceList.EMPTY);
         }
         
         ResourceLocation stackItemLoc = ForgeRegistries.ITEMS.getKey(stack.getItem());
@@ -344,7 +344,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return itemAffinityFuture.thenCompose(itemAffinity -> {
             // Extract source values from the affinity data
             return itemAffinity == null ? 
-                    CompletableFuture.completedFuture(new SourceList()) : 
+                    CompletableFuture.completedFuture(SourceList.EMPTY) : 
                     itemAffinity.getTotalAsync(recipeManager, registryAccess, history);
         }).thenCompose(sources -> {
             // Append any needed bonus affinities for NBT data
@@ -404,7 +404,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                     });
                 }).toList();
         return CompletableFuture.allOf(recipeSourceFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
-            MutableObject<SourceList> retVal = new MutableObject<>(new SourceList());
+            MutableObject<SourceList> retVal = new MutableObject<>(SourceList.EMPTY);
             MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
             recipeSourceFutures.forEach(recipeSourceFuture -> {
                 recipeSourceFuture.thenAccept(recipeSources -> {
@@ -450,7 +450,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
 
         // Compute total affinities for each ingredient
-        SourceList intermediate = new SourceList();
+        SourceList intermediate = SourceList.EMPTY;
         List<CompletableFuture<SourceList>> ingFutures = ingredients.stream().map(ingredient -> this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history)
                 .thenCompose(ingStack -> this.getAffinityValuesAsync(ingStack, recipeManager, registryAccess, history))).toList();
         CompletableFuture<SourceList> intermediateFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
@@ -470,7 +470,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         
         // Scale down remaining affinities
         return reducedFuture.thenApply(intermediateSources -> {
-            SourceList retVal = new SourceList();
+            SourceList retVal = SourceList.EMPTY;
             intermediateSources.getSources().forEach(source -> {
                 double amount = intermediateSources.getAmount(source) * 0.75D / output.getCount();
                 if (amount < 1.0D && amount > 0.75D) {
@@ -514,7 +514,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (sources == null) {
             return null;
         }
-        SourceList retVal = new SourceList();
+        SourceList retVal = SourceList.EMPTY;
         for (Source source : sources.getSources()) {
             retVal.merge(source, Math.min(maxAmount, sources.getAmount(source)));
         }

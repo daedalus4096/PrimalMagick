@@ -272,7 +272,7 @@ public class AttunementManager {
      * @param deltas the amounts of change to apply, may be negative
      */
     public static void incrementAttunement(@Nullable Player player, @Nullable AttunementType type, @Nullable SourceList deltas) {
-        SourceList newValues = new SourceList();
+        SourceList newValues = SourceList.EMPTY;
         for (Source source : deltas.getSources()) {
             int oldValue = getAttunement(player, source, type);
             newValues.add(source, oldValue + deltas.getAmount(source));

@@ -34,15 +34,15 @@ public class ManaStorage implements IManaStorage {
     protected int maxExtract;
     
     public ManaStorage(int capacity, Source... allowedSources) {
-        this(capacity, capacity, capacity, new SourceList(), allowedSources);
+        this(capacity, capacity, capacity, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxTransfer, Source... allowedSources) {
-        this(capacity, maxTransfer, maxTransfer, new SourceList(), allowedSources);
+        this(capacity, maxTransfer, maxTransfer, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
-        this(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
+        this(capacity, maxReceive, maxExtract, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxReceive, int maxExtract, SourceList mana, Source... allowedSources) {
@@ -50,7 +50,7 @@ public class ManaStorage implements IManaStorage {
         this.maxReceive = maxReceive;
         this.maxExtract = maxExtract;
         this.allowedSources = new HashSet<>(Arrays.asList(allowedSources));
-        this.mana = new SourceList();
+        this.mana = SourceList.EMPTY;
         this.setMana(mana);
     }
 
@@ -63,7 +63,7 @@ public class ManaStorage implements IManaStorage {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        SourceList nbtMana = new SourceList();
+        SourceList nbtMana = SourceList.EMPTY;
         nbtMana.deserializeNBT(nbt.getCompound("Mana"));
         this.setMana(nbtMana);
     }
@@ -152,7 +152,7 @@ public class ManaStorage implements IManaStorage {
         private final LazyOptional<IManaStorage> holder;
         
         public Provider(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
-            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
+            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, SourceList.EMPTY, allowedSources);
             this.holder = LazyOptional.of(() -> this.instance);  // Cache a lazy optional of the capability instance
         }
 

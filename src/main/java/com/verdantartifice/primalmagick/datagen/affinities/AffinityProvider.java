@@ -57,7 +57,7 @@ public class AffinityProvider implements DataProvider {
     }
     
     protected void registerAffinities(Consumer<IFinishedAffinity> consumer) {
-        SourceList auraUnit = new SourceList().add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1);
+        SourceList auraUnit = SourceList.EMPTY.add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1);
         
         // Define vanilla item affinities
         ItemAffinityBuilder.itemAffinity(Items.STONE).set(Source.EARTH, 5).build(consumer);
@@ -716,7 +716,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_RED.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_BLACK.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(new SourceList()).build(consumer); // Wands have no affinities
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(SourceList.EMPTY).build(consumer); // Wands have no affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOODY_FLESH.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOOD_NOTES.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWED_ORB.get()).set(Source.HALLOWED, 25).build(consumer);

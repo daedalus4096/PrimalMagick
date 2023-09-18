@@ -372,7 +372,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
 
     @Override
     public SourceList getAllMana() {
-        SourceList mana = new SourceList();
+        SourceList mana = SourceList.EMPTY;
         for (Source source : Source.SORTED_SOURCES) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {

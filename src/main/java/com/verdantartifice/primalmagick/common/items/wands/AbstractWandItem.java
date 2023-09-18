@@ -97,7 +97,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
 
     @Override
     public SourceList getAllMana(ItemStack stack) {
-        SourceList retVal = new SourceList();
+        SourceList retVal = SourceList.EMPTY;
         boolean isInfinite = this.getMaxMana(stack) == -1;
         for (Source source : Source.SORTED_SOURCES) {
             if (isInfinite) {
@@ -187,7 +187,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         if (this.containsMana(stack, player, sources)) {
             // If the wand stack contains enough mana, process the consumption and return success
             boolean isInfinite = (this.getMaxMana(stack) == -1);
-            SourceList attunementDeltas = new SourceList();
+            SourceList attunementDeltas = SourceList.EMPTY;
             for (Source source : sources.getSources()) {
                 int amount = sources.getAmount(source);
                 int realAmount = amount / 100;

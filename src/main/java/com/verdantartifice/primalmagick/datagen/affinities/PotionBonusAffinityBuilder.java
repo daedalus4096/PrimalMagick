@@ -33,7 +33,7 @@ public class PotionBonusAffinityBuilder {
     
     public PotionBonusAffinityBuilder bonus(Source source, int amount) {
         if (this.bonusValues == null) {
-            this.bonusValues = new SourceList();
+            this.bonusValues = SourceList.EMPTY;
         }
         this.bonusValues.add(source, amount);
         return this;

@@ -33,7 +33,7 @@ public class EntityTypeAffinityBuilder {
     
     public EntityTypeAffinityBuilder value(Source source, int amount) {
         if (this.values == null) {
-            this.values = new SourceList();
+            this.values = SourceList.EMPTY;
         }
         this.values.add(source, amount);
         return this;

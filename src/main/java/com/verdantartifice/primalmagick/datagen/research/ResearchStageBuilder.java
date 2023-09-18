@@ -114,7 +114,7 @@ public class ResearchStageBuilder {
     
     public ResearchStageBuilder attunement(@Nonnull Source source, int amount) {
         if (this.attunements == null) {
-            this.attunements = new SourceList();
+            this.attunements = SourceList.EMPTY;
         }
         this.attunements.add(source, amount);
         return this;

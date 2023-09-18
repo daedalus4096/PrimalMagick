@@ -292,7 +292,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             int height = buffer.readVarInt();
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
-            SourceList manaCosts = new SourceList();
+            SourceList manaCosts = SourceList.EMPTY;
             for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
                 manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
             }

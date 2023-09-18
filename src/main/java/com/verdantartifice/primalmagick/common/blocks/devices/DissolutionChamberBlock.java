@@ -86,7 +86,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         CompoundTag nbt = stack.getTagElement("ManaContainerTag");
         if (nbt != null) {
-            SourceList mana = new SourceList();
+            SourceList mana = SourceList.EMPTY;
             mana.deserializeNBT(nbt);
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = mana.getAmount(source);
@@ -143,7 +143,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
         if (tile instanceof IManaContainer manaTile) {
             CompoundTag nbt = stack.getTagElement("ManaContainerTag");
             if (nbt != null) {
-                SourceList mana = new SourceList();
+                SourceList mana = SourceList.EMPTY;
                 mana.deserializeNBT(nbt);
                 manaTile.setMana(mana);
             }

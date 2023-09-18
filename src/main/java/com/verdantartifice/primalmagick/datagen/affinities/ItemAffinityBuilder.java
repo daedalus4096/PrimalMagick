@@ -46,7 +46,7 @@ public class ItemAffinityBuilder {
     
     public ItemAffinityBuilder set(Source source, int amount) {
         if (this.setValues == null) {
-            this.setValues = new SourceList();
+            this.setValues = SourceList.EMPTY;
         }
         this.setValues.add(source, amount);
         return this;
@@ -59,7 +59,7 @@ public class ItemAffinityBuilder {
     
     public ItemAffinityBuilder add(Source source, int amount) {
         if (this.addValues == null) {
-            this.addValues = new SourceList();
+            this.addValues = SourceList.EMPTY;
         }
         this.addValues.add(source, amount);
         return this;
@@ -72,7 +72,7 @@ public class ItemAffinityBuilder {
     
     public ItemAffinityBuilder remove(Source source, int amount) {
         if (this.removeValues == null) {
-            this.removeValues = new SourceList();
+            this.removeValues = SourceList.EMPTY;
         }
         this.removeValues.add(source, amount);
         return this;

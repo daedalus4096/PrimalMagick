@@ -122,7 +122,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         CompoundTag nbt = stack.getTagElement("ManaContainerTag");
         if (nbt != null) {
-            SourceList mana = new SourceList();
+            SourceList mana = SourceList.EMPTY;
             mana.deserializeNBT(nbt);
             for (Source source : Source.SORTED_SOURCES) {
                 int amount = mana.getAmount(source);
@@ -142,7 +142,7 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
         if (tile instanceof IManaContainer) {
             CompoundTag nbt = stack.getTagElement("ManaContainerTag");
             if (nbt != null) {
-                SourceList mana = new SourceList();
+                SourceList mana = SourceList.EMPTY;
                 mana.deserializeNBT(nbt);
                 ((IManaContainer)tile).setMana(mana);
             }

@@ -29,7 +29,7 @@ public class ResearchAddendum {
     protected List<ResourceLocation> recipes = new ArrayList<>();
     protected List<SimpleResearchKey> siblings = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
-    protected SourceList attunements = new SourceList();
+    protected SourceList attunements = SourceList.EMPTY;
 
     protected ResearchAddendum(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;
