@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplinePage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.IPageElement;
 import com.verdantartifice.primalmagick.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageString;
@@ -1002,7 +1003,14 @@ public class GrimoireScreen extends Screen {
         }
         
         // Flag the last page as such to show the refresh button
-        ((TipsPage)this.pages.get(this.pages.size() - 1)).setLastPage(true);
+        TipsPage lastPage = ((TipsPage)this.pages.get(this.pages.size() - 1));
+        int contentHeight = lastPage.getElements().stream().mapToInt(IPageElement::getHeight).sum();
+        if (contentHeight > (lastPage.isFirstPage() ? 112 : 140)) {
+            // If the last page's contents would overlap the next tip button, add an extra page
+            lastPage = new TipsPage();
+            this.pages.add(lastPage);
+        }
+        lastPage.setLastPage(true);
     }
     
     public int getCurrentPage() {

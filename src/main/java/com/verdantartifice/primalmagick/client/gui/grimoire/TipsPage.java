@@ -82,7 +82,7 @@ public class TipsPage extends AbstractPage {
             screen.addWidgetToScreen(Button.builder(Component.translatable("grimoire.primalmagick.next_tip_button"), button -> {
                 screen.invalidateCurrentTip();
                 screen.gotoTopic(TOPIC, false);
-            }).bounds(x + 16 + (side * 136), y + 116, 119, 20).build());
+            }).bounds(x + 16 + (side * 136), y + 116 + (this.isFirstPage() ? 0 : 23), 119, 20).build());
         }
     }
 }

@@ -34,13 +34,13 @@ public class PageString implements IPageElement {
     }
 
     @Override
-    public int getNextY(int y) {
+    public int getHeight() {
         Minecraft mc = Minecraft.getInstance();
-        y += mc.font.lineHeight;
+        int height = mc.font.lineHeight;
         if (this.str.endsWith("~B")) {
             // If this element ends with a <BR> tag, leave some extra vertical space after it
-            y += (int)(mc.font.lineHeight * 0.66D);
+            height += (int)(mc.font.lineHeight * 0.66D);
         }
-        return y;
+        return height;
     }
 }
