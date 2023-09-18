@@ -390,9 +390,18 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         return tag;
     }
 
+    /**
+     * Deserializes source list data from the given tag into this object.  <strong>This method
+     * breaks the immutability contract of the class; only call it on a copy of an empty list
+     * object, not the original.</strong>
+     */
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         // FIXME This method violates the immutability contract for the class; redesign
+        if (this == SourceList.EMPTY) {
+            // Reference comparison intended
+            throw new IllegalStateException("Attempting to modify a statically known source list!");
+        }
         this.sources.clear();
         ListTag tagList = nbt.getList("Sources", Tag.TAG_COMPOUND);
         for (int index = 0; index < tagList.size(); index++) {
