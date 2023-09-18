@@ -69,7 +69,7 @@ public class ManaStorage implements IManaStorage {
     }
     
     public void setMana(SourceList mana) {
-        this.mana.clear();
+        this.mana = SourceList.EMPTY;
         for (Source source : mana.getSources()) {
             this.setMana(source, mana.getAmount(source));
         }

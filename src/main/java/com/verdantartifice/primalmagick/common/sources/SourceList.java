@@ -72,10 +72,6 @@ public class SourceList implements INBTSerializable<CompoundTag> {
         return this.sources.getOrDefault(source, 0);
     }
     
-    public void clear() {
-        this.sources.clear();
-    }
-    
     /**
      * Returns a copy of this list with the given amount of the given source of mana added to it.
      * Does not allow non-positive values; use {@link #reduce(Source, int)} or 
