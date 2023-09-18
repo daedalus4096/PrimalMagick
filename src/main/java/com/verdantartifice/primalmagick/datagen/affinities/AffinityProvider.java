@@ -697,8 +697,8 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.QUARTZ_ORE.get()).base(Items.STONE).add(Source.EARTH, 10).add(Source.INFERNAL, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ARCANE_WORKBENCH.get()).base(Items.CRAFTING_TABLE).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.ESSENCE_FURNACE.get()).base(Items.FURNACE).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.CALCINATOR_BASIC.get()).set(auraUnit.multiply(5)).set(Source.EARTH, 41).set(Source.INFERNAL, 3).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.CALCINATOR_ENCHANTED.get()).set(auraUnit.multiply(26)).set(Source.EARTH, 51).set(Source.INFERNAL, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.CALCINATOR_BASIC.get()).set(auraUnit.multiply(5)).set(Source.EARTH, 46).set(Source.INFERNAL, 3).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.CALCINATOR_ENCHANTED.get()).set(auraUnit.multiply(26)).set(Source.EARTH, 77).set(Source.INFERNAL, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_WHITE.get()).set(Source.SEA, 3).set(Source.SKY, 3).set(Source.SUN, 1).set(Source.BLOOD, 4).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_ORANGE.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_MAGENTA.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
@@ -726,12 +726,12 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_PRISM.get()).set(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MANA_SALTS.get()).set(auraUnit.multiply(5)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.BEESWAX.get()).set(Source.SEA, 2).set(Source.BLOOD, 2).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.PRIMALITE_INGOT.get()).set(auraUnit.multiply(3)).set(Source.EARTH, 8).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.HEXIUM_INGOT.get()).set(auraUnit.multiply(2)).set(Source.EARTH, 6).set(Source.BLOOD, 15).set(Source.INFERNAL, 15).set(Source.VOID, 15).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWSTEEL_INGOT.get()).set(auraUnit).set(Source.EARTH, 5).set(Source.BLOOD, 11).set(Source.INFERNAL, 11).set(Source.VOID, 11).set(Source.HALLOWED, 37).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.PRIMALITE_INGOT.get()).set(auraUnit.multiply(3)).set(Source.EARTH, 11).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HEXIUM_INGOT.get()).set(auraUnit.multiply(2)).set(Source.EARTH, 8).set(Source.BLOOD, 15).set(Source.INFERNAL, 15).set(Source.VOID, 15).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWSTEEL_INGOT.get()).set(auraUnit).set(Source.EARTH, 6).set(Source.BLOOD, 11).set(Source.INFERNAL, 11).set(Source.VOID, 11).set(Source.HALLOWED, 37).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.SPELLCLOTH.get()).set(Source.EARTH, 4).set(Source.SEA, 4).set(Source.SKY, 19).set(Source.SUN, 4).set(Source.MOON, 4).set(Source.BLOOD, 9).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HEXWEAVE.get()).set(Source.EARTH, 3).set(Source.SEA, 3).set(Source.SKY, 29).set(Source.SUN, 3).set(Source.MOON, 3).set(Source.BLOOD, 30).set(Source.INFERNAL, 27).set(Source.VOID, 27).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.HEARTWOOD.get()).set(auraUnit.multiply(5)).set(Source.EARTH, 10).set(Source.SUN, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.HEARTWOOD.get()).set(auraUnit.multiply(5)).set(Source.EARTH, 15).set(Source.SUN, 15).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INCENSE_STICK.get()).set(Source.EARTH, 4).set(Source.SKY, 5).set(Source.SUN, 4).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.DOWSING_ROD.get()).set(Source.EARTH, 3).set(Source.SUN, 3).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.FOUR_LEAF_CLOVER.get()).set(Source.EARTH, 5).set(Source.SUN, 5).set(Source.MOON, 20).set(Source.HALLOWED, 20).build(consumer);
