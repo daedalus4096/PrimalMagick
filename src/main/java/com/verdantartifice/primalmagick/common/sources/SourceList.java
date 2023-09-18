@@ -76,7 +76,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     /**
      * Returns a copy of this list with the given amount of the given source of mana added to it.
-     * Does not allow non-positive values; use {@link #reduce(Source, int)} or 
+     * Does not allow negative values; use {@link #reduce(Source, int)} or 
      * {@link #remove(Source, int)} to subtract.
      * 
      * @param source the source of mana to be added
@@ -85,9 +85,9 @@ public class SourceList implements INBTSerializable<CompoundTag> {
      */
     @Nonnull
     public SourceList add(@Nullable Source source, int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount may not be non-positive");
-        } else if (source != null) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount may not be negative");
+        } else if (source != null && amount > 0) {
             SourceList retVal = new SourceList(this);
             retVal.addInner(source, amount);
             return retVal;
@@ -121,7 +121,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     /**
      * Returns a copy of this list with the given source of mana reduced by the given amount.  If this
-     * list does not have that much mana, no modification occurs.  Does not allow non-positive values; 
+     * list does not have that much mana, no modification occurs.  Does not allow negative values; 
      * use {@link #add(Source, int)} to add.
      * 
      * @param source the source of mana to be reduced
@@ -129,9 +129,9 @@ public class SourceList implements INBTSerializable<CompoundTag> {
      * @return a new source list with the updated values
      */
     public SourceList reduce(@Nullable Source source, int amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Amount may not be non-positive");
-        } else if (source != null) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount may not be negative");
+        } else if (source != null && amount > 0) {
             // Reduce the given source in this list by the given amount, but only if it has at least that much already
             int newAmount = this.getAmount(source) - amount;
             if (newAmount == 0) {
@@ -147,7 +147,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
             }
         }
 
-        // Do nothing if the given source is null, the amount is non-positive, or this list doesn't have at least as much as the given amount
+        // Do nothing if the given source is null, the amount is zero, or this list doesn't have at least as much as the given amount
         return this;
     }
     
@@ -170,7 +170,7 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     
     /**
      * Returns a copy of this list with the given amount of the given source of mana subtracted from
-     * it.  Clamps the new list's minimum mana value to zero.  Does not allow non-positive values; use
+     * it.  Clamps the new list's minimum mana value to zero.  Does not allow negative values; use
      * {@link #add(Source, int)} to add.
      * 
      * @param source the source of mana to be removed
@@ -180,9 +180,9 @@ public class SourceList implements INBTSerializable<CompoundTag> {
     @Nonnull
     public SourceList remove(@Nullable Source source, int amount) {
         // Reduce the given source in this list by the given amount, even if it doesn't have that much
-        if (amount <= 0) {
+        if (amount < 0) {
             throw new IllegalArgumentException("Amount may not be non-positive");
-        } else if (source != null) {
+        } else if (source != null && amount > 0) {
             int newAmount = this.getAmount(source) - amount;
             if (newAmount <= 0) {
                 // If the new amount is non-positive, just remove all of the given source
