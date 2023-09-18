@@ -8,7 +8,8 @@
         "RUNE_SEA"
       ],
       "siblings": [
-        "&primalmagick:bounty"
+        "&primalmagick:bounty",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.primal_fishing_rod.text.addenda.1"
     }

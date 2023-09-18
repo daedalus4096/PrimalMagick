@@ -8,7 +8,8 @@
         "RUNE_BLOOD"
       ],
       "siblings": [
-        "&primalmagick:rending"
+        "&primalmagick:rending",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.forbidden_trident.text.addenda.1"
     }

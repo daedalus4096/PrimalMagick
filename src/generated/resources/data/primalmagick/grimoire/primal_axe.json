@@ -8,7 +8,8 @@
         "RUNE_SKY"
       ],
       "siblings": [
-        "&primalmagick:disintegration"
+        "&primalmagick:disintegration",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.primal_axe.text.addenda.1"
     }

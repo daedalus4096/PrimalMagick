@@ -8,7 +8,8 @@
         "RUNE_MOON"
       ],
       "siblings": [
-        "&primalmagick:lucky_strike"
+        "&primalmagick:lucky_strike",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.primal_pickaxe.text.addenda.1"
     }

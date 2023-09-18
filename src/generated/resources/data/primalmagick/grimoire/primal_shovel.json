@@ -8,7 +8,8 @@
         "RUNE_EARTH"
       ],
       "siblings": [
-        "&primalmagick:reverberation"
+        "&primalmagick:reverberation",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.primal_shovel.text.addenda.1"
     }

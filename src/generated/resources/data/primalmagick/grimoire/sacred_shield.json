@@ -8,7 +8,8 @@
         "RUNE_HALLOWED"
       ],
       "siblings": [
-        "&primalmagick:bulwark"
+        "&primalmagick:bulwark",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.sacred_shield.text.addenda.1"
     }

@@ -8,7 +8,8 @@
         "RUNE_INFERNAL"
       ],
       "siblings": [
-        "&primalmagick:soulpiercing"
+        "&primalmagick:soulpiercing",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.forbidden_bow.text.addenda.1"
     }

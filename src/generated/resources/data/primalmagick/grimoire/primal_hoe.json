@@ -8,7 +8,8 @@
         "RUNE_SUN"
       ],
       "siblings": [
-        "&primalmagick:verdant"
+        "&primalmagick:verdant",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.primal_hoe.text.addenda.1"
     }

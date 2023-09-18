@@ -8,7 +8,8 @@
         "RUNE_VOID"
       ],
       "siblings": [
-        "&primalmagick:essence_thief"
+        "&primalmagick:essence_thief",
+        "UNLOCK_RUNE_ENCHANTMENTS"
       ],
       "text": "research.primalmagick.forbidden_sword.text.addenda.1"
     }
