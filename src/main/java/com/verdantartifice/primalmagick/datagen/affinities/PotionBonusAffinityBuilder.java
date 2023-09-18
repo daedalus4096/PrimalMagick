@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class PotionBonusAffinityBuilder {
     protected final ResourceLocation targetId;
-    protected SourceList bonusValues;
+    protected SourceList.Builder bonusValues = SourceList.builder();
     
     protected PotionBonusAffinityBuilder(@Nonnull Potion target) {
         this.targetId = ForgeRegistries.POTIONS.getKey(target);
@@ -27,15 +27,12 @@ public class PotionBonusAffinityBuilder {
     }
     
     public PotionBonusAffinityBuilder bonus(SourceList bonusValues) {
-        this.bonusValues = bonusValues.copy();
+        this.bonusValues.with(bonusValues);
         return this;
     }
     
     public PotionBonusAffinityBuilder bonus(Source source, int amount) {
-        if (this.bonusValues == null) {
-            this.bonusValues = new SourceList();
-        }
-        this.bonusValues.add(source, amount);
+        this.bonusValues.with(source, amount);
         return this;
     }
     
@@ -58,7 +55,7 @@ public class PotionBonusAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new PotionBonusAffinityBuilder.Result(id, this.targetId, this.bonusValues));
+        consumer.accept(new PotionBonusAffinityBuilder.Result(id, this.targetId, this.bonusValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
@@ -85,7 +82,7 @@ public class PotionBonusAffinityBuilder {
         @Override
         public void serialize(JsonObject json) {
             json.addProperty("target", this.targetId.toString());
-            if (this.bonusValues != null) {
+            if (this.bonusValues != null && !this.bonusValues.isEmpty()) {
                 json.add("bonus", this.bonusValues.serializeJson());
             }
         }

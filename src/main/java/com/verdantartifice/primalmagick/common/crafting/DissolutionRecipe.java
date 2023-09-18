@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
@@ -98,10 +97,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         @Override
         public DissolutionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            SourceList manaCosts = new SourceList();
-            for (int index = 0; index < Source.SORTED_SOURCES.size(); index++) {
-                manaCosts.add(Source.SORTED_SOURCES.get(index), buffer.readVarInt());
-            }
+            SourceList manaCosts = SourceList.fromNetwork(buffer);
             Ingredient ing = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
             return new DissolutionRecipe(recipeId, group, ing, result, manaCosts);
@@ -110,9 +106,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         @Override
         public void toNetwork(FriendlyByteBuf buffer, DissolutionRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            for (Source source : Source.SORTED_SOURCES) {
-                buffer.writeVarInt(recipe.manaCosts.getAmount(source));
-            }
+            SourceList.toNetwork(buffer, recipe.manaCosts);
             recipe.ingredient.toNetwork(buffer);
             buffer.writeItem(recipe.result);
         }

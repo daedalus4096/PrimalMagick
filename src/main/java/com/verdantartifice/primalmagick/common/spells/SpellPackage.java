@@ -150,12 +150,12 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
         // Calculate the total mana cost of this spell package.  The spell's base cost is determined by
         // its payload, then modified by its vehicle and mods, if present.
         if (this.payload == null) {
-            return new SourceList();
+            return SourceList.EMPTY;
         }
         
         int baseManaCost = this.payload.getBaseManaCost();
         if (baseManaCost == 0) {
-            return new SourceList();
+            return SourceList.EMPTY;
         }
         
         Source source = this.payload.getSource();
@@ -176,7 +176,7 @@ public class SpellPackage implements INBTSerializable<CompoundTag> {
             multiplier *= this.secondaryMod.getManaCostMultiplier();
         }
         
-        return new SourceList().add(source, (baseManaCost + baseModifier) * multiplier);
+        return SourceList.EMPTY.add(source, (baseManaCost + baseModifier) * multiplier);
     }
     
     public void cast(Level world, LivingEntity caster, ItemStack spellSource) {

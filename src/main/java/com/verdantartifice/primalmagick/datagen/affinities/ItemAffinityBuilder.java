@@ -18,9 +18,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ItemAffinityBuilder {
     protected final ResourceLocation targetId;
     protected ResourceLocation baseId;
-    protected SourceList setValues;
-    protected SourceList addValues;
-    protected SourceList removeValues;
+    protected boolean hasSetValues = false;
+    protected SourceList.Builder setValues = SourceList.builder();
+    protected SourceList.Builder addValues = SourceList.builder();
+    protected SourceList.Builder removeValues = SourceList.builder();
 
     protected ItemAffinityBuilder(@Nonnull ItemLike item) {
         this.targetId = ForgeRegistries.ITEMS.getKey(item.asItem());
@@ -40,41 +41,34 @@ public class ItemAffinityBuilder {
     }
     
     public ItemAffinityBuilder set(@Nonnull SourceList setValues) {
-        this.setValues = setValues.copy();
+        this.setValues.with(setValues);
+        this.hasSetValues = true;
         return this;
     }
     
     public ItemAffinityBuilder set(Source source, int amount) {
-        if (this.setValues == null) {
-            this.setValues = new SourceList();
-        }
-        this.setValues.add(source, amount);
+        this.setValues.with(source, amount);
+        this.hasSetValues = true;
         return this;
     }
     
     public ItemAffinityBuilder add(@Nonnull SourceList addValues) {
-        this.addValues = addValues.copy();
+        this.addValues.with(addValues);
         return this;
     }
     
     public ItemAffinityBuilder add(Source source, int amount) {
-        if (this.addValues == null) {
-            this.addValues = new SourceList();
-        }
-        this.addValues.add(source, amount);
+        this.addValues.with(source, amount);
         return this;
     }
     
     public ItemAffinityBuilder remove(@Nonnull SourceList removeValues) {
-        this.removeValues = removeValues.copy();
+        this.removeValues.with(removeValues);
         return this;
     }
     
     public ItemAffinityBuilder remove(Source source, int amount) {
-        if (this.removeValues == null) {
-            this.removeValues = new SourceList();
-        }
-        this.removeValues.add(source, amount);
+        this.removeValues.with(source, amount);
         return this;
     }
     
@@ -86,13 +80,13 @@ public class ItemAffinityBuilder {
             throw new IllegalStateException("Unknown target item " + this.targetId.toString() + " for affinity " + id.toString());
         }
         
-        if (this.baseId != null && this.setValues != null) {
+        if (this.baseId != null && this.hasSetValues) {
             throw new IllegalStateException("Both base and set-values defined for affinity " + id.toString());
         } else if (this.baseId != null && !ForgeRegistries.ITEMS.containsKey(this.baseId)) {
             throw new IllegalStateException("Unknown base item " + this.baseId.toString() + " for affinity " + id.toString());
         } else if (this.baseId != null && this.targetId.equals(this.baseId)) {
             throw new IllegalStateException("Target defines itself as a base for affinity " + id.toString());
-        } else if (this.baseId == null && this.setValues == null) {
+        } else if (this.baseId == null && !this.hasSetValues) {
             throw new IllegalStateException("Neither base nor set-values defined for affinity " + id.toString());
         }
     }
@@ -107,7 +101,7 @@ public class ItemAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ItemAffinityBuilder.Result(id, this.targetId, this.baseId, this.setValues, this.addValues, this.removeValues));
+        consumer.accept(new ItemAffinityBuilder.Result(id, this.targetId, this.baseId, this.setValues.build(), this.addValues.build(), this.removeValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
@@ -142,14 +136,13 @@ public class ItemAffinityBuilder {
             json.addProperty("target", this.targetId.toString());
             if (this.baseId != null) {
                 json.addProperty("base", this.baseId.toString());
-            }
-            if (this.setValues != null) {
+            } else if (this.setValues != null) {
                 json.add("set", this.setValues.serializeJson());
             }
-            if (this.addValues != null) {
+            if (this.addValues != null && !this.addValues.isEmpty()) {
                 json.add("add", this.addValues.serializeJson());
             }
-            if (this.removeValues != null) {
+            if (this.removeValues != null && !this.removeValues.isEmpty()) {
                 json.add("remove", this.removeValues.serializeJson());
             }
         }

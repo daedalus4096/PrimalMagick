@@ -2,15 +2,12 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.sources.IManaContainer;
-import com.verdantartifice.primalmagick.common.sources.Source;
-import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
@@ -120,32 +117,12 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
     @Override
     public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        CompoundTag nbt = stack.getTagElement("ManaContainerTag");
-        if (nbt != null) {
-            SourceList mana = new SourceList();
-            mana.deserializeNBT(nbt);
-            for (Source source : Source.SORTED_SOURCES) {
-                int amount = mana.getAmount(source);
-                if (amount > 0) {
-                    Component nameComp = source.getNameText();
-                    Component line = Component.translatable("tooltip.primalmagick.source.mana_container", nameComp, (amount / 100.0D));
-                    tooltip.add(line);
-                }
-            }
-        }
+        ManaContainerHelper.appendHoverText(stack, tooltip);
     }
 
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
-        BlockEntity tile = worldIn.getBlockEntity(pos);
-        if (tile instanceof IManaContainer) {
-            CompoundTag nbt = stack.getTagElement("ManaContainerTag");
-            if (nbt != null) {
-                SourceList mana = new SourceList();
-                mana.deserializeNBT(nbt);
-                ((IManaContainer)tile).setMana(mana);
-            }
-        }
+        ManaContainerHelper.setManaOnPlace(worldIn, pos, stack);
     }
 }

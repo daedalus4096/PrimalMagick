@@ -32,7 +32,7 @@ public class ResearchStageBuilder {
     protected final List<SimpleResearchKey> siblings = new ArrayList<>();
     protected final List<SimpleResearchKey> revelations = new ArrayList<>();
     protected final List<SimpleResearchKey> hints = new ArrayList<>();
-    protected SourceList attunements;
+    protected final SourceList.Builder attunements = SourceList.builder();
     
     protected ResearchStageBuilder(@Nonnull String modId) {
         this.modId = modId;
@@ -108,15 +108,12 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder attunement(@Nonnull SourceList sources) {
-        this.attunements = sources.copy();
+        this.attunements.with(sources);
         return this;
     }
     
     public ResearchStageBuilder attunement(@Nonnull Source source, int amount) {
-        if (this.attunements == null) {
-            this.attunements = new SourceList();
-        }
-        this.attunements.add(source, amount);
+        this.attunements.with(source, amount);
         return this;
     }
     
@@ -164,7 +161,7 @@ public class ResearchStageBuilder {
     public IFinishedResearchStage build() {
         this.validate();
         return new ResearchStageBuilder.Result(this.modId, this.requiredItems, this.requiredCrafts, this.requiredKnowledge, this.requiredResearch, this.recipes, this.siblings, 
-                this.revelations, this.hints, this.attunements);
+                this.revelations, this.hints, this.attunements.build());
     }
     
     public static class Result implements IFinishedResearchStage {

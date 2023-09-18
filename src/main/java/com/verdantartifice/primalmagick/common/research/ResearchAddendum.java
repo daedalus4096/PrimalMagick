@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
@@ -29,7 +28,7 @@ public class ResearchAddendum {
     protected List<ResourceLocation> recipes = new ArrayList<>();
     protected List<SimpleResearchKey> siblings = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
-    protected SourceList attunements = new SourceList();
+    protected SourceList attunements = SourceList.EMPTY;
 
     protected ResearchAddendum(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;
@@ -75,9 +74,7 @@ public class ResearchAddendum {
             addendum.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
         }
         addendum.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
-        for (Source source : Source.SORTED_SOURCES) {
-            addendum.attunements.add(source, buf.readVarInt());
-        }
+        addendum.attunements = SourceList.fromNetwork(buf);
         return addendum;
     }
     
@@ -92,9 +89,7 @@ public class ResearchAddendum {
             buf.writeUtf(key.toString());
         }
         buf.writeUtf(addendum.requiredResearch == null ? "" : addendum.requiredResearch.toString());
-        for (Source source : Source.SORTED_SOURCES) {
-            buf.writeVarInt(addendum.attunements.getAmount(source));
-        }
+        SourceList.toNetwork(buf, addendum.attunements);
     }
     
     @Nonnull

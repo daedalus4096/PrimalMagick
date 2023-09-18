@@ -34,15 +34,15 @@ public class ManaStorage implements IManaStorage {
     protected int maxExtract;
     
     public ManaStorage(int capacity, Source... allowedSources) {
-        this(capacity, capacity, capacity, new SourceList(), allowedSources);
+        this(capacity, capacity, capacity, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxTransfer, Source... allowedSources) {
-        this(capacity, maxTransfer, maxTransfer, new SourceList(), allowedSources);
+        this(capacity, maxTransfer, maxTransfer, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
-        this(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
+        this(capacity, maxReceive, maxExtract, SourceList.EMPTY, allowedSources);
     }
     
     public ManaStorage(int capacity, int maxReceive, int maxExtract, SourceList mana, Source... allowedSources) {
@@ -50,7 +50,7 @@ public class ManaStorage implements IManaStorage {
         this.maxReceive = maxReceive;
         this.maxExtract = maxExtract;
         this.allowedSources = new HashSet<>(Arrays.asList(allowedSources));
-        this.mana = new SourceList();
+        this.mana = SourceList.EMPTY;
         this.setMana(mana);
     }
 
@@ -63,13 +63,11 @@ public class ManaStorage implements IManaStorage {
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-        SourceList nbtMana = new SourceList();
-        nbtMana.deserializeNBT(nbt.getCompound("Mana"));
-        this.setMana(nbtMana);
+        this.setMana(SourceList.deserializeNBT(nbt.getCompound("Mana")));
     }
     
     public void setMana(SourceList mana) {
-        this.mana.clear();
+        this.mana = SourceList.EMPTY;
         for (Source source : mana.getSources()) {
             this.setMana(source, mana.getAmount(source));
         }
@@ -77,7 +75,7 @@ public class ManaStorage implements IManaStorage {
     
     public void setMana(Source source, int amount) {
         if (this.allowedSources.contains(source) && this.capacity != INFINITE) {
-            this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
+            this.mana = this.mana.set(source, Mth.clamp(amount, 0, this.capacity));
         }
     }
 
@@ -88,7 +86,7 @@ public class ManaStorage implements IManaStorage {
         }
         int manaReceived = Math.min(this.capacity - this.mana.getAmount(source), Math.min(this.maxReceive, maxReceive));
         if (!simulate) {
-            this.mana.add(source, manaReceived);
+            this.mana = this.mana.add(source, manaReceived);
             this.onManaChanged();
         }
         return manaReceived;
@@ -104,7 +102,7 @@ public class ManaStorage implements IManaStorage {
         }
         int manaExtracted = Math.min(this.mana.getAmount(source), Math.min(this.maxExtract, maxExtract));
         if (!simulate) {
-            this.mana.reduce(source, manaExtracted);
+            this.mana = this.mana.reduce(source, manaExtracted);
             this.onManaChanged();
         }
         return manaExtracted;
@@ -152,7 +150,7 @@ public class ManaStorage implements IManaStorage {
         private final LazyOptional<IManaStorage> holder;
         
         public Provider(int capacity, int maxReceive, int maxExtract, Source... allowedSources) {
-            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, new SourceList(), allowedSources);
+            this.instance = new ManaStorage(capacity, maxReceive, maxExtract, SourceList.EMPTY, allowedSources);
             this.holder = LazyOptional.of(() -> this.instance);  // Cache a lazy optional of the capability instance
         }
 

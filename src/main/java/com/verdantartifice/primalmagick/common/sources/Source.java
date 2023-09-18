@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -26,7 +27,7 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class Source {
+public class Source implements StringRepresentable {
     public static final Map<String, Source> SOURCES = new HashMap<>();
     protected static final Map<SimpleResearchKey, Source> DISCOVER_KEYS = new HashMap<>();
     
@@ -186,5 +187,10 @@ public class Source {
     @Nullable
     public static Source getSource(@Nullable SimpleResearchKey discoverKey) {
         return DISCOVER_KEYS.get(discoverKey);
+    }
+
+    @Override
+    public String getSerializedName() {
+        return this.getTag();
     }
 }

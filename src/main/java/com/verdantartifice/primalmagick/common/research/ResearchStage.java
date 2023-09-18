@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -45,7 +44,7 @@ public class ResearchStage {
     protected List<SimpleResearchKey> revelations = new ArrayList<>();
     protected List<SimpleResearchKey> hints = new ArrayList<>();
     protected CompoundResearchKey requiredResearch;
-    protected SourceList attunements = new SourceList();
+    protected SourceList attunements = SourceList.EMPTY;
     
     protected ResearchStage(@Nonnull ResearchEntry entry, @Nonnull String textTranslationKey) {
         this.researchEntry = entry;
@@ -145,9 +144,7 @@ public class ResearchStage {
             stage.hints.add(SimpleResearchKey.parse(buf.readUtf()));
         }
         stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
-        for (Source source : Source.SORTED_SOURCES) {
-            stage.attunements.add(source, buf.readVarInt());
-        }
+        stage.attunements = SourceList.fromNetwork(buf);
         return stage;
     }
     
@@ -198,9 +195,7 @@ public class ResearchStage {
             buf.writeUtf(key.toString());
         }
         buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
-        for (Source source : Source.SORTED_SOURCES) {
-            buf.writeVarInt(stage.attunements.getAmount(source));
-        }
+        SourceList.toNetwork(buf, stage.attunements);
     }
     
     @Nonnull

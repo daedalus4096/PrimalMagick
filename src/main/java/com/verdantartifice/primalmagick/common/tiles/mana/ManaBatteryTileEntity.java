@@ -332,14 +332,14 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public SourceList getAllMana() {
-        SourceList mana = new SourceList();
+        SourceList.Builder mana = SourceList.builder();
         for (Source source : Source.SORTED_SOURCES) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
-                mana.add(source, amount);
+                mana.with(source, amount);
             }
         }
-        return mana;
+        return mana.build();
     }
 
     @Override

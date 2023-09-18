@@ -269,7 +269,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return CompletableFuture.supplyAsync(() -> {
             IAffinity entityAffinity = this.getAffinity(AffinityType.ENTITY_TYPE, ForgeRegistries.ENTITY_TYPES.getKey(type));
             if (entityAffinity == null) {
-                return new SourceList();
+                return SourceList.EMPTY;
             } else {
                 return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY)).join();
             }
@@ -327,7 +327,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     
     protected CompletableFuture<SourceList> getAffinityValuesAsync(@Nonnull ItemStack stack, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         if (stack.isEmpty()) {
-            return CompletableFuture.completedFuture(new SourceList());
+            return CompletableFuture.completedFuture(SourceList.EMPTY);
         }
         
         ResourceLocation stackItemLoc = ForgeRegistries.ITEMS.getKey(stack.getItem());
@@ -344,7 +344,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return itemAffinityFuture.thenCompose(itemAffinity -> {
             // Extract source values from the affinity data
             return itemAffinity == null ? 
-                    CompletableFuture.completedFuture(new SourceList()) : 
+                    CompletableFuture.completedFuture(SourceList.EMPTY) : 
                     itemAffinity.getTotalAsync(recipeManager, registryAccess, history);
         }).thenCompose(sources -> {
             // Append any needed bonus affinities for NBT data
@@ -389,22 +389,23 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                     // Compute the affinities from the recipe's ingredients
                     return this.generateItemAffinityValuesFromIngredientsAsync(recipe, recipeManager, registryAccess, history).thenApply(ingSources -> {
                         // Add affinities from mana costs, if any
+                        SourceList retVal = ingSources.copy();
                         if (recipe instanceof IHasManaCost manaRecipe) {
                             SourceList manaCosts = manaRecipe.getManaCosts();
                             for (Source source : manaCosts.getSources()) {
                                 if (manaCosts.getAmount(source) > 0) {
                                     int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem(registryAccess).getCount());
                                     if (manaAmount > 0) {
-                                        ingSources.add(source, manaAmount);
+                                        retVal = retVal.add(source, manaAmount);
                                     }
                                 }
                             }
                         }
-                        return ingSources;
+                        return retVal;
                     });
                 }).toList();
         return CompletableFuture.allOf(recipeSourceFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
-            MutableObject<SourceList> retVal = new MutableObject<>(new SourceList());
+            MutableObject<SourceList> retVal = new MutableObject<>(SourceList.EMPTY);
             MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
             recipeSourceFutures.forEach(recipeSourceFuture -> {
                 recipeSourceFuture.thenAccept(recipeSources -> {
@@ -450,37 +451,42 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
 
         // Compute total affinities for each ingredient
-        SourceList intermediate = new SourceList();
+        MutableObject<SourceList> intermediate = new MutableObject<>(SourceList.EMPTY);
         List<CompletableFuture<SourceList>> ingFutures = ingredients.stream().map(ingredient -> this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history)
                 .thenCompose(ingStack -> this.getAffinityValuesAsync(ingStack, recipeManager, registryAccess, history))).toList();
         CompletableFuture<SourceList> intermediateFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
-            ingFutures.forEach(ingFuture -> ingFuture.thenAccept(intermediate::add));
-            return intermediate;
+            ingFutures.forEach(ingFuture -> ingFuture.thenAccept(values -> {
+                intermediate.setValue(intermediate.getValue().add(values));
+            }));
+            return intermediate.getValue();
         });
         
         // Subtract affinities for remaining containers
         CompletableFuture<SourceList> reducedFuture = containerFuture.thenCombine(intermediateFuture, (containerList, intermediateSources) -> {
+            MutableObject<SourceList> toBeReduced = new MutableObject<>(intermediateSources.copy());
             List<CompletableFuture<SourceList>> reductionFutures = containerList.stream().filter(Predicate.not(ItemStack::isEmpty))
                     .map(containerStack -> this.getAffinityValuesAsync(containerStack, recipeManager, registryAccess, history)).toList();
             CompletableFuture.allOf(reductionFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
-                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(intermediateSources::remove));
+                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(values -> {
+                    toBeReduced.setValue(toBeReduced.getValue().remove(values));
+                }));
             });
-            return intermediateSources;
+            return toBeReduced.getValue();
         });
         
         // Scale down remaining affinities
         return reducedFuture.thenApply(intermediateSources -> {
-            SourceList retVal = new SourceList();
+            SourceList.Builder retVal = SourceList.builder();
             intermediateSources.getSources().forEach(source -> {
                 double amount = intermediateSources.getAmount(source) * 0.75D / output.getCount();
                 if (amount < 1.0D && amount > 0.75D) {
                     amount = 1.0D;
                 }
                 if ((int)amount > 0) {
-                    retVal.add(source, (int)amount);
+                    retVal.with(source, (int)amount);
                 }
             });
-            return retVal;
+            return retVal.build();
         });
     }
     
@@ -514,9 +520,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         if (sources == null) {
             return null;
         }
-        SourceList retVal = new SourceList();
+        SourceList retVal = SourceList.EMPTY;
         for (Source source : sources.getSources()) {
-            retVal.merge(source, Math.min(maxAmount, sources.getAmount(source)));
+            retVal = retVal.merge(source, Math.min(maxAmount, sources.getAmount(source)));
         }
         return retVal;
     }
@@ -524,7 +530,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     @Nullable
     protected CompletableFuture<SourceList> addBonusAffinitiesAsync(@Nonnull ItemStack stack, @Nonnull SourceList inputSources, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess) {
         List<CompletableFuture<SourceList>> bonusFutures = new ArrayList<>();
-        SourceList retVal = inputSources.copy();
+        MutableObject<SourceList> retVal = new MutableObject<>(inputSources.copy());
         
         // Determine bonus affinities from NBT-attached potion data
         Potion potion = PotionUtils.getPotion(stack);
@@ -550,10 +556,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return CompletableFuture.allOf(bonusFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
             bonusFutures.forEach(bonusFuture -> {
                 bonusFuture.thenAccept(bonus -> {
-                    retVal.add(bonus);
+                    retVal.setValue(retVal.getValue().add(bonus));
                 });
             });
-            return retVal;
+            return retVal.getValue();
         });
     }
 }

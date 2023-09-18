@@ -16,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class EnchantmentBonusAffinityBuilder {
     protected final ResourceLocation targetId;
-    protected SourceList multiplierValues;
+    protected SourceList.Builder multiplierValues = SourceList.builder();
 
     protected EnchantmentBonusAffinityBuilder(@Nonnull Enchantment target) {
         this.targetId = ForgeRegistries.ENCHANTMENTS.getKey(target);
@@ -27,15 +27,12 @@ public class EnchantmentBonusAffinityBuilder {
     }
     
     public EnchantmentBonusAffinityBuilder multiplier(SourceList multiplierValues) {
-        this.multiplierValues = multiplierValues;
+        this.multiplierValues.with(multiplierValues);
         return this;
     }
     
     public EnchantmentBonusAffinityBuilder multiplier(Source source, int amount) {
-        if (this.multiplierValues == null) {
-            this.multiplierValues = new SourceList();
-        }
-        this.multiplierValues.add(source, amount);
+        this.multiplierValues.with(source, amount);
         return this;
     }
     
@@ -62,7 +59,7 @@ public class EnchantmentBonusAffinityBuilder {
     
     public void build(Consumer<IFinishedAffinity> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId, this.multiplierValues));
+        consumer.accept(new EnchantmentBonusAffinityBuilder.Result(id, this.targetId, this.multiplierValues.build()));
     }
     
     public static class Result implements IFinishedAffinity {
@@ -89,7 +86,7 @@ public class EnchantmentBonusAffinityBuilder {
         @Override
         public void serialize(JsonObject json) {
             json.addProperty("target", this.targetId.toString());
-            if (this.multiplierValues != null) {
+            if (this.multiplierValues != null && !this.multiplierValues.isEmpty()) {
                 json.add("multiplier", this.multiplierValues.serializeJson());
             }
         }

@@ -24,11 +24,10 @@ public class ManaContainerHelper {
         Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
         CompoundTag nbt = stack.getTagElement("ManaContainerTag");
         if (nbt != null) {
-            SourceList mana = new SourceList();
-            mana.deserializeNBT(nbt);
-            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(player) && mana.getAmount(source) > 0).forEach(source ->
-                tooltip.add(Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (mana.getAmount(source) / 100.0D)))
-            );
+            SourceList mana = SourceList.deserializeNBT(nbt);
+            Source.SORTED_SOURCES.stream().filter(source -> source.isDiscovered(player) && mana.getAmount(source) > 0).map(source ->
+                Component.translatable("tooltip.primalmagick.source.mana_container", source.getNameText(), (mana.getAmount(source) / 100.0D))
+            ).forEach(tooltip::add);
         }
     }
     
@@ -37,9 +36,7 @@ public class ManaContainerHelper {
         if (tile instanceof IManaContainer manaTile) {
             CompoundTag nbt = stack.getTagElement("ManaContainerTag");
             if (nbt != null) {
-                SourceList mana = new SourceList();
-                mana.deserializeNBT(nbt);
-                manaTile.setMana(mana);
+                manaTile.setMana(SourceList.deserializeNBT(nbt));
             }
         }
     }
