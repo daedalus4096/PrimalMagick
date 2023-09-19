@@ -1507,6 +1507,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("no_hallowed_shrines").name("No known shrines exist for the Hallowed source of magick, so you'll have to acquire its mana through other means.").build();
         this.tip("go_explore").name("Exploring beyond the Overworld could be the key to unlocking new kinds of magick.").build();
         this.tip("new_disciplines").name("Continuing your arcane studies may cause you to unlock whole new disciplines of magick. Check back in your Fundamentals from time to time.").build();
+        this.tip("view_affinities").name("You can view the magickal affinities of any analyzed item in your inventory with the View Affinities key. By default, this is Left Shift, but you can re-map that in Options.").build();
+        this.tip("analysis").name("To learn which magickal affinities a block or item possesses, you must analyze it at an Analysis Table.").build();
+        this.tip("no_affinities").name("As a practicing mage, you can tell at a glance if an item has no magickal affinity whatsoever. No need to feed it to an Analysis Table.").build();
+        this.tip("research_table").name("The Research Table is a mage's bread and butter. You need to use it to develop Theories, which are essential for delving deeper into the secrets of magick.").build();
+        this.tip("project_success").name("Your chance of success for a research project is listed on the Complete Project button at the Research Table. You can improve it be devoting materials to the project.").build();
+        this.tip("research_boldness").name("If you don't have all the materials to get your research project success chance to 100%%, don't be afraid to try anyway! If you fail, you'll only lose a sheet of paper and some ink.").build();
+        this.tip("research_aids").name("Certain blocks, when placed near your Research Table, will add special, more lucrative research projects to your available pool. Consider a Bookshelf as a good start.").build();
+        this.tip("better_analysis").name("You'll need to improve your available analysis tools before you can analyze living creatures. Try studying your Magitech.").build();
+        this.tip("spending_mana").name("A mage spends mana either by crafting items with it, such as at an Arcane Workbench, or by casting spells.").build();
         this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
         this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();

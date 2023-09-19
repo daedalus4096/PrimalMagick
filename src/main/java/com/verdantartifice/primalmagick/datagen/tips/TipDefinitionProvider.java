@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.client.tips.TipDefinition;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.data.CachedOutput;
@@ -64,6 +65,15 @@ public class TipDefinitionProvider implements DataProvider {
         TipDefinition.builder("no_hallowed_shrines").requiredResearch(CompoundResearchKey.from(Source.HALLOWED.getDiscoverKey())).save(consumer);
         TipDefinition.builder("go_explore").save(consumer);
         TipDefinition.builder("new_disciplines").save(consumer);
+        TipDefinition.builder("view_affinities").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
+        TipDefinition.builder("analysis").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
+        TipDefinition.builder("no_affinities").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
+        TipDefinition.builder("research_table").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
+        TipDefinition.builder("project_success").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
+        TipDefinition.builder("research_boldness").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
+        TipDefinition.builder("research_aids").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
+        TipDefinition.builder("better_analysis").requiredResearch(CompoundResearchKey.parse("UNLOCK_MAGITECH")).save(consumer);
+        TipDefinition.builder("spending_mana").requiredResearch(CompoundResearchKey.parse("TERRESTRIAL_MAGICK")).save(consumer);
         TipDefinition.builder("ritual_symmetry").requiredResearch(CompoundResearchKey.parse("BASIC_RITUAL")).save(consumer);
         TipDefinition.builder("power_runes").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
         TipDefinition.builder("rune_hints").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
