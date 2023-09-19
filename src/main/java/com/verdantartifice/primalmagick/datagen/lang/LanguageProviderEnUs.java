@@ -1493,12 +1493,23 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
         this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
         
+        this.tip("thanks").name("Thanks for playing Primal Magick! You rock!").build();
+        this.tip("discord").name("Looking to connect with fellow Primal Magick players? Join our Discord! You can find an invite link on either CurseForge or Modrinth.").build();
         this.tip("more_tips").name("More tips will unlock as you progress through your arcane research, so keep checking back.").build();
         this.tip("earth_shrine_loc").name("Earth shrines can be found in flatlands, such as plains and savannas.").build();
         this.tip("sea_shrine_loc").name("Sea shrines can be found in wet or cold regions, such as beaches, swamps, or snowfields.").build();
         this.tip("sky_shrine_loc").name("Sky shrines can be found in high places, such as mountains or extreme hills.").build();
         this.tip("sun_shrine_loc").name("Sun shrines can be found in hot places, such as deserts or badlands.").build();
         this.tip("moon_shrine_loc").name("Moon shrines can be found aboveground in dimly lit biomes, primarily forests.").build();
+        this.tip("no_blood_shrines").name("No known shrines exist for the Blood source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_infernal_shrines").name("No known shrines exist for the Infernal source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_void_shrines").name("No known shrines exist for the Void source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_hallowed_shrines").name("No known shrines exist for the Hallowed source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("go_explore").name("Exploring beyond the Overworld could be the key to unlocking new kinds of magick.").build();
+        this.tip("new_disciplines").name("Continuing your arcane studies may cause you to unlock whole new disciplines of magick. Check back in your Fundamentals from time to time.").build();
+        this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
+        this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
+        this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
         
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
