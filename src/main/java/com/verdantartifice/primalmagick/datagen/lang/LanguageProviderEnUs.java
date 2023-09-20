@@ -1514,8 +1514,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("project_success").name("Your chance of success for a research project is listed on the Complete Project button at the Research Table. You can improve it be devoting materials to the project.").build();
         this.tip("research_boldness").name("If you don't have all the materials to get your research project success chance to 100%%, don't be afraid to try anyway! If you fail, you'll only lose a sheet of paper and some ink.").build();
         this.tip("research_aids").name("Certain blocks, when placed near your Research Table, will add special, more lucrative research projects to your available pool. Consider a Bookshelf as a good start.").build();
+        this.tip("permanent_attunement").name("Completing certain research entries in your Grimoire will earn you permanent attunement to magick, granting you passive bonuses. Check the Attunements section of your Grimoire to learn more.").build();
+        this.tip("temporary_attunement").name("Spending mana will earn you temporary attunement to magick, granting you passive bonuses for a short time. Check the Attunements section of your Grimoire to learn more.").build();
         this.tip("better_analysis").name("You'll need to improve your available analysis tools before you can analyze living creatures. Try studying your Magitech.").build();
         this.tip("spending_mana").name("A mage spends mana either by crafting items with it, such as at an Arcane Workbench, or by casting spells.").build();
+        this.tip("sotu").name("The secrets of the universe will take a great deal of work to uncover, and are not for the faint of heart. Check the Fundamentals section of your Grimoire to learn what is required.").build();
+        this.tip("mana_charger").name("The Mana Charger lets you convert magickal essence, such as dust, into mana for your wand. More potent types of essence will yield more mana.").build();
+        this.tip("staves").name("Magickal staves can be inscribed with more spells than a regular wand, but are too large to fit in most crafting stations.").build();
         this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
         this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();

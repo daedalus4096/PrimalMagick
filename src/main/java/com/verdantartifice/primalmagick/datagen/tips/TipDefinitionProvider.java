@@ -72,8 +72,13 @@ public class TipDefinitionProvider implements DataProvider {
         TipDefinition.builder("project_success").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
         TipDefinition.builder("research_boldness").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
         TipDefinition.builder("research_aids").requiredResearch(CompoundResearchKey.parse("THEORYCRAFTING")).save(consumer);
+        TipDefinition.builder("permanent_attunement").requiredResearch(CompoundResearchKey.parse("ATTUNEMENTS")).save(consumer);
+        TipDefinition.builder("temporary_attunement").requiredResearch(CompoundResearchKey.parse("ATTUNEMENTS")).save(consumer);
         TipDefinition.builder("better_analysis").requiredResearch(CompoundResearchKey.parse("UNLOCK_MAGITECH")).save(consumer);
         TipDefinition.builder("spending_mana").requiredResearch(CompoundResearchKey.parse("TERRESTRIAL_MAGICK")).save(consumer);
+        TipDefinition.builder("sotu").requiredResearch(CompoundResearchKey.parse("SECRETS_OF_THE_UNIVERSE@0")).save(consumer);
+        TipDefinition.builder("mana_charger").requiredResearch(CompoundResearchKey.parse("WAND_CHARGER")).save(consumer);
+        TipDefinition.builder("staves").requiredResearch(CompoundResearchKey.parse("STAVES")).save(consumer);
         TipDefinition.builder("ritual_symmetry").requiredResearch(CompoundResearchKey.parse("BASIC_RITUAL")).save(consumer);
         TipDefinition.builder("power_runes").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
         TipDefinition.builder("rune_hints").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
