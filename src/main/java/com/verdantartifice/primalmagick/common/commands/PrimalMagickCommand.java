@@ -5,12 +5,17 @@ import java.util.Collections;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import com.google.gson.JsonArray;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -44,6 +49,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 
@@ -58,11 +64,15 @@ import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.synchronization.SuggestionProviders;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Definition of the /primalmagick debug command and its /pm alias.
@@ -176,6 +186,11 @@ public class PrimalMagickCommand {
                             )
                         )
                     )
+                )
+            )
+            .then(Commands.literal("affinities")
+                .then(Commands.literal("lint")
+                    .executes((context) -> {return getSourcelessItems(context.getSource());})
                 )
             )
             .then(Commands.literal("recipes")
@@ -595,6 +610,42 @@ public class PrimalMagickCommand {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target", target.getName(), typeText, sourceText, value));
             }
         }
+        return 0;
+    }
+
+    /**
+     * getSourcelessItems iterates all item recipes and reports a JSON list of any that render to 0 sources.
+     * Intended to assist with modpack linting.
+     */
+    private static int getSourcelessItems(CommandSourceStack source) {
+        ServerPlayer target = source.getPlayer();
+
+        Logger LOGGER = LogManager.getLogger();
+
+        ServerLevel level = source.getLevel();
+
+        AffinityManager am = AffinityManager.getOrCreateInstance();
+
+        JsonArray array = new JsonArray();
+        ForgeRegistries.ITEMS.forEach( (item) -> {
+                ItemStack stack = item.getDefaultInstance();
+                CompletableFuture<SourceList> f = am.getAffinityValuesAsync(stack, level);
+
+                try {
+                    SourceList sources = f.get();
+                    if (sources.isEmpty()){
+                        array.add(item.getDescriptionId());
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        );
+
+        target.sendSystemMessage(Component.literal("Found " + Integer.toString(array.size()) + " items without sources; check system logs for details"), false);
+
+        LOGGER.info("Items with no sources: " + array.toString());
+
         return 0;
     }
 
