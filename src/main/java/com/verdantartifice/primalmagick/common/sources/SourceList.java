@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import com.google.gson.JsonObject;
 
@@ -24,6 +25,7 @@ import net.minecraft.network.chat.MutableComponent;
  * 
  * @author Daedalus4096
  */
+@Immutable
 public class SourceList {
     public static final SourceList EMPTY = new SourceList();
 
@@ -40,7 +42,7 @@ public class SourceList {
     protected SourceList(Map<Source, Integer> values) {
         this();
         values.entrySet().forEach(entry -> {
-            this.sources.put(entry.getKey(), entry.getValue().intValue());
+            this.setInner(entry.getKey(), entry.getValue().intValue());
         });
     }
     
@@ -108,7 +110,7 @@ public class SourceList {
     }
     
     private void addInner(@Nonnull Source source, int amount) {
-        this.sources.put(source, this.getAmount(source) + amount);
+        this.setInner(source, this.getAmount(source) + amount);
     }
     
     /**
@@ -134,7 +136,7 @@ public class SourceList {
             } else if (newAmount > 0) {
                 // If it's still positive, save the new value
                 SourceList retVal = new SourceList(this);
-                retVal.sources.put(source, newAmount);
+                retVal.setInner(source, newAmount);
                 return retVal;
             }
         }
@@ -182,7 +184,7 @@ public class SourceList {
             } else {
                 // Otherwise save the new value
                 SourceList retVal = new SourceList(this);
-                retVal.sources.put(source, newAmount);
+                retVal.setInner(source, newAmount);
                 return retVal;
             }
         } else {
@@ -207,7 +209,7 @@ public class SourceList {
                 if (newAmount <= 0) {
                     retVal.sources.removeInt(source);
                 } else {
-                    retVal.sources.put(source, newAmount);
+                    retVal.setInner(source, newAmount);
                 }
             }
             return retVal;
@@ -230,7 +232,7 @@ public class SourceList {
         // Set this list to have the given amount of the given source, but only if it's greater than already present
         if (source != null && amount > this.getAmount(source)) {
             SourceList retVal = new SourceList(this);
-            retVal.sources.put(source, amount);
+            retVal.setInner(source, amount);
             return retVal;
         } else {
             return this;
@@ -249,7 +251,7 @@ public class SourceList {
         if (list != null && !list.isEmpty()) {
             SourceList retVal = new SourceList(this);
             for (Source source : list.getSources()) {
-                retVal.sources.put(source, Math.max(this.getAmount(source), list.getAmount(source)));
+                retVal.setInner(source, Math.max(this.getAmount(source), list.getAmount(source)));
             }
             return retVal;
         } else {
@@ -269,12 +271,7 @@ public class SourceList {
     public SourceList set(@Nullable Source source, int amount) {
         if (source != null) {
             SourceList retVal = new SourceList(this);
-            if (amount == 0) {
-                // If the new amount of mana is zero, just remove it
-                retVal.sources.removeInt(source);
-            } else {
-                retVal.sources.put(source, amount);
-            }
+            retVal.setInner(source, amount);
             return retVal;
         } else {
             return this;
@@ -294,17 +291,20 @@ public class SourceList {
         if (list != null && !list.isEmpty()) {
             SourceList retVal = new SourceList(this);
             for (Source source : list.getSources()) {
-                int amount = list.getAmount(source);
-                if (amount == 0) {
-                    // If the new amount of mana is zero, just remove it
-                    retVal.sources.removeInt(source);
-                } else {
-                    retVal.sources.put(source, amount);
-                }
+                retVal.setInner(source, list.getAmount(source));
             }
             return retVal;
         } else {
             return this;
+        }
+    }
+    
+    private void setInner(@Nonnull Source source, int amount) {
+        if (amount == 0) {
+            // If the new amount of mana is zero, just remove it
+            this.sources.removeInt(source);
+        } else {
+            this.sources.put(source, amount);
         }
     }
     
@@ -325,7 +325,7 @@ public class SourceList {
         } else if (multiplier > 0) {
             SourceList retVal = new SourceList(this);
             for (Source source : this.getSources()) {
-                retVal.sources.put(source, multiplier * this.getAmount(source));
+                retVal.setInner(source, multiplier * this.getAmount(source));
             }
             return retVal;
         } else {
@@ -421,6 +421,12 @@ public class SourceList {
         return output;
     }
     
+    @Override
+    public String toString() {
+        List<String> pieces = Source.SORTED_SOURCES.stream().filter(this.sources::containsKey).map(source -> String.join("=", source.getTag(), Integer.toString(this.sources.getInt(source)))).toList();
+        return "SourceList[" + String.join(",", pieces) + "]";
+    }
+
     public static class Builder {
         protected final Object2IntOpenHashMap<Source> sources;
         
