@@ -55,7 +55,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (handIn == InteractionHand.MAIN_HAND) {
+        if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 ItemStack stack = player.getItemInHand(handIn);

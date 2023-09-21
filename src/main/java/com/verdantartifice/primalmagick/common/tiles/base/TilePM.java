@@ -74,12 +74,12 @@ public class TilePM extends BlockEntity {
      * @param player the player whose client is to receive the given data
      */
     public void sendMessageToClient(CompoundTag nbt, @Nullable ServerPlayer player) {
-        if (player == null) {
-            if (this.hasLevel()) {
+        if (this.hasLevel() && !this.getLevel().isClientSide) {
+            if (player == null) {
                 PacketHandler.sendToAllAround(new TileToClientPacket(this.worldPosition, nbt), this.level.dimension(), this.worldPosition, 128.0D);
+            } else {
+                PacketHandler.sendToPlayer(new TileToClientPacket(this.worldPosition, nbt), player);
             }
-        } else {
-            PacketHandler.sendToPlayer(new TileToClientPacket(this.worldPosition, nbt), player);
         }
     }
     
@@ -89,7 +89,9 @@ public class TilePM extends BlockEntity {
      * @param nbt the data to be synced
      */
     public void sendMessageToServer(CompoundTag nbt) {
-        PacketHandler.sendToServer(new TileToServerPacket(this.worldPosition, nbt));
+        if (this.hasLevel() && this.getLevel().isClientSide) {
+            PacketHandler.sendToServer(new TileToServerPacket(this.worldPosition, nbt));
+        }
     }
     
     /**

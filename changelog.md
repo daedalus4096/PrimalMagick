@@ -4,6 +4,7 @@ v4.0.4
 * Fixed a bug preventing players from receiving observations for scanning mobs
 * Improved arcane recipe book performance in large modpacks
 * Added a Tips section to the Grimoire
+* Fixed a multiplayer client crash when using the Auto Charger
 * Refactored how the Dream Journal's text data is stored
 * Made the Dream Journal able to be cloned
 * Made enchanted books readable, at least if you're fluent in Standard Galactic
