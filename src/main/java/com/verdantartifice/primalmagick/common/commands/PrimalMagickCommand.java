@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
@@ -62,11 +61,13 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -634,7 +635,9 @@ public class PrimalMagickCommand {
                 try {
                     SourceList sources = f.get();
                     if (sources.isEmpty()){
-                        array.add(item.getDescriptionId());
+                        if (getRecipeCountForItem(source, item) == 0) {
+                            array.add(item.getDescriptionId());
+                        }
                     }
                 } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
@@ -647,6 +650,20 @@ public class PrimalMagickCommand {
         LOGGER.info("Items with no sources: " + array.toString());
 
         return 0;
+    }
+
+    private static long getRecipeCountForItem(CommandSourceStack source, Item item){
+
+        net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getRecipeManager();
+
+        RegistryAccess registryAccess = source.registryAccess();
+
+
+        long count = recipeManager.getRecipes().stream()
+            .filter(r -> r.getResultItem(registryAccess) != null && (r.getResultItem(registryAccess).getItem().equals(item)))
+            .count()
+        ;
+        return count; 
     }
 
     private static int resetRecipes(CommandSourceStack source, ServerPlayer target) {
