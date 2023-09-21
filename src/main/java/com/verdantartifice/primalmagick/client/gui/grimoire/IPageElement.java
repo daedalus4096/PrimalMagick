@@ -22,5 +22,13 @@ public interface IPageElement {
      * @param y the page-relative Y-coordinate of this element
      * @return the page-relative Y-coordinate at which to render the next element
      */
-    public int getNextY(int y);
+    public default int getNextY(int y) {
+        return y + this.getHeight();
+    }
+    
+    /**
+     * Get the height of this page element.
+     * @return the height of this page element
+     */
+    public int getHeight();
 }

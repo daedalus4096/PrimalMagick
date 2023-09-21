@@ -1,20 +1,15 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import com.mojang.serialization.Codec;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -25,102 +20,96 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class CompoundResearchKey {
-    private static final Logger LOGGER = LogManager.getLogger();
+    public static final CompoundResearchKey EMPTY = new CompoundResearchKey(true);
+    
+    public static final Codec<CompoundResearchKey> CODEC = Codec.STRING.xmap(CompoundResearchKey::parse, CompoundResearchKey::toString);
 
-    protected List<SimpleResearchKey> keys = new ArrayList<>();
-    protected boolean requireAll;
+    protected final List<SimpleResearchKey> keys;
+    protected final boolean requireAll;
     
     protected CompoundResearchKey(boolean requireAll) {
         this.requireAll = requireAll;
+        this.keys = ImmutableList.of();
     }
     
     protected CompoundResearchKey(boolean requireAll, @Nonnull SimpleResearchKey key) {
-        this(requireAll);
-        this.keys.add(key);
+        this.requireAll = requireAll;
+        this.keys = ImmutableList.of(key);
     }
     
-    @Nullable
-    public static CompoundResearchKey parse(@Nullable String keyStr) {
-        if (keyStr == null || keyStr.isEmpty()) {
-            return null;
+    protected CompoundResearchKey(boolean requireAll, @Nonnull SimpleResearchKey... keys) {
+        this.requireAll = requireAll;
+        this.keys = ImmutableList.<SimpleResearchKey>builder().add(keys).build();
+    }
+    
+    protected CompoundResearchKey(boolean requireAll, @Nonnull List<SimpleResearchKey> keys) {
+        this.requireAll = requireAll;
+        this.keys = ImmutableList.<SimpleResearchKey>builder().addAll(keys).build();
+    }
+    
+    public static CompoundResearchKey parse(String keyStr) {
+        if (keyStr == null) {
+            throw new IllegalArgumentException("Key string may not be null");
+        } else if (keyStr.isEmpty()) {
+            return EMPTY;
         } else if (keyStr.contains("&&")) {
             if (keyStr.contains("||")) {
-                LOGGER.error("Research key may contain && or || but not both: {}", keyStr);
-                return null;
+                throw new IllegalArgumentException("Research key may contain && or || but not both");
             }
             
             // Parse all tokens of the string into simple research keys, filtering out failures, then collect them into a compound research key
-            List<SimpleResearchKey> keys = Arrays.asList(keyStr.split("&&")).stream()
-                                                .map(k -> SimpleResearchKey.parse(k))
-                                                .filter(Objects::nonNull)
-                                                .collect(Collectors.toList());
-            return CompoundResearchKey.from(true, keys.toArray(new SimpleResearchKey[keys.size()]));
+            return CompoundResearchKey.from(true, parseKeys(keyStr, "&&"));
         } else if (keyStr.contains("||")) {
             // Parse all tokens of the string into simple research keys, filtering out failures, then collect them into a compound research key
-            List<SimpleResearchKey> keys = Arrays.asList(keyStr.split("||")).stream()
-                                                .map(k -> SimpleResearchKey.parse(k))
-                                                .filter(Objects::nonNull)
-                                                .collect(Collectors.toList());
-            return CompoundResearchKey.from(false, keys.toArray(new SimpleResearchKey[keys.size()]));
+            return CompoundResearchKey.from(false, parseKeys(keyStr, "||"));
         } else {
             return CompoundResearchKey.from(SimpleResearchKey.parse(keyStr));
         }
     }
     
-    @Nullable
+    protected static List<SimpleResearchKey> parseKeys(String keyStr, String glue) {
+        return Arrays.asList(keyStr.split(glue)).stream().filter(Objects::nonNull).map(SimpleResearchKey::parse).toList();
+    }
+    
     public static CompoundResearchKey parse(@Nullable JsonArray jsonArray) throws Exception {
         // When parsing from a JSON file instead of an ad-hoc string, always require that all SRKs be satisfied
-        CompoundResearchKey retVal = new CompoundResearchKey(true);
-        for (JsonElement element : jsonArray) {
-            SimpleResearchKey simpleKey = SimpleResearchKey.parse(element.getAsString());
-            if (simpleKey != null) {
-                retVal.keys.add(simpleKey);
-            }
+        if (jsonArray == null) {
+            throw new IllegalArgumentException("JSON data may not be null");
         }
-        return retVal.keys.isEmpty() ? null : retVal;
+        ImmutableList.Builder<SimpleResearchKey> keyBuilder = ImmutableList.builder();
+        jsonArray.asList().stream().map(e -> SimpleResearchKey.parse(e.getAsString())).forEach(keyBuilder::add);
+        return new CompoundResearchKey(true, keyBuilder.build());
     }
     
-    @Nullable
     public static CompoundResearchKey from(@Nullable SimpleResearchKey simpleKey) {
-        return (simpleKey == null) ? null : new CompoundResearchKey(true, simpleKey);
+        if (simpleKey == null) {
+            throw new IllegalArgumentException("Inner key may not be null");
+        } else {
+            return new CompoundResearchKey(true, simpleKey);
+        }
     }
     
-    @Nullable
     public static CompoundResearchKey from(boolean requireAll, SimpleResearchKey... simpleKeys) {
-        CompoundResearchKey compound = new CompoundResearchKey(requireAll);
-        for (SimpleResearchKey simple : simpleKeys) {
-            if (simple != null) {
-                compound.keys.add(simple);
-            }
-        }
-        return (compound.keys.size() > 0) ? compound : null;
+        return new CompoundResearchKey(requireAll, Arrays.asList(simpleKeys).stream().filter(Objects::nonNull).toList());
     }
     
-    @Nullable
+    public static CompoundResearchKey from(boolean requireAll, List<SimpleResearchKey> simpleKeys) {
+        return new CompoundResearchKey(requireAll, simpleKeys.stream().filter(Objects::nonNull).toList());
+    }
+    
     public static CompoundResearchKey from(boolean requireAll, String... keyStrs) {
-        CompoundResearchKey compound = new CompoundResearchKey(requireAll);
-        for (String keyStr : keyStrs) {
-            SimpleResearchKey key = SimpleResearchKey.parse(keyStr);
-            if (key != null) {
-                compound.keys.add(key);
-            }
-        }
-        return (compound.keys.size() > 0) ? compound : null;
+        return new CompoundResearchKey(requireAll, Arrays.asList(keyStrs).stream().filter(Objects::nonNull).map(SimpleResearchKey::parse).toList());
     }
     
     @Nonnull
     public CompoundResearchKey copy() {
         // Make a deep copy of the compound research key
-        CompoundResearchKey key = new CompoundResearchKey(this.requireAll);
-        for (SimpleResearchKey simpleKey : this.keys) {
-            key.keys.add(simpleKey.copy());
-        }
-        return key;
+        return new CompoundResearchKey(this.requireAll, this.keys.stream().map(SimpleResearchKey::copy).toList());
     }
     
     @Nonnull
     public List<SimpleResearchKey> getKeys() {
-        return Collections.unmodifiableList(this.keys);
+        return this.keys;
     }
     
     public boolean getRequireAll() {
@@ -128,42 +117,28 @@ public class CompoundResearchKey {
     }
     
     public boolean isKnownBy(@Nullable Player player) {
+        if (this.equals(EMPTY)) {
+            return true;
+        }
         if (this.requireAll) {
             // If requireAll is true, the CRK is only known if all contained SRKs are known
-            for (SimpleResearchKey simpleKey : this.keys) {
-                if (!simpleKey.isKnownBy(player)) {
-                    return false;
-                }
-            }
-            return true;
+            return this.keys.stream().allMatch(simpleKey -> simpleKey.isKnownBy(player));
         } else {
-            // Otherwise, the CRK  is known if any of the contained SRKs are known
-            for (SimpleResearchKey simpleKey : this.keys) {
-                if (simpleKey.isKnownBy(player)) {
-                    return true;
-                }
-            }
-            return false;
+            // Otherwise, the CRK is known if any of the contained SRKs are known
+            return this.keys.stream().anyMatch(simpleKey -> simpleKey.isKnownBy(player));
         }
     }
     
     public boolean isKnownByStrict(@Nullable Player player) {
+        if (this.equals(EMPTY)) {
+            return true;
+        }
         if (this.requireAll) {
             // If requireAll is true, the CRK is only known if all contained SRKs are known
-            for (SimpleResearchKey simpleKey : this.keys) {
-                if (!simpleKey.isKnownByStrict(player)) {
-                    return false;
-                }
-            }
-            return true;
+            return this.keys.stream().allMatch(simpleKey -> simpleKey.isKnownByStrict(player));
         } else {
             // Otherwise, the CRK  is known if any of the contained SRKs are known
-            for (SimpleResearchKey simpleKey : this.keys) {
-                if (simpleKey.isKnownByStrict(player)) {
-                    return true;
-                }
-            }
-            return false;
+            return this.keys.stream().anyMatch(simpleKey -> simpleKey.isKnownByStrict(player));
         }
     }
     
@@ -180,17 +155,13 @@ public class CompoundResearchKey {
             return false;
         } else {
             // Return true if the given SRK is one of this CRK's keys, regardless of any stage requirements given in either
-            return this.keys.stream().map((k) -> k.stripStage()).collect(Collectors.toList()).contains(simpleKey.stripStage());
+            return this.keys.stream().map((k) -> k.stripStage()).toList().contains(simpleKey.stripStage());
         }
     }
     
     @Override
     public String toString() {
-        String glue = this.requireAll ? "&&" : "||";
-        List<String> simpleStrs = this.keys.stream()
-                                    .map(k -> k.toString())
-                                    .collect(Collectors.toList());
-        return String.join(glue, simpleStrs);
+        return String.join(this.requireAll ? "&&" : "||", this.keys.stream().map(k -> k.toString()).toList());
     }
 
     @Override

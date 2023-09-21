@@ -58,7 +58,7 @@ public class PageImage implements IPageElement {
     }
 
     @Override
-    public int getNextY(int y) {
-        return (y + this.adjustedHeight + 2);
+    public int getHeight() {
+        return this.adjustedHeight + 2;
     }
 }

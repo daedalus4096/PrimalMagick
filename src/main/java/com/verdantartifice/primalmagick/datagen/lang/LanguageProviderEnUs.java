@@ -1493,6 +1493,43 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
         this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
         
+        this.tip("thanks").name("Thanks for playing Primal Magick! You rock!").build();
+        this.tip("discord").name("Looking to connect with fellow Primal Magick players? Join our Discord! You can find an invite link on either CurseForge or Modrinth.").build();
+        this.tip("more_tips").name("More tips will unlock as you progress through your arcane research, so keep checking back.").build();
+        this.tip("earth_shrine_loc").name("Earth shrines can be found in flatlands, such as plains and savannas.").build();
+        this.tip("sea_shrine_loc").name("Sea shrines can be found in wet or cold regions, such as beaches, swamps, or snowfields.").build();
+        this.tip("sky_shrine_loc").name("Sky shrines can be found in high places, such as mountains or extreme hills.").build();
+        this.tip("sun_shrine_loc").name("Sun shrines can be found in hot places, such as deserts or badlands.").build();
+        this.tip("moon_shrine_loc").name("Moon shrines can be found aboveground in dimly lit biomes, primarily forests.").build();
+        this.tip("no_blood_shrines").name("No known shrines exist for the Blood source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_infernal_shrines").name("No known shrines exist for the Infernal source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_void_shrines").name("No known shrines exist for the Void source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("no_hallowed_shrines").name("No known shrines exist for the Hallowed source of magick, so you'll have to acquire its mana through other means.").build();
+        this.tip("go_explore").name("Exploring beyond the Overworld could be the key to unlocking new kinds of magick.").build();
+        this.tip("new_disciplines").name("Continuing your arcane studies may cause you to unlock whole new disciplines of magick. Check back in your Fundamentals from time to time.").build();
+        this.tip("salt").name("Refined salt can be used to make your food tastier and more filling. Keep an eye out for it while you're mining!").build();
+        this.tip("treefolk").name("Strange treefolk have been sighted in the Overworld's forests. They're not aggressive, and will barter various plants in exchange for bone meal.").build();
+        this.tip("view_affinities").name("You can view the magickal affinities of any analyzed item in your inventory with the View Affinities key. By default, this is Left Shift, but you can re-map that in Options.").build();
+        this.tip("analysis").name("To learn which magickal affinities a block or item possesses, you must analyze it at an Analysis Table.").build();
+        this.tip("no_affinities").name("As a practicing mage, you can tell at a glance if an item has no magickal affinity whatsoever. No need to feed it to an Analysis Table.").build();
+        this.tip("research_table").name("The Research Table is a mage's bread and butter. You need to use it to develop Theories, which are essential for delving deeper into the secrets of magick.").build();
+        this.tip("project_success").name("Your chance of success for a research project is listed on the Complete Project button at the Research Table. You can improve it be devoting materials to the project.").build();
+        this.tip("research_boldness").name("If you don't have all the materials to get your research project success chance to 100%%, don't be afraid to try anyway! If you fail, you'll only lose a sheet of paper and some ink.").build();
+        this.tip("research_aids").name("Certain blocks, when placed near your Research Table, will add special, more lucrative research projects to your available pool. Consider a Bookshelf as a good start.").build();
+        this.tip("permanent_attunement").name("Completing certain research entries in your Grimoire will earn you permanent attunement to magick, granting you passive bonuses. Check the Attunements section of your Grimoire to learn more.").build();
+        this.tip("temporary_attunement").name("Spending mana will earn you temporary attunement to magick, granting you passive bonuses for a short time. Check the Attunements section of your Grimoire to learn more.").build();
+        this.tip("better_analysis").name("You'll need to improve your available analysis tools before you can analyze living creatures. Try studying your Magitech.").build();
+        this.tip("spending_mana").name("A mage spends mana either by crafting items with it, such as at an Arcane Workbench, or by casting spells.").build();
+        this.tip("sotu").name("The secrets of the universe will take a great deal of work to uncover, and are not for the faint of heart. Check the Fundamentals section of your Grimoire to learn what is required.").build();
+        this.tip("mana_charger").name("The Mana Charger lets you convert magickal essence, such as dust, into mana for your wand. More potent types of essence will yield more mana.").build();
+        this.tip("staves").name("Magickal staves can be inscribed with more spells than a regular wand, but are too large to fit in most crafting stations.").build();
+        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you a discount when spending mana.").build();
+        this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
+        this.tip("induced_attunement").name("Eating Ambrosia will earn you induced attunement to magick, granting you passive bonuses. But every time you gain induced attunement for one source, you lose a bit for all the others.").build();
+        this.tip("ambrosia_cap").name("Ambrosia has a cap on how much induced attunement it can grant you. More powerful types of Ambrosia have higher caps.").build();
+        this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
+        this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
+        
         // Generate written language localizations
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
         this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
@@ -1578,6 +1615,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("attunement_header").name("Attunements").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
         this.grimoire("recipe_index_header").name("Recipes").build();
+        this.grimoire("tips_header").name("Tips").build();
         this.grimoire("attunement_gain_header").name("Attunements Gained").build();
         this.grimoire("addendum_header").name("Addendum %1$d").build();
         this.grimoire("requirements_header").name("Requirements").build();
@@ -1598,6 +1636,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("ritual_props_header").name("Props:").build();
         this.grimoire("complete_button").name("Complete").build();
         this.grimoire("completing_text").name("Completing...").build();
+        this.grimoire("next_tip_button").name("Next Tip").build();
         this.grimoire("section_header").sub("new").output("New").end().build();
         this.grimoire("section_header").sub("updated").output("Updated").end().build();
         this.grimoire("section_header").sub("complete").output("Complete").end().build();

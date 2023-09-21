@@ -3,6 +3,7 @@ v4.0.4
 * Moved affinity calculation to a background thread to improve performance in large modpacks
 * Fixed a bug preventing players from receiving observations for scanning mobs
 * Improved arcane recipe book performance in large modpacks
+* Added a Tips section to the Grimoire
 * Refactored how the Dream Journal's text data is stored
 * Made the Dream Journal able to be cloned
 * Made enchanted books readable, at least if you're fluent in Standard Galactic
