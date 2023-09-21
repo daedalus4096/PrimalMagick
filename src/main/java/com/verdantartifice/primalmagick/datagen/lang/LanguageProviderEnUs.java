@@ -1507,6 +1507,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("no_hallowed_shrines").name("No known shrines exist for the Hallowed source of magick, so you'll have to acquire its mana through other means.").build();
         this.tip("go_explore").name("Exploring beyond the Overworld could be the key to unlocking new kinds of magick.").build();
         this.tip("new_disciplines").name("Continuing your arcane studies may cause you to unlock whole new disciplines of magick. Check back in your Fundamentals from time to time.").build();
+        this.tip("salt").name("Refined salt can be used to make your food tastier and more filling. Keep an eye out for it while you're mining!").build();
+        this.tip("treefolk").name("Strange treefolk have been sighted in the Overworld's forests. They're not aggressive, and will barter various plants in exchange for bone meal.").build();
         this.tip("view_affinities").name("You can view the magickal affinities of any analyzed item in your inventory with the View Affinities key. By default, this is Left Shift, but you can re-map that in Options.").build();
         this.tip("analysis").name("To learn which magickal affinities a block or item possesses, you must analyze it at an Analysis Table.").build();
         this.tip("no_affinities").name("As a practicing mage, you can tell at a glance if an item has no magickal affinity whatsoever. No need to feed it to an Analysis Table.").build();
@@ -1521,7 +1523,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("sotu").name("The secrets of the universe will take a great deal of work to uncover, and are not for the faint of heart. Check the Fundamentals section of your Grimoire to learn what is required.").build();
         this.tip("mana_charger").name("The Mana Charger lets you convert magickal essence, such as dust, into mana for your wand. More potent types of essence will yield more mana.").build();
         this.tip("staves").name("Magickal staves can be inscribed with more spells than a regular wand, but are too large to fit in most crafting stations.").build();
+        this.tip("robes").name("Robes aren't as protective as normal armor, but they do offer you a discount when spending mana.").build();
         this.tip("ritual_symmetry").name("Symmetry is very important when setting up your ritual layout. Try using a Dowsing Rod if you're having trouble with it.").build();
+        this.tip("induced_attunement").name("Eating Ambrosia will earn you induced attunement to magick, granting you passive bonuses. But every time you gain induced attunement for one source, you lose a bit for all the others.").build();
+        this.tip("ambrosia_cap").name("Ambrosia has a cap on how much induced attunement it can grant you. More powerful types of Ambrosia have higher caps.").build();
         this.tip("power_runes").name("Runescribing only produces enchantments of level one by default, but there are special runes, such as Insight Runes, that can improve that.").build();
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
         

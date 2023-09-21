@@ -65,6 +65,8 @@ public class TipDefinitionProvider implements DataProvider {
         TipDefinition.builder("no_hallowed_shrines").requiredResearch(CompoundResearchKey.from(Source.HALLOWED.getDiscoverKey())).save(consumer);
         TipDefinition.builder("go_explore").save(consumer);
         TipDefinition.builder("new_disciplines").save(consumer);
+        TipDefinition.builder("salt").save(consumer);
+        TipDefinition.builder("treefolk").save(consumer);
         TipDefinition.builder("view_affinities").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
         TipDefinition.builder("analysis").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
         TipDefinition.builder("no_affinities").requiredResearch(CompoundResearchKey.from(SimpleResearchKey.FIRST_STEPS)).save(consumer);
@@ -79,7 +81,10 @@ public class TipDefinitionProvider implements DataProvider {
         TipDefinition.builder("sotu").requiredResearch(CompoundResearchKey.parse("SECRETS_OF_THE_UNIVERSE@0")).save(consumer);
         TipDefinition.builder("mana_charger").requiredResearch(CompoundResearchKey.parse("WAND_CHARGER")).save(consumer);
         TipDefinition.builder("staves").requiredResearch(CompoundResearchKey.parse("STAVES")).save(consumer);
+        TipDefinition.builder("robes").requiredResearch(CompoundResearchKey.parse("IMBUED_WOOL")).save(consumer);
         TipDefinition.builder("ritual_symmetry").requiredResearch(CompoundResearchKey.parse("BASIC_RITUAL")).save(consumer);
+        TipDefinition.builder("induced_attunement").requiredResearch(CompoundResearchKey.parse("AMBROSIA")).save(consumer);
+        TipDefinition.builder("ambrosia_cap").requiredResearch(CompoundResearchKey.parse("AMBROSIA")).save(consumer);
         TipDefinition.builder("power_runes").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
         TipDefinition.builder("rune_hints").requiredResearch(CompoundResearchKey.parse("BASIC_RUNEWORKING")).save(consumer);
     }
