@@ -29,7 +29,7 @@ public class DataPackUtils {
      *       - there's no schema-first model here; there's a deserializer but not a serializer for the datapack format.
      */
 
-    static String itemFilePrefix = "data/primalmagick/affinities/item/";
+    static String itemFilePrefix = "data/primalmagick/affinities/items/";
 
     static String packMCMetaFilename = "pack.mcmeta";
     static String packMCMeta = """
