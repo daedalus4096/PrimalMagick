@@ -12,6 +12,7 @@ v4.0.4
 * Changed ritual lectern to now retrieve books by shift-right-clicking
 * Added debug command to grant mod books
 * Added affinities to some items that were missing them
+* Added tools to help mod and datapack authors identify items needing affinities; thanks Issaferret!
 * Updated to Forge 47.2.0
 
 v4.0.3
