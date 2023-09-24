@@ -1,0 +1,18 @@
+
+#Radial menu settings
+[radial]
+	#If true, the radial menu will try to prevent the mouse from leaving the outer circle
+	clipMouse = false
+	#If true, the radial menu will allow clicking outside the outer circle to activate the highlighted item
+	allowClickOutsideBounds = false
+	#If true, releasing the menu key will activate the highlighted item; otherwise requires a click
+	releaseToSwitch = true
+
+#Misc settings
+[misc]
+	#Whether to show the wand HUD while a wand or staff is held in the main hand.
+	showWandHud = true
+	#Item affinities are hidden by default and pressing shift reveals them.
+	#Setting this to 'true' will reverse this behavior.
+	showAffinities = false
+
