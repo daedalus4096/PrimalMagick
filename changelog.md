@@ -11,6 +11,7 @@ v4.0.4
 * Made enchanted books placeable on vanilla lecterns
 * Changed ritual lectern to now retrieve books by shift-right-clicking
 * Added debug command to grant mod books
+* Updated to Forge 47.2.0
 
 v4.0.3
 ------
