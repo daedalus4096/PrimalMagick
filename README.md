@@ -7,3 +7,16 @@
     <a title="Discord" target="_blank" href="https://discord.gg/VYqn7wGKaS"><img alt="Discord" src="https://img.shields.io/discord/880654627270434896?logo=discord&logoColor=ffffff&label=Discord&color=5865f2"></a>
 </h2>
 <p>Primal Magick is a magick-themed mod for Minecraft.  Research new items, cast spells, and attune yourself to the wonders of magick!  To get started, simply go exploring and check out any ancient shrines you happen to find along the way.  Everything else you need to progress is taught to you in the course of play, no external wikis needed!</p>
+
+
+## For Mod/Modpack Maintainers
+
+### Adding affinities for other mods
+
+PrimalMagick derives affinities for items from their recipes; for base items that have no recipe, you will need to provide datapack-format affinity definitions.
+
+The below commands will make generating these affinities correctly easier when run inside a minecraft instance with PrimalMagic and your mod(s).
+
+/pm affinities lint [all] - iterates over all items to identify which have no sources and logs a list of items that resolve to empty sourceLists in ResourceLocation (mod:itemname) form. Also sends a message to the triggering player with a count of items missing sources. By default, will skip over any entities in minecraft and primalmagick namespaces, on the theory that the mod owner owns the task of maintaining those.
+
+/pm affinities generateDatapack [all] - Performs the same task as above, including skipping minecraft and primalmagick namespaces by default, then writes a datapack to disk in the configured java temp directory containing all the affected items. The path to the file is written to system logs.
