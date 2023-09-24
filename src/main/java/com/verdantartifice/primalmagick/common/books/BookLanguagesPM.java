@@ -36,4 +36,5 @@ public class BookLanguagesPM {
     public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), Style.EMPTY.withFont(new ResourceLocation("default")), 0, BookDefinitionTagsPM.DEFAULT_BOOKS));
     public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), Style.EMPTY.withFont(new ResourceLocation("alt")), -1, BookDefinitionTagsPM.GALACTIC_BOOKS));
     public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), Style.EMPTY.withFont(new ResourceLocation("illageralt")), 20, BookDefinitionTagsPM.ILLAGER_BOOKS));
+    public static final RegistryObject<BookLanguage> SUN = register("sun", () -> new BookLanguage(PrimalMagick.resource("sun"), Style.EMPTY.withFont(PrimalMagick.resource("sun")), 20, BookDefinitionTagsPM.SUN_BOOKS));
 }
