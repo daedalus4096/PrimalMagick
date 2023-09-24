@@ -25,6 +25,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Blocks;
 
 public class AffinityProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -610,6 +611,16 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.SHELTER_POTTERY_SHERD).base(Items.ANGLER_POTTERY_SHERD).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SKULL_POTTERY_SHERD).base(Items.ANGLER_POTTERY_SHERD).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SNORT_POTTERY_SHERD).base(Items.ANGLER_POTTERY_SHERD).build(consumer);
+        ItemAffinityBuilder.emptyAffinity(Blocks.REINFORCED_DEEPSLATE).build(consumer); // Unbreakable
+        ItemAffinityBuilder.emptyAffinity(Blocks.BARRIER).build(consumer);  // Unbreakable
+        ItemAffinityBuilder.emptyAffinity(Blocks.LIGHT).build(consumer);    // Unbreakable
+        ItemAffinityBuilder.emptyAffinity(Blocks.COMMAND_BLOCK).build(consumer);    // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.REPEATING_COMMAND_BLOCK).build(consumer);  // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.CHAIN_COMMAND_BLOCK).build(consumer);  // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.STRUCTURE_BLOCK).build(consumer);  // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.STRUCTURE_VOID).build(consumer);   // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.JIGSAW).build(consumer);   // Creative only
+        ItemAffinityBuilder.emptyAffinity(Blocks.FROGSPAWN).build(consumer);    // Unobtainable
         
         // Define mod affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
@@ -716,7 +727,9 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_RED.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_BLACK.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.MUNDANE_WAND.get()).set(SourceList.EMPTY).build(consumer); // Wands have no affinities
+        ItemAffinityBuilder.emptyAffinity(ItemsPM.MUNDANE_WAND.get()).build(consumer);  // Wands have no affinities
+        ItemAffinityBuilder.emptyAffinity(ItemsPM.MODULAR_WAND.get()).build(consumer);  // Wands have no affinities
+        ItemAffinityBuilder.emptyAffinity(ItemsPM.MODULAR_STAFF.get()).build(consumer); // Wands have no affinities
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOODY_FLESH.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.BLOOD_NOTES.get()).set(Source.BLOOD, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWED_ORB.get()).set(Source.HALLOWED, 25).build(consumer);
@@ -786,6 +799,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_INFERNAL.get()).build(consumer);
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_VOID.get()).build(consumer);
         ItemAffinityBuilder.essenceAffinity(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get()).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SPELL_SCROLL_FILLED.get()).base(ItemsPM.SPELL_SCROLL_BLANK.get()).build(consumer);
         
         // Define vanilla entity type affinities
         EntityTypeAffinityBuilder.entityAffinity(EntityType.ALLAY).value(Source.SKY, 10).value(Source.HALLOWED, 10).build(consumer);
