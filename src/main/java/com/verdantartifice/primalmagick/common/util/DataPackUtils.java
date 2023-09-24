@@ -8,7 +8,9 @@ import java.util.zip.ZipOutputStream;
 
 import org.jetbrains.annotations.Nullable;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -36,10 +38,10 @@ public class DataPackUtils {
         {
             "pack": {
               "description": "Primal Magick ModPack Base Item Affinities",
-              "pack_format": 15
+              "pack_format": %d
             }
         }
-    """;
+    """.formatted(SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA));
 
     // I'm also assuming that explicitly setting 0 for things is free, so if people use these templates without cleaning them up
     // noone'll care.
