@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 20
+  },
+  "target": "primalmagick:static_tablet"
+}

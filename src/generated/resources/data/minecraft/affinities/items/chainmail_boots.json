@@ -1,0 +1,8 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 20,
+    "sky": 20
+  },
+  "target": "minecraft:chainmail_boots"
+}
