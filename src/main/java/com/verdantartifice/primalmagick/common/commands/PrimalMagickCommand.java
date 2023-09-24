@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.commands;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -195,10 +196,14 @@ public class PrimalMagickCommand {
             )
             .then(Commands.literal("affinities")
                 .then(Commands.literal("lint")
-                    .executes((context) -> {return getSourcelessItems(context.getSource());})
+                    // By default, invoke excluding vanilla and PM items on the assumption they should be in the intended place.
+                    .executes((context) -> {return getSourcelessItems(context.getSource(), Arrays.asList("minecraft", "primalmagick"));})
+                    .then(Commands.literal("all").executes((context) -> {return getSourcelessItems(context.getSource(),null);}))
                 )
                 .then(Commands.literal("generateDatapack")
-                    .executes(context -> { return writeSourcelessItemDatapack(context.getSource());})
+                    // By default, invoke excluding vanilla and PM items on the assumption they should be in the intended places.
+                    .executes(context -> { return writeSourcelessItemDatapack(context.getSource(), Arrays.asList("minecraft", "primalmagick"));})
+                    .then(Commands.literal("all").executes((context) -> {return writeSourcelessItemDatapack(context.getSource(),null);}))
                 )
             )
             .then(Commands.literal("recipes")
@@ -621,11 +626,13 @@ public class PrimalMagickCommand {
         return 0;
     }
 
+    
+
     /**
      * getSourcelessItems iterates all item recipes and reports a JSON list of any that render to 0 sources.
      * Intended to assist with modpack linting.
      */
-    private static int getSourcelessItems(CommandSourceStack source) {
+    private static int getSourcelessItems(CommandSourceStack source, Collection<String> excludeNamespaces) {
         ServerPlayer target = source.getPlayer();
 
         Logger LOGGER = LogManager.getLogger();
@@ -634,9 +641,14 @@ public class PrimalMagickCommand {
         net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getRecipeManager();
         RegistryAccess registryAccess = source.registryAccess();
 
-        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level);
+        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
 
-        target.sendSystemMessage(Component.literal("Found " + Integer.toString(sourcelessItems.size()) + " items without sources; check system logs for details"), false);
+        String excludeNote = "";
+        if ( (excludeNamespaces != null) && (excludeNamespaces.size() >0)) {
+            excludeNote = " excluding resource namespaces: "+ String.join(", ", excludeNamespaces);
+        }
+
+        target.sendSystemMessage(Component.literal("Found " + Integer.toString(sourcelessItems.size()) + " items without sources"+ excludeNote + "; check system logs for details"), false);
 
         // note: technically this could result in a list with null elements. which is noncommunicative.
         LOGGER.info("Items with no sources: " + sourcelessItems.stream().map(item -> ForgeRegistries.ITEMS.getKey(item)).toList().toString());
@@ -644,7 +656,7 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static int writeSourcelessItemDatapack(CommandSourceStack source) {
+    private static int writeSourcelessItemDatapack(CommandSourceStack source, Collection<String> excludeNamespaces) {
 
         Logger LOGGER = LogManager.getLogger();
         ServerPlayer target = source.getPlayer();
@@ -652,8 +664,7 @@ public class PrimalMagickCommand {
         net.minecraft.world.item.crafting.RecipeManager recipeManager = source.getRecipeManager();
         RegistryAccess registryAccess = source.registryAccess();
 
-        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level);
-        
+        List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
 
         byte[] itemsToDataPackTemplate;
         try {
@@ -672,6 +683,7 @@ public class PrimalMagickCommand {
             fos.write(itemsToDataPackTemplate);
             fos.close();
 
+            // Being very careful not to make this a tool for users to use to enumerate server attributes.
             target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items to disk; check system logs for location."));
             LOGGER.atInfo().log("Wrote Datapack to "+ filePath );
         } catch (IOException e) {
@@ -684,12 +696,23 @@ public class PrimalMagickCommand {
         return 0;
     }
 
-    private static List<Item> listSourcelessItems(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, ServerLevel level ) {
+    private static List<Item> listSourcelessItems(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, ServerLevel level, Collection<String> excludeNamespaces ) {
         AffinityManager am = AffinityManager.getOrCreateInstance();
 
         Vector<Item> items = new Vector<Item>();
         ForgeRegistries.ITEMS.forEach( (item) -> {
                 ItemStack stack = item.getDefaultInstance();
+
+                ResourceLocation resourceLocation = ForgeRegistries.ITEMS.getKey(item);
+                if (resourceLocation == null) {
+                    // If the Item can't be resolved in registry, it's got problems I can't care about.
+                    return;
+                }
+                String namespace = resourceLocation.getNamespace();
+                if (excludeNamespaces != null && excludeNamespaces.contains(namespace)){
+                    return;
+                }
+
                 CompletableFuture<SourceList> f = am.getAffinityValuesAsync(stack, level);
 
                 try {
