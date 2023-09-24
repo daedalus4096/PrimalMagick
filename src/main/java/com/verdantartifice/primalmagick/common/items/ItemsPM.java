@@ -838,8 +838,9 @@ public class ItemsPM {
     // Register book items
     public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(StaticBookItem.BOOK_BACKGROUND, new Item.Properties().stacksTo(16)));
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(StaticBookItem.TABLET_BACKGROUND, new Item.Properties().stacksTo(16)));
-    public static final RegistryObject<LinguisticsGainItem> CODEX = registerCustom("codex", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(1, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerCustom("codex_creative", LinguisticsGainItem::registerCreativeTabItems, () -> new LinguisticsGainItem(Short.MAX_VALUE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
-    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
+    // TODO Re-add book items to creative tab once the book project is ready to deploy
+    public static final RegistryObject<LinguisticsGainItem> CODEX = registerWithoutTab("codex", () -> new LinguisticsGainItem(1, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerWithoutTab("codex_creative", () -> new LinguisticsGainItem(Short.MAX_VALUE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
 }
