@@ -1,0 +1,5 @@
+{
+  "type": "item",
+  "base": "minecraft:written_book",
+  "target": "primalmagick:static_book"
+}

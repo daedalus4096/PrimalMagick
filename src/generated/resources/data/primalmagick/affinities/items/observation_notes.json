@@ -1,0 +1,12 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 5,
+    "hallowed": 5,
+    "moon": 5,
+    "sea": 5,
+    "sky": 5,
+    "sun": 5
+  },
+  "target": "primalmagick:observation_notes"
+}

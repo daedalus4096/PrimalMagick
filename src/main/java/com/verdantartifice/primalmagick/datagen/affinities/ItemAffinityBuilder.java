@@ -35,6 +35,10 @@ public class ItemAffinityBuilder {
         return itemAffinity(essence).set(essence.getSource(), essence.getEssenceType().getAffinity());
     }
     
+    public static ItemAffinityBuilder emptyAffinity(@Nonnull ItemLike item) {
+        return itemAffinity(item).set(SourceList.EMPTY);
+    }
+    
     public ItemAffinityBuilder base(@Nonnull ItemLike baseItem) {
         this.baseId = ForgeRegistries.ITEMS.getKey(baseItem.asItem());
         return this;

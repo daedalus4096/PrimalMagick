@@ -1,0 +1,7 @@
+{
+  "type": "item",
+  "set": {
+    "earth": 5
+  },
+  "target": "primalmagick:lore_tablet_fragment"
+}
