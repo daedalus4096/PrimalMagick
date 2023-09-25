@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -768,14 +769,11 @@ public class ResearchManager {
         }
         
         // Once all items are processed, then add any accrued observation points to the player's knowledge
-        CompletableFuture.allOf(obsPointsFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
-            obsPointsFutures.forEach(future -> {
-                future.thenAccept(obsPoints -> {
-                    if (obsPoints > 0) {
-                        addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
-                    }
-                });
-            });
+        Util.sequence(obsPointsFutures).thenAccept(obsPointsList -> {
+            int obsPoints = obsPointsList.stream().mapToInt(i -> i).sum();
+            if (obsPoints > 0) {
+                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
+            }
         });
         
         // If any items were successfully scanned, sync the research/knowledge changes to the player's client
