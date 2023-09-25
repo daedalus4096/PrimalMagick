@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.AnalysisResultSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -24,6 +27,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AnalysisTableMenu extends AbstractContainerMenu {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected final Container analysisInventory = new SimpleContainer(2) {
         public int getMaxStackSize() {
             return 1;
@@ -119,9 +124,14 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
             } else if (!stack.isEmpty()) {
                 this.analysisInventory.setItem(0, ItemStack.EMPTY);
                 this.analysisInventory.setItem(1, stack);
-                if (!ResearchManager.isScanned(stack, this.player)) {
-                    ResearchManager.setScanned(stack, serverPlayer);
-                }
+                ResearchManager.isScannedAsync(stack, serverPlayer).thenAccept(isScanned -> {
+                    if (!isScanned) {
+                        ResearchManager.setScanned(stack, serverPlayer);
+                    }
+                }).exceptionally(e -> {
+                    LOGGER.error("Failed to analyze item stack at analysis table: " + stack.toString(), e);
+                    return null;
+                });
             }
         }
     }

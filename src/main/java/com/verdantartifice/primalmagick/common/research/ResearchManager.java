@@ -610,6 +610,21 @@ public class ResearchManager {
         }
     }
     
+    public static CompletableFuture<Boolean> isScannedAsync(@Nullable ItemStack stack, @Nullable Player player) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return CompletableFuture.completedFuture(Boolean.FALSE);
+        }
+        
+        return AffinityManager.getInstance().getAffinityValuesAsync(stack, player.level()).thenApply(affinities -> {
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
+                // If the given itemstack has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
+            return (key != null && key.isKnownByStrict(player));
+        });
+    }
+    
     public static boolean isScanned(@Nullable EntityType<?> type, @Nullable Player player) {
         if (type == null || player == null) {
             return false;
