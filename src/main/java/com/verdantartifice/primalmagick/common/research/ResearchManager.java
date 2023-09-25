@@ -643,6 +643,21 @@ public class ResearchManager {
             return true;
         }
     }
+    
+    public static CompletableFuture<Boolean> isScannedAsync(@Nullable EntityType<?> type, @Nullable Player player) {
+        if (type == null || player == null) {
+            return CompletableFuture.completedFuture(Boolean.FALSE);
+        }
+        
+        return AffinityManager.getInstance().getAffinityValuesAsync(type, player.level().registryAccess()).thenApply(affinities -> {
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
+                // If the given entity has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
+            return (key != null && key.isKnownByStrict(player));
+        });
+    }
 
     public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayer player) {
         // Scan the given itemstack and sync the data to the player's client
