@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
@@ -21,6 +24,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ScanEntityPacket implements IMessageToServer {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected EntityType<?> type;
     
     public ScanEntityPacket() {
@@ -47,13 +52,18 @@ public class ScanEntityPacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 if (message.type != null) {
                     ServerPlayer player = ctx.get().getSender();
-                    if (ResearchManager.isScanned(message.type, player)) {
-                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
-                    } else if (ResearchManager.setScanned(message.type, player)) {
-                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
-                    } else {
-                        player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
-                    }
+                    ResearchManager.isScannedAsync(message.type, player).thenAccept(isScanned -> {
+                        if (isScanned) {
+                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                        } else if (ResearchManager.setScanned(message.type, player)) {
+                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                        } else {
+                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
+                        }
+                    }).exceptionally(e -> {
+                        LOGGER.error("Failed to scan entity type " + message.type.toString(), e);
+                        return null;
+                    });
                 }
             });
             

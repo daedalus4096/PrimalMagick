@@ -404,18 +404,16 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                         return retVal;
                     });
                 }).toList();
-        return CompletableFuture.allOf(recipeSourceFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+        return Util.sequence(recipeSourceFutures).thenApply(recipeSourcesList -> {
             MutableObject<SourceList> retVal = new MutableObject<>(SourceList.EMPTY);
             MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
-            recipeSourceFutures.forEach(recipeSourceFuture -> {
-                recipeSourceFuture.thenAccept(recipeSources -> {
-                    int manaSize = recipeSources.getManaSize();
-                    if (manaSize > 0 && manaSize < maxValue.intValue()) {
-                        // Keep the source list with the smallest non-zero mana footprint
-                        retVal.setValue(recipeSources);
-                        maxValue.setValue(manaSize);
-                    }
-                });
+            recipeSourcesList.forEach(recipeSources -> {
+                int manaSize = recipeSources.getManaSize();
+                if (manaSize > 0 && manaSize < maxValue.intValue()) {
+                    // Keep the source list with the smallest non-zero mana footprint
+                    retVal.setValue(recipeSources);
+                    maxValue.setValue(manaSize);
+                }
             });
             return retVal.getValue();
         });
@@ -434,16 +432,13 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             for (Ingredient ingredient : ingredients) {
                 ingFutures.add(this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history));
             }
-            containerFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
+            containerFuture = Util.sequence(ingFutures).thenApply(ingStackList -> {
                 MutableInt index = new MutableInt(0);
-                for (CompletableFuture<ItemStack> ingFuture : ingFutures) {
-                    ingFuture.thenAccept(ingStack -> {
-                        if (!ingStack.isEmpty()) {
-                            inv.setItem(index.intValue(), ingStack);
-                        }
-                    });
-                    index.increment();
-                }
+                ingStackList.forEach(ingStack -> {
+                    if (!ingStack.isEmpty()) {
+                        inv.setItem(index.intValue(), ingStack);
+                    }
+                });
                 return craftingRecipe.getRemainingItems(inv);
             });
         } else {
@@ -454,10 +449,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         MutableObject<SourceList> intermediate = new MutableObject<>(SourceList.EMPTY);
         List<CompletableFuture<SourceList>> ingFutures = ingredients.stream().map(ingredient -> this.getMatchingItemStackAsync(ingredient, recipeManager, registryAccess, history)
                 .thenCompose(ingStack -> this.getAffinityValuesAsync(ingStack, recipeManager, registryAccess, history))).toList();
-        CompletableFuture<SourceList> intermediateFuture = CompletableFuture.allOf(ingFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
-            ingFutures.forEach(ingFuture -> ingFuture.thenAccept(values -> {
+        CompletableFuture<SourceList> intermediateFuture = Util.sequence(ingFutures).thenApply(valueList -> {
+            valueList.forEach(values -> {
                 intermediate.setValue(intermediate.getValue().add(values));
-            }));
+            });
             return intermediate.getValue();
         });
         
@@ -466,10 +461,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             MutableObject<SourceList> toBeReduced = new MutableObject<>(intermediateSources.copy());
             List<CompletableFuture<SourceList>> reductionFutures = containerList.stream().filter(Predicate.not(ItemStack::isEmpty))
                     .map(containerStack -> this.getAffinityValuesAsync(containerStack, recipeManager, registryAccess, history)).toList();
-            CompletableFuture.allOf(reductionFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
-                reductionFutures.forEach(reductionFuture -> reductionFuture.thenAccept(values -> {
+            Util.sequence(reductionFutures).thenAccept(valueList -> {
+                valueList.forEach(values -> {
                     toBeReduced.setValue(toBeReduced.getValue().remove(values));
-                }));
+                });
             });
             return toBeReduced.getValue();
         });
@@ -553,11 +548,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         }
         
         // Add any detected bonus affinities to the original input
-        return CompletableFuture.allOf(bonusFutures.toArray(CompletableFuture[]::new)).thenApply($ -> {
-            bonusFutures.forEach(bonusFuture -> {
-                bonusFuture.thenAccept(bonus -> {
-                    retVal.setValue(retVal.getValue().add(bonus));
-                });
+        return Util.sequence(bonusFutures).thenApply(bonusList -> {
+            bonusList.forEach(bonus -> {
+                retVal.setValue(retVal.getValue().add(bonus));
             });
             return retVal.getValue();
         });

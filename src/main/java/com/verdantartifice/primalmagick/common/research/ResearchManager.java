@@ -32,6 +32,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -610,6 +611,21 @@ public class ResearchManager {
         }
     }
     
+    public static CompletableFuture<Boolean> isScannedAsync(@Nullable ItemStack stack, @Nullable Player player) {
+        if (stack == null || stack.isEmpty() || player == null) {
+            return CompletableFuture.completedFuture(Boolean.FALSE);
+        }
+        
+        return AffinityManager.getInstance().getAffinityValuesAsync(stack, player.level()).thenApply(affinities -> {
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, stack.getItem()))) {
+                // If the given itemstack has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
+            return (key != null && key.isKnownByStrict(player));
+        });
+    }
+    
     public static boolean isScanned(@Nullable EntityType<?> type, @Nullable Player player) {
         if (type == null || player == null) {
             return false;
@@ -627,6 +643,21 @@ public class ResearchManager {
             // If the affinities for the entity are not ready yet, temporarily consider the entity scanned
             return true;
         }
+    }
+    
+    public static CompletableFuture<Boolean> isScannedAsync(@Nullable EntityType<?> type, @Nullable Player player) {
+        if (type == null || player == null) {
+            return CompletableFuture.completedFuture(Boolean.FALSE);
+        }
+        
+        return AffinityManager.getInstance().getAffinityValuesAsync(type, player.level().registryAccess()).thenApply(affinities -> {
+            if ((affinities == null || affinities.isEmpty()) && (!(player instanceof ServerPlayer) || !hasScanTriggers((ServerPlayer)player, type))) {
+                // If the given entity has no affinities, consider it already scanned
+                return true;
+            }
+            SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
+            return (key != null && key.isKnownByStrict(player));
+        });
     }
 
     public static boolean setScanned(@Nullable ItemStack stack, @Nullable ServerPlayer player) {
@@ -738,14 +769,11 @@ public class ResearchManager {
         }
         
         // Once all items are processed, then add any accrued observation points to the player's knowledge
-        CompletableFuture.allOf(obsPointsFutures.toArray(CompletableFuture[]::new)).thenAccept($ -> {
-            obsPointsFutures.forEach(future -> {
-                future.thenAccept(obsPoints -> {
-                    if (obsPoints > 0) {
-                        addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
-                    }
-                });
-            });
+        Util.sequence(obsPointsFutures).thenAccept(obsPointsList -> {
+            int obsPoints = obsPointsList.stream().mapToInt(i -> i).sum();
+            if (obsPoints > 0) {
+                addKnowledge(player, KnowledgeType.OBSERVATION, obsPoints, false);
+            }
         });
         
         // If any items were successfully scanned, sync the research/knowledge changes to the player's client
