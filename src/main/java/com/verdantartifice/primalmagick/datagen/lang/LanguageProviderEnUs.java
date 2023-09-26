@@ -1538,15 +1538,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
-            .foreword("[Test foreword]")
+            .foreword("Test foreword")
             .text("Sphinx of black quartz, judge my vow! 1234567890.")
-            .afterword("(Test afterword)")
+            .afterword("Test afterword")
             .build();
         this.book(BooksPM.DREAM_JOURNAL).name("Dream Journal").author("Unknown")
             .text("I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of the shrine and found stone laced with a curious dust. Sensing more magick within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase. The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.")
             .build();
         this.book(BooksPM.SOURCE_PRIMER).name("Source Primer").author("Unknown")
-            .foreword("[This book is printed very simply, as if intended for young children.]")
+            .foreword("This book is printed very simply, as if intended for young children.")
             .text("The Earth abides.\nThe Sea flows.\nThe Sky drifts.\nThe Sun shines.\nThe Moon changes.\nThe Blood pumps.\nThe Infernal rages.\nThe Void hungers.\nThe Hallowed sings.")
             .build();
         

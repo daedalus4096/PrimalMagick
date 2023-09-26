@@ -23,6 +23,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
@@ -116,7 +117,7 @@ public class BookHelper {
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
             String key = getForewordTranslationKey(view.bookKey());
             if (I18n.exists(key)) {
-                retVal.addAll(font.split(Component.translatable(key).withStyle(FOREWORD_TEXT_STYLE), TEXT_WIDTH));
+                retVal.addAll(font.split(ComponentUtils.wrapInSquareBrackets(Component.translatable(key)).withStyle(FOREWORD_TEXT_STYLE), TEXT_WIDTH));
                 retVal.add(FormattedCharSequence.EMPTY);
             }
         }
@@ -150,7 +151,7 @@ public class BookHelper {
             String key = getAfterwordTranslationKey(view.bookKey());
             if (I18n.exists(key)) {
                 retVal.add(FormattedCharSequence.EMPTY);
-                retVal.addAll(font.split(Component.translatable(key).withStyle(AFTERWORD_TEXT_STYLE), TEXT_WIDTH));
+                retVal.addAll(font.split(ComponentUtils.wrapInSquareBrackets(Component.translatable(key)).withStyle(AFTERWORD_TEXT_STYLE), TEXT_WIDTH));
             }
         }
         
