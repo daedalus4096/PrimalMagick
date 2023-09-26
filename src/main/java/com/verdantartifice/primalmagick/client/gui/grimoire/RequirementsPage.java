@@ -120,7 +120,7 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Init research requirement widgets
-        if (this.stage.getRequiredResearch() != null) {
+        if (!this.stage.getRequiredResearch().isEmpty()) {
             y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getResearchRequirementCompletion(mc.player);
             for (int index = 0; index < this.stage.getRequiredResearch().getKeys().size(); index++) {
@@ -185,7 +185,7 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Render research requirement section
-        if (this.stage.getRequiredResearch() != null) {
+        if (!this.stage.getRequiredResearch().isEmpty()) {
             Component leadComponent = Component.translatable("grimoire.primalmagick.required_research_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;

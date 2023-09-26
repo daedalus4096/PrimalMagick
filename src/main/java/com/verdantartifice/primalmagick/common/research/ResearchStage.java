@@ -259,7 +259,7 @@ public class ResearchStage {
     }
     
     public boolean hasPrerequisites() {
-        return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || this.requiredResearch != null;
+        return !this.mustObtain.isEmpty() || !this.mustCraft.isEmpty() || !this.requiredKnowledge.isEmpty() || (this.requiredResearch != null && !this.requiredResearch.isEmpty());
     }
     
     public boolean arePrerequisitesMet(@Nullable Player player) {

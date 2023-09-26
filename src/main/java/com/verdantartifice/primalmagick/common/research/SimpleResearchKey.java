@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
+import net.minecraft.util.StringUtil;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -128,6 +129,10 @@ public class SimpleResearchKey {
     
     public int getStage() {
         return this.stage.orElse(-1);
+    }
+    
+    public boolean isEmpty() {
+        return StringUtil.isNullOrEmpty(this.rootKey) && this.stage.isEmpty();
     }
     
     @Nonnull

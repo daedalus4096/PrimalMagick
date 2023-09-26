@@ -116,6 +116,10 @@ public class CompoundResearchKey {
         return this.requireAll;
     }
     
+    public boolean isEmpty() {
+        return this.keys.isEmpty() || this.keys.stream().allMatch(SimpleResearchKey::isEmpty);
+    }
+    
     public boolean isKnownBy(@Nullable Player player) {
         if (this.equals(EMPTY)) {
             return true;

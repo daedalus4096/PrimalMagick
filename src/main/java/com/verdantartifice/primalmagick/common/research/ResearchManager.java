@@ -209,10 +209,8 @@ public class ResearchManager {
                         }
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
-                            if (stage.getRequiredResearch() != null) {
-                                for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                    completeResearch(player, requiredKey);
-                                }
+                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                completeResearch(player, requiredKey);
                             }
                         }
                     }
@@ -223,7 +221,7 @@ public class ResearchManager {
                     // Mark as updated any research entry that has a stage which requires completion of this entry
                     for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
                         for (ResearchStage searchStage : searchEntry.getStages()) {
-                            if (searchStage.getRequiredResearch() != null && searchStage.getRequiredResearch().contains(strippedKey)) {
+                            if (searchStage.getRequiredResearch().contains(strippedKey)) {
                                 knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                                 break;
                             }
@@ -249,10 +247,8 @@ public class ResearchManager {
                         }
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
-                            if (stage.getRequiredResearch() != null) {
-                                for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                    completeResearch(player, requiredKey);
-                                }
+                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                                completeResearch(player, requiredKey);
                             }
                         }
                     }
