@@ -826,6 +826,7 @@ public class PrimalMagickCommand {
             ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
             StaticBookItem.setBookDefinition(bookStack, BooksPM.BOOKS.get().getValue(bookId));
             StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId));
+            StaticBookItem.setGeneration(bookStack, 0);
             StaticBookItem.setTranslatedComprehension(bookStack, comprehension);
             
             for (ServerPlayer serverPlayer : targets) {
