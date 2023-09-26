@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -22,6 +23,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.crafting.PartialNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -137,6 +139,17 @@ public class RitualRecipeBuilder {
      */
     public RitualRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(tag, 1);
+    }
+    
+    /**
+     * Add an ingredient to the recipe that requires a partial NBT match on one or more item types.
+     * 
+     * @param nbt the NBT data which must be satisfied for an ingredient match
+     * @param items the types of allowed items for the ingredient to be added
+     * @return the modified builder
+     */
+    public RitualRecipeBuilder addIngredientNbtPartial(CompoundTag nbt, ItemLike... items) {
+        return this.addIngredient(PartialNBTIngredient.of(nbt, items));
     }
     
     /**

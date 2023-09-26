@@ -1,17 +1,19 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -42,8 +44,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class StaticBookItem extends Item {
-    public static final ResourceLocation BOOK_BACKGROUND = new ResourceLocation("textures/gui/book.png");
-    public static final ResourceLocation TABLET_BACKGROUND = PrimalMagick.resource("textures/gui/tablet.png");
     public static final String TAG_BOOK_ID = "BookId";
     public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
@@ -52,12 +52,24 @@ public class StaticBookItem extends Item {
     public static final int MAX_GENERATION = 2;
     
     protected static final DecimalFormat COMPREHENSION_FORMATTER = new DecimalFormat("###.#");
+    protected static final Map<BookType, StaticBookItem> TYPE_MAP = new HashMap<>();
     
     protected final ResourceLocation bgTexture;
 
-    public StaticBookItem(ResourceLocation bgTexture, Item.Properties properties) {
+    public StaticBookItem(BookType type, Item.Properties properties) {
         super(properties);
-        this.bgTexture = bgTexture;
+        this.bgTexture = type.getBackgroundTexture();
+        TYPE_MAP.put(type, this);
+    }
+    
+    public static ItemStack make(BookType type, Optional<BookDefinition> bookDefOpt, Optional<BookLanguage> bookLangOpt, Optional<String> authorOpt, OptionalInt generationOpt, OptionalInt translationOpt) {
+        ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
+        bookDefOpt.ifPresent(bookDef -> setBookDefinition(retVal, bookDef));
+        bookLangOpt.ifPresent(bookLang -> setBookLanguage(retVal, bookLang));
+        authorOpt.ifPresent(authorOverride -> setAuthorOverride(retVal, authorOverride));
+        generationOpt.ifPresent(generation -> setGeneration(retVal, generation));
+        setTranslatedComprehension(retVal, translationOpt);
+        return retVal;
     }
     
     protected static MutableComponent getStaticAttribute(ResourceLocation bookId, String attrName) {

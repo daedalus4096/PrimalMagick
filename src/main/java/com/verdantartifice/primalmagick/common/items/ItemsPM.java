@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.books.CodexType;
 import com.verdantartifice.primalmagick.common.creative.CreativeModeTabsPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
@@ -836,11 +838,11 @@ public class ItemsPM {
     public static final RegistryObject<Item> DRAINED_MAJESTIC_HALLOWED_PIXIE = registerWithoutTab("drained_pixie_majestic_hallowed", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
     
     // Register book items
-    public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(StaticBookItem.BOOK_BACKGROUND, new Item.Properties().stacksTo(16)));
-    public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(StaticBookItem.TABLET_BACKGROUND, new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
     // TODO Re-add book items to creative tab once the book project is ready to deploy
-    public static final RegistryObject<LinguisticsGainItem> CODEX = registerWithoutTab("codex", () -> new LinguisticsGainItem(1, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerWithoutTab("codex_creative", () -> new LinguisticsGainItem(Short.MAX_VALUE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
+    public static final RegistryObject<LinguisticsGainItem> CODEX = registerWithoutTab("codex", () -> new LinguisticsGainItem(CodexType.DEFAULT, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerWithoutTab("codex_creative", () -> new LinguisticsGainItem(CodexType.CREATIVE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
     public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
 }

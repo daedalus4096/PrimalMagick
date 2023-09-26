@@ -1,0 +1,36 @@
+{
+  "type": "primalmagick:ritual",
+  "ingredients": [
+    {
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:static_book",
+        "primalmagick:static_tablet"
+      ],
+      "nbt": "{BookLanguageId:\"primalmagick:sun\",Generation:0}"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "item": "primalmagick:sunwood_sapling"
+    }
+  ],
+  "instability": 1,
+  "mana": {
+    "sun": 50
+  },
+  "props": [
+    {
+      "tag": "primalmagick:ritual_candles"
+    },
+    {
+      "block": "primalmagick:ritual_lectern"
+    }
+  ],
+  "research": "ROSETTA_ARCANA",
+  "result": {
+    "item": "primalmagick:codex",
+    "nbt": "{BookLanguageId:\"primalmagick:sun\"}"
+  }
+}

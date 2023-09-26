@@ -1233,6 +1233,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.DOWSING_ROD.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("ROSETTA_ARCANA", discipline).icon(ItemsPM.CODEX.get()).parent("EXPERT_RITUAL")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.LORE_TABLET_FRAGMENT.get(), 4).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().recipe(PrimalMagick.resource("sun_codex")).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
