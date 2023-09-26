@@ -87,6 +87,10 @@ public class StaticBookItem extends Item {
         return Optional.empty();
     }
     
+    public static boolean hasBookDefinition(ItemStack stack) {
+        return getBookId(stack).isPresent();
+    }
+    
     public static BookDefinition getBookDefinition(ItemStack stack) {
         return getBookId(stack).map(BooksPM.BOOKS.get()::getValue).orElse(BooksPM.TEST_BOOK.get());
     }
@@ -105,6 +109,10 @@ public class StaticBookItem extends Item {
             }
         }
         return Optional.empty();
+    }
+    
+    public static boolean hasBookLanguage(ItemStack stack) {
+        return getBookLanguageId(stack).isPresent();
     }
     
     public static BookLanguage getBookLanguage(ItemStack stack) {
@@ -179,9 +187,9 @@ public class StaticBookItem extends Item {
         if (hasAuthor(pStack)) {
             pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
         }
-        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", getBookLanguage(pStack).getName()).withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
-        if (lang.isComplex()) {
+        if (hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
             Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
             BookDefinition def = getBookDefinition(pStack);
             OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
