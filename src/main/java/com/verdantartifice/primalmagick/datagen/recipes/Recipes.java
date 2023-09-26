@@ -1,14 +1,21 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.books.CodexType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.items.books.LinguisticsGainItem;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -87,6 +94,7 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceCaskRecipes(consumer);
         this.registerAttunementShacklesRecipes(consumer);
         this.registerWardingModuleRecipes(consumer);
+        this.registerCodexRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6534,5 +6542,9 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_WARDING_MODULE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 400))
             .build(consumer);
+    }
+    
+    protected void registerCodexRecipes(Consumer<FinishedRecipe> consumer) {
+        // TODO Re-add codex ritual recipes once the book project is ready to deploy
     }
 }

@@ -34,10 +34,10 @@ public abstract class AbstractPage {
     public abstract void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY);
     
     /**
-     * Get the translation key for this page's title
-     * @return the translation key for this page's title
+     * Get the text for this page's title
+     * @return the text for this page's title
      */
-    protected abstract String getTitleTranslationKey();
+    protected abstract Component getTitleText();
     
     /**
      * Create the widgets to show on this grimoire page
@@ -61,7 +61,7 @@ public abstract class AbstractPage {
             guiGraphics.blit(GRIMOIRE_TEXTURE, x + 10 + (side * 140), y + 18, 24, 184, 96, 5);   // Render the separator bar above the title text
         }
         guiGraphics.blit(GRIMOIRE_TEXTURE, x + 10 + (side * 140), y + 35, 24, 184, 96, 5);   // Render the separator bar below the title text
-        Component headerText = Component.translatable(this.getTitleTranslationKey());
+        Component headerText = this.getTitleText();
         int width = mc.font.width(headerText.getString());
         int indent = 124;
         if (width <= 124) {

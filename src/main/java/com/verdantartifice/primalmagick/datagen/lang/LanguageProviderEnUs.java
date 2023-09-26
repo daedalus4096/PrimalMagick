@@ -860,8 +860,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.BASIC_WARDING_MODULE).name("Warding Module").build();
         this.item(ItemsPM.GREATER_WARDING_MODULE).name("Greater Warding Module").build();
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
-        this.item(ItemsPM.STATIC_BOOK).name("Unknown Book").build();
-        this.item(ItemsPM.STATIC_TABLET).name("Unknown Tablet").build();
+        this.item(ItemsPM.STATIC_BOOK).name("Any Book").build();
+        this.item(ItemsPM.STATIC_TABLET).name("Any Tablet").build();
         this.item(ItemsPM.CODEX).name("Codex: %1$s").build();
         this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();

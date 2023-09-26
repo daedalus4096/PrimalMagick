@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.CodexType;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -35,12 +38,20 @@ import net.minecraft.world.level.Level;
  */
 public class LinguisticsGainItem extends Item {
     public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
+    protected static final Map<CodexType, LinguisticsGainItem> TYPE_MAP = new HashMap<>();
 
     protected final int amount;
 
-    public LinguisticsGainItem(int amount, Item.Properties properties) {
+    public LinguisticsGainItem(CodexType type, Item.Properties properties) {
         super(properties);
-        this.amount = amount;
+        this.amount = type.getAmount();
+        TYPE_MAP.put(type, this);
+    }
+    
+    public static ItemStack make(CodexType type, Optional<BookLanguage> bookLangOpt) {
+        ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
+        bookLangOpt.ifPresent(bookLang -> setBookLanguage(retVal, bookLang));
+        return retVal;
     }
 
     protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {

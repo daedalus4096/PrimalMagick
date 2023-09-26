@@ -1,17 +1,19 @@
 package com.verdantartifice.primalmagick.common.items.books;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.BookHelper;
 import com.verdantartifice.primalmagick.client.books.BookView;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -42,8 +44,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * @author Daedalus4096
  */
 public class StaticBookItem extends Item {
-    public static final ResourceLocation BOOK_BACKGROUND = new ResourceLocation("textures/gui/book.png");
-    public static final ResourceLocation TABLET_BACKGROUND = PrimalMagick.resource("textures/gui/tablet.png");
     public static final String TAG_BOOK_ID = "BookId";
     public static final String TAG_BOOK_LANGUAGE_ID = "BookLanguageId";
     public static final String TAG_AUTHOR_OVERRIDE = "AuthorOverride";
@@ -52,12 +52,24 @@ public class StaticBookItem extends Item {
     public static final int MAX_GENERATION = 2;
     
     protected static final DecimalFormat COMPREHENSION_FORMATTER = new DecimalFormat("###.#");
+    protected static final Map<BookType, StaticBookItem> TYPE_MAP = new HashMap<>();
     
     protected final ResourceLocation bgTexture;
 
-    public StaticBookItem(ResourceLocation bgTexture, Item.Properties properties) {
+    public StaticBookItem(BookType type, Item.Properties properties) {
         super(properties);
-        this.bgTexture = bgTexture;
+        this.bgTexture = type.getBackgroundTexture();
+        TYPE_MAP.put(type, this);
+    }
+    
+    public static ItemStack make(BookType type, Optional<BookDefinition> bookDefOpt, Optional<BookLanguage> bookLangOpt, Optional<String> authorOpt, OptionalInt generationOpt, OptionalInt translationOpt) {
+        ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
+        bookDefOpt.ifPresent(bookDef -> setBookDefinition(retVal, bookDef));
+        bookLangOpt.ifPresent(bookLang -> setBookLanguage(retVal, bookLang));
+        authorOpt.ifPresent(authorOverride -> setAuthorOverride(retVal, authorOverride));
+        generationOpt.ifPresent(generation -> setGeneration(retVal, generation));
+        setTranslatedComprehension(retVal, translationOpt);
+        return retVal;
     }
     
     protected static MutableComponent getStaticAttribute(ResourceLocation bookId, String attrName) {
@@ -73,6 +85,10 @@ public class StaticBookItem extends Item {
             }
         }
         return Optional.empty();
+    }
+    
+    public static boolean hasBookDefinition(ItemStack stack) {
+        return getBookId(stack).isPresent();
     }
     
     public static BookDefinition getBookDefinition(ItemStack stack) {
@@ -95,6 +111,10 @@ public class StaticBookItem extends Item {
         return Optional.empty();
     }
     
+    public static boolean hasBookLanguage(ItemStack stack) {
+        return getBookLanguageId(stack).isPresent();
+    }
+    
     public static BookLanguage getBookLanguage(ItemStack stack) {
         return getBookLanguageId(stack).map(BookLanguagesPM.LANGUAGES.get()::getValue).orElse(BookLanguagesPM.DEFAULT.get());
     }
@@ -104,13 +124,12 @@ public class StaticBookItem extends Item {
         return stack;
     }
 
-    @Override
-    public Component getName(ItemStack pStack) {
-        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
-    }
-    
     protected static Component getNameFromBookId(ResourceLocation bookId) {
         return getStaticAttribute(bookId, "title");
+    }
+    
+    public static boolean hasAuthor(ItemStack stack) {
+        return stack.hasTag() && (!StringUtil.isNullOrEmpty(stack.getTag().getString(TAG_AUTHOR_OVERRIDE)) || !StringUtil.isNullOrEmpty(stack.getTag().getString(TAG_BOOK_ID)));
     }
     
     public static Component getAuthor(ItemStack stack) {
@@ -157,13 +176,20 @@ public class StaticBookItem extends Item {
     }
 
     @Override
+    public Component getName(ItemStack pStack) {
+        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
+    }
+    
+    @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         BookLanguage lang = getBookLanguage(pStack);
-        pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
-        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", getBookLanguage(pStack).getName()).withStyle(ChatFormatting.GRAY));
+        if (hasAuthor(pStack)) {
+            pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        }
+        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
-        if (lang.isComplex()) {
+        if (hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
             Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
             BookDefinition def = getBookDefinition(pStack);
             OptionalInt translatedComprehension = getTranslatedComprehension(pStack);

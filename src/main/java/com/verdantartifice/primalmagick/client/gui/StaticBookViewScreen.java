@@ -15,9 +15,9 @@ import com.verdantartifice.primalmagick.client.books.BookView;
 import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.client.GameNarrator;
@@ -64,7 +64,7 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, StaticBookItem.BOOK_BACKGROUND, false);
+        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, BookType.BOOK.getBackgroundTexture(), false);
     }
     
     public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, ResourceLocation bgTexture) {

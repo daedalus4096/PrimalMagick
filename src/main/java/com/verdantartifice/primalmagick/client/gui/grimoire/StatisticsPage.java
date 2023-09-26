@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 /**
  * Grimoire page showing the player's mod-relevant statistics (e.g. the number of times they cast
@@ -62,8 +63,8 @@ public class StatisticsPage extends AbstractPage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return "grimoire.primalmagick.stats_header";
+    protected Component getTitleText() {
+        return Component.translatable("grimoire.primalmagick.stats_header");
     }
 
     @Override

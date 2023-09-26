@@ -1233,6 +1233,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.DOWSING_ROD.get()).build())
             .build(consumer);
+        // TODO Re-add Rosetta Arcana research once the book project is ready to deploy
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {

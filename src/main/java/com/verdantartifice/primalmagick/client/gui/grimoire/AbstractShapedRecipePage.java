@@ -31,8 +31,9 @@ public abstract class AbstractShapedRecipePage<T extends IShapedRecipe<?>> exten
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
+    protected Component getTitleText() {
+        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        return stack.getItem().getName(stack);
     }
 
     @Override
