@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -79,8 +80,8 @@ public class AttunementPage extends AbstractPage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return this.source.getNameTranslationKey();
+    protected Component getTitleText() {
+        return Component.translatable(this.source.getNameTranslationKey());
     }
 
     @Override

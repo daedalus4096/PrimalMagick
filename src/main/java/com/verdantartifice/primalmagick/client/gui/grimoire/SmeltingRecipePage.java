@@ -27,8 +27,9 @@ public class SmeltingRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
+    protected Component getTitleText() {
+        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        return stack.getItem().getName(stack);
     }
 
     @Override

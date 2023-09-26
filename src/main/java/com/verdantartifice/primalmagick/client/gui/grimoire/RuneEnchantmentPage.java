@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.runes.RuneType;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -57,8 +58,8 @@ public class RuneEnchantmentPage extends AbstractPage {
     }
     
     @Override
-    protected String getTitleTranslationKey() {
-        return this.enchant.getDescriptionId();
+    protected Component getTitleText() {
+        return Component.translatable(this.enchant.getDescriptionId());
     }
     
     @Override

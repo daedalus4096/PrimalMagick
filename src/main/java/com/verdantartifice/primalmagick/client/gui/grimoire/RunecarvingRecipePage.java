@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Grimoire page showing a runecarving recipe.
@@ -26,8 +27,9 @@ public class RunecarvingRecipePage extends AbstractRecipePage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return this.recipe.getResultItem(this.registryAccess).getDescriptionId();
+    protected Component getTitleText() {
+        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        return stack.getItem().getName(stack);
     }
 
     @Override

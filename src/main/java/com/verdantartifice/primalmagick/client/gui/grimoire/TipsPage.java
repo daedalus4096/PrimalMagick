@@ -55,8 +55,8 @@ public class TipsPage extends AbstractPage {
     }
     
     @Override
-    protected String getTitleTranslationKey() {
-        return "grimoire.primalmagick.tips_header";
+    protected Component getTitleText() {
+        return Component.translatable("grimoire.primalmagick.tips_header");
     }
 
     @Override

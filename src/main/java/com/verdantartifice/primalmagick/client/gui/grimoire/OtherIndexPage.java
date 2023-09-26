@@ -33,8 +33,8 @@ public class OtherIndexPage extends AbstractPage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return "grimoire.primalmagick.other_header";
+    protected Component getTitleText() {
+        return Component.translatable("grimoire.primalmagick.other_header");
     }
 
     @Override

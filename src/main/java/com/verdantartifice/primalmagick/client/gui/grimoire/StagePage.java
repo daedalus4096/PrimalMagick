@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 /**
  * Grimoire page showing the page elements for a research stage.
@@ -44,8 +45,8 @@ public class StagePage extends AbstractPage {
     }
     
     @Override
-    protected String getTitleTranslationKey() {
-        return this.stage.getResearchEntry().getNameTranslationKey();
+    protected Component getTitleText() {
+        return Component.translatable(this.stage.getResearchEntry().getNameTranslationKey());
     }
     
     @Override

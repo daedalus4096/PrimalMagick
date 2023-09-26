@@ -47,8 +47,8 @@ public class RecipeIndexPage extends AbstractPage {
     }
     
     @Override
-    protected String getTitleTranslationKey() {
-        return "grimoire.primalmagick.recipe_index_header";
+    protected Component getTitleText() {
+        return Component.translatable("grimoire.primalmagick.recipe_index_header");
     }
 
     @Override

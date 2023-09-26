@@ -43,8 +43,8 @@ public class RequirementsPage extends AbstractPage {
     }
 
     @Override
-    protected String getTitleTranslationKey() {
-        return "grimoire.primalmagick.requirements_header";
+    protected Component getTitleText() {
+        return Component.translatable("grimoire.primalmagick.requirements_header");
     }
     
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {

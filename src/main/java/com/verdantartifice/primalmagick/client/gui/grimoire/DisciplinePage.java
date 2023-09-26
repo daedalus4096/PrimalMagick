@@ -50,8 +50,8 @@ public class DisciplinePage extends AbstractPage {
     }
     
     @Override
-    protected String getTitleTranslationKey() {
-        return this.discipline.getNameTranslationKey();
+    protected Component getTitleText() {
+        return Component.translatable(this.discipline.getNameTranslationKey());
     }
 
     @Override
