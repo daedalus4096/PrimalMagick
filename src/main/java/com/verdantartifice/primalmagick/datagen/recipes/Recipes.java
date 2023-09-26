@@ -6545,16 +6545,6 @@ public class Recipes extends RecipeProvider {
     }
     
     protected void registerCodexRecipes(Consumer<FinishedRecipe> consumer) {
-        RitualRecipeBuilder.ritualRecipe(LinguisticsGainItem.make(CodexType.DEFAULT, Optional.of(BookLanguagesPM.SUN.get())))
-            .addIngredientNbtPartial(StaticBookItem.make(BookType.BOOK, Optional.empty(), Optional.of(BookLanguagesPM.SUN.get()), Optional.empty(), OptionalInt.of(0), OptionalInt.empty()).getTag(), 
-                    ItemsPM.STATIC_BOOK.get(), ItemsPM.STATIC_TABLET.get())
-            .addIngredient(Tags.Items.GEMS_DIAMOND)
-            .addIngredient(ItemsPM.SUNWOOD_SAPLING.get())
-            .addProp(BlockTagsPM.RITUAL_CANDLES)
-            .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ROSETTA_ARCANA")))
-            .manaCost(SourceList.builder().withSun(50).build())
-            .instability(1)
-            .build(consumer, PrimalMagick.resource("sun_codex"));
+        // TODO Re-add codex ritual recipes once the book project is ready to deploy
     }
 }
