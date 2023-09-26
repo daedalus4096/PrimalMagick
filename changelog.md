@@ -1,3 +1,9 @@
+v4.0.5
+------
+* Fixed a progression-breaking bug with the Analysis Table and Arcanometer
+* Fixed a bug causing empty requirements sections to be shown for research entries in the Grimoire
+* Fixed some error spam when reloading resource packs
+
 v4.0.4
 ------
 * Moved affinity calculation to a background thread to improve performance in large modpacks
