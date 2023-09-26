@@ -116,13 +116,12 @@ public class StaticBookItem extends Item {
         return stack;
     }
 
-    @Override
-    public Component getName(ItemStack pStack) {
-        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
-    }
-    
     protected static Component getNameFromBookId(ResourceLocation bookId) {
         return getStaticAttribute(bookId, "title");
+    }
+    
+    public static boolean hasAuthor(ItemStack stack) {
+        return stack.hasTag() && (!StringUtil.isNullOrEmpty(stack.getTag().getString(TAG_AUTHOR_OVERRIDE)) || !StringUtil.isNullOrEmpty(stack.getTag().getString(TAG_BOOK_ID)));
     }
     
     public static Component getAuthor(ItemStack stack) {
@@ -169,10 +168,17 @@ public class StaticBookItem extends Item {
     }
 
     @Override
+    public Component getName(ItemStack pStack) {
+        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
+    }
+    
+    @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         BookLanguage lang = getBookLanguage(pStack);
-        pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        if (hasAuthor(pStack)) {
+            pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+        }
         pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", getBookLanguage(pStack).getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
         if (lang.isComplex()) {

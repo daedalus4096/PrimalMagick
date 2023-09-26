@@ -3194,6 +3194,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Well, it's simple, but I think it will do the job.<BR>Waving this dowsing rod at a ritual altar will give me a rough idea of how stable my current ritual layout is.  In addition, waving it at a prop or an offering pedestal will give me feedback on its placement.<BR>I mustn't forget, however, that a complex ritual can quickly overwhelm even a very good layout if I'm not quick and efficient in stepping through the process.")
                 .end()
             .build();
+        this.researchEntry("ROSETTA_ARCANA").name("Rosetta Arcana")
+            .stages()
+                .add("Lorem ipsum 1")
+                .add("Lorem ipsum 2")
+                .end()
+            .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")
             .stages()
                 .add("I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!")
