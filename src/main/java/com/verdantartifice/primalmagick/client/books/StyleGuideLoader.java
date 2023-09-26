@@ -48,6 +48,7 @@ public class StyleGuideLoader extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // Load style guides explicitly defined in resource packs
+        StyleGuideManager.clearStyleGuides();
         pObject.entrySet().forEach(entry -> {
             ResourceLocation location = entry.getKey();
             // Filter anything beginning with "_" as it's used for metadata.

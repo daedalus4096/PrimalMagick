@@ -22,10 +22,14 @@ import net.minecraft.world.entity.player.Player;
 public class TipManager {
     protected static final Map<ResourceLocation, TipDefinition> REGISTRY = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
+    
+    public static void clearTips() {
+        REGISTRY.clear();
+    }
 
     public static void setTipDefinition(ResourceLocation id, TipDefinition tip) {
         if (REGISTRY.containsKey(id)) {
-            LOGGER.error("Tip definition {} is already registered", id.toString());
+            LOGGER.warn("Tip definition {} is already registered", id.toString());
         } else {
             REGISTRY.put(id, tip);
         }

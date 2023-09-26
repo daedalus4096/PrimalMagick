@@ -48,6 +48,7 @@ public class TipLoader extends SimpleJsonResourceReloadListener {
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
         // Load tip definitions explicitly defined in resource packs
+        TipManager.clearTips();
         pObject.entrySet().forEach(entry -> {
             ResourceLocation location = entry.getKey();
             // Filter anything beginning with "_" as it's used for metadata.

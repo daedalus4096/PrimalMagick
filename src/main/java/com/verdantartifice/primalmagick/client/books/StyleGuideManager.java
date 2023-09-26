@@ -19,10 +19,14 @@ import net.minecraft.resources.ResourceLocation;
 public class StyleGuideManager {
     protected static final Map<ResourceLocation, StyleGuide> REGISTRY = new HashMap<>();
     private static final Logger LOGGER = LogManager.getLogger();
+    
+    public static void clearStyleGuides() {
+        REGISTRY.clear();
+    }
 
     public static void setStyleGuide(ResourceLocation id, StyleGuide guide) {
         if (REGISTRY.containsKey(id)) {
-            LOGGER.error("Style guide for language {} is already registered with {} entries", id.toString(), guide.size());
+            LOGGER.warn("Style guide for language {} is already registered with {} entries", id.toString(), guide.size());
         } else {
             REGISTRY.put(id, guide);
         }
