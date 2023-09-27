@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -25,6 +26,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.FormattedCharSequence;
@@ -55,11 +57,13 @@ public class BookHelper {
     private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
     private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
     private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
+    private static Function<BookView, Component> memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
     
     public static void invalidate() {
         memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
         memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
         memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
+        memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
     }
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
@@ -73,6 +77,22 @@ public class BookHelper {
     private static String getAfterwordTranslationKey(ResourceKey<?> bookKey) {
         if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
             return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "afterword");
+        } else {
+            return "tooltip.primalmagick.question_marks";
+        }
+    }
+
+    private static String getTitleTranslationKey(ResourceKey<?> bookKey) {
+        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "title");
+        } else {
+            return "tooltip.primalmagick.question_marks";
+        }
+    }
+
+    private static String getAuthorTranslationKey(ResourceKey<?> bookKey) {
+        if (bookKey.isFor(RegistryKeysPM.BOOKS)) {
+            return String.join(".", "written_book", bookKey.location().getNamespace(), bookKey.location().getPath(), "author");
         } else {
             return "tooltip.primalmagick.question_marks";
         }
@@ -169,16 +189,50 @@ public class BookHelper {
         return Mth.ceil((float)getTextLines(view, font).size() / (float)MAX_LINES_PER_PAGE);
     }
     
+    public static Component getTitleText(BookView view) {
+        return memoizedTitleText.apply(view);
+    }
+    
+    private static Component getTitleTextInner(BookView view) {
+        MutableComponent retVal = Component.empty();
+        String titleTranslationKey = getTitleTranslationKey(view.bookKey());
+        final BookLanguage lang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
+                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
+                BookLanguagesPM.DEFAULT.get();
+        final Lexicon langLex = LexiconManager.getLexicon(lang.languageId()).orElseThrow();
+        final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
+        
+        // Add the encoded title text
+        Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(Component.translatable(titleTranslationKey)))).forEach(word -> {
+            if (SEPARATOR_ONLY.matcher(word).matches()) {
+                // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.complexity())) {
+                // If the word has been translated, then add it directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else {
+                // If the word has not been translated, then add an encoded replacement word
+                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
+            }
+        });
+        return retVal;
+    }
+    
     public static List<String> getUnencodedWords(BookDefinition bookDef) {
         return memoizedUnencodedWords.apply(bookDef);
     }
     
     private static List<String> getUnencodedWordsInner(BookDefinition bookDef) {
         List<String> words = new ArrayList<>();
-        String textTranslationKey = getTextTranslationKey(ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId()));
-        Component fullText = Component.translatable(textTranslationKey);
-        WORD_BOUNDARY.splitAsStream(StringDecomposer.getPlainText(fullText)).filter(word -> !SEPARATOR_ONLY.matcher(word).matches()).forEach(words::add);
+        ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId());
+        gatherUnencodedWords(getTextTranslationKey(bookKey), words::add);
+        gatherUnencodedWords(getTitleTranslationKey(bookKey), words::add);
+        gatherUnencodedWords(getAuthorTranslationKey(bookKey), words::add);
         return words;
+    }
+    
+    private static void gatherUnencodedWords(String translationKey, Consumer<String> adder) {
+        WORD_BOUNDARY.splitAsStream(StringDecomposer.getPlainText(Component.translatable(translationKey))).filter(word -> !SEPARATOR_ONLY.matcher(word).matches()).forEach(adder);
     }
     
     /**

@@ -18,11 +18,13 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringUtil;
@@ -177,7 +179,16 @@ public class StaticBookItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
+        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+        if (player != null && getBookId(pStack).isPresent()) {
+            ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, getBookId(pStack).get());
+            BookLanguage language = getBookLanguage(pStack);
+            int comprehension = Math.max(LinguisticsManager.getComprehension(player, language), getTranslatedComprehension(pStack).orElse(0));
+            BookView view = new BookView(bookKey, language.languageId(), comprehension);
+            return BookHelper.getTitleText(view);
+        } else {
+            return super.getName(pStack);
+        }
     }
     
     @Override
