@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.recipe_book;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -69,7 +70,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected int width;
     protected int height;
     protected final GhostRecipe ghostRecipe = new GhostRecipe();
-    protected final List<ArcaneRecipeBookTabButton> tabButtons = new ArrayList<>();
+    protected final List<ArcaneRecipeBookTabButton> tabButtons = Collections.synchronizedList(new ArrayList<>());
     @Nullable
     protected ArcaneRecipeBookTabButton selectedTab;
     protected StateSwitchingButton filterButton;
@@ -157,9 +158,11 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         }
         
         if (this.selectedTab != null) {
-            this.selectedTab = this.tabButtons.stream().filter(tab -> {
-                return tab.getCategory().equals(this.selectedTab.getCategory());
-            }).findFirst().orElse(null);
+            synchronized (this.tabButtons) {
+                this.selectedTab = this.tabButtons.stream().filter(tab -> {
+                    return tab.getCategory().equals(this.selectedTab.getCategory());
+                }).findFirst().orElse(null);
+            }
         }
         if (this.selectedTab == null) {
             this.selectedTab = this.tabButtons.get(0);
@@ -266,16 +269,18 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         int yPos = (this.height - IMAGE_HEIGHT) / 2 + 3;
         int tabCount = 0;
         
-        for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
-            ArcaneRecipeBookCategories category = tab.getCategory();
-            if (category != ArcaneRecipeBookCategories.CRAFTING_SEARCH) {
-                if (tab.updateVisibility(this.vanillaBook, this.arcaneBook)) {
+        synchronized (this.tabButtons) {
+            for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
+                ArcaneRecipeBookCategories category = tab.getCategory();
+                if (category != ArcaneRecipeBookCategories.CRAFTING_SEARCH) {
+                    if (tab.updateVisibility(this.vanillaBook, this.arcaneBook)) {
+                        tab.setPosition(xPos, yPos + 27 * tabCount++);
+                        tab.startAnimation(this.mc, this.vanillaBook, this.arcaneBook);
+                    }
+                } else {
+                    tab.visible = true;
                     tab.setPosition(xPos, yPos + 27 * tabCount++);
-                    tab.startAnimation(this.mc, this.vanillaBook, this.arcaneBook);
                 }
-            } else {
-                tab.visible = true;
-                tab.setPosition(xPos, yPos + 27 * tabCount++);
             }
         }
     }
@@ -320,8 +325,10 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                 this.searchBox.render(guiGraphics, mouseX, mouseY, partialTicks);
             }
             
-            for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
-                tab.render(guiGraphics, mouseX, mouseY, partialTicks);
+            synchronized (this.tabButtons) {
+                for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
+                    tab.render(guiGraphics, mouseX, mouseY, partialTicks);
+                }
             }
             
             this.filterButton.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -397,22 +404,24 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                     }
                     return true;
                 } else {
-                    for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
-                        if (tab.mouseClicked(mouseX, mouseY, buttonIndex)) {
-                            if (this.selectedTab != tab) {
-                                if (this.selectedTab != null) {
-                                    this.selectedTab.setStateTriggered(false);
+                    synchronized (this.tabButtons) {
+                        for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
+                            if (tab.mouseClicked(mouseX, mouseY, buttonIndex)) {
+                                if (this.selectedTab != tab) {
+                                    if (this.selectedTab != null) {
+                                        this.selectedTab.setStateTriggered(false);
+                                    }
+                                    this.selectedTab = tab;
+                                    this.selectedTab.setStateTriggered(true);
+                                    if (!this.isLoading) {
+                                        this.updateCollections(true);
+                                    }
                                 }
-                                this.selectedTab = tab;
-                                this.selectedTab.setStateTriggered(true);
-                                if (!this.isLoading) {
-                                    this.updateCollections(true);
-                                }
+                                return true;
                             }
-                            return true;
                         }
+                        return false;
                     }
-                    return false;
                 }
             }
         } else {
