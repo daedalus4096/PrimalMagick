@@ -2035,7 +2035,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry("STONEMELDING").name("Stonemelding")
             .stages()
                 .add("Stone is an excellent material to build with because it's so unyielding.  But that same inflexibility also makes it a pain to work with.  Cobblestone is frequently an acceptable substitute, but sometimes you need a single, solid block, not a mass of small boulders.<BR>I should study the mundane process of making stone from cobble to see if a more alchemical solution presents itself.")
-                .add("As I hoped, alchemy was the answer here.  Sprinkling a handful of earth dust into the cracks of some blocks of cobblestone will cause the mass to become temporarily pliable, like wet clay.  I can then take the individual cobbles and mash them together.")
+                .add("As I hoped, alchemy was the answer here.  Sprinkling a handful of earth dust into the cracks of some blocks of cobblestone will cause the mass to become temporarily pliable, like wet clay.  I can then take the individual cobbles and mash them together.<BR>Even better, the process works with other types of particulate stone as well.  With a little bit of earth dust, I can gradually increase the particle size of the rock until it becomes fully solid.")
                 .end()
             .build();
         this.researchEntry("SKYGLASS").name("Skyglass")

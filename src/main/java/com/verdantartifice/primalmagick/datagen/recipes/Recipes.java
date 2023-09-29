@@ -88,6 +88,7 @@ public class Recipes extends RecipeProvider {
         this.registerAttunementShacklesRecipes(consumer);
         this.registerWardingModuleRecipes(consumer);
         this.registerCodexRecipes(consumer);
+        this.registerStonemeldingRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -153,14 +154,6 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.parse("SEASCRIBE_PEN")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 10)) // FIXME Replace immutable addition with builders
             .build(consumer);
-        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
-            .patternLine("SSS")
-            .patternLine("SDS")
-            .patternLine("SSS")
-            .key('S', Items.COBBLESTONE)
-            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
-            .build(consumer, PrimalMagick.resource("stone_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNLAMP.get())
             .patternLine("NNN")
             .patternLine("NTN")
@@ -6548,5 +6541,40 @@ public class Recipes extends RecipeProvider {
     
     protected void registerCodexRecipes(Consumer<FinishedRecipe> consumer) {
         // TODO Re-add codex ritual recipes once the book project is ready to deploy
+    }
+    
+    protected void registerStonemeldingRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
+            .patternLine("SSS")
+            .patternLine("SDS")
+            .patternLine("SSS")
+            .key('S', Tags.Items.COBBLESTONE_NORMAL)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .build(consumer, PrimalMagick.resource("stone_from_stonemelding"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.DEEPSLATE, 8)
+            .patternLine("SSS")
+            .patternLine("SDS")
+            .patternLine("SSS")
+            .key('S', Tags.Items.COBBLESTONE_DEEPSLATE)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .build(consumer, PrimalMagick.resource("deepslate_from_stonemelding"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.COBBLESTONE, 8)
+            .patternLine("SSS")
+            .patternLine("SDS")
+            .patternLine("SSS")
+            .key('S', Tags.Items.GRAVEL)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .build(consumer, PrimalMagick.resource("cobblestone_from_stonemelding"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.GRAVEL, 8)
+            .patternLine("SSS")
+            .patternLine("SDS")
+            .patternLine("SSS")
+            .key('S', Tags.Items.SAND)
+            .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
     }
 }

@@ -5,7 +5,7 @@
       "item": "primalmagick:essence_dust_earth"
     },
     "S": {
-      "tag": "forge:cobblestone/normal"
+      "tag": "forge:cobblestone/deepslate"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   "research": "STONEMELDING",
   "result": {
     "count": 8,
-    "item": "minecraft:stone"
+    "item": "minecraft:deepslate"
   }
 }

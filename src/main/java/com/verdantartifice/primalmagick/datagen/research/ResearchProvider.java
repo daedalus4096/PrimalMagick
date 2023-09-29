@@ -472,7 +472,8 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).icon(Items.STONE).parent("BASIC_ALCHEMY")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraftStack(Items.STONE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(PrimalMagick.MODID, "stone_from_stonemelding").attunement(Source.EARTH, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 1).recipe(PrimalMagick.MODID, "stone_from_stonemelding").recipe(PrimalMagick.MODID, "deepslate_from_stonemelding")
+                    .recipe(PrimalMagick.MODID, "cobblestone_from_stonemelding").recipe(PrimalMagick.MODID, "gravel_from_stonemelding").build())
             .build(consumer);
         ResearchEntryBuilder.entry("SKYGLASS", discipline).icon(ItemsPM.SKYGLASS.get()).parent("STONEMELDING")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_SKY.get()).requiredCraftStack(Items.GLASS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())

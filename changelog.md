@@ -3,6 +3,7 @@ v4.0.6
 * Fixed a client crash that could sometimes occur with the arcane recipe book
 * Increased affinities for bamboo blocks and their byproducts
 * Allowed Earthshatter Hammer and Dissolution Chamber to work with deepslate
+* Added more Stonemelding recipes
 
 v4.0.5
 ------
