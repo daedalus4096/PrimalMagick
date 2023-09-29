@@ -58,12 +58,14 @@ public class BookHelper {
     private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
     private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
     private static Function<BookView, Component> memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
+    private static BiFunction<BookView, Component, Component> memoizedAuthorText = Util.memoize(BookHelper::getAuthorTextInner);
     
     public static void invalidate() {
         memoizedTextLines = Util.memoize(BookHelper::getTextLinesInner);
         memoizedUnencodedWords = Util.memoize(BookHelper::getUnencodedWordsInner);
         memoizedBookComprehension = Util.memoize(BookHelper::getBookComprehensionInner);
         memoizedTitleText = Util.memoize(BookHelper::getTitleTextInner);
+        memoizedAuthorText = Util.memoize(BookHelper::getAuthorTextInner);
     }
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {
@@ -204,6 +206,34 @@ public class BookHelper {
         
         // Add the encoded title text
         Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(Component.translatable(titleTranslationKey)))).forEach(word -> {
+            if (SEPARATOR_ONLY.matcher(word).matches()) {
+                // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.complexity())) {
+                // If the word has been translated, then add it directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else {
+                // If the word has not been translated, then add an encoded replacement word
+                retVal.append(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
+            }
+        });
+        return retVal;
+    }
+    
+    public static Component getAuthorText(BookView view, Component unencodedText) {
+        return memoizedAuthorText.apply(view, unencodedText);
+    }
+    
+    private static Component getAuthorTextInner(BookView view, Component unencodedText) {
+        MutableComponent retVal = Component.empty();
+        final BookLanguage lang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
+                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
+                BookLanguagesPM.DEFAULT.get();
+        final Lexicon langLex = LexiconManager.getLexicon(lang.languageId()).orElseThrow();
+        final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
+        
+        // Add the encoded title text
+        Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(unencodedText))).forEach(word -> {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
