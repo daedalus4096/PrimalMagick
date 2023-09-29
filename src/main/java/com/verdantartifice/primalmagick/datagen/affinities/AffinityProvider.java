@@ -139,7 +139,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.DARK_OAK_LOG).base(Items.OAK_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MANGROVE_LOG).base(Items.OAK_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CHERRY_LOG).base(Items.OAK_LOG).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.BAMBOO_BLOCK).base(Items.OAK_LOG).add(Source.SKY, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MANGROVE_ROOTS).base(Items.MANGROVE_LOG).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.CRIMSON_STEM).base(Items.OAK_LOG).add(Source.MOON, 10).add(Source.INFERNAL, 10).remove(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WARPED_STEM).base(Items.CRIMSON_STEM).build(consumer);

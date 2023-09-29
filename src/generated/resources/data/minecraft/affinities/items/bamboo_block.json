@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "sky": 10
-  },
-  "base": "minecraft:oak_log",
-  "target": "minecraft:bamboo_block"
-}
