@@ -1,3 +1,7 @@
+v4.0.6
+------
+* Fixed a client crash that could sometimes occur with the arcane recipe book
+
 v4.0.5
 ------
 * Fixed a progression-breaking bug with the Analysis Table and Arcanometer
