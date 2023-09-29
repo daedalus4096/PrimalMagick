@@ -18,11 +18,13 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.OpenStaticBookScreenPacket;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringUtil;
@@ -174,10 +176,22 @@ public class StaticBookItem extends Item {
         stack.getOrCreateTag().putInt(TAG_GENERATION, newGeneration);
         return stack;
     }
+    
+    private static BookView makeBookView(ItemStack pStack) {
+        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+        ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, getBookId(pStack).get());
+        BookLanguage language = getBookLanguage(pStack);
+        int comprehension = Math.max(player == null ? 0 : LinguisticsManager.getComprehension(player, language), getTranslatedComprehension(pStack).orElse(0));
+        return new BookView(bookKey, language.languageId(), comprehension);
+    }
 
     @Override
     public Component getName(ItemStack pStack) {
-        return getBookId(pStack).map(StaticBookItem::getNameFromBookId).orElse(super.getName(pStack));
+        if (getBookId(pStack).isPresent()) {
+            return BookHelper.getTitleText(makeBookView(pStack));
+        } else {
+            return super.getName(pStack);
+        }
     }
     
     @Override
@@ -185,7 +199,8 @@ public class StaticBookItem extends Item {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         BookLanguage lang = getBookLanguage(pStack);
         if (hasAuthor(pStack)) {
-            pTooltipComponents.add(Component.translatable("book.byAuthor", getAuthor(pStack)).withStyle(ChatFormatting.GRAY));
+            Component authorText = BookHelper.getAuthorText(makeBookView(pStack), getAuthor(pStack));
+            pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
