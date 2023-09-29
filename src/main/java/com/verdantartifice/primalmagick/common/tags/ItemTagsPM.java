@@ -20,6 +20,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> DEAD_CORAL_BLOCKS = tag("dead_coral_blocks");
     public static final TagKey<Item> DEAD_CORAL_PLANTS = tag("dead_coral_plants");
     public static final TagKey<Item> DEAD_CORALS = tag("dead_corals");
+    public static final TagKey<Item> DEEP_STONE = tag("deep_stone");
     public static final TagKey<Item> ENCHANTING_TABLES = tag("enchanting_tables");
     public static final TagKey<Item> ESSENCES = tag("essences");
     public static final TagKey<Item> HALLOWOOD_LOGS = tag("hallowood_logs");
@@ -38,6 +39,7 @@ public class ItemTagsPM {
     public static final TagKey<Item> STAINED_SKYGLASS_PANES = tag("stained_skyglass_panes");
     public static final TagKey<Item> STATIC_BOOKS = tag("static_books");
     public static final TagKey<Item> SUNWOOD_LOGS = tag("sunwood_logs");
+    public static final TagKey<Item> SURFACE_STONE = tag("surface_stone");
     public static final TagKey<Item> TREEFOLK_LOVED = tag("treefolk_loved");
     
     public static final TagKey<Item> WARDABLE_ARMOR = tag("wardable_armor");

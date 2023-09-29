@@ -1867,9 +1867,14 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("copper_grit_from_raw_metal"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.STONE)
+            .requires(ItemTagsPM.SURFACE_STONE)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, PrimalMagick.resource("cobblestone_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLED_DEEPSLATE)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(ItemTagsPM.DEEP_STONE)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, PrimalMagick.resource("cobbled_deepslate_from_earthshatter_hammer"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.GRAVEL)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(Tags.Items.COBBLESTONE)
@@ -6279,9 +6284,13 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
             .build(consumer, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
-            .ingredient(Tags.Items.STONE)
+            .ingredient(ItemTagsPM.SURFACE_STONE)
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("cobblestone_from_dissolving_stone"));
+            .build(consumer, PrimalMagick.resource("cobblestone_from_dissolving_surface_stone"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLED_DEEPSLATE, 2)
+            .ingredient(ItemTagsPM.DEEP_STONE)
+            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+            .build(consumer, PrimalMagick.resource("cobbled_deepslate_from_dissolving_deep_stone"));
         DissolutionRecipeBuilder.dissolutionRecipe(Items.GRAVEL, 2)
             .ingredient(Tags.Items.COBBLESTONE)
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
