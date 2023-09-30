@@ -1534,6 +1534,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
         this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
         this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
+        this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").build();
         this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
 
         // Generate written book localizations
