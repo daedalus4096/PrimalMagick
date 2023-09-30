@@ -5,6 +5,7 @@ v4.0.6
 * Allowed Earthshatter Hammer and Dissolution Chamber to work with deepslate
 * Added more Stonemelding recipes
 * Fixed a bug with Mana Nexus research prerequisites
+* Made Treefolk attempt to find land instead of swimming all day
 
 v4.0.5
 ------

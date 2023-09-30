@@ -43,6 +43,7 @@ import net.minecraft.world.entity.ai.behavior.StartAttacking;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.behavior.StopBeingAngryIfTargetDead;
 import net.minecraft.world.entity.ai.behavior.Swim;
+import net.minecraft.world.entity.ai.behavior.TryFindLand;
 import net.minecraft.world.entity.ai.behavior.declarative.BehaviorBuilder;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -113,7 +114,7 @@ public class TreefolkAi {
     }
     
     private static void initIdleActivity(Brain<TreefolkEntity> brain) {
-        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), StartDancingSometimes.create(DANCE_DURATION, RECENTLY_DANCED_DURATION, DANCE_COOLDOWN), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
+        brain.addActivity(Activity.IDLE, 10, ImmutableList.of(SetEntityLookTarget.create(TreefolkAi::isPlayerHoldingLovedItem, MAX_LOOK_DIST_FOR_PLAYER_HOLDING_LOVED_ITEM), StartAttacking.create(TreefolkEntity::isAdult, TreefolkAi::findNearestValidAttackTarget), new StartFertilizing<>(TreefolkEntity::isAdult), StartDancingSometimes.create(DANCE_DURATION, RECENTLY_DANCED_DURATION, DANCE_COOLDOWN), TryFindLand.create(MAX_LOOK_DIST, 1F), createIdleLookBehaviors(), createIdleMovementBehaviors(), SetLookAndInteract.create(EntityType.PLAYER, 4)));
     }
     
     private static void initAdmireItemActivity(Brain<TreefolkEntity> brain) {
