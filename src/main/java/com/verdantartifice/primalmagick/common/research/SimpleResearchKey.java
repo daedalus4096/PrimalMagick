@@ -52,7 +52,15 @@ public class SimpleResearchKey {
         this.stage = stage;
     }
     
-    public static SimpleResearchKey parse(String keyStr) {
+    public static SimpleResearchKey of(ResearchName name) {
+        return new SimpleResearchKey(name.rootName());
+    }
+    
+    public static SimpleResearchKey of(ResearchName name, int stage) {
+        return new SimpleResearchKey(name.rootName(), stage);
+    }
+    
+    private static SimpleResearchKey parse(String keyStr) {
         if (keyStr == null) {
             // Invalid key string
             throw new IllegalArgumentException("Research key may not be null");
