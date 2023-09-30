@@ -4,6 +4,7 @@ v4.0.6
 * Increased affinities for bamboo blocks and their byproducts
 * Allowed Earthshatter Hammer and Dissolution Chamber to work with deepslate
 * Added more Stonemelding recipes
+* Fixed a bug with Mana Nexus research prerequisites
 
 v4.0.5
 ------
