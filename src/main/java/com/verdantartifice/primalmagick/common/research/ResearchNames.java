@@ -253,4 +253,33 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SACRED_SHIELD = register("sacred_shield", () -> new ResearchName("SACRED_SHIELD"));
     public static final RegistryObject<ResearchName> DREAM_VISION_TALISMAN = register("dream_vision_talisman", () -> new ResearchName("DREAM_VISION_TALISMAN"));
     public static final RegistryObject<ResearchName> DOWSING_ROD = register("dowsing_rod", () -> new ResearchName("DOWSING_ROD"));
+
+    // Register Magitech research
+    public static final RegistryObject<ResearchName> BASIC_MAGITECH = register("basic_magitech", () -> new ResearchName("BASIC_MAGITECH"));
+    public static final RegistryObject<ResearchName> EXPERT_MAGITECH = register("expert_magitech", () -> new ResearchName("EXPERT_MAGITECH"));
+    public static final RegistryObject<ResearchName> MASTER_MAGITECH = register("master_magitech", () -> new ResearchName("MASTER_MAGITECH"));
+    public static final RegistryObject<ResearchName> SUPREME_MAGITECH = register("supreme_magitech", () -> new ResearchName("SUPREME_MAGITECH"));
+    public static final RegistryObject<ResearchName> COMPLETE_MAGITECH = register("complete_magitech", () -> new ResearchName("COMPLETE_MAGITECH"));
+    public static final RegistryObject<ResearchName> HONEY_EXTRACTOR = register("honey_extractor", () -> new ResearchName("HONEY_EXTRACTOR"));
+    public static final RegistryObject<ResearchName> SEASCRIBE_PEN = register("seascribe_pen", () -> new ResearchName("SEASCRIBE_PEN"));
+    public static final RegistryObject<ResearchName> ARCANOMETER = register("arcanometer", () -> new ResearchName("ARCANOMETER"));
+    public static final RegistryObject<ResearchName> PRIMALITE_GOLEM = register("primalite_golem", () -> new ResearchName("PRIMALITE_GOLEM"));
+    public static final RegistryObject<ResearchName> HEXIUM_GOLEM = register("hexium_golem", () -> new ResearchName("HEXIUM_GOLEM"));
+    public static final RegistryObject<ResearchName> HALLOWSTEEL_GOLEM = register("hallowsteel_golem", () -> new ResearchName("HALLOWSTEEL_GOLEM"));
+    public static final RegistryObject<ResearchName> CONCOCTING_TINCTURES = register("concocting_tinctures", () -> new ResearchName("CONCOCTING_TINCTURES"));
+    public static final RegistryObject<ResearchName> CONCOCTING_PHILTERS = register("concocting_philters", () -> new ResearchName("CONCOCTING_PHILTERS"));
+    public static final RegistryObject<ResearchName> CONCOCTING_ELIXIRS = register("concocting_elixirs", () -> new ResearchName("CONCOCTING_ELIXIRS"));
+    public static final RegistryObject<ResearchName> CONCOCTING_BOMBS = register("concocting_bombs", () -> new ResearchName("CONCOCTING_BOMBS"));
+    public static final RegistryObject<ResearchName> ENTROPY_SINK = register("entropy_sink", () -> new ResearchName("ENTROPY_SINK"));
+    public static final RegistryObject<ResearchName> AUTO_CHARGER = register("auto_charger", () -> new ResearchName("AUTO_CHARGER"));
+    public static final RegistryObject<ResearchName> ESSENCE_TRANSMUTER = register("essence_transmuter", () -> new ResearchName("ESSENCE_TRANSMUTER"));
+    public static final RegistryObject<ResearchName> DISSOLUTION_CHAMBER = register("dissolution_chamber", () -> new ResearchName("DISSOLUTION_CHAMBER"));
+    public static final RegistryObject<ResearchName> ZEPHYR_ENGINE = register("zephyr_engine", () -> new ResearchName("ZEPHYR_ENGINE"));
+    public static final RegistryObject<ResearchName> VOID_TURBINE = register("void_turbine", () -> new ResearchName("VOID_TURBINE"));
+    public static final RegistryObject<ResearchName> INFERNAL_FURNACE = register("infernal_furnace", () -> new ResearchName("INFERNAL_FURNACE"));
+    public static final RegistryObject<ResearchName> MANA_NEXUS = register("mana_nexus", () -> new ResearchName("MANA_NEXUS"));
+    public static final RegistryObject<ResearchName> MANA_SINGULARITY = register("mana_singularity", () -> new ResearchName("MANA_SINGULARITY"));
+    public static final RegistryObject<ResearchName> WARDING_MODULE = register("warding_module", () -> new ResearchName("WARDING_MODULE"));
+    public static final RegistryObject<ResearchName> GREATER_WARDING_MODULE = register("greater_warding_module", () -> new ResearchName("GREATER_WARDING_MODULE"));
+    public static final RegistryObject<ResearchName> SUPREME_WARDING_MODULE = register("supreme_warding_module", () -> new ResearchName("SUPREME_WARDING_MODULE"));
 }
