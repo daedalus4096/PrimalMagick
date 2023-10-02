@@ -185,4 +185,35 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SPELL_MOD_QUICKEN = register("spell_mod_quicken", () -> new ResearchName("SPELL_MOD_QUICKEN"));
     public static final RegistryObject<ResearchName> SPELL_MOD_BURST = register("spell_mod_burst", () -> new ResearchName("SPELL_MOD_BURST"));
     public static final RegistryObject<ResearchName> SPELL_MOD_FORK = register("spell_mod_fork", () -> new ResearchName("SPELL_MOD_FORK"));
+    
+    // Register Runeworking research
+    public static final RegistryObject<ResearchName> BASIC_RUNEWORKING = register("basic_runeworking", () -> new ResearchName("BASIC_RUNEWORKING"));
+    public static final RegistryObject<ResearchName> EXPERT_RUNEWORKING = register("expert_runeworking", () -> new ResearchName("EXPERT_RUNEWORKING"));
+    public static final RegistryObject<ResearchName> MASTER_RUNEWORKING = register("master_runeworking", () -> new ResearchName("MASTER_RUNEWORKING"));
+    public static final RegistryObject<ResearchName> SUPREME_RUNEWORKING = register("supreme_runeworking", () -> new ResearchName("SUPREME_RUNEWORKING"));
+    public static final RegistryObject<ResearchName> COMPLETE_RUNEWORKING = register("complete_runeworking", () -> new ResearchName("COMPLETE_RUNEWORKING"));
+    public static final RegistryObject<ResearchName> RUNE_EARTH = register("rune_earth", () -> new ResearchName("RUNE_EARTH"));
+    public static final RegistryObject<ResearchName> RUNE_SEA = register("rune_sea", () -> new ResearchName("RUNE_SEA"));
+    public static final RegistryObject<ResearchName> RUNE_SKY = register("rune_sky", () -> new ResearchName("RUNE_SKY"));
+    public static final RegistryObject<ResearchName> RUNE_SUN = register("rune_sun", () -> new ResearchName("RUNE_SUN"));
+    public static final RegistryObject<ResearchName> RUNE_MOON = register("rune_moon", () -> new ResearchName("RUNE_MOON"));
+    public static final RegistryObject<ResearchName> RUNE_PROJECT = register("rune_project", () -> new ResearchName("RUNE_PROJECT"));
+    public static final RegistryObject<ResearchName> RUNE_PROTECT = register("rune_protect", () -> new ResearchName("RUNE_PROTECT"));
+    public static final RegistryObject<ResearchName> RUNE_ITEM = register("rune_item", () -> new ResearchName("RUNE_ITEM"));
+    public static final RegistryObject<ResearchName> RUNE_SELF = register("rune_earth", () -> new ResearchName("RUNE_SELF"));
+    public static final RegistryObject<ResearchName> RUNE_BLOOD = register("rune_blood", () -> new ResearchName("RUNE_BLOOD"));
+    public static final RegistryObject<ResearchName> RUNE_INFERNAL = register("rune_infernal", () -> new ResearchName("RUNE_INFERNAL"));
+    public static final RegistryObject<ResearchName> RUNE_VOID = register("rune_void", () -> new ResearchName("RUNE_VOID"));
+    public static final RegistryObject<ResearchName> RUNE_ABSORB = register("rune_absorb", () -> new ResearchName("RUNE_ABSORB"));
+    public static final RegistryObject<ResearchName> RUNE_DISPEL = register("rune_dispel", () -> new ResearchName("RUNE_DISPEL"));
+    public static final RegistryObject<ResearchName> RUNE_SUMMON = register("rune_summon", () -> new ResearchName("RUNE_SUMMON"));
+    public static final RegistryObject<ResearchName> RUNE_AREA = register("rune_area", () -> new ResearchName("RUNE_AREA"));
+    public static final RegistryObject<ResearchName> RUNE_CREATURE = register("rune_creature", () -> new ResearchName("RUNE_CREATURE"));
+    public static final RegistryObject<ResearchName> RUNE_HALLOWED = register("rune_hallowed", () -> new ResearchName("RUNE_HALLOWED"));
+    public static final RegistryObject<ResearchName> RUNE_INSIGHT = register("rune_insight", () -> new ResearchName("RUNE_INSIGHT"));
+    public static final RegistryObject<ResearchName> RUNE_POWER = register("rune_power", () -> new ResearchName("RUNE_POWER"));
+    public static final RegistryObject<ResearchName> RUNE_GRACE = register("rune_grace", () -> new ResearchName("RUNE_GRACE"));
+    public static final RegistryObject<ResearchName> RUNIC_GRINDSTONE = register("runic_grindstone", () -> new ResearchName("RUNIC_GRINDSTONE"));
+    public static final RegistryObject<ResearchName> RECALL_STONE = register("recall_stone", () -> new ResearchName("RECALL_STONE"));
+    public static final RegistryObject<ResearchName> RUNIC_TRIM = register("runic_trim", () -> new ResearchName("RUNIC_TRIM"));
 }
