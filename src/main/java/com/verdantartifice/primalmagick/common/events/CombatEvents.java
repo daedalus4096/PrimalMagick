@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -103,11 +104,14 @@ public class CombatEvents {
         if (event.getEntity() instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
             if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
-                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_drown_a_little"))) {
-                    ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_drown_a_little"));
+                SimpleResearchKey drownKey = ResearchNames.INTERNAL_DROWN_A_LITTLE.get().simpleKey();
+                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, drownKey)) {
+                    ResearchManager.completeResearch(target, drownKey);
                 }
-                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, SimpleResearchKey.parse("m_feel_the_burn"))) {
-                    ResearchManager.completeResearch(target, SimpleResearchKey.parse("m_feel_the_burn"));
+                
+                SimpleResearchKey lavaKey = ResearchNames.INTERNAL_FEEL_THE_BURN.get().simpleKey();
+                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, lavaKey)) {
+                    ResearchManager.completeResearch(target, lavaKey);
                 }
             }
 

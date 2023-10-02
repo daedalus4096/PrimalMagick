@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.items.misc;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -25,19 +26,19 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ResearchGainItem extends Item {
-    protected final SimpleResearchKey key;
+    protected final Supplier<SimpleResearchKey> keySupplier;
     
-    public ResearchGainItem(SimpleResearchKey key, Item.Properties properties) {
+    public ResearchGainItem(Supplier<SimpleResearchKey> keySupplier, Item.Properties properties) {
         super(properties);
-        this.key = key;
+        this.keySupplier = keySupplier;
     }
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
             if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
-                if (!this.key.isKnownByStrict(player)) {
-                    ResearchManager.completeResearch(player, this.key);
+                if (!this.keySupplier.get().isKnownByStrict(player)) {
+                    ResearchManager.completeResearch(player, this.keySupplier.get());
                     player.displayClientMessage(Component.translatable("event.primalmagick.research.gain").withStyle(ChatFormatting.GREEN), false);
                     if (player instanceof ServerPlayer serverPlayer) {
                         PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)player.getRandom().nextGaussian() * 0.05F), serverPlayer);

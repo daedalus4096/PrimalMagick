@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class AmplifySpellMod extends AbstractSpellMod {
     public static final String TYPE = "amplify";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_AMPLIFY"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_MOD_AMPLIFY.get().compoundKey();
 
     public AmplifySpellMod() {
         super();

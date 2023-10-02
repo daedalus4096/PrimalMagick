@@ -1,9 +1,12 @@
 package com.verdantartifice.primalmagick.common.items.essence;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.util.StringRepresentable;
@@ -23,9 +26,9 @@ public enum EssenceType implements StringRepresentable {
     CRYSTAL("crystal", Rarity.RARE, 50, 100),
     CLUSTER("cluster", Rarity.EPIC, 100, 1000);
     
-    private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.parse("SHARD_SYNTHESIS");
-    private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.parse("CRYSTAL_SYNTHESIS");
-    private static final SimpleResearchKey CLUSTER_RESEARCH = SimpleResearchKey.parse("CLUSTER_SYNTHESIS");
+    private static final Supplier<SimpleResearchKey> SHARD_RESEARCH = ResearchNames.simpleKey(ResearchNames.SHARD_SYNTHESIS);
+    private static final Supplier<SimpleResearchKey> CRYSTAL_RESEARCH = ResearchNames.simpleKey(ResearchNames.CRYSTAL_SYNTHESIS);
+    private static final Supplier<SimpleResearchKey> CLUSTER_RESEARCH = ResearchNames.simpleKey(ResearchNames.CLUSTER_SYNTHESIS);
     
     private final String name;
     private final Rarity rarity;
@@ -120,11 +123,11 @@ public enum EssenceType implements StringRepresentable {
             case DUST:
                 return true;
             case SHARD:
-                return SHARD_RESEARCH.isKnownByStrict(player);
+                return SHARD_RESEARCH.get().isKnownByStrict(player);
             case CRYSTAL:
-                return CRYSTAL_RESEARCH.isKnownByStrict(player);
+                return CRYSTAL_RESEARCH.get().isKnownByStrict(player);
             case CLUSTER:
-                return CLUSTER_RESEARCH.isKnownByStrict(player);
+                return CLUSTER_RESEARCH.get().isKnownByStrict(player);
             default:
                 return false;
             }

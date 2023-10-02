@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
@@ -53,8 +54,8 @@ public class RunescribingResultSlot extends Slot {
             if (ResearchManager.isResearchComplete(this.player, SimpleResearchKey.FIRST_STEPS)) {
                 List<Rune> runes = RuneManager.getRunes(stack);
                 Map<Enchantment, Integer> enchants = RuneManager.getRuneEnchantments(runes, stack, this.player, false);
-                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
-                    ResearchManager.completeResearch(this.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"));
+                if (!enchants.isEmpty() && !ResearchManager.isResearchComplete(this.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey())) {
+                    ResearchManager.completeResearch(this.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey());
                 }
                 for (Enchantment enchant : enchants.keySet()) {
                     SimpleResearchKey key = SimpleResearchKey.parseRuneEnchantment(enchant);

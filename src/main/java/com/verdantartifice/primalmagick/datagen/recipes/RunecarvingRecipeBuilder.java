@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonObject;
@@ -136,6 +137,16 @@ public class RunecarvingRecipeBuilder {
     public RunecarvingRecipeBuilder research(CompoundResearchKey research) {
         this.research = research.copy();
         return this;
+    }
+    
+    /**
+     * Adds a research requirement to this recipe.  Throws if the optional is empty.
+     * 
+     * @param researchOpt the research requirement to add
+     * @return the modified builder
+     */
+    public RunecarvingRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
+        return this.research(researchOpt.orElseThrow());
     }
     
     /**

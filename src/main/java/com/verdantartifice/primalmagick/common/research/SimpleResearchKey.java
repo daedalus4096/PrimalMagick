@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.OptionalInt;
 
 import javax.annotation.Nonnull;
@@ -50,6 +51,18 @@ public class SimpleResearchKey {
     protected SimpleResearchKey(@Nonnull String rootKey, @Nonnull OptionalInt stage) {
         this.rootKey = rootKey;
         this.stage = stage;
+    }
+    
+    public static SimpleResearchKey of(ResearchName name) {
+        return new SimpleResearchKey(name.rootName());
+    }
+    
+    public static SimpleResearchKey of(ResearchName name, int stage) {
+        return new SimpleResearchKey(name.rootName(), stage);
+    }
+    
+    public static Optional<SimpleResearchKey> find(String keyStr) {
+        return ResearchNames.find(keyStr).map(ResearchName::simpleKey);
     }
     
     public static SimpleResearchKey parse(String keyStr) {

@@ -1,8 +1,11 @@
 package com.verdantartifice.primalmagick.common.blocks.golems;
 
+import java.util.function.Supplier;
+
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +18,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class PrimaliteGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<PrimaliteGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("PRIMALITE_GOLEM");
+    protected static final Supplier<SimpleResearchKey> RESEARCH = ResearchNames.simpleKey(ResearchNames.PRIMALITE_GOLEM);
     
     public PrimaliteGolemControllerBlock(Properties properties) {
         super(properties);
@@ -23,7 +26,7 @@ public class PrimaliteGolemControllerBlock extends AbstractEnchantedGolemControl
 
     @Override
     protected SimpleResearchKey getRequiredResearch() {
-        return RESEARCH;
+        return RESEARCH.get();
     }
 
     @Override

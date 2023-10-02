@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import com.google.gson.JsonArray;
@@ -91,6 +92,10 @@ public class ConcoctingRecipeBuilder {
     public ConcoctingRecipeBuilder research(CompoundResearchKey research) {
         this.research = research;
         return this;
+    }
+    
+    public ConcoctingRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
+        return this.research(researchOpt.orElseThrow());
     }
     
     public ConcoctingRecipeBuilder manaCost(SourceList mana) {

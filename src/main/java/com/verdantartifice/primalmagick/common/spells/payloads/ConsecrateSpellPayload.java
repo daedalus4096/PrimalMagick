@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.core.BlockPos;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
  */
 public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload {
     public static final String TYPE = "consecrate";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONSECRATE"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONSECRATE.get().compoundKey();
 
     public ConsecrateSpellPayload() {
         super(BlocksPM.CONSECRATION_FIELD.get().defaultBlockState(), 2);

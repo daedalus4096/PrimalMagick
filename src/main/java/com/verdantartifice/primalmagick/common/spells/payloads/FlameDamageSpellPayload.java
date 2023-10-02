@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class FlameDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "flame_damage";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_FLAME"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_FLAME.get().compoundKey();
 
     public FlameDamageSpellPayload() {
         super();

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.common.entities.projectiles.SpellProjectileEntity;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.mods.ForkSpellMod;
 
@@ -22,7 +22,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class ProjectileSpellVehicle extends AbstractSpellVehicle {
     public static final String TYPE = "projectile";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_VEHICLE_PROJECTILE"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_VEHICLE_PROJECTILE.get().compoundKey();
     
     public static CompoundResearchKey getResearch() {
         return RESEARCH;

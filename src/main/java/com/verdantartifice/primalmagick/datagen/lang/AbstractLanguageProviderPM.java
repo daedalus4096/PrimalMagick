@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -205,7 +207,11 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ResearchEntryLanguageBuilder researchEntry(String keyStr) {
-        return this.researchEntry(SimpleResearchKey.parse(keyStr));
+        return this.researchEntry(ResearchNames.find(keyStr).orElseThrow());
+    }
+    
+    public ResearchEntryLanguageBuilder researchEntry(ResearchName key) {
+        return this.researchEntry(key.simpleKey());
     }
     
     public ResearchEntryLanguageBuilder researchEntry(SimpleResearchKey key) {
@@ -213,7 +219,11 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(String keyStr) {
-        return this.researchRequirement(SimpleResearchKey.parse(keyStr));
+        return this.researchRequirement(ResearchNames.find(keyStr).orElseThrow());
+    }
+    
+    public ResearchRequirementLanguageBuilder researchRequirement(ResearchName key) {
+        return this.researchRequirement(key.simpleKey());
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(SimpleResearchKey key) {

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
@@ -88,24 +89,26 @@ public class EntityEvents {
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onAnimalTameLowest(AnimalTameEvent event) {
         // Grant appropriate research if a player tames a wolf
+        SimpleResearchKey tameKey = ResearchNames.INTERNAL_FURRY_FRIEND.get().simpleKey();
         Player player = event.getTamer();
         if ( !event.isCanceled() &&
              event.getAnimal() instanceof Wolf && 
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) && 
-             !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_furry_friend")) ) {
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_furry_friend"));
+             !ResearchManager.isResearchComplete(player, tameKey) ) {
+            ResearchManager.completeResearch(player, tameKey);
         }
     }
     
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static void onBabyEntitySpawnLowest(BabyEntitySpawnEvent event) {
         // Grant appropriate research if a player breeds an animal
+        SimpleResearchKey breedKey = ResearchNames.INTERNAL_BREED_ANIMAL.get().simpleKey();
         Player player = event.getCausedByPlayer();
         if ( !event.isCanceled() && 
              player != null &&
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) &&
-             !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_breed_animal")) ) {
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_breed_animal"));
+             !ResearchManager.isResearchComplete(player, breedKey) ) {
+            ResearchManager.completeResearch(player, breedKey);
         }
     }
     

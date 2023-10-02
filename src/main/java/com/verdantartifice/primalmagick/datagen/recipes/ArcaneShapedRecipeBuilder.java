@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -141,6 +142,16 @@ public class ArcaneShapedRecipeBuilder {
     public ArcaneShapedRecipeBuilder research(CompoundResearchKey research) {
         this.research = research.copy();
         return this;
+    }
+    
+    /**
+     * Adds a research requirement to this recipe.  Throws if the optional is empty.
+     * 
+     * @param researchOpt the research requirement to add
+     * @return the modified builder
+     */
+    public ArcaneShapedRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
+        return this.research(researchOpt.orElseThrow());
     }
     
     /**

@@ -3,12 +3,14 @@ package com.verdantartifice.primalmagick.common.menus;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
@@ -44,7 +46,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
-    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS");
+    protected static final Supplier<SimpleResearchKey> UNLOCK_INDEX_RESEARCH = ResearchNames.simpleKey(ResearchNames.UNLOCK_RUNE_ENCHANTMENTS);
     
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {
@@ -275,7 +277,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                         for (SimpleResearchKey candidate : candidates) {
                             candidateBag.add(candidate, 1);
                         }
-                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
+                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH.get());
                         ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
                         hintCount++;
                         

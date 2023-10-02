@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
 /**
@@ -14,7 +14,7 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
  */
 public class QuickenSpellMod extends AbstractSpellMod {
     public static final String TYPE = "quicken";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_QUICKEN"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_MOD_QUICKEN.get().compoundKey();
 
     public QuickenSpellMod() {
         super();

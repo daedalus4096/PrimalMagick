@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +46,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -113,7 +115,7 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final SimpleResearchKey NDE_RESEARCH_KEY = SimpleResearchKey.parse("m_near_death_experience");
+    private static final Supplier<SimpleResearchKey> NDE_RESEARCH_KEY = ResearchNames.simpleKey(ResearchNames.INTERNAL_NEAR_DEATH_EXPERIENCE);
     private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
     private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
     private static final Logger LOGGER = LogManager.getLogger();
@@ -167,8 +169,8 @@ public class PlayerEvents {
         if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
              health >= player.getMaxHealth() &&
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) ) {
-            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY)) {
-                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY);
+            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY.get())) {
+                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY.get());
             }
             NEAR_DEATH_ELIGIBLE.remove(playerId);
         }
@@ -272,8 +274,8 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
-            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_EARTH@2"))) {
-                SimpleResearchKey key = SimpleResearchKey.parse("m_env_earth");
+            if (knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(2))) {
+                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_EARTH.get().simpleKey();
                 if (player.position().y < -16.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
@@ -281,8 +283,8 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sea Source research, check if they're in the ocean
-            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SEA@2"))) {
-                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sea");
+            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(2))) {
+                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SEA.get().simpleKey();
                 if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
@@ -290,8 +292,8 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sky Source research, check if they're high up enough
-            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SKY@2"))) {
-                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sky");
+            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(2))) {
+                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SKY.get().simpleKey();
                 if (player.position().y > 128.0D && inOverworld && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
@@ -299,8 +301,8 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
-            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_SUN@2"))) {
-                SimpleResearchKey key = SimpleResearchKey.parse("m_env_sun");
+            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(2))) {
+                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SUN.get().simpleKey();
                 if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
@@ -308,8 +310,8 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
-            if (knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@1")) && !knowledge.isResearchKnown(SimpleResearchKey.parse("SOURCE_MOON@2"))) {
-                SimpleResearchKey key = SimpleResearchKey.parse("m_env_moon");
+            if (knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(2))) {
+                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_MOON.get().simpleKey();
                 if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
                     ResearchManager.completeResearch(player, key);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
@@ -319,15 +321,18 @@ public class PlayerEvents {
     }
     
     protected static void checkVanillaStatistics(ServerPlayer player) {
-        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_fly_elytra")) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("m_fly_elytra"));
+        SimpleResearchKey elytraKey = ResearchNames.INTERNAL_FLY_ELYTRA.get().simpleKey();
+        if (!ResearchManager.isResearchComplete(player, elytraKey) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
+            ResearchManager.completeResearch(player, elytraKey);
         }
-        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("b_place_torch_expert")) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("b_place_torch_expert"));
+        SimpleResearchKey torchKey = ResearchNames.INTERNAL_PLACE_TORCH_EXPERT.get().simpleKey();
+        if (!ResearchManager.isResearchComplete(player, torchKey) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
+            ResearchManager.completeResearch(player, torchKey);
         }
-        if (!ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("b_place_stone_expert")) &&
+        SimpleResearchKey stoneKey = ResearchNames.INTERNAL_PLACE_STONE_EXPERT.get().simpleKey();
+        if (!ResearchManager.isResearchComplete(player, stoneKey) &&
                 (player.getStats().getValue(Stats.ITEM_USED.get(Items.STONE)) + player.getStats().getValue(Stats.ITEM_USED.get(Items.COBBLESTONE))) >= 100) {
-            ResearchManager.completeResearch(player, SimpleResearchKey.parse("b_place_stone_expert"));
+            ResearchManager.completeResearch(player, stoneKey);
         }
     }
 
@@ -545,8 +550,8 @@ public class PlayerEvents {
     public static void onWakeUp(PlayerWakeUpEvent event) {
         Player player = event.getEntity();
         if (player != null && !player.level().isClientSide) {
-            if ( ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("m_found_shrine")) &&
-                 !ResearchManager.isResearchComplete(player, SimpleResearchKey.parse("t_got_dream")) ) {
+            if ( ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_FOUND_SHRINE.get().simpleKey()) &&
+                 !ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey()) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
                 grantDreamJournal(player);
             }
@@ -573,7 +578,7 @@ public class PlayerEvents {
     
     protected static void grantDreamJournal(Player player) {
         // First grant the appropriate research entry to continue FTUX
-        ResearchManager.completeResearch(player, SimpleResearchKey.parse("t_got_dream"));
+        ResearchManager.completeResearch(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey());
         
         // Construct the dream journal item
         ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());

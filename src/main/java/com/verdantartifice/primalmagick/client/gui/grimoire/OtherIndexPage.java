@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.client.Minecraft;
@@ -46,7 +47,7 @@ public class OtherIndexPage extends AbstractPage {
         y += 24;
         
         // Add attunements button if attunements are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
+        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.ATTUNEMENTS.get().simpleKey())) {
             text = Component.translatable("grimoire.primalmagick.attunement_header");
             Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
@@ -61,7 +62,7 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add rune enchantments button if rune enchantments are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
+        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey())) {
             text = Component.translatable("grimoire.primalmagick.rune_enchantment_header");
             Button button = screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();

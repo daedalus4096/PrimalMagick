@@ -1769,10 +1769,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("draconic_memories").name("Draconic Memories").text("This dragon hoarded experiences, not gold.  Even in death it hungers for more.  Feed it, and see what it can teach you.").build();
 
         // Generate research requirement localizations
-        this.researchRequirement("m_dummy").name("Location Discovery").build();
-        this.researchRequirement("t_dummy").name("Research Discovery").build();
-        this.researchRequirement("b_dummy").name("Item Discovery").build();
-        this.researchRequirement("u_dummy").name("Unknown Discovery").build();
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();
         this.researchRequirement(Source.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
         this.researchRequirement(Source.INFERNAL.getDiscoverKey()).name("Discover a source of hellish power").build();

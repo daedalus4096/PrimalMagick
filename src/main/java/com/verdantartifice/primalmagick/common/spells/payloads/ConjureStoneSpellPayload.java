@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload {
     public static final String TYPE = "conjure_stone";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_CONJURE_STONE"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONJURE_STONE.get().compoundKey();
     
     public ConjureStoneSpellPayload() {
         super(Blocks.STONE.defaultBlockState());

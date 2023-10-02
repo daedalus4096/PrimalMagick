@@ -68,12 +68,13 @@ public class ResearchManager {
     private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
     
     // Set of research keys whose children should not be shown in the Upcoming section of the grimoire
+    // TODO Convert into tag
     private static final Set<SimpleResearchKey> OPAQUE_RESEARCH = ImmutableSet.of(
             Source.BLOOD.getDiscoverKey(), 
             Source.INFERNAL.getDiscoverKey(), 
             Source.VOID.getDiscoverKey(), 
             Source.HALLOWED.getDiscoverKey(),
-            SimpleResearchKey.parse("t_discover_forbidden")
+            SimpleResearchKey.parse("t_discover_forbidden")     // FIXME Don't use SRK::parse
     );
     
     public static Set<Integer> getAllCraftingReferences() {

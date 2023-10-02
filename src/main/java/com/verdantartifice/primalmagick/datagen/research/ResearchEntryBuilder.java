@@ -11,6 +11,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
@@ -36,16 +38,12 @@ public class ResearchEntryBuilder {
         this.finaleExempt = false;
     }
     
-    public static ResearchEntryBuilder entry(@Nonnull String modId, @Nonnull SimpleResearchKey key, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(modId, key, discipline);
+    public static ResearchEntryBuilder entry(@Nonnull ResearchName name, @Nonnull String discipline) {
+        return new ResearchEntryBuilder(PrimalMagick.MODID, name.simpleKey(), discipline);
     }
     
-    public static ResearchEntryBuilder entry(@Nonnull SimpleResearchKey key, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(PrimalMagick.MODID, key, discipline);
-    }
-    
-    public static ResearchEntryBuilder entry(@Nonnull String keyStr, @Nonnull String discipline) {
-        return new ResearchEntryBuilder(PrimalMagick.MODID, SimpleResearchKey.parse(keyStr), discipline);
+    public static ResearchEntryBuilder entry(@Nonnull String name, @Nonnull String discipline) {
+        return entry(ResearchNames.find(name).orElseThrow(), discipline);
     }
     
     public ResearchEntryBuilder parent(SimpleResearchKey parent) {
@@ -53,9 +51,13 @@ public class ResearchEntryBuilder {
         return this;
     }
     
-    public ResearchEntryBuilder parent(String parentStr) {
-        this.parents.add(SimpleResearchKey.parse(parentStr));
+    public ResearchEntryBuilder parent(ResearchName parent) {
+        this.parents.add(parent.simpleKey());
         return this;
+    }
+    
+    public ResearchEntryBuilder parent(String parent) {
+        return this.parent(ResearchNames.find(parent).orElseThrow());
     }
     
     public ResearchEntryBuilder hidden() {

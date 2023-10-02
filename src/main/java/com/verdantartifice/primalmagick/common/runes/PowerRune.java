@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
 /**
@@ -13,12 +14,8 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public class PowerRune extends Rune {
-    public PowerRune(@Nonnull String tag, @Nonnull String discoveryTag, Rarity rarity, int limit) {
-        super(tag, discoveryTag, rarity, true, limit);
-    }
-    
-    public PowerRune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey, Rarity rarity, int limit) {
-        super(id, discoveryKey, rarity, true, limit);
+    public PowerRune(@Nonnull String tag, @Nonnull Supplier<ResearchName> discoveryKey, Rarity rarity, int limit) {
+        super(tag, discoveryKey, rarity, true, limit);
     }
     
     @Override

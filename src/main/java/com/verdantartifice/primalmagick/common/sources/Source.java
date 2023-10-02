@@ -31,6 +31,7 @@ public class Source implements StringRepresentable {
     public static final Map<String, Source> SOURCES = new HashMap<>();
     protected static final Map<SimpleResearchKey, Source> DISCOVER_KEYS = new HashMap<>();
     
+    // FIXME Don't use SRK::parse for discover and sibling keys
     public static final Source EARTH = new Source("earth", 0x20702B, 0.5D, ChatFormatting.DARK_GREEN, StatsPM.MANA_SPENT_EARTH);
     public static final Source SEA = new Source("sea", 0x117899, 1.0D, ChatFormatting.BLUE, StatsPM.MANA_SPENT_SEA);
     public static final Source SKY = new Source("sky", 0x87CEEB, 1.0D, ChatFormatting.AQUA, StatsPM.MANA_SPENT_SKY);

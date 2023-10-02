@@ -11,6 +11,8 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
@@ -52,9 +54,12 @@ public class ProjectBuilder {
         return this;
     }
     
+    public ProjectBuilder requiredResearch(@Nullable ResearchName key) {
+        return requiredResearch(key.simpleKey());
+    }
+    
     public ProjectBuilder requiredResearch(@Nullable String keyStr) {
-        this.requiredResearch = SimpleResearchKey.parse(keyStr);
-        return this;
+        return requiredResearch(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ProjectBuilder materialCountOverride(int count) {
