@@ -202,7 +202,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> RUNE_PROJECT = register("rune_project", () -> new ResearchName("RUNE_PROJECT"));
     public static final RegistryObject<ResearchName> RUNE_PROTECT = register("rune_protect", () -> new ResearchName("RUNE_PROTECT"));
     public static final RegistryObject<ResearchName> RUNE_ITEM = register("rune_item", () -> new ResearchName("RUNE_ITEM"));
-    public static final RegistryObject<ResearchName> RUNE_SELF = register("rune_earth", () -> new ResearchName("RUNE_SELF"));
+    public static final RegistryObject<ResearchName> RUNE_SELF = register("rune_self", () -> new ResearchName("RUNE_SELF"));
     public static final RegistryObject<ResearchName> RUNE_BLOOD = register("rune_blood", () -> new ResearchName("RUNE_BLOOD"));
     public static final RegistryObject<ResearchName> RUNE_INFERNAL = register("rune_infernal", () -> new ResearchName("RUNE_INFERNAL"));
     public static final RegistryObject<ResearchName> RUNE_VOID = register("rune_void", () -> new ResearchName("RUNE_VOID"));
