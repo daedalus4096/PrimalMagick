@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.mods;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -22,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class MineSpellMod extends AbstractSpellMod {
     public static final String TYPE = "mine";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_MINE"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_MOD_MINE.get().compoundKey();
 
     public MineSpellMod() {
         super();

@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.util.VectorUtils;
@@ -27,7 +27,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class ForkSpellMod extends AbstractSpellMod {
     public static final String TYPE = "fork";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_MOD_FORK"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_MOD_FORK.get().compoundKey();
 
     public ForkSpellMod() {
         super();
