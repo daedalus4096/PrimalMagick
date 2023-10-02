@@ -36,10 +36,10 @@ public class Source implements StringRepresentable {
     public static final Source SKY = new Source("sky", 0x87CEEB, 1.0D, ChatFormatting.AQUA, StatsPM.MANA_SPENT_SKY);
     public static final Source SUN = new Source("sun", 0xF9C81C, 0.75D, ChatFormatting.YELLOW, StatsPM.MANA_SPENT_SUN);
     public static final Source MOON = new Source("moon", 0xD1DDE3, 1.0D, ChatFormatting.GRAY, StatsPM.MANA_SPENT_MOON);
-    public static final Source BLOOD = new Source("blood", 0x8A0303, 1.5D, ChatFormatting.DARK_RED, StatsPM.MANA_SPENT_BLOOD, SimpleResearchKey.find("t_discover_blood"), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden"), SimpleResearchKey.find("m_sotu_discover_blood")));
-    public static final Source INFERNAL = new Source("infernal", 0xED2F1B, 2.0D, ChatFormatting.GOLD, StatsPM.MANA_SPENT_INFERNAL, SimpleResearchKey.find("t_discover_infernal"), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden"), SimpleResearchKey.find("m_sotu_discover_infernal")));
-    public static final Source VOID = new Source("void", 0x551A8B, 2.0D, ChatFormatting.DARK_PURPLE, StatsPM.MANA_SPENT_VOID, SimpleResearchKey.find("t_discover_void"), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden"), SimpleResearchKey.find("m_sotu_discover_void")));
-    public static final Source HALLOWED = new Source("hallowed", 0xEEEBD9, 3.0D, ChatFormatting.WHITE, StatsPM.MANA_SPENT_HALLOWED, SimpleResearchKey.find("t_discover_hallowed"));
+    public static final Source BLOOD = new Source("blood", 0x8A0303, 1.5D, ChatFormatting.DARK_RED, StatsPM.MANA_SPENT_BLOOD, SimpleResearchKey.find("t_discover_blood").orElseThrow(), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden").orElseThrow(), SimpleResearchKey.find("m_sotu_discover_blood").orElseThrow()));
+    public static final Source INFERNAL = new Source("infernal", 0xED2F1B, 2.0D, ChatFormatting.GOLD, StatsPM.MANA_SPENT_INFERNAL, SimpleResearchKey.find("t_discover_infernal").orElseThrow(), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden").orElseThrow(), SimpleResearchKey.find("m_sotu_discover_infernal").orElseThrow()));
+    public static final Source VOID = new Source("void", 0x551A8B, 2.0D, ChatFormatting.DARK_PURPLE, StatsPM.MANA_SPENT_VOID, SimpleResearchKey.find("t_discover_void").orElseThrow(), Arrays.asList(SimpleResearchKey.find("t_discover_forbidden").orElseThrow(), SimpleResearchKey.find("m_sotu_discover_void").orElseThrow()));
+    public static final Source HALLOWED = new Source("hallowed", 0xEEEBD9, 3.0D, ChatFormatting.WHITE, StatsPM.MANA_SPENT_HALLOWED, SimpleResearchKey.find("t_discover_hallowed").orElseThrow());
     
     // List of sources in the order in which they should be displayed
     public static final List<Source> SORTED_SOURCES = Arrays.asList(Source.EARTH, Source.SEA, Source.SKY, Source.SUN, Source.MOON, Source.BLOOD, Source.INFERNAL, Source.VOID, Source.HALLOWED);
