@@ -14,4 +14,8 @@ public record ResearchName(String rootName) {
     public SimpleResearchKey simpleKey(int stage) {
         return SimpleResearchKey.of(this, stage);
     }
+    
+    public boolean matches(String toMatch) {
+        return this.rootName().equals(toMatch);
+    }
 }

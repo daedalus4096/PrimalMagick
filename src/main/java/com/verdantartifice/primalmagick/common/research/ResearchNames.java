@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.research;
 
 import java.util.function.Supplier;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
@@ -27,6 +29,11 @@ public class ResearchNames {
     
     protected static RegistryObject<ResearchName> register(String id, Supplier<ResearchName> nameSupplier) {
         return DEFERRED_NAMES.register(id, nameSupplier);
+    }
+    
+    @Nonnull
+    public static ResearchName find(String name) {
+        return NAMES.get().getValues().stream().filter(rn -> rn.matches(name)).findFirst().orElseThrow(() -> new IllegalArgumentException("Unrecognized research name"));
     }
     
     // Register Fundamentals research

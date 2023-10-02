@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
@@ -41,6 +42,10 @@ public class ResearchEntryBuilder {
         return new ResearchEntryBuilder(PrimalMagick.MODID, name.simpleKey(), discipline);
     }
     
+    public static ResearchEntryBuilder entry(@Nonnull String name, @Nonnull String discipline) {
+        return entry(ResearchNames.find(name), discipline);
+    }
+    
     public ResearchEntryBuilder parent(SimpleResearchKey parent) {
         this.parents.add(parent);
         return this;
@@ -49,6 +54,10 @@ public class ResearchEntryBuilder {
     public ResearchEntryBuilder parent(ResearchName parent) {
         this.parents.add(parent.simpleKey());
         return this;
+    }
+    
+    public ResearchEntryBuilder parent(String parent) {
+        return this.parent(ResearchNames.find(parent));
     }
     
     public ResearchEntryBuilder hidden() {
