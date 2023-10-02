@@ -39,7 +39,7 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull String keyStr) {
-        return requiredResearch(ResearchNames.find(keyStr));
+        return requiredResearch(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull ResearchName key) {
@@ -79,7 +79,7 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder sibling(@Nonnull String keyStr) {
-        return sibling(ResearchNames.find(keyStr));
+        return sibling(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchAddendumBuilder sibling(@Nonnull ResearchName key) {

@@ -43,7 +43,7 @@ public class ResearchEntryBuilder {
     }
     
     public static ResearchEntryBuilder entry(@Nonnull String name, @Nonnull String discipline) {
-        return entry(ResearchNames.find(name), discipline);
+        return entry(ResearchNames.find(name).orElseThrow(), discipline);
     }
     
     public ResearchEntryBuilder parent(SimpleResearchKey parent) {
@@ -57,7 +57,7 @@ public class ResearchEntryBuilder {
     }
     
     public ResearchEntryBuilder parent(String parent) {
-        return this.parent(ResearchNames.find(parent));
+        return this.parent(ResearchNames.find(parent).orElseThrow());
     }
     
     public ResearchEntryBuilder hidden() {

@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
@@ -35,8 +36,8 @@ public class ResearchNames {
     }
     
     @Nonnull
-    public static ResearchName find(String name) {
-        return NAMES.get().getValues().stream().filter(rn -> rn.matches(name)).findFirst().orElseThrow(() -> new IllegalArgumentException("Unrecognized research name"));
+    public static Optional<ResearchName> find(String name) {
+        return NAMES.get().getValues().stream().filter(rn -> rn.matches(name)).findFirst();
     }
     
     private static void validate(IForgeRegistryInternal<ResearchName> owner, RegistryManager stage, int id, ResourceLocation key, ResearchName obj) {

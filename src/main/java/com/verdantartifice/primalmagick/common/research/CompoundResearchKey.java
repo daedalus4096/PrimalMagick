@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.research;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -89,8 +90,12 @@ public class CompoundResearchKey {
         }
     }
     
+    public static Optional<CompoundResearchKey> from(@Nonnull Optional<SimpleResearchKey> simpleKeyOpt) {
+        return simpleKeyOpt.isPresent() ? Optional.of(new CompoundResearchKey(true, simpleKeyOpt.get())) : Optional.empty();
+    }
+    
     public static CompoundResearchKey from(boolean requireAll, SimpleResearchKey... simpleKeys) {
-        return new CompoundResearchKey(requireAll, Arrays.asList(simpleKeys).stream().filter(Objects::nonNull).toList());
+        return new CompoundResearchKey(requireAll, Arrays.stream(simpleKeys).filter(Objects::nonNull).toList());
     }
     
     public static CompoundResearchKey from(boolean requireAll, List<SimpleResearchKey> simpleKeys) {
@@ -98,7 +103,7 @@ public class CompoundResearchKey {
     }
     
     public static CompoundResearchKey from(boolean requireAll, String... keyStrs) {
-        return new CompoundResearchKey(requireAll, Arrays.asList(keyStrs).stream().filter(Objects::nonNull).map(SimpleResearchKey::parse).toList());
+        return new CompoundResearchKey(requireAll, Arrays.stream(keyStrs).filter(Objects::nonNull).map(SimpleResearchKey::parse).toList());
     }
     
     @Nonnull

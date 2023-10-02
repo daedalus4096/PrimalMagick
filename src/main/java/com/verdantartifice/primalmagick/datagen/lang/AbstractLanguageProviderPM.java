@@ -207,7 +207,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ResearchEntryLanguageBuilder researchEntry(String keyStr) {
-        return this.researchEntry(ResearchNames.find(keyStr));
+        return this.researchEntry(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchEntryLanguageBuilder researchEntry(ResearchName key) {
@@ -219,7 +219,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(String keyStr) {
-        return this.researchRequirement(ResearchNames.find(keyStr));
+        return this.researchRequirement(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(ResearchName key) {

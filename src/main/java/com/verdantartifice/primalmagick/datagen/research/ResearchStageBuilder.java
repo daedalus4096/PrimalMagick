@@ -90,11 +90,11 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull String keyStr) {
-        return requiredResearch(ResearchNames.find(keyStr), false);
+        return requiredResearch(ResearchNames.find(keyStr).orElseThrow(), false);
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull String keyStr, boolean hasHint) {
-        return requiredResearch(ResearchNames.find(keyStr), hasHint);
+        return requiredResearch(ResearchNames.find(keyStr).orElseThrow(), hasHint);
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull ResearchName key) {
@@ -145,7 +145,7 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder sibling(@Nonnull String keyStr) {
-        return sibling(ResearchNames.find(keyStr));
+        return sibling(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchStageBuilder sibling(@Nonnull ResearchName key) {
@@ -158,7 +158,7 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder reveals(@Nonnull String keyStr) {
-        return reveals(ResearchNames.find(keyStr));
+        return reveals(ResearchNames.find(keyStr).orElseThrow());
     }
     
     public ResearchStageBuilder reveals(@Nonnull ResearchName key) {
