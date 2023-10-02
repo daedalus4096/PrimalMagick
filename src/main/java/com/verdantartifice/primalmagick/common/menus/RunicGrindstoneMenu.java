@@ -44,7 +44,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
-    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS");
+    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.find("UNLOCK_RUNE_ENCHANTMENTS");
     
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {

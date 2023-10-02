@@ -46,7 +46,7 @@ public class OtherIndexPage extends AbstractPage {
         y += 24;
         
         // Add attunements button if attunements are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("ATTUNEMENTS"))) {
+        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.find("ATTUNEMENTS"))) {
             text = Component.translatable("grimoire.primalmagick.attunement_header");
             Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
@@ -61,7 +61,7 @@ public class OtherIndexPage extends AbstractPage {
         }
         
         // Add rune enchantments button if rune enchantments are unlocked
-        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parse("UNLOCK_RUNE_ENCHANTMENTS"))) {
+        if (ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.find("UNLOCK_RUNE_ENCHANTMENTS"))) {
             text = Component.translatable("grimoire.primalmagick.rune_enchantment_header");
             Button button = screen.addWidgetToScreen(new RuneEnchantmentIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();

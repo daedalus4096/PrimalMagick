@@ -57,6 +57,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> UNLOCK_RITUAL = register("unlock_ritual", () -> new ResearchName("UNLOCK_RITUAL"));
     public static final RegistryObject<ResearchName> UNLOCK_MAGITECH = register("unlock_magitech", () -> new ResearchName("UNLOCK_MAGITECH"));
     public static final RegistryObject<ResearchName> UNLOCK_SCANS = register("unlock_scans", () -> new ResearchName("UNLOCK_SCANS"));
+    public static final RegistryObject<ResearchName> UNLOCK_RUNE_ENCHANTMENTS = register("unlock_rune_enchantments", () -> new ResearchName("UNLOCK_RUNE_ENCHANTMENTS"));
     public static final RegistryObject<ResearchName> TERRESTRIAL_MAGICK = register("terrestrial_magick", () -> new ResearchName("TERRESTRIAL_MAGICK"));
     public static final RegistryObject<ResearchName> FORBIDDEN_MAGICK = register("forbidden_magick", () -> new ResearchName("FORBIDDEN_MAGICK"));
     public static final RegistryObject<ResearchName> HEAVENLY_MAGICK = register("heavenly_magick", () -> new ResearchName("HEAVENLY_MAGICK"));

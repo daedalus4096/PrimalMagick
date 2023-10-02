@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class HallowsteelGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<HallowsteelGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("HALLOWSTEEL_GOLEM");
+    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.find("HALLOWSTEEL_GOLEM");
 
     public HallowsteelGolemControllerBlock(Properties properties) {
         super(properties);

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class HexiumGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<HexiumGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("HEXIUM_GOLEM");
+    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.find("HEXIUM_GOLEM");
 
     public HexiumGolemControllerBlock(Properties properties) {
         super(properties);

@@ -30,7 +30,7 @@ public class InitResearch {
     private static void initScanResearch() {
         ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.parse("b_sotu_scan_hallowed_orb")));
-        SimpleResearchKey rawMarble = SimpleResearchKey.parse("RAW_MARBLE");
+        SimpleResearchKey rawMarble = SimpleResearchKey.find("RAW_MARBLE");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_SLAB.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_STAIRS.get(), rawMarble));
@@ -43,20 +43,20 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_CHISELED.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RUNED.get(), rawMarble));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_TILES.get(), rawMarble));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.parse("HALLOWED_ORB")));
-        SimpleResearchKey hallowood = SimpleResearchKey.parse("HALLOWOOD_TREES");
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.find("HALLOWED_ORB")));
+        SimpleResearchKey hallowood = SimpleResearchKey.find("HALLOWOOD_TREES");
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.HALLOWOOD_LOGS, hallowood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWOOD_LEAVES.get(), hallowood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWOOD_SAPLING.get(), hallowood));
-        SimpleResearchKey sunwood = SimpleResearchKey.parse("SUNWOOD_TREES");
+        SimpleResearchKey sunwood = SimpleResearchKey.find("SUNWOOD_TREES");
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.SUNWOOD_LOGS, sunwood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.SUNWOOD_LEAVES.get(), sunwood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.SUNWOOD_SAPLING.get(), sunwood));
-        SimpleResearchKey moonwood = SimpleResearchKey.parse("MOONWOOD_TREES");
+        SimpleResearchKey moonwood = SimpleResearchKey.find("MOONWOOD_TREES");
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsPM.MOONWOOD_LOGS, moonwood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MOONWOOD_LEAVES.get(), moonwood));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MOONWOOD_SAPLING.get(), moonwood));
-        SimpleResearchKey rockSalt = SimpleResearchKey.parse("ROCK_SALT");
+        SimpleResearchKey rockSalt = SimpleResearchKey.find("ROCK_SALT");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ROCK_SALT_ORE.get(), rockSalt));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ROCK_SALT.get(), rockSalt));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.REFINED_SALT.get(), rockSalt));
@@ -75,22 +75,22 @@ public class InitResearch {
         ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.FLYING_CREATURES, SimpleResearchKey.parse("t_flying_creature"), false));
         ResearchManager.registerScanTrigger(new ScanEntityTagResearchTrigger(EntityTypeTagsPM.GOLEMS, SimpleResearchKey.parse("t_golem"), false));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.NETHER_STARS, SimpleResearchKey.parse("b_scan_nether_star"), false));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ALCHEMICAL_WASTE.get(), SimpleResearchKey.parse("ALCHEMICAL_WASTE")));
-        SimpleResearchKey quartz = SimpleResearchKey.parse("QUARTZ");
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.ALCHEMICAL_WASTE.get(), SimpleResearchKey.find("ALCHEMICAL_WASTE")));
+        SimpleResearchKey quartz = SimpleResearchKey.find("QUARTZ");
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.GEMS_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.ORES_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.STORAGE_BLOCKS_QUARTZ, quartz));
         ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(ItemTagsForgeExt.NUGGETS_QUARTZ, quartz));
-        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.INNER_DEMON.get(), SimpleResearchKey.parse("INNER_DEMON")));
-        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.BOOKSHELVES, SimpleResearchKey.parse("BOOKSHELF")));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEEHIVE, SimpleResearchKey.parse("BEEHIVE")));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEACON, SimpleResearchKey.parse("BEACON")));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_EGG, SimpleResearchKey.parse("DRAGON_EGG")));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_HEAD, SimpleResearchKey.parse("DRAGON_HEAD")));
-        SimpleResearchKey relic = SimpleResearchKey.parse("MYSTICAL_RELIC");
+        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.INNER_DEMON.get(), SimpleResearchKey.find("INNER_DEMON")));
+        ResearchManager.registerScanTrigger(new ScanItemTagResearchTrigger(Tags.Items.BOOKSHELVES, SimpleResearchKey.find("BOOKSHELF")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEEHIVE, SimpleResearchKey.find("BEEHIVE")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.BEACON, SimpleResearchKey.find("BEACON")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_EGG, SimpleResearchKey.find("DRAGON_EGG")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(Items.DRAGON_HEAD, SimpleResearchKey.find("DRAGON_HEAD")));
+        SimpleResearchKey relic = SimpleResearchKey.find("MYSTICAL_RELIC");
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC.get(), relic));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MYSTICAL_RELIC_FRAGMENT.get(), relic));
-        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), SimpleResearchKey.parse("HUMMING_ARTIFACT")));
-        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.TREEFOLK.get(), SimpleResearchKey.parse("TREEFOLK")));
+        ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get(), SimpleResearchKey.find("HUMMING_ARTIFACT")));
+        ResearchManager.registerScanTrigger(new ScanEntityResearchTrigger(EntityTypesPM.TREEFOLK.get(), SimpleResearchKey.find("TREEFOLK")));
     }
 }

@@ -533,7 +533,7 @@ public class ItemsPM {
     public static final RegistryObject<KnowledgeGainItem> MYSTICAL_RELIC = registerSupplier("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> MYSTICAL_RELIC_FRAGMENT = registerSupplier("mystical_relic_fragment", () -> new Item(new Item.Properties()));
     public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = registerSupplier("blood_notes", () -> new ForbiddenSourceGainItem(Source.BLOOD, new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<ResearchGainItem> SHEEP_TOME = registerSupplier("sheep_tome", () -> new ResearchGainItem(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH_SHEEP"), new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ResearchGainItem> SHEEP_TOME = registerSupplier("sheep_tome", () -> new ResearchGainItem(SimpleResearchKey.find("SPELL_PAYLOAD_POLYMORPH_SHEEP"), new Item.Properties().rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
     public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = registerSupplier("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class PrimaliteGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<PrimaliteGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.parse("PRIMALITE_GOLEM");
+    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.find("PRIMALITE_GOLEM");
     
     public PrimaliteGolemControllerBlock(Properties properties) {
         super(properties);

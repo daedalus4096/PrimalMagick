@@ -57,7 +57,7 @@ public class ProjectProvider implements DataProvider {
     }
     
     protected void registerProjects(Consumer<IFinishedProject> consumer) {
-        SimpleResearchKey shardSynthesis = SimpleResearchKey.parse("SHARD_SYNTHESIS");
+        SimpleResearchKey shardSynthesis = SimpleResearchKey.find("SHARD_SYNTHESIS");
         
         ProjectBuilder.project("advanced_essence_analysis").requiredResearch("CRYSTAL_SYNTHESIS").rewardMultiplier(0.5D)
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
