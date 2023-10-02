@@ -59,4 +59,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SOURCE_INFERNAL = register("source_infernal", () -> new ResearchName("SOURCE_INFERNAL"));
     public static final RegistryObject<ResearchName> SOURCE_VOID = register("source_void", () -> new ResearchName("SOURCE_VOID"));
     public static final RegistryObject<ResearchName> SOURCE_HALLOWED = register("source_hallowed", () -> new ResearchName("SOURCE_HALLOWED"));
+    public static final RegistryObject<ResearchName> SECRETS_OF_THE_UNIVERSE = register("secrets_of_the_universe", () -> new ResearchName("SECRETS_OF_THE_UNIVERSE"));
+    public static final RegistryObject<ResearchName> COMPLETE_BASICS = register("complete_basics", () -> new ResearchName("COMPLETE_BASICS"));
+    public static final RegistryObject<ResearchName> THEORY_OF_EVERYTHING = register("theory_of_everything", () -> new ResearchName("THEORY_OF_EVERYTHING"));
 }
