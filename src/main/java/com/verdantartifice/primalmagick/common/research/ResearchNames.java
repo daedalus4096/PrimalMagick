@@ -216,4 +216,41 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> RUNIC_GRINDSTONE = register("runic_grindstone", () -> new ResearchName("RUNIC_GRINDSTONE"));
     public static final RegistryObject<ResearchName> RECALL_STONE = register("recall_stone", () -> new ResearchName("RECALL_STONE"));
     public static final RegistryObject<ResearchName> RUNIC_TRIM = register("runic_trim", () -> new ResearchName("RUNIC_TRIM"));
+
+    // Register Ritual Magick research
+    public static final RegistryObject<ResearchName> BASIC_RITUAL = register("basic_ritual", () -> new ResearchName("BASIC_RITUAL"));
+    public static final RegistryObject<ResearchName> EXPERT_RITUAL = register("expert_ritual", () -> new ResearchName("EXPERT_RITUAL"));
+    public static final RegistryObject<ResearchName> MASTER_RITUAL = register("master_ritual", () -> new ResearchName("MASTER_RITUAL"));
+    public static final RegistryObject<ResearchName> SUPREME_RITUAL = register("supreme_ritual", () -> new ResearchName("SUPREME_RITUAL"));
+    public static final RegistryObject<ResearchName> COMPLETE_RITUAL = register("complete_ritual", () -> new ResearchName("COMPLETE_RITUAL"));
+    public static final RegistryObject<ResearchName> MANAFRUIT = register("manafruit", () -> new ResearchName("MANAFRUIT"));
+    public static final RegistryObject<ResearchName> RITUAL_CANDLES = register("ritual_candles", () -> new ResearchName("RITUAL_CANDLES"));
+    public static final RegistryObject<ResearchName> INCENSE_BRAZIER = register("incense_brazier", () -> new ResearchName("INCENSE_BRAZIER"));
+    public static final RegistryObject<ResearchName> RITUAL_LECTERN = register("ritual_lectern", () -> new ResearchName("RITUAL_LECTERN"));
+    public static final RegistryObject<ResearchName> RITUAL_BELL = register("ritual_bell", () -> new ResearchName("RITUAL_BELL"));
+    public static final RegistryObject<ResearchName> BLOODLETTER = register("bloodletter", () -> new ResearchName("BLOODLETTER"));
+    public static final RegistryObject<ResearchName> SOUL_ANVIL = register("soul_anvil", () -> new ResearchName("SOUL_ANVIL"));
+    public static final RegistryObject<ResearchName> CELESTIAL_HARP = register("celestial_harp", () -> new ResearchName("CELESTIAL_HARP"));
+    public static final RegistryObject<ResearchName> WAND_CORE_PRIMAL = register("wand_core_primal", () -> new ResearchName("WAND_CORE_PRIMAL"));
+    public static final RegistryObject<ResearchName> WAND_CORE_DARK_PRIMAL = register("wand_core_dark_primal", () -> new ResearchName("WAND_CORE_DARK_PRIMAL"));
+    public static final RegistryObject<ResearchName> WAND_CORE_PURE_PRIMAL = register("wand_core_pure_primal", () -> new ResearchName("WAND_CORE_PURE_PRIMAL"));
+    public static final RegistryObject<ResearchName> PIXIES = register("pixies", () -> new ResearchName("PIXIES"));
+    public static final RegistryObject<ResearchName> GRAND_PIXIES = register("grand_pixies", () -> new ResearchName("GRAND_PIXIES"));
+    public static final RegistryObject<ResearchName> MAJESTIC_PIXIES = register("majestic_pixies", () -> new ResearchName("MAJESTIC_PIXIES"));
+    public static final RegistryObject<ResearchName> AMBROSIA = register("ambrosia", () -> new ResearchName("AMBROSIA"));
+    public static final RegistryObject<ResearchName> GREATER_AMBROSIA = register("greater_ambrosia", () -> new ResearchName("GREATER_AMBROSIA"));
+    public static final RegistryObject<ResearchName> SUPREME_AMBROSIA = register("supreme_ambrosia", () -> new ResearchName("SUPREME_AMBROSIA"));
+    public static final RegistryObject<ResearchName> FLYING_CARPET = register("flying_carpet", () -> new ResearchName("FLYING_CARPET"));
+    public static final RegistryObject<ResearchName> CLEANSING_RITE = register("cleansing_rite", () -> new ResearchName("CLEANSING_RITE"));
+    public static final RegistryObject<ResearchName> PRIMAL_SHOVEL = register("primal_shovel", () -> new ResearchName("PRIMAL_SHOVEL"));
+    public static final RegistryObject<ResearchName> PRIMAL_FISHING_ROD = register("primal_fishing_rod", () -> new ResearchName("PRIMAL_FISHING_ROD"));
+    public static final RegistryObject<ResearchName> PRIMAL_AXE = register("primal_axe", () -> new ResearchName("PRIMAL_AXE"));
+    public static final RegistryObject<ResearchName> PRIMAL_HOE = register("primal_hoe", () -> new ResearchName("PRIMAL_HOE"));
+    public static final RegistryObject<ResearchName> PRIMAL_PICKAXE = register("primal_pickaxe", () -> new ResearchName("PRIMAL_PICKAXE"));
+    public static final RegistryObject<ResearchName> FORBIDDEN_TRIDENT = register("forbidden_trident", () -> new ResearchName("FORBIDDEN_TRIDENT"));
+    public static final RegistryObject<ResearchName> FORBIDDEN_BOW = register("forbidden_bow", () -> new ResearchName("FORBIDDEN_BOW"));
+    public static final RegistryObject<ResearchName> FORBIDDEN_SWORD = register("forbidden_sword", () -> new ResearchName("FORBIDDEN_SWORD"));
+    public static final RegistryObject<ResearchName> SACRED_SHIELD = register("sacred_shield", () -> new ResearchName("SACRED_SHIELD"));
+    public static final RegistryObject<ResearchName> DREAM_VISION_TALISMAN = register("dream_vision_talisman", () -> new ResearchName("DREAM_VISION_TALISMAN"));
+    public static final RegistryObject<ResearchName> DOWSING_ROD = register("dowsing_rod", () -> new ResearchName("DOWSING_ROD"));
 }
