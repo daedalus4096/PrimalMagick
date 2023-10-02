@@ -6200,7 +6200,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("MANA_ARROWS")).add(Source.BLOOD.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_INFERNAL.get(), 4)
@@ -6210,7 +6210,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("MANA_ARROWS")).add(Source.INFERNAL.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_VOID.get(), 4)
@@ -6220,7 +6220,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("MANA_ARROWS")).add(Source.VOID.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.VOID, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_HALLOWED.get(), 4)
@@ -6230,7 +6230,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("MANA_ARROWS")).add(Source.HALLOWED.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 5))
             .build(consumer);
     }
@@ -6355,28 +6355,28 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("HUMMING_ARTIFACT")).add(Source.BLOOD.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("HUMMING_ARTIFACT")).add(Source.INFERNAL.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_VOID.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("HUMMING_ARTIFACT")).add(Source.VOID.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("HUMMING_ARTIFACT")).add(Source.HALLOWED.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .build(consumer);
     }
@@ -6469,7 +6469,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_BLOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")).add(Source.BLOOD.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get())
@@ -6478,7 +6478,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")).add(Source.INFERNAL.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get())
@@ -6487,7 +6487,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_VOID.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")).add(Source.VOID.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get())
@@ -6496,7 +6496,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_HALLOWED.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")).add(Source.HALLOWED.getDiscoverKey()).build())
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .build(consumer);
     }
