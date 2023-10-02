@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.golems;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.PrimaliteGolemEntity;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.world.entity.EntityType;
@@ -15,7 +16,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class PrimaliteGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<PrimaliteGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = SimpleResearchKey.find("PRIMALITE_GOLEM");
+    protected static final SimpleResearchKey RESEARCH = ResearchNames.PRIMALITE_GOLEM.get().simpleKey();
     
     public PrimaliteGolemControllerBlock(Properties properties) {
         super(properties);

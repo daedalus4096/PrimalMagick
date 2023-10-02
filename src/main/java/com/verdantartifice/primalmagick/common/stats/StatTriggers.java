@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -22,6 +24,10 @@ import net.minecraft.server.level.ServerPlayer;
  */
 public class StatTriggers {
     private static final Map<Stat, Map<Integer, List<SimpleResearchKey>>> REGISTRY = new HashMap<>();
+    
+    public static void register(@Nullable Stat stat, int threshold, @Nonnull Optional<SimpleResearchKey> researchOpt) {
+        register(stat, threshold, researchOpt.orElseThrow());
+    }
     
     public static void register(@Nullable Stat stat, int threshold, @Nullable SimpleResearchKey research) {
         // Don't allow null keys or values in the registry

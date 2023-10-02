@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
@@ -44,7 +45,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
-    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = SimpleResearchKey.find("UNLOCK_RUNE_ENCHANTMENTS");
+    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey();
     
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {
