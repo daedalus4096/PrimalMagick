@@ -116,4 +116,37 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> ESSENCE_CASK_HEAVENLY = register("essence_cask_heavenly", () -> new ResearchName("ESSENCE_CASK_HEAVENLY"));
     public static final RegistryObject<ResearchName> WAND_GLAMOUR_TABLE = register("wand_glamour_table", () -> new ResearchName("WAND_GLAMOUR_TABLE"));
     public static final RegistryObject<ResearchName> ATTUNEMENT_SHACKLES = register("attunement_shackles", () -> new ResearchName("ATTUNEMENT_SHACKLES"));
+    
+    // Register Alchemy research
+    public static final RegistryObject<ResearchName> BASIC_ALCHEMY = register("basic_alchemy", () -> new ResearchName("BASIC_ALCHEMY"));
+    public static final RegistryObject<ResearchName> EXPERT_ALCHEMY = register("expert_alchemy", () -> new ResearchName("EXPERT_ALCHEMY"));
+    public static final RegistryObject<ResearchName> MASTER_ALCHEMY = register("master_alchemy", () -> new ResearchName("MASTER_ALCHEMY"));
+    public static final RegistryObject<ResearchName> SUPREME_ALCHEMY = register("supreme_alchemy", () -> new ResearchName("SUPREME_ALCHEMY"));
+    public static final RegistryObject<ResearchName> COMPLETE_ALCHEMY = register("complete_alchemy", () -> new ResearchName("COMPLETE_ALCHEMY"));
+    public static final RegistryObject<ResearchName> STONEMELDING = register("stonemelding", () -> new ResearchName("STONEMELDING"));
+    public static final RegistryObject<ResearchName> SKYGLASS = register("skyglass", () -> new ResearchName("SKYGLASS"));
+    public static final RegistryObject<ResearchName> SHARD_SYNTHESIS = register("shard_synthesis", () -> new ResearchName("SHARD_SYNTHESIS"));
+    public static final RegistryObject<ResearchName> SHARD_DESYNTHESIS = register("shard_desynthesis", () -> new ResearchName("SHARD_DESYNTHESIS"));
+    public static final RegistryObject<ResearchName> PRIMALITE = register("primalite", () -> new ResearchName("PRIMALITE"));
+    public static final RegistryObject<ResearchName> CRYSTAL_SYNTHESIS = register("crystal_synthesis", () -> new ResearchName("CRYSTAL_SYNTHESIS"));
+    public static final RegistryObject<ResearchName> CRYSTAL_DESYNTHESIS = register("crystal_desynthesis", () -> new ResearchName("CRYSTAL_DESYNTHESIS"));
+    public static final RegistryObject<ResearchName> HEXIUM = register("hexium", () -> new ResearchName("HEXIUM"));
+    public static final RegistryObject<ResearchName> CLUSTER_SYNTHESIS = register("cluster_synthesis", () -> new ResearchName("CLUSTER_SYNTHESIS"));
+    public static final RegistryObject<ResearchName> CLUSTER_DESYNTHESIS = register("cluster_desynthesis", () -> new ResearchName("CLUSTER_DESYNTHESIS"));
+    public static final RegistryObject<ResearchName> HALLOWSTEEL = register("hallowsteel", () -> new ResearchName("HALLOWSTEEL"));
+    public static final RegistryObject<ResearchName> CALCINATOR_BASIC = register("calcinator_basic", () -> new ResearchName("CALCINATOR_BASIC"));
+    public static final RegistryObject<ResearchName> CALCINATOR_ENCHANTED = register("calcinator_enchanted", () -> new ResearchName("CALCINATOR_ENCHANTED"));
+    public static final RegistryObject<ResearchName> CALCINATOR_FORBIDDEN = register("calcinator_forbidden", () -> new ResearchName("CALCINATOR_FORBIDDEN"));
+    public static final RegistryObject<ResearchName> CALCINATOR_HEAVENLY = register("calcinator_heavenly", () -> new ResearchName("CALCINATOR_HEAVENLY"));
+    public static final RegistryObject<ResearchName> CRYOTREATMENT = register("cryotreatment", () -> new ResearchName("CRYOTREATMENT"));
+    public static final RegistryObject<ResearchName> SANGUINE_CRUCIBLE = register("sanguine_crucible", () -> new ResearchName("SANGUINE_CRUCIBLE"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_LAND_ANIMALS = register("sanguine_core_land_animals", () -> new ResearchName("SANGUINE_CORE_LAND_ANIMALS"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_SEA_CREATURES = register("sanguine_core_sea_creatures", () -> new ResearchName("SANGUINE_CORE_SEA_CREATURES"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_FLYING_CREATURES = register("sanguine_core_flying_creatures", () -> new ResearchName("SANGUINE_CORE_FLYING_CREATURES"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_PLANTS = register("sanguine_core_plants", () -> new ResearchName("SANGUINE_CORE_PLANTS"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_UNDEAD = register("sanguine_core_undead", () -> new ResearchName("SANGUINE_CORE_UNDEAD"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_SAPIENTS = register("sanguine_core_sapients", () -> new ResearchName("SANGUINE_CORE_SAPIENTS"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_DEMONS = register("sanguine_core_demons", () -> new ResearchName("SANGUINE_CORE_DEMONS"));
+    public static final RegistryObject<ResearchName> SANGUINE_CORE_ALIENS = register("sanguine_core_aliens", () -> new ResearchName("SANGUINE_CORE_ALIENS"));
+    public static final RegistryObject<ResearchName> IGNYX = register("ignyx", () -> new ResearchName("IGNYX"));
 }
