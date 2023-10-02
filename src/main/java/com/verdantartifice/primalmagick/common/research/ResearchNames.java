@@ -149,4 +149,40 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SANGUINE_CORE_DEMONS = register("sanguine_core_demons", () -> new ResearchName("SANGUINE_CORE_DEMONS"));
     public static final RegistryObject<ResearchName> SANGUINE_CORE_ALIENS = register("sanguine_core_aliens", () -> new ResearchName("SANGUINE_CORE_ALIENS"));
     public static final RegistryObject<ResearchName> IGNYX = register("ignyx", () -> new ResearchName("IGNYX"));
+    
+    // Register Sorcery research
+    public static final RegistryObject<ResearchName> BASIC_SORCERY = register("basic_sorcery", () -> new ResearchName("BASIC_SORCERY"));
+    public static final RegistryObject<ResearchName> EXPERT_SORCERY = register("expert_sorcery", () -> new ResearchName("EXPERT_SORCERY"));
+    public static final RegistryObject<ResearchName> MASTER_SORCERY = register("master_sorcery", () -> new ResearchName("MASTER_SORCERY"));
+    public static final RegistryObject<ResearchName> SUPREME_SORCERY = register("supreme_sorcery", () -> new ResearchName("SUPREME_SORCERY"));
+    public static final RegistryObject<ResearchName> COMPLETE_SORCERY = register("complete_sorcery", () -> new ResearchName("COMPLETE_SORCERY"));
+    public static final RegistryObject<ResearchName> WAND_INSCRIPTION = register("wand_inscription", () -> new ResearchName("WAND_INSCRIPTION"));
+    public static final RegistryObject<ResearchName> SPELL_VEHICLE_PROJECTILE = register("spell_vehicle_projectile", () -> new ResearchName("SPELL_VEHICLE_PROJECTILE"));
+    public static final RegistryObject<ResearchName> SPELL_VEHICLE_BOLT = register("spell_vehicle_bolt", () -> new ResearchName("SPELL_VEHICLE_BOLT"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_FROST = register("spell_payload_frost", () -> new ResearchName("SPELL_PAYLOAD_FROST"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_LIGHTNING = register("spell_payload_lightning", () -> new ResearchName("SPELL_PAYLOAD_LIGHTNING"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_SOLAR = register("spell_payload_solar", () -> new ResearchName("SPELL_PAYLOAD_SOLAR"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_LUNAR = register("spell_payload_lunar", () -> new ResearchName("SPELL_PAYLOAD_LUNAR"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_BLOOD = register("spell_payload_blood", () -> new ResearchName("SPELL_PAYLOAD_BLOOD"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_FLAME = register("spell_payload_flame", () -> new ResearchName("SPELL_PAYLOAD_FLAME"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_VOID = register("spell_payload_void", () -> new ResearchName("SPELL_PAYLOAD_VOID"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_HOLY = register("spell_payload_holy", () -> new ResearchName("SPELL_PAYLOAD_HOLY"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_BREAK = register("spell_payload_break", () -> new ResearchName("SPELL_PAYLOAD_BREAK"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_STONE = register("spell_payload_conjure_stone", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_STONE"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_WATER = register("spell_payload_conjure_water", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_WATER"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_FLIGHT = register("spell_payload_flight", () -> new ResearchName("SPELL_PAYLOAD_FLIGHT"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_LIGHT = register("spell_payload_conjure_light", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_LIGHT"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_HEALING = register("spell_payload_healing", () -> new ResearchName("SPELL_PAYLOAD_HEALING"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_POLYMORPH = register("spell_payload_polymorph", () -> new ResearchName("SPELL_PAYLOAD_POLYMORPH"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_POLYMORPH_SHEEP = register("spell_payload_polymorph_sheep", () -> new ResearchName("SPELL_PAYLOAD_POLYMORPH_SHEEP"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_ANIMAL = register("spell_payload_conjure_animal", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_ANIMAL"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_LAVA = register("spell_payload_conjure_lava", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_LAVA"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_DRAIN_SOUL = register("spell_payload_drain_soul", () -> new ResearchName("SPELL_PAYLOAD_DRAIN_SOUL"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_TELEPORT = register("spell_payload_teleport", () -> new ResearchName("SPELL_PAYLOAD_TELEPORT"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONSECRATE = register("spell_payload_consecrate", () -> new ResearchName("SPELL_PAYLOAD_CONSECRATE"));
+    public static final RegistryObject<ResearchName> SPELL_MOD_AMPLIFY = register("spell_mod_amplify", () -> new ResearchName("SPELL_MOD_AMPLIFY"));
+    public static final RegistryObject<ResearchName> SPELL_MOD_MINE = register("spell_mod_mine", () -> new ResearchName("SPELL_MOD_MINE"));
+    public static final RegistryObject<ResearchName> SPELL_MOD_QUICKEN = register("spell_mod_quicken", () -> new ResearchName("SPELL_MOD_QUICKEN"));
+    public static final RegistryObject<ResearchName> SPELL_MOD_BURST = register("spell_mod_burst", () -> new ResearchName("SPELL_MOD_BURST"));
+    public static final RegistryObject<ResearchName> SPELL_MOD_FORK = register("spell_mod_fork", () -> new ResearchName("SPELL_MOD_FORK"));
 }
