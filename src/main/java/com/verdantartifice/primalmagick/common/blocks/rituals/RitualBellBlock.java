@@ -98,7 +98,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
     });
     
     public RitualBellBlock() {
-        super(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).pushReaction(PushReaction.DESTROY).strength(5.0F).sound(SoundType.ANVIL));
+        super(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).pushReaction(PushReaction.DESTROY).strength(3.0F, 6.0F).sound(SoundType.ANVIL));
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(ATTACHMENT, BellAttachType.FLOOR));
     }
     
