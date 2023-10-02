@@ -10,6 +10,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -88,11 +90,19 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull String keyStr) {
-        return requiredResearch(SimpleResearchKey.parse(keyStr), false);
+        return requiredResearch(ResearchNames.find(keyStr), false);
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull String keyStr, boolean hasHint) {
-        return requiredResearch(SimpleResearchKey.parse(keyStr), hasHint);
+        return requiredResearch(ResearchNames.find(keyStr), hasHint);
+    }
+    
+    public ResearchStageBuilder requiredResearch(@Nonnull ResearchName key) {
+        return requiredResearch(key.simpleKey(), false);
+    }
+    
+    public ResearchStageBuilder requiredResearch(@Nonnull ResearchName key, boolean hasHint) {
+        return requiredResearch(key.simpleKey(), hasHint);
     }
     
     public ResearchStageBuilder requiredResearch(@Nonnull SimpleResearchKey key) {
@@ -135,7 +145,11 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder sibling(@Nonnull String keyStr) {
-        return sibling(SimpleResearchKey.parse(keyStr));
+        return sibling(ResearchNames.find(keyStr));
+    }
+    
+    public ResearchStageBuilder sibling(@Nonnull ResearchName key) {
+        return sibling(key.simpleKey());
     }
     
     public ResearchStageBuilder sibling(@Nonnull SimpleResearchKey key) {
@@ -144,7 +158,11 @@ public class ResearchStageBuilder {
     }
     
     public ResearchStageBuilder reveals(@Nonnull String keyStr) {
-        return reveals(SimpleResearchKey.parse(keyStr));
+        return reveals(ResearchNames.find(keyStr));
+    }
+    
+    public ResearchStageBuilder reveals(@Nonnull ResearchName key) {
+        return reveals(key.simpleKey());
     }
     
     public ResearchStageBuilder reveals(@Nonnull SimpleResearchKey key) {

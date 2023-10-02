@@ -9,6 +9,8 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -37,7 +39,11 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull String keyStr) {
-        return requiredResearch(SimpleResearchKey.parse(keyStr));
+        return requiredResearch(ResearchNames.find(keyStr));
+    }
+    
+    public ResearchAddendumBuilder requiredResearch(@Nonnull ResearchName key) {
+        return requiredResearch(key.simpleKey());
     }
     
     public ResearchAddendumBuilder requiredResearch(@Nonnull SimpleResearchKey key) {
@@ -73,7 +79,11 @@ public class ResearchAddendumBuilder {
     }
     
     public ResearchAddendumBuilder sibling(@Nonnull String keyStr) {
-        return sibling(SimpleResearchKey.parse(keyStr));
+        return sibling(ResearchNames.find(keyStr));
+    }
+    
+    public ResearchAddendumBuilder sibling(@Nonnull ResearchName key) {
+        return sibling(key.simpleKey());
     }
     
     public ResearchAddendumBuilder sibling(@Nonnull SimpleResearchKey key) {

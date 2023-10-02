@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidget;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
@@ -29,7 +30,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
  */
 public class RuneEnchantmentPage extends AbstractPage {
     protected static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/grimoire_overlay.png");
-    protected static final SimpleResearchKey UNKNOWN_RUNE = SimpleResearchKey.parse("u_unknown_rune");
+    protected static final SimpleResearchKey UNKNOWN_RUNE = ResearchNames.INTERNAL_UNKNOWN_RUNE.get().simpleKey();
     
     protected Enchantment enchant;
     protected List<IPageElement> contents = new ArrayList<>();

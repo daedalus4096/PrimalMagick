@@ -73,7 +73,7 @@ public class ResearchManager {
             Source.INFERNAL.getDiscoverKey(), 
             Source.VOID.getDiscoverKey(), 
             Source.HALLOWED.getDiscoverKey(),
-            SimpleResearchKey.parse("t_discover_forbidden")
+            ResearchNames.INTERNAL_DISCOVER_FORBIDDEN.get().simpleKey()
     );
     
     public static Set<Integer> getAllCraftingReferences() {
