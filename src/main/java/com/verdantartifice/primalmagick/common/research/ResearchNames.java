@@ -309,9 +309,6 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> DISCOVER_VOID = register("discover_void", () -> new ResearchName("t_discover_void"));
     public static final RegistryObject<ResearchName> DISCOVER_FORBIDDEN = register("discover_forbidden", () -> new ResearchName("t_discover_forbidden"));
     public static final RegistryObject<ResearchName> DISCOVER_HALLOWED = register("discover_hallowed", () -> new ResearchName("t_discover_hallowed"));
-    public static final RegistryObject<ResearchName> DISCOVER_BLOOD_SOTU = register("discover_blood_sotu", () -> new ResearchName("m_sotu_discover_blood"));
-    public static final RegistryObject<ResearchName> DISCOVER_INFERNAL_SOTU = register("discover_infernal_sotu", () -> new ResearchName("m_sotu_discover_infernal"));
-    public static final RegistryObject<ResearchName> DISCOVER_VOID_SOTU = register("discover_void_sotu", () -> new ResearchName("m_sotu_discover_void"));
     public static final RegistryObject<ResearchName> UNKNOWN_RUNE = register("unknown_rune", () -> new ResearchName("u_unknown_rune"));
     public static final RegistryObject<ResearchName> SPELLS_CAST_EXPERT = register("spells_cast_expert", () -> new ResearchName("t_spells_cast_expert"));
     public static final RegistryObject<ResearchName> SPELLS_CAST_MASTER = register("spells_cast_master", () -> new ResearchName("t_spells_cast_master"));
@@ -338,4 +335,37 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> ENV_SKY = register("env_sky", () -> new ResearchName("m_env_sky"));
     public static final RegistryObject<ResearchName> ENV_SUN = register("env_sun", () -> new ResearchName("m_env_sun"));
     public static final RegistryObject<ResearchName> ENV_MOON = register("env_moon", () -> new ResearchName("m_env_moon"));
+    public static final RegistryObject<ResearchName> CRAFTED_ALCHEMY_EXPERT = register("crafted_alchemy_expert", () -> new ResearchName("b_crafted_alchemy_expert"));
+    public static final RegistryObject<ResearchName> CRAFTED_ALCHEMY_MASTER = register("crafted_alchemy_master", () -> new ResearchName("b_crafted_alchemy_master"));
+    public static final RegistryObject<ResearchName> CRAFTED_ALCHEMY_SUPREME = register("crafted_alchemy_supreme", () -> new ResearchName("b_crafted_alchemy_supreme"));
+    public static final RegistryObject<ResearchName> CRAFTED_MANAWEAVING_EXPERT = register("crafted_manaweaving_expert", () -> new ResearchName("b_crafted_manaweaving_expert"));
+    public static final RegistryObject<ResearchName> CRAFTED_MANAWEAVING_MASTER = register("crafted_manaweaving_master", () -> new ResearchName("b_crafted_manaweaving_master"));
+    public static final RegistryObject<ResearchName> CRAFTED_MANAWEAVING_SUPREME = register("crafted_manaweaving_supreme", () -> new ResearchName("b_crafted_manaweaving_supreme"));
+    public static final RegistryObject<ResearchName> CRAFTED_RUNEWORKING_EXPERT = register("crafted_runeworking_expert", () -> new ResearchName("b_crafted_runeworking_expert"));
+    public static final RegistryObject<ResearchName> CRAFTED_RUNEWORKING_MASTER = register("crafted_runeworking_master", () -> new ResearchName("b_crafted_runeworking_master"));
+    public static final RegistryObject<ResearchName> CRAFTED_RUNEWORKING_SUPREME = register("crafted_runeworking_supreme", () -> new ResearchName("b_crafted_runeworking_supreme"));
+    public static final RegistryObject<ResearchName> RITUALS_COMPLETED_EXPERT = register("rituals_completed_expert", () -> new ResearchName("t_rituals_completed_expert"));
+    public static final RegistryObject<ResearchName> RITUALS_COMPLETED_MASTER = register("rituals_completed_master", () -> new ResearchName("t_rituals_completed_master"));
+    public static final RegistryObject<ResearchName> RITUALS_COMPLETED_SUPREME = register("rituals_completed_supreme", () -> new ResearchName("t_rituals_completed_supreme"));
+    public static final RegistryObject<ResearchName> RITUAL_MISHAPS_BASIC = register("ritual_mishaps_basic", () -> new ResearchName("t_ritual_mishaps_basic"));
+    public static final RegistryObject<ResearchName> CRAFTED_MAGITECH_EXPERT = register("crafted_magitech_expert", () -> new ResearchName("b_crafted_magitech_expert"));
+    public static final RegistryObject<ResearchName> CRAFTED_MAGITECH_MASTER = register("crafted_magitech_master", () -> new ResearchName("b_crafted_magitech_master"));
+    public static final RegistryObject<ResearchName> CRAFTED_MAGITECH_SUPREME = register("crafted_magitech_supreme", () -> new ResearchName("b_crafted_magitech_supreme"));
+    public static final RegistryObject<ResearchName> ITEMS_RUNESCRIBED_EXPERT = register("items_runescribed_expert", () -> new ResearchName("t_items_runescribed_expert"));
+    public static final RegistryObject<ResearchName> ITEMS_RUNESCRIBED_MASTER = register("items_runescribed_master", () -> new ResearchName("t_items_runescribed_master"));
+    public static final RegistryObject<ResearchName> ITEMS_RUNESCRIBED_SUPREME = register("items_runescribed_supreme", () -> new ResearchName("t_items_runescribed_supreme"));
+    public static final RegistryObject<ResearchName> RESEARCH_PROJECTS_COMPLETED = register("research_projects_completed", () -> new ResearchName("t_research_projects_completed"));
+    public static final RegistryObject<ResearchName> ITEMS_ANALYZED = register("items_analyzed", () -> new ResearchName("t_items_analyzed"));
+    public static final RegistryObject<ResearchName> SCAN_PRIMALITE = register("scan_primalite", () -> new ResearchName("b_scan_primalite"));
+    public static final RegistryObject<ResearchName> SCAN_HEXIUM = register("scan_hexium", () -> new ResearchName("b_scan_hexium"));
+    public static final RegistryObject<ResearchName> SCAN_HALLOWSTEEL = register("scan_hallowsteel", () -> new ResearchName("b_scan_hallowsteel"));
+    public static final RegistryObject<ResearchName> SCAN_FLYING_CREATURE = register("flying_creature", () -> new ResearchName("t_flying_creature"));
+    public static final RegistryObject<ResearchName> SCAN_GOLEM = register("golem", () -> new ResearchName("t_golem"));
+    public static final RegistryObject<ResearchName> OBSERVATIONS_MADE_BASICS = register("observations_made_basics", () -> new ResearchName("t_observations_made_basics"));
+    public static final RegistryObject<ResearchName> OBSERVATIONS_MADE_EXPERT = register("observations_made_expert", () -> new ResearchName("t_observations_made_expert"));
+    public static final RegistryObject<ResearchName> THEORIES_FORMED_BASICS = register("theories_formed_basics", () -> new ResearchName("t_theories_formed_basics"));
+
+    public static final RegistryObject<ResearchName> SOTU_DISCOVER_BLOOD = register("sotu_discover_blood", () -> new ResearchName("m_sotu_discover_blood"));
+    public static final RegistryObject<ResearchName> SOTU_DISCOVER_INFERNAL = register("sotu_discover_infernal", () -> new ResearchName("m_sotu_discover_infernal"));
+    public static final RegistryObject<ResearchName> SOTU_DISCOVER_VOID = register("sotu_discover_void", () -> new ResearchName("m_sotu_discover_void"));
 }
