@@ -53,7 +53,7 @@ public class ProjectBuilder {
     }
     
     public ProjectBuilder requiredResearch(@Nullable String keyStr) {
-        this.requiredResearch = SimpleResearchKey.parse(keyStr);
+        this.requiredResearch = SimpleResearchKey.find(keyStr);
         return this;
     }
     
