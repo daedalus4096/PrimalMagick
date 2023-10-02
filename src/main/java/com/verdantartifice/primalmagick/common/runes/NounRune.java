@@ -1,10 +1,11 @@
 package com.verdantartifice.primalmagick.common.runes;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchName;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
 /**
@@ -13,12 +14,8 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public class NounRune extends Rune {
-    public NounRune(@Nonnull String tag, @Nonnull String discoveryTag) {
-        super(tag, discoveryTag, Rarity.COMMON, false, -1);
-    }
-    
-    public NounRune(@Nonnull ResourceLocation id, @Nonnull SimpleResearchKey discoveryKey) {
-        super(id, discoveryKey, Rarity.COMMON, false, -1);
+    public NounRune(@Nonnull String tag, @Nonnull Supplier<ResearchName> discoveryKey) {
+        super(tag, discoveryKey, Rarity.COMMON, false, -1);
     }
     
     @Override
