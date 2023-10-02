@@ -302,4 +302,14 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> MYSTICAL_RELIC = register("mystical_relic", () -> new ResearchName("MYSTICAL_RELIC"));
     public static final RegistryObject<ResearchName> HUMMING_ARTIFACT = register("humming_artifact", () -> new ResearchName("HUMMING_ARTIFACT"));
     public static final RegistryObject<ResearchName> TREEFOLK = register("treefolk", () -> new ResearchName("TREEFOLK"));
+    
+    // Register internal research
+    public static final RegistryObject<ResearchName> DISCOVER_BLOOD = register("discover_blood", () -> new ResearchName("t_discover_blood"));
+    public static final RegistryObject<ResearchName> DISCOVER_INFERNAL = register("discover_infernal", () -> new ResearchName("t_discover_infernal"));
+    public static final RegistryObject<ResearchName> DISCOVER_VOID = register("discover_void", () -> new ResearchName("t_discover_void"));
+    public static final RegistryObject<ResearchName> DISCOVER_FORBIDDEN = register("discover_forbidden", () -> new ResearchName("t_discover_forbidden"));
+    public static final RegistryObject<ResearchName> DISCOVER_HALLOWED = register("discover_hallowed", () -> new ResearchName("t_discover_hallowed"));
+    public static final RegistryObject<ResearchName> DISCOVER_BLOOD_SOTU = register("discover_blood_sotu", () -> new ResearchName("m_sotu_discover_blood"));
+    public static final RegistryObject<ResearchName> DISCOVER_INFERNAL_SOTU = register("discover_infernal_sotu", () -> new ResearchName("m_sotu_discover_infernal"));
+    public static final RegistryObject<ResearchName> DISCOVER_VOID_SOTU = register("discover_void_sotu", () -> new ResearchName("m_sotu_discover_void"));
 }
