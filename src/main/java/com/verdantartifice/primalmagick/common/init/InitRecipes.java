@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandTransformBlockTag;
 import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.world.item.ItemStack;
@@ -20,9 +21,9 @@ import net.minecraftforge.common.Tags;
  */
 public class InitRecipes {
     public static void initWandTransforms() {
-        WandTransforms.register(new WandTransformBlockTag(Tags.Blocks.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), CompoundResearchKey.from(false, SimpleResearchKey.parse("t_got_dream"), SimpleResearchKey.parse("FIRST_STEPS"))));
-        WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS@1"))));
-        WandTransforms.register(new WandTransformBlock(Blocks.FURNACE, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_ALCHEMY@1"))));
+        WandTransforms.register(new WandTransformBlockTag(Tags.Blocks.BOOKSHELVES, new ItemStack(ItemsPM.GRIMOIRE.get()), CompoundResearchKey.from(false, SimpleResearchKey.parse("t_got_dream"), SimpleResearchKey.FIRST_STEPS)));
+        WandTransforms.register(new WandTransformBlock(Blocks.CRAFTING_TABLE, new ItemStack(BlocksPM.ARCANE_WORKBENCH.get()), CompoundResearchKey.from(ResearchNames.FIRST_STEPS.get().simpleKey(1))));
+        WandTransforms.register(new WandTransformBlock(Blocks.FURNACE, new ItemStack(BlocksPM.ESSENCE_FURNACE.get()), CompoundResearchKey.from(ResearchNames.BASIC_ALCHEMY.get().simpleKey(1))));
     }
     
     public static void initCompostables() {
