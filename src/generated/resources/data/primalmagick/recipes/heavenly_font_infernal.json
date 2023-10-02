@@ -23,7 +23,7 @@
     "EFE",
     "IMI"
   ],
-  "research": "HEAVENLY_MANA_FONTS",
+  "research": "HEAVENLY_MANA_FONTS&&t_discover_infernal",
   "result": {
     "item": "primalmagick:heavenly_font_infernal"
   }

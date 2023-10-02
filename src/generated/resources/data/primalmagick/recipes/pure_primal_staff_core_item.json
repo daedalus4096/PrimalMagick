@@ -52,7 +52,7 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
-  "research": "WAND_CORE_PURE_PRIMAL",
+  "research": "STAVES&&WAND_CORE_PURE_PRIMAL",
   "result": {
     "item": "primalmagick:pure_primal_staff_core_item"
   }
