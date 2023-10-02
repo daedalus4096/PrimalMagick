@@ -7,10 +7,13 @@ import javax.annotation.Nonnull;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryInternal;
 import net.minecraftforge.registries.RegistryBuilder;
+import net.minecraftforge.registries.RegistryManager;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -21,7 +24,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ResearchNames {
     private static final DeferredRegister<ResearchName> DEFERRED_NAMES = DeferredRegister.create(RegistryKeysPM.RESEARCH_NAMES, PrimalMagick.MODID);
     
-    public static final Supplier<IForgeRegistry<ResearchName>> NAMES = DEFERRED_NAMES.makeRegistry(() -> new RegistryBuilder<ResearchName>().hasTags());
+    public static final Supplier<IForgeRegistry<ResearchName>> NAMES = DEFERRED_NAMES.makeRegistry(() -> new RegistryBuilder<ResearchName>().hasTags().onValidate(ResearchNames::validate));
     
     public static void init() {
         DEFERRED_NAMES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -34,6 +37,13 @@ public class ResearchNames {
     @Nonnull
     public static ResearchName find(String name) {
         return NAMES.get().getValues().stream().filter(rn -> rn.matches(name)).findFirst().orElseThrow(() -> new IllegalArgumentException("Unrecognized research name"));
+    }
+    
+    private static void validate(IForgeRegistryInternal<ResearchName> owner, RegistryManager stage, int id, ResourceLocation key, ResearchName obj) {
+        // Validate that each registry object is the only one with its given root name
+        if (NAMES.get().getValues().stream().filter(rn -> rn.matches(obj.rootName())).count() > 1L) {
+            throw new IllegalStateException("Research name " + key.toString() + " has a duplicate root name!");
+        }
     }
     
     // Register Fundamentals research
