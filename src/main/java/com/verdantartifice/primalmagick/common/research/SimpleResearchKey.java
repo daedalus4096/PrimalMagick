@@ -60,6 +60,10 @@ public class SimpleResearchKey {
         return new SimpleResearchKey(name.rootName(), stage);
     }
     
+    public static SimpleResearchKey find(String keyStr) {
+        return ResearchNames.find(keyStr).simpleKey();
+    }
+    
     private static SimpleResearchKey parse(String keyStr) {
         if (keyStr == null) {
             // Invalid key string

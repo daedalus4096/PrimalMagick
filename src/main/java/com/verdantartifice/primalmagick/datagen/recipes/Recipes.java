@@ -125,7 +125,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S  ")
             .key('S', Tags.Items.RODS_WOODEN)
             .key('P', Items.PAPER)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_SORCERY")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.RESEARCH_TABLE.get())
             .addIngredient(BlocksPM.WOOD_TABLE.get())
@@ -152,7 +152,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
             .key('I', ItemsPM.ENCHANTED_INK.get())
             .key('N', Tags.Items.NUGGETS_IRON)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SEASCRIBE_PEN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SEASCRIBE_PEN")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 10)) // FIXME Replace immutable addition with builders
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNLAMP.get())
@@ -161,7 +161,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("NNN")
             .key('N', ItemTagsPM.NUGGETS_PRIMALITE)
             .key('T', Items.TORCH)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUNLAMP")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUNLAMP")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPIRIT_LANTERN.get())
@@ -170,7 +170,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("NNN")
             .key('N', ItemTagsPM.NUGGETS_HEXIUM)
             .key('T', Items.SOUL_TORCH)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUNLAMP"), SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("SUNLAMP"), SimpleResearchKey.find("HEXIUM")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_PRISM.get())
@@ -180,13 +180,13 @@ public class Recipes extends RecipeProvider {
             .key('N', Tags.Items.NUGGETS_IRON)
             .key('Q', ItemTagsForgeExt.NUGGETS_QUARTZ)
             .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_MANAWEAVING")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MANA_SALTS.get())
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .addIngredient(ItemsPM.REFINED_SALT.get())
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_SALTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_SALTS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.WAND_CHARGER.get())
@@ -196,7 +196,7 @@ public class Recipes extends RecipeProvider {
             .key('G', Tags.Items.INGOTS_GOLD)
             .key('M', ItemsPM.MARBLE_RAW.get())
             .key('P', ItemsPM.MANA_PRISM.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CHARGER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CHARGER")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCRAFTING_ALTAR.get())
             .patternLine("MMM")
@@ -204,19 +204,19 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .key('M', ItemsPM.MARBLE_RAW.get())
             .key('S', ItemsPM.SPELL_SCROLL_BLANK.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_SORCERY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_SORCERY")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.WAND_ASSEMBLY_TABLE.get())
             .patternLine("MM")
             .patternLine("MM")
             .key('M', ItemsPM.MARBLE_RUNED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ADVANCED_WANDMAKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ADVANCED_WANDMAKING")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WAND_INSCRIPTION_TABLE.get())
             .addIngredient(ItemsPM.WOOD_TABLE.get())
             .addIngredient(ItemsPM.SPELL_SCROLL_BLANK.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_INSCRIPTION")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_INSCRIPTION")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_ALTAR.get())
@@ -225,7 +225,7 @@ public class Recipes extends RecipeProvider {
             .key('G', Tags.Items.INGOTS_GOLD)
             .key('R', ItemsPM.MARBLE_RUNED.get())
             .key('M', ItemsPM.MARBLE_RAW.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RITUAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_RITUAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OFFERING_PEDESTAL.get())
@@ -234,14 +234,14 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('S', ItemsPM.MARBLE_SLAB.get())
             .key('P', ItemsPM.MARBLE_PILLAR.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RITUAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_RITUAL")))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MANAFRUIT.get())
             .addIngredient(Items.APPLE)
             .addIngredient(Items.HONEY_BOTTLE)
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANAFRUIT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANAFRUIT")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .instability(1)
             .build(consumer);
@@ -252,14 +252,14 @@ public class Recipes extends RecipeProvider {
             .key('G', Tags.Items.INGOTS_GOLD)
             .key('C', ItemTags.COALS)
             .key('P', ItemTags.PLANKS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INCENSE_BRAZIER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("INCENSE_BRAZIER")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INCENSE_STICK.get())
             .patternLine(" F")
             .patternLine("S ")
             .key('F', ItemTags.SMALL_FLOWERS)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INCENSE_BRAZIER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("INCENSE_BRAZIER")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 1))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_LECTERN.get())
@@ -268,7 +268,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S ")
             .key('S', ItemsPM.MOONWOOD_SLAB.get())
             .key('B', Tags.Items.BOOKSHELVES)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_LECTERN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RITUAL_LECTERN")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_BELL.get())
@@ -278,7 +278,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
             .key('I', Tags.Items.NUGGETS_IRON)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_BELL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RITUAL_BELL")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLOODLETTER.get())
@@ -288,7 +288,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_SMOKED.get())
             .key('S', Items.DIAMOND_SWORD)
             .key('P', ItemsPM.MARBLE_SMOKED_PILLAR.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BLOODLETTER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BLOODLETTER")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SOUL_ANVIL.get())
@@ -297,7 +297,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("III")
             .key('B', ItemTagsPM.STORAGE_BLOCKS_HEXIUM)
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SOUL_ANVIL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SOUL_ANVIL")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CELESTIAL_HARP.get())
@@ -306,7 +306,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SW ")
             .key('W', ItemsPM.HALLOWOOD_PLANKS.get())
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CELESTIAL_HARP")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CELESTIAL_HARP")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.SOUL_GEM.get())
@@ -321,7 +321,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.RODS_WOODEN)
             .key('L', Items.STONE_SLAB)
             .key('P', ItemsPM.SUNWOOD_PLANKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNIC_GRINDSTONE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNIC_GRINDSTONE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 25))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_BASIC.get())
@@ -332,7 +332,7 @@ public class Recipes extends RecipeProvider {
             .key('F', ItemsPM.ESSENCE_FURNACE.get())
             .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .setGroup("calcinators")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_BASIC")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CALCINATOR_BASIC")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_ENCHANTED.get())
@@ -343,7 +343,7 @@ public class Recipes extends RecipeProvider {
             .key('C', ItemsPM.CALCINATOR_BASIC.get())
             .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
             .setGroup("calcinators")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_ENCHANTED")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CALCINATOR_ENCHANTED")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_FORBIDDEN.get())
@@ -356,7 +356,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .key('V', ItemsPM.ESSENCE_CRYSTAL_VOID.get())
             .setGroup("calcinators")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_FORBIDDEN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CALCINATOR_FORBIDDEN")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CALCINATOR_HEAVENLY.get())
@@ -367,18 +367,18 @@ public class Recipes extends RecipeProvider {
             .key('C', ItemsPM.CALCINATOR_FORBIDDEN.get())
             .key('E', ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
             .setGroup("calcinators")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CALCINATOR_HEAVENLY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CALCINATOR_HEAVENLY")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.ICE)
             .addIngredient(Items.WATER_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CRYOTREATMENT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
             .build(consumer, PrimalMagick.resource("ice_from_cryotreatment"));
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.OBSIDIAN)
             .addIngredient(Items.LAVA_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CRYOTREATMENT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
             .build(consumer, PrimalMagick.resource("obsidian_from_cryotreatment"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_BASIC.get())
             .patternLine("SIS")
@@ -388,7 +388,7 @@ public class Recipes extends RecipeProvider {
             .key('I', Tags.Items.INGOTS_IRON)
             .key('R', Tags.Items.DUSTS_REDSTONE)
             .setGroup("magitech_parts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_MAGITECH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_MAGITECH")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
@@ -399,7 +399,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
             .setGroup("magitech_parts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MAGITECH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MAGITECH")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
@@ -410,7 +410,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .setGroup("magitech_parts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MAGITECH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MAGITECH")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
@@ -421,7 +421,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
             .setGroup("magitech_parts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MAGITECH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MAGITECH")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HONEY_EXTRACTOR.get())
@@ -432,7 +432,7 @@ public class Recipes extends RecipeProvider {
             .key('W', ItemTags.PLANKS)
             .key('B', Items.GLASS_BOTTLE)
             .key('P', ItemsPM.MAGITECH_PARTS_BASIC.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HONEY_EXTRACTOR")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HONEY_EXTRACTOR")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 10))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARCANOMETER.get())
@@ -443,7 +443,7 @@ public class Recipes extends RecipeProvider {
             .key('G', Tags.Items.INGOTS_GOLD)
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARCANOMETER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARCANOMETER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.FLYING_CARPET.get())
@@ -458,7 +458,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get(), 2)
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FLYING_CARPET")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FLYING_CARPET")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 100))
             .instability(6)
             .build(consumer);
@@ -471,7 +471,7 @@ public class Recipes extends RecipeProvider {
             .key('T', ItemsPM.REFINED_SALT.get())
             .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ENTROPY_SINK")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ENTROPY_SINK")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 75).add(Source.SEA, 75).add(Source.SKY, 75).add(Source.SUN, 75).add(Source.MOON, 75))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.AUTO_CHARGER.get())
@@ -482,7 +482,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('C', ItemsPM.WAND_CHARGER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AUTO_CHARGER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AUTO_CHARGER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DREAM_VISION_TALISMAN.get())
@@ -495,7 +495,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DREAM_VISION_TALISMAN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("DREAM_VISION_TALISMAN")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .instability(4)
             .build(consumer);
@@ -503,7 +503,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTags.COALS)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IGNYX")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IGNYX")))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX_BLOCK.get())
             .requires(ItemsPM.IGNYX.get(), 9)
@@ -519,7 +519,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("DS ")
             .key('S', Tags.Items.RODS_WOODEN)
             .key('D', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DOWSING_ROD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("DOWSING_ROD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_TRANSMUTER.get())
@@ -530,7 +530,7 @@ public class Recipes extends RecipeProvider {
             .key('R', ItemsPM.MANA_PRISM.get())
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_TRANSMUTER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ESSENCE_TRANSMUTER")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.MYSTICAL_RELIC.get())
@@ -546,7 +546,7 @@ public class Recipes extends RecipeProvider {
             .key('W', Items.WARPED_PLANKS)
             .key('S', ItemsPM.ESSENCE_SHARD_SKY.get())
             .key('R', Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ZEPHYR_ENGINE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ZEPHYR_ENGINE")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.VOID_TURBINE.get())
@@ -558,7 +558,7 @@ public class Recipes extends RecipeProvider {
             .key('C', Items.CRIMSON_PLANKS)
             .key('S', ItemsPM.ESSENCE_SHARD_VOID.get())
             .key('R', Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("VOID_TURBINE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("VOID_TURBINE")))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RECALL_STONE.get())
@@ -569,14 +569,14 @@ public class Recipes extends RecipeProvider {
             .key('U', ItemsPM.RUNE_SUMMON.get())
             .key('O', Tags.Items.OBSIDIAN)
             .key('E', ItemsPM.RUNE_SELF.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RECALL_STONE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RECALL_STONE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WAND_GLAMOUR_TABLE.get())
             .addIngredient(ItemsPM.WOOD_TABLE.get())
             .addIngredient(Tags.Items.STORAGE_BLOCKS_QUARTZ)
             .addIngredient(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GLAMOUR_TABLE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_GLAMOUR_TABLE")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.INFERNAL_FURNACE.get())
@@ -586,7 +586,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_SMOKED.get())
             .key('C', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("INFERNAL_FURNACE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("INFERNAL_FURNACE")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_NEXUS.get())
@@ -597,7 +597,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
             .key('M', ItemsPM.MARBLE_SMOKED.get())
             .key('G', ItemsPM.WIZARD_WAND_GEM_ITEM.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_NEXUS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_NEXUS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 250).add(Source.SEA, 250).add(Source.SKY, 250).add(Source.SUN, 250).add(Source.MOON, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_SINGULARITY.get())
@@ -608,7 +608,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
             .key('M', ItemsPM.MARBLE_HALLOWED.get())
             .key('G', ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_SINGULARITY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_SINGULARITY")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 750).add(Source.SEA, 750).add(Source.SKY, 750).add(Source.SUN, 750).add(Source.MOON, 750))
             .build(consumer);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemsPM.LORE_TABLET_DIRTY.get())
@@ -632,7 +632,7 @@ public class Recipes extends RecipeProvider {
             .key('#', Tags.Items.GEMS_DIAMOND)
             .key('R', ItemsPM.RUNE_UNATTUNED.get())
             .key('M', ItemsPM.MARBLE_RAW.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNIC_TRIM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNIC_TRIM")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
             .build(consumer);
 
@@ -773,13 +773,13 @@ public class Recipes extends RecipeProvider {
     protected void registerEnchantedMarbleRecipes(Consumer<FinishedRecipe> consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.MARBLE_ENCHANTED.get(), 9)
             .addIngredient(BlocksPM.MARBLE_RAW.get(), 9)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1).add(Source.SEA, 1).add(Source.SKY, 1).add(Source.SUN, 1).add(Source.MOON, 1))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -792,7 +792,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -804,7 +804,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICK_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -816,7 +816,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM")
             .patternLine("MM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_BRICKS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -825,7 +825,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_ENCHANTED_SLAB.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_CHISELED.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -834,7 +834,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_PILLAR.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -845,7 +845,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" M ")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
             .key('C', BlocksPM.MARBLE_ENCHANTED_CHISELED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_RUNED.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -853,7 +853,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_SLAB.get(), 2)
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -863,7 +863,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_STAIRS.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -872,7 +872,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
@@ -886,13 +886,13 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_RAW.get())
             .key('C', ItemTags.COALS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -905,7 +905,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -917,7 +917,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICK_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -929,7 +929,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM")
             .patternLine("MM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_BRICKS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -938,7 +938,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_SMOKED_SLAB.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_CHISELED.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -947,7 +947,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_PILLAR.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -958,7 +958,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" M ")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
             .key('C', BlocksPM.MARBLE_SMOKED_CHISELED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_RUNED.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -966,7 +966,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_SLAB.get(), 2)
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -976,7 +976,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_STAIRS.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -985,7 +985,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_SMOKED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
@@ -999,13 +999,13 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_RAW.get())
             .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1018,7 +1018,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1030,7 +1030,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED_BRICKS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICK_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1042,7 +1042,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM")
             .patternLine("MM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_BRICKS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1051,7 +1051,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_HALLOWED_SLAB.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_CHISELED.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1060,7 +1060,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("M")
             .patternLine("M")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_PILLAR.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1071,7 +1071,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" M ")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
             .key('C', BlocksPM.MARBLE_HALLOWED_CHISELED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_RUNED.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1079,7 +1079,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_SLAB.get(), 6)
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_SLAB.get(), 2)
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1089,7 +1089,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MM ")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_STAIRS.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1098,7 +1098,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("MMM")
             .patternLine("MMM")
             .key('M', BlocksPM.MARBLE_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_MANAWEAVING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
             .build(consumer);
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
@@ -1249,7 +1249,7 @@ public class Recipes extends RecipeProvider {
                     Item quartzItem = upgradeType.getUpgradeMedium();
                     if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItem != null) {
                         CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(upgradeType.getSerializedName().toUpperCase() + "_SYNTHESIS");
+                        SimpleResearchKey baseResearch = SimpleResearchKey.find(upgradeType.getSerializedName().toUpperCase() + "_SYNTHESIS");
                         if (source.getDiscoverKey() == null) {
                             research = CompoundResearchKey.from(baseResearch);
                         } else {
@@ -1280,7 +1280,7 @@ public class Recipes extends RecipeProvider {
                     ItemStack downgradeStack = EssenceItem.getEssence(downgradeType, source);
                     if (!baseStack.isEmpty() && !downgradeStack.isEmpty()) {
                         CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.parse(baseType.getSerializedName().toUpperCase() + "_DESYNTHESIS");
+                        SimpleResearchKey baseResearch = SimpleResearchKey.find(baseType.getSerializedName().toUpperCase() + "_DESYNTHESIS");
                         if (source.getDiscoverKey() == null) {
                             research = CompoundResearchKey.from(baseResearch);
                         } else {
@@ -1399,7 +1399,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("GGG")
             .key('G', Items.GLASS)
             .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_BLACK.get(), 8)
             .patternLine("GGG")
@@ -1408,7 +1408,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_BLACK)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_BLUE.get(), 8)
             .patternLine("GGG")
@@ -1417,7 +1417,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_BLUE)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_BROWN.get(), 8)
             .patternLine("GGG")
@@ -1426,7 +1426,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_BROWN)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_CYAN.get(), 8)
             .patternLine("GGG")
@@ -1435,7 +1435,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_CYAN)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_GRAY.get(), 8)
             .patternLine("GGG")
@@ -1444,7 +1444,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_GRAY)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_GREEN.get(), 8)
             .patternLine("GGG")
@@ -1453,7 +1453,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_GREEN)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get(), 8)
             .patternLine("GGG")
@@ -1462,7 +1462,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_LIGHT_BLUE)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get(), 8)
             .patternLine("GGG")
@@ -1471,7 +1471,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_LIGHT_GRAY)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_LIME.get(), 8)
             .patternLine("GGG")
@@ -1480,7 +1480,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_LIME)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_MAGENTA.get(), 8)
             .patternLine("GGG")
@@ -1489,7 +1489,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_MAGENTA)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_ORANGE.get(), 8)
             .patternLine("GGG")
@@ -1498,7 +1498,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_ORANGE)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PINK.get(), 8)
             .patternLine("GGG")
@@ -1507,7 +1507,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_PINK)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PURPLE.get(), 8)
             .patternLine("GGG")
@@ -1516,7 +1516,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_PURPLE)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_RED.get(), 8)
             .patternLine("GGG")
@@ -1525,7 +1525,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_RED)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_WHITE.get(), 8)
             .patternLine("GGG")
@@ -1534,7 +1534,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_WHITE)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_YELLOW.get(), 8)
             .patternLine("GGG")
@@ -1543,7 +1543,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS)
             .key('D', Tags.Items.DYES_YELLOW)
             .setGroup("stained_skyglass")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
     }
     
@@ -1552,14 +1552,14 @@ public class Recipes extends RecipeProvider {
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.SKYGLASS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_BLACK.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_black_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLACK.get(), 8)
             .patternLine("GGG")
@@ -1568,14 +1568,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_BLACK)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_black_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_BLUE.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_blue_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BLUE.get(), 8)
             .patternLine("GGG")
@@ -1584,14 +1584,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_BLUE)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_blue_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_BROWN.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_brown_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_BROWN.get(), 8)
             .patternLine("GGG")
@@ -1600,14 +1600,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_BROWN)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_brown_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_CYAN.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_cyan_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_CYAN.get(), 8)
             .patternLine("GGG")
@@ -1616,14 +1616,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_CYAN)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_cyan_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_GRAY.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_gray_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GRAY.get(), 8)
             .patternLine("GGG")
@@ -1632,14 +1632,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_GRAY)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_gray_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_GREEN.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_green_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_GREEN.get(), 8)
             .patternLine("GGG")
@@ -1648,14 +1648,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_GREEN)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_green_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_LIGHT_BLUE.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_blue_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_BLUE.get(), 8)
             .patternLine("GGG")
@@ -1664,14 +1664,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_LIGHT_BLUE)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_blue_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_LIGHT_GRAY.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_gray_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIGHT_GRAY.get(), 8)
             .patternLine("GGG")
@@ -1680,14 +1680,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_LIGHT_GRAY)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_light_gray_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_LIME.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_lime_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_LIME.get(), 8)
             .patternLine("GGG")
@@ -1696,14 +1696,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_LIME)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_lime_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_MAGENTA.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_magenta_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_MAGENTA.get(), 8)
             .patternLine("GGG")
@@ -1712,14 +1712,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_MAGENTA)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_magenta_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_ORANGE.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_orange_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_ORANGE.get(), 8)
             .patternLine("GGG")
@@ -1728,14 +1728,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_ORANGE)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_orange_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_PINK.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_pink_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PINK.get(), 8)
             .patternLine("GGG")
@@ -1744,14 +1744,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_PINK)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_pink_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_PURPLE.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_purple_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_PURPLE.get(), 8)
             .patternLine("GGG")
@@ -1760,14 +1760,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_PURPLE)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_purple_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_RED.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_red_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_RED.get(), 8)
             .patternLine("GGG")
@@ -1776,14 +1776,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_RED)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_red_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_WHITE.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_white_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_WHITE.get(), 8)
             .patternLine("GGG")
@@ -1792,14 +1792,14 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_WHITE)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_white_from_panes"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
             .key('G', ItemsPM.STAINED_SKYGLASS_YELLOW.get())
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_yellow_from_blocks"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.STAINED_SKYGLASS_PANE_YELLOW.get(), 8)
             .patternLine("GGG")
@@ -1808,7 +1808,7 @@ public class Recipes extends RecipeProvider {
             .key('G', ItemTagsPM.SKYGLASS_PANES)
             .key('D', Tags.Items.DYES_YELLOW)
             .setGroup("stained_skyglass_pane")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SKYGLASS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SKYGLASS")))
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_yellow_from_panes"));
     }
 
@@ -1820,7 +1820,7 @@ public class Recipes extends RecipeProvider {
             .key('I', Tags.Items.INGOTS_IRON)
             .key('E', ItemsPM.ESSENCE_SHARD_EARTH.get())
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EARTHSHATTER_HAMMER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EARTHSHATTER_HAMMER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IRON_GRIT.get(), 2)
@@ -1934,7 +1934,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("primalite_ingot")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.PRIMALITE_NUGGET.get(), 9)
             .requires(ItemTagsPM.INGOTS_PRIMALITE)
@@ -1966,7 +1966,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_TRIDENT.get())
             .patternLine(" II")
@@ -1974,7 +1974,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S  ")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_BOW.get())
             .patternLine(" IS")
@@ -1982,7 +1982,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" IS")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_SHOVEL.get())
             .patternLine("I")
@@ -1990,7 +1990,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_PICKAXE.get())
             .patternLine("III")
@@ -1998,7 +1998,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S ")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_AXE.get())
             .patternLine("II")
@@ -2006,7 +2006,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_HOE.get())
             .patternLine("II")
@@ -2014,7 +2014,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_FISHING_ROD.get())
             .patternLine("  I")
@@ -2022,33 +2022,33 @@ public class Recipes extends RecipeProvider {
             .patternLine("I S")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_HEAD.get())
             .patternLine("III")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_CHEST.get())
             .patternLine("I I")
             .patternLine("III")
             .patternLine("III")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_LEGS.get())
             .patternLine("III")
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_FEET.get())
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_SHIELD.get())
             .patternLine("PIP")
@@ -2056,7 +2056,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" P ")
             .key('P', ItemTags.PLANKS)
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE")))
             .build(consumer);
     }
     
@@ -2067,7 +2067,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .setGroup("hexium_ingot")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.HEXIUM_NUGGET.get(), 9)
             .requires(ItemTagsPM.INGOTS_HEXIUM)
@@ -2099,7 +2099,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_TRIDENT.get())
             .patternLine(" II")
@@ -2107,7 +2107,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S  ")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_BOW.get())
             .patternLine(" IS")
@@ -2115,7 +2115,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" IS")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_SHOVEL.get())
             .patternLine("I")
@@ -2123,7 +2123,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_PICKAXE.get())
             .patternLine("III")
@@ -2131,7 +2131,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S ")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_AXE.get())
             .patternLine("II")
@@ -2139,7 +2139,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_HOE.get())
             .patternLine("II")
@@ -2147,7 +2147,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_FISHING_ROD.get())
             .patternLine("  I")
@@ -2155,33 +2155,33 @@ public class Recipes extends RecipeProvider {
             .patternLine("I S")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_HEAD.get())
             .patternLine("III")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_CHEST.get())
             .patternLine("I I")
             .patternLine("III")
             .patternLine("III")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_LEGS.get())
             .patternLine("III")
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_FEET.get())
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_SHIELD.get())
             .patternLine("PIP")
@@ -2189,7 +2189,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" P ")
             .key('P', ItemTags.PLANKS)
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM")))
             .build(consumer);
     }
     
@@ -2198,7 +2198,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemTagsPM.INGOTS_HEXIUM)
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
             .setGroup("hallowsteel_ingot")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.HALLOWSTEEL_NUGGET.get(), 9)
             .requires(ItemTagsPM.INGOTS_HALLOWSTEEL)
@@ -2230,7 +2230,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_TRIDENT.get())
             .patternLine(" II")
@@ -2238,7 +2238,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S  ")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_BOW.get())
             .patternLine(" IS")
@@ -2246,7 +2246,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" IS")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_SHOVEL.get())
             .patternLine("I")
@@ -2254,7 +2254,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_PICKAXE.get())
             .patternLine("III")
@@ -2262,7 +2262,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S ")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_AXE.get())
             .patternLine("II")
@@ -2270,7 +2270,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_HOE.get())
             .patternLine("II")
@@ -2278,7 +2278,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_FISHING_ROD.get())
             .patternLine("  I")
@@ -2286,33 +2286,33 @@ public class Recipes extends RecipeProvider {
             .patternLine("I S")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('S', Tags.Items.STRING)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_HEAD.get())
             .patternLine("III")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_CHEST.get())
             .patternLine("I I")
             .patternLine("III")
             .patternLine("III")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_LEGS.get())
             .patternLine("III")
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_FEET.get())
             .patternLine("I I")
             .patternLine("I I")
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_SHIELD.get())
             .patternLine("PIP")
@@ -2320,7 +2320,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" P ")
             .key('P', ItemTags.PLANKS)
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL")))
             .build(consumer);
     }
     
@@ -2329,7 +2329,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" H")
             .patternLine("H ")
             .key('H', ItemsPM.HEARTWOOD.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_HEARTWOOD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_HEARTWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get())
@@ -2337,7 +2337,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .key('#', Tags.Items.OBSIDIAN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_OBSIDIAN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_OBSIDIAN")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 15).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CORAL_WAND_CORE_ITEM.get())
@@ -2345,7 +2345,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_SEA.get())
             .key('#', ItemTagsPM.CORAL_BLOCKS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_CORAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_CORAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 15).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get())
@@ -2353,7 +2353,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
             .key('#', Items.BAMBOO)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_BAMBOO")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_BAMBOO")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 15).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get())
@@ -2361,7 +2361,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_SUN.get())
             .key('#', ItemsPM.SUNWOOD_LOG.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_SUNWOOD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_SUNWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 15).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get())
@@ -2369,7 +2369,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_MOON.get())
             .key('#', ItemsPM.MOONWOOD_LOG.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_MOONWOOD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_MOONWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BONE_WAND_CORE_ITEM.get())
@@ -2377,7 +2377,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
             .key('#', Items.BONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_BONE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_BONE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.BLOOD, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get())
@@ -2385,7 +2385,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .key('#', Tags.Items.RODS_BLAZE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_BLAZE_ROD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_BLAZE_ROD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.INFERNAL, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get())
@@ -2393,7 +2393,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D")
             .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
             .key('#', Items.PURPUR_BLOCK)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURPUR")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_PURPUR")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.VOID, 15))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_WAND_CORE_ITEM.get())
@@ -2408,7 +2408,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .instability(3)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PRIMAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 15).add(Source.SEA, 15).add(Source.SKY, 15).add(Source.SUN, 15).add(Source.MOON, 15))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get())
@@ -2424,7 +2424,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .instability(5)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_DARK_PRIMAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_DARK_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50).add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get())
@@ -2439,66 +2439,66 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
             .instability(7)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURE_PRIMAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CORE_PURE_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100).add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100).add(Source.HALLOWED, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IRON_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
             .key('N', Tags.Items.NUGGETS_IRON)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_IRON")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CAP_IRON")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.GOLD_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
             .key('N', Tags.Items.NUGGETS_GOLD)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_GOLD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CAP_GOLD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
             .key('N', ItemTagsPM.NUGGETS_PRIMALITE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_PRIMALITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CAP_PRIMALITE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 15).add(Source.SEA, 15).add(Source.SKY, 15).add(Source.SUN, 15).add(Source.MOON, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
             .key('N', ItemTagsPM.NUGGETS_HEXIUM)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_HEXIUM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CAP_HEXIUM")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get())
             .patternLine("NNN")
             .patternLine("N N")
             .key('N', ItemTagsPM.NUGGETS_HALLOWSTEEL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CAP_HALLOWSTEEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_CAP_HALLOWSTEEL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 150).add(Source.SEA, 150).add(Source.SKY, 150).add(Source.SUN, 150).add(Source.MOON, 150))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get())
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_APPRENTICE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_GEM_APPRENTICE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 10).add(Source.SEA, 10).add(Source.SKY, 10).add(Source.SUN, 10).add(Source.MOON, 10))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get())
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_ADEPT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_GEM_ADEPT")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 30).add(Source.SEA, 30).add(Source.SKY, 30).add(Source.SUN, 30).add(Source.MOON, 30))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get())
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CRYSTALS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_WIZARD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_GEM_WIZARD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get())
             .addIngredient(Tags.Items.GEMS_DIAMOND)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_CLUSTERS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_GEM_ARCHMAGE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WAND_GEM_ARCHMAGE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 300).add(Source.SEA, 300).add(Source.SKY, 300).add(Source.SUN, 300).add(Source.MOON, 300))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get())
@@ -2506,7 +2506,7 @@ public class Recipes extends RecipeProvider {
             .patternLine(" H ")
             .patternLine("H  ")
             .key('H', ItemsPM.HEARTWOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_HEARTWOOD")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_HEARTWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get())
@@ -2515,7 +2515,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_EARTH.get())
             .key('#', Tags.Items.OBSIDIAN)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_OBSIDIAN")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_OBSIDIAN")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 15).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get())
@@ -2524,7 +2524,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_SEA.get())
             .key('#', ItemTagsPM.CORAL_BLOCKS)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_CORAL")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_CORAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 15).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get())
@@ -2533,7 +2533,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_SKY.get())
             .key('#', Items.BAMBOO)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_BAMBOO")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_BAMBOO")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 15).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get())
@@ -2542,7 +2542,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_SUN.get())
             .key('#', ItemsPM.SUNWOOD_LOG.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_SUNWOOD")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_SUNWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 15).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get())
@@ -2551,7 +2551,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_MOON.get())
             .key('#', ItemsPM.MOONWOOD_LOG.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_MOONWOOD")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_MOONWOOD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BONE_STAFF_CORE_ITEM.get())
@@ -2560,7 +2560,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .key('#', Items.BONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_BONE")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_BONE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.BLOOD, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get())
@@ -2569,7 +2569,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .key('#', Tags.Items.RODS_BLAZE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_BLAZE_ROD")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_BLAZE_ROD")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.INFERNAL, 15))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get())
@@ -2578,7 +2578,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("#D ")
             .key('D', ItemsPM.ESSENCE_SHARD_VOID.get())
             .key('#', Items.PURPUR_BLOCK)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_PURPUR")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_PURPUR")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5).add(Source.VOID, 15))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_STAFF_CORE_ITEM.get())
@@ -2593,7 +2593,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .instability(4)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_PRIMAL")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 15).add(Source.SEA, 15).add(Source.SKY, 15).add(Source.SUN, 15).add(Source.MOON, 15))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get())
@@ -2609,7 +2609,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .instability(6)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("STAVES"), SimpleResearchKey.parse("WAND_CORE_DARK_PRIMAL")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_DARK_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 50).add(Source.SEA, 50).add(Source.SKY, 50).add(Source.SUN, 50).add(Source.MOON, 50).add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get())
@@ -2624,7 +2624,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
             .instability(8)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WAND_CORE_PURE_PRIMAL")))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("STAVES"), SimpleResearchKey.find("WAND_CORE_PURE_PRIMAL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100).add(Source.SEA, 100).add(Source.SKY, 100).add(Source.SUN, 100).add(Source.MOON, 100).add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100).add(Source.HALLOWED, 100))
             .build(consumer);
     }
@@ -2633,7 +2633,7 @@ public class Recipes extends RecipeProvider {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.TALLOW.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RITUAL_CANDLES")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
             .patternLine("S")
@@ -2642,7 +2642,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.STRING)
             .key('T', ItemsPM.TALLOW.get())
             .setGroup("ritual_candles")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RITUAL_CANDLES")))
             .build(consumer, PrimalMagick.resource("ritual_candle_white_from_tallow"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RITUAL_CANDLE_WHITE.get())
             .patternLine("S")
@@ -2651,7 +2651,7 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.STRING)
             .key('W', ItemsPM.BEESWAX.get())
             .setGroup("ritual_candles")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RITUAL_CANDLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RITUAL_CANDLES")))
             .build(consumer, PrimalMagick.resource("ritual_candle_white_from_beeswax"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ItemsPM.RITUAL_CANDLE_BLACK.get())
             .requires(ItemTagsPM.RITUAL_CANDLES)
@@ -2756,13 +2756,13 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.WOOD_TABLE.get())
             .addIngredient(Items.STONE_SLAB)
             .addIngredient(Items.DIAMOND_SWORD)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_RUNEWORKING")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_UNATTUNED.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_RUNEWORKING")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get())
             .patternLine(" R ")
@@ -2772,7 +2772,7 @@ public class Recipes extends RecipeProvider {
             .key('D', Tags.Items.GEMS_DIAMOND)
             .key('M', ItemsPM.MARBLE_RAW.get())
             .setGroup("runescribing_altar")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("BASIC_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BASIC_RUNEWORKING")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get())
@@ -2784,7 +2784,7 @@ public class Recipes extends RecipeProvider {
             .key('A', ItemsPM.RUNESCRIBING_ALTAR_BASIC.get())
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())
             .setGroup("runescribing_altar")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("EXPERT_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_RUNEWORKING")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get())
@@ -2796,7 +2796,7 @@ public class Recipes extends RecipeProvider {
             .key('A', ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get())
             .key('M', ItemsPM.MARBLE_SMOKED.get())
             .setGroup("runescribing_altar")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MASTER_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_RUNEWORKING")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get())
@@ -2808,107 +2808,107 @@ public class Recipes extends RecipeProvider {
             .key('A', ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get())
             .key('M', ItemsPM.MARBLE_HALLOWED.get())
             .setGroup("runescribing_altar")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_RUNEWORKING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_RUNEWORKING")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_EARTH.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_EARTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_EARTH")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SEA.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SEA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_SEA")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SKY.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SKY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_SKY")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_SUN.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SUN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_SUN")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_MOON.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_MOON")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_MOON")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROJECT.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_PROJECT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_PROJECT")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_PROTECT.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_PROTECT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_PROTECT")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ITEM.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_ITEM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_ITEM")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SELF.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SELF")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_SELF")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_BLOOD.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_BLOOD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_BLOOD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_INFERNAL.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_INFERNAL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_INFERNAL")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_VOID.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_VOID")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_VOID")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_ABSORB.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_ABSORB")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_ABSORB")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_DISPEL.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_DISPEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_DISPEL")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_SUMMON.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_SUMMON")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_SUMMON")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_AREA.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_AREA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_AREA")))
             .build(consumer);
         RunecarvingRecipeBuilder.runecarvingRecipe(ItemsPM.RUNE_CREATURE.get())
             .firstIngredient(Items.STONE_SLAB)
             .secondIngredient(Tags.Items.GEMS_LAPIS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_CREATURE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_CREATURE")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_HALLOWED.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
             .setGroup("source_runes")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_HALLOWED")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_HALLOWED")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_INSIGHT.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
@@ -2917,19 +2917,19 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_INSIGHT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_INSIGHT")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_POWER.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_VOID.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_POWER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_POWER")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNE_GRACE.get())
             .addIngredient(ItemsPM.RUNE_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("RUNE_GRACE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("RUNE_GRACE")))
             .build(consumer);
     }
 
@@ -2941,7 +2941,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('I', ItemTagsPM.INGOTS_PRIMALITE)
             .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMALITE_GOLEM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMALITE_GOLEM")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20).add(Source.SEA, 20).add(Source.SKY, 20).add(Source.SUN, 20).add(Source.MOON, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get())
@@ -2951,7 +2951,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXIUM_GOLEM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXIUM_GOLEM")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50).add(Source.INFERNAL, 50).add(Source.VOID, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get())
@@ -2961,7 +2961,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
             .key('I', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('R', Tags.Items.STORAGE_BLOCKS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HALLOWSTEEL_GOLEM")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HALLOWSTEEL_GOLEM")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
     }
@@ -2974,14 +2974,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_basic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -2990,14 +2990,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_basic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3006,14 +3006,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_basic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3022,14 +3022,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_basic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3038,14 +3038,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_basic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3054,14 +3054,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.BLOOD.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_basic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3070,14 +3070,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_basic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3086,14 +3086,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.VOID.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_basic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3102,14 +3102,14 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_CREATURE.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .instability(3)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_BASIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_basic_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3121,14 +3121,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_grand_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3140,14 +3140,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SEA_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_SEA_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_grand_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3159,14 +3159,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SKY_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_SKY_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_grand_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3178,14 +3178,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_SUN_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_SUN_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_grand_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3197,14 +3197,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_MOON_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_MOON_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GRAND_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GRAND_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_grand_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3216,14 +3216,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.BLOOD.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_grand_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3235,14 +3235,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_grand_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3254,14 +3254,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_VOID_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_VOID_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.VOID.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_grand_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3273,14 +3273,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .instability(5)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_GRAND_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GRAND_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GRAND_PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_grand_hallowed_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3293,14 +3293,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_majestic_earth_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3313,14 +3313,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_SEA_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_majestic_sea_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3333,14 +3333,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_SKY_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_majestic_sky_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3353,14 +3353,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_SUN_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_majestic_sun_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3373,14 +3373,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_MOON_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MAJESTIC_PIXIES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MAJESTIC_PIXIES")))
             .build(consumer, PrimalMagick.resource("pixie_majestic_moon_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3393,14 +3393,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_BLOOD_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.BLOOD.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_majestic_blood_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3413,14 +3413,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_INFERNAL_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.INFERNAL.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_majestic_infernal_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3433,14 +3433,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_VOID_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.VOID.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_majestic_void_revive"));
         RitualRecipeBuilder.ritualRecipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
@@ -3453,14 +3453,14 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 200))
             .instability(7)
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.DRAINED_MAJESTIC_HALLOWED_PIXIE.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MAJESTIC_PIXIES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MAJESTIC_PIXIES"), Source.HALLOWED.getDiscoverKey()))
             .build(consumer, PrimalMagick.resource("pixie_majestic_hallowed_revive"));
     }
 
@@ -3473,7 +3473,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40))
             .instability(4)
             .build(consumer);
@@ -3485,7 +3485,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 40))
             .instability(4)
             .build(consumer);
@@ -3497,7 +3497,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .instability(4)
             .build(consumer);
@@ -3509,7 +3509,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 40))
             .instability(4)
             .build(consumer);
@@ -3521,7 +3521,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .instability(4)
             .build(consumer);
@@ -3533,7 +3533,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("AMBROSIA"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("AMBROSIA"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .instability(4)
             .build(consumer);
@@ -3545,7 +3545,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .instability(4)
             .build(consumer);
@@ -3557,7 +3557,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("AMBROSIA"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("AMBROSIA"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .instability(4)
             .build(consumer);
@@ -3569,7 +3569,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.RUNE_SELF.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .instability(4)
             .build(consumer);
@@ -3583,7 +3583,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .instability(6)
             .build(consumer);
@@ -3597,7 +3597,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 100))
             .instability(6)
             .build(consumer);
@@ -3611,7 +3611,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 100))
             .instability(6)
             .build(consumer);
@@ -3625,7 +3625,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 100))
             .instability(6)
             .build(consumer);
@@ -3639,7 +3639,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 100))
             .instability(6)
             .build(consumer);
@@ -3653,7 +3653,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GREATER_AMBROSIA"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GREATER_AMBROSIA"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 100))
             .instability(6)
             .build(consumer);
@@ -3667,7 +3667,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GREATER_AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GREATER_AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 100))
             .instability(6)
             .build(consumer);
@@ -3681,7 +3681,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GREATER_AMBROSIA"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GREATER_AMBROSIA"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 100))
             .instability(6)
             .build(consumer);
@@ -3695,7 +3695,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlockTagsPM.RITUAL_CANDLES, 2)
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("GREATER_AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("GREATER_AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .instability(6)
             .build(consumer);
@@ -3710,7 +3710,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 200))
             .instability(8)
             .build(consumer);
@@ -3725,7 +3725,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 200))
             .instability(8)
             .build(consumer);
@@ -3740,7 +3740,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 200))
             .instability(8)
             .build(consumer);
@@ -3755,7 +3755,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 200))
             .instability(8)
             .build(consumer);
@@ -3770,7 +3770,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_AMBROSIA")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_AMBROSIA")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 200))
             .instability(8)
             .build(consumer);
@@ -3785,7 +3785,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUPREME_AMBROSIA"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("SUPREME_AMBROSIA"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 200))
             .instability(8)
             .build(consumer);
@@ -3800,7 +3800,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUPREME_AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("SUPREME_AMBROSIA"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 200))
             .instability(8)
             .build(consumer);
@@ -3815,7 +3815,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUPREME_AMBROSIA"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("SUPREME_AMBROSIA"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 200))
             .instability(8)
             .build(consumer);
@@ -3830,7 +3830,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("SUPREME_AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("SUPREME_AMBROSIA"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 200))
             .instability(8)
             .build(consumer);
@@ -3844,7 +3844,7 @@ public class Recipes extends RecipeProvider {
             .key('I', ItemTagsPM.INGOTS_HEXIUM)
             .key('C', ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .key('W', Items.WATER_BUCKET)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CRUCIBLE")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 100).add(Source.INFERNAL, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -3854,7 +3854,7 @@ public class Recipes extends RecipeProvider {
             .key('H', ItemTagsPM.INGOTS_HEXIUM)
             .key('B', ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .key('I', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CRUCIBLE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CRUCIBLE")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50).add(Source.INFERNAL, 50))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ALLAY.get())
@@ -3862,483 +3862,483 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.FEATHERS)
             .addIngredient(Items.NOTE_BLOCK)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_AXOLOTL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.TROPICAL_FISH_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.FEATHERS)
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BEE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemTags.SMALL_FLOWERS)
             .addIngredient(Items.HONEYCOMB)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_BLAZE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.RODS_BLAZE)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAMEL.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SADDLE)
             .addIngredient(Items.CACTUS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemTags.FISHES)
             .addIngredient(Tags.Items.STRING)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CAVE_SPIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SPIDER_EYE)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CHICKEN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.FEATHERS)
             .addIngredient(Tags.Items.EGGS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COD.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.COD)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_COW.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.BEEF)
             .addIngredient(Tags.Items.LEATHER)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_CREEPER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.GUNPOWDER)
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_PLANTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DOLPHIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.COD)
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DONKEY.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SADDLE)
             .addIngredient(Tags.Items.CHESTS_WOODEN)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_DROWNED.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ELDER_GUARDIAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.DUSTS_PRISMARINE)
             .addIngredient(Items.SPONGE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.ENDER_PEARLS)
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_ALIENS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_ALIENS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ENDERMITE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.ENDER_PEARLS)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_ALIENS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_ALIENS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_EVOKER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .addIngredient(Items.TOTEM_OF_UNDYING)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SAPIENTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FOX.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.LEATHER)
             .addIngredient(Items.SWEET_BERRIES)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_FROG.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.TADPOLE_BUCKET)
             .addIngredient(Items.SLIME_BALL)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GHAST.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GLOW_SQUID.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.GLOW_INK_SAC)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GOAT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.MILK_BUCKET)
             .addIngredient(Items.GOAT_HORN)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_GUARDIAN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.DUSTS_PRISMARINE)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HOGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.PORKCHOP)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SADDLE)
             .addIngredient(Items.APPLE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_HUSK.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_LLAMA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.LEATHER)
             .addIngredient(ItemTags.WOOL_CARPETS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MAGMA_CUBE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_MOOSHROOM.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.BEEF)
             .addIngredient(Tags.Items.MUSHROOMS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_PLANTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_OCELOT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemTags.FISHES)
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PANDA.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.BAMBOO)
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PARROT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.FEATHERS)
             .addIngredient(Items.VINE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PHANTOM.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIG.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.PORKCHOP)
             .addIngredient(Tags.Items.CROPS_CARROT)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.GOLDEN_SWORD)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PIGLIN_BRUTE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.GOLDEN_AXE)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .addIngredient(Items.CROSSBOW)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SAPIENTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_POLAR_BEAR.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.COD)
             .addIngredient(Items.ICE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_PUFFERFISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RABBIT.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.RABBIT)
             .addIngredient(Items.RABBIT_HIDE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_RAVAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SADDLE)
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SALMON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SALMON)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SHEEP.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.MUTTON)
             .addIngredient(ItemTags.WOOL)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SHULKER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SHULKER_SHELL)
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_ALIENS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_ALIENS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SILVERFISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.STONE)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SKELETON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.BONES)
             .addIngredient(Items.BOW)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SKELETON_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.BONES)
             .addIngredient(Items.SADDLE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SLIME.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.SLIMEBALLS)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SNIFFER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SNIFFER_EGG)
             .addIngredient(Items.TORCHFLOWER_SEEDS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SPIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SPIDER_EYE)
             .addIngredient(Tags.Items.STRING)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_SQUID.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.INK_SAC)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_STRAY.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.BONES)
             .addIngredient(Items.ICE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_STRIDER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SADDLE)
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_DEMONS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_DEMONS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TROPICAL_FISH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.TROPICAL_FISH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TURTLE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.SCUTE)
             .addIngredient(Items.SEAGRASS)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SEA_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SEA_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VEX.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.FEATHERS)
             .addIngredient(Items.IRON_SWORD)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_FLYING_CREATURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_FLYING_CREATURES")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SAPIENTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_VINDICATOR.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .addIngredient(Items.IRON_AXE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SAPIENTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WITCH.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.BLOODY_FLESH.get())
             .addIngredient(Items.GLASS_BOTTLE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_SAPIENTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_SAPIENTS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WITHER_SKELETON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.BONES)
             .addIngredient(Items.WITHER_SKELETON_SKULL)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_WOLF.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Tags.Items.BONES)
             .addIngredient(Items.BEEF)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_LAND_ANIMALS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_LAND_ANIMALS")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(Items.PORKCHOP)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE_HORSE.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(Items.SADDLE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIE_VILLAGER.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(Tags.Items.GEMS_EMERALD)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_ZOMBIFIED_PIGLIN.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(Items.GOLDEN_SWORD)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_UNDEAD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_UNDEAD")))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SANGUINE_CORE_TREEFOLK.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
             .addIngredient(ItemsPM.HEARTWOOD.get())
             .addIngredient(Items.APPLE)
             .setGroup("attuned_sanguine_cores")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SANGUINE_CORE_PLANTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SANGUINE_CORE_PLANTS")))
             .build(consumer);
         RitualRecipeBuilder.ritualRecipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get())
             .addIngredient(ItemsPM.SANGUINE_CORE_BLANK.get())
@@ -4354,7 +4354,7 @@ public class Recipes extends RecipeProvider {
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CLEANSING_RITE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CLEANSING_RITE")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100))
             .instability(7)
             .build(consumer);
@@ -4365,7 +4365,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .patternLine(" # ")
             .key('#', ItemsPM.SKYGLASS.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.CONCOCTER.get())
             .patternLine("CPC")
@@ -4375,7 +4375,7 @@ public class Recipes extends RecipeProvider {
             .key('P', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
             .key('B', Items.BREWING_STAND)
             .key('M', ItemsPM.MARBLE_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.TINCTURE))
@@ -4384,7 +4384,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE))
@@ -4394,7 +4394,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.TINCTURE))
@@ -4404,7 +4404,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.TINCTURE))
@@ -4415,7 +4415,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.TINCTURE))
@@ -4424,7 +4424,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.TINCTURE))
@@ -4434,7 +4434,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.TINCTURE))
@@ -4444,7 +4444,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE))
@@ -4453,7 +4453,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.TINCTURE))
@@ -4463,7 +4463,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.TINCTURE))
@@ -4472,7 +4472,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.TINCTURE))
@@ -4482,7 +4482,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.TINCTURE))
@@ -4492,7 +4492,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.TINCTURE))
@@ -4501,7 +4501,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
@@ -4511,7 +4511,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
@@ -4521,7 +4521,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.TINCTURE))
@@ -4531,7 +4531,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.TINCTURE))
@@ -4542,7 +4542,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.TINCTURE))
@@ -4552,7 +4552,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.TINCTURE))
@@ -4563,7 +4563,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE))
@@ -4573,7 +4573,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.TINCTURE))
@@ -4584,7 +4584,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.TINCTURE))
@@ -4595,7 +4595,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_TINCTURES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.TINCTURE))
@@ -4604,7 +4604,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.TINCTURE))
@@ -4614,7 +4614,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.TINCTURE))
@@ -4624,7 +4624,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.TINCTURE))
@@ -4633,7 +4633,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.TINCTURE))
@@ -4643,7 +4643,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.TINCTURE))
@@ -4652,7 +4652,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_TINCTURES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_TINCTURES")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
     }
@@ -4664,7 +4664,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.PHILTER))
@@ -4674,7 +4674,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.PHILTER))
@@ -4684,7 +4684,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.PHILTER))
@@ -4695,7 +4695,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.PHILTER))
@@ -4704,7 +4704,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.PHILTER))
@@ -4714,7 +4714,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.PHILTER))
@@ -4724,7 +4724,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.PHILTER))
@@ -4733,7 +4733,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.PHILTER))
@@ -4743,7 +4743,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.PHILTER))
@@ -4752,7 +4752,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.PHILTER))
@@ -4762,7 +4762,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.PHILTER))
@@ -4772,7 +4772,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.PHILTER))
@@ -4781,7 +4781,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.PHILTER))
@@ -4791,7 +4791,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.PHILTER))
@@ -4801,7 +4801,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.PHILTER))
@@ -4811,7 +4811,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.PHILTER))
@@ -4822,7 +4822,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.PHILTER))
@@ -4832,7 +4832,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.PHILTER))
@@ -4843,7 +4843,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.PHILTER))
@@ -4853,7 +4853,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.PHILTER))
@@ -4864,7 +4864,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.PHILTER))
@@ -4875,7 +4875,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_PHILTERS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.PHILTER))
@@ -4884,7 +4884,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.PHILTER))
@@ -4894,7 +4894,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.PHILTER))
@@ -4904,7 +4904,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.PHILTER))
@@ -4913,7 +4913,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.PHILTER))
@@ -4923,7 +4923,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.PHILTER))
@@ -4932,7 +4932,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_PHILTERS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_PHILTERS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
     }
@@ -4944,7 +4944,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.ELIXIR))
@@ -4954,7 +4954,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.ELIXIR))
@@ -4964,7 +4964,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.ELIXIR))
@@ -4975,7 +4975,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.ELIXIR))
@@ -4984,7 +4984,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.ELIXIR))
@@ -4994,7 +4994,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.ELIXIR))
@@ -5004,7 +5004,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.ELIXIR))
@@ -5013,7 +5013,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.ELIXIR))
@@ -5023,7 +5023,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.ELIXIR))
@@ -5032,7 +5032,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.ELIXIR))
@@ -5042,7 +5042,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.ELIXIR))
@@ -5052,7 +5052,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.ELIXIR))
@@ -5061,7 +5061,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
@@ -5071,7 +5071,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
@@ -5081,7 +5081,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.ELIXIR))
@@ -5091,7 +5091,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.ELIXIR))
@@ -5102,7 +5102,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.ELIXIR))
@@ -5112,7 +5112,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.ELIXIR))
@@ -5123,7 +5123,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.ELIXIR))
@@ -5133,7 +5133,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.ELIXIR))
@@ -5144,7 +5144,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.ELIXIR))
@@ -5155,7 +5155,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_ELIXIRS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.ELIXIR))
@@ -5164,7 +5164,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.ELIXIR))
@@ -5174,7 +5174,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.ELIXIR))
@@ -5184,7 +5184,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.ELIXIR))
@@ -5193,7 +5193,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.ELIXIR))
@@ -5203,7 +5203,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.ELIXIR))
@@ -5212,7 +5212,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
             .useDefaultGroup()
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_ELIXIRS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_ELIXIRS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
     }
@@ -5225,14 +5225,14 @@ public class Recipes extends RecipeProvider {
             .key('S', Tags.Items.STRING)
             .key('I', Tags.Items.INGOTS_IRON)
             .key('F', ItemsPM.SKYGLASS_FLASK.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.NIGHT_VISION, FuseType.MEDIUM))
             .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION, FuseType.MEDIUM))
@@ -5241,7 +5241,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.INVISIBILITY, FuseType.MEDIUM))
@@ -5250,7 +5250,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY, FuseType.MEDIUM))
@@ -5260,7 +5260,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GOLDEN_CARROT)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LEAPING, FuseType.MEDIUM))
@@ -5268,7 +5268,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_LEAPING, FuseType.MEDIUM))
@@ -5277,7 +5277,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING, FuseType.MEDIUM))
@@ -5286,7 +5286,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE, FuseType.MEDIUM))
@@ -5294,7 +5294,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE, FuseType.MEDIUM))
@@ -5303,7 +5303,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SWIFTNESS, FuseType.MEDIUM))
@@ -5311,7 +5311,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS, FuseType.MEDIUM))
@@ -5320,7 +5320,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS, FuseType.MEDIUM))
@@ -5329,7 +5329,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER, FuseType.MEDIUM))
@@ -5337,7 +5337,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER, FuseType.MEDIUM))
@@ -5346,7 +5346,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER, FuseType.MEDIUM))
@@ -5355,7 +5355,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WATER_BREATHING, FuseType.MEDIUM))
@@ -5364,7 +5364,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING, FuseType.MEDIUM))
@@ -5374,7 +5374,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PUFFERFISH)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HEALING, FuseType.MEDIUM))
@@ -5383,7 +5383,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HEALING, FuseType.MEDIUM))
@@ -5393,7 +5393,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.REGENERATION, FuseType.MEDIUM))
@@ -5402,7 +5402,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION, FuseType.MEDIUM))
@@ -5412,7 +5412,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION, FuseType.MEDIUM))
@@ -5422,7 +5422,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GHAST_TEAR)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRENGTH, FuseType.MEDIUM))
@@ -5430,7 +5430,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH, FuseType.MEDIUM))
@@ -5439,7 +5439,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH, FuseType.MEDIUM))
@@ -5448,7 +5448,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOW_FALLING, FuseType.MEDIUM))
@@ -5456,7 +5456,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING, FuseType.MEDIUM))
@@ -5465,7 +5465,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOWNESS, FuseType.MEDIUM))
@@ -5475,7 +5475,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS, FuseType.MEDIUM))
@@ -5486,7 +5486,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS, FuseType.MEDIUM))
@@ -5497,7 +5497,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HARMING, FuseType.MEDIUM))
@@ -5506,7 +5506,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HARMING, FuseType.MEDIUM))
@@ -5516,7 +5516,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Items.GLISTERING_MELON_SLICE)
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM))
@@ -5525,7 +5525,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SPIDER_EYE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_POISON, FuseType.MEDIUM))
@@ -5535,7 +5535,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_POISON, FuseType.MEDIUM))
@@ -5545,7 +5545,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_GLOWSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WEAKNESS, FuseType.MEDIUM))
@@ -5553,7 +5553,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS, FuseType.MEDIUM))
@@ -5562,7 +5562,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
             .addIngredient(Tags.Items.DUSTS_REDSTONE)
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("CONCOCTING_BOMBS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK, FuseType.MEDIUM))
@@ -5570,7 +5570,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("CONCOCTING_BOMBS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
     }
@@ -5583,7 +5583,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
             .key('S', Tags.Items.STRING)
             .key('C', ItemTags.WOOL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SPELLCLOTH")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE.get())
@@ -5593,7 +5593,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemTagsPM.ESSENCES_FORBIDDEN_SHARDS)
             .key('S', Tags.Items.STRING)
             .key('C', ItemsPM.SPELLCLOTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXWEAVE")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 20).add(Source.INFERNAL, 20).add(Source.VOID, 20))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL.get())
@@ -5603,14 +5603,14 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
             .key('S', Tags.Items.STRING)
             .key('C', ItemsPM.HEXWEAVE.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SAINTSWOOL")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 50))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemTags.WOOL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IMBUED_WOOL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_CHEST.get())
@@ -5618,7 +5618,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("###")
             .patternLine("###")
             .key('#', ItemTags.WOOL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IMBUED_WOOL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_LEGS.get())
@@ -5626,93 +5626,93 @@ public class Recipes extends RecipeProvider {
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemTags.WOOL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IMBUED_WOOL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.IMBUED_WOOL_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemTags.WOOL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("IMBUED_WOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IMBUED_WOOL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5).add(Source.SEA, 5).add(Source.SKY, 5).add(Source.SUN, 5).add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SPELLCLOTH")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_CHEST.get())
             .patternLine("# #")
             .patternLine("###")
             .patternLine("###")
             .key('#', ItemsPM.SPELLCLOTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SPELLCLOTH")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_LEGS.get())
             .patternLine("###")
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SPELLCLOTH")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SPELLCLOTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SPELLCLOTH")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SPELLCLOTH")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXWEAVE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_CHEST.get())
             .patternLine("# #")
             .patternLine("###")
             .patternLine("###")
             .key('#', ItemsPM.HEXWEAVE.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXWEAVE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_LEGS.get())
             .patternLine("###")
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXWEAVE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEXWEAVE_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.HEXWEAVE.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEXWEAVE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEXWEAVE")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_HEAD.get())
             .patternLine("###")
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SAINTSWOOL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_CHEST.get())
             .patternLine("# #")
             .patternLine("###")
             .patternLine("###")
             .key('#', ItemsPM.SAINTSWOOL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SAINTSWOOL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_LEGS.get())
             .patternLine("###")
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SAINTSWOOL")))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SAINTSWOOL_FEET.get())
             .patternLine("# #")
             .patternLine("# #")
             .key('#', ItemsPM.SAINTSWOOL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SAINTSWOOL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SAINTSWOOL")))
             .build(consumer);
     }
     
@@ -5725,7 +5725,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .addProp(BlocksPM.RITUAL_BELL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_SHOVEL")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMAL_SHOVEL")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40))
             .instability(3)
             .build(consumer);
@@ -5737,7 +5737,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.RITUAL_LECTERN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_FISHING_ROD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMAL_FISHING_ROD")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 40))
             .instability(3)
             .build(consumer);
@@ -5749,7 +5749,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.RITUAL_BELL.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_AXE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMAL_AXE")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .instability(3)
             .build(consumer);
@@ -5761,7 +5761,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlockTagsPM.RITUAL_CANDLES)
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_HOE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMAL_HOE")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 40))
             .instability(3)
             .build(consumer);
@@ -5773,7 +5773,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.RITUAL_LECTERN.get())
             .addProp(BlocksPM.INCENSE_BRAZIER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("PRIMAL_PICKAXE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("PRIMAL_PICKAXE")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .instability(3)
             .build(consumer);
@@ -5784,7 +5784,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_PRISM.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.BLOODLETTER.get(), 2)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_TRIDENT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_TRIDENT")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .instability(3)
             .build(consumer);
@@ -5795,7 +5795,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_PRISM.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.SOUL_ANVIL.get(), 2)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_BOW")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_BOW")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .instability(3)
             .build(consumer);
@@ -5807,7 +5807,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.BLOODLETTER.get())
             .addProp(BlocksPM.SOUL_ANVIL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_SWORD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_SWORD")))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .instability(3)
             .build(consumer);
@@ -5818,7 +5818,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.MANA_PRISM.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addProp(BlocksPM.CELESTIAL_HARP.get(), 2)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SACRED_SHIELD")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SACRED_SHIELD")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .instability(3)
             .build(consumer);
@@ -5833,7 +5833,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_EARTH.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SEA.get())
@@ -5844,7 +5844,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_SEA.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
@@ -5855,7 +5855,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_SKY.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_SUN.get())
@@ -5866,7 +5866,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_SUN.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_MOON.get())
@@ -5877,7 +5877,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_MOON.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get())
@@ -5888,7 +5888,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_INFERNAL.get())
@@ -5899,7 +5899,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_VOID.get())
@@ -5910,7 +5910,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_VOID.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get())
@@ -5921,7 +5921,7 @@ public class Recipes extends RecipeProvider {
             .key('M', ItemsPM.MARBLE_ENCHANTED_SLAB.get())
             .key('E', ItemsPM.ESSENCE_SHARD_HALLOWED.get())
             .setGroup("artificial_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ARTIFICIAL_MANA_FONTS"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ARTIFICIAL_MANA_FONTS"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 250))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_EARTH.get())
@@ -5933,7 +5933,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_EARTH.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SEA.get())
@@ -5945,7 +5945,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_SEA.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SKY.get())
@@ -5957,7 +5957,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_SKY.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_SUN.get())
@@ -5969,7 +5969,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_SUN.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_MOON.get())
@@ -5981,7 +5981,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_MOON.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("FORBIDDEN_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get())
@@ -5993,7 +5993,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_BLOOD.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("FORBIDDEN_MANA_FONTS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get())
@@ -6005,7 +6005,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_INFERNAL.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("FORBIDDEN_MANA_FONTS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_VOID.get())
@@ -6017,7 +6017,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_VOID.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_VOID.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("FORBIDDEN_MANA_FONTS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get())
@@ -6029,7 +6029,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
             .key('F', ItemsPM.ARTIFICIAL_FONT_HALLOWED.get())
             .setGroup("forbidden_mana_fonts")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("FORBIDDEN_MANA_FONTS"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("FORBIDDEN_MANA_FONTS"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 750))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_EARTH.get())
@@ -6041,7 +6041,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_EARTH.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_EARTH.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SEA.get())
@@ -6053,7 +6053,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_SEA.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_SEA.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SKY.get())
@@ -6065,7 +6065,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_SKY.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_SKY.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_SUN.get())
@@ -6077,7 +6077,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_SUN.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_SUN.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_MOON.get())
@@ -6089,7 +6089,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_MOON.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_MOON.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_BLOOD.get())
@@ -6101,7 +6101,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_BLOOD.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_BLOOD.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get())
@@ -6113,7 +6113,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_INFERNAL.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_INFERNAL.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_VOID.get())
@@ -6125,7 +6125,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_VOID.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_VOID.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 2500))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get())
@@ -6137,7 +6137,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
             .key('F', ItemsPM.FORBIDDEN_FONT_HALLOWED.get())
             .setGroup("heavenly_mana_fonts")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HEAVENLY_MANA_FONTS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HEAVENLY_MANA_FONTS")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 2500))
             .build(consumer);
     }
@@ -6150,7 +6150,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_ARROWS")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SEA.get(), 4)
@@ -6160,7 +6160,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_ARROWS")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SKY.get(), 4)
@@ -6170,7 +6170,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_SKY.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_ARROWS")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_SUN.get(), 4)
@@ -6180,7 +6180,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_ARROWS")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_MOON.get(), 4)
@@ -6190,7 +6190,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("MANA_ARROWS")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MANA_ARROWS")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_BLOOD.get(), 4)
@@ -6200,7 +6200,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_BLOOD.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_INFERNAL.get(), 4)
@@ -6210,7 +6210,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_VOID.get(), 4)
@@ -6220,7 +6220,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 5))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_HALLOWED.get(), 4)
@@ -6230,7 +6230,7 @@ public class Recipes extends RecipeProvider {
             .key('A', Items.ARROW)
             .key('D', ItemsPM.ESSENCE_DUST_HALLOWED.get())
             .setGroup("mana_arrows")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("MANA_ARROWS"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("MANA_ARROWS"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 5))
             .build(consumer);
     }
@@ -6244,7 +6244,7 @@ public class Recipes extends RecipeProvider {
             .key('C', ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .key('M', ItemsPM.MARBLE_SMOKED_SLAB.get())
             .key('P', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("DISSOLUTION_CHAMBER")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("DISSOLUTION_CHAMBER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .build(consumer);
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
@@ -6320,63 +6320,63 @@ public class Recipes extends RecipeProvider {
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HUMMING_ARTIFACT")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SEA.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HUMMING_ARTIFACT")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HUMMING_ARTIFACT")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_SUN.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HUMMING_ARTIFACT")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_MOON.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("HUMMING_ARTIFACT")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HUMMING_ARTIFACT")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_VOID.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_VOID.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_HALLOWED.get())
             .setGroup("humming_artifact")
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("HUMMING_ARTIFACT"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("HUMMING_ARTIFACT"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .build(consumer);
     }
@@ -6390,7 +6390,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemTagsPM.ESSENCES_TERRESTRIAL_SHARDS)
             .key('M', ItemTagsPM.INGOTS_PRIMALITE)
             .key('B', Items.BARREL)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_ENCHANTED")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ESSENCE_CASK_ENCHANTED")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_FORBIDDEN.get())
@@ -6401,7 +6401,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemTagsPM.ESSENCES_FORBIDDEN_CRYSTALS)
             .key('M', ItemTagsPM.INGOTS_HEXIUM)
             .key('B', ItemsPM.ESSENCE_CASK_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_FORBIDDEN")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ESSENCE_CASK_FORBIDDEN")))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 100).add(Source.INFERNAL, 100).add(Source.VOID, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_HEAVENLY.get())
@@ -6412,7 +6412,7 @@ public class Recipes extends RecipeProvider {
             .key('E', ItemsPM.ESSENCE_CLUSTER_HALLOWED.get())
             .key('M', ItemTagsPM.INGOTS_HALLOWSTEEL)
             .key('B', ItemsPM.ESSENCE_CASK_FORBIDDEN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ESSENCE_CASK_HEAVENLY")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ESSENCE_CASK_HEAVENLY")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 400))
             .build(consumer);
     }
@@ -6424,7 +6424,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
@@ -6433,7 +6433,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")))
             .manaCost(SourceList.EMPTY.add(Source.SEA, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get())
@@ -6442,7 +6442,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_SKY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")))
             .manaCost(SourceList.EMPTY.add(Source.SKY, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get())
@@ -6451,7 +6451,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_SUN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")))
             .manaCost(SourceList.EMPTY.add(Source.SUN, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get())
@@ -6460,7 +6460,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_MOON.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("ATTUNEMENT_SHACKLES")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ATTUNEMENT_SHACKLES")))
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get())
@@ -6469,7 +6469,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_BLOOD.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.BLOOD.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.BLOOD.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get())
@@ -6478,7 +6478,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_INFERNAL.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.INFERNAL.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.INFERNAL.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get())
@@ -6487,7 +6487,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_VOID.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.VOID.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.VOID.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 40))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get())
@@ -6496,7 +6496,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("S S")
             .key('C', Items.CHAIN)
             .key('S', ItemsPM.ESSENCE_SHARD_HALLOWED.get())
-            .research(CompoundResearchKey.from(true, SimpleResearchKey.parse("ATTUNEMENT_SHACKLES"), Source.HALLOWED.getDiscoverKey()))
+            .research(CompoundResearchKey.from(true, SimpleResearchKey.find("ATTUNEMENT_SHACKLES"), Source.HALLOWED.getDiscoverKey()))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 40))
             .build(consumer);
     }
@@ -6511,7 +6511,7 @@ public class Recipes extends RecipeProvider {
             .key('E', Tags.Items.GEMS_EMERALD)
             .key('S', ItemsPM.RUNE_SELF.get())
             .key('M', ItemsPM.MAGITECH_PARTS_ENCHANTED.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("WARDING_MODULE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("WARDING_MODULE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.GREATER_WARDING_MODULE.get())
@@ -6523,7 +6523,7 @@ public class Recipes extends RecipeProvider {
             .key('E', Tags.Items.GEMS_EMERALD)
             .key('S', ItemsPM.RUNE_SELF.get())
             .key('M', ItemsPM.MAGITECH_PARTS_FORBIDDEN.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("GREATER_WARDING_MODULE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("GREATER_WARDING_MODULE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 200))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SUPREME_WARDING_MODULE.get())
@@ -6535,7 +6535,7 @@ public class Recipes extends RecipeProvider {
             .key('E', Tags.Items.GEMS_EMERALD)
             .key('S', ItemsPM.RUNE_SELF.get())
             .key('M', ItemsPM.MAGITECH_PARTS_HEAVENLY.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("SUPREME_WARDING_MODULE")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_WARDING_MODULE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 400))
             .build(consumer);
     }
@@ -6551,7 +6551,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SSS")
             .key('S', Tags.Items.COBBLESTONE_NORMAL)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("stone_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.DEEPSLATE, 8)
             .patternLine("SSS")
@@ -6559,7 +6559,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SSS")
             .key('S', Tags.Items.COBBLESTONE_DEEPSLATE)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("deepslate_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.COBBLESTONE, 8)
             .patternLine("SSS")
@@ -6567,7 +6567,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SSS")
             .key('S', Tags.Items.GRAVEL)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("cobblestone_from_stonemelding"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.GRAVEL, 8)
             .patternLine("SSS")
@@ -6575,7 +6575,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SSS")
             .key('S', Tags.Items.SAND)
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("STONEMELDING")))
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
     }
 }
