@@ -8,6 +8,7 @@ v4.0.6
 * Made Treefolk attempt to find land instead of swimming all day
 * Fixed typos in the scan entry for Humming Artifacts
 * Reduced break time of Ritual Bells
+* Reduced the requirements for Expert, Master, and Supreme Ritual Magick research
 * Various internal refactoring
 
 v4.0.5

@@ -1809,9 +1809,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("b_crafted_runeworking_expert").name("Craft 10 runeworking items").build();
         this.researchRequirement("b_crafted_runeworking_master").name("Craft 50 runeworking items").build();
         this.researchRequirement("b_crafted_runeworking_supreme").name("Craft 250 runeworking items").build();
-        this.researchRequirement("t_rituals_completed_expert").name("Conduct 5 rituals").build();
-        this.researchRequirement("t_rituals_completed_master").name("Conduct 25 rituals").build();
-        this.researchRequirement("t_rituals_completed_supreme").name("Conduct 100 rituals").build();
+        this.researchRequirement("t_rituals_completed_expert").name("Conduct 2 rituals").build();
+        this.researchRequirement("t_rituals_completed_master").name("Conduct 10 rituals").build();
+        this.researchRequirement("t_rituals_completed_supreme").name("Conduct 50 rituals").build();
         this.researchRequirement("t_ritual_mishaps_basic").name("Endure a ritual mishap").build();
         this.researchRequirement("b_crafted_magitech_expert").name("Craft 5 magitech items").build();
         this.researchRequirement("b_crafted_magitech_master").name("Craft 25 magitech items").build();

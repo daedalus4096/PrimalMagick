@@ -44,9 +44,9 @@ public class InitStats {
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 10, SimpleResearchKey.find("b_crafted_runeworking_expert"));
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 50, SimpleResearchKey.find("b_crafted_runeworking_master"));
         StatTriggers.register(StatsPM.CRAFTED_RUNEWORKING, 250, SimpleResearchKey.find("b_crafted_runeworking_supreme"));
-        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 5, SimpleResearchKey.find("t_rituals_completed_expert"));
-        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 25, SimpleResearchKey.find("t_rituals_completed_master"));
-        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 100, SimpleResearchKey.find("t_rituals_completed_supreme"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 2, SimpleResearchKey.find("t_rituals_completed_expert"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 10, SimpleResearchKey.find("t_rituals_completed_master"));
+        StatTriggers.register(StatsPM.RITUALS_COMPLETED, 50, SimpleResearchKey.find("t_rituals_completed_supreme"));
         StatTriggers.register(StatsPM.RITUAL_MISHAPS, 1, SimpleResearchKey.find("t_ritual_mishaps_basic"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 5, SimpleResearchKey.find("b_crafted_magitech_expert"));
         StatTriggers.register(StatsPM.CRAFTED_MAGITECH, 25, SimpleResearchKey.find("b_crafted_magitech_master"));
