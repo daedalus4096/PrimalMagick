@@ -40,6 +40,16 @@ public class ResearchNames {
         return NAMES.get().getValues().stream().filter(rn -> rn.matches(name)).findFirst();
     }
     
+    @Nonnull
+    public static Supplier<SimpleResearchKey> simpleKey(Supplier<ResearchName> nameSupplier) {
+        return () -> nameSupplier.get().simpleKey();
+    }
+    
+    @Nonnull
+    public static Supplier<SimpleResearchKey> simpleKey(Supplier<ResearchName> nameSupplier, int stage) {
+        return () -> nameSupplier.get().simpleKey(stage);
+    }
+    
     private static void validate(IForgeRegistryInternal<ResearchName> owner, RegistryManager stage, int id, ResourceLocation key, ResearchName obj) {
         // Validate that each registry object is the only one with its given root name
         if (NAMES.get().getValues().stream().filter(rn -> rn.matches(obj.rootName())).count() > 1L) {

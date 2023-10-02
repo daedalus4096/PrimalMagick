@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.golems;
 
+import java.util.function.Supplier;
+
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.HallowsteelGolemEntity;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class HallowsteelGolemControllerBlock extends AbstractEnchantedGolemControllerBlock<HallowsteelGolemEntity> {
-    protected static final SimpleResearchKey RESEARCH = ResearchNames.HALLOWSTEEL_GOLEM.get().simpleKey();
+    protected static final Supplier<SimpleResearchKey> RESEARCH = ResearchNames.simpleKey(ResearchNames.HALLOWSTEEL_GOLEM);
 
     public HallowsteelGolemControllerBlock(Properties properties) {
         super(properties);
@@ -24,7 +26,7 @@ public class HallowsteelGolemControllerBlock extends AbstractEnchantedGolemContr
 
     @Override
     protected SimpleResearchKey getRequiredResearch() {
-        return RESEARCH;
+        return RESEARCH.get();
     }
 
     @Override

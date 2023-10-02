@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -114,7 +115,7 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final SimpleResearchKey NDE_RESEARCH_KEY = ResearchNames.INTERNAL_NEAR_DEATH_EXPERIENCE.get().simpleKey();
+    private static final Supplier<SimpleResearchKey> NDE_RESEARCH_KEY = ResearchNames.simpleKey(ResearchNames.INTERNAL_NEAR_DEATH_EXPERIENCE);
     private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
     private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
     private static final Logger LOGGER = LogManager.getLogger();
@@ -168,8 +169,8 @@ public class PlayerEvents {
         if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
              health >= player.getMaxHealth() &&
              ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) ) {
-            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY)) {
-                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY);
+            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY.get())) {
+                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY.get());
             }
             NEAR_DEATH_ELIGIBLE.remove(playerId);
         }
