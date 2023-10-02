@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -540,7 +541,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         
         // Give a hint the first time the player aborts a wand transform early
-        SimpleResearchKey hintKey = SimpleResearchKey.parse("m_wand_transform_hint");
+        SimpleResearchKey hintKey = ResearchNames.INTERNAL_WAND_TRANSFORM_HINT.get().simpleKey();
         BlockPos wandPos = this.getPositionInUse(stack);
         if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !hintKey.isKnownByStrict(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {

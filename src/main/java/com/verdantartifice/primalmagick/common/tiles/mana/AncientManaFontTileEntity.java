@@ -5,6 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.blocks.mana.AncientManaFontBlock;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -40,8 +41,8 @@ public class AncientManaFontTileEntity extends AbstractManaFontTileEntity {
         entity.ticksExisted++;
         if (!level.isClientSide && entity.ticksExisted % 10 == 0) {
             // Have players in range discover this font's shrine
-            SimpleResearchKey shrineResearch = SimpleResearchKey.parse("m_found_shrine");
-            SimpleResearchKey siphonResearch = SimpleResearchKey.parse("m_siphon_prompt");
+            SimpleResearchKey shrineResearch = ResearchNames.INTERNAL_FOUND_SHRINE.get().simpleKey();
+            SimpleResearchKey siphonResearch = ResearchNames.INTERNAL_SIPHON_PROMPT.get().simpleKey();
             List<Player> players = EntityUtils.getEntitiesInRange(level, pos, null, Player.class, 5.0D);
             for (Player player : players) {
                 if (!ResearchManager.isResearchComplete(player, shrineResearch) && !ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {

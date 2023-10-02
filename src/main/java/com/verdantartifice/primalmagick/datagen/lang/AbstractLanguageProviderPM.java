@@ -219,7 +219,11 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(String keyStr) {
-        return this.researchRequirement(SimpleResearchKey.parse(keyStr));
+        return this.researchRequirement(ResearchNames.find(keyStr));
+    }
+    
+    public ResearchRequirementLanguageBuilder researchRequirement(ResearchName key) {
+        return this.researchRequirement(key.simpleKey());
     }
     
     public ResearchRequirementLanguageBuilder researchRequirement(SimpleResearchKey key) {

@@ -316,6 +316,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> INTERNAL_SPELLS_CRAFTED_EXPERT = register("spells_crafted_expert", () -> new ResearchName("t_spells_crafted_expert"));
     public static final RegistryObject<ResearchName> INTERNAL_SPELL_COST_MASTER = register("spell_cost_master", () -> new ResearchName("t_spell_cost_master"));
     public static final RegistryObject<ResearchName> INTERNAL_SPELL_COST_SUPREME = register("spell_cost_supreme", () -> new ResearchName("t_spell_cost_supreme"));
+    public static final RegistryObject<ResearchName> INTERNAL_FOUND_SHRINE = register("found_shrine", () -> new ResearchName("m_found_shrine"));
     public static final RegistryObject<ResearchName> INTERNAL_FOUND_SHRINE_EARTH = register("found_shrine_earth", () -> new ResearchName("m_found_shrine_earth"));
     public static final RegistryObject<ResearchName> INTERNAL_FOUND_SHRINE_SEA = register("found_shrine_sea", () -> new ResearchName("m_found_shrine_sea"));
     public static final RegistryObject<ResearchName> INTERNAL_FOUND_SHRINE_SKY = register("found_shrine_sky", () -> new ResearchName("m_found_shrine_sky"));
@@ -387,4 +388,6 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> INTERNAL_SOTU_RESEARCH_SANGUINE_CRUCIBLE = register("sotu_research_sanguine_crucible", () -> new ResearchName("t_sotu_research_sanguine_crucible"));
     public static final RegistryObject<ResearchName> INTERNAL_SOTU_RESEARCH_CLEANSING_RITE = register("sotu_research_cleansing_rite", () -> new ResearchName("t_sotu_research_cleansing_rite"));
     public static final RegistryObject<ResearchName> INTERNAL_SOTU_SCAN_HALLOWED_ORB = register("sotu_scan_hallowed_orb", () -> new ResearchName("b_sotu_scan_hallowed_orb"));
+    public static final RegistryObject<ResearchName> INTERNAL_WAND_TRANSFORM_HINT = register("wand_transform_hint", () -> new ResearchName("m_wand_transform_hint"));
+    public static final RegistryObject<ResearchName> INTERNAL_SIPHON_PROMPT = register("siphon_prompt", () -> new ResearchName("m_siphon_prompt"));
 }
