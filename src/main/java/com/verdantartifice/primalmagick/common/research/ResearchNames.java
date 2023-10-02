@@ -282,4 +282,23 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> WARDING_MODULE = register("warding_module", () -> new ResearchName("WARDING_MODULE"));
     public static final RegistryObject<ResearchName> GREATER_WARDING_MODULE = register("greater_warding_module", () -> new ResearchName("GREATER_WARDING_MODULE"));
     public static final RegistryObject<ResearchName> SUPREME_WARDING_MODULE = register("supreme_warding_module", () -> new ResearchName("SUPREME_WARDING_MODULE"));
+    
+    // Register scan research
+    public static final RegistryObject<ResearchName> RAW_MARBLE = register("raw_marble", () -> new ResearchName("RAW_MARBLE"));
+    public static final RegistryObject<ResearchName> HALLOWED_ORB = register("hallowed_orb", () -> new ResearchName("HALLOWED_ORB"));
+    public static final RegistryObject<ResearchName> HALLOWOOD_TREES = register("hallowood_trees", () -> new ResearchName("HALLOWOOD_TREES"));
+    public static final RegistryObject<ResearchName> SUNWOOD_TREES = register("sunwood_trees", () -> new ResearchName("SUNWOOD_TREES"));
+    public static final RegistryObject<ResearchName> MOONWOOD_TREES = register("moonwood_trees", () -> new ResearchName("MOONWOOD_TREES"));
+    public static final RegistryObject<ResearchName> ROCK_SALT = register("rock_salt", () -> new ResearchName("ROCK_SALT"));
+    public static final RegistryObject<ResearchName> ALCHEMICAL_WASTE = register("alchemical_waste", () -> new ResearchName("ALCHEMICAL_WASTE"));
+    public static final RegistryObject<ResearchName> QUARTZ = register("quartz", () -> new ResearchName("QUARTZ"));
+    public static final RegistryObject<ResearchName> INNER_DEMON = register("inner_demon", () -> new ResearchName("INNER_DEMON"));
+    public static final RegistryObject<ResearchName> BOOKSHELF = register("bookshelf", () -> new ResearchName("BOOKSHELF"));
+    public static final RegistryObject<ResearchName> BEEHIVE = register("beehive", () -> new ResearchName("BEEHIVE"));
+    public static final RegistryObject<ResearchName> BEACON = register("beacon", () -> new ResearchName("BEACON"));
+    public static final RegistryObject<ResearchName> DRAGON_EGG = register("dragon_egg", () -> new ResearchName("DRAGON_EGG"));
+    public static final RegistryObject<ResearchName> DRAGON_HEAD = register("dragon_head", () -> new ResearchName("DRAGON_HEAD"));
+    public static final RegistryObject<ResearchName> MYSTICAL_RELIC = register("mystical_relic", () -> new ResearchName("MYSTICAL_RELIC"));
+    public static final RegistryObject<ResearchName> HUMMING_ARTIFACT = register("humming_artifact", () -> new ResearchName("HUMMING_ARTIFACT"));
+    public static final RegistryObject<ResearchName> TREEFOLK = register("treefolk", () -> new ResearchName("TREEFOLK"));
 }
