@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.menus;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -45,7 +46,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class RunicGrindstoneMenu extends AbstractContainerMenu {
     protected static final List<RuneType> RUNE_TYPES = List.of(RuneType.VERB, RuneType.NOUN, RuneType.SOURCE);
-    protected static final SimpleResearchKey UNLOCK_INDEX_RESEARCH = ResearchNames.UNLOCK_RUNE_ENCHANTMENTS.get().simpleKey();
+    protected static final Supplier<SimpleResearchKey> UNLOCK_INDEX_RESEARCH = ResearchNames.simpleKey(ResearchNames.UNLOCK_RUNE_ENCHANTMENTS);
     
     public final Container resultSlots = new ResultContainer();
     public final Container repairSlots = new SimpleContainer(2) {
@@ -276,7 +277,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                         for (SimpleResearchKey candidate : candidates) {
                             candidateBag.add(candidate, 1);
                         }
-                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH);
+                        ResearchManager.completeResearch(this.player, UNLOCK_INDEX_RESEARCH.get());
                         ResearchManager.completeResearch(this.player, candidateBag.getRandom(this.player.getRandom()));
                         hintCount++;
                         
