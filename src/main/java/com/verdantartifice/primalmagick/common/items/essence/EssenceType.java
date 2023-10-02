@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.util.StringRepresentable;
@@ -23,9 +24,9 @@ public enum EssenceType implements StringRepresentable {
     CRYSTAL("crystal", Rarity.RARE, 50, 100),
     CLUSTER("cluster", Rarity.EPIC, 100, 1000);
     
-    private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.find("SHARD_SYNTHESIS");
-    private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.find("CRYSTAL_SYNTHESIS");
-    private static final SimpleResearchKey CLUSTER_RESEARCH = SimpleResearchKey.find("CLUSTER_SYNTHESIS");
+    private static final SimpleResearchKey SHARD_RESEARCH = ResearchNames.SHARD_SYNTHESIS.get().simpleKey();
+    private static final SimpleResearchKey CRYSTAL_RESEARCH = ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey();
+    private static final SimpleResearchKey CLUSTER_RESEARCH = ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey();
     
     private final String name;
     private final Rarity rarity;

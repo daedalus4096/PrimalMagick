@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +71,10 @@ public class CompoundResearchKey {
     
     protected static List<SimpleResearchKey> parseKeys(String keyStr, String glue) {
         return Arrays.asList(keyStr.split(glue)).stream().filter(Objects::nonNull).map(SimpleResearchKey::parse).toList();
+    }
+    
+    public static Builder builder(boolean requireAll) {
+        return new Builder(requireAll);
     }
     
     public static CompoundResearchKey parse(@Nullable JsonArray jsonArray) throws Exception {
@@ -199,5 +204,27 @@ public class CompoundResearchKey {
         if (requireAll != other.requireAll)
             return false;
         return true;
+    }
+    
+    public static class Builder {
+        private final boolean requireAll;
+        private final List<SimpleResearchKey> simpleKeys = new ArrayList<>();
+        
+        protected Builder(boolean requireAll) {
+            this.requireAll = requireAll;
+        }
+        
+        public Builder add(SimpleResearchKey key) {
+            this.simpleKeys.add(key);
+            return this;
+        }
+        
+        public Builder add(Optional<SimpleResearchKey> keyOpt) {
+            return this.add(keyOpt.orElseThrow());
+        }
+        
+        public CompoundResearchKey build() {
+            return new CompoundResearchKey(this.requireAll, this.simpleKeys);
+        }
     }
 }
