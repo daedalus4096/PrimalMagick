@@ -364,8 +364,27 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> OBSERVATIONS_MADE_BASICS = register("observations_made_basics", () -> new ResearchName("t_observations_made_basics"));
     public static final RegistryObject<ResearchName> OBSERVATIONS_MADE_EXPERT = register("observations_made_expert", () -> new ResearchName("t_observations_made_expert"));
     public static final RegistryObject<ResearchName> THEORIES_FORMED_BASICS = register("theories_formed_basics", () -> new ResearchName("t_theories_formed_basics"));
-
+    public static final RegistryObject<ResearchName> BLOCKS_BROKEN_BAREHANDED_EXPERT = register("blocks_broken_barehanded_expert", () -> new ResearchName("m_blocks_broken_barehanded_expert"));
+    public static final RegistryObject<ResearchName> PLACE_STONE_EXPERT = register("place_stone_expert", () -> new ResearchName("b_place_stone_expert"));
+    public static final RegistryObject<ResearchName> DROWN_A_LITTLE = register("drown_a_little", () -> new ResearchName("m_drown_a_little"));
+    public static final RegistryObject<ResearchName> FLY_ELYTRA = register("fly_elytra", () -> new ResearchName("m_fly_elytra"));
+    public static final RegistryObject<ResearchName> PLACE_TORCH_EXPERT = register("place_torch_expert", () -> new ResearchName("b_place_torch_expert"));
+    public static final RegistryObject<ResearchName> NEAR_DEATH_EXPERIENCE = register("near_death_experience", () -> new ResearchName("m_near_death_experience"));
+    public static final RegistryObject<ResearchName> FURRY_FRIEND = register("furry_friend", () -> new ResearchName("m_furry_friend"));
+    public static final RegistryObject<ResearchName> BREED_ANIMAL = register("breed_animal", () -> new ResearchName("m_breed_animal"));
+    public static final RegistryObject<ResearchName> FEEL_THE_BURN = register("feel_the_burn", () -> new ResearchName("m_feel_the_burn"));
+    public static final RegistryObject<ResearchName> TELEPORT_A_LOT = register("teleport_a_lot", () -> new ResearchName("m_teleport_a_lot"));
+    public static final RegistryObject<ResearchName> SCAN_NETHER_STAR = register("scan_nether_star", () -> new ResearchName("b_scan_nether_star"));
+    public static final RegistryObject<ResearchName> MANA_SIPHONED_BASICS = register("mana_siphoned_basics", () -> new ResearchName("t_mana_siphoned_basics"));
+    public static final RegistryObject<ResearchName> MANA_SIPHONED_EXPERT = register("mana_siphoned_expert", () -> new ResearchName("t_mana_siphoned_expert"));
+    public static final RegistryObject<ResearchName> MANA_SPENT_TOTAL_BASICS = register("mana_spent_total_basics", () -> new ResearchName("t_mana_spent_total_basics"));
     public static final RegistryObject<ResearchName> SOTU_DISCOVER_BLOOD = register("sotu_discover_blood", () -> new ResearchName("m_sotu_discover_blood"));
     public static final RegistryObject<ResearchName> SOTU_DISCOVER_INFERNAL = register("sotu_discover_infernal", () -> new ResearchName("m_sotu_discover_infernal"));
     public static final RegistryObject<ResearchName> SOTU_DISCOVER_VOID = register("sotu_discover_void", () -> new ResearchName("m_sotu_discover_void"));
+    public static final RegistryObject<ResearchName> SOTU_RESEARCH_ARCANOMETER = register("sotu_research_arcanometer", () -> new ResearchName("t_sotu_research_arcanometer"));
+    public static final RegistryObject<ResearchName> SOTU_RESEARCH_HEXIUM = register("sotu_research_hexium", () -> new ResearchName("t_sotu_research_hexium"));
+    public static final RegistryObject<ResearchName> SOTU_RESEARCH_POWER_RUNE = register("sotu_research_power_rune", () -> new ResearchName("t_sotu_research_power_rune"));
+    public static final RegistryObject<ResearchName> SOTU_RESEARCH_SANGUINE_CRUCIBLE = register("sotu_research_sanguine_crucible", () -> new ResearchName("t_sotu_research_sanguine_crucible"));
+    public static final RegistryObject<ResearchName> SOTU_RESEARCH_CLEANSING_RITE = register("sotu_research_cleansing_rite", () -> new ResearchName("t_sotu_research_cleansing_rite"));
+    public static final RegistryObject<ResearchName> SOTU_SCAN_HALLOWED_ORB = register("sotu_scan_hallowed_orb", () -> new ResearchName("b_sotu_scan_hallowed_orb"));
 }
