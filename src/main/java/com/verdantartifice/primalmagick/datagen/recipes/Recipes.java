@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -99,7 +100,7 @@ public class Recipes extends RecipeProvider {
             .addIngredient(BlocksPM.WOOD_TABLE.get())
             .addIngredient(ItemsPM.MAGNIFYING_GLASS.get())
             .addIngredient(Items.PAPER)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS@2")))
+            .research(CompoundResearchKey.from(ResearchNames.FIRST_STEPS.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGNIFYING_GLASS.get())
             .patternLine(" I ")
@@ -108,7 +109,7 @@ public class Recipes extends RecipeProvider {
             .key('I', Tags.Items.INGOTS_IRON)
             .key('G', Tags.Items.GLASS_PANES_COLORLESS)
             .key('S', Tags.Items.RODS_WOODEN)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS@2")))
+            .research(CompoundResearchKey.from(ResearchNames.FIRST_STEPS.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.WOOD_TABLE.get())
             .patternLine("SSS")
@@ -116,7 +117,7 @@ public class Recipes extends RecipeProvider {
             .patternLine("SPS")
             .key('S', ItemTags.WOODEN_SLABS)
             .key('P', ItemTags.PLANKS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("FIRST_STEPS@2")))
+            .research(CompoundResearchKey.from(ResearchNames.FIRST_STEPS.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELL_SCROLL_BLANK.get())
             .patternLine("  S")
@@ -130,18 +131,18 @@ public class Recipes extends RecipeProvider {
             .addIngredient(BlocksPM.WOOD_TABLE.get())
             .addIngredient(Items.BOOK)
             .addIngredient(Items.PAPER)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
+            .research(CompoundResearchKey.from(ResearchNames.THEORYCRAFTING.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK.get())
             .addIngredient(Items.GLASS_BOTTLE)
             .addIngredient(Tags.Items.DYES_BLACK)
             .addIngredient(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
+            .research(CompoundResearchKey.from(ResearchNames.THEORYCRAFTING.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get())
             .addIngredient(ItemsPM.ENCHANTED_INK.get())
             .addIngredient(Tags.Items.FEATHERS)
-            .research(CompoundResearchKey.from(SimpleResearchKey.parse("THEORYCRAFTING@2")))
+            .research(CompoundResearchKey.from(ResearchNames.THEORYCRAFTING.get().simpleKey(2)))
             .build(consumer);
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SEASCRIBE_PEN.get())
             .patternLine(" GP")
