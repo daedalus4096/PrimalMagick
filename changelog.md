@@ -6,6 +6,7 @@ v4.0.6
 * Added more Stonemelding recipes
 * Fixed a bug with Mana Nexus research prerequisites
 * Made Treefolk attempt to find land instead of swimming all day
+* Fixed typos in the scan entry for Humming Artifacts
 * Various internal refactoring
 
 v4.0.5
