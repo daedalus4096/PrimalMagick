@@ -64,7 +64,7 @@ public class SimpleResearchKey {
         return ResearchNames.find(keyStr).simpleKey();
     }
     
-    private static SimpleResearchKey parse(String keyStr) {
+    public static SimpleResearchKey parse(String keyStr) {
         if (keyStr == null) {
             // Invalid key string
             throw new IllegalArgumentException("Research key may not be null");
