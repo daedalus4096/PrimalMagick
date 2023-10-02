@@ -23,9 +23,9 @@ public enum EssenceType implements StringRepresentable {
     CRYSTAL("crystal", Rarity.RARE, 50, 100),
     CLUSTER("cluster", Rarity.EPIC, 100, 1000);
     
-    private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.parse("SHARD_SYNTHESIS");
-    private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.parse("CRYSTAL_SYNTHESIS");
-    private static final SimpleResearchKey CLUSTER_RESEARCH = SimpleResearchKey.parse("CLUSTER_SYNTHESIS");
+    private static final SimpleResearchKey SHARD_RESEARCH = SimpleResearchKey.find("SHARD_SYNTHESIS");
+    private static final SimpleResearchKey CRYSTAL_RESEARCH = SimpleResearchKey.find("CRYSTAL_SYNTHESIS");
+    private static final SimpleResearchKey CLUSTER_RESEARCH = SimpleResearchKey.find("CLUSTER_SYNTHESIS");
     
     private final String name;
     private final Rarity rarity;
