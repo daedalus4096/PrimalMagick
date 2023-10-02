@@ -9,6 +9,8 @@ v4.0.6
 * Fixed typos in the scan entry for Humming Artifacts
 * Reduced break time of Ritual Bells
 * Reduced the requirements for Expert, Master, and Supreme Ritual Magick research
+* Added the Arcane Workbench as a JEI catalyst for vanilla crafting
+* Added the Infernal Furnace as a JEI catalyst for vanilla smelting
 * Various internal refactoring
 
 v4.0.5
