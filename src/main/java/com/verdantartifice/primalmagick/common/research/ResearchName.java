@@ -15,6 +15,10 @@ public record ResearchName(String rootName) {
         return SimpleResearchKey.of(this, stage);
     }
     
+    public CompoundResearchKey compoundKey() {
+        return CompoundResearchKey.from(this.simpleKey());
+    }
+    
     public boolean matches(String toMatch) {
         return this.rootName().equals(toMatch);
     }

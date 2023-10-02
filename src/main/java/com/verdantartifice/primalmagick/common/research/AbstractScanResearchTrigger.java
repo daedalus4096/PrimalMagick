@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public abstract class AbstractScanResearchTrigger implements IScanTrigger {
-    protected static final SimpleResearchKey SCANS_KEY = SimpleResearchKey.parse("UNLOCK_SCANS");
+    protected static final SimpleResearchKey SCANS_KEY = ResearchNames.UNLOCK_SCANS.get().simpleKey();
 
     protected final SimpleResearchKey toUnlock;
     protected final boolean unlockScansPage;
