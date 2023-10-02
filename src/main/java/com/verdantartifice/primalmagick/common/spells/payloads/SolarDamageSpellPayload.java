@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -29,7 +29,7 @@ import net.minecraft.world.phys.Vec3;
  */
 public class SolarDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "solar_damage";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_SOLAR"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_SOLAR.get().compoundKey();
 
     public SolarDamageSpellPayload() {
         super();

@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +18,7 @@ import net.minecraft.world.entity.EntityType;
  */
 public class PolymorphWolfSpellPayload extends AbstractPolymorphSpellPayload {
     public static final String TYPE = "polymorph";
-    protected static final CompoundResearchKey RESEARCH = CompoundResearchKey.from(SimpleResearchKey.parse("SPELL_PAYLOAD_POLYMORPH"));
+    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_POLYMORPH.get().compoundKey();
 
     public PolymorphWolfSpellPayload() {
         super();
