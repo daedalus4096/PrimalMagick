@@ -304,6 +304,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> TREEFOLK = register("treefolk", () -> new ResearchName("TREEFOLK"));
     
     // Register internal research
+    public static final RegistryObject<ResearchName> INTERNAL_GOT_DREAM = register("got_dream", () -> new ResearchName("t_got_dream"));
     public static final RegistryObject<ResearchName> INTERNAL_DISCOVER_BLOOD = register("discover_blood", () -> new ResearchName("t_discover_blood"));
     public static final RegistryObject<ResearchName> INTERNAL_DISCOVER_INFERNAL = register("discover_infernal", () -> new ResearchName("t_discover_infernal"));
     public static final RegistryObject<ResearchName> INTERNAL_DISCOVER_VOID = register("discover_void", () -> new ResearchName("t_discover_void"));
