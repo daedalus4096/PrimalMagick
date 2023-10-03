@@ -4,6 +4,9 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
@@ -44,6 +47,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock}
  */
 public class SunlampBlock extends BaseEntityBlock {
+    protected static final Logger LOGGER = LogManager.getLogger();
     public static final DirectionProperty ATTACHMENT = DirectionProperty.create("attachment", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
     
     protected static final VoxelShape GROUND_SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/sunlamp_ground_base"));
@@ -88,7 +92,7 @@ public class SunlampBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return stateIn.getValue(ATTACHMENT) == facing ? 
+        return stateIn.getValue(ATTACHMENT) == facing && !stateIn.canSurvive(worldIn, currentPos) ? 
                 Blocks.AIR.defaultBlockState() : 
                 super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }

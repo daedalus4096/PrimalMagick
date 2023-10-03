@@ -11,6 +11,7 @@ v4.0.6
 * Reduced the requirements for Expert, Master, and Supreme Ritual Magick research
 * Added the Arcane Workbench as a JEI catalyst for vanilla crafting
 * Added the Infernal Furnace as a JEI catalyst for vanilla smelting
+* Fixed a bug causing Sunlamps to break when attached to phasing blocks such as Moonwood Logs
 * Various internal refactoring
 
 v4.0.5
