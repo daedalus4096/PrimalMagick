@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.SpellcraftingAlta
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandAssemblyTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandGlamourTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.crafting.WandInscriptionTableBlock;
+import com.verdantartifice.primalmagick.common.blocks.crops.HydromelonBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.AnalysisTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.DissolutionChamberBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
@@ -69,6 +70,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodTree;
 import com.verdantartifice.primalmagick.common.blocks.trees.TreefolkSproutBlock;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
@@ -77,12 +79,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -194,6 +198,11 @@ public class BlocksPM {
     public static final RegistryObject<StairBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairBlock(HALLOWOOD_PLANKS.get()::defaultBlockState, Block.Properties.copy(HALLOWOOD_PLANKS.get())));
     public static final RegistryObject<PillarBlock> HALLOWOOD_PILLAR = BLOCKS.register("hallowood_pillar", () -> new PillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     
+    // Register crop blocks
+    public static final RegistryObject<HydromelonBlock> HYDROMELON = BLOCKS.register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<AttachedStemBlock> ATTACHED_HYDROMELON_STEM = BLOCKS.register("attached_hydromelon_stem", () -> new AttachedStemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<StemBlock> HYRDOMELON_STEM = BLOCKS.register("hydromelon_stem", () -> new StemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
+
     // Register infused stone
     public static final RegistryObject<Block> INFUSED_STONE_EARTH = BLOCKS.register("infused_stone_earth", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> INFUSED_STONE_SEA = BLOCKS.register("infused_stone_sea", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));

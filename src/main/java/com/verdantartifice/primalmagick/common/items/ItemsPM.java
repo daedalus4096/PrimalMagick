@@ -224,6 +224,9 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> HALLOWOOD_SLAB = registerSupplier("hallowood_slab", () -> new BlockItem(BlocksPM.HALLOWOOD_SLAB.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> HALLOWOOD_STAIRS = registerSupplier("hallowood_stairs", () -> new BlockItem(BlocksPM.HALLOWOOD_STAIRS.get(), new Item.Properties()));
     public static final RegistryObject<BurnableBlockItem> HALLOWOOD_PILLAR = registerSupplier("hallowood_pillar", () -> new BurnableBlockItem(BlocksPM.HALLOWOOD_PILLAR.get(), 300, new Item.Properties()));
+    
+    // Register crop items
+    public static final RegistryObject<Item> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new ItemNameBlockItem(BlocksPM.HYRDOMELON_STEM.get(), new Item.Properties()));
 
     // Register infused stone block items
     public static final RegistryObject<BlockItem> INFUSED_STONE_EARTH = registerSupplier("infused_stone_earth", () -> new BlockItem(BlocksPM.INFUSED_STONE_EARTH.get(), new Item.Properties()));
