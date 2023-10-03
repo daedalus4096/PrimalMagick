@@ -753,15 +753,17 @@ public class ResearchManager {
         for (Item item : ForgeRegistries.ITEMS) {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
-            key = SimpleResearchKey.parseItemScan(stack);
-            if (key != null && knowledge.addResearch(key)) {
-                count++;
-    
-                // Determine how many observation points the itemstack is worth and queue them up to add to the player's knowledge
-                obsPointsFutures.add(getObservationPointsAsync(stack, player.getCommandSenderWorld()));
-                
-                // Check to see if any scan triggers need to be run for the item
-                checkScanTriggers(player, item);
+            if (!stack.isEmpty()) { // Skip over air
+                key = SimpleResearchKey.parseItemScan(stack);
+                if (key != null && knowledge.addResearch(key)) {
+                    count++;
+        
+                    // Determine how many observation points the itemstack is worth and queue them up to add to the player's knowledge
+                    obsPointsFutures.add(getObservationPointsAsync(stack, player.getCommandSenderWorld()));
+                    
+                    // Check to see if any scan triggers need to be run for the item
+                    checkScanTriggers(player, item);
+                }
             }
         }
         

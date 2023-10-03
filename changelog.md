@@ -13,6 +13,7 @@ v4.0.6
 * Added the Infernal Furnace as a JEI catalyst for vanilla smelting
 * Fixed a bug causing Sunlamps to break when attached to phasing blocks such as Moonwood Logs
 * Made runescribed enchantment results consistent in the face of conflicting combinations
+* Fixed an error preventing granting users all scan research via debug command
 * Various internal refactoring
 
 v4.0.5
