@@ -12,6 +12,7 @@ v4.0.6
 * Added the Arcane Workbench as a JEI catalyst for vanilla crafting
 * Added the Infernal Furnace as a JEI catalyst for vanilla smelting
 * Fixed a bug causing Sunlamps to break when attached to phasing blocks such as Moonwood Logs
+* Made runescribed enchantment results consistent in the face of conflicting combinations
 * Various internal refactoring
 
 v4.0.5

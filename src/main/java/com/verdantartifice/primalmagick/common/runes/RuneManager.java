@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.runes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -135,20 +137,20 @@ public class RuneManager {
             return Collections.emptyMap();
         }
         
-        Map<Enchantment, Integer> retVal = new HashMap<>();
-        
         // Separate out the given runes by type
-        List<VerbRune> verbRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.VERB).map(r -> (VerbRune)r).collect(Collectors.toList());
-        List<NounRune> nounRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.NOUN).map(r -> (NounRune)r).collect(Collectors.toList());
-        List<SourceRune> sourceRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.SOURCE).map(r -> (SourceRune)r).collect(Collectors.toList());
+        List<VerbRune> verbRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.VERB).map(r -> (VerbRune)r).toList();
+        List<NounRune> nounRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.NOUN).map(r -> (NounRune)r).toList();
+        List<SourceRune> sourceRunes = runes.stream().filter(r -> r != null && r.getType() == RuneType.SOURCE).map(r -> (SourceRune)r).toList();
         int powerLevel = 1 + (int)runes.stream().filter(r -> r != null && r.getType() == RuneType.POWER).count();
         
         // Iterate through each combination of verb, noun, and source to find enchantments
+        List<EnchantmentInstance> intermediate = new ArrayList<>();
         for (VerbRune verb : verbRunes) {
             for (NounRune noun : nounRunes) {
                 for (SourceRune source : sourceRunes) {
                     // Intersect the sets of enchantments for each verb, noun, and source combination
-                    Set<Enchantment> possibleEnchantments = new HashSet<>(VERB_ENCHANTMENTS.getOrDefault(verb, new HashSet<>()));   // Needs to be mutable
+                    Set<Enchantment> possibleEnchantments = new HashSet<>();
+                    possibleEnchantments.addAll(VERB_ENCHANTMENTS.getOrDefault(verb, Collections.emptySet()));
                     possibleEnchantments.retainAll(NOUN_ENCHANTMENTS.getOrDefault(noun, Collections.emptySet()));
                     possibleEnchantments.retainAll(SOURCE_ENCHANTMENTS.getOrDefault(source, Collections.emptySet()));
                     
@@ -157,15 +159,25 @@ public class RuneManager {
                         // those already found, it meets the minimum power level, and the player has any needed
                         // research, add the enchantment to the result set
                         if ( possible.canEnchant(stack) && 
-                             (!filterIncompatible || EnchantmentHelper.isEnchantmentCompatible(retVal.keySet(), possible)) && 
                              (!ENCHANTMENT_RESEARCH.containsKey(possible) || ENCHANTMENT_RESEARCH.get(possible).isKnownByStrict(player)) &&
                              powerLevel >= possible.getMinLevel() ) {
-                            retVal.put(possible, Math.min(powerLevel, possible.getMaxLevel()));
+                            intermediate.add(new EnchantmentInstance(possible, Math.min(powerLevel, possible.getMaxLevel())));
                         }
                     }
                 }
             }
         }
+        
+        // Sort enchantments first by their minimum XP cost (descending) and then by hash code (ascending) to ensure consistent results
+        intermediate.sort(Comparator.<EnchantmentInstance>comparingInt(i -> i.enchantment.getMinCost(i.level)).reversed().thenComparingInt(i -> i.hashCode()));
+        
+        // Add intermediate enchantments to the result map, filtering out incompatible enchantments if appropriate
+        Map<Enchantment, Integer> retVal = new HashMap<>();
+        intermediate.forEach(instance -> {
+            if (!filterIncompatible || EnchantmentHelper.isEnchantmentCompatible(retVal.keySet(), instance.enchantment)) {
+                retVal.put(instance.enchantment, instance.level);
+            }
+        });
         
         return retVal;
     }
