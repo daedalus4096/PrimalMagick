@@ -3,7 +3,7 @@
   "set": {
     "earth": 5,
     "moon": 5,
-    "void": 10
+    "void": 20
   },
   "target": "minecraft:chorus_fruit"
 }
