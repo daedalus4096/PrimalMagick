@@ -316,6 +316,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MANA_NEXUS).name("Mana Nexus").build();
         this.block(BlocksPM.MANA_SINGULARITY).name("Mana Singularity").build();
         this.block(BlocksPM.MANA_SINGULARITY_CREATIVE).name("Creative Mana Singularity").build();
+        this.block(BlocksPM.HYDROMELON).name("Hydromelon").build();
+        this.block(BlocksPM.HYRDOMELON_STEM).name("Hydromelon Stem").build();
+        this.block(BlocksPM.ATTACHED_HYDROMELON_STEM).name("Attached Hydromelon Stem").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -866,6 +869,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
+        this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

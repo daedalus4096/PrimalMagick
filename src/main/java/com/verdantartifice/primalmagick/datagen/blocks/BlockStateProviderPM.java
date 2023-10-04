@@ -38,11 +38,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -54,6 +56,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -162,6 +165,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.slabBlockWithItem(BlocksPM.HALLOWOOD_SLAB.get(), BlocksPM.HALLOWOOD_PLANKS.get());
         this.stairsBlockWithItem(BlocksPM.HALLOWOOD_STAIRS.get(), this.blockTexture(BlocksPM.HALLOWOOD_PLANKS.get()));
         this.pillarBlockWithItem(BlocksPM.HALLOWOOD_PILLAR.get());
+        
+        // Generate crop blocks
+        this.cubeColumnBlockWithItem(BlocksPM.HYDROMELON.get());
+        this.stemBlock(BlocksPM.HYRDOMELON_STEM.get(), 8);
+        this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYRDOMELON_STEM.get()));
         
         // Generate infused stone blocks
         this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
@@ -311,6 +319,10 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.wallBlock(block, texture);
         ModelFile wallInv = this.models().wallInventory(this.name(block) + "_inventory", texture);
         this.simpleBlockItem(block, wallInv);
+    }
+    
+    private void cubeColumnBlockWithItem(Block block) {
+        this.cubeColumnBlockWithItem(block, this.blockTexture(block).withSuffix("_side"), this.blockTexture(block).withSuffix("_end"));
     }
     
     private void cubeColumnBlockWithItem(Block block, ResourceLocation endTexture) {
@@ -735,5 +747,24 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void crossBlockWithItem(Block block, ResourceLocation itemTexture) {
         this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
         this.itemModels().basicItem(itemTexture);
+    }
+    
+    private void stemBlock(Block block, int numStages) {
+        VariantBlockStateBuilder builder = this.getVariantBuilder(block);
+        StemBlock.AGE.getPossibleValues().forEach(stage -> {
+            builder.partialState().with(StemBlock.AGE, stage).modelForState().modelFile(
+                    this.models().withExistingParent(this.name(block) + "_stage" + stage, new ResourceLocation("block/stem_growth" + stage)).texture("stem", this.blockTexture(block))).addModel();
+        });
+    }
+    
+    private void attachedStemBlock(Block block, ResourceLocation lowerStemTexture) {
+        ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/stem_fruit"))
+                .texture("stem", lowerStemTexture)
+                .texture("upperstem", this.blockTexture(block));
+        this.getVariantBuilder(block)
+            .partialState().with(AttachedStemBlock.FACING, Direction.NORTH).modelForState().modelFile(model).rotationY(90).addModel()
+            .partialState().with(AttachedStemBlock.FACING, Direction.SOUTH).modelForState().modelFile(model).rotationY(270).addModel()
+            .partialState().with(AttachedStemBlock.FACING, Direction.WEST).modelForState().modelFile(model).addModel()
+            .partialState().with(AttachedStemBlock.FACING, Direction.EAST).modelForState().modelFile(model).rotationY(180).addModel();
     }
 }

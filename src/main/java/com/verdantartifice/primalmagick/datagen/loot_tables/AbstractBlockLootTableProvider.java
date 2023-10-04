@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
@@ -77,6 +78,10 @@ public abstract class AbstractBlockLootTableProvider extends BlockLootSubProvide
     private void registerLootTableBuilder(Block block, LootTable.Builder builder) {
         this.registeredBlocks.add(ForgeRegistries.BLOCKS.getKey(block));
         this.add(block, builder);
+    }
+    
+    protected void registerLootTableBuilder(Block block, Function<Block, LootTable.Builder> builderGenerator) {
+        this.registerLootTableBuilder(block, builderGenerator.apply(block));
     }
     
     protected void registerEmptyTable(Block block) {

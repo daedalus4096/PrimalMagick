@@ -26,6 +26,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
         this.registerHallowoodLootTables();
+        this.registerCropLootTables();
         this.registerInfusedStoneLootTables();
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
@@ -199,6 +200,12 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.HALLOWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_PILLAR.get());
+    }
+    
+    private void registerCropLootTables() {
+        this.registerBasicTable(BlocksPM.HYDROMELON.get());
+        this.registerLootTableBuilder(BlocksPM.HYRDOMELON_STEM.get(), b -> this.createStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
+        this.registerLootTableBuilder(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), b -> this.createAttachedStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
     }
     
     private void registerInfusedStoneLootTables() {

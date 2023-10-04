@@ -227,6 +227,7 @@ public class ItemsPM {
     
     // Register crop items
     public static final RegistryObject<Item> HYDROMELON_SEEDS = registerSupplier("hydromelon_seeds", () -> new ItemNameBlockItem(BlocksPM.HYRDOMELON_STEM.get(), new Item.Properties()));
+    public static final RegistryObject<Item> HYDROMELON = registerSupplier("hydromelon", () -> new BlockItem(BlocksPM.HYDROMELON.get(), new Item.Properties()));
 
     // Register infused stone block items
     public static final RegistryObject<BlockItem> INFUSED_STONE_EARTH = registerSupplier("infused_stone_earth", () -> new BlockItem(BlocksPM.INFUSED_STONE_EARTH.get(), new Item.Properties()));

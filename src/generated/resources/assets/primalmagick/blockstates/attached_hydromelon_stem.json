@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "primalmagick:block/attached_hydromelon_stem",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "primalmagick:block/attached_hydromelon_stem",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "primalmagick:block/attached_hydromelon_stem",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "primalmagick:block/attached_hydromelon_stem"
+    }
+  }
+}

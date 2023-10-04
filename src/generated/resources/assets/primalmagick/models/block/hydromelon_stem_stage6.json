@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/stem_growth6",
+  "textures": {
+    "stem": "primalmagick:block/hydromelon_stem"
+  }
+}
