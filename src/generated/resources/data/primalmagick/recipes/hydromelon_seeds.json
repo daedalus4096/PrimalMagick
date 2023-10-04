@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "primalmagick:hydromelon_slice"
+    }
+  ],
+  "result": {
+    "item": "primalmagick:hydromelon_seeds"
+  }
+}

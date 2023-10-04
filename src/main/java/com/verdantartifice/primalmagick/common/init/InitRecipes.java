@@ -33,5 +33,7 @@ public class InitRecipes {
         ComposterBlock.COMPOSTABLES.put(ItemsPM.SUNWOOD_LEAVES.get(), 0.3F);
         ComposterBlock.COMPOSTABLES.put(ItemsPM.HALLOWOOD_SAPLING.get(), 0.3F);
         ComposterBlock.COMPOSTABLES.put(ItemsPM.HALLOWOOD_LEAVES.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(ItemsPM.HYDROMELON_SEEDS.get(), 0.3F);
+        ComposterBlock.COMPOSTABLES.put(ItemsPM.HYDROMELON.get(), 0.65F);
     }
 }

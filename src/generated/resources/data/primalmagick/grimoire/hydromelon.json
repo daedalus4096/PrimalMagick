@@ -1,0 +1,41 @@
+{
+  "addenda": [],
+  "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hydromelon_slice"
+  },
+  "key": "HYDROMELON",
+  "name": "research.primalmagick.hydromelon.title",
+  "parents": [
+    "EXPERT_RITUAL",
+    "RITUAL_CANDLES",
+    "RITUAL_BELL",
+    "RUNE_SEA",
+    "SHARD_SYNTHESIS"
+  ],
+  "stages": [
+    {
+      "required_item": [
+        "primalmagick:sunwood_sapling",
+        "primalmagick:moonwood_sapling",
+        "minecraft:melon"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "research.primalmagick.hydromelon.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sea": 2
+      },
+      "recipes": [
+        "primalmagick:hydromelon_seeds_from_ritual",
+        "primalmagick:hydromelon",
+        "primalmagick:hydromelon_seeds"
+      ],
+      "text": "research.primalmagick.hydromelon.text.stage.2"
+    }
+  ]
+}

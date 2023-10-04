@@ -17,6 +17,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.StemBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,6 +53,18 @@ public class ColorEvents {
                     ((RitualCandleBlock)state.getBlock()).getColor().getFireworkColor() :
                     DyeColor.WHITE.getFireworkColor();
         }, BlocksPM.RITUAL_CANDLE_BLACK.get(), BlocksPM.RITUAL_CANDLE_BLUE.get(), BlocksPM.RITUAL_CANDLE_BROWN.get(), BlocksPM.RITUAL_CANDLE_CYAN.get(), BlocksPM.RITUAL_CANDLE_GRAY.get(), BlocksPM.RITUAL_CANDLE_GREEN.get(), BlocksPM.RITUAL_CANDLE_LIGHT_BLUE.get(), BlocksPM.RITUAL_CANDLE_LIGHT_GRAY.get(), BlocksPM.RITUAL_CANDLE_LIME.get(), BlocksPM.RITUAL_CANDLE_MAGENTA.get(), BlocksPM.RITUAL_CANDLE_ORANGE.get(), BlocksPM.RITUAL_CANDLE_PINK.get(), BlocksPM.RITUAL_CANDLE_PURPLE.get(), BlocksPM.RITUAL_CANDLE_RED.get(), BlocksPM.RITUAL_CANDLE_WHITE.get(), BlocksPM.RITUAL_CANDLE_YELLOW.get());
+        
+        event.register((state, lightReader, pos, dummy) -> {
+            return 14731036;
+        }, BlocksPM.ATTACHED_HYDROMELON_STEM.get());
+        
+        event.register((state, lightReader, pos, dummy) -> {
+            int i = state.getValue(StemBlock.AGE);
+            int j = i * 32;
+            int k = 255 - i * 8;
+            int l = i * 4;
+            return j << 16 | k << 8 | l;
+        }, BlocksPM.HYRDOMELON_STEM.get());
     }
     
     @SubscribeEvent

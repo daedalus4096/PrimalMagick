@@ -1,11 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
+import java.util.OptionalInt;
+
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 /**
  * Data provider for all of the mod's block loot tables.
@@ -26,6 +29,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSunwoodLootTables();
         this.registerMoonwoodLootTables();
         this.registerHallowoodLootTables();
+        this.registerCropLootTables();
         this.registerInfusedStoneLootTables();
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
@@ -199,6 +203,12 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.HALLOWOOD_SLAB.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_STAIRS.get());
         this.registerBasicTable(BlocksPM.HALLOWOOD_PILLAR.get());
+    }
+    
+    private void registerCropLootTables() {
+        this.registerSplittingTable(BlocksPM.HYDROMELON.get(), ItemsPM.HYDROMELON_SLICE.get(), UniformGenerator.between(3F, 7F), OptionalInt.of(9));
+        this.registerLootTableBuilder(BlocksPM.HYRDOMELON_STEM.get(), b -> this.createStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
+        this.registerLootTableBuilder(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), b -> this.createAttachedStemDrops(b, ItemsPM.HYDROMELON_SEEDS.get()));
     }
     
     private void registerInfusedStoneLootTables() {

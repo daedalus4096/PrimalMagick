@@ -316,6 +316,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MANA_NEXUS).name("Mana Nexus").build();
         this.block(BlocksPM.MANA_SINGULARITY).name("Mana Singularity").build();
         this.block(BlocksPM.MANA_SINGULARITY_CREATIVE).name("Creative Mana Singularity").build();
+        this.block(BlocksPM.HYDROMELON).name("Hydromelon").build();
+        this.block(BlocksPM.HYRDOMELON_STEM).name("Hydromelon Stem").build();
+        this.block(BlocksPM.ATTACHED_HYDROMELON_STEM).name("Attached Hydromelon Stem").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -866,6 +869,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
+        this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
+        this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -3189,6 +3194,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("Rituals are complicated, and laying out my altar space correctly seems very important to success, according to my Grimoire.<BR>Doing this by eye and the seat of my pants strikes me as a path to disaster.  I need a tool that will give me feedback on the quality of my altar layout before I attempt a ritual.")
                 .add("Well, it's simple, but I think it will do the job.<BR>Waving this dowsing rod at a ritual altar will give me a rough idea of how stable my current ritual layout is.  In addition, waving it at a prop or an offering pedestal will give me feedback on its placement.<BR>I mustn't forget, however, that a complex ritual can quickly overwhelm even a very good layout if I'm not quick and efficient in stepping through the process.")
+                .end()
+            .build();
+        this.researchEntry("HYDROMELON").name("Hydromelon")
+            .stages()
+                .add("I've been thinking a lot lately about Sunwood and Moonwood trees, and I'd bet good emeralds that they're not natural.  They're just too... wondrous.  My guess is that the ancients created them through magick.<BR>I'd like to try doing something similar with my work, but what?  I find that I've had trouble finding good sources of Sea essence that I can harvest in a renewable fashion, so maybe that's a good start.")
+                .add("That wasn't as hard as I expected!  I've managed to take the essence of a melon and infuse it with the nature of the Sea.<BR>These Hydromelons can now be grown in my farm, or any farm really.  The slices make for a very refreshing snack.<BR>I just need to be careful when harvesting these.  The rind is about the only thing holding it together; if I were to strip that off with an axe, the whole thing would disintegrate into a mess of water.")
                 .end()
             .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")

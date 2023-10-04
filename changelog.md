@@ -15,6 +15,7 @@ v4.0.6
 * Fixed a bug causing Sunlamps to break when attached to phasing blocks such as Moonwood Logs
 * Made runescribed enchantment results consistent in the face of conflicting combinations
 * Fixed an error preventing granting users all scan research via debug command
+* Added Hydromelons, a refreshing crop rich in Sea essence
 * Various internal refactoring
 
 v4.0.5

@@ -1235,6 +1235,13 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.DOWSING_ROD.get()).build())
             .build(consumer);
         // TODO Re-add Rosetta Arcana research once the book project is ready to deploy
+        ResearchEntryBuilder.entry("HYDROMELON", discipline).icon(ItemsPM.HYDROMELON_SLICE.get()).parent("EXPERT_RITUAL").parent("RITUAL_CANDLES").parent("RITUAL_BELL").parent("RUNE_SEA")
+            .parent("SHARD_SYNTHESIS")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.SUNWOOD_SAPLING.get()).requiredItemStack(ItemsPM.MOONWOOD_SAPLING.get()).requiredItemStack(Items.MELON)
+                    .requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(PrimalMagick.resource("hydromelon_seeds_from_ritual")).recipe(ItemsPM.HYDROMELON.get())
+                    .recipe(ItemsPM.HYDROMELON_SEEDS.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
