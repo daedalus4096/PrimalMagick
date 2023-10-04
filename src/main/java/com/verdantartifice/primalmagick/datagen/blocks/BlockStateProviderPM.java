@@ -753,14 +753,16 @@ public class BlockStateProviderPM extends BlockStateProvider {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
         StemBlock.AGE.getPossibleValues().forEach(stage -> {
             builder.partialState().with(StemBlock.AGE, stage).modelForState().modelFile(
-                    this.models().withExistingParent(this.name(block) + "_stage" + stage, new ResourceLocation("block/stem_growth" + stage)).texture("stem", this.blockTexture(block))).addModel();
+                    this.models().withExistingParent(this.name(block) + "_stage" + stage, new ResourceLocation("block/stem_growth" + stage))
+                        .texture("stem", this.blockTexture(block)).renderType(CUTOUT)).addModel();
         });
     }
     
     private void attachedStemBlock(Block block, ResourceLocation lowerStemTexture) {
         ModelFile model = this.models().withExistingParent(this.name(block), new ResourceLocation("block/stem_fruit"))
                 .texture("stem", lowerStemTexture)
-                .texture("upperstem", this.blockTexture(block));
+                .texture("upperstem", this.blockTexture(block))
+                .renderType(CUTOUT);
         this.getVariantBuilder(block)
             .partialState().with(AttachedStemBlock.FACING, Direction.NORTH).modelForState().modelFile(model).rotationY(90).addModel()
             .partialState().with(AttachedStemBlock.FACING, Direction.SOUTH).modelForState().modelFile(model).rotationY(270).addModel()
