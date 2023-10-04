@@ -102,6 +102,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
     protected void registerModels(HolderLookup.Provider lookupProvider) {
         // Generate crop items
         this.basicItem(ItemsPM.HYDROMELON_SEEDS.get());
+        this.basicItem(ItemsPM.HYDROMELON_SLICE.get());
         
         // Generate salted food items
         this.itemWithParent(ItemsPM.SALTED_BAKED_POTATO.get(), Items.BAKED_POTATO);

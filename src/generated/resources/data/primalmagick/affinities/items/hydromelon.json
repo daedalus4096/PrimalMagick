@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "sea": 20
-  },
-  "base": "minecraft:melon",
-  "target": "primalmagick:hydromelon"
-}
