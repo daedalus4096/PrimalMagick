@@ -30,7 +30,8 @@
       "recipes": [
         "primalmagick:ignyx",
         "primalmagick:ignyx_block",
-        "primalmagick:ignyx_from_storage_block"
+        "primalmagick:ignyx_from_storage_block",
+        "primalmagick:torch_from_ignyx"
       ],
       "text": "research.primalmagick.ignyx.text.stage.2"
     }

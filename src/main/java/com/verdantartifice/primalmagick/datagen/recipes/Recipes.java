@@ -91,6 +91,7 @@ public class Recipes extends RecipeProvider {
         this.registerCodexRecipes(consumer);
         this.registerStonemeldingRecipes(consumer);
         this.registerCropRecipes(consumer);
+        this.registerIgnyxRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -500,20 +501,6 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.MOON, 40))
             .instability(4)
             .build(consumer);
-        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.IGNYX.get())
-            .addIngredient(ItemTags.COALS)
-            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
-            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.find("IGNYX")))
-            .build(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX_BLOCK.get())
-            .requires(ItemsPM.IGNYX.get(), 9)
-            .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
-            .save(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX.get(), 9)
-            .requires(ItemsPM.IGNYX_BLOCK.get())
-            .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
-            .save(consumer, PrimalMagick.resource("ignyx_from_storage_block"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DOWSING_ROD.get())
             .patternLine("  S")
             .patternLine("SS ")
@@ -6600,5 +6587,27 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.HYDROMELON_SLICE.get())
             .unlockedBy("has_hydromelon_slice", has(ItemsPM.HYDROMELON_SLICE.get()))
             .save(consumer);
+    }
+    
+    protected void registerIgnyxRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.IGNYX.get())
+            .addIngredient(ItemTags.COALS)
+            .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("IGNYX")))
+            .build(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX_BLOCK.get())
+            .requires(ItemsPM.IGNYX.get(), 9)
+            .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IGNYX.get(), 9)
+            .requires(ItemsPM.IGNYX_BLOCK.get())
+            .unlockedBy("has_ignyx_block", has(ItemsPM.IGNYX_BLOCK.get()))
+            .save(consumer, PrimalMagick.resource("ignyx_from_storage_block"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, Items.TORCH, 32)
+            .requires(ItemsPM.IGNYX.get())
+            .requires(Ingredient.of(Tags.Items.RODS_WOODEN), 8)
+            .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
+            .save(consumer, PrimalMagick.resource("torch_from_ignyx"));
     }
 }

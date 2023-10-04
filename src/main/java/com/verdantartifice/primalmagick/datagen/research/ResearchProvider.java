@@ -715,7 +715,7 @@ public class ResearchProvider implements DataProvider {
             .parent(Source.INFERNAL.getDiscoverKey())
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(ItemTags.COALS).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get())
-                    .recipe(PrimalMagick.resource("ignyx_from_storage_block")).build())
+                    .recipe(PrimalMagick.resource("ignyx_from_storage_block")).recipe(PrimalMagick.resource("torch_from_ignyx")).build())
             .build(consumer);
     }
 
