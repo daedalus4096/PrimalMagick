@@ -3196,6 +3196,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Well, it's simple, but I think it will do the job.<BR>Waving this dowsing rod at a ritual altar will give me a rough idea of how stable my current ritual layout is.  In addition, waving it at a prop or an offering pedestal will give me feedback on its placement.<BR>I mustn't forget, however, that a complex ritual can quickly overwhelm even a very good layout if I'm not quick and efficient in stepping through the process.")
                 .end()
             .build();
+        this.researchEntry("HYDROMELON").name("Hydromelon")
+            .stages()
+                .add("I've been thinking a lot lately about Sunwood and Moonwood trees, and I'd bet good emeralds that they're not natural.  They're just too... wondrous.  My guess is that the ancients created them through magick.<BR>I'd like to try doing something similar with my work, but what?  I find that I've had trouble finding good sources of Sea essence that I can harvest in a renewable fashion, so maybe that's a good start.")
+                .add("That wasn't as hard as I expected!  I've managed to take the essence of a melon and infuse it with the nature of the Sea.<BR>These Hydromelons can now be grown in my farm, or any farm really.  The slices make for a very refreshing snack.<BR>I just need to be careful when harvesting these.  The rind is about the only thing holding it together; if I were to strip that off with an axe, the whole thing would disintegrate into a mess of water.")
+                .end()
+            .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")
             .stages()
                 .add("I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!")

@@ -90,6 +90,7 @@ public class Recipes extends RecipeProvider {
         this.registerWardingModuleRecipes(consumer);
         this.registerCodexRecipes(consumer);
         this.registerStonemeldingRecipes(consumer);
+        this.registerCropRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6577,5 +6578,27 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
+    }
+    
+    protected void registerCropRecipes(Consumer<FinishedRecipe> consumer) {
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.HYDROMELON_SEEDS.get())
+            .addIngredient(Tags.Items.SEEDS_MELON)
+            .addIngredient(Items.WATER_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
+            .addIngredient(ItemsPM.RUNE_SEA.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.RITUAL_BELL.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("HYDROMELON")))
+            .manaCost(SourceList.EMPTY.add(Source.SEA, 50))
+            .instability(3)
+            .build(consumer, PrimalMagick.resource("hydromelon_seeds_from_ritual"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.HYDROMELON.get())
+            .requires(ItemsPM.HYDROMELON_SLICE.get(), 9)
+            .unlockedBy("has_hydromelon_slice", has(ItemsPM.HYDROMELON_SLICE.get()))
+            .save(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, ItemsPM.HYDROMELON_SEEDS.get())
+            .requires(ItemsPM.HYDROMELON_SLICE.get())
+            .unlockedBy("has_hydromelon_slice", has(ItemsPM.HYDROMELON_SLICE.get()))
+            .save(consumer);
     }
 }
