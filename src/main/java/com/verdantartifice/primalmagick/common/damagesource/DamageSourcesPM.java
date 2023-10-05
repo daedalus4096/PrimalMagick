@@ -18,6 +18,10 @@ public class DamageSourcesPM {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.BLEEDING));
     }
     
+    public static DamageSource bloodRose(Level level) {
+        return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.BLOOD_ROSE));
+    }
+    
     public static DamageSource hellishChain(Level level, LivingEntity directSource) {
         return new DamageSource(level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypesPM.HELLISH_CHAIN), directSource);
     }

@@ -1273,6 +1273,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate death message localizations for damage types
         this.deathMessage(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
+        this.deathMessage(DamageTypesPM.BLOOD_ROSE).name("%1$s was pricked to death").player("%1$s walked into a blood rose whilst trying to escape %2$s").build();
         this.deathMessage(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
         this.deathMessage(DamageTypesPM.SORCERY_EARTH).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
         this.deathMessage(DamageTypesPM.SORCERY_SEA).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();

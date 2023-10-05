@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.common.blocks.flowers;
 
+import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
+import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +29,8 @@ public class BloodRoseBlock extends TallFlowerBlock {
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        // TODO Auto-generated method stub
-        super.entityInside(pState, pLevel, pPos, pEntity);
+        if (!pEntity.getType().is(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE)) {
+            pEntity.hurt(DamageSourcesPM.bloodRose(pLevel), 1F);
+        }
     }
 }

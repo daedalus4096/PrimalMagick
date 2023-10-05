@@ -20,6 +20,7 @@ public class DamageTypesPM {
     private static final Map<Source, ResourceKey<DamageType>> SORCERY_MAP = new HashMap<>();
     
     public static final ResourceKey<DamageType> BLEEDING = create("bleeding");
+    public static final ResourceKey<DamageType> BLOOD_ROSE = create("blood_rose");
     public static final ResourceKey<DamageType> HELLISH_CHAIN = create("hellish_chain");
     public static final ResourceKey<DamageType> SORCERY_EARTH = createSorcery("sorcery_earth", Source.EARTH);
     public static final ResourceKey<DamageType> SORCERY_SEA = createSorcery("sorcery_sea", Source.SEA);
@@ -51,6 +52,7 @@ public class DamageTypesPM {
     
     public static void bootstrap(BootstapContext<DamageType> context) {
         context.register(BLEEDING, new DamageType(String.join(".", PrimalMagick.MODID, "bleeding"), 0.1F));
+        context.register(BLOOD_ROSE, new DamageType(String.join(".", PrimalMagick.MODID, "blood_rose"), 0.1F));
         context.register(HELLISH_CHAIN, new DamageType(String.join(".", PrimalMagick.MODID, "hellish_chain"), 0F));
         context.register(SORCERY_EARTH, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_earth"), 0F));
         context.register(SORCERY_SEA, new DamageType(String.join(".", PrimalMagick.MODID, "sorcery_sea"), 0F));

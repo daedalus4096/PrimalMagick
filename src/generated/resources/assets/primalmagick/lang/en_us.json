@@ -344,6 +344,8 @@
   "concoctions.primalmagick.fuse_set": "Bomb fuse set to %1$s",
   "death.attack.primalmagick.bleeding": "%1$s bled to death",
   "death.attack.primalmagick.bleeding.player": "%1$s bled to death whilst fighting %2$s",
+  "death.attack.primalmagick.blood_rose": "%1$s was pricked to death",
+  "death.attack.primalmagick.blood_rose.player": "%1$s walked into a blood rose whilst trying to escape %2$s",
   "death.attack.primalmagick.hellish_chain": "%1$s was killed by %2$s",
   "death.attack.primalmagick.hellish_chain.item": "%1$s was killed by %2$s using %3$s",
   "death.attack.primalmagick.sorcery_blood": "%1$s was killed by %2$s using sorcery",
