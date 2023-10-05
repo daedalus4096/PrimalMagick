@@ -3211,6 +3211,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("Excellent!  Maybe a little too excellent...<BR>Infusing a rose bush with Blood essence has created a very hungry plant.  Its thorns are wickedly sharp and if I didn't know better I'd say they reach out to snare passerby.  Perhaps I can make use of this as some very gothic base defense.")
                 .end()
             .build();
+        this.researchEntry("EMBERFLOWER").name("Emberflower")
+            .stages()
+                .add("The Hydromelon was a great success, so I'd like to keep at it.  This time perhaps I can infuse some plant life with Infernal magick.  The Nether is home to a surprising array of plant life, but I'd like something with a little more touch of home in it.")
+                .add("Very good.  Infusing a sunflower with Infernal essence has created a very hot plant.  Its flower burns and smokes, giving off modest light, and can be ground down into valuable blaze powder.  It can even survive when planted in soul sand or soul soil, though I question what absorbing nutrients from such material would do to the plant.")
+                .end()
+            .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")
             .stages()
                 .add("I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!")

@@ -4,7 +4,9 @@ import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallFlowerBlock;
@@ -21,6 +23,11 @@ import net.minecraft.world.phys.Vec3;
 public class EmberflowerBlock extends TallFlowerBlock {
     public EmberflowerBlock(Block.Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
+        return super.mayPlaceOn(pState, pLevel, pPos) || pState.is(BlockTags.SOUL_FIRE_BASE_BLOCKS);
     }
 
     @Override

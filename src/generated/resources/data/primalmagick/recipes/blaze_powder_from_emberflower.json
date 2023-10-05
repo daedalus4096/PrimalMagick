@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "primalmagick:emberflower"
+    }
+  ],
+  "result": {
+    "item": "minecraft:blaze_powder"
+  }
+}

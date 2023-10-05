@@ -1,0 +1,37 @@
+{
+  "addenda": [],
+  "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:emberflower"
+  },
+  "key": "EMBERFLOWER",
+  "name": "research.primalmagick.emberflower.title",
+  "parents": [
+    "t_discover_infernal",
+    "EXPERT_RITUAL",
+    "HYDROMELON",
+    "BLOODLETTER",
+    "RUNE_INFERNAL"
+  ],
+  "stages": [
+    {
+      "required_item": [
+        "minecraft:sunflower"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "research.primalmagick.emberflower.text.stage.1"
+    },
+    {
+      "attunements": {
+        "infernal": 2
+      },
+      "recipes": [
+        "primalmagick:emberflower"
+      ],
+      "text": "research.primalmagick.emberflower.text.stage.2"
+    }
+  ]
+}
