@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.books.LexiconLoader;
 import com.verdantartifice.primalmagick.client.books.StyleGuideLoader;
 import com.verdantartifice.primalmagick.client.fx.particles.AirCurrentParticle;
-import com.verdantartifice.primalmagick.client.fx.particles.DripParticlesPM;
+import com.verdantartifice.primalmagick.client.fx.particles.DripParticlePM;
 import com.verdantartifice.primalmagick.client.fx.particles.InfernalFlameParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.ManaSparkleParticle;
 import com.verdantartifice.primalmagick.client.fx.particles.NoteEmitterParticle;
@@ -71,9 +71,9 @@ public class ClientRegistrationEvents {
         event.registerSpriteSet(ParticleTypesPM.INFERNAL_FLAME.get(), InfernalFlameParticle.Factory::new);
         event.registerSpriteSet(ParticleTypesPM.AIR_CURRENT.get(), AirCurrentParticle.Factory::new);
         event.registerSpriteSet(ParticleTypesPM.VOID_SMOKE.get(), AirCurrentParticle.Factory::new);
-        event.registerSprite(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlesPM::createBloodDropHangParticle);
-        event.registerSprite(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlesPM::createBloodDropFallParticle);
-        event.registerSprite(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlesPM::createBloodDropLandParticle);
+        event.registerSprite(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), DripParticlePM::createBloodDropHangParticle);
+        event.registerSprite(ParticleTypesPM.FALLING_BLOOD_DROP.get(), DripParticlePM::createBloodDropFallParticle);
+        event.registerSprite(ParticleTypesPM.LANDING_BLOOD_DROP.get(), DripParticlePM::createBloodDropLandParticle);
     }
     
     /**

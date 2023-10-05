@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.flowers;
 
+import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.damagesource.DamageSourcesPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 
@@ -23,8 +24,13 @@ public class BloodRoseBlock extends TallFlowerBlock {
 
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        // TODO Auto-generated method stub
-        super.animateTick(pState, pLevel, pPos, pRandom);
+        if (pRandom.nextInt(5) == 0) {
+            // TODO Shift by blockstate XZ offset?
+            double x = pPos.getX() + pRandom.nextDouble();
+            double y = pPos.getY() + pRandom.nextDouble();
+            double z = pPos.getZ() + pRandom.nextDouble();
+            FxDispatcher.INSTANCE.bloodDrop(x, y, z);
+        }
     }
 
     @Override
