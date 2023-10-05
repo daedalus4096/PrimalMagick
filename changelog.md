@@ -17,6 +17,7 @@ v4.0.6
 * Fixed an error preventing granting users all scan research via debug command
 * Added Hydromelons, a refreshing crop rich in Sea essence
 * Added Blood Roses, a gothic decoration rich in Blood essence
+* Added Emberflowers, a bright decoration rich in Infernal essence
 * Added ability to make torches in bulk using Ignyx
 * Various internal refactoring
 
