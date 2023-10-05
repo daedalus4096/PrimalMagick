@@ -16,6 +16,7 @@ v4.0.6
 * Made runescribed enchantment results consistent in the face of conflicting combinations
 * Fixed an error preventing granting users all scan research via debug command
 * Added Hydromelons, a refreshing crop rich in Sea essence
+* Added Blood Roses, a gothic decoration rich in Blood essence
 * Added ability to make torches in bulk using Ignyx
 * Various internal refactoring
 
