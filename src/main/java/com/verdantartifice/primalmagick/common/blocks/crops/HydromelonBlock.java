@@ -3,8 +3,10 @@ package com.verdantartifice.primalmagick.common.blocks.crops;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -43,10 +45,22 @@ public class HydromelonBlock extends StemGrownBlock {
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pPlayer != null && pPlayer.getItemInHand(pHand).canPerformAction(ToolActions.AXE_STRIP)) {
-            // If the player right-clicks on the hydromelon with an axe, replace this block with water
+            // If the player right-clicks on the hydromelon with an axe, replace this block with water (or vapor if in the Nether)
+            boolean shouldVaporize = pLevel.dimensionType().ultraWarm();
+            RandomSource rng = pPlayer.getRandom();
             pLevel.playSound(pPlayer, pPos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (shouldVaporize) {
+                pLevel.playSound(pPlayer, pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (pLevel.random.nextFloat() - pLevel.random.nextFloat()) * 0.8F);
+                for (int index = 0; index < 8; index++) {
+                    pLevel.addParticle(ParticleTypes.LARGE_SMOKE, pPos.getX() + rng.nextDouble(), pPos.getY() + rng.nextDouble(), pPos.getZ() + rng.nextDouble(), 0.0D, 0.0D, 0.0D);
+                }
+            }
             if (!pLevel.isClientSide) {
-                pLevel.setBlock(pPos, Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                if (shouldVaporize) {
+                    pLevel.removeBlock(pPos, false);
+                } else {
+                    pLevel.setBlock(pPos, Blocks.WATER.defaultBlockState(), Block.UPDATE_ALL_IMMEDIATE);
+                }
                 pPlayer.getItemInHand(pHand).hurtAndBreak(1, pPlayer, (p) -> {
                     p.broadcastBreakEvent(pHand);
                 });
