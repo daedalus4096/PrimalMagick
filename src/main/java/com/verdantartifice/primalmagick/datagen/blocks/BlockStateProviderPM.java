@@ -782,6 +782,6 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.getVariantBuilder(block)
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
-        this.simpleBlockItem(block, topModel);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block).withSuffix("_top"));
     }
 }
