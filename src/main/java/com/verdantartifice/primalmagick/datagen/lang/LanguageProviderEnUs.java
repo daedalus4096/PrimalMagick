@@ -872,6 +872,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
         this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
         this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose Bush").build();
+        this.item(ItemsPM.EMBERFLOWER).name("Emberflower").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

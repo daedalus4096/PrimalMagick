@@ -172,6 +172,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.stemBlock(BlocksPM.HYRDOMELON_STEM.get());
         this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYRDOMELON_STEM.get()));
         this.tallCrossBlockWithItem(BlocksPM.BLOOD_ROSE.get());
+        this.tallExistingBlockWithItem(BlocksPM.EMBERFLOWER.get(), this.blockTexture(BlocksPM.EMBERFLOWER.get()).withSuffix("_front"));
         
         // Generate infused stone blocks
         this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
@@ -783,5 +784,20 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", this.blockTexture(block).withSuffix("_top"));
+    }
+    
+    private void tallExistingBlockWithItem(Block block, ResourceLocation itemTexture) {
+        this.tallExistingBlockWithItem(block, this.defaultModel(block).withSuffix("_top"), this.defaultModel(block).withSuffix("_bottom"), itemTexture);
+    }
+    
+    private void tallExistingBlockWithItem(Block block, ResourceLocation topModel, ResourceLocation bottomModel, ResourceLocation itemTexture) {
+        this.tallExistingBlockWithItem(block, this.models().getExistingFile(topModel), this.models().getExistingFile(bottomModel), itemTexture);
+    }
+    
+    private void tallExistingBlockWithItem(Block block, ModelFile topModel, ModelFile bottomModel, ResourceLocation itemTexture) {
+        this.getVariantBuilder(block)
+            .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
+            .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
     }
 }

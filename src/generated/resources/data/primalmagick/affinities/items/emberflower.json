@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "add": {
+    "infernal": 20,
+    "sun": 5
+  },
+  "base": "minecraft:sunflower",
+  "target": "primalmagick:emberflower"
+}

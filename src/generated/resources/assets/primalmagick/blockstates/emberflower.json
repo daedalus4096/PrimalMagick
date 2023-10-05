@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "primalmagick:block/emberflower_bottom"
+    },
+    "half=upper": {
+      "model": "primalmagick:block/emberflower_top"
+    }
+  }
+}
