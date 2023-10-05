@@ -871,7 +871,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
         this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
         this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
-        this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose").build();
+        this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose Bush").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
