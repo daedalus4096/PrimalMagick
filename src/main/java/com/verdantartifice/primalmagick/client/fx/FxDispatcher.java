@@ -358,4 +358,9 @@ public class FxDispatcher {
             p.setColor(r, g, b);
         }
     }
+    
+    public void bloodDrop(double x, double y, double z) {
+        Minecraft mc = Minecraft.getInstance();
+        mc.particleEngine.createParticle(ParticleTypesPM.DRIPPING_BLOOD_DROP.get(), x, y, z, 0, 0, 0);
+    }
 }

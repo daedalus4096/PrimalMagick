@@ -1,0 +1,37 @@
+{
+  "addenda": [],
+  "discipline": "RITUAL",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:blood_rose"
+  },
+  "key": "BLOOD_ROSE",
+  "name": "research.primalmagick.blood_rose.title",
+  "parents": [
+    "t_discover_blood",
+    "EXPERT_RITUAL",
+    "HYDROMELON",
+    "BLOODLETTER",
+    "RUNE_BLOOD"
+  ],
+  "stages": [
+    {
+      "required_item": [
+        "minecraft:rose_bush"
+      ],
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "text": "research.primalmagick.blood_rose.text.stage.1"
+    },
+    {
+      "attunements": {
+        "blood": 2
+      },
+      "recipes": [
+        "primalmagick:blood_rose"
+      ],
+      "text": "research.primalmagick.blood_rose.text.stage.2"
+    }
+  ]
+}

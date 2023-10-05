@@ -16,6 +16,7 @@ public class EntityTypeTagsPM {
     public static final TagKey<EntityType<?>> ENCHANTED_GOLEMS = tag("enchanted_golems");
     public static final TagKey<EntityType<?>> PIXIES = tag("pixies");
     
+    public static final TagKey<EntityType<?>> BLOOD_ROSE_IMMUNE = tag("blood_rose_immune");
     public static final TagKey<EntityType<?>> FLYING_CREATURES = tag("flying_creatures");
     public static final TagKey<EntityType<?>> GOLEMS = tag("golems");
     

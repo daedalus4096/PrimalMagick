@@ -871,6 +871,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
         this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
         this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
+        this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose Bush").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -1272,6 +1273,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate death message localizations for damage types
         this.deathMessage(DamageTypesPM.BLEEDING).name("%1$s bled to death").player("%1$s bled to death whilst fighting %2$s").build();
+        this.deathMessage(DamageTypesPM.BLOOD_ROSE).name("%1$s was pricked to death").player("%1$s walked into a blood rose whilst trying to escape %2$s").build();
         this.deathMessage(DamageTypesPM.HELLISH_CHAIN).name("%1$s was killed by %2$s").item("%1$s was killed by %2$s using %3$s").build();
         this.deathMessage(DamageTypesPM.SORCERY_EARTH).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
         this.deathMessage(DamageTypesPM.SORCERY_SEA).name("%1$s was killed by %2$s using sorcery").item("%1$s was killed by %2$s using %3$s").build();
@@ -3200,6 +3202,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("I've been thinking a lot lately about Sunwood and Moonwood trees, and I'd bet good emeralds that they're not natural.  They're just too... wondrous.  My guess is that the ancients created them through magick.<BR>I'd like to try doing something similar with my work, but what?  I find that I've had trouble finding good sources of Sea essence that I can harvest in a renewable fashion, so maybe that's a good start.")
                 .add("That wasn't as hard as I expected!  I've managed to take the essence of a melon and infuse it with the nature of the Sea.<BR>These Hydromelons can now be grown in my farm, or any farm really.  The slices make for a very refreshing snack.<BR>I just need to be careful when harvesting these.  The rind is about the only thing holding it together; if I were to strip that off with an axe, the whole thing would disintegrate into a mess of water.")
+                .end()
+            .build();
+        this.researchEntry("BLOOD_ROSE").name("Blood Rose")
+            .stages()
+                .add("The Hydromelon was a great success, so I'd like to keep at it.  This time perhaps I can infuse some plant life with Blood magick.  You don't often see plants with Blood affinity, so this should be a fascinating exercise.")
+                .add("Excellent!  Maybe a little too excellent...<BR>Infusing a rose bush with Blood essence has created a very hungry plant.  Its thorns are wickedly sharp and if I didn't know better I'd say they reach out to snare passerby.  Perhaps I can make use of this as some very gothic base defense.")
                 .end()
             .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")

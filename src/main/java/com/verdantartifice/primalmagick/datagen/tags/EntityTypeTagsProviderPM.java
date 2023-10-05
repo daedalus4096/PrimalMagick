@@ -50,6 +50,7 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
                 EntityTypesPM.BASIC_VOID_PIXIE.get(), EntityTypesPM.GRAND_VOID_PIXIE.get(), EntityTypesPM.MAJESTIC_VOID_PIXIE.get(),
                 EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get());
         
+        this.tag(EntityTypeTagsPM.BLOOD_ROSE_IMMUNE).add(EntityType.BEE);
         this.tag(EntityTypeTagsPM.FLYING_CREATURES).addTag(EntityTypeTagsPM.PIXIES).add(EntityType.ALLAY, EntityType.BAT, EntityType.BEE, EntityType.BLAZE, EntityType.CHICKEN, EntityType.ENDER_DRAGON,
                 EntityType.GHAST, EntityType.PARROT, EntityType.PHANTOM, EntityType.VEX, EntityType.WITHER);
         this.tag(EntityTypeTagsPM.GOLEMS).addTag(EntityTypeTagsPM.ENCHANTED_GOLEMS).add(EntityType.IRON_GOLEM, EntityType.SNOW_GOLEM);

@@ -35,5 +35,6 @@ public class InitRecipes {
         ComposterBlock.COMPOSTABLES.put(ItemsPM.HALLOWOOD_LEAVES.get(), 0.3F);
         ComposterBlock.COMPOSTABLES.put(ItemsPM.HYDROMELON_SEEDS.get(), 0.3F);
         ComposterBlock.COMPOSTABLES.put(ItemsPM.HYDROMELON.get(), 0.65F);
+        ComposterBlock.COMPOSTABLES.put(ItemsPM.BLOOD_ROSE.get(), 0.85F);
     }
 }

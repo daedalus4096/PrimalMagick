@@ -6587,6 +6587,18 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.HYDROMELON_SLICE.get())
             .unlockedBy("has_hydromelon_slice", has(ItemsPM.HYDROMELON_SLICE.get()))
             .save(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.BLOOD_ROSE.get(), 2)
+            .addIngredient(Items.ROSE_BUSH)
+            .addIngredient(ItemsPM.BLOODY_FLESH.get())
+            .addIngredient(Items.CACTUS)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
+            .addIngredient(ItemsPM.RUNE_BLOOD.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("BLOOD_ROSE")))
+            .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50))
+            .instability(4)
+            .build(consumer);
     }
     
     protected void registerIgnyxRecipes(Consumer<FinishedRecipe> consumer) {

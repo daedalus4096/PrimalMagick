@@ -266,6 +266,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> DREAM_VISION_TALISMAN = register("dream_vision_talisman", () -> new ResearchName("DREAM_VISION_TALISMAN"));
     public static final RegistryObject<ResearchName> DOWSING_ROD = register("dowsing_rod", () -> new ResearchName("DOWSING_ROD"));
     public static final RegistryObject<ResearchName> HYDROMELON = register("hydromelon", () -> new ResearchName("HYDROMELON"));
+    public static final RegistryObject<ResearchName> BLOOD_ROSE = register("blood_rose", () -> new ResearchName("BLOOD_ROSE"));
 
     // Register Magitech research
     public static final RegistryObject<ResearchName> BASIC_MAGITECH = register("basic_magitech", () -> new ResearchName("BASIC_MAGITECH"));

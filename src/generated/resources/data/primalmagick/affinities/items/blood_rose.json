@@ -1,0 +1,9 @@
+{
+  "type": "item",
+  "set": {
+    "blood": 20,
+    "earth": 5,
+    "moon": 5
+  },
+  "target": "primalmagick:blood_rose"
+}
