@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.TallFlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Block definition for a blood rose.  Like a regular rose bush, but does damage like a cactus and drips.
@@ -24,11 +25,11 @@ public class BloodRoseBlock extends TallFlowerBlock {
 
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        if (pRandom.nextInt(5) == 0) {
-            // TODO Shift by blockstate XZ offset?
-            double x = pPos.getX() + pRandom.nextDouble();
-            double y = pPos.getY() + pRandom.nextDouble();
-            double z = pPos.getZ() + pRandom.nextDouble();
+        if (pRandom.nextInt(10) == 0) {
+            Vec3 offset = pState.getOffset(pLevel, pPos);
+            double x = pPos.getX() + (0.1D + 0.8D * pRandom.nextDouble()) + offset.x();
+            double y = pPos.getY() + (0.1D + 0.8D * pRandom.nextDouble());
+            double z = pPos.getZ() + (0.1D + 0.8D * pRandom.nextDouble()) + offset.z();
             FxDispatcher.INSTANCE.bloodDrop(x, y, z);
         }
     }
