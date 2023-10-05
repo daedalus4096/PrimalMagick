@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.VoidTurbineBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ZephyrEngineBlock;
 import com.verdantartifice.primalmagick.common.blocks.flowers.BloodRoseBlock;
+import com.verdantartifice.primalmagick.common.blocks.flowers.EmberflowerBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.HallowsteelGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.HexiumGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.PrimaliteGolemControllerBlock;
@@ -204,7 +205,8 @@ public class BlocksPM {
     public static final RegistryObject<HydromelonBlock> HYDROMELON = BLOCKS.register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<AttachedStemBlock> ATTACHED_HYDROMELON_STEM = BLOCKS.register("attached_hydromelon_stem", () -> new AttachedStemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<StemBlock> HYRDOMELON_STEM = BLOCKS.register("hydromelon_stem", () -> new StemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
-    public static final RegistryObject<BloodRoseBlock> BLOOD_ROSE = BLOCKS.register("blood_rose", () -> new BloodRoseBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<BloodRoseBlock> BLOOD_ROSE = BLOCKS.register("blood_rose", () -> new BloodRoseBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<EmberflowerBlock> EMBERFLOWER = BLOCKS.register("emberflower", () -> new EmberflowerBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY).lightLevel(state -> 10)));
 
     // Register infused stone
     public static final RegistryObject<Block> INFUSED_STONE_EARTH = BLOCKS.register("infused_stone_earth", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));

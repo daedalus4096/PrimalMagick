@@ -6599,6 +6599,22 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.BLOOD, 50))
             .instability(4)
             .build(consumer);
+        RitualRecipeBuilder.ritualRecipe(ItemsPM.EMBERFLOWER.get(), 2)
+            .addIngredient(Items.SUNFLOWER)
+            .addIngredient(Items.BLAZE_POWDER)
+            .addIngredient(Tags.Items.CROPS_NETHER_WART)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
+            .addIngredient(ItemsPM.RUNE_INFERNAL.get())
+            .addProp(BlockTagsPM.RITUAL_CANDLES)
+            .addProp(BlocksPM.BLOODLETTER.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EMBERFLOWER")))
+            .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 50))
+            .instability(4)
+            .build(consumer);
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.BREWING, Items.BLAZE_POWDER)
+            .requires(ItemsPM.EMBERFLOWER.get())
+            .unlockedBy("has_emberflower", has(ItemsPM.EMBERFLOWER.get()))
+            .save(consumer, PrimalMagick.resource("blaze_powder_from_emberflower"));
     }
     
     protected void registerIgnyxRecipes(Consumer<FinishedRecipe> consumer) {

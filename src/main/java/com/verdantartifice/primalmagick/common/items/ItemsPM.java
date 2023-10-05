@@ -232,6 +232,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> HYDROMELON = registerSupplier("hydromelon", () -> new BlockItem(BlocksPM.HYDROMELON.get(), new Item.Properties()));
     public static final RegistryObject<Item> HYDROMELON_SLICE = registerSupplier("hydromelon_slice", () -> new Item(new Item.Properties().food(FoodsPM.HYDROMELON_SLICE)));
     public static final RegistryObject<DoubleHighBlockItem> BLOOD_ROSE = registerSupplier("blood_rose", () -> new DoubleHighBlockItem(BlocksPM.BLOOD_ROSE.get(), new Item.Properties()));
+    public static final RegistryObject<DoubleHighBlockItem> EMBERFLOWER = registerSupplier("emberflower", () -> new DoubleHighBlockItem(BlocksPM.EMBERFLOWER.get(), new Item.Properties()));
 
     // Register infused stone block items
     public static final RegistryObject<BlockItem> INFUSED_STONE_EARTH = registerSupplier("infused_stone_earth", () -> new BlockItem(BlocksPM.INFUSED_STONE_EARTH.get(), new Item.Properties()));

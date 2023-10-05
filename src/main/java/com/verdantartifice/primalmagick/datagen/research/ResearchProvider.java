@@ -1247,6 +1247,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.ROSE_BUSH).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("EMBERFLOWER", discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(Source.INFERNAL.getDiscoverKey()).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
+            .parent("RUNE_INFERNAL")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SUNFLOWER).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
