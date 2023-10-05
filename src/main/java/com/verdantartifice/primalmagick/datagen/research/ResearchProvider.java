@@ -1242,6 +1242,11 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 2).recipe(PrimalMagick.resource("hydromelon_seeds_from_ritual")).recipe(ItemsPM.HYDROMELON.get())
                     .recipe(ItemsPM.HYDROMELON_SEEDS.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("BLOOD_ROSE", discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(Source.BLOOD.getDiscoverKey()).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
+            .parent("RUNE_BLOOD")
+            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.ROSE_BUSH).requiredKnowledge(KnowledgeType.THEORY, 1).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).build())
+            .build(consumer);
     }
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {

@@ -3204,6 +3204,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("That wasn't as hard as I expected!  I've managed to take the essence of a melon and infuse it with the nature of the Sea.<BR>These Hydromelons can now be grown in my farm, or any farm really.  The slices make for a very refreshing snack.<BR>I just need to be careful when harvesting these.  The rind is about the only thing holding it together; if I were to strip that off with an axe, the whole thing would disintegrate into a mess of water.")
                 .end()
             .build();
+        this.researchEntry("BLOOD_ROSE").name("Blood Rose")
+            .stages()
+                .add("The Hydromelon was a great success, so I'd like to keep at it.  This time perhaps I can infuse some plant life with Blood magick.  You don't often see plants with Blood affinity, so this should be a fascinating exercise.")
+                .add("Excellent!  Maybe a little too excellent...<BR>Infusing a rose bush with Blood essence has created a very hungry plant.  Its thorns are wickedly sharp and if I didn't know better I'd say they reach out to snare passerby.  Perhaps I can make use of this as some very gothic base defense.")
+                .end()
+            .build();
         this.researchEntry("BASIC_MAGITECH").name("Basic Magitech")
             .stages()
                 .add("I think I'm starting to get the hang of Magitech.  The devices are just like normal machines, except they run on mana instead of redstone.<BR>I've drawn up schematics for set of simple, replaceable parts that I can use when designing enchanted machinery.  No doubt more advanced devices will need something more intricate, but it's a start!")
