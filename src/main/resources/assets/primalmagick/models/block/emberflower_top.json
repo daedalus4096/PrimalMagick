@@ -1,5 +1,6 @@
 {
     "ambientocclusion": false,
+    "render_type": "minecraft:cutout",
     "textures": {
         "particle": "primalmagick:block/emberflower_front",
         "cross": "block/sunflower_top",
