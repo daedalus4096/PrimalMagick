@@ -49,6 +49,7 @@ import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.block.state.properties.StairsShape;
@@ -168,8 +169,9 @@ public class BlockStateProviderPM extends BlockStateProvider {
         
         // Generate crop blocks
         this.cubeColumnBlockWithItem(BlocksPM.HYDROMELON.get());
-        this.stemBlock(BlocksPM.HYRDOMELON_STEM.get(), 8);
+        this.stemBlock(BlocksPM.HYRDOMELON_STEM.get());
         this.attachedStemBlock(BlocksPM.ATTACHED_HYDROMELON_STEM.get(), this.blockTexture(BlocksPM.HYRDOMELON_STEM.get()));
+        this.tallCrossBlockWithItem(BlocksPM.BLOOD_ROSE.get());
         
         // Generate infused stone blocks
         this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_EARTH.get());
@@ -749,7 +751,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.itemModels().basicItem(itemTexture);
     }
     
-    private void stemBlock(Block block, int numStages) {
+    private void stemBlock(Block block) {
         VariantBlockStateBuilder builder = this.getVariantBuilder(block);
         StemBlock.AGE.getPossibleValues().forEach(stage -> {
             builder.partialState().with(StemBlock.AGE, stage).modelForState().modelFile(
@@ -768,5 +770,18 @@ public class BlockStateProviderPM extends BlockStateProvider {
             .partialState().with(AttachedStemBlock.FACING, Direction.SOUTH).modelForState().modelFile(model).rotationY(270).addModel()
             .partialState().with(AttachedStemBlock.FACING, Direction.WEST).modelForState().modelFile(model).addModel()
             .partialState().with(AttachedStemBlock.FACING, Direction.EAST).modelForState().modelFile(model).rotationY(180).addModel();
+    }
+    
+    private void tallCrossBlockWithItem(Block block) {
+        this.tallCrossBlockWithItem(block, this.blockTexture(block).withSuffix("_top"), this.blockTexture(block).withSuffix("_bottom"));
+    }
+    
+    private void tallCrossBlockWithItem(Block block, ResourceLocation topTexture, ResourceLocation bottomTexture) {
+        ModelFile topModel = this.models().cross(this.name(block) + "_top", topTexture).renderType(CUTOUT);
+        ModelFile bottomModel = this.models().cross(this.name(block) + "_bottom", bottomTexture).renderType(CUTOUT);
+        this.getVariantBuilder(block)
+            .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
+            .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
+        this.simpleBlockItem(block, topModel);
     }
 }

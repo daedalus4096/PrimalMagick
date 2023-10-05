@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "primalmagick:block/blood_rose_bottom"
+    },
+    "half=upper": {
+      "model": "primalmagick:block/blood_rose_top"
+    }
+  }
+}

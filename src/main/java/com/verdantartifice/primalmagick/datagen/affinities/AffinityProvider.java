@@ -673,6 +673,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.HALLOWOOD_SLAB.get()).base(Items.OAK_SLAB).add(Source.HALLOWED, 1).remove(Source.SUN, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HYDROMELON_SEEDS.get()).base(Items.MELON_SEEDS).add(Source.SEA, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.HYDROMELON_SLICE.get()).base(Items.MELON_SLICE).add(Source.SEA, 6).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.BLOOD_ROSE.get()).set(SourceList.builder().withEarth(5).withMoon(5).withBlood(20).build()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_EARTH.get()).base(Items.STONE).add(Source.EARTH, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SEA.get()).base(Items.STONE).add(Source.SEA, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SKY.get()).base(Items.STONE).add(Source.SKY, 1).build(consumer);
