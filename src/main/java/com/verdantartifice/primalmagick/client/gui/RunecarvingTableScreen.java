@@ -88,12 +88,25 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
             int i1 = top + l * 18 + 2;
             ItemStack output = list.get(i).getResultItem(this.minecraft.level.registryAccess());
             guiGraphics.renderItem(output, k, i1);
-            if (mouseX >= k && mouseX < k + 16 && mouseY >= i1 && mouseY < i1 + 18) {
-                GuiUtils.renderItemTooltip(guiGraphics, output, mouseX, mouseY);
-            }
         }
     }
     
+    @Override
+    protected void renderTooltip(GuiGraphics pGuiGraphics, int pX, int pY) {
+        super.renderTooltip(pGuiGraphics, pX, pY);
+        List<IRunecarvingRecipe> list = this.menu.getRecipeList();
+        for (int i = this.recipeIndexOffset; i < this.recipeIndexOffset + 12 && i < this.menu.getRecipeListSize(); ++i) {
+            int j = i - this.recipeIndexOffset;
+            int k = this.leftPos + 52 + j % 4 * 16;
+            int l = j / 4;
+            int i1 = this.topPos + 14 + l * 18 + 2;
+            ItemStack output = list.get(i).getResultItem(this.minecraft.level.registryAccess());
+            if (pX >= k && pX < k + 16 && pY >= i1 && pY < i1 + 18) {
+                GuiUtils.renderItemTooltip(pGuiGraphics, output, pX, pY);
+            }
+        }
+    }
+
     @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
         this.clickedOnSroll = false;
