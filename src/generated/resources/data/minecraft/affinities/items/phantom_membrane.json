@@ -2,6 +2,7 @@
   "type": "item",
   "set": {
     "blood": 5,
+    "moon": 20,
     "sky": 20
   },
   "target": "minecraft:phantom_membrane"

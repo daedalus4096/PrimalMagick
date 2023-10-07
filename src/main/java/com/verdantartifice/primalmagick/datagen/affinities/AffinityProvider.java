@@ -541,7 +541,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.DISC_FRAGMENT_5).set(Source.SKY, 2).set(Source.MOON, 2).set(Source.HALLOWED, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.MUSIC_DISC_5).base(Items.MUSIC_DISC_11).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.TRIDENT).set(Source.EARTH, 15).set(Source.SEA, 25).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.PHANTOM_MEMBRANE).set(Source.SKY, 20).set(Source.BLOOD, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.PHANTOM_MEMBRANE).set(Source.SKY, 20).set(Source.MOON, 20).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.NAUTILUS_SHELL).set(Source.SEA, 20).set(Source.BLOOD, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.HEART_OF_THE_SEA).set(Source.SEA, 25).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SUSPICIOUS_STEW).set(Source.EARTH, 12).set(Source.SUN, 4).set(Source.MOON, 7).build(consumer);

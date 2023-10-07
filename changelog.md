@@ -1,6 +1,7 @@
 v4.0.7
 ------
 * Added Earthshatter Hammer and Dissolution Chamber recipes for Ancient Debris
+* Gave Phantom Membranes some moon affinity
 
 v4.0.6
 ------
