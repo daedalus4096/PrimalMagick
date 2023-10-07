@@ -1,3 +1,7 @@
+v4.0.7
+------
+* Added Earthshatter Hammer and Dissolution Chamber recipes for Ancient Debris
+
 v4.0.6
 ------
 * Fixed a client crash that could sometimes occur with the arcane recipe book

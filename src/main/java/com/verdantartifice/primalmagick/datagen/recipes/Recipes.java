@@ -1867,6 +1867,11 @@ public class Recipes extends RecipeProvider {
             .requires(Tags.Items.GRAVEL)
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, PrimalMagick.resource("sand_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.NETHERITE_SCRAP, 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(Items.ANCIENT_DEBRIS)
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer"));
     }
 
     protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
@@ -6301,6 +6306,10 @@ public class Recipes extends RecipeProvider {
             .ingredient(Items.GLOWSTONE)
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
             .build(consumer, PrimalMagick.resource("glowstone_dust_from_dissolving_glowstone_block"));
+        DissolutionRecipeBuilder.dissolutionRecipe(Items.NETHERITE_SCRAP, 3)
+            .ingredient(Items.ANCIENT_DEBRIS)
+            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+            .build(consumer, PrimalMagick.resource("netherite_scrap_from_dissolving_ancient_debris"));
     }
     
     protected void registerHummingArtifactRecipes(Consumer<FinishedRecipe> consumer) {

@@ -44,7 +44,8 @@
         "primalmagick:blaze_powder_from_dissolving_blaze_rod",
         "primalmagick:string_from_dissolving_wool",
         "primalmagick:quartz_from_dissolving_quartz_block",
-        "primalmagick:glowstone_dust_from_dissolving_glowstone_block"
+        "primalmagick:glowstone_dust_from_dissolving_glowstone_block",
+        "primalmagick:netherite_scrap_from_dissolving_ancient_debris"
       ],
       "text": "research.primalmagick.dissolution_chamber.text.stage.2"
     }

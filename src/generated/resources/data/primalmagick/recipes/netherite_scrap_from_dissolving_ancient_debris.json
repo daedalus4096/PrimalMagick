@@ -1,0 +1,13 @@
+{
+  "type": "primalmagick:dissolution",
+  "ingredient": {
+    "item": "minecraft:ancient_debris"
+  },
+  "mana": {
+    "earth": 1
+  },
+  "result": {
+    "count": 3,
+    "item": "minecraft:netherite_scrap"
+  }
+}

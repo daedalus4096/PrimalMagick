@@ -41,7 +41,8 @@
         "primalmagick:cobblestone_from_earthshatter_hammer",
         "primalmagick:cobbled_deepslate_from_earthshatter_hammer",
         "primalmagick:gravel_from_earthshatter_hammer",
-        "primalmagick:sand_from_earthshatter_hammer"
+        "primalmagick:sand_from_earthshatter_hammer",
+        "primalmagick:netherite_scrap_from_earthshatter_hammer"
       ],
       "text": "research.primalmagick.earthshatter_hammer.text.stage.2"
     }
