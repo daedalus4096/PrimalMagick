@@ -34,7 +34,7 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
             Component amountText = Component.literal(Integer.toString(this.material.getItemStack().getCount()));
             int width = mc.font.width(amountText);
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 500.0F);
+            guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
             guiGraphics.pose().popPose();

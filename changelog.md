@@ -3,6 +3,7 @@ v4.0.7
 * Added Earthshatter Hammer and Dissolution Chamber recipes for Ancient Debris
 * Gave Phantom Membranes some moon affinity
 * Fixed tooltip Z-order issue with Runecarving Table screen
+* Fixed tooltip Z-order issue with Research Table screen
 
 v4.0.6
 ------
