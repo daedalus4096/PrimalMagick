@@ -67,10 +67,10 @@
       "weight": 4.0
     },
     {
-      "type": "item",
+      "type": "tag",
       "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:milk_bucket",
+      "name": "forge:milk",
+      "quantity": 1,
       "weight": 1.0
     },
     {

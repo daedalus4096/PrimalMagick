@@ -117,6 +117,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTagsForgeExt.DUSTS_COPPER).add(ItemsPM.COPPER_GRIT.get());
         this.tag(ItemTagsForgeExt.DUSTS_GOLD).add(ItemsPM.GOLD_GRIT.get());
         this.tag(ItemTagsForgeExt.DUSTS_IRON).add(ItemsPM.IRON_GRIT.get());
+        this.tag(ItemTagsForgeExt.MILK).add(Items.MILK_BUCKET);
         this.tag(ItemTagsForgeExt.NUGGETS_QUARTZ).add(ItemsPM.QUARTZ_NUGGET.get());
         this.tag(ItemTagsForgeExt.ORES_ROCK_SALT).add(ItemsPM.ROCK_SALT_ORE.get());
 

@@ -15,6 +15,7 @@ public class ItemTagsForgeExt {
     public static final TagKey<Item> DUSTS_IRON = tag("dusts/iron");
     public static final TagKey<Item> DUSTS_GOLD = tag("dusts/gold");
     public static final TagKey<Item> DUSTS_COPPER = tag("dusts/copper");
+    public static final TagKey<Item> MILK = tag("milk");
     public static final TagKey<Item> NUGGETS_COPPER = tag("nuggets/copper");
     public static final TagKey<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
     public static final TagKey<Item> NUGGETS_TIN = tag("nuggets/tin");

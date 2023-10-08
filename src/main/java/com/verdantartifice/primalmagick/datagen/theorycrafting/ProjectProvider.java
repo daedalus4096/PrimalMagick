@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CachedOutput;
@@ -221,7 +222,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.TORCH, 16, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BREAD, 4, true).weight(1).build())
             .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).bonusReward(0.25D).weight(4).matchNbt().build())
-            .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsForgeExt.MILK, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.OBSIDIAN, 10, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
             .build(consumer);
@@ -260,7 +261,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.COOKED_BEEF, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BAKED_POTATO, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.MILK_BUCKET, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(ItemTagsForgeExt.MILK, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.CAKE, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.ROSE_BUSH, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.TNT, true).bonusReward(0.125D).weight(0.5D).build())
