@@ -6,6 +6,7 @@ v4.0.7
 * Fixed tooltip Z-order issue with Research Table screen
 * Changed research projects to use the Forge milk tag instead of just the milk bucket
 * Added new theorycrafting project to the pool
+* Made research projects refund container items, such as empty milk buckets
 
 v4.0.6
 ------

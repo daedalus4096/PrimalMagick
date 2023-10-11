@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -17,9 +19,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.IItemHandler;
@@ -133,7 +137,9 @@ public class InventoryUtils {
      * Attempts to remove the given quantity of the given item from the player's main inventory.  Does
      * not consider equipped items or nested inventories (e.g. backpacks).  If the given stack has a
      * count higher than one, this method will search for any combination of itemstacks in the player's
-     * inventory that total the given count, rather than requiring a single stack of that size.
+     * inventory that total the given count, rather than requiring a single stack of that size.  Should
+     * the item being removed have a container (e.g. an empty bucket from a milk bucket), the container
+     * will be refunded to the player.
      * 
      * @param player the player whose inventory to search
      * @param stack the item and quantity to be removed
@@ -173,7 +179,8 @@ public class InventoryUtils {
                     }
                 }
                 if (count <= 0) {
-                    // Once a sufficient number of the given item are removed, return true
+                    // Once a sufficient number of the given item are removed, refund container(s) and return true
+                    addRefundItem(stack, stack.getCount(), player);
                     return true;
                 }
             }
@@ -186,7 +193,8 @@ public class InventoryUtils {
      * not consider equipped items or nested inventories (e.g. backpacks).  If the given stack has a
      * count higher than one, this method will search for any combination of itemstacks in the player's
      * inventory that total the given count, rather than requiring a single stack of that size.  By
-     * default, does not attempt to match NBT data on itemstacks.
+     * default, does not attempt to match NBT data on itemstacks.  Should the item being removed have a
+     * container (e.g. an empty bucket from a milk bucket), the container will be refunded to the player.
      * 
      * @param player the player whose inventory to search
      * @param stack the item and quantity to be removed
@@ -202,7 +210,8 @@ public class InventoryUtils {
      * greater than one, this method will search for any combination of itemstacks in the player's
      * inventory that total the given count, rather than requiring a single stack of that size.  The found
      * items need not be the same, so long as all of them belong to the tag.  Does not attempt to match
-     * NBT data, as that cannot be conveyed by a tag.
+     * NBT data, as that cannot be conveyed by a tag.  Should the items being removed have a container
+     * (e.g. an empty bucket from a milk bucket), the container will be refunded to the player.
      * 
      * @param player the player whose inventory to search
      * @param tagName the tag containing the items to be removed
@@ -226,12 +235,14 @@ public class InventoryUtils {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && searchStack.is(tag)) {
                 if (searchStack.getCount() > amount) {
+                    addRefundItem(searchStack, amount, player);
                     searchStack.shrink(amount);
                     amount = 0;
                     if (player instanceof ServerPlayer) {
                         ((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(ClientboundContainerSetSlotPacket.PLAYER_INVENTORY, 0, index, searchStack));
                     }
                 } else {
+                    addRefundItem(searchStack, searchStack.getCount(), player);
                     amount -= searchStack.getCount();
                     player.getInventory().items.set(index, ItemStack.EMPTY);
                     if (player instanceof ServerPlayer) {
@@ -245,6 +256,27 @@ public class InventoryUtils {
             }
         }
         return false;
+    }
+    
+    private static void addRefundItem(ItemStack stack, int refundCount, Player player) {
+        ItemStack refundStack = ItemStack.EMPTY;
+        if (stack.hasCraftingRemainingItem()) {
+            refundStack = stack.getCraftingRemainingItem().copyWithCount(refundCount);
+        } else if (stack.is(Items.POTION)) {
+            // Potions don't use the standard container mechanism, so test for them directly
+            refundStack = new ItemStack(Items.GLASS_BOTTLE, refundCount);
+        } else if (stack.is(ItemsPM.CONCOCTION.get())) {
+            // Concoctions don't use the standard container mechanism, so test for them directly
+            refundStack = new ItemStack(ItemsPM.SKYGLASS_FLASK.get(), refundCount);
+        }
+        
+        if (!refundStack.isEmpty() && !player.addItem(refundStack)) {
+            ItemEntity entity = player.drop(refundStack, false);
+            if (entity != null) {
+                entity.setNoPickUpDelay();
+                entity.setTarget(player.getUUID());
+            }
+        }
     }
     
     /**
