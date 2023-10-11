@@ -279,7 +279,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("gold_ingot_from_grit_smelting")).recipe(PrimalMagick.resource("copper_ingot_from_grit_smelting"))
                     .recipe(PrimalMagick.resource("cobblestone_from_earthshatter_hammer")).recipe(PrimalMagick.resource("cobbled_deepslate_from_earthshatter_hammer"))
                     .recipe(PrimalMagick.resource("gravel_from_earthshatter_hammer")).recipe(PrimalMagick.resource("sand_from_earthshatter_hammer"))
-                    .recipe(PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer")).build())
+                    .recipe(PrimalMagick.resource("rock_salt_from_earthshatter_hammer")).recipe(PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUNLAMP", discipline).icon(ItemsPM.SUNLAMP.get()).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
@@ -1409,7 +1409,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("sand_from_dissolving_gravel")).recipe(PrimalMagick.resource("bone_meal_from_dissolving_bone"))
                     .recipe(PrimalMagick.resource("blaze_powder_from_dissolving_blaze_rod")).recipe(PrimalMagick.resource("string_from_dissolving_wool"))
                     .recipe(PrimalMagick.resource("quartz_from_dissolving_quartz_block")).recipe(PrimalMagick.resource("glowstone_dust_from_dissolving_glowstone_block"))
-                    .recipe(PrimalMagick.resource("netherite_scrap_from_dissolving_ancient_debris")).build())
+                    .recipe(PrimalMagick.resource("rock_salt_from_dissolving_rock_salt_ore")).recipe(PrimalMagick.resource("netherite_scrap_from_dissolving_ancient_debris")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ZEPHYR_ENGINE", discipline).icon(ItemsPM.ZEPHYR_ENGINE.get()).parent("EXPERT_MAGITECH").parent("PRIMALITE").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemStack(Items.PISTON).build())
