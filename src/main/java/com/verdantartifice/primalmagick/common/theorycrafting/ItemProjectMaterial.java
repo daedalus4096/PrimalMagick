@@ -5,6 +5,9 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -29,6 +32,8 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ItemProjectMaterial extends AbstractProjectMaterial {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     public static final String TYPE = "item";
     public static final IProjectMaterialSerializer<ItemProjectMaterial> SERIALIZER = new ItemProjectMaterial.Serializer();
     
@@ -217,7 +222,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, ItemProjectMaterial material) {
-            buf.writeItem(material.stack);
+            buf.writeItemStack(material.stack, false);
             buf.writeBoolean(material.consumed);
             buf.writeBoolean(material.matchNBT);
             buf.writeDouble(material.weight);

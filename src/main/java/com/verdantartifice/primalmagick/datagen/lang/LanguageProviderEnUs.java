@@ -1776,6 +1776,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("end_expedition").name("End Expedition").text("The cities of The End reek of secrets.  You prepare an expedition to brave their dangers and bring some home.").build();
         this.researchProject("master_essence_analysis").name("Master Essence Analysis").text("Study of magickal essence has been profitable for you.  It's time to learn what the purest samples have to teach.").build();
         this.researchProject("draconic_memories").name("Draconic Memories").text("This dragon hoarded experiences, not gold.  Even in death it hungers for more.  Feed it, and see what it can teach you.").build();
+        this.researchProject("raiding_the_raiders").name("Raiding the Raiders").text("The Illagers have surely plundered some valuable arcane secrets.  Show them that turnabout is fair play.").build();
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();

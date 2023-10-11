@@ -8,9 +8,12 @@ import java.util.Set;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.theorycrafting.ItemProjectMaterial;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
@@ -49,8 +52,17 @@ public class ItemProjectMaterialWidget extends AbstractProjectMaterialWidget<Ite
         Minecraft mc = Minecraft.getInstance();
         ItemStack stack = this.material.getItemStack();
         List<Component> textList = new ArrayList<>();
-        textList.add(stack.getHoverName().copy().withStyle(stack.getItem().getRarity(stack).getStyleModifier()));
-        stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+        MutableComponent nameComponent = stack.getHoverName().copy();
+        if (nameComponent.getStyle().equals(Style.EMPTY)) {
+            nameComponent = nameComponent.withStyle(stack.getItem().getRarity(stack).getStyleModifier());
+        }
+        if (stack.hasCustomHoverName()) {
+            nameComponent = nameComponent.withStyle(nameComponent.getStyle().applyFormat(ChatFormatting.ITALIC));
+        }
+        textList.add(nameComponent);
+        if (ItemStack.shouldShowInTooltip(stack.getHideFlags(), ItemStack.TooltipPart.ADDITIONAL)) {
+            stack.getItem().appendHoverText(stack, mc.level, textList, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
+        }
         return textList;
     }
 }

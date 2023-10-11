@@ -24,6 +24,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -254,6 +255,18 @@ public class ProjectProvider implements DataProvider {
             .build(consumer);
         ProjectBuilder.project("portal_detritus").aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .material(ItemMaterialBuilder.item(ItemsPM.MAGNIFYING_GLASS.get(), false).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("raiding_the_raiders").rewardMultiplier(0.5D)
+            .material(ItemMaterialBuilder.item(Raid.getLeaderBannerInstance(), true).matchNbt().bonusReward(0.25D).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.BLOODY_FLESH.get(), true).weight(1).build())
+            .material(ItemMaterialBuilder.item(Items.CROSSBOW, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.IRON_SWORD, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.IRON_AXE, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.ARROW, 4, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.GLASS_BOTTLE, 3, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.DARK_OAK_LOG, 16, true).weight(5).build())
+            .material(ItemMaterialBuilder.item(Items.CARVED_PUMPKIN, true).weight(1).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_EMERALD, true).bonusReward(0.25D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("recuperation")
             .material(ItemTagMaterialBuilder.tag(ItemTags.BEDS, false).weight(2).build())

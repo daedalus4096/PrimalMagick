@@ -6,6 +6,9 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +22,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ItemUtils {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     /**
      * Calculate a unique hash code for the given itemstack and its NBT data.
      * 
@@ -76,7 +81,7 @@ public class ItemUtils {
         if (tokens.length >= 3 && tokens[2].startsWith("{")) {
             // Parse the JSON-ified NBT data, if present
             nbt = tokens[2];
-            nbt.replaceAll("'", "\"");
+            nbt.replaceAll("\\\"", "\"");
         }
         if (count < 1) {
             count = 1;
@@ -92,7 +97,9 @@ public class ItemUtils {
                     stack.setTag(TagParser.parseTag(nbt));
                 }
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            LOGGER.warn("Exception while parsing item stack string " + str, e);
+        }
         
         return stack;
     }
@@ -113,7 +120,7 @@ public class ItemUtils {
         }
         if (stack.hasTag()) {
             sb.append(';');
-            sb.append(stack.getTag().toString().replaceAll("\"", "'"));
+            sb.append(stack.getTag().toString().replaceAll("\"", "\\\""));
         }
         return sb.toString();
     }

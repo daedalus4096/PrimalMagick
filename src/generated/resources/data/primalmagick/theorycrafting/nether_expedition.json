@@ -63,7 +63,7 @@
       "bonus_reward": 0.25,
       "consumed": true,
       "match_nbt": true,
-      "stack": "minecraft:potion;1;{Potion:'minecraft:fire_resistance'}",
+      "stack": "minecraft:potion;1;{Potion:\"minecraft:fire_resistance\"}",
       "weight": 4.0
     },
     {

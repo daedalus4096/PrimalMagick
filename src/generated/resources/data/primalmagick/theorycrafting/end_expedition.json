@@ -63,7 +63,7 @@
       "bonus_reward": 0.5,
       "consumed": true,
       "match_nbt": true,
-      "stack": "minecraft:potion;1;{Potion:'minecraft:slow_falling'}",
+      "stack": "minecraft:potion;1;{Potion:\"minecraft:slow_falling\"}",
       "weight": 1.0
     },
     {
