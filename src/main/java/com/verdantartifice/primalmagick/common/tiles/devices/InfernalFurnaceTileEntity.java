@@ -59,7 +59,8 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
-    protected static final int MANA_PER_HALF_SECOND = 10;
+    protected static final int MANA_PER_HALF_SECOND = 1;
+    protected static final int DEFAULT_COOK_TIME = 100;
     protected static final int LIT_GRACE_TICKS_MAX = 5;
     protected static final int OUTPUT_SLOT_INDEX = 0;
     protected static final int INPUT_SLOT_INDEX = 1;
@@ -193,7 +194,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     @Override
     public void onLoad() {
         super.onLoad();
-        this.processTimeTotal = getTotalCookTime(this.level, this);
+        this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, InfernalFurnaceTileEntity entity) {
@@ -248,7 +249,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
                 entity.processTime += (entity.isSupercharged() ? SUPERCHARGE_MULTIPLIER : 1);
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
-                    entity.processTimeTotal = getTotalCookTime(level, entity);
+                    entity.processTimeTotal = getTotalCookTime(level, entity, DEFAULT_COOK_TIME);
                     entity.litGraceTicks = LIT_GRACE_TICKS_MAX;
                     if (entity.burn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
                         entity.setRecipeUsed(recipe);
@@ -330,13 +331,14 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         }
     }
 
-    private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
-        return getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(200);
+    private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity, int defaultTime) {
+        // Infernal furnaces take half as long to smelt items as normal
+        return getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).map(t -> t / 2).orElse(defaultTime);
     }
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
-        // Return centimana per one hundred ticks of cooking time of the current recipe, or zero if no recipe is active
-        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : (getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).orElse(0) / 100) * MANA_PER_HALF_SECOND;
+        // Return centimana per ten ticks of cooking time of the current recipe, or zero if no recipe is active
+        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : (getTotalCookTime(pLevel, pBlockEntity, 0) / 10) * MANA_PER_HALF_SECOND;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
@@ -440,7 +442,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.items.get(index), stack);
         super.setItem(index, stack);
         if (index == INPUT_SLOT_INDEX && !flag) {
-            this.processTimeTotal = getTotalCookTime(this.level, this);
+            this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
         }

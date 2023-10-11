@@ -92,7 +92,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     
     public DissolutionChamberTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state, 3);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Source.EARTH);
+        this.manaStorage = new ManaStorage(25600, 100, 100, Source.EARTH);
     }
     
     @Override
@@ -122,7 +122,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     }
 
     protected int getProcessTimeTotal() {
-        return 200;
+        return 100;
     }
     
     @Override

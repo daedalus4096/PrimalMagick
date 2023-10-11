@@ -303,7 +303,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
     
     protected int getCookTimeTotal() {
-        return 200;
+        return 100;
     }
 
     @Override

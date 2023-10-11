@@ -115,7 +115,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
     
     protected int getSpinTimeTotal() {
-        return 200;
+        return 100;
     }
     
     protected int getManaCost() {

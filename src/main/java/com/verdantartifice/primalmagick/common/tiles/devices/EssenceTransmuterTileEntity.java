@@ -163,7 +163,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     }
     
     protected int getProcessTimeTotal() {
-        return 200;
+        return 100;
     }
     
     protected int getManaCost() {
