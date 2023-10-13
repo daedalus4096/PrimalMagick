@@ -42,7 +42,7 @@ public class BountyFarmingModifier extends LootModifier {
         for (int index = 0; index < enchantmentLevel; index++) {
             if (context.getRandom().nextFloat() < this.chance) {
                 List<ItemStack> bonusList = new ArrayList<>();
-                table.getRandomItems(context, bonusList::add);    // Use deprecated method to avoid recursive modification of loot generated
+                table.getRandomItemsRaw(context, bonusList::add);   // Use deprecated method to avoid recursive modification of loot generated
                 generatedLoot = ItemUtils.mergeItemStackLists(generatedLoot, bonusList).stream().collect(ObjectArrayList.toList());
             }
         }

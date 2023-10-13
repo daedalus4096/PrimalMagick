@@ -17,6 +17,7 @@ v4.0.7
 * Eliminated toast spam when granting research via debug command
 * Added Creative Grimoire, for creative players who don't want to fiddle with debug commands
 * Made Endermen take additional damage from Sea spells; they remain immune to ranged attacks
+* Fixed a bug where the Bounty enchantment could recursively multiply bonus loot
 
 v4.0.6
 ------
