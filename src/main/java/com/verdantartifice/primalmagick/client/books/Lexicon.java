@@ -17,6 +17,7 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.Util;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 
 /**
  * Maps the full set of words used in a book language, plus metadata.
@@ -122,7 +123,12 @@ public class Lexicon {
     public String getReplacementWord(String original) {
         List<String> candidates = this.getWordsOfLength(original.length());
         if (candidates.isEmpty()) {
-            return "a".repeat(original.length());
+            RandomSource rng = RandomSource.create(Math.abs(original.hashCode()));  // Seed the randomness based on the original's hash code for consistent results
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < original.length(); i++) {
+                sb.append('a' + rng.nextIntBetweenInclusive(0, 25));
+            }
+            return sb.toString();
         } else {
             return candidates.get(Math.abs(original.hashCode()) % candidates.size());
         }
