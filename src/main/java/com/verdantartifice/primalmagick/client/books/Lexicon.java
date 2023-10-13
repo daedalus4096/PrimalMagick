@@ -138,7 +138,15 @@ public class Lexicon {
      * @return
      */
     public boolean isWordTranslated(String word, int comprehension, int complexity) {
-        return this.getTranslatedWords(comprehension, complexity).contains(word.toLowerCase());
+        if (complexity == 0) {
+            // If the language has no complexity, then all words are automatically translated
+            return true;
+        } else if (complexity < 0) {
+            // If the language is not translatable, then no words are translated ever
+            return false;
+        } else {
+            return this.getTranslatedWords(comprehension, complexity).contains(word.toLowerCase());
+        }
     }
     
     protected List<String> getTranslatedWords(int comprehension, int complexity) {

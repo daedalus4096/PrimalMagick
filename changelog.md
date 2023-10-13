@@ -11,6 +11,7 @@ v4.0.7
 * Increased total mana capacity of the Dissolution Chamber
 * Fixed a multiplayer display bug in the menu of the Mana Nexus
 * Fixed a bug preventing ops from granting research via debug command in multiplayer
+* Fixed a display bug with long player names on the Dream Journal
 
 v4.0.6
 ------
