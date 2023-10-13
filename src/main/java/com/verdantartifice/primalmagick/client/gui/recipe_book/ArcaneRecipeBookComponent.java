@@ -74,6 +74,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     @Nullable
     protected ArcaneRecipeBookTabButton selectedTab;
     protected StateSwitchingButton filterButton;
+    protected final Object filterButtonLock = new Object();
     protected AbstractArcaneRecipeBookMenu<?> menu;
     protected Minecraft mc;
     @Nullable
@@ -143,8 +144,11 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.searchBox.setEditable(true);
         this.recipeBookPage.init(this.mc, xPos, yPos, this.arcaneBook.getData());
         this.recipeBookPage.addListener(this);
-        this.filterButton = new StateSwitchingButton(xPos + 110, yPos + 12, 26, 16, this.arcaneBook.getData().isFiltering(this.menu.getRecipeBookType()));
-        this.initFilterButtonTextures();
+        synchronized (this.filterButtonLock) {
+            // Don't allow the filter button to be rendered if it's being initialized on another thread, to prevent client crashes
+            this.filterButton = new StateSwitchingButton(xPos + 110, yPos + 12, 26, 16, this.arcaneBook.getData().isFiltering(this.menu.getRecipeBookType()));
+            this.initFilterButtonTextures();
+        }
         
         int tabPosX = (this.width - IMAGE_WIDTH) / 2 - this.xOffset - 30;
         int tabPosY = (this.height - IMAGE_HEIGHT) / 2 + 3;
@@ -331,7 +335,11 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                 }
             }
             
-            this.filterButton.render(guiGraphics, mouseX, mouseY, partialTicks);
+            synchronized (this.filterButtonLock) {
+                // Don't allow the filter button to be rendered if it's being initialized on another thread, to prevent client crashes
+                this.filterButton.render(guiGraphics, mouseX, mouseY, partialTicks);
+            }
+
             this.recipeBookPage.render(guiGraphics, xPos, yPos, mouseX, mouseY, partialTicks);
             guiGraphics.pose().popPose();
         }
