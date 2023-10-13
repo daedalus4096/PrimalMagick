@@ -879,6 +879,8 @@
   "item.primalmagick.gold_grit": "金砂",
   "item.primalmagick.gold_wand_cap_item": "金制杖端",
   "item.primalmagick.grimoire": "魔导书",
+  "item.primalmagick.grimoire_creative": "Creative Grimoire",
+  "item.primalmagick.grimoire_creative.tooltip": "Contains all the secrets of the arcane",
   "item.primalmagick.hallowed_orb": "神圣法球",
   "item.primalmagick.hallowed_orb.tooltip.1": "一种平和的感觉淹没了你",
   "item.primalmagick.hallowed_orb.tooltip.2": "当你拿着这个的时候",
