@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.network;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
+import com.verdantartifice.primalmagick.common.network.packets.data.ContainerSetVarintDataPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncArcaneRecipeBookPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncAttunementsPacket;
@@ -131,6 +132,7 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode, OpenEnchantedBookScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncLinguisticsPacket.class, SyncLinguisticsPacket::encode, SyncLinguisticsPacket::decode, SyncLinguisticsPacket.Handler::onMessage);
+        INSTANCE.registerMessage(disc++, ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket::encode, ContainerSetVarintDataPacket::decode, ContainerSetVarintDataPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {
