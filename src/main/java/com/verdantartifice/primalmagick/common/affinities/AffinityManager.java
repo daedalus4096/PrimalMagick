@@ -369,9 +369,10 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
 
         // If we haven't hit a complexity limit, scan recipes to compute affinities
         if (history.size() < HISTORY_LIMIT) {
-            CompletableFuture<SourceList> valuesFuture = this.generateItemAffinityValuesFromRecipesAsync(id, recipeManager, registryAccess, history);
+            CompletableFuture<RecipeValues> valuesFuture = this.generateItemAffinityValuesFromRecipesAsync(id, recipeManager, registryAccess, history);
             return valuesFuture.thenApply(values -> {
-                IAffinity retVal = new ItemAffinity(id, values);
+                ItemAffinity retVal = new ItemAffinity(id, values.values());
+                retVal.setSourceRecipe(values.recipe());
                 this.registerAffinity(retVal);
                 return retVal;
             });
@@ -381,9 +382,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nullable
-    protected CompletableFuture<SourceList> generateItemAffinityValuesFromRecipesAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    protected CompletableFuture<RecipeValues> generateItemAffinityValuesFromRecipesAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // Look up all recipes with the given item as an output
-        List<CompletableFuture<SourceList>> recipeSourceFutures = recipeManager.getRecipes().stream()
+        List<CompletableFuture<RecipeValues>> recipeValueFutures = recipeManager.getRecipes().stream()
                 .filter(r -> r.getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.getResultItem(registryAccess).getItem()).equals(id))
                 .map(recipe -> {
                     // Compute the affinities from the recipe's ingredients
@@ -401,17 +402,17 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                                 }
                             }
                         }
-                        return retVal;
+                        return new RecipeValues(Optional.ofNullable(recipe.getId()), retVal);
                     });
                 }).toList();
-        return Util.sequence(recipeSourceFutures).thenApply(recipeSourcesList -> {
-            MutableObject<SourceList> retVal = new MutableObject<>(SourceList.EMPTY);
+        return Util.sequence(recipeValueFutures).thenApply(recipeValuesList -> {
+            MutableObject<RecipeValues> retVal = new MutableObject<>(RecipeValues.EMPTY);
             MutableInt maxValue = new MutableInt(Integer.MAX_VALUE);
-            recipeSourcesList.forEach(recipeSources -> {
-                int manaSize = recipeSources.getManaSize();
+            recipeValuesList.forEach(recipeValue -> {
+                int manaSize = recipeValue.values().getManaSize();
                 if (manaSize > 0 && manaSize < maxValue.intValue()) {
                     // Keep the source list with the smallest non-zero mana footprint
-                    retVal.setValue(recipeSources);
+                    retVal.setValue(recipeValue);
                     maxValue.setValue(manaSize);
                 }
             });
@@ -554,5 +555,9 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
             });
             return retVal.getValue();
         });
+    }
+    
+    protected static record RecipeValues(Optional<ResourceLocation> recipe, SourceList values) {
+        public static final RecipeValues EMPTY = new RecipeValues(Optional.empty(), SourceList.EMPTY);
     }
 }
