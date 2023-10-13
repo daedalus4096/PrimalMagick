@@ -2,16 +2,19 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
+import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.ContainerSynchronizer;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +29,7 @@ public class ManaBatteryMenu extends AbstractContainerMenu {
     protected final ContainerData data;
     protected final Slot inputSlot;
     protected final Slot chargeSlot;
+    protected final Player player;
     
     public ManaBatteryMenu(int id, Inventory playerInv) {
         this(id, playerInv, new SimpleContainer(2), new SimpleContainerData(20));
@@ -35,6 +39,7 @@ public class ManaBatteryMenu extends AbstractContainerMenu {
         super(MenuTypesPM.MANA_BATTERY.get(), id);
         checkContainerSize(inv, 2);
         checkContainerDataCount(data, 20);
+        this.player = playerInv.player;
         this.inv = inv;
         this.data = data;
         
@@ -60,6 +65,18 @@ public class ManaBatteryMenu extends AbstractContainerMenu {
         this.addDataSlots(this.data);
     }
     
+    @Override
+    public void setSynchronizer(ContainerSynchronizer pSynchronizer) {
+        // The data slot values anticipated by this menu are too large to be transfered by the vanilla synchronizer,
+        // which transmits data slot values as shorts.  Assuming that this menu is on the server side, ignore the
+        // given synchronizer and substitute in one which can handle larger values.
+        if (this.player instanceof ServerPlayer serverPlayer) {
+            super.setSynchronizer(new ContainerSynchronizerLarge(serverPlayer));
+        } else {
+            super.setSynchronizer(pSynchronizer);
+        }
+    }
+
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack stack = ItemStack.EMPTY;
