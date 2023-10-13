@@ -40,12 +40,12 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.ARROWS).add(ItemsPM.MANA_ARROW_EARTH.get(), ItemsPM.MANA_ARROW_SEA.get(), ItemsPM.MANA_ARROW_SKY.get(), ItemsPM.MANA_ARROW_SUN.get(), ItemsPM.MANA_ARROW_MOON.get(), ItemsPM.MANA_ARROW_BLOOD.get(), ItemsPM.MANA_ARROW_INFERNAL.get(), ItemsPM.MANA_ARROW_VOID.get(), ItemsPM.MANA_ARROW_HALLOWED.get());
         this.tag(ItemTags.AXES).add(ItemsPM.PRIMALITE_AXE.get(), ItemsPM.HEXIUM_AXE.get(), ItemsPM.HALLOWSTEEL_AXE.get(), ItemsPM.PRIMAL_AXE.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
-        this.tag(ItemTags.BOOKSHELF_BOOKS).add(ItemsPM.GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
+        this.tag(ItemTags.BOOKSHELF_BOOKS).add(ItemsPM.GRIMOIRE.get(), ItemsPM.CREATIVE_GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
         this.tag(ItemTags.FREEZE_IMMUNE_WEARABLES).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTags.HOES).add(ItemsPM.PRIMALITE_HOE.get(), ItemsPM.HEXIUM_HOE.get(), ItemsPM.HALLOWSTEEL_HOE.get(), ItemsPM.PRIMAL_HOE.get());
         this.tag(ItemTags.LOGS_THAT_BURN).addTag(ItemTagsPM.MOONWOOD_LOGS).addTag(ItemTagsPM.SUNWOOD_LOGS).addTag(ItemTagsPM.HALLOWOOD_LOGS);
         this.tag(ItemTags.LEAVES).add(ItemsPM.MOONWOOD_LEAVES.get(), ItemsPM.SUNWOOD_LEAVES.get(), ItemsPM.HALLOWOOD_LEAVES.get());
-        this.tag(ItemTags.LECTERN_BOOKS).add(Items.ENCHANTED_BOOK, ItemsPM.GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
+        this.tag(ItemTags.LECTERN_BOOKS).add(Items.ENCHANTED_BOOK, ItemsPM.GRIMOIRE.get(), ItemsPM.CREATIVE_GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
         this.tag(ItemTags.PICKAXES).add(ItemsPM.PRIMALITE_PICKAXE.get(), ItemsPM.HEXIUM_PICKAXE.get(), ItemsPM.HALLOWSTEEL_PICKAXE.get(), ItemsPM.PRIMAL_PICKAXE.get());
         this.tag(ItemTags.PLANKS).add(ItemsPM.MOONWOOD_PLANKS.get(), ItemsPM.SUNWOOD_PLANKS.get(), ItemsPM.HALLOWOOD_PLANKS.get());
         this.tag(ItemTags.SAPLINGS).add(ItemsPM.MOONWOOD_SAPLING.get(), ItemsPM.SUNWOOD_SAPLING.get(), ItemsPM.HALLOWOOD_SAPLING.get());

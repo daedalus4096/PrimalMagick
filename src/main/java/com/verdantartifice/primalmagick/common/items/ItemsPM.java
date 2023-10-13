@@ -138,6 +138,10 @@ public class ItemsPM {
         return ITEMS.register(name, itemSupplier);
     }
     
+    // Register grimoire items
+    public static final RegistryObject<GrimoireItem> GRIMOIRE = registerSupplier("grimoire", () -> new GrimoireItem(false, new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<GrimoireItem> CREATIVE_GRIMOIRE = registerSupplier("grimoire_creative", () -> new GrimoireItem(true, new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    
     // Register raw marble block items
     public static final RegistryObject<BlockItem> MARBLE_RAW = registerSupplier("marble_raw", () -> new BlockItem(BlocksPM.MARBLE_RAW.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_SLAB = registerSupplier("marble_slab", () -> new BlockItem(BlocksPM.MARBLE_SLAB.get(), new Item.Properties()));
@@ -498,7 +502,6 @@ public class ItemsPM {
     public static final RegistryObject<ArmorItem> HALLOWSTEEL_FEET = registerSupplier("hallowsteel_feet", () -> new ArmorItem(ArmorMaterialPM.HALLOWSTEEL, ArmorItem.Type.BOOTS, new Item.Properties().rarity(Rarity.EPIC)));
     
     // Register miscellaneous items
-    public static final RegistryObject<GrimoireItem> GRIMOIRE = registerSupplier("grimoire", GrimoireItem::new);
     public static final RegistryObject<ArcanometerItem> ARCANOMETER = registerSupplier("arcanometer", ArcanometerItem::new);
     public static final RegistryObject<Item> MAGNIFYING_GLASS = registerSupplier("magnifying_glass", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ALCHEMICAL_WASTE = registerSupplier("alchemical_waste", () -> new Item(new Item.Properties()));

@@ -187,9 +187,14 @@ public class ResearchManager {
     }
     
     public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
+        // Complete the given research, optionally syncing it to the player's client
+        return completeResearch(player, key, sync, true, true);
+    }
+    
+    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Repeatedly progress the given research until it is completed, optionally syncing it to the player's client
         boolean retVal = false;
-        while (progressResearch(player, key, sync)) {
+        while (progressResearch(player, key, sync, showNewFlags, showPopups)) {
             retVal = true;
         }
         return retVal;
@@ -211,13 +216,13 @@ public class ResearchManager {
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
                             for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                completeResearch(player, requiredKey);
+                                completeResearch(player, requiredKey, true, true, false);
                             }
                         }
                     }
                     
                     // Once all prerequisites are out of the way, complete this entry itself
-                    completeResearch(player, strippedKey);
+                    completeResearch(player, strippedKey, true, true, false);
                     
                     // Mark as updated any research entry that has a stage which requires completion of this entry
                     for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
@@ -249,7 +254,7 @@ public class ResearchManager {
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
                             for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
-                                completeResearch(player, requiredKey);
+                                completeResearch(player, requiredKey, true, true, false);
                             }
                         }
                     }
@@ -326,10 +331,10 @@ public class ResearchManager {
     
     public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
         // Progress the given research to its next stage and sync to the player's client
-        return progressResearch(player, key, sync, true);
+        return progressResearch(player, key, sync, true, true);
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean flags) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Progress the given research to its next stage and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
@@ -404,7 +409,9 @@ public class ResearchManager {
                 for (SimpleResearchKey revelation : currentStage.getRevelations()) {
                     if (!knowledge.isResearchKnown(revelation)) {
                         knowledge.addResearch(revelation);
-                        knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
+                        if (showPopups) {
+                            knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.POPUP);
+                        }
                         knowledge.addResearchFlag(revelation, IPlayerKnowledge.ResearchFlag.NEW);
                     }
                 }
@@ -447,8 +454,10 @@ public class ResearchManager {
         if (entryComplete) {
             if (sync) {
                 // If the entry has been completed and we're syncing, add the appropriate flags
-                knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
-                if (flags) {
+                if (showPopups) {
+                    knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
+                }
+                if (showNewFlags) {
                     knowledge.addResearchFlag(key, IPlayerKnowledge.ResearchFlag.NEW);
                 }
             }
@@ -499,7 +508,9 @@ public class ResearchManager {
                             boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty() && !e.isFinaleExempt()).allMatch(e -> e.isComplete(player));
                             if (shouldUnlock) {
                                 knowledge.addResearch(finaleKey);
-                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                                if (showPopups) {
+                                    knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                                }
                                 knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
                             }
                         }

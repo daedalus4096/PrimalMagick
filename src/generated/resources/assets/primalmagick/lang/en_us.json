@@ -879,6 +879,8 @@
   "item.primalmagick.gold_grit": "Gold Grit",
   "item.primalmagick.gold_wand_cap_item": "Gold Wand Cap",
   "item.primalmagick.grimoire": "Grimoire",
+  "item.primalmagick.grimoire_creative": "Creative Grimoire",
+  "item.primalmagick.grimoire_creative.tooltip": "Contains all the secrets of the arcane",
   "item.primalmagick.hallowed_orb": "Hallowed Orb",
   "item.primalmagick.hallowed_orb.tooltip.1": "A sense of peace washes over",
   "item.primalmagick.hallowed_orb.tooltip.2": "you as you hold this",

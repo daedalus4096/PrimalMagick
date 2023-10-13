@@ -633,6 +633,8 @@ public class AffinityProvider implements DataProvider {
         });
         
         // Define mod affinities
+        ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
+        ItemAffinityBuilder.emptyAffinity(ItemsPM.CREATIVE_GRIMOIRE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_RAW.get()).set(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED.get()).base(ItemsPM.MARBLE_RAW.get()).add(auraUnit).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.MARBLE_ENCHANTED_SLAB.get()).base(ItemsPM.MARBLE_SLAB.get()).add(auraUnit).build(consumer);
@@ -740,7 +742,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_GREEN.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_RED.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.RITUAL_CANDLE_BLACK.get()).base(ItemsPM.RITUAL_CANDLE_WHITE.get()).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.GRIMOIRE.get()).base(Items.ENCHANTED_BOOK).build(consumer);
         ItemAffinityBuilder.emptyAffinity(ItemsPM.MUNDANE_WAND.get()).build(consumer);  // Wands have no affinities
         ItemAffinityBuilder.emptyAffinity(ItemsPM.MODULAR_WAND.get()).build(consumer);  // Wands have no affinities
         ItemAffinityBuilder.emptyAffinity(ItemsPM.MODULAR_STAFF.get()).build(consumer); // Wands have no affinities

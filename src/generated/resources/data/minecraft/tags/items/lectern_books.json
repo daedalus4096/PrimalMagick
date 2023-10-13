@@ -2,6 +2,7 @@
   "values": [
     "minecraft:enchanted_book",
     "primalmagick:grimoire",
+    "primalmagick:grimoire_creative",
     "primalmagick:static_book"
   ]
 }

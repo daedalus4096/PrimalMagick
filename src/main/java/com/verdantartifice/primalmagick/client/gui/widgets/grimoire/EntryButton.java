@@ -47,7 +47,7 @@ public class EntryButton extends AbstractTopicButton {
                         PacketHandler.sendToServer(new SyncResearchFlagsPacket(mc.player, geb.getEntry().getKey()));
                     });
                 } else {
-                    PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true));  // Advance research from unknown to stage 1
+                    PacketHandler.sendToServer(new SyncProgressPacket(geb.getEntry().getKey(), true, false, true, true));  // Advance research from unknown to stage 1
                 }
                 
                 // Set the new grimoire topic and open a new screen for it
