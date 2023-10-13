@@ -9,6 +9,7 @@ v4.0.7
 * Made research projects refund container items, such as empty milk buckets
 * Increased base processing speed of most magitech devices
 * Increased total mana capacity of the Dissolution Chamber
+* Fixed a multiplayer display bug in the menu of the Mana Nexus
 
 v4.0.6
 ------
