@@ -322,6 +322,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
+        this.item(ItemsPM.CREATIVE_GRIMOIRE).name("Creative Grimoire").tooltip("Contains all the secrets of the arcane").build();
         this.item(ItemsPM.ARCANOMETER).name("Arcanometer").build();
         this.item(ItemsPM.MAGNIFYING_GLASS).name("Magnifying Glass").build();
         this.item(ItemsPM.ESSENCE_DUST_EARTH).name("Earth Dust").build();

@@ -1,6 +1,7 @@
 {
   "values": [
     "primalmagick:grimoire",
+    "primalmagick:grimoire_creative",
     "primalmagick:static_book"
   ]
 }

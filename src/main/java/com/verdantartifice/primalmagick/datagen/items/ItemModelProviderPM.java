@@ -202,6 +202,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         
         // Generate miscellaneous items
         this.basicItem(ItemsPM.GRIMOIRE.get());
+        this.basicItem(ItemsPM.CREATIVE_GRIMOIRE.get());
         // TODO Generate arcanometer
         this.basicItem(ItemsPM.MAGNIFYING_GLASS.get());
         this.basicItem(ItemsPM.ALCHEMICAL_WASTE.get());

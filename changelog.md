@@ -15,6 +15,7 @@ v4.0.7
 * Made Flying Carpet drop in world upon taking sufficient damage instead of being destroyed
 * Fixed a rare client crash that could occur when initializing the arcane recipe book
 * Eliminated toast spam when granting research via debug command
+* Added Creative Grimoire, for creative players who don't want to fiddle with debug commands
 
 v4.0.6
 ------
