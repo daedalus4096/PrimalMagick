@@ -34,19 +34,22 @@ public class SyncProgressPacket implements IMessageToServer {
     protected boolean firstSync;
     protected boolean runChecks;
     protected boolean noFlags;
+    protected boolean noPopups;
     
     public SyncProgressPacket() {
         this.key = null;
         this.firstSync = false;
         this.runChecks = false;
         this.noFlags = false;
+        this.noPopups = false;
     }
     
-    public SyncProgressPacket(SimpleResearchKey key, boolean firstSync, boolean runChecks, boolean noFlags) {
+    public SyncProgressPacket(SimpleResearchKey key, boolean firstSync, boolean runChecks, boolean noFlags, boolean noPopups) {
         this.key = key;
         this.firstSync = firstSync;
         this.runChecks = runChecks;
         this.noFlags = noFlags;
+        this.noPopups = noPopups;
     }
     
     public static void encode(SyncProgressPacket message, FriendlyByteBuf buf) {
@@ -54,6 +57,7 @@ public class SyncProgressPacket implements IMessageToServer {
         buf.writeBoolean(message.firstSync);
         buf.writeBoolean(message.runChecks);
         buf.writeBoolean(message.noFlags);
+        buf.writeBoolean(message.noPopups);
     }
     
     public static SyncProgressPacket decode(FriendlyByteBuf buf) {
@@ -62,6 +66,7 @@ public class SyncProgressPacket implements IMessageToServer {
         message.firstSync = buf.readBoolean();
         message.runChecks = buf.readBoolean();
         message.noFlags = buf.readBoolean();
+        message.noPopups = buf.readBoolean();
         return message;
     }
     
@@ -78,7 +83,7 @@ public class SyncProgressPacket implements IMessageToServer {
                         }
                         // Do the actual progression
                         LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
-                        ResearchManager.progressResearch(player, message.key, true, !message.noFlags);
+                        ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
                     }
                 }
             });

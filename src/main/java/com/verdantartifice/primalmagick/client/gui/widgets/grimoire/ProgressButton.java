@@ -37,7 +37,7 @@ public class ProgressButton extends Button {
             if (button instanceof ProgressButton) {
                 // Send a packet to the server and tell the screen to update more frequently until resolved
                 ProgressButton pb = (ProgressButton)button;
-                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey(), false, true, true));
+                PacketHandler.sendToServer(new SyncProgressPacket(pb.getStage().getResearchEntry().getKey(), false, true, true, false));
                 pb.getScreen().setProgressing();
             }
         }

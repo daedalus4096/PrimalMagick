@@ -14,6 +14,7 @@ v4.0.7
 * Fixed a display bug with long player names on the Dream Journal
 * Made Flying Carpet drop in world upon taking sufficient damage instead of being destroyed
 * Fixed a rare client crash that could occur when initializing the arcane recipe book
+* Eliminated toast spam when granting research via debug command
 
 v4.0.6
 ------
