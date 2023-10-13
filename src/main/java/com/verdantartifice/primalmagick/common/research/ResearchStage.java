@@ -248,9 +248,9 @@ public class ResearchStage {
         return Collections.unmodifiableList(this.hints);
     }
     
-    @Nullable
+    @Nonnull
     public CompoundResearchKey getRequiredResearch() {
-        return this.requiredResearch;
+        return this.requiredResearch == null ? CompoundResearchKey.EMPTY : this.requiredResearch;
     }
     
     @Nonnull
