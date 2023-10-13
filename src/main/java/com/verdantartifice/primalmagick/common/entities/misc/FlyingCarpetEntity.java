@@ -17,6 +17,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,8 +25,10 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -36,6 +39,7 @@ import net.minecraftforge.network.NetworkHooks;
  */
 public class FlyingCarpetEntity extends Entity {
     protected static final EntityDataAccessor<Integer> DYE_COLOR = SynchedEntityData.defineId(FlyingCarpetEntity.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<Float> DAMAGE = SynchedEntityData.defineId(FlyingCarpetEntity.class, EntityDataSerializers.FLOAT);
 
     private float momentum;
     private int lerpSteps;
@@ -69,6 +73,7 @@ public class FlyingCarpetEntity extends Entity {
     @Override
     protected void defineSynchedData() {
         this.entityData.define(DYE_COLOR, -1);
+        this.entityData.define(DAMAGE, 0.0F);
     }
 
     @Override
@@ -136,6 +141,11 @@ public class FlyingCarpetEntity extends Entity {
         this.xo = this.getX();
         this.yo = this.getY();
         this.zo = this.getZ();
+        
+        if (this.getDamage() > 0.0F) {
+            this.setDamage(this.getDamage() - 1.0F);
+        }
+        
         super.tick();
         this.tickLerp();
         
@@ -227,12 +237,7 @@ public class FlyingCarpetEntity extends Entity {
         Level level = this.level();
         if (!level.isClientSide && this.isAlive()) {
             if (player.isSecondaryUseActive()) {
-                ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
-                DyeColor color = this.getDyeColor();
-                if (color != null) {
-                    ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);
-                }
-                this.spawnAtLocation(stack, 0.0F);
+                this.spawnAtLocation(this.getDropItem(), 0.0F);
                 this.discard();
                 return InteractionResult.SUCCESS;
             } else {
@@ -241,6 +246,37 @@ public class FlyingCarpetEntity extends Entity {
             }
         }
         return InteractionResult.PASS;
+    }
+    
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+        Level level = this.level();
+        if (this.isInvulnerableTo(pSource)) {
+            return false;
+        } else if (!level.isClientSide && !this.isRemoved()) {
+            this.setDamage(this.getDamage() + pAmount * 10.0F);
+            this.markHurt();
+            this.gameEvent(GameEvent.ENTITY_DAMAGE, pSource.getEntity());
+            boolean flag = pSource.getEntity() instanceof Player player && player.getAbilities().instabuild;
+            if (flag || this.getDamage() > 40F) {
+                if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+                    this.spawnAtLocation(this.getDropItem(), 0.0F);
+                }
+                this.discard();
+            }
+            return true;
+        } else {
+            return true;
+        }
+    }
+
+    protected ItemStack getDropItem() {
+        ItemStack stack = new ItemStack(ItemsPM.FLYING_CARPET.get());
+        DyeColor color = this.getDyeColor();
+        if (color != null) {
+            ((FlyingCarpetItem)stack.getItem()).setDyeColor(stack, color);
+        }
+        return stack;
     }
     
     public DyeColor getDyeColor() {
@@ -258,6 +294,14 @@ public class FlyingCarpetEntity extends Entity {
         } else {
             this.entityData.set(DYE_COLOR, Integer.valueOf(color.getId()));
         }
+    }
+    
+    public void setDamage(float damageTaken) {
+        this.entityData.set(DAMAGE, damageTaken);
+    }
+    
+    public float getDamage() {
+        return this.entityData.get(DAMAGE);
     }
 
     @Override

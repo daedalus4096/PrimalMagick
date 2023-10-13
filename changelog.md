@@ -12,6 +12,7 @@ v4.0.7
 * Fixed a multiplayer display bug in the menu of the Mana Nexus
 * Fixed a bug preventing ops from granting research via debug command in multiplayer
 * Fixed a display bug with long player names on the Dream Journal
+* Made Flying Carpet drop in world upon taking sufficient damage instead of being destroyed
 
 v4.0.6
 ------
