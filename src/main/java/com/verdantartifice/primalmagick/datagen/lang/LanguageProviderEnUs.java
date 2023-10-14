@@ -1441,6 +1441,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("linguistics").sub("comprehension").sub("set").sub("target").output("%1$s has set your %2$s language comprehension to %3$d").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("success").sub("capped").output("Set %2$s language comprehension for %1$s to %3$d (capped from %4$d)").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s language comprehension to %3$d (capped from %4$d)").end().build();
+        this.command("affinities").sub("explain").sub("from_recipe").output("Affinities for item %1$s are derived from recipe %2$s").end().build();
+        this.command("affinities").sub("explain").sub("from_data").output("Affinities for item %1$s are explicitly set").end().build();
+        this.command("affinities").sub("explain").sub("not_found").output("Affinity data not found for item %1$s").end().build();
         this.command("error").name("Error executing command").build();
         
         // Generate event output localizations

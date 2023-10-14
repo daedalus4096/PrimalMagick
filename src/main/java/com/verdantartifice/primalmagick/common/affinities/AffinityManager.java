@@ -168,8 +168,7 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return this.affinities.getOrDefault(type, Collections.emptyMap()).get(id);
     }
     
-    @Nullable
-    CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+    public CompletableFuture<IAffinity> getOrGenerateItemAffinityAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         Map<ResourceLocation, IAffinity> map = this.affinities.computeIfAbsent(AffinityType.ITEM, (affinityType) -> {
             return new HashMap<>();
         });

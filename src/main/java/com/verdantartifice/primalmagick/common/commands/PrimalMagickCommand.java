@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.commands;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +20,8 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
+import com.verdantartifice.primalmagick.common.affinities.IAffinity;
+import com.verdantartifice.primalmagick.common.affinities.ItemAffinity;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -204,6 +207,10 @@ public class PrimalMagickCommand {
                     // By default, invoke excluding vanilla and PM items on the assumption they should be in the intended places.
                     .executes(context -> { return writeSourcelessItemDatapack(context.getSource(), Arrays.asList("minecraft", "primalmagick"));})
                     .then(Commands.literal("all").executes((context) -> {return writeSourcelessItemDatapack(context.getSource(),null);}))
+                )
+                .then(Commands.literal("explain")
+                    // /pm affinities explain <item>
+                    .then(Commands.argument("item", ItemArgument.item(buildContext)).executes(context -> explainItemAffinity(context.getSource(), ItemArgument.getItem(context, "item"))))
                 )
             )
             .then(Commands.literal("recipes")
@@ -888,6 +895,23 @@ public class PrimalMagickCommand {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, newValue));
             }
         }
+        return 0;
+    }
+
+    private static int explainItemAffinity(CommandSourceStack source, ItemInput item) {
+        // Get the affinity data for the item
+        ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(item.getItem());
+        IAffinity affinityData = AffinityManager.getInstance().getOrGenerateItemAffinityAsync(itemId, source.getRecipeManager(), source.registryAccess(), new ArrayList<>()).join();
+        if (affinityData instanceof ItemAffinity itemAffinity) {
+            itemAffinity.getSourceRecipe().ifPresentOrElse(recipeLoc -> {
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_recipe", itemId.toString(), recipeLoc.toString()), true);
+            }, () -> {
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.affinities.explain.from_data", itemId.toString()), true);
+            });
+        } else {
+            source.sendFailure(Component.translatable("commands.primalmagick.affinities.explain.not_found", itemId.toString()));
+        }
+                
         return 0;
     }
 }
