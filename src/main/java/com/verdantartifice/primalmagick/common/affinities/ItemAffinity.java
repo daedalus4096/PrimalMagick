@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.affinities;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nonnull;
@@ -25,6 +26,7 @@ public class ItemAffinity extends AbstractAffinity {
     protected SourceList setValues;
     protected SourceList addValues;
     protected SourceList removeValues;
+    protected Optional<ResourceLocation> sourceRecipe = Optional.empty();
     
     protected ItemAffinity(@Nonnull ResourceLocation target) {
         super(target);
@@ -43,6 +45,14 @@ public class ItemAffinity extends AbstractAffinity {
     @Override
     public IAffinitySerializer<?> getSerializer() {
         return SERIALIZER;
+    }
+    
+    public Optional<ResourceLocation> getSourceRecipe() {
+        return this.sourceRecipe;
+    }
+    
+    public void setSourceRecipe(Optional<ResourceLocation> sourceRecipe) {
+        this.sourceRecipe = sourceRecipe;
     }
 
     @Override

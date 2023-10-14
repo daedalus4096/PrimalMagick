@@ -19,6 +19,7 @@ v4.0.7
 * Made Endermen take additional damage from Sea spells; they remain immune to ranged attacks
 * Fixed a bug where the Bounty enchantment could recursively multiply bonus loot
 * Improved the Bounty enchantment to increase yields of all members of the vanilla crops block tag
+* Added a command to help debug from where items are sourcing their affinities
 
 v4.0.6
 ------
