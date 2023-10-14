@@ -1568,7 +1568,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.add("spells.primalmagick.vehicle.header", "Spell Type");
         this.spellVehicle(EmptySpellVehicle.TYPE).name("None").defaultName("").build();
         this.spellVehicle(TouchSpellVehicle.TYPE).name("Touch").defaultName("Hand").build();
-        this.spellVehicle(ProjectileSpellVehicle.TYPE).name("Projectile").defaultName("Missle").build();
+        this.spellVehicle(ProjectileSpellVehicle.TYPE).name("Projectile").defaultName("Missile").build();
         this.spellVehicle(BoltSpellVehicle.TYPE).name("Bolt").defaultName("Bolt").detailTooltip("Bolt (%1$d blocks)").build();
         this.spellVehicle(SelfSpellVehicle.TYPE).name("Self").defaultName("Self").build();
         

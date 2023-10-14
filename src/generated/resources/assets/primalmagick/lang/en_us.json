@@ -2402,7 +2402,7 @@
   "spells.primalmagick.vehicle.header": "Spell Type",
   "spells.primalmagick.vehicle.none.default_name": "",
   "spells.primalmagick.vehicle.none.type": "None",
-  "spells.primalmagick.vehicle.projectile.default_name": "Missle",
+  "spells.primalmagick.vehicle.projectile.default_name": "Missile",
   "spells.primalmagick.vehicle.projectile.type": "Projectile",
   "spells.primalmagick.vehicle.self.default_name": "Self",
   "spells.primalmagick.vehicle.self.type": "Self",
