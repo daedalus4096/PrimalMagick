@@ -1117,6 +1117,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .fullRuneText("The Magick Protection enchantment can be imbued through the use of Protect, Self, and Void runes.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magick damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.")
             .partialRuneText("The Magick Protection enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any piece of armor.  When applied, it significantly reduces all incoming magick damage, such as from sorcerous spells.  It is incompatible with other Protection enchantments.")
             .build();
+        this.enchantment(EnchantmentsPM.GUILLOTINE).name("Guillotine")
+            .description("Grants a chance for the victim to drop its head when slain.")
+            .fullRuneText("The Guillotine enchantment can be imbued through the use of Dispel, Creature, and Blood runes.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
+            .partialRuneText("The Guillotine enchantment can be imbued through the use of runes, though I'm still learning which ones.  It can be applied to any sword or axe.  When applied, it increases the chance for the victim to drop its head when slain.")
+            .build();
 
         // Generate vanilla enchantment localization extensions
         this.enchantment(Enchantments.ALL_DAMAGE_PROTECTION)
