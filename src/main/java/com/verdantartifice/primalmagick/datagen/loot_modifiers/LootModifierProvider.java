@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFarmingModif
 import com.verdantartifice.primalmagick.common.loot.modifiers.BountyFishingModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
+import com.verdantartifice.primalmagick.common.loot.modifiers.GuillotineModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
@@ -27,6 +28,7 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -196,6 +198,48 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }));
+        this.add("guillotine_zombie_head", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.ZOMBIE_HEAD, 0.1F));
+        this.add("guillotine_skeleton_skull", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.SKELETON_SKULL, 0.1F));
+        this.add("guillotine_creeper_head", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.CREEPER_HEAD, 0.1F));
+        this.add("guillotine_dragon_head", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.DRAGON_HEAD, 0.1F));
+        this.add("guillotine_wither_skeleton_skull", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.WITHER_SKELETON_SKULL, 0.1F));
+        this.add("guillotine_piglin_head", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.PIGLIN_HEAD, 0.1F));
+        this.add("guillotine_player_head", new GuillotineModifier(
+                new LootItemCondition[] {
+                        // TODO Use the MatchTool loot predicate if the tool parameter is ever included for entity kills
+                        LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD)).build(),
+                        LootItemKilledByPlayerCondition.killedByPlayer().build()
+                }, Items.PLAYER_HEAD, 0.1F));
         // TODO Re-add archaeology and structure chest loot modifiers once the book project is ready to deploy
     }
 }

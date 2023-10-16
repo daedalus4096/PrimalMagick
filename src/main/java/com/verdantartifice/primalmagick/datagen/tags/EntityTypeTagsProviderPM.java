@@ -66,5 +66,13 @@ public class EntityTypeTagsProviderPM extends EntityTypeTagsProvider {
         this.tag(EntityTypeTagsPM.DROPS_RELIC_FRAGMENTS_LOW).add(EntityType.CREEPER, EntityType.DROWNED, EntityType.ENDERMAN, EntityType.GHAST, EntityType.GUARDIAN, EntityType.HUSK,
                 EntityType.PHANTOM, EntityType.PIGLIN, EntityType.PIGLIN_BRUTE, EntityType.PILLAGER, EntityType.SKELETON, EntityType.STRAY, EntityType.VINDICATOR, EntityType.WITHER_SKELETON,
                 EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN, EntityTypesPM.TREEFOLK.get());
+        
+        this.tag(EntityTypeTagsPM.GUILLOTINE_ZOMBIE_HEAD).add(EntityType.ZOMBIE, EntityType.DROWNED, EntityType.HUSK, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_SKELETON_SKULL).add(EntityType.SKELETON, EntityType.STRAY);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_CREEPER_HEAD).add(EntityType.CREEPER);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_DRAGON_HEAD).add(EntityType.ENDER_DRAGON);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_WITHER_SKELETON_SKULL).add(EntityType.WITHER_SKELETON);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_PIGLIN_HEAD).add(EntityType.PIGLIN, EntityType.PIGLIN_BRUTE);
+        this.tag(EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD).add(EntityType.PLAYER);
     }
 }

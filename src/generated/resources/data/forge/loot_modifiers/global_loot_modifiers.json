@@ -3,8 +3,11 @@
     "primalmagick:bloody_flesh",
     "primalmagick:humming_artifact_pillager_outpost",
     "primalmagick:lucky_strike",
+    "primalmagick:guillotine_skeleton_skull",
+    "primalmagick:guillotine_creeper_head",
     "primalmagick:bounty_farming",
     "primalmagick:essence_thief",
+    "primalmagick:guillotine_zombie_head",
     "primalmagick:humming_artifact_woodland_mansion",
     "primalmagick:humming_artifact_stronghold_library",
     "primalmagick:four_leaf_clover_tall_grass",
@@ -18,14 +21,18 @@
     "primalmagick:humming_artifact_abandoned_mineshaft",
     "primalmagick:blood_notes_high",
     "primalmagick:humming_artifact_igloo_chest",
+    "primalmagick:guillotine_player_head",
     "primalmagick:blood_notes_low",
     "primalmagick:relic_fragments_high",
     "primalmagick:humming_artifact_simple_dungeon",
+    "primalmagick:guillotine_piglin_head",
     "primalmagick:humming_artifact_shipwreck_treasure",
+    "primalmagick:guillotine_wither_skeleton_skull",
     "primalmagick:humming_artifact_ancient_city",
     "primalmagick:humming_artifact_nether_fortress",
     "primalmagick:humming_artifact_bastion_treasure",
-    "primalmagick:bounty_fishing"
+    "primalmagick:bounty_fishing",
+    "primalmagick:guillotine_dragon_head"
   ],
   "replace": false
 }

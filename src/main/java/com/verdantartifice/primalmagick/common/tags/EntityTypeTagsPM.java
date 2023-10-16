@@ -28,6 +28,14 @@ public class EntityTypeTagsPM {
     public static final TagKey<EntityType<?>> DROPS_BLOOD_NOTES_LOW = tag("drops_blood_notes_low");
     public static final TagKey<EntityType<?>> DROPS_RELIC_FRAGMENTS_HIGH = tag("drops_relic_fragments_high");
     public static final TagKey<EntityType<?>> DROPS_RELIC_FRAGMENTS_LOW = tag("drops_relic_fragments_low");
+    
+    public static final TagKey<EntityType<?>> GUILLOTINE_ZOMBIE_HEAD = tag("guillotine/zombie_head");
+    public static final TagKey<EntityType<?>> GUILLOTINE_SKELETON_SKULL = tag("guillotine/skeleton_skull");
+    public static final TagKey<EntityType<?>> GUILLOTINE_CREEPER_HEAD = tag("guillotine/creeper_head");
+    public static final TagKey<EntityType<?>> GUILLOTINE_DRAGON_HEAD = tag("guillotine/dragon_head");
+    public static final TagKey<EntityType<?>> GUILLOTINE_WITHER_SKELETON_SKULL = tag("guillotine/wither_skeleton_skull");
+    public static final TagKey<EntityType<?>> GUILLOTINE_PIGLIN_HEAD = tag("guillotine/piglin_head");
+    public static final TagKey<EntityType<?>> GUILLOTINE_PLAYER_HEAD = tag("guillotine/player_head");
 
     private static TagKey<EntityType<?>> tag(String name) {
         return TagKey.create(Registries.ENTITY_TYPE, PrimalMagick.resource(name));
