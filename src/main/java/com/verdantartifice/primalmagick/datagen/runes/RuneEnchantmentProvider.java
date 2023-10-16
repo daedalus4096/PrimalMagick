@@ -137,6 +137,7 @@ public class RuneEnchantmentProvider implements DataProvider {
         RuneEnchantmentBuilder.enchantment(EnchantmentsPM.BULWARK.get()).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.HALLOWED)
             .requiredResearch(CompoundResearchKey.from(true, "MASTER_RUNEWORKING", "SACRED_SHIELD", "RUNE_PROTECT", "RUNE_SELF", "RUNE_HALLOWED")).build(consumer);
         RuneEnchantmentBuilder.enchantment(EnchantmentsPM.MAGICK_PROTECTION.get()).verb(Rune.PROTECT).noun(Rune.SELF).source(Rune.VOID).build(consumer);
+        RuneEnchantmentBuilder.enchantment(EnchantmentsPM.GUILLOTINE.get()).verb(Rune.DISPEL).noun(Rune.CREATURE).source(Rune.BLOOD).build(consumer);
         
         // Register lack of rune combinations for unsupported enchantments
         this.registerEmptyEnchantment(Enchantments.BINDING_CURSE);

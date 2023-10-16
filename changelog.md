@@ -20,6 +20,7 @@ v4.0.7
 * Fixed a bug where the Bounty enchantment could recursively multiply bonus loot
 * Improved the Bounty enchantment to increase yields of all members of the vanilla crops block tag
 * Added a command to help debug from where items are sourcing their affinities
+* Added Guillotine enchantment, to help you get a head
 
 v4.0.6
 ------

@@ -1,0 +1,7 @@
+{
+  "type": "enchantment_bonus",
+  "multiplier": {
+    "blood": 1
+  },
+  "target": "primalmagick:guillotine"
+}
