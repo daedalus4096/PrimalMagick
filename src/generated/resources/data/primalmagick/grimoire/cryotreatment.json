@@ -26,7 +26,8 @@
       },
       "recipes": [
         "primalmagick:ice_from_cryotreatment",
-        "primalmagick:obsidian_from_cryotreatment"
+        "primalmagick:obsidian_from_cryotreatment",
+        "primalmagick:slime_ball_from_cryotreatment"
       ],
       "text": "research.primalmagick.cryotreatment.text.stage.2"
     }

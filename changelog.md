@@ -21,6 +21,7 @@ v4.0.7
 * Improved the Bounty enchantment to increase yields of all members of the vanilla crops block tag
 * Added a command to help debug from where items are sourcing their affinities
 * Added Guillotine enchantment, to help you get a head
+* Added a Cryotreatment recipe to turn magma cream into slime balls
 
 v4.0.6
 ------

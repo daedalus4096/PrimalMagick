@@ -90,6 +90,7 @@ public class Recipes extends RecipeProvider {
         this.registerWardingModuleRecipes(consumer);
         this.registerCodexRecipes(consumer);
         this.registerStonemeldingRecipes(consumer);
+        this.registerCryotreatmentRecipes(consumer);
         this.registerCropRecipes(consumer);
         this.registerIgnyxRecipes(consumer);
         
@@ -372,16 +373,6 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("CALCINATOR_HEAVENLY")))
             .manaCost(SourceList.EMPTY.add(Source.HALLOWED, 100))
             .build(consumer);
-        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.ICE)
-            .addIngredient(Items.WATER_BUCKET)
-            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
-            .build(consumer, PrimalMagick.resource("ice_from_cryotreatment"));
-        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.OBSIDIAN)
-            .addIngredient(Items.LAVA_BUCKET)
-            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
-            .build(consumer, PrimalMagick.resource("obsidian_from_cryotreatment"));
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MAGITECH_PARTS_BASIC.get())
             .patternLine("SIS")
             .patternLine("IRI")
@@ -6583,6 +6574,24 @@ public class Recipes extends RecipeProvider {
             .key('D', ItemsPM.ESSENCE_DUST_EARTH.get())
             .research(CompoundResearchKey.from(SimpleResearchKey.find("STONEMELDING")))
             .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
+    }
+    
+    protected void registerCryotreatmentRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.ICE)
+            .addIngredient(Items.WATER_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
+            .build(consumer, PrimalMagick.resource("ice_from_cryotreatment"));
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.OBSIDIAN)
+            .addIngredient(Items.LAVA_BUCKET)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
+            .build(consumer, PrimalMagick.resource("obsidian_from_cryotreatment"));
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.SLIME_BALL)
+            .addIngredient(Items.MAGMA_CREAM)
+            .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("CRYOTREATMENT")))
+            .build(consumer, PrimalMagick.resource("slime_ball_from_cryotreatment"));
     }
     
     protected void registerCropRecipes(Consumer<FinishedRecipe> consumer) {
