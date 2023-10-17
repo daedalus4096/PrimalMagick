@@ -194,7 +194,7 @@ public class BlocksPM {
     public static final RegistryObject<StrippableLogBlock> HALLOWOOD_LOG = BLOCKS.register("hallowood_log", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_LOG.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<RotatedPillarBlock> STRIPPED_HALLOWOOD_WOOD = BLOCKS.register("stripped_hallowood_wood", () -> new RotatedPillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<StrippableLogBlock> HALLOWOOD_WOOD = BLOCKS.register("hallowood_wood", () -> new StrippableLogBlock(STRIPPED_HALLOWOOD_WOOD.get(), Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
-    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlocksPM::isntSolid).isViewBlocking(BlocksPM::isntSolid).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
+    public static final RegistryObject<LeavesBlock> HALLOWOOD_LEAVES = BLOCKS.register("hallowood_leaves", () -> new LeavesBlock(Block.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).strength(0.2F).noOcclusion().sound(SoundType.GRASS).lightLevel((state) -> { return 10; }).isSuffocating(BlocksPM::never).isViewBlocking(BlocksPM::never).isValidSpawn(BlocksPM::allowsSpawnOnLeaves)));
     public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.copy(HALLOWOOD_PLANKS.get())));
@@ -371,7 +371,7 @@ public class BlocksPM {
     public static final RegistryObject<TreefolkSproutBlock> TREEFOLK_SPROUT = BLOCKS.register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
 
     // Helper functions for block properties
-    protected static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
+    protected static boolean never(BlockState state, BlockGetter reader, BlockPos pos) {
         return false;
     }
 
