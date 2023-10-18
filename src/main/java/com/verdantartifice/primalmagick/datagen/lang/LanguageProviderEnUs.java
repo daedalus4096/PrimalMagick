@@ -2353,6 +2353,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("I've now learned how to create a source block of water from nothing but Sea mana.  By casting this spell, I can place a block of water anywhere I like, just as if I'd dumped it from a bucket.<BR>This spell is not without limits, however.  An extremely high ambient temperature, such as found in the Nether, will cause the spell to fail.")
                 .end()
             .build();
+        this.researchEntry("SPELL_PAYLOAD_SHEAR").name("Spell Payload: Shear")
+            .stages()
+                .add("Breaking things is all well and good, but sometimes I need to be a little more... precise.  A scalpel instead of a sledgehammer.  Let's see what magick can provide.")
+                .add("With the careful application of cutting winds, I can now simulate the effect of shears on a target.  It won't damage creatures, but it will shear a sheep, harvest some leaves, or disarm a tripwire without damaging the rest of the environment.  Niche, but useful.")
+                .end()
+            .build();
         this.researchEntry("SPELL_PAYLOAD_FLIGHT").name("Spell Payload: Flight")
             .stages()
                 .add("Ah, to soar through the sky like a bird.  Is there any more universal dream among humankind?  Perhaps Sky magick is the key to realizing that dream.")
