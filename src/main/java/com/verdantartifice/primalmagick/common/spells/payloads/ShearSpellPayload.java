@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TripWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
@@ -69,20 +70,23 @@ public class ShearSpellPayload extends AbstractSpellPayload {
                 BlockPos pos = blockTarget.getBlockPos();
                 BlockState state = world.getBlockState(pos);
                 UseOnContext fakeContext = new UseOnContext(world, player, InteractionHand.MAIN_HAND, fakeShears, blockTarget);
-                boolean actionFound = false;
                 for (ToolAction action : ToolActions.DEFAULT_SHEARS_ACTIONS) {
                     // If the block state responds to a right-click from shears, then do that
                     BlockState modifiedState = state.getToolModifiedState(fakeContext, action, true);
                     if (modifiedState != null) {
-                        actionFound = true;
                         world.setBlock(pos, modifiedState, Block.UPDATE_ALL_IMMEDIATE);
                         world.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, modifiedState));
-                        break;
+                        return;
                     }
                 }
-                if (!actionFound && state.is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
+                if (!world.isClientSide && state.getBlock() instanceof TripWireBlock tripwire) {
+                    // Handle special tripwire case
+                    world.setBlock(pos, state.setValue(TripWireBlock.DISARMED, Boolean.TRUE), Block.UPDATE_INVISIBLE);
+                    world.gameEvent(player, GameEvent.SHEAR, pos);
+                }
+                if (state.is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
                     // If no applicable right-click action is found, but the block is mineable with shears, then break it quickly
-                    BlockBreaker breaker = new BlockBreaker.Builder().power(5).target(pos, state).durability(1F).player((Player)caster).tool(fakeShears).fortune(treasureLevel).alwaysDrop().build();
+                    BlockBreaker breaker = new BlockBreaker.Builder().power(5).target(pos, state).durability(1F).player(player).tool(fakeShears).fortune(treasureLevel).alwaysDrop().build();
                     BlockBreaker.schedule(world, 1, breaker);
                 }
             }
