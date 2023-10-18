@@ -182,6 +182,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_BREAK = register("spell_payload_break", () -> new ResearchName("SPELL_PAYLOAD_BREAK"));
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_STONE = register("spell_payload_conjure_stone", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_STONE"));
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_WATER = register("spell_payload_conjure_water", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_WATER"));
+    public static final RegistryObject<ResearchName> SPELL_PAYLOAD_SHEAR = register("spell_payload_shear", () -> new ResearchName("SPELL_PAYLOAD_SHEAR"));
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_FLIGHT = register("spell_payload_flight", () -> new ResearchName("SPELL_PAYLOAD_FLIGHT"));
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_CONJURE_LIGHT = register("spell_payload_conjure_light", () -> new ResearchName("SPELL_PAYLOAD_CONJURE_LIGHT"));
     public static final RegistryObject<ResearchName> SPELL_PAYLOAD_HEALING = register("spell_payload_healing", () -> new ResearchName("SPELL_PAYLOAD_HEALING"));
