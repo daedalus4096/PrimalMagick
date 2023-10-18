@@ -384,6 +384,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> INTERNAL_BLOCKS_BROKEN_BAREHANDED_EXPERT = register("blocks_broken_barehanded_expert", () -> new ResearchName("m_blocks_broken_barehanded_expert"));
     public static final RegistryObject<ResearchName> INTERNAL_PLACE_STONE_EXPERT = register("place_stone_expert", () -> new ResearchName("b_place_stone_expert"));
     public static final RegistryObject<ResearchName> INTERNAL_DROWN_A_LITTLE = register("drown_a_little", () -> new ResearchName("m_drown_a_little"));
+    public static final RegistryObject<ResearchName> INTERNAL_SHEARS_USED = register("shears_used", () -> new ResearchName("b_shears_used_expert"));
     public static final RegistryObject<ResearchName> INTERNAL_FLY_ELYTRA = register("fly_elytra", () -> new ResearchName("m_fly_elytra"));
     public static final RegistryObject<ResearchName> INTERNAL_PLACE_TORCH_EXPERT = register("place_torch_expert", () -> new ResearchName("b_place_torch_expert"));
     public static final RegistryObject<ResearchName> INTERNAL_NEAR_DEATH_EXPERIENCE = register("near_death_experience", () -> new ResearchName("m_near_death_experience"));

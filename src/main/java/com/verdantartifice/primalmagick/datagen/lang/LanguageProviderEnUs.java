@@ -1762,6 +1762,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
+        this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
         // Generate research project localizations
@@ -1853,6 +1854,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("m_blocks_broken_barehanded_expert").name("Break 50 blocks with your bare hands.  They must be at least as hard as wood.").build();
         this.researchRequirement("b_place_stone_expert").name("Place 100 stone or cobblestone").build();
         this.researchRequirement("m_drown_a_little").name("Test the limits of your underwater endurance").hint("Suffer at least one point of drowning damage").build();
+        this.researchRequirement("b_shears_used_expert").name("Use shears to trim 50 things").build();
         this.researchRequirement("m_fly_elytra").name("Soar on an Elytra for 1km").build();
         this.researchRequirement("b_place_torch_expert").name("Place 100 torches").build();
         this.researchRequirement("m_near_death_experience").name("Have a near-death experience").hint("Drop to three hearts of life or less, then recover to full health without dying").build();

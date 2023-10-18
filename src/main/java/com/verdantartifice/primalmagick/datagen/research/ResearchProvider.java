@@ -802,7 +802,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_SHEAR", discipline).icon(Source.SKY.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING").parent("SPELL_PAYLOAD_BREAK")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build()) // FIXME Add extra requirement for shear research
+            .stage(ResearchStageBuilder.stage().requiredResearch("b_shears_used_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 3).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLIGHT", discipline).icon(Source.SKY.getImage()).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING")
