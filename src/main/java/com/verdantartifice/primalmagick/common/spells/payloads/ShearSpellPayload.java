@@ -30,6 +30,7 @@ import net.minecraft.world.level.block.TripWireBlock;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -82,10 +83,14 @@ public class ShearSpellPayload extends AbstractSpellPayload {
                         return;
                     }
                 }
-                if (!world.isClientSide && state.getBlock() instanceof TripWireBlock tripwire) {
+                if (state.getBlock() instanceof TripWireBlock tripwire) {
                     // Handle special tripwire case
+                    FluidState fluid = world.getFluidState(pos);
                     world.setBlock(pos, state.setValue(TripWireBlock.DISARMED, Boolean.TRUE), Block.UPDATE_INVISIBLE);
                     world.gameEvent(player, GameEvent.SHEAR, pos);
+                    if (world.setBlock(pos, fluid.createLegacyBlock(), world.isClientSide ? Block.UPDATE_ALL_IMMEDIATE : Block.UPDATE_ALL)) {
+                        state.getBlock().destroy(world, pos, state);
+                    }
                 }
                 if (state.getBlock() instanceof BeehiveBlock beehive && state.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
                     // Handle special beehive case
@@ -101,7 +106,9 @@ public class ShearSpellPayload extends AbstractSpellPayload {
                         beehive.resetHoneyLevel(world, state, pos);
                     }
                 }
-                if (state.is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
+                
+                // Re-fetch block state in case it was changed by this function
+                if (world.getBlockState(pos).is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
                     // If no applicable right-click action is found, but the block is mineable with shears, then break it quickly
                     BlockBreaker breaker = new BlockBreaker.Builder().power(5).target(pos, state).durability(1F).player(player).tool(fakeShears).fortune(treasureLevel).alwaysDrop().build();
                     BlockBreaker.schedule(world, 1, breaker);
