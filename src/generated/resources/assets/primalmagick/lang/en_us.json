@@ -2385,6 +2385,8 @@
   "spells.primalmagick.payload.polymorph_sheep.default_name": "Sheeping",
   "spells.primalmagick.payload.polymorph_sheep.detail_tooltip": "Polymorph (%1$s sec)",
   "spells.primalmagick.payload.polymorph_sheep.type": "Polymorph: Sheep",
+  "spells.primalmagick.payload.shear.default_name": "Shearing",
+  "spells.primalmagick.payload.shear.type": "Shear",
   "spells.primalmagick.payload.solar_damage.default_name": "Solar",
   "spells.primalmagick.payload.solar_damage.detail_tooltip": "Solar Damage (%1$s damage, %2$s sec)",
   "spells.primalmagick.payload.solar_damage.type": "Solar Damage",

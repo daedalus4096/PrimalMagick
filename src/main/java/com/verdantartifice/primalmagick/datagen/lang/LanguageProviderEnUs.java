@@ -45,6 +45,7 @@ import com.verdantartifice.primalmagick.common.spells.payloads.LightningDamageSp
 import com.verdantartifice.primalmagick.common.spells.payloads.LunarDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphSheepSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphWolfSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ShearSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SolarDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.TeleportSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.VoidDamageSpellPayload;
@@ -1592,6 +1593,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.spellPayload(BreakSpellPayload.TYPE).name("Break").defaultName("Shattering").build();
         this.spellPayload(ConjureStoneSpellPayload.TYPE).name("Conjure Stone").defaultName("Stone").build();
         this.spellPayload(ConjureWaterSpellPayload.TYPE).name("Conjure Water").defaultName("Water").build();
+        this.spellPayload(ShearSpellPayload.TYPE).name("Shear").defaultName("Shearing").build();
         this.spellPayload(FlightSpellPayload.TYPE).name("Flight").defaultName("Flight").detailTooltip("Flight (%1$s sec)").build();
         this.spellPayload(ConjureLightSpellPayload.TYPE).name("Conjure Light").defaultName("Illuminating").build();
         this.spellPayload(HealingSpellPayload.TYPE).name("Healing").defaultName("Healing").detailTooltip("Healing (%1$s health)").build();
