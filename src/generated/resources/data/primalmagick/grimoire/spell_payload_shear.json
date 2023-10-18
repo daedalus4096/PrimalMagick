@@ -1,0 +1,32 @@
+{
+  "addenda": [],
+  "discipline": "SORCERY",
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/sources/sky.png"
+  },
+  "key": "SPELL_PAYLOAD_SHEAR",
+  "name": "research.primalmagick.spell_payload_shear.title",
+  "parents": [
+    "EXPERT_SORCERY",
+    "SPELL_PAYLOAD_LIGHTNING",
+    "SPELL_PAYLOAD_BREAK"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;1"
+      ],
+      "required_research": [
+        "b_shears_used_expert"
+      ],
+      "text": "research.primalmagick.spell_payload_shear.text.stage.1"
+    },
+    {
+      "attunements": {
+        "sky": 3
+      },
+      "text": "research.primalmagick.spell_payload_shear.text.stage.2"
+    }
+  ]
+}

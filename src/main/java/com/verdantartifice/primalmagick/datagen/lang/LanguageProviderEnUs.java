@@ -45,6 +45,7 @@ import com.verdantartifice.primalmagick.common.spells.payloads.LightningDamageSp
 import com.verdantartifice.primalmagick.common.spells.payloads.LunarDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphSheepSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.PolymorphWolfSpellPayload;
+import com.verdantartifice.primalmagick.common.spells.payloads.ShearSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.SolarDamageSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.TeleportSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.payloads.VoidDamageSpellPayload;
@@ -1592,6 +1593,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.spellPayload(BreakSpellPayload.TYPE).name("Break").defaultName("Shattering").build();
         this.spellPayload(ConjureStoneSpellPayload.TYPE).name("Conjure Stone").defaultName("Stone").build();
         this.spellPayload(ConjureWaterSpellPayload.TYPE).name("Conjure Water").defaultName("Water").build();
+        this.spellPayload(ShearSpellPayload.TYPE).name("Shear").defaultName("Shearing").build();
         this.spellPayload(FlightSpellPayload.TYPE).name("Flight").defaultName("Flight").detailTooltip("Flight (%1$s sec)").build();
         this.spellPayload(ConjureLightSpellPayload.TYPE).name("Conjure Light").defaultName("Illuminating").build();
         this.spellPayload(HealingSpellPayload.TYPE).name("Healing").defaultName("Healing").detailTooltip("Healing (%1$s health)").build();
@@ -1760,6 +1762,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
+        this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
         // Generate research project localizations
@@ -1851,6 +1854,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("m_blocks_broken_barehanded_expert").name("Break 50 blocks with your bare hands.  They must be at least as hard as wood.").build();
         this.researchRequirement("b_place_stone_expert").name("Place 100 stone or cobblestone").build();
         this.researchRequirement("m_drown_a_little").name("Test the limits of your underwater endurance").hint("Suffer at least one point of drowning damage").build();
+        this.researchRequirement("b_shears_used_expert").name("Use shears to trim 50 things").build();
         this.researchRequirement("m_fly_elytra").name("Soar on an Elytra for 1km").build();
         this.researchRequirement("b_place_torch_expert").name("Place 100 torches").build();
         this.researchRequirement("m_near_death_experience").name("Have a near-death experience").hint("Drop to three hearts of life or less, then recover to full health without dying").build();
@@ -2351,6 +2355,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("Water behaves curiously in the Overworld; with the right placement, an infinite amount of it can be formed.  Can I replicate this effect with magick?")
                 .add("I've now learned how to create a source block of water from nothing but Sea mana.  By casting this spell, I can place a block of water anywhere I like, just as if I'd dumped it from a bucket.<BR>This spell is not without limits, however.  An extremely high ambient temperature, such as found in the Nether, will cause the spell to fail.")
+                .end()
+            .build();
+        this.researchEntry("SPELL_PAYLOAD_SHEAR").name("Spell Payload: Shear")
+            .stages()
+                .add("Breaking things is all well and good, but sometimes I need to be a little more... precise.  A scalpel instead of a sledgehammer.  Let's see what magick can provide.")
+                .add("With the careful application of cutting winds, I can now simulate the effect of shears on a target.  It won't damage creatures, but it will shear a sheep, harvest some leaves, or disarm a tripwire without damaging the rest of the environment.  Niche, but useful.")
                 .end()
             .build();
         this.researchEntry("SPELL_PAYLOAD_FLIGHT").name("Spell Payload: Flight")

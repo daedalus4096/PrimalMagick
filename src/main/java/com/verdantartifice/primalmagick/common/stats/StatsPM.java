@@ -47,5 +47,6 @@ public class StatsPM {
     public static final Stat SHRINE_FOUND_SUN = Stat.create("shrine_found_sun", StatFormatter.DEFAULT, false);
     public static final Stat SHRINE_FOUND_MOON = Stat.create("shrine_found_moon", StatFormatter.DEFAULT, false);
     public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.create("blocks_broken_barehanded", StatFormatter.DEFAULT, false);
+    public static final Stat SHEARS_USED = Stat.create("shears_used", StatFormatter.DEFAULT, false);
     public static final Stat TREANTS_NAMED = Stat.create("treants_named", StatFormatter.DEFAULT, false);
 }
