@@ -23,8 +23,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.TripWireBlock;
+import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
@@ -83,6 +86,20 @@ public class ShearSpellPayload extends AbstractSpellPayload {
                     // Handle special tripwire case
                     world.setBlock(pos, state.setValue(TripWireBlock.DISARMED, Boolean.TRUE), Block.UPDATE_INVISIBLE);
                     world.gameEvent(player, GameEvent.SHEAR, pos);
+                }
+                if (state.getBlock() instanceof BeehiveBlock beehive && state.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
+                    // Handle special beehive case
+                    world.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
+                    BeehiveBlock.dropHoneycomb(world, pos);
+                    world.gameEvent(player, GameEvent.SHEAR, pos);
+                    if (!CampfireBlock.isSmokeyPos(world, pos)) {
+                        if (beehive.hiveContainsBees(world, pos)) {
+                            beehive.angerNearbyBees(world, pos);
+                        }
+                        beehive.releaseBeesAndResetHoneyLevel(world, state, pos, player, BeehiveBlockEntity.BeeReleaseStatus.EMERGENCY);
+                    } else {
+                        beehive.resetHoneyLevel(world, state, pos);
+                    }
                 }
                 if (state.is(BlockTagsForgeExt.MINEABLE_WITH_SHEARS)) {
                     // If no applicable right-click action is found, but the block is mineable with shears, then break it quickly
