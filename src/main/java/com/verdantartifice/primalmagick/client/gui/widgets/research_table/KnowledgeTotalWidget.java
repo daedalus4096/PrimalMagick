@@ -1,17 +1,23 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.research_table;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.OptionalInt;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
@@ -23,21 +29,31 @@ import net.minecraftforge.common.util.LazyOptional;
  */
 public class KnowledgeTotalWidget extends AbstractWidget {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table_overlay.png");
+    protected static final DecimalFormat FORMATTER = new DecimalFormat("###.##");
 
-    protected KnowledgeType type;
-    protected LazyOptional<IPlayerKnowledge> knowledgeOpt;
+    protected final KnowledgeType type;
+    protected final LazyOptional<IPlayerKnowledge> knowledgeOpt;
+    protected final OptionalInt successDeltaOpt;
     
     public KnowledgeTotalWidget(int x, int y, KnowledgeType type) {
+        this(x, y, type, OptionalInt.empty());
+    }
+    
+    public KnowledgeTotalWidget(int x, int y, KnowledgeType type, OptionalInt successDeltaOpt) {
         super(x, y, 16, 19, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.type = type;
         this.knowledgeOpt = PrimalMagickCapabilities.getKnowledge(mc.player);
-        this.setTooltip(Tooltip.create(Component.translatable(this.type.getNameTranslationKey())));
+        this.successDeltaOpt = successDeltaOpt;
     }
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
+        
+        // Prepare tooltip
+        List<Component> lines = new ArrayList<>();
+        lines.add(Component.translatable(this.type.getNameTranslationKey()));
         
         // Draw knowledge type icon
         guiGraphics.pose().pushPose();
@@ -72,6 +88,31 @@ public class KnowledgeTotalWidget extends AbstractWidget {
             guiGraphics.blit(TEXTURE, 0, 0, 182, 0, px, 2);
             guiGraphics.pose().popPose();
         });
+        
+        this.successDeltaOpt.ifPresent(points -> {
+            double levels = (double)points / (double)this.type.getProgression();
+            String levelStr = FORMATTER.format(Math.abs(levels));
+            if (points > 0) {
+                // Draw theory gain preview str
+                Component previewText = Component.translatable("label.primalmagick.research_table.theory_gain_preview.positive", levelStr).withStyle(ChatFormatting.GREEN);
+                int width = mc.font.width(previewText);
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY(), 5.0F);
+                guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
+                guiGraphics.drawString(mc.font, previewText, 0, 0, Color.WHITE.getRGB());
+                guiGraphics.pose().popPose();
+                
+                // Prepare tooltip addition
+                if (levels == 1D) {
+                    lines.add(Component.translatable("tooltip.primalmagick.research_table.theory_gain_preview.positive.single", levelStr).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                } else {
+                    lines.add(Component.translatable("tooltip.primalmagick.research_table.theory_gain_preview.positive.multiple", levelStr).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                }
+            }
+        });
+        
+        // Assemble tooltip
+        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
     }
     
     @Override

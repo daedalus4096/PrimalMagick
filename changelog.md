@@ -24,6 +24,7 @@ v4.0.7
 * Added a Cryotreatment recipe to turn magma cream into slime balls
 * Fixed a bug where Consecration fields caused suffocation
 * Added Shear spell payload, to help you keep things neatly trimmed
+* Added theory gain preview to the Research Table
 
 v4.0.6
 ------

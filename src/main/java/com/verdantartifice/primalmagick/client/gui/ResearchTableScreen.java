@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -162,10 +163,10 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
         this.clearWidgets();
         this.completeProjectButton = null;
         
-        // Render theory progress widget
-        this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY));
-        
         if (this.project == null && this.menu.isWritingReady()) {
+            // Render theory progress widget
+            this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY));
+            
             if (this.progressing) {
                 // Render starting widget
                 Component text = Component.translatable("label.primalmagick.research_table.starting");
@@ -176,6 +177,9 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
                 this.addRenderableWidget(new StartProjectButton(this.leftPos + 38, this.topPos + 111, text, this));
             }
         } else if (this.isProjectReady()) {
+            // Render theory progress widget with gain preview
+            this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY, OptionalInt.of(this.project.getTheoryPointReward())));
+            
             if (this.progressing) {
                 // Render completing widget
                 Component text = Component.translatable("label.primalmagick.research_table.completing");

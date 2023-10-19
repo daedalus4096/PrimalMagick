@@ -897,6 +897,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("research_item").name("Use to gain arcane research").build();
         this.tooltip("research_table").sub("material").sub("consumed").output("This material will be consumed").end().build();
         this.tooltip("research_table").sub("material").sub("has_bonus").output("This material will grant bonus research progress").end().build();
+        this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("single").output("You will gain %1$s theory on success").end().build();
+        this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("multiple").output("You will gain %1$s theories on success").end().build();
         this.tooltip("attunement_shackles").sub("shackled").output("Shackled").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("additions_slot_description").output("Add source rune").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
@@ -952,6 +954,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("research_table").sub("complete").output("Complete Project (%1$s%%)").end().build();
         this.label("research_table").sub("unlock").output("Unlocked by: %1$s").end().build();
         this.label("research_table").sub("aid_header").output("Active research aids:").end().build();
+        this.label("research_table").sub("theory_gain_preview").sub("positive").output("+%1$s").end().build();
         this.label("essence_cask").sub("contents").output("Contents: %1$d / %2$d").end().build();
         this.label("essence_cask").sub("left_click").output("Left-click to withdraw one stack").end().build();
         this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();
