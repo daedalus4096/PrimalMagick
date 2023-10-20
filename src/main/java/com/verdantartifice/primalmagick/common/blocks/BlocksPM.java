@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks;
 
+import java.util.Optional;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.base.SaplingBlockPM;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ArcaneWorkbenchBlock;
@@ -35,6 +37,9 @@ import com.verdantartifice.primalmagick.common.blocks.mana.ArtificialManaFontBlo
 import com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.WandChargerBlock;
+import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemClusterBlock;
+import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemSourceBlock;
+import com.verdantartifice.primalmagick.common.blocks.minerals.GemBudType;
 import com.verdantartifice.primalmagick.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
@@ -83,6 +88,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.AttachedStemBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -214,6 +220,15 @@ public class BlocksPM {
     public static final RegistryObject<Block> INFUSED_STONE_SKY = BLOCKS.register("infused_stone_sky", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> INFUSED_STONE_SUN = BLOCKS.register("infused_stone_sun", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<Block> INFUSED_STONE_MOON = BLOCKS.register("infused_stone_moon", () -> new Block(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+    
+    // Register budding gem blocks
+    public static final RegistryObject<BuddingGemClusterBlock> SYNTHETIC_AMETHYST_CLUSTER = BLOCKS.register("synthetic_amethyst_cluster", () -> new BuddingGemClusterBlock(7, 3, GemBudType.AMETHYST, Optional.empty(), Block.Properties.of().forceSolidOn().noOcclusion().randomTicks().sound(SoundType.AMETHYST_CLUSTER).strength(1.5F).lightLevel(state -> 5).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<BuddingGemClusterBlock> LARGE_SYNTHETIC_AMETHYST_BUD = BLOCKS.register("large_synthetic_amethyst_bud", () -> new BuddingGemClusterBlock(5, 3, GemBudType.AMETHYST, Optional.of(SYNTHETIC_AMETHYST_CLUSTER), Block.Properties.of().forceSolidOn().noOcclusion().randomTicks().sound(SoundType.LARGE_AMETHYST_BUD).strength(1.5F).lightLevel(state -> 4).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<BuddingGemClusterBlock> MEDIUM_SYNTHETIC_AMETHYST_BUD = BLOCKS.register("medium_synthetic_amethyst_bud", () -> new BuddingGemClusterBlock(4, 3, GemBudType.AMETHYST, Optional.of(LARGE_SYNTHETIC_AMETHYST_BUD), Block.Properties.of().forceSolidOn().noOcclusion().randomTicks().sound(SoundType.MEDIUM_AMETHYST_BUD).strength(1.5F).lightLevel(state -> 2).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<BuddingGemClusterBlock> SMALL_SYNTHETIC_AMETHYST_BUD = BLOCKS.register("small_synthetic_amethyst_bud", () -> new BuddingGemClusterBlock(3, 4, GemBudType.AMETHYST, Optional.of(MEDIUM_SYNTHETIC_AMETHYST_BUD), Block.Properties.of().forceSolidOn().noOcclusion().randomTicks().sound(SoundType.SMALL_AMETHYST_BUD).strength(1.5F).lightLevel(state -> 1).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<BuddingGemSourceBlock> DAMAGED_BUDDING_AMETHYST_BLOCK = BLOCKS.register("damaged_budding_amethyst_block", () -> new BuddingGemSourceBlock(GemBudType.AMETHYST, () -> SMALL_SYNTHETIC_AMETHYST_BUD.get(), () -> Blocks.AMETHYST_BLOCK, 0.08F, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(1.5F).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+    public static final RegistryObject<BuddingGemSourceBlock> CHIPPED_BUDDING_AMETHYST_BLOCK = BLOCKS.register("chipped_budding_amethyst_block", () -> new BuddingGemSourceBlock(GemBudType.AMETHYST, () -> SMALL_SYNTHETIC_AMETHYST_BUD.get(), () -> DAMAGED_BUDDING_AMETHYST_BLOCK.get(), 0.08F, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(1.5F).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+    public static final RegistryObject<BuddingGemSourceBlock> FLAWED_BUDDING_AMETHYST_BLOCK = BLOCKS.register("flawed_budding_amethyst_block", () -> new BuddingGemSourceBlock(GemBudType.AMETHYST, SMALL_SYNTHETIC_AMETHYST_BUD, () -> CHIPPED_BUDDING_AMETHYST_BLOCK.get(), 0.08F, Block.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(1.5F).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
     
     // Register skyglass
     public static final RegistryObject<SkyglassBlock> SKYGLASS = BLOCKS.register("skyglass", () -> new SkyglassBlock(Block.Properties.of().instrument(NoteBlockInstrument.HAT).isRedstoneConductor((state, getter, pos) -> false).strength(0.3F).sound(SoundType.GLASS).noOcclusion()));

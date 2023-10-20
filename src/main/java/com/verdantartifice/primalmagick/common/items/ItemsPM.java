@@ -244,6 +244,15 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> INFUSED_STONE_SKY = registerSupplier("infused_stone_sky", () -> new BlockItem(BlocksPM.INFUSED_STONE_SKY.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> INFUSED_STONE_SUN = registerSupplier("infused_stone_sun", () -> new BlockItem(BlocksPM.INFUSED_STONE_SUN.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> INFUSED_STONE_MOON = registerSupplier("infused_stone_moon", () -> new BlockItem(BlocksPM.INFUSED_STONE_MOON.get(), new Item.Properties()));
+    
+    // Register budding gem block items
+    public static final RegistryObject<BlockItem> SYNTHETIC_AMETHYST_CLUSTER = registerSupplier("synthetic_amethyst_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> LARGE_SYNTHETIC_AMETHYST_BUD = registerSupplier("large_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MEDIUM_SYNTHETIC_AMETHYST_BUD = registerSupplier("medium_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SMALL_SYNTHETIC_AMETHYST_BUD = registerSupplier("small_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DAMAGED_BUDDING_AMETHYST_BLOCK = registerSupplier("damaged_budding_amethyst_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CHIPPED_BUDDING_AMETHYST_BLOCK = registerSupplier("chipped_budding_amethyst_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> FLAWED_BUDDING_AMETHYST_BLOCK = registerSupplier("flawed_budding_amethyst_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
 
     // Register skyglass block items
     public static final RegistryObject<BlockItem> SKYGLASS = registerSupplier("skyglass", () -> new BlockItem(BlocksPM.SKYGLASS.get(), new Item.Properties()));
