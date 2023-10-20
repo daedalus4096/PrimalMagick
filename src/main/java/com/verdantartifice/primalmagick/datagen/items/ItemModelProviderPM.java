@@ -128,6 +128,7 @@ public class ItemModelProviderPM extends ModelProvider<ItemModelBuilderPM> {
         this.basicItem(ItemsPM.HEXIUM_NUGGET.get());
         this.basicItem(ItemsPM.HALLOWSTEEL_NUGGET.get());
         this.basicItem(ItemsPM.QUARTZ_NUGGET.get());
+        this.itemWithParent(ItemsPM.ENERGIZED_AMETHYST.get(), Items.AMETHYST_SHARD);
         
         // Generate tool items
         this.handheldItem(ItemsPM.PRIMALITE_SWORD.get());

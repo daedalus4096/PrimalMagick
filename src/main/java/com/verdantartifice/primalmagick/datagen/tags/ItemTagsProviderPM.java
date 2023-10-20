@@ -41,6 +41,7 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(ItemTags.AXES).add(ItemsPM.PRIMALITE_AXE.get(), ItemsPM.HEXIUM_AXE.get(), ItemsPM.HALLOWSTEEL_AXE.get(), ItemsPM.PRIMAL_AXE.get());
         this.tag(ItemTags.BEACON_PAYMENT_ITEMS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.tag(ItemTags.BOOKSHELF_BOOKS).add(ItemsPM.GRIMOIRE.get(), ItemsPM.CREATIVE_GRIMOIRE.get(), ItemsPM.STATIC_BOOK.get());
+        this.tag(ItemTags.CLUSTER_MAX_HARVESTABLES).add(ItemsPM.PRIMALITE_PICKAXE.get(), ItemsPM.HEXIUM_PICKAXE.get(), ItemsPM.HALLOWSTEEL_PICKAXE.get(), ItemsPM.PRIMAL_PICKAXE.get());
         this.tag(ItemTags.FREEZE_IMMUNE_WEARABLES).addTag(ItemTagsPM.ROBES);
         this.tag(ItemTags.HOES).add(ItemsPM.PRIMALITE_HOE.get(), ItemsPM.HEXIUM_HOE.get(), ItemsPM.HALLOWSTEEL_HOE.get(), ItemsPM.PRIMAL_HOE.get());
         this.tag(ItemTags.LOGS_THAT_BURN).addTag(ItemTagsPM.MOONWOOD_LOGS).addTag(ItemTagsPM.SUNWOOD_LOGS).addTag(ItemTagsPM.HALLOWOOD_LOGS);

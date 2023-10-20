@@ -320,6 +320,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.HYDROMELON).name("Hydromelon").build();
         this.block(BlocksPM.HYRDOMELON_STEM).name("Hydromelon Stem").build();
         this.block(BlocksPM.ATTACHED_HYDROMELON_STEM).name("Attached Hydromelon Stem").build();
+        this.block(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER).name("Synthetic Amethyst Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD).name("Large Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD).name("Medium Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD).name("Small Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK).name("Damaged Budding Amethyst Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK).name("Chipped Budding Amethyst Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK).name("Flawed Budding Amethyst Block").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -875,6 +882,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
         this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose Bush").build();
         this.item(ItemsPM.EMBERFLOWER).name("Emberflower").build();
+        this.item(ItemsPM.ENERGIZED_AMETHYST).name("Energized Amethyst Shard").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

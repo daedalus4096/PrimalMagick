@@ -5,11 +5,19 @@ import java.util.OptionalInt;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
+import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 /**
@@ -36,6 +44,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSkyglassLootTables();
         this.registerRitualCandleLootTables();
         this.registerManaFontLootTables();
+        this.registerBuddingGemLootTables();
         
         // Register device loot tables
         this.registerBasicTable(BlocksPM.ARCANE_WORKBENCH.get());
@@ -308,6 +317,16 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.HEAVENLY_FONT_INFERNAL.get());
         this.registerBasicTable(BlocksPM.HEAVENLY_FONT_VOID.get());
         this.registerBasicTable(BlocksPM.HEAVENLY_FONT_HALLOWED.get());
+    }
+    
+    private void registerBuddingGemLootTables() {
+        this.registerLootTableBuilder(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)).when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES))).otherwise(this.applyExplosionDecay(b, LootItem.lootTableItem(Items.AMETHYST_SHARD).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F)))))));
+        this.dropWhenSilkTouch(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());
+        this.dropWhenSilkTouch(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get());
+        this.dropWhenSilkTouch(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get());
+        this.registerLootTableBuilder(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(Items.AMETHYST_BLOCK)));
+        this.registerLootTableBuilder(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())));
+        this.registerLootTableBuilder(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), b -> createSilkTouchDispatchTable(b, LootItem.lootTableItem(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())));
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {

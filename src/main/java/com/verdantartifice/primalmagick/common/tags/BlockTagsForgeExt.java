@@ -12,6 +12,7 @@ public class BlockTagsForgeExt {
     public static final TagKey<Block> ORES_SILVER = tag("ores/silver");
     public static final TagKey<Block> ORES_URANIUM = tag("ores/uranium");
     
+    public static final TagKey<Block> BUDDING = tag("budding");
     public static final TagKey<Block> MINEABLE_WITH_SHEARS = tag("mineable/shears");
 
     private static TagKey<Block> tag(String name) {

@@ -682,6 +682,13 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SKY.get()).base(Items.STONE).add(Source.SKY, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_SUN.get()).base(Items.STONE).add(Source.SUN, 1).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.INFUSED_STONE_MOON.get()).base(Items.STONE).add(Source.MOON, 1).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SYNTHETIC_AMETHYST_CLUSTER.get()).set(Source.EARTH, 20).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.LARGE_SYNTHETIC_AMETHYST_BUD.get()).set(Source.EARTH, 10).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get()).set(Source.EARTH, 5).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.SMALL_SYNTHETIC_AMETHYST_BUD.get()).set(Source.EARTH, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get()).base(Items.AMETHYST_BLOCK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get()).base(Items.AMETHYST_BLOCK).build(consumer);
+        ItemAffinityBuilder.itemAffinity(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get()).base(Items.AMETHYST_BLOCK).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STAINED_SKYGLASS_BLACK.get()).base(ItemsPM.SKYGLASS.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STAINED_SKYGLASS_BLUE.get()).base(ItemsPM.SKYGLASS.get()).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STAINED_SKYGLASS_BROWN.get()).base(ItemsPM.SKYGLASS.get()).build(consumer);
