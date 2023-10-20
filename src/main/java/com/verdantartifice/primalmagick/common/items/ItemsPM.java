@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagick.common.items.food.FoodsPM;
 import com.verdantartifice.primalmagick.common.items.food.ManafruitItem;
+import com.verdantartifice.primalmagick.common.items.minerals.EnergizedGemItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
@@ -430,6 +431,7 @@ public class ItemsPM {
     public static final RegistryObject<Item> HEXIUM_NUGGET = registerSupplier("hexium_nugget", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HALLOWSTEEL_NUGGET = registerSupplier("hallowsteel_nugget", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> QUARTZ_NUGGET = registerSupplier("quartz_nugget", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<EnergizedGemItem> ENERGIZED_AMETHYST = registerSupplier("energized_amethyst", () -> new EnergizedGemItem(new Item.Properties()));
     
     // Register tool items
     public static final RegistryObject<SwordItem> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().rarity(Rarity.UNCOMMON)));
