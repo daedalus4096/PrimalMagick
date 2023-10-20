@@ -815,6 +815,11 @@ public class BlockStateProviderPM extends BlockStateProvider {
     }
     
     private void directionalCrossBlockWithItem(Block block) {
-        this.directionalBlockWithItem(block, this.getCrossModel(block));
+        this.directionalCrossBlockWithItem(block, this.blockTexture(block));
+    }
+    
+    private void directionalCrossBlockWithItem(Block block, ResourceLocation itemTexture) {
+        this.directionalBlock(block, this.getCrossModel(block));
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
     }
 }
