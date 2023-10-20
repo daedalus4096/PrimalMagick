@@ -49,6 +49,7 @@ import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.TickStickItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -868,4 +869,7 @@ public class ItemsPM {
     public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerWithoutTab("codex_creative", () -> new LinguisticsGainItem(CodexType.CREATIVE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
     public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
+    
+    // Register debug items
+    public static final RegistryObject<TickStickItem> TICK_STICK = registerWithoutTab("tick_stick", () -> new TickStickItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 }

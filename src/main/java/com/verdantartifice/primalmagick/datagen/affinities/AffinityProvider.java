@@ -863,6 +863,7 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.emptyAffinity(ItemsPM.DRAINED_MAJESTIC_INFERNAL_PIXIE.get()).build(consumer);
         ItemAffinityBuilder.emptyAffinity(ItemsPM.DRAINED_MAJESTIC_VOID_PIXIE.get()).build(consumer);
         ItemAffinityBuilder.emptyAffinity(ItemsPM.DRAINED_MAJESTIC_HALLOWED_PIXIE.get()).build(consumer);
+        ItemAffinityBuilder.emptyAffinity(ItemsPM.TICK_STICK.get()).build(consumer);
         
         // Define vanilla entity type affinities
         EntityTypeAffinityBuilder.entityAffinity(EntityType.ALLAY).value(Source.SKY, 10).value(Source.HALLOWED, 10).build(consumer);
