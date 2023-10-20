@@ -42,11 +42,24 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
 
     protected final GemBudType gemType;
     protected final Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt;
-    
-    public BuddingGemClusterBlock(GemBudType gemType, Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt, Block.Properties properties) {
+    protected final VoxelShape northAabb;
+    protected final VoxelShape southAabb;
+    protected final VoxelShape eastAabb;
+    protected final VoxelShape westAabb;
+    protected final VoxelShape upAabb;
+    protected final VoxelShape downAabb;
+
+    public BuddingGemClusterBlock(int pSize, int pOffset, GemBudType gemType, Optional<Supplier<BuddingGemClusterBlock>> nextGemSupplierOpt, Block.Properties properties) {
         super(properties);
+        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, Boolean.FALSE).setValue(FACING, Direction.UP));
         this.gemType = gemType;
         this.nextGemSupplierOpt = nextGemSupplierOpt;
+        this.upAabb = Block.box((double)pOffset, 0.0D, (double)pOffset, (double)(16 - pOffset), (double)pSize, (double)(16 - pOffset));
+        this.downAabb = Block.box((double)pOffset, (double)(16 - pSize), (double)pOffset, (double)(16 - pOffset), 16.0D, (double)(16 - pOffset));
+        this.northAabb = Block.box((double)pOffset, (double)pOffset, (double)(16 - pSize), (double)(16 - pOffset), (double)(16 - pOffset), 16.0D);
+        this.southAabb = Block.box((double)pOffset, (double)pOffset, 0.0D, (double)(16 - pOffset), (double)(16 - pOffset), (double)pSize);
+        this.eastAabb = Block.box(0.0D, (double)pOffset, (double)pOffset, (double)pSize, (double)(16 - pOffset), (double)(16 - pOffset));
+        this.westAabb = Block.box((double)(16 - pSize), (double)pOffset, (double)pOffset, 16.0D, (double)(16 - pOffset), (double)(16 - pOffset));
     }
     
     public GemBudType getGemBudType() {
@@ -59,8 +72,14 @@ public class BuddingGemClusterBlock extends Block implements SimpleWaterloggedBl
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        // TODO Auto-generated method stub
-        return super.getShape(pState, pLevel, pPos, pContext);
+        return switch (pState.getValue(FACING)) {
+            case NORTH -> this.northAabb;
+            case SOUTH -> this.southAabb;
+            case EAST -> this.eastAabb;
+            case WEST -> this.westAabb;
+            case DOWN -> this.downAabb;
+            case UP -> this.upAabb;
+        };
     }
 
     @SuppressWarnings("deprecation")
