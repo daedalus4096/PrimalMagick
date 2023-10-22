@@ -215,11 +215,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        if (state != null && state.getBlock() instanceof RitualLecternBlock) {
-            return state.getValue(HAS_BOOK);
-        } else {
-            return false;
-        }
+        return state != null && state.hasProperty(HAS_BOOK) && state.getValue(HAS_BOOK);
     }
 
     @Override

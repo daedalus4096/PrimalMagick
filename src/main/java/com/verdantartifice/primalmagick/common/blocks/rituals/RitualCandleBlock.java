@@ -144,11 +144,7 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        if (state != null && state.getBlock() instanceof RitualCandleBlock) {
-            return state.getValue(LIT);
-        } else {
-            return false;
-        }
+        return state != null && state.hasProperty(LIT) && state.getValue(LIT);
     }
     
     @Override

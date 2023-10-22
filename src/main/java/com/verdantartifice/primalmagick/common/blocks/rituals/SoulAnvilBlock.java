@@ -163,11 +163,7 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        if (state != null && state.getBlock() instanceof SoulAnvilBlock) {
-            return state.getValue(DIRTY);
-        } else {
-            return false;
-        }
+        return state != null && state.hasProperty(DIRTY) && state.getValue(DIRTY);
     }
 
     @Override

@@ -100,8 +100,7 @@ public class CelestialHarpBlock extends BaseEntityBlock implements IRitualPropBl
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        BlockEntity tile = world.getBlockEntity(pos);
-        return (tile instanceof CelestialHarpTileEntity && ((CelestialHarpTileEntity)tile).isPlaying());
+        return world.getBlockEntity(pos) instanceof CelestialHarpTileEntity harp && harp.isPlaying();
     }
 
     @Override

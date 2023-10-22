@@ -125,8 +125,7 @@ public class EntropySinkBlock extends BaseEntityBlock implements IRitualPropBloc
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        BlockEntity tile = world.getBlockEntity(pos);
-        return (tile instanceof EntropySinkTileEntity && ((EntropySinkTileEntity)tile).isGlowing());
+        return world.getBlockEntity(pos) instanceof EntropySinkTileEntity sink && sink.isGlowing();
     }
 
     @Override

@@ -289,8 +289,7 @@ public class RitualBellBlock extends BaseEntityBlock implements IRitualPropBlock
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        BlockEntity tile = world.getBlockEntity(pos);
-        return (tile instanceof RitualBellTileEntity && ((RitualBellTileEntity)tile).isRinging());
+        return world.getBlockEntity(pos) instanceof RitualBellTileEntity bell && bell.isRinging();
     }
 
     @Override

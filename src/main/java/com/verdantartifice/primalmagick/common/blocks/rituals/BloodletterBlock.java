@@ -123,11 +123,7 @@ public class BloodletterBlock extends BaseEntityBlock implements IRitualPropBloc
 
     @Override
     public boolean isPropActivated(BlockState state, Level world, BlockPos pos) {
-        if (state != null && state.getBlock() instanceof BloodletterBlock) {
-            return state.getValue(FILLED);
-        } else {
-            return false;
-        }
+        return state != null && state.hasProperty(FILLED) && state.getValue(FILLED);
     }
 
     @Override

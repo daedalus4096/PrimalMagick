@@ -1,3 +1,7 @@
+v4.0.8
+------
+* Fixed a bug where Incense Braziers could be chosen for activation twice in a row during a ritual
+
 v4.0.7
 ------
 * Added Earthshatter Hammer and Dissolution Chamber recipes for Rock Salt and Ancient Debris
