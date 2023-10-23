@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
  * @author Daedalus4096
  */
 public class ResearchKeyFactory {
-    public IResearchKey parse(@Nonnull String keyStr) {
+    public static IResearchKey parse(@Nonnull String keyStr) {
         if (keyStr == null) {
             throw new IllegalArgumentException("Key string may not be null");
         } else if (keyStr.isEmpty()) {
