@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -136,5 +138,31 @@ public class QuorumResearchKey implements IResearchKey {
             return false;
         QuorumResearchKey other = (QuorumResearchKey) obj;
         return Objects.equals(keys, other.keys) && requiredCount == other.requiredCount;
+    }
+    
+    public static Builder builder(int requiredCount) {
+        return new Builder(requiredCount);
+    }
+    
+    public static class Builder {
+        private final int requiredCount;
+        private final List<SimpleResearchKey> simpleKeys = new ArrayList<>();
+        
+        protected Builder(int requiredCount) {
+            this.requiredCount = requiredCount;
+        }
+        
+        public Builder add(SimpleResearchKey key) {
+            this.simpleKeys.add(key);
+            return this;
+        }
+        
+        public Builder add(Optional<SimpleResearchKey> keyOpt) {
+            return this.add(keyOpt.orElseThrow());
+        }
+        
+        public QuorumResearchKey build() {
+            return new QuorumResearchKey(this.requiredCount, this.simpleKeys);
+        }
     }
 }
