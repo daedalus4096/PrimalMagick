@@ -120,4 +120,21 @@ public class QuorumResearchKey implements IResearchKey {
         sb.append(String.join(",", this.keys.stream().map(SimpleResearchKey::toString).toList()));
         return sb.toString();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keys, requiredCount);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        QuorumResearchKey other = (QuorumResearchKey) obj;
+        return Objects.equals(keys, other.keys) && requiredCount == other.requiredCount;
+    }
 }
