@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class CompoundResearchKey {
+public class CompoundResearchKey implements IResearchKey {
     public static final CompoundResearchKey EMPTY = new CompoundResearchKey(true);
     
     public static final Codec<CompoundResearchKey> CODEC = Codec.STRING.xmap(CompoundResearchKey::parse, CompoundResearchKey::toString);
@@ -126,10 +126,12 @@ public class CompoundResearchKey {
         return this.requireAll;
     }
     
+    @Override
     public boolean isEmpty() {
         return this.keys.isEmpty() || this.keys.stream().allMatch(SimpleResearchKey::isEmpty);
     }
     
+    @Override
     public boolean isKnownBy(@Nullable Player player) {
         if (this.equals(EMPTY)) {
             return true;
@@ -143,6 +145,7 @@ public class CompoundResearchKey {
         }
     }
     
+    @Override
     public boolean isKnownByStrict(@Nullable Player player) {
         if (this.equals(EMPTY)) {
             return true;
