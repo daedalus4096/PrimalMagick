@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -21,6 +22,8 @@ import net.minecraft.world.entity.player.Player;
  */
 public class QuorumResearchKey implements IResearchKey {
     public static final QuorumResearchKey EMPTY = new QuorumResearchKey();
+    
+    public static final Codec<QuorumResearchKey> CODEC = Codec.STRING.xmap(QuorumResearchKey::parse, QuorumResearchKey::toString);
     
     protected final List<SimpleResearchKey> keys;
     protected final int requiredCount;
