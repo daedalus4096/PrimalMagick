@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class SimpleResearchKey {
+public class SimpleResearchKey implements IResearchKey {
     public static final SimpleResearchKey EMPTY = new SimpleResearchKey("");
     public static final SimpleResearchKey FIRST_STEPS = new SimpleResearchKey("FIRST_STEPS");
     
@@ -144,6 +144,7 @@ public class SimpleResearchKey {
         return this.stage.orElse(-1);
     }
     
+    @Override
     public boolean isEmpty() {
         return StringUtil.isNullOrEmpty(this.rootKey) && this.stage.isEmpty();
     }
@@ -153,6 +154,7 @@ public class SimpleResearchKey {
         return new SimpleResearchKey(this.rootKey, OptionalInt.empty());
     }
     
+    @Override
     public boolean isKnownBy(@Nullable Player player) {
         if (player == null) {
             return false;
@@ -170,6 +172,7 @@ public class SimpleResearchKey {
         }
     }
     
+    @Override
     public boolean isKnownByStrict(@Nullable Player player) {
         if (player == null) {
             return false;
