@@ -1,0 +1,123 @@
+package com.verdantartifice.primalmagick.common.research;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.google.common.collect.ImmutableList;
+
+import net.minecraft.world.entity.player.Player;
+
+/**
+ * Data object identifying multiple research entries/stages at once.  Comprised of multiple simple
+ * research keys, and must be satisfied by completing a given number of them.
+ * 
+ * @author Daedalus4096
+ */
+public class QuorumResearchKey implements IResearchKey {
+    public static final QuorumResearchKey EMPTY = new QuorumResearchKey();
+    
+    protected final List<SimpleResearchKey> keys;
+    protected final int requiredCount;
+    
+    protected QuorumResearchKey() {
+        this.requiredCount = 0;
+        this.keys = List.of();
+    }
+    
+    protected QuorumResearchKey(SimpleResearchKey key) {
+        this.requiredCount = 1;
+        this.keys = List.of(key);
+    }
+    
+    protected QuorumResearchKey(int requiredCount, @Nonnull SimpleResearchKey... keys) {
+        this.requiredCount = requiredCount;
+        this.keys = ImmutableList.<SimpleResearchKey>builder().add(keys).build();
+    }
+    
+    protected QuorumResearchKey(int requiredCount, @Nonnull List<SimpleResearchKey> keys) {
+        this.requiredCount = requiredCount;
+        this.keys = ImmutableList.<SimpleResearchKey>builder().addAll(keys).build();
+    }
+    
+    public int getRequiredCount() {
+        return this.requiredCount;
+    }
+    
+    public List<SimpleResearchKey> getKeys() {
+        return this.keys;
+    }
+    
+    public static QuorumResearchKey parse(String keyStr) {
+        if (keyStr == null) {
+            throw new IllegalArgumentException("Key string may not be null");
+        } else if (keyStr.isEmpty()) {
+            return EMPTY;
+        } else if (keyStr.startsWith("?") && keyStr.contains(":")) {
+            String[] pieces = keyStr.split(":");
+            if (pieces.length != 2) {
+                throw new IllegalArgumentException("Key string '" + keyStr + "' is not a valid quorum research key");
+            }
+            
+            int required;
+            try {
+                required = Integer.parseInt(pieces[0].substring(1));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Key string '" + keyStr + "' is not a valid quorum research key", e);
+            }
+            
+            List<SimpleResearchKey> newKeys = Arrays.stream(pieces[1].split(",")).filter(Objects::nonNull).map(SimpleResearchKey::parse).toList();
+            if (newKeys.isEmpty()) {
+                throw new IllegalArgumentException("Key string '" + keyStr + "' is not a valid quorum research key");
+            }
+            
+            return new QuorumResearchKey(required, newKeys);
+        } else {
+            throw new IllegalArgumentException("Key string '" + keyStr + "' is not a valid quorum research key");
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.keys.isEmpty() || this.keys.stream().allMatch(SimpleResearchKey::isEmpty);
+    }
+
+    @Override
+    public boolean isKnownBy(Player player) {
+        return this.keys.stream().filter(k -> k.isKnownBy(player)).count() >= (long)this.requiredCount;
+    }
+
+    @Override
+    public boolean isKnownByStrict(Player player) {
+        return this.keys.stream().filter(k -> k.isKnownByStrict(player)).count() >= (long)this.requiredCount;
+    }
+    
+    public boolean contains(@Nullable SimpleResearchKey simpleKey) {
+        if (simpleKey == null) {
+            return false;
+        } else {
+            return this.keys.contains(simpleKey);
+        }
+    }
+    
+    public boolean containsStripped(@Nullable SimpleResearchKey simpleKey) {
+        if (simpleKey == null) {
+            return false;
+        } else {
+            // Return true if the given SRK is one of this QRK's keys, regardless of any stage requirements given in either
+            return this.keys.stream().map((k) -> k.stripStage()).toList().contains(simpleKey.stripStage());
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("?");
+        sb.append(this.requiredCount);
+        sb.append(":");
+        sb.append(String.join(",", this.keys.stream().map(SimpleResearchKey::toString).toList()));
+        return sb.toString();
+    }
+}
