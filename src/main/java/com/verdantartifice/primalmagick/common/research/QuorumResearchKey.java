@@ -82,6 +82,36 @@ public class QuorumResearchKey implements IResearchKey {
         }
     }
 
+    public static QuorumResearchKey from(@Nullable SimpleResearchKey simpleKey) {
+        if (simpleKey == null) {
+            throw new IllegalArgumentException("Inner key may not be null");
+        } else {
+            return new QuorumResearchKey(simpleKey);
+        }
+    }
+    
+    public static Optional<QuorumResearchKey> from(@Nonnull Optional<SimpleResearchKey> simpleKeyOpt) {
+        return simpleKeyOpt.isPresent() ? Optional.of(new QuorumResearchKey(simpleKeyOpt.get())) : Optional.empty();
+    }
+    
+    public static QuorumResearchKey from(int requiredCount, SimpleResearchKey... simpleKeys) {
+        return new QuorumResearchKey(requiredCount, Arrays.stream(simpleKeys).filter(Objects::nonNull).toList());
+    }
+    
+    public static QuorumResearchKey from(int requiredCount, List<SimpleResearchKey> simpleKeys) {
+        return new QuorumResearchKey(requiredCount, simpleKeys.stream().filter(Objects::nonNull).toList());
+    }
+    
+    public static QuorumResearchKey from(int requiredCount, String... keyStrs) {
+        return new QuorumResearchKey(requiredCount, Arrays.stream(keyStrs).filter(Objects::nonNull).map(SimpleResearchKey::parse).toList());
+    }
+    
+    @Nonnull
+    public QuorumResearchKey copy() {
+        // Make a deep copy of this quorum research key
+        return new QuorumResearchKey(this.requiredCount, this.keys.stream().map(SimpleResearchKey::copy).toList());
+    }
+    
     @Override
     public boolean isEmpty() {
         return this.keys.isEmpty() || this.keys.stream().allMatch(SimpleResearchKey::isEmpty);
