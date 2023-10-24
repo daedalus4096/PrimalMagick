@@ -1,0 +1,125 @@
+{
+  "aid_blocks": [],
+  "key": "primalmagick:master_runework",
+  "material_options": [
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:runecarving_table",
+      "weight": 5.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:stone_slab;4",
+      "weight": 3.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:gems/lapis",
+      "quantity": 4,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_sword;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_HALLOWED",
+      "stack": "primalmagick:rune_hallowed",
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_POWER",
+      "stack": "primalmagick:rune_power",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_PROJECT",
+      "stack": "primalmagick:rune_project;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_PROTECT",
+      "stack": "primalmagick:rune_protect;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_ITEM",
+      "stack": "primalmagick:rune_item;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SELF",
+      "stack": "primalmagick:rune_self;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_ABSORB",
+      "stack": "primalmagick:rune_absorb;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_DISPEL",
+      "stack": "primalmagick:rune_dispel;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SUMMON",
+      "stack": "primalmagick:rune_summon;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_AREA",
+      "stack": "primalmagick:rune_area;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_CREATURE",
+      "stack": "primalmagick:rune_creature;2",
+      "weight": 1.0
+    }
+  ],
+  "required_research": "RUNE_HALLOWED",
+  "reward_multiplier": 1.0
+}

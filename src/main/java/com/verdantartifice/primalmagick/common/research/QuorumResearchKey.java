@@ -194,6 +194,15 @@ public class QuorumResearchKey implements IResearchKey {
             return this.add(keyOpt.orElseThrow());
         }
         
+        public Builder add(String keyStr) {
+            return this.add(SimpleResearchKey.find(keyStr));
+        }
+        
+        public Builder add(String... keyStrs) {
+            Arrays.stream(keyStrs).map(SimpleResearchKey::find).<SimpleResearchKey>map(Optional::orElseThrow).forEach(key -> this.simpleKeys.add(key));
+            return this;
+        }
+        
         public QuorumResearchKey build() {
             return new QuorumResearchKey(this.requiredCount, this.simpleKeys);
         }

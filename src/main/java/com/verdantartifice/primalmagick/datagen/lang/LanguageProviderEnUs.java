@@ -1792,6 +1792,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("master_essence_analysis").name("Master Essence Analysis").text("Study of magickal essence has been profitable for you.  It's time to learn what the purest samples have to teach.").build();
         this.researchProject("draconic_memories").name("Draconic Memories").text("This dragon hoarded experiences, not gold.  Even in death it hungers for more.  Feed it, and see what it can teach you.").build();
         this.researchProject("raiding_the_raiders").name("Raiding the Raiders").text("The Illagers have surely plundered some valuable arcane secrets.  Show them that turnabout is fair play.").build();
+        this.researchProject("runework").name("Runework").text("You practice carving some runes, an exacting process, hoping to refine your technique.  It could save you a lot of trouble down the road.").build();
+        this.researchProject("advanced_runework").name("Advanced Runework").text("Practicing basic magickal runes was rewarding.  It stands to reason that more advanced runes would be even more elucidating.").build();
+        this.researchProject("master_runework").name("Master Runework").text("Perfecting your technique of the mass production of runes, and the production of the most advanced runes, would be of great value.").build();
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();
