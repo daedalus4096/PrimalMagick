@@ -15,7 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.research.IResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
