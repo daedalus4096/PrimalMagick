@@ -11,9 +11,9 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.IResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -23,7 +23,7 @@ public class ProjectBuilder {
     protected final ResourceLocation key;
     protected final List<IFinishedProjectMaterial> materialOptions = new ArrayList<>();
     protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
-    protected SimpleResearchKey requiredResearch;
+    protected IResearchKey requiredResearch;
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
@@ -49,7 +49,7 @@ public class ProjectBuilder {
         return this;
     }
     
-    public ProjectBuilder requiredResearch(@Nullable SimpleResearchKey key) {
+    public ProjectBuilder requiredResearch(@Nullable IResearchKey key) {
         this.requiredResearch = key;
         return this;
     }
@@ -59,7 +59,7 @@ public class ProjectBuilder {
     }
     
     public ProjectBuilder requiredResearch(@Nullable String keyStr) {
-        return requiredResearch(ResearchNames.find(keyStr).orElseThrow());
+        return requiredResearch(ResearchKeyFactory.parse(keyStr));
     }
     
     public ProjectBuilder materialCountOverride(int count) {
@@ -132,13 +132,13 @@ public class ProjectBuilder {
     public static class Result implements IFinishedProject {
         protected final ResourceLocation key;
         protected final List<IFinishedProjectMaterial> materialOptions;
-        protected final SimpleResearchKey requiredResearch;
+        protected final IResearchKey requiredResearch;
         protected final Optional<Integer> requiredMaterialCountOverride;
         protected final Optional<Double> baseSuccessChanceOverride;
         protected final double rewardMultiplier;
         protected final List<ResourceLocation> aidBlocks;
         
-        public Result(@Nonnull ResourceLocation key, @Nonnull List<IFinishedProjectMaterial> materialOptions, @Nullable SimpleResearchKey requiredResearch, @Nonnull Optional<Integer> materialCount, 
+        public Result(@Nonnull ResourceLocation key, @Nonnull List<IFinishedProjectMaterial> materialOptions, @Nullable IResearchKey requiredResearch, @Nonnull Optional<Integer> materialCount, 
                 @Nonnull Optional<Double> successChance, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
             this.key = key;
             this.materialOptions = materialOptions;
