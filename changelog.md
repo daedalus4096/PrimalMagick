@@ -1,6 +1,7 @@
 v4.0.8
 ------
 * Fixed a bug where Incense Braziers could be chosen for activation twice in a row during a ritual
+* Added new theorycrafting projects to the pool
 
 v4.0.7
 ------
