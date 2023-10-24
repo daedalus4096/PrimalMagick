@@ -327,6 +327,27 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK).name("Damaged Budding Amethyst Block").build();
         this.block(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK).name("Chipped Budding Amethyst Block").build();
         this.block(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK).name("Flawed Budding Amethyst Block").build();
+        this.block(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER).name("Synthetic Diamond Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD).name("Large Synthetic Diamond Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD).name("Medium Synthetic Diamond Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD).name("Small Synthetic Diamond Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK).name("Damaged Budding Diamond Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK).name("Chipped Budding Diamond Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK).name("Flawed Budding Diamond Block").build();
+        this.block(BlocksPM.SYNTHETIC_EMERALD_CLUSTER).name("Synthetic Emerald Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD).name("Large Synthetic Emerald Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD).name("Medium Synthetic Emerald Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD).name("Small Synthetic Emerald Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK).name("Damaged Budding Emerald Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK).name("Chipped Budding Emerald Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK).name("Flawed Budding Emerald Block").build();
+        this.block(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER).name("Synthetic Quartz Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD).name("Large Synthetic Quartz Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD).name("Medium Synthetic Quartz Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD).name("Small Synthetic Quartz Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK).name("Damaged Budding Quartz Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK).name("Chipped Budding Quartz Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -884,6 +905,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.EMBERFLOWER).name("Emberflower").build();
         this.item(ItemsPM.TICK_STICK).name("Tick Stick").build();
         this.item(ItemsPM.ENERGIZED_AMETHYST).name("Energized Amethyst Shard").build();
+        this.item(ItemsPM.ENERGIZED_DIAMOND).name("Energized Diamond").build();
+        this.item(ItemsPM.ENERGIZED_EMERALD).name("Energized Emerald").build();
+        this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();

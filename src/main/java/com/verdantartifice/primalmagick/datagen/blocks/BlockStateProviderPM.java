@@ -189,6 +189,27 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get());
+        this.cubeColumnBlockWithItem(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get());
+        this.cubeColumnBlockWithItem(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
+        this.cubeColumnBlockWithItem(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
         
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks

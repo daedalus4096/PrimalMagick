@@ -4,5 +4,5 @@ public enum GemBudType {
     AMETHYST,
     DIAMOND,
     EMERALD,
-    NETHER_QUARTZ;
+    QUARTZ;
 }
