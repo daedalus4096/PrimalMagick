@@ -13,7 +13,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.IResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -34,13 +35,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ProjectTemplate {
     protected ResourceLocation key;
     protected List<AbstractProjectMaterial> materialOptions = new ArrayList<>();
-    protected SimpleResearchKey requiredResearch;
+    protected IResearchKey requiredResearch;
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
     protected List<ResourceLocation> aidBlocks = new ArrayList<>();
     
-    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nullable SimpleResearchKey requiredResearch,
+    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nullable IResearchKey requiredResearch,
             @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
         this.key = key;
         this.materialOptions = materialOptions;
@@ -141,9 +142,9 @@ public class ProjectTemplate {
             }
             ResourceLocation key = new ResourceLocation(keyStr);
             
-            SimpleResearchKey requiredResearch = null;
+            IResearchKey requiredResearch = null;
             if (json.has("required_research")) {
-                requiredResearch = SimpleResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString());
+                requiredResearch = ResearchKeyFactory.parse(json.getAsJsonPrimitive("required_research").getAsString());
             }
             
             Optional<Integer> materialCountOverride = Optional.empty();
@@ -193,7 +194,7 @@ public class ProjectTemplate {
         @Override
         public ProjectTemplate fromNetwork(FriendlyByteBuf buf) {
             ResourceLocation key = buf.readResourceLocation();
-            SimpleResearchKey requiredResearch = buf.readBoolean() ? SimpleResearchKey.parse(buf.readUtf()) : null;
+            IResearchKey requiredResearch = buf.readBoolean() ? ResearchKeyFactory.parse(buf.readUtf()) : null;
             Optional<Integer> materialCountOverride = buf.readBoolean() ? Optional.of(buf.readVarInt()) : Optional.empty();
             Optional<Double> baseSuccessChanceOverride = buf.readBoolean() ? Optional.of(buf.readDouble()) : Optional.empty();
             double rewardMultiplier = buf.readDouble();

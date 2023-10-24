@@ -13,6 +13,7 @@ import com.google.common.collect.ImmutableList;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.QuorumResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -82,6 +83,21 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get(), true).requiredResearch(Source.INFERNAL.getDiscoverKey()).afterCrafting(5).bonusReward(0.25D).weight(1).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_VOID.get(), true).requiredResearch(Source.VOID.getDiscoverKey()).afterCrafting(5).bonusReward(0.25D).weight(1).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).afterCrafting(5).bonusReward(0.25D).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("advanced_runework").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(3).add("RUNE_BLOOD", "RUNE_INFERNAL", "RUNE_VOID", "RUNE_ABSORB", "RUNE_DISPEL", "RUNE_SUMMON", "RUNE_AREA", "RUNE_CREATURE", "RUNE_INSIGHT").build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
+            .material(ItemMaterialBuilder.item(Items.STONE_SLAB, 2, true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, 2, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_BLOOD.get(), true).requiredResearch("RUNE_BLOOD").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_INFERNAL.get(), true).requiredResearch("RUNE_INFERNAL").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_VOID.get(), true).requiredResearch("RUNE_VOID").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_INSIGHT.get(), true).requiredResearch("RUNE_INSIGHT").bonusReward(0.25D).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_ABSORB.get(), true).requiredResearch("RUNE_ABSORB").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_DISPEL.get(), true).requiredResearch("RUNE_DISPEL").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SUMMON.get(), true).requiredResearch("RUNE_SUMMON").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_AREA.get(), true).requiredResearch("RUNE_AREA").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_CREATURE.get(), true).requiredResearch("RUNE_CREATURE").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("apiamancy").aid(Blocks.BEEHIVE).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .material(ItemTagMaterialBuilder.tag(ItemTags.SMALL_FLOWERS, true).weight(1).build())
@@ -201,6 +217,23 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CLUSTER_VOID.get(), true).requiredResearch(Source.VOID.getDiscoverKey()).afterCrafting(5).weight(1).bonusReward(0.5D).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).afterCrafting(5).bonusReward(0.5D).weight(1).build())
             .build(consumer);
+        ProjectBuilder.project("master_runework").rewardMultiplier(1D).requiredResearch("RUNE_HALLOWED")
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
+            .material(ItemMaterialBuilder.item(Items.STONE_SLAB, 4, true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, 4, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_HALLOWED.get(), true).requiredResearch("RUNE_HALLOWED").weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_POWER.get(), true).requiredResearch("RUNE_POWER").bonusReward(0.5D).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_PROJECT.get(), 2, true).requiredResearch("RUNE_PROJECT").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_PROTECT.get(), 2, true).requiredResearch("RUNE_PROTECT").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_ITEM.get(), 2, true).requiredResearch("RUNE_ITEM").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SELF.get(), 2, true).requiredResearch("RUNE_SELF").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_ABSORB.get(), 2, true).requiredResearch("RUNE_ABSORB").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_DISPEL.get(), 2, true).requiredResearch("RUNE_DISPEL").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SUMMON.get(), 2, true).requiredResearch("RUNE_SUMMON").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_AREA.get(), 2, true).requiredResearch("RUNE_AREA").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_CREATURE.get(), 2, true).requiredResearch("RUNE_CREATURE").weight(1).build())
+            .build(consumer);
         ProjectBuilder.project("mundane_tinkering")
             .material(ItemMaterialBuilder.item(Items.CRAFTING_TABLE, false).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.ANVIL, false).weight(1).build())
@@ -292,6 +325,21 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.COMPARATOR, false).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.DUSTS_REDSTONE, 4, true).weight(3).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
+            .build(consumer);
+        ProjectBuilder.project("runework").requiredResearch(QuorumResearchKey.builder(3).add("RUNE_EARTH", "RUNE_SEA", "RUNE_SKY", "RUNE_SUN", "RUNE_MOON", "RUNE_PROJECT", "RUNE_PROTECT", "RUNE_ITEM", "RUNE_SELF").build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
+            .material(ItemMaterialBuilder.item(Items.STONE_SLAB, true).weight(3).build())
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(3).build())
+            .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_EARTH.get(), true).requiredResearch("RUNE_EARTH").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SEA.get(), true).requiredResearch("RUNE_SEA").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SKY.get(), true).requiredResearch("RUNE_SKY").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SUN.get(), true).requiredResearch("RUNE_SUN").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_MOON.get(), true).requiredResearch("RUNE_MOON").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_PROJECT.get(), true).requiredResearch("RUNE_PROJECT").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_PROTECT.get(), true).requiredResearch("RUNE_PROTECT").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_ITEM.get(), true).requiredResearch("RUNE_ITEM").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SELF.get(), true).requiredResearch("RUNE_SELF").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("spellwork").requiredResearch("BASIC_SORCERY")
             .material(ItemMaterialBuilder.item(ItemsPM.SPELLCRAFTING_ALTAR.get(), false).weight(5).build())

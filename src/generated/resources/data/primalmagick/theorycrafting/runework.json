@@ -1,0 +1,108 @@
+{
+  "aid_blocks": [],
+  "key": "primalmagick:runework",
+  "material_options": [
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:runecarving_table",
+      "weight": 5.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:stone_slab",
+      "weight": 3.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:gems/lapis",
+      "quantity": 1,
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_sword;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_EARTH",
+      "stack": "primalmagick:rune_earth",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SEA",
+      "stack": "primalmagick:rune_sea",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SKY",
+      "stack": "primalmagick:rune_sky",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SUN",
+      "stack": "primalmagick:rune_sun",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_MOON",
+      "stack": "primalmagick:rune_moon",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_PROJECT",
+      "stack": "primalmagick:rune_project",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_PROTECT",
+      "stack": "primalmagick:rune_protect",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_ITEM",
+      "stack": "primalmagick:rune_item",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "RUNE_SELF",
+      "stack": "primalmagick:rune_self",
+      "weight": 1.0
+    }
+  ],
+  "required_research": "?3:RUNE_EARTH,RUNE_SEA,RUNE_SKY,RUNE_SUN,RUNE_MOON,RUNE_PROJECT,RUNE_PROTECT,RUNE_ITEM,RUNE_SELF",
+  "reward_multiplier": 0.25
+}
