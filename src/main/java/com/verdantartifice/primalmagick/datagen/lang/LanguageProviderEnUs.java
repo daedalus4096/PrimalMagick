@@ -1831,6 +1831,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("ritual_practice").name("Ritual Practice").text("Every little detail is important when performing a ritual, so getting some practice in would be a wise idea.").build();
         this.researchProject("advanced_ritual_practice").name("Adv. Ritual Practice").text("Practicing simple rituals helped hone your technique.  Now it's time to practice more advanced rituals.").build();
         this.researchProject("master_ritual_practice").name("Master Ritual Practice").text("The most powerful rituals are also the most dangerous.  Best to get some practice in before attempting one.").build();
+        this.researchProject("magitech_tinkering").name("Magitech Tinkering").text("You spend some time tinkering with your magitech devices, to better understand the relationship between magick and technology.").build();
+        this.researchProject("conduit_forces").name("Conduit Forces").text("A Conduit is a powerful artifact of the Sea, but is it magickal or something else?  Study one to try to find some answers.").build();
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();

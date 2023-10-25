@@ -142,6 +142,9 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.PHANTOM_MEMBRANE, true).bonusReward(0.125D).weight(0.5D).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .build(consumer);
+        ProjectBuilder.project("conduit_forces").aid(Blocks.CONDUIT).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_PRISMARINE, true).weight(1).build())
+            .build(consumer);
         ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(1.0D)
             .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, true).weight(1).build())
             .build(consumer);
@@ -213,6 +216,19 @@ public class ProjectProvider implements DataProvider {
             .build(consumer);
         ProjectBuilder.project("hit_the_books").aid(Blocks.BOOKSHELF).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())
+            .build(consumer);
+        ProjectBuilder.project("magitech_tinkering").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(3).add("ARCANOMETER", "CONCOCTING_TINCTURES", "ENTROPY_SINK", "AUTO_CHARGER", "ESSENCE_TRANSMUTER", "DISSOLUTION_CHAMBER", "INFERNAL_FURNACE").build())
+            .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_BASIC.get(), true).bonusReward(0.125D).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_ENCHANTED.get(), true).requiredResearch("EXPERT_MAGITECH").bonusReward(0.25D).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get(), true).requiredResearch("MASTER_MAGITECH").bonusReward(0.5D).weight(3).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.HONEY_EXTRACTOR.get(), false).requiredResearch("HONEY_EXTRACTOR").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ARCANOMETER.get(), false).requiredResearch("ARCANOMETER").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.CONCOCTER.get(), false).requiredResearch("CONCOCTING_TINCTURES").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ENTROPY_SINK.get(), false).requiredResearch("ENTROPY_SINK").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.AUTO_CHARGER.get(), false).requiredResearch("AUTO_CHARGER").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_TRANSMUTER.get(), false).requiredResearch("ESSENCE_TRANSMUTER").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.DISSOLUTION_CHAMBER.get(), false).requiredResearch("DISSOLUTION_CHAMBER").weight(1).build())
+            .material(ItemMaterialBuilder.item(ItemsPM.INFERNAL_FURNACE.get(), false).requiredResearch("INFERNAL_FURNACE").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("master_essence_analysis").requiredResearch("CLUSTER_SYNTHESIS").rewardMultiplier(1.0D)
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
