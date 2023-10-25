@@ -93,6 +93,7 @@ public class Recipes extends RecipeProvider {
         this.registerCryotreatmentRecipes(consumer);
         this.registerCropRecipes(consumer);
         this.registerIgnyxRecipes(consumer);
+        this.registerGemBudRecipes(consumer);
         
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ItemsPM.MUNDANE_WAND.get())
             .requires(Tags.Items.RODS_WOODEN)
@@ -6664,5 +6665,92 @@ public class Recipes extends RecipeProvider {
             .requires(Ingredient.of(Tags.Items.RODS_WOODEN), 8)
             .unlockedBy("has_ignyx", has(ItemsPM.IGNYX.get()))
             .save(consumer, PrimalMagick.resource("torch_from_ignyx"));
+    }
+    
+    protected void registerGemBudRecipes(Consumer<FinishedRecipe> consumer) {
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_AMETHYST.get())
+            .addIngredient(Tags.Items.GEMS_AMETHYST)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
+            .addIngredient(Items.AMETHYST_BLOCK)
+            .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())
+            .addIngredient(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get())
+            .addIngredient(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_AMETHYST.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")))
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_DIAMOND.get())
+            .addIngredient(Tags.Items.GEMS_DIAMOND)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get())
+            .addIngredient(Items.DIAMOND_BLOCK)
+            .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get())
+            .addIngredient(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_DIAMOND_BLOCK.get())
+            .addIngredient(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_DIAMOND.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_EMERALD.get())
+            .addIngredient(Tags.Items.GEMS_EMERALD)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get())
+            .addIngredient(Items.EMERALD_BLOCK)
+            .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
+            .addIngredient(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_EMERALD_BLOCK.get())
+            .addIngredient(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_EMERALD.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_QUARTZ.get())
+            .addIngredient(Tags.Items.GEMS_QUARTZ)
+            .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
+            .addIngredient(ItemsPM.ESSENCE_SHARD_HALLOWED.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get())
+            .addIngredient(Items.QUARTZ_BLOCK)
+            .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get())
+            .addIngredient(ItemsPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.FLAWED_BUDDING_QUARTZ_BLOCK.get())
+            .addIngredient(ItemsPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get())
+            .addIngredient(ItemsPM.ENERGIZED_QUARTZ.get())
+            .research(CompoundResearchKey.builder(true).add(SimpleResearchKey.find("SYNTHETIC_GEM_BUDS")).add(Source.HALLOWED.getDiscoverKey()).build())
+            .build(consumer);
     }
 }

@@ -161,6 +161,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> SANGUINE_CORE_DEMONS = register("sanguine_core_demons", () -> new ResearchName("SANGUINE_CORE_DEMONS"));
     public static final RegistryObject<ResearchName> SANGUINE_CORE_ALIENS = register("sanguine_core_aliens", () -> new ResearchName("SANGUINE_CORE_ALIENS"));
     public static final RegistryObject<ResearchName> IGNYX = register("ignyx", () -> new ResearchName("IGNYX"));
+    public static final RegistryObject<ResearchName> SYNTHETIC_GEM_BUDS = register("synthetic_gem_buds", () -> new ResearchName("SYNTHETIC_GEM_BUDS"));
     
     // Register Sorcery research
     public static final RegistryObject<ResearchName> BASIC_SORCERY = register("basic_sorcery", () -> new ResearchName("BASIC_SORCERY"));

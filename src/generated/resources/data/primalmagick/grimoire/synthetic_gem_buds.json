@@ -1,0 +1,63 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "hallowed": 3
+      },
+      "recipes": [
+        "primalmagick:energized_diamond",
+        "primalmagick:damaged_budding_diamond_block",
+        "primalmagick:chipped_budding_diamond_block",
+        "primalmagick:flawed_budding_diamond_block",
+        "primalmagick:energized_emerald",
+        "primalmagick:damaged_budding_emerald_block",
+        "primalmagick:chipped_budding_emerald_block",
+        "primalmagick:flawed_budding_emerald_block",
+        "primalmagick:energized_quartz",
+        "primalmagick:damaged_budding_quartz_block",
+        "primalmagick:chipped_budding_quartz_block",
+        "primalmagick:flawed_budding_quartz_block"
+      ],
+      "required_research": [
+        "t_discover_hallowed"
+      ],
+      "text": "research.primalmagick.synthetic_gem_buds.text.addenda.1"
+    }
+  ],
+  "discipline": "ALCHEMY",
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:amethyst_cluster"
+  },
+  "key": "SYNTHETIC_GEM_BUDS",
+  "name": "research.primalmagick.synthetic_gem_buds.title",
+  "parents": [
+    "MASTER_ALCHEMY",
+    "SHARD_SYNTHESIS",
+    "STONEMELDING"
+  ],
+  "stages": [
+    {
+      "required_item": [
+        "tag:forge:gems/amethyst"
+      ],
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "research.primalmagick.synthetic_gem_buds.text.stage.1"
+    },
+    {
+      "attunements": {
+        "earth": 3,
+        "sun": 3
+      },
+      "recipes": [
+        "primalmagick:energized_amethyst",
+        "primalmagick:damaged_budding_amethyst_block",
+        "primalmagick:chipped_budding_amethyst_block",
+        "primalmagick:flawed_budding_amethyst_block"
+      ],
+      "text": "research.primalmagick.synthetic_gem_buds.text.stage.2"
+    }
+  ]
+}
