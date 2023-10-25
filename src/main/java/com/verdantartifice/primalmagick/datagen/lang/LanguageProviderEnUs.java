@@ -1828,6 +1828,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("runework").name("Runework").text("You practice carving some runes, an exacting process, hoping to refine your technique.  It could save you a lot of trouble down the road.").build();
         this.researchProject("advanced_runework").name("Advanced Runework").text("Practicing basic magickal runes was rewarding.  It stands to reason that more advanced runes would be even more elucidating.").build();
         this.researchProject("master_runework").name("Master Runework").text("Perfecting your technique of the mass production of runes, and the production of the most advanced runes, would be of great value.").build();
+        this.researchProject("ritual_practice").name("Ritual Practice").text("Every little detail is important when performing a ritual, so getting some practice in would be a wise idea.").build();
+        this.researchProject("advanced_ritual_practice").name("Adv. Ritual Practice").text("Practicing simple rituals helped hone your technique.  Now it's time to practice more advanced rituals.").build();
+        this.researchProject("master_ritual_practice").name("Master Ritual Practice").text("The most powerful rituals are also the most dangerous.  Best to get some practice in before attempting one.").build();
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();
