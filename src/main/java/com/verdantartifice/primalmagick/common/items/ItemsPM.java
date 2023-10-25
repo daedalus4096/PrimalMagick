@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.common.items.food.AmbrosiaItem;
 import com.verdantartifice.primalmagick.common.items.food.BloodyFleshItem;
 import com.verdantartifice.primalmagick.common.items.food.FoodsPM;
 import com.verdantartifice.primalmagick.common.items.food.ManafruitItem;
+import com.verdantartifice.primalmagick.common.items.minerals.EnergizedGemItem;
 import com.verdantartifice.primalmagick.common.items.misc.ArcanometerItem;
 import com.verdantartifice.primalmagick.common.items.misc.AttunementShacklesItem;
 import com.verdantartifice.primalmagick.common.items.misc.BurnableBlockItem;
@@ -48,6 +49,7 @@ import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.items.misc.SeascribePenItem;
 import com.verdantartifice.primalmagick.common.items.misc.SpellcraftingAltarBlockItem;
+import com.verdantartifice.primalmagick.common.items.misc.TickStickItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenBowItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenSwordItem;
 import com.verdantartifice.primalmagick.common.items.tools.ForbiddenTridentItem;
@@ -244,6 +246,36 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> INFUSED_STONE_SKY = registerSupplier("infused_stone_sky", () -> new BlockItem(BlocksPM.INFUSED_STONE_SKY.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> INFUSED_STONE_SUN = registerSupplier("infused_stone_sun", () -> new BlockItem(BlocksPM.INFUSED_STONE_SUN.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> INFUSED_STONE_MOON = registerSupplier("infused_stone_moon", () -> new BlockItem(BlocksPM.INFUSED_STONE_MOON.get(), new Item.Properties()));
+    
+    // Register budding gem block items
+    public static final RegistryObject<BlockItem> SYNTHETIC_AMETHYST_CLUSTER = registerSupplier("synthetic_amethyst_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> LARGE_SYNTHETIC_AMETHYST_BUD = registerSupplier("large_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MEDIUM_SYNTHETIC_AMETHYST_BUD = registerSupplier("medium_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SMALL_SYNTHETIC_AMETHYST_BUD = registerSupplier("small_synthetic_amethyst_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DAMAGED_BUDDING_AMETHYST_BLOCK = registerSupplier("damaged_budding_amethyst_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CHIPPED_BUDDING_AMETHYST_BLOCK = registerSupplier("chipped_budding_amethyst_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> FLAWED_BUDDING_AMETHYST_BLOCK = registerSupplier("flawed_budding_amethyst_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SYNTHETIC_DIAMOND_CLUSTER = registerSupplier("synthetic_diamond_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> LARGE_SYNTHETIC_DIAMOND_BUD = registerSupplier("large_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MEDIUM_SYNTHETIC_DIAMOND_BUD = registerSupplier("medium_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SMALL_SYNTHETIC_DIAMOND_BUD = registerSupplier("small_synthetic_diamond_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DAMAGED_BUDDING_DIAMOND_BLOCK = registerSupplier("damaged_budding_diamond_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CHIPPED_BUDDING_DIAMOND_BLOCK = registerSupplier("chipped_budding_diamond_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> FLAWED_BUDDING_DIAMOND_BLOCK = registerSupplier("flawed_budding_diamond_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SYNTHETIC_EMERALD_CLUSTER = registerSupplier("synthetic_emerald_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> LARGE_SYNTHETIC_EMERALD_BUD = registerSupplier("large_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MEDIUM_SYNTHETIC_EMERALD_BUD = registerSupplier("medium_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SMALL_SYNTHETIC_EMERALD_BUD = registerSupplier("small_synthetic_emerald_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DAMAGED_BUDDING_EMERALD_BLOCK = registerSupplier("damaged_budding_emerald_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CHIPPED_BUDDING_EMERALD_BLOCK = registerSupplier("chipped_budding_emerald_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> FLAWED_BUDDING_EMERALD_BLOCK = registerSupplier("flawed_budding_emerald_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SYNTHETIC_QUARTZ_CLUSTER = registerSupplier("synthetic_quartz_cluster", () -> new BlockItem(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> LARGE_SYNTHETIC_QUARTZ_BUD = registerSupplier("large_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MEDIUM_SYNTHETIC_QUARTZ_BUD = registerSupplier("medium_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> SMALL_SYNTHETIC_QUARTZ_BUD = registerSupplier("small_synthetic_quartz_bud", () -> new BlockItem(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DAMAGED_BUDDING_QUARTZ_BLOCK = registerSupplier("damaged_budding_quartz_block", () -> new BlockItem(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> CHIPPED_BUDDING_QUARTZ_BLOCK = registerSupplier("chipped_budding_quartz_block", () -> new BlockItem(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> FLAWED_BUDDING_QUARTZ_BLOCK = registerSupplier("flawed_budding_quartz_block", () -> new BlockItem(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get(), new Item.Properties()));
 
     // Register skyglass block items
     public static final RegistryObject<BlockItem> SKYGLASS = registerSupplier("skyglass", () -> new BlockItem(BlocksPM.SKYGLASS.get(), new Item.Properties()));
@@ -421,6 +453,10 @@ public class ItemsPM {
     public static final RegistryObject<Item> HEXIUM_NUGGET = registerSupplier("hexium_nugget", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HALLOWSTEEL_NUGGET = registerSupplier("hallowsteel_nugget", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> QUARTZ_NUGGET = registerSupplier("quartz_nugget", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<EnergizedGemItem> ENERGIZED_AMETHYST = registerSupplier("energized_amethyst", () -> new EnergizedGemItem(new Item.Properties()));
+    public static final RegistryObject<EnergizedGemItem> ENERGIZED_DIAMOND = registerSupplier("energized_diamond", () -> new EnergizedGemItem(new Item.Properties()));
+    public static final RegistryObject<EnergizedGemItem> ENERGIZED_EMERALD = registerSupplier("energized_emerald", () -> new EnergizedGemItem(new Item.Properties()));
+    public static final RegistryObject<EnergizedGemItem> ENERGIZED_QUARTZ = registerSupplier("energized_quartz", () -> new EnergizedGemItem(new Item.Properties()));
     
     // Register tool items
     public static final RegistryObject<SwordItem> PRIMALITE_SWORD = registerSupplier("primalite_sword", () -> new SwordItem(ItemTierPM.PRIMALITE, 3, -2.4F, new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -857,4 +893,7 @@ public class ItemsPM {
     public static final RegistryObject<LinguisticsGainItem> CODEX_CREATIVE = registerWithoutTab("codex_creative", () -> new LinguisticsGainItem(CodexType.CREATIVE, new Item.Properties().stacksTo(16).rarity(Rarity.EPIC)));
     public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
     public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
+    
+    // Register debug items
+    public static final RegistryObject<TickStickItem> TICK_STICK = registerWithoutTab("tick_stick", () -> new TickStickItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 }

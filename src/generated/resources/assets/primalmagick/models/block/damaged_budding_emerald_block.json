@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "primalmagick:block/damaged_budding_emerald_block"
+  }
+}

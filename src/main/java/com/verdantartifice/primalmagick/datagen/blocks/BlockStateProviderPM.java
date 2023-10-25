@@ -181,6 +181,36 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_SUN.get());
         this.simpleCubeBlockWithItem(BlocksPM.INFUSED_STONE_MOON.get());
         
+        // Generate budding gem blocks
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_EMERALD_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD.get());
+        this.simpleCubeBlockWithItem(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get());
+        this.simpleCubeBlockWithItem(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER.get());
+        this.directionalCrossBlockWithItem(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD.get());
+        this.directionalCrossBlockWithItem(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD.get());
+        this.cubeColumnBlockWithItem(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get());
+        this.cubeColumnBlockWithItem(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get());
+        this.cubeColumnBlockWithItem(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
+        
         // TODO Generate skyglass blocks
         // TODO Generate skyglass pane blocks
         
@@ -747,8 +777,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
     }
     
+    private ModelFile getCrossModel(Block block) {
+        return this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT);
+    }
+    
     private void crossBlockWithItem(Block block, ResourceLocation itemTexture) {
-        this.simpleBlock(block, this.models().cross(this.name(block), this.blockTexture(block)).renderType(CUTOUT));
+        this.simpleBlock(block, this.getCrossModel(block));
         this.itemModels().basicItem(itemTexture);
     }
     
@@ -798,6 +832,15 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.getVariantBuilder(block)
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER).modelForState().modelFile(topModel).addModel()
             .partialState().with(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER).modelForState().modelFile(bottomModel).addModel();
+        this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
+    }
+    
+    private void directionalCrossBlockWithItem(Block block) {
+        this.directionalCrossBlockWithItem(block, this.blockTexture(block));
+    }
+    
+    private void directionalCrossBlockWithItem(Block block, ResourceLocation itemTexture) {
+        this.directionalBlock(block, this.getCrossModel(block));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
     }
 }

@@ -320,6 +320,34 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.HYDROMELON).name("Hydromelon").build();
         this.block(BlocksPM.HYRDOMELON_STEM).name("Hydromelon Stem").build();
         this.block(BlocksPM.ATTACHED_HYDROMELON_STEM).name("Attached Hydromelon Stem").build();
+        this.block(BlocksPM.SYNTHETIC_AMETHYST_CLUSTER).name("Synthetic Amethyst Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_AMETHYST_BUD).name("Large Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_AMETHYST_BUD).name("Medium Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_AMETHYST_BUD).name("Small Synthetic Amethyst Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK).name("Damaged Budding Amethyst Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK).name("Chipped Budding Amethyst Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK).name("Flawed Budding Amethyst Block").build();
+        this.block(BlocksPM.SYNTHETIC_DIAMOND_CLUSTER).name("Synthetic Diamond Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_DIAMOND_BUD).name("Large Synthetic Diamond Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_DIAMOND_BUD).name("Medium Synthetic Diamond Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_DIAMOND_BUD).name("Small Synthetic Diamond Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK).name("Damaged Budding Diamond Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK).name("Chipped Budding Diamond Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK).name("Flawed Budding Diamond Block").build();
+        this.block(BlocksPM.SYNTHETIC_EMERALD_CLUSTER).name("Synthetic Emerald Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_EMERALD_BUD).name("Large Synthetic Emerald Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_EMERALD_BUD).name("Medium Synthetic Emerald Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_EMERALD_BUD).name("Small Synthetic Emerald Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK).name("Damaged Budding Emerald Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK).name("Chipped Budding Emerald Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK).name("Flawed Budding Emerald Block").build();
+        this.block(BlocksPM.SYNTHETIC_QUARTZ_CLUSTER).name("Synthetic Quartz Cluster").build();
+        this.block(BlocksPM.LARGE_SYNTHETIC_QUARTZ_BUD).name("Large Synthetic Quartz Bud").build();
+        this.block(BlocksPM.MEDIUM_SYNTHETIC_QUARTZ_BUD).name("Medium Synthetic Quartz Bud").build();
+        this.block(BlocksPM.SMALL_SYNTHETIC_QUARTZ_BUD).name("Small Synthetic Quartz Bud").build();
+        this.block(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK).name("Damaged Budding Quartz Block").build();
+        this.block(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK).name("Chipped Budding Quartz Block").build();
+        this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -875,6 +903,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.HYDROMELON_SLICE).name("Hydromelon Slice").build();
         this.item(ItemsPM.BLOOD_ROSE).name("Blood Rose Bush").build();
         this.item(ItemsPM.EMBERFLOWER).name("Emberflower").build();
+        this.item(ItemsPM.TICK_STICK).name("Tick Stick").build();
+        this.item(ItemsPM.ENERGIZED_AMETHYST).name("Energized Amethyst Shard").build();
+        this.item(ItemsPM.ENERGIZED_DIAMOND).name("Energized Diamond").build();
+        this.item(ItemsPM.ENERGIZED_EMERALD).name("Energized Emerald").build();
+        this.item(ItemsPM.ENERGIZED_QUARTZ).name("Energized Quartz").build();
         
         // Generate miscellaneous tooltip localizations
         this.tooltip("sanguine_core").sub("1").output("Durability: %1$d").end().build();
@@ -2248,6 +2281,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("My machines hunger for energy, and it's all I can do to find enough coal to keep them running.  There has to be a way to extend my stockpile with magick.")
                 .add("Score another one for the alchemical arts!<BR>Infernal dust is brimming with heat and energy, so I thought, why not infuse some coal with it?  Turns out, though, that just burned my eyebrows off.  The material structure of the coal wasn't strong enough to contain that much thermal energy.  However, if I also infuse the coal with earth dust at the same time, that results in a stable product!<BR>Well, stable-ish.  It'll still explode if you throw it hard against something.  Curiously, though, whacking on a block of the stuff with a pickaxe seems perfectly safe.  Weird.<BR>In any case, all of this has yielded a fuel that burns hotter and longer than regular coal.  Eight times as long, to be precise.  This will extend my fuel stores nicely, so long as it's handled with care.")
+                .end()
+            .build();
+        this.researchEntry("SYNTHETIC_GEM_BUDS").name("Synthetic Gem Buds")
+            .stages()
+                .add("Amethyst is a fascinating gem.  A precious mineral that grows almost like a plant.  But the budding blocks that they grow from are so fragile, they can't be moved, which means harvesting them always requires some travel.<BR>I wonder if I can replicate this feature with magick, in a way that I can have closer to home?")
+                .add("I'm going to call this effort a qualified success.<BR>By carefully introducing the growing nature of the Sun, tempered with the ordered structure of the Earth, I can \"teach\" otherwise inert amethyst blocks how to bud.  Gems at home, great!<BR>Unfortunately, the process is imperfect.  Unlike their geode-bound kin, these synthetic amethyst buds will decay over time, eventually returning to an inert state.<BR>The good news is that I can simply reintroduce essence to the gems and get them growing again.  It will simply take some maintenance once in a while.")
+                .end()
+            .addenda()
+                .add("Fascinating!  By substituting the magick of the Hallowed for the magick of the Sun, I can infuse growth even into gems that don't ordinarily bud.")
                 .end()
             .build();
         this.researchEntry("BASIC_SORCERY").name("Basic Sorcery")

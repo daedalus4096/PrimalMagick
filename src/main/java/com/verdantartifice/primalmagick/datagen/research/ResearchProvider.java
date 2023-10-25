@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.data.CachedOutput;
@@ -718,6 +719,16 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(ItemTags.COALS).build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get())
                     .recipe(PrimalMagick.resource("ignyx_from_storage_block")).recipe(PrimalMagick.resource("torch_from_ignyx")).build())
+            .build(consumer);
+        ResearchEntryBuilder.entry("SYNTHETIC_GEM_BUDS", discipline).icon(Items.AMETHYST_CLUSTER).parent("MASTER_ALCHEMY").parent("SHARD_SYNTHESIS").parent("STONEMELDING")
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).requiredItemTag(Tags.Items.GEMS_AMETHYST).build())
+            .stage(ResearchStageBuilder.stage().attunement(SourceList.builder().withEarth(3).withSun(3).build()).recipe(ItemsPM.ENERGIZED_AMETHYST.get()).recipe(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
+                    .recipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Source.HALLOWED.getDiscoverKey()).attunement(Source.HALLOWED, 3).recipe(ItemsPM.ENERGIZED_DIAMOND.get())
+                    .recipe(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get()).recipe(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_DIAMOND_BLOCK.get())
+                    .recipe(ItemsPM.ENERGIZED_EMERALD.get()).recipe(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get()).recipe(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
+                    .recipe(ItemsPM.FLAWED_BUDDING_EMERALD_BLOCK.get()).recipe(ItemsPM.ENERGIZED_QUARTZ.get()).recipe(ItemsPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get())
+                    .recipe(ItemsPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_QUARTZ_BLOCK.get()).build())
             .build(consumer);
     }
 
