@@ -13,5 +13,9 @@
     }
   ],
   "required_material_count_override": 1,
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "constant",
+    "weight": 5.0
+  }
 }

@@ -64,6 +64,7 @@ public class ProjectProvider implements DataProvider {
         SimpleResearchKey shardSynthesis = ResearchNames.SHARD_SYNTHESIS.get().simpleKey();
         
         ProjectBuilder.project("advanced_essence_analysis").requiredResearch("CRYSTAL_SYNTHESIS").rewardMultiplier(0.5D)
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("CLUSTER_SYNTHESIS", -2).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_EARTH.get(), true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_SEA.get(), true).weight(3).build())
@@ -85,6 +86,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).afterCrafting(5).bonusReward(0.25D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("advanced_ritual_practice").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(2).add("RITUAL_LECTERN", "RITUAL_BELL", "PRIMAL_SHOVEL", "PRIMAL_FISHING_ROD", "PRIMAL_AXE", "PRIMAL_HOE", "PRIMAL_PICKAXE").build())
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(3).modifier("BASIC_RITUAL", 1).modifier("EXPERT_RITUAL", 1).modifier("MASTER_RITUAL", -1).modifier("SUPREME_RITUAL", -1).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RITUAL_ALTAR.get(), false).weight(10).build())
             .material(ItemMaterialBuilder.item(ItemsPM.OFFERING_PEDESTAL.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.REFINED_SALT.get(), 2, true).weight(3).build())
@@ -103,6 +105,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_MOON.get(), true).requiredResearch("PRIMAL_PICKAXE").bonusReward(0.25D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("advanced_runework").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(3).add("RUNE_BLOOD", "RUNE_INFERNAL", "RUNE_VOID", "RUNE_ABSORB", "RUNE_DISPEL", "RUNE_SUMMON", "RUNE_AREA", "RUNE_CREATURE", "RUNE_INSIGHT").build())
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(3).modifier("BASIC_RUNEWORKING", 1).modifier("EXPERT_RUNEWORKING", 1).modifier("MASTER_RUNEWORKING", -1).modifier("SUPREME_RUNEWORKING", -1).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.STONE_SLAB, 2, true).weight(3).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, 2, true).weight(3).build())
@@ -118,12 +121,15 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.RUNE_CREATURE.get(), true).requiredResearch("RUNE_CREATURE").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("apiamancy").aid(Blocks.BEEHIVE).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.SMALL_FLOWERS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("beacon_emanations").aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.BEACON_PAYMENT_ITEMS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("brewing_experiments").rewardMultiplier(0.5D).requiredResearch(Source.INFERNAL.getDiscoverKey())
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BREWING_STAND, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.CROPS_NETHER_WART, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.FERMENTED_SPIDER_EYE, true).weight(1).build())
@@ -143,15 +149,19 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .build(consumer);
         ProjectBuilder.project("conduit_forces").aid(Blocks.CONDUIT).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_PRISMARINE, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("draconic_energies").aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(1.0D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.ENDER_PEARLS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("draconic_memories").aid(Blocks.DRAGON_HEAD).aid(Blocks.DRAGON_WALL_HEAD).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ExperienceMaterialBuilder.experience(3, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("enchanting_studies").requiredResearch("BASIC_MANAWEAVING")
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())    // TODO Add more advanced versions and adjust
             .material(ItemTagMaterialBuilder.tag(ItemTagsPM.ENCHANTING_TABLES, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(5).build())
             .material(ExperienceMaterialBuilder.experience(3, true).bonusReward(0.125D).weight(5).build())
@@ -168,6 +178,7 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("end_expedition").requiredResearch(Source.VOID.getDiscoverKey()).rewardMultiplier(1.0D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.NETHERITE_SWORD, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.CROSSBOW, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.ARROW, 32, true).weight(1).build())
@@ -181,6 +192,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.ENDER_EYE, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("essence_analysis").requiredResearch("BASIC_ALCHEMY")
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("CRYSTAL_SYNTHESIS", -2).modifier("CLUSTER_SYNTHESIS", -2).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_EARTH.get(), true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_DUST_SEA.get(), true).weight(3).build())
@@ -202,6 +214,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_HALLOWED.get(), true).requiredResearch(CompoundResearchKey.from(true, shardSynthesis, Source.HALLOWED.getDiscoverKey())).afterCrafting(5).bonusReward(0.125D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("expedition")
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier(Source.INFERNAL.getDiscoverKey(), -2).modifier(Source.VOID.getDiscoverKey(), -2).build())
             .material(ItemMaterialBuilder.item(Items.IRON_SWORD, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BOW, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.ARROW, 4, true).weight(1).build())
@@ -215,9 +228,11 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.BREAD, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("hit_the_books").aid(Blocks.BOOKSHELF).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("magitech_tinkering").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(3).add("ARCANOMETER", "CONCOCTING_TINCTURES", "ENTROPY_SINK", "AUTO_CHARGER", "ESSENCE_TRANSMUTER", "DISSOLUTION_CHAMBER", "INFERNAL_FURNACE").build())
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(3).modifier("MASTER_MAGITECH", 2).build())
             .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_BASIC.get(), true).bonusReward(0.125D).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_ENCHANTED.get(), true).requiredResearch("EXPERT_MAGITECH").bonusReward(0.25D).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get(), true).requiredResearch("MASTER_MAGITECH").bonusReward(0.5D).weight(3).build())
@@ -231,6 +246,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.INFERNAL_FURNACE.get(), false).requiredResearch("INFERNAL_FURNACE").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("master_essence_analysis").requiredResearch("CLUSTER_SYNTHESIS").rewardMultiplier(1.0D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_EARTH.get(), true).weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CRYSTAL_SEA.get(), true).weight(3).build())
@@ -252,6 +268,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_CLUSTER_HALLOWED.get(), true).requiredResearch(Source.HALLOWED.getDiscoverKey()).afterCrafting(5).bonusReward(0.5D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("master_ritual_practice").rewardMultiplier(1D).requiredResearch(QuorumResearchKey.builder(2).add("BLOODLETTER", "SOUL_ANVIL", "FORBIDDEN_TRIDENT", "FORBIDDEN_SWORD", "FORBIDDEN_BOW").build())
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RITUAL_ALTAR.get(), false).weight(10).build())
             .material(ItemMaterialBuilder.item(ItemsPM.OFFERING_PEDESTAL.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.REFINED_SALT.get(), 4, true).weight(3).build())
@@ -267,6 +284,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.ESSENCE_SHARD_VOID.get(), true).requiredResearch("FORBIDDEN_SWORD").bonusReward(0.5D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("master_runework").rewardMultiplier(1D).requiredResearch("RUNE_HALLOWED")
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.STONE_SLAB, 4, true).weight(3).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, 4, true).weight(3).build())
@@ -284,6 +302,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.RUNE_CREATURE.get(), 2, true).requiredResearch("RUNE_CREATURE").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("mundane_tinkering")
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("BASIC_MAGITECH", -1).modifier("EXPERT_MAGITECH", -1).modifier("MASTER_MAGITECH", -1).modifier("SUPREME_MAGITECH", -1).build())
             .material(ItemMaterialBuilder.item(Items.CRAFTING_TABLE, false).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.ANVIL, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.FURNACE, false).weight(1).build())
@@ -296,6 +315,7 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("nether_expedition").requiredResearch(Source.INFERNAL.getDiscoverKey()).rewardMultiplier(0.5D)
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier(Source.VOID.getDiscoverKey(), -2).build())
             .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.CROSSBOW, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.ARROW, 16, true).weight(1).build())
@@ -310,9 +330,11 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("observation_analysis").aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ObservationMaterialBuilder.observation(1, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("piglin_barter").requiredResearch(Source.INFERNAL.getDiscoverKey()).rewardMultiplier(1D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BELL, true).weight(0.5D).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.STORAGE_BLOCKS_GOLD, true).bonusReward(0.5D).weight(0.5D).build())
             .material(ItemMaterialBuilder.item(Items.RAW_GOLD_BLOCK, true).bonusReward(0.5D).weight(0.5D).build())
@@ -336,9 +358,11 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.LIGHT_WEIGHTED_PRESSURE_PLATE, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("portal_detritus").aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.MAGNIFYING_GLASS.get(), false).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("raiding_the_raiders").rewardMultiplier(0.5D)
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Raid.getLeaderBannerInstance(), true).matchNbt().bonusReward(0.25D).weight(1).build())
             .material(ItemMaterialBuilder.item(ItemsPM.BLOODY_FLESH.get(), true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.CROSSBOW, true).weight(3).build())
@@ -351,6 +375,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_EMERALD, true).bonusReward(0.25D).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("recuperation")
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier(Source.INFERNAL.getDiscoverKey(), -2).modifier(Source.VOID.getDiscoverKey(), -2).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.BEDS, false).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.JUKEBOX, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(2).build())
@@ -362,6 +387,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.TNT, true).bonusReward(0.125D).weight(0.5D).build())
             .build(consumer);
         ProjectBuilder.project("redstone_tinkering").requiredResearch("BASIC_MAGITECH")
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("BASIC_MAGITECH", -1).modifier("EXPERT_MAGITECH", -1).modifier("MASTER_MAGITECH", -1).modifier("SUPREME_MAGITECH", -1).build())
             .material(ItemMaterialBuilder.item(Items.DETECTOR_RAIL, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.ACTIVATOR_RAIL, false).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.DISPENSER, false).weight(1).build())
@@ -376,6 +402,7 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("ritual_practice").requiredResearch(QuorumResearchKey.builder(2).add("MANAFRUIT", "RITUAL_CANDLES", "INCENSE_BRAZIER", "DOWSING_ROD").build())
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("EXPERT_RITUAL", -1).modifier("MASTER_RITUAL", -1).modifier("SUPREME_RITUAL", -2).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RITUAL_ALTAR.get(), false).weight(10).build())
             .material(ItemMaterialBuilder.item(ItemsPM.OFFERING_PEDESTAL.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.REFINED_SALT.get(), true).weight(3).build())
@@ -389,6 +416,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.DOWSING_ROD.get(), false).requiredResearch("DOWSING_ROD").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("runework").requiredResearch(QuorumResearchKey.builder(3).add("RUNE_EARTH", "RUNE_SEA", "RUNE_SKY", "RUNE_SUN", "RUNE_MOON", "RUNE_PROJECT", "RUNE_PROTECT", "RUNE_ITEM", "RUNE_SELF").build())
+            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("EXPERT_RUNEWORKING", -1).modifier("MASTER_RUNEWORKING", -1).modifier("SUPREME_RUNEWORKING", -2).build())
             .material(ItemMaterialBuilder.item(ItemsPM.RUNECARVING_TABLE.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(Items.STONE_SLAB, true).weight(3).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_LAPIS, true).weight(3).build())
@@ -404,6 +432,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(ItemsPM.RUNE_SELF.get(), true).requiredResearch("RUNE_SELF").weight(1).build())
             .build(consumer);
         ProjectBuilder.project("spellwork").requiredResearch("BASIC_SORCERY")
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())    // TODO Add more advanced versions and adjust
             .material(ItemMaterialBuilder.item(ItemsPM.SPELLCRAFTING_ALTAR.get(), false).weight(5).build())
             .material(ItemMaterialBuilder.item(ItemsPM.WAND_INSCRIPTION_TABLE.get(), false).requiredResearch("WAND_INSCRIPTION").weight(2).build())
             .material(ItemMaterialBuilder.item(ItemsPM.WAND_CHARGER.get(), false).requiredResearch("WAND_CHARGER").weight(2).build())
@@ -417,6 +446,7 @@ public class ProjectProvider implements DataProvider {
             .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
             .build(consumer);
         ProjectBuilder.project("trade")
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())    // TODO Add more advanced versions and adjust
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_EMERALD, true).bonusReward(0.25D).weight(10).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.GEMS_DIAMOND, true).bonusReward(0.25D).weight(2).build())
             .material(ItemMaterialBuilder.item(Items.COAL, true).weight(2).build())
@@ -431,6 +461,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemTagMaterialBuilder.tag(Tags.Items.INGOTS_IRON, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("wand_tinkering").requiredResearch("BASIC_SORCERY")
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())    // TODO Add more advanced versions and adjust
             .material(ItemMaterialBuilder.item(ItemsPM.WAND_ASSEMBLY_TABLE.get(), false).requiredResearch("ADVANCED_WANDMAKING").weight(3).build())
             .material(ItemMaterialBuilder.item(ItemsPM.HEARTWOOD.get(), true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.OBSIDIAN, true).weight(1).build())

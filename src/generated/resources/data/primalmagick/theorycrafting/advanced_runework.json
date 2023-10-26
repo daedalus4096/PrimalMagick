@@ -105,5 +105,27 @@
     }
   ],
   "required_research": "?3:RUNE_BLOOD,RUNE_INFERNAL,RUNE_VOID,RUNE_ABSORB,RUNE_DISPEL,RUNE_SUMMON,RUNE_AREA,RUNE_CREATURE,RUNE_INSIGHT",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "BASIC_RUNEWORKING",
+        "weight_modifier": 1.0
+      },
+      {
+        "research_key": "EXPERT_RUNEWORKING",
+        "weight_modifier": 1.0
+      },
+      {
+        "research_key": "MASTER_RUNEWORKING",
+        "weight_modifier": -1.0
+      },
+      {
+        "research_key": "SUPREME_RUNEWORKING",
+        "weight_modifier": -1.0
+      }
+    ],
+    "starting_weight": 3.0
+  }
 }

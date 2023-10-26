@@ -72,5 +72,27 @@
       "weight": 5.0
     }
   ],
-  "reward_multiplier": 0.25
+  "reward_multiplier": 0.25,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "BASIC_MAGITECH",
+        "weight_modifier": -1.0
+      },
+      {
+        "research_key": "EXPERT_MAGITECH",
+        "weight_modifier": -1.0
+      },
+      {
+        "research_key": "MASTER_MAGITECH",
+        "weight_modifier": -1.0
+      },
+      {
+        "research_key": "SUPREME_MAGITECH",
+        "weight_modifier": -1.0
+      }
+    ],
+    "starting_weight": 5.0
+  }
 }

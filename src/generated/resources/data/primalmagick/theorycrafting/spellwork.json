@@ -82,5 +82,9 @@
     }
   ],
   "required_research": "BASIC_SORCERY",
-  "reward_multiplier": 0.25
+  "reward_multiplier": 0.25,
+  "weight_function": {
+    "type": "constant",
+    "weight": 5.0
+  }
 }

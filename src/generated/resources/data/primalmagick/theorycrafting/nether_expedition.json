@@ -89,5 +89,15 @@
     }
   ],
   "required_research": "t_discover_infernal",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "t_discover_void",
+        "weight_modifier": -2.0
+      }
+    ],
+    "starting_weight": 5.0
+  }
 }
