@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public class ConstantWeight implements IWeightFunction {
     public static final String TYPE = "constant";
+    public static final IWeightFunctionSerializer<ConstantWeight> SERIALIZER = new Serializer();
     
     private final double weight;
     

@@ -20,6 +20,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public class ProgressiveWeight implements IWeightFunction {
     public static final String TYPE = "progressive";
+    public static final IWeightFunctionSerializer<ProgressiveWeight> SERIALIZER = new Serializer();
     
     private final double startingWeight;
     private final List<Modifier> modifiers;
@@ -46,6 +47,8 @@ public class ProgressiveWeight implements IWeightFunction {
     }
     
     protected static record Modifier(SimpleResearchKey researchKey, double weightModifier) {
+        protected static final Serializer SERIALIZER = new Serializer();
+        
         protected static class Serializer {
             public Modifier read(ResourceLocation templateId, JsonObject json) {
                 SimpleResearchKey key = SimpleResearchKey.parse(json.getAsJsonPrimitive("research_key").getAsString());
@@ -73,11 +76,10 @@ public class ProgressiveWeight implements IWeightFunction {
             
             List<Modifier> modifiers = new ArrayList<>();
             JsonArray modifiersArray = json.getAsJsonArray("modifiers");
-            Modifier.Serializer modifierSerializer = new Modifier.Serializer();
             for (JsonElement modifierElement : modifiersArray) {
                 try {
                     JsonObject modifierObj = modifierElement.getAsJsonObject();
-                    modifiers.add(modifierSerializer.read(templateId, modifierObj));
+                    modifiers.add(Modifier.SERIALIZER.read(templateId, modifierObj));
                 } catch (Exception e) {
                     throw new JsonSyntaxException("Invalid modifier in weight function JSON for " + templateId.toString(), e);
                 }
@@ -104,9 +106,8 @@ public class ProgressiveWeight implements IWeightFunction {
         public void toNetwork(FriendlyByteBuf buf, ProgressiveWeight weight) {
             buf.writeDouble(weight.startingWeight);
             buf.writeVarInt(weight.modifiers.size());
-            Modifier.Serializer modifierSerializer = new Modifier.Serializer();
             for (Modifier modifier : weight.modifiers) {
-                modifierSerializer.toNetwork(buf, modifier);
+                Modifier.SERIALIZER.toNetwork(buf, modifier);
             }
         }
     }
