@@ -1,0 +1,96 @@
+{
+  "aid_blocks": [],
+  "key": "primalmagick:advanced_wand_tinkering",
+  "material_options": [
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "required_research": "ADVANCED_WANDMAKING",
+      "stack": "primalmagick:wand_assembly_table",
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "required_research": "WAND_GLAMOUR_TABLE",
+      "stack": "primalmagick:wand_glamour_table",
+      "weight": 3.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "primalmagick:heartwood;2",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:bones",
+      "quantity": 1,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:rods/blaze",
+      "quantity": 1,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:purpur_block",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "primalmagick:ingots/primalite",
+      "quantity": 1,
+      "required_research": "PRIMALITE",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "primalmagick:ingots/hexium",
+      "quantity": 1,
+      "required_research": "HEXIUM",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_blood",
+      "stack": "primalmagick:essence_dust_blood",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_infernal",
+      "stack": "primalmagick:essence_dust_infernal",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_void",
+      "stack": "primalmagick:essence_dust_void",
+      "weight": 1.0
+    }
+  ],
+  "required_research": "MASTER_MANAWEAVING",
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "constant",
+    "weight": 5.0
+  }
+}

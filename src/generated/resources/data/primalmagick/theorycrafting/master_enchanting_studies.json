@@ -1,6 +1,6 @@
 {
   "aid_blocks": [],
-  "key": "primalmagick:enchanting_studies",
+  "key": "primalmagick:master_enchanting_studies",
   "material_options": [
     {
       "type": "tag",
@@ -13,14 +13,14 @@
       "type": "tag",
       "consumed": true,
       "name": "forge:gems/lapis",
-      "quantity": 1,
+      "quantity": 3,
       "weight": 5.0
     },
     {
       "type": "experience",
-      "bonus_reward": 0.125,
+      "bonus_reward": 0.5,
       "consumed": true,
-      "levels": 1,
+      "levels": 3,
       "weight": 5.0
     },
     {
@@ -34,63 +34,63 @@
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_sword;1;{Damage:0}",
+      "stack": "primalmagick:hexium_sword;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_pickaxe;1;{Damage:0}",
+      "stack": "primalmagick:hexium_pickaxe;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_shovel;1;{Damage:0}",
+      "stack": "primalmagick:hexium_shovel;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_axe;1;{Damage:0}",
+      "stack": "primalmagick:hexium_axe;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_hoe;1;{Damage:0}",
+      "stack": "primalmagick:hexium_hoe;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_helmet;1;{Damage:0}",
+      "stack": "primalmagick:hexium_head;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_chestplate;1;{Damage:0}",
+      "stack": "primalmagick:hexium_chest;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_leggings;1;{Damage:0}",
+      "stack": "primalmagick:hexium_legs;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "stack": "minecraft:golden_boots;1;{Damage:0}",
+      "stack": "primalmagick:hexium_feet;1;{Damage:0}",
       "weight": 1.0
     },
     {
@@ -100,24 +100,10 @@
       "weight": 5.0
     }
   ],
-  "required_research": "BASIC_MANAWEAVING",
-  "reward_multiplier": 0.25,
+  "required_research": "MASTER_MANAWEAVING&&HEXIUM",
+  "reward_multiplier": 1.0,
   "weight_function": {
-    "type": "progressive",
-    "modifiers": [
-      {
-        "research_key": "EXPERT_MANAWEAVING",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "MASTER_MANAWEAVING",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "SUPREME_MANAWEAVING",
-        "weight_modifier": -2.0
-      }
-    ],
-    "starting_weight": 5.0
+    "type": "constant",
+    "weight": 5.0
   }
 }

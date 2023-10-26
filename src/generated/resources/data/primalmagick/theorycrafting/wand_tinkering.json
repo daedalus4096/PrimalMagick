@@ -87,10 +87,16 @@
       "weight": 5.0
     }
   ],
-  "required_research": "BASIC_SORCERY",
+  "required_research": "BASIC_MANAWEAVING",
   "reward_multiplier": 0.25,
   "weight_function": {
-    "type": "constant",
-    "weight": 5.0
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "MASTER_MANAWEAVING",
+        "weight_modifier": -2.0
+      }
+    ],
+    "starting_weight": 5.0
   }
 }
