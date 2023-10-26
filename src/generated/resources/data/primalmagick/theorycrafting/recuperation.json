@@ -46,6 +46,7 @@
     },
     {
       "type": "item",
+      "bonus_reward": 0.125,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:cake",

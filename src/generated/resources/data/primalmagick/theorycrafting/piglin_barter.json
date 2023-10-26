@@ -11,7 +11,7 @@
     },
     {
       "type": "tag",
-      "bonus_reward": 0.25,
+      "bonus_reward": 0.5,
       "consumed": true,
       "name": "forge:storage_blocks/gold",
       "quantity": 1,
@@ -19,7 +19,7 @@
     },
     {
       "type": "item",
-      "bonus_reward": 0.25,
+      "bonus_reward": 0.5,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:raw_gold_block",
@@ -111,6 +111,7 @@
     },
     {
       "type": "item",
+      "bonus_reward": 0.5,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:golden_horse_armor",
@@ -153,5 +154,5 @@
     }
   ],
   "required_research": "t_discover_infernal",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 1.0
 }

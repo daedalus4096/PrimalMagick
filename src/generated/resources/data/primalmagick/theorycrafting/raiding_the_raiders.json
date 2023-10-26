@@ -57,7 +57,7 @@
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:dark_oak_log;16",
-      "weight": 5.0
+      "weight": 3.0
     },
     {
       "type": "item",

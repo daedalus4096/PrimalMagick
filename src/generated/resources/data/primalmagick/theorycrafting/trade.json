@@ -4,7 +4,7 @@
   "material_options": [
     {
       "type": "tag",
-      "bonus_reward": 0.125,
+      "bonus_reward": 0.25,
       "consumed": true,
       "name": "forge:gems/emerald",
       "quantity": 1,
@@ -12,6 +12,7 @@
     },
     {
       "type": "tag",
+      "bonus_reward": 0.25,
       "consumed": true,
       "name": "forge:gems/diamond",
       "quantity": 1,

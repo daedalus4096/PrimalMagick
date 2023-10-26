@@ -7,7 +7,7 @@
       "consumed": false,
       "match_nbt": false,
       "stack": "minecraft:brewing_stand",
-      "weight": 3.0
+      "weight": 5.0
     },
     {
       "type": "tag",
@@ -46,7 +46,7 @@
     },
     {
       "type": "item",
-      "bonus_reward": 0.125,
+      "bonus_reward": 0.25,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:rabbit_foot",
@@ -103,7 +103,7 @@
     },
     {
       "type": "item",
-      "bonus_reward": 0.125,
+      "bonus_reward": 0.25,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:turtle_helmet;1;{Damage:0}",
@@ -111,7 +111,7 @@
     },
     {
       "type": "item",
-      "bonus_reward": 0.125,
+      "bonus_reward": 0.25,
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:phantom_membrane",
@@ -125,5 +125,5 @@
     }
   ],
   "required_research": "t_discover_infernal",
-  "reward_multiplier": 0.25
+  "reward_multiplier": 0.5
 }
