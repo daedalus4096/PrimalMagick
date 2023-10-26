@@ -77,7 +77,7 @@ public class TheorycraftManager {
     public static Project createRandomProject(@Nonnull ServerPlayer player, @Nonnull BlockPos tablePos) {
         WeightedRandomBag<ProjectTemplate> templateBag = new WeightedRandomBag<>();
         for (ProjectTemplate template : TEMPLATES.values()) {
-            templateBag.add(template, 1);
+            templateBag.add(template, template.getWeight(player));
         }
         
         // Determine what blocks are nearby so that aid blocks can be checked
