@@ -31,6 +31,12 @@ public class ConstantWeight implements IWeightFunction {
         return TYPE;
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public IWeightFunctionSerializer<ConstantWeight> getSerializer() {
+        return SERIALIZER;
+    }
+
     public static class Serializer implements IWeightFunctionSerializer<ConstantWeight> {
         @Override
         public ConstantWeight read(ResourceLocation templateId, JsonObject json) {

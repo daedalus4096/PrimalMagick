@@ -27,6 +27,7 @@ public class ProjectBuilder {
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
+    protected Optional<IFinishedWeightFunction> weightFunction = Optional.empty();
     
     protected ProjectBuilder(@Nonnull ResourceLocation key) {
         this.key = key;
@@ -89,6 +90,11 @@ public class ProjectBuilder {
         return this;
     }
     
+    public ProjectBuilder weightFunction(@Nullable IFinishedWeightFunction weight) {
+        this.weightFunction = Optional.ofNullable(weight);
+        return this;
+    }
+    
     private void validate(ResourceLocation id) {
         if (this.key == null) {
             throw new IllegalStateException("No key for theorycrafting project " + id.toString());
@@ -126,7 +132,7 @@ public class ProjectBuilder {
     
     public void build(Consumer<IFinishedProject> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ProjectBuilder.Result(this.key, this.materialOptions, this.requiredResearch, this.requiredMaterialCountOverride, this.baseSuccessChanceOverride, this.rewardMultiplier, this.aidBlocks));
+        consumer.accept(new ProjectBuilder.Result(this.key, this.materialOptions, this.requiredResearch, this.requiredMaterialCountOverride, this.baseSuccessChanceOverride, this.rewardMultiplier, this.aidBlocks, this.weightFunction));
     }
     
     public static class Result implements IFinishedProject {
@@ -137,9 +143,10 @@ public class ProjectBuilder {
         protected final Optional<Double> baseSuccessChanceOverride;
         protected final double rewardMultiplier;
         protected final List<ResourceLocation> aidBlocks;
+        protected final Optional<IFinishedWeightFunction> weightFunction;
         
         public Result(@Nonnull ResourceLocation key, @Nonnull List<IFinishedProjectMaterial> materialOptions, @Nullable IResearchKey requiredResearch, @Nonnull Optional<Integer> materialCount, 
-                @Nonnull Optional<Double> successChance, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
+                @Nonnull Optional<Double> successChance, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks, @Nonnull Optional<IFinishedWeightFunction> weightFunction) {
             this.key = key;
             this.materialOptions = materialOptions;
             this.requiredResearch = requiredResearch;
@@ -147,6 +154,7 @@ public class ProjectBuilder {
             this.baseSuccessChanceOverride = successChance;
             this.rewardMultiplier = rewardMultiplier;
             this.aidBlocks = aidBlocks;
+            this.weightFunction = weightFunction;
         }
 
         @Override
@@ -179,6 +187,10 @@ public class ProjectBuilder {
                 materialsArray.add(material.getMaterialJson());
             }
             json.add("material_options", materialsArray);
+            
+            this.weightFunction.ifPresent(weight -> {
+                json.add("weight_function", weight.getWeightJson());
+            });
         }
     }
 }

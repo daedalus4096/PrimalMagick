@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 public interface IFinishedWeightFunction {
     void serialize(JsonObject json);
     
-    default JsonObject getMaterialJson() {
+    default JsonObject getWeightJson() {
         JsonObject json = new JsonObject();
         this.serialize(json);
         return json;

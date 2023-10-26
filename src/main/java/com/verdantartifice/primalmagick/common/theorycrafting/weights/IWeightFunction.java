@@ -10,4 +10,5 @@ import net.minecraft.world.entity.player.Player;
 public interface IWeightFunction {
     double getWeight(Player player);
     String getFunctionType();
+    <T extends IWeightFunction> IWeightFunctionSerializer<T> getSerializer();
 }

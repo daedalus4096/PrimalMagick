@@ -46,6 +46,12 @@ public class ProgressiveWeight implements IWeightFunction {
         return TYPE;
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public IWeightFunctionSerializer<ProgressiveWeight> getSerializer() {
+        return SERIALIZER;
+    }
+    
     protected static record Modifier(SimpleResearchKey researchKey, double weightModifier) {
         protected static final Serializer SERIALIZER = new Serializer();
         
