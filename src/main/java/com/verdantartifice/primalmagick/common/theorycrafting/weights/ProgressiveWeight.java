@@ -38,7 +38,7 @@ public class ProgressiveWeight implements IWeightFunction {
                 retVal += modifier.weightModifier();
             }
         }
-        return retVal;
+        return Math.max(0D, retVal);
     }
 
     @Override
