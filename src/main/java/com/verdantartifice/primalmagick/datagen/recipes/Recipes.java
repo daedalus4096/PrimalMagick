@@ -1869,6 +1869,11 @@ public class Recipes extends RecipeProvider {
             .requires(ItemsPM.ROCK_SALT_ORE.get())
             .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .save(consumer, PrimalMagick.resource("rock_salt_from_earthshatter_hammer"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.REFINED_SALT.get(), 2)
+            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .requires(ItemsPM.ROCK_SALT.get())
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+            .save(consumer, PrimalMagick.resource("refined_salt_from_earthshatter_hammer"));
     }
 
     protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
@@ -6311,6 +6316,10 @@ public class Recipes extends RecipeProvider {
             .ingredient(ItemsPM.ROCK_SALT_ORE.get())
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
             .build(consumer, PrimalMagick.resource("rock_salt_from_dissolving_rock_salt_ore"));
+        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.REFINED_SALT.get(), 3)
+            .ingredient(ItemsPM.ROCK_SALT.get())
+            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+            .build(consumer, PrimalMagick.resource("refined_salt_from_dissolving_rock_salt"));
     }
     
     protected void registerHummingArtifactRecipes(Consumer<FinishedRecipe> consumer) {

@@ -6,6 +6,7 @@ v4.0.8
 * Rebalanced material requirements for some theorycrafting projects
 * Made some low-value theorycrafting projects less likely to show up as you advance in research
 * Added Synthetic Gem Buds, for a different kind of farming
+* Made the Earthshatter Hammer and Dissolution Chamber able to refine and multiply Rock Salt
 * Made datapack template generation tool include sourceless entities as well as items
 
 v4.0.7
