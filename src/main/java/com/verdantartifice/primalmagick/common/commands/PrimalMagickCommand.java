@@ -74,6 +74,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -672,10 +673,11 @@ public class PrimalMagickCommand {
         RegistryAccess registryAccess = source.registryAccess();
 
         List<Item> sourcelessItems = listSourcelessItems(recipeManager, registryAccess, level, excludeNamespaces);
+        List<EntityType<?>> sourcelessEntities = listSourcelessEntityTypes(registryAccess, excludeNamespaces);
 
         byte[] itemsToDataPackTemplate;
         try {
-            itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems);
+            itemsToDataPackTemplate = DataPackUtils.ItemsToDataPackTemplate(sourcelessItems, sourcelessEntities);
         } catch (IOException e){
             LOGGER.atError().withThrowable(e).log("unable to generate datapack");
             return 1;
@@ -691,7 +693,7 @@ public class PrimalMagickCommand {
             fos.close();
 
             // Being very careful not to make this a tool for users to use to enumerate server attributes.
-            target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items to disk; check system logs for location."));
+            target.sendSystemMessage(Component.literal("Wrote datapack template for sourceless items and entities to disk; check system logs for location."));
             LOGGER.atInfo().log("Wrote Datapack to "+ filePath );
         } catch (IOException e) {
             LOGGER.atError().withThrowable(e).log("unable to write datapack");
@@ -701,6 +703,35 @@ public class PrimalMagickCommand {
 
 
         return 0;
+    }
+    
+    private static List<EntityType<?>> listSourcelessEntityTypes(RegistryAccess registryAccess, Collection<String> excludeNamespaces) {
+        AffinityManager am = AffinityManager.getOrCreateInstance();
+        Vector<EntityType<?>> retVal = new Vector<>();
+        
+        ForgeRegistries.ENTITY_TYPES.forEach(entityType -> {
+            ResourceLocation resourceLocation = ForgeRegistries.ENTITY_TYPES.getKey(entityType);
+            if (resourceLocation == null) {
+                // If the Item can't be resolved in registry, it's got problems I can't care about.
+                return;
+            }
+            String namespace = resourceLocation.getNamespace();
+            if (excludeNamespaces != null && excludeNamespaces.contains(namespace)) {
+                return;
+            }
+            
+            CompletableFuture<SourceList> future = am.getAffinityValuesAsync(entityType, registryAccess);
+            try {
+                SourceList sources = future.get();
+                if (sources.isEmpty()) {
+                    retVal.add(entityType);
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
+        
+        return retVal;
     }
 
     private static List<Item> listSourcelessItems(net.minecraft.world.item.crafting.RecipeManager recipeManager, RegistryAccess registryAccess, ServerLevel level, Collection<String> excludeNamespaces ) {
