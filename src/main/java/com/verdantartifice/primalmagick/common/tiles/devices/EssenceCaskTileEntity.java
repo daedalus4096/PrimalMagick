@@ -249,7 +249,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     }
 
     public void dropContents() {
-        Containers.dropContents(this.level, this.worldPosition, this);
+        this.dropContents(this.level, this.worldPosition);
         for (Table.Cell<EssenceType, Source, Integer> cell : this.contents.cellSet()) {
             ItemStack tempStack = EssenceItem.getEssence(cell.getRowKey(), cell.getColumnKey(), cell.getValue());
             this.contents.put(cell.getRowKey(), cell.getColumnKey(), 0);

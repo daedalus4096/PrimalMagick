@@ -140,8 +140,8 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                Containers.dropContents(worldIn, pos, (OfferingPedestalTileEntity)tile);
+            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                pedestalTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

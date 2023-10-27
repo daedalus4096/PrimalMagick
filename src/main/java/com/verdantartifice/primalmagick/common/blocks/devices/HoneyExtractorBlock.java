@@ -106,8 +106,8 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof HoneyExtractorTileEntity) {
-                Containers.dropContents(worldIn, pos, (HoneyExtractorTileEntity)tile);
+            if (tile instanceof HoneyExtractorTileEntity extractorTile) {
+                extractorTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

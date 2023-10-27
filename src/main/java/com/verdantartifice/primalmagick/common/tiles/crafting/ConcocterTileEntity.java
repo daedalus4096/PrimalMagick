@@ -267,7 +267,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
                     return true;
                 } else if (!ItemStack.isSameItem(currentOutput, output)) {
                     return false;
-                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize(OUTPUT_SLOT_INDEX) && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
                     return true;
                 } else {
                     return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
@@ -362,15 +362,16 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
+    public ItemStack setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+        ItemStack retVal = super.setItem(index, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index >= 0 && index < MAX_INPUT_ITEMS && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.setChanged();
         }
+        return retVal;
     }
 
     @Override

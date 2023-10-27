@@ -61,8 +61,8 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
         }
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualAltarTileEntity) {
-                Containers.dropContents(worldIn, pos, (RitualAltarTileEntity)tile);
+            if (tile instanceof RitualAltarTileEntity altarTile) {
+                altarTile.dropContents(worldIn, pos);
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);

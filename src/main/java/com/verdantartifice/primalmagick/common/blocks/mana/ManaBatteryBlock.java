@@ -92,7 +92,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                Containers.dropContents(pLevel, pPos, batteryTile);
+                batteryTile.dropContents(pLevel, pPos);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

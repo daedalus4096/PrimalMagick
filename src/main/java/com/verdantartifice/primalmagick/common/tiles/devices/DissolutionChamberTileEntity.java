@@ -180,7 +180,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
                     return true;
                 } else if (!ItemStack.isSameItem(currentOutput, output)) {
                     return false;
-                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize(OUTPUT_SLOT_INDEX) && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
                     return true;
                 } else {
                     return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
@@ -212,14 +212,15 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     }
     
     @Override
-    public void setItem(int index, ItemStack stack) {
+    public ItemStack setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+        ItemStack retVal = super.setItem(index, stack);
         if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();
         }
+        return retVal;
     }
 
     @Override

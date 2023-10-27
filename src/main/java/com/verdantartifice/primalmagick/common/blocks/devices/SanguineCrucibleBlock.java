@@ -140,7 +140,7 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
                 worldIn.setBlock(pos, state.setValue(LIT, true), Block.UPDATE_ALL_IMMEDIATE);
                 return InteractionResult.SUCCESS;
             } else if (player.isSecondaryUseActive() && stack.isEmpty() && crucibleTile.hasCore()) {
-                popResource(worldIn, pos.relative(hit.getDirection()), crucibleTile.removeItemNoUpdate(0));
+                popResource(worldIn, pos.relative(hit.getDirection()), crucibleTile.removeItem(0, 1));
                 worldIn.playSound(null, pos, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundSource.BLOCKS, 0.3F, 0.5F);
                 worldIn.setBlock(pos, state.setValue(LIT, false), Block.UPDATE_ALL_IMMEDIATE);
                 return InteractionResult.SUCCESS;
@@ -156,8 +156,8 @@ public class SanguineCrucibleBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof SanguineCrucibleTileEntity) {
-                Containers.dropContents(worldIn, pos, (SanguineCrucibleTileEntity)tile);
+            if (tile instanceof SanguineCrucibleTileEntity crucibleTile) {
+                crucibleTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

@@ -174,9 +174,9 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     protected boolean canSpin() {
         ItemStack honeyOutput = this.items.get(2);
         ItemStack beeswaxOutput = this.items.get(3);
-        return (honeyOutput.getCount() < this.getMaxStackSize() &&
+        return (honeyOutput.getCount() < this.getMaxStackSize(2) &&
                 honeyOutput.getCount() < honeyOutput.getMaxStackSize() &&
-                beeswaxOutput.getCount() < this.getMaxStackSize() &&
+                beeswaxOutput.getCount() < this.getMaxStackSize(3) &&
                 beeswaxOutput.getCount() < beeswaxOutput.getMaxStackSize());
     }
     
@@ -205,14 +205,15 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
+    public ItemStack setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+        ItemStack retVal = super.setItem(index, stack);
         if ((index == 0 || index == 1) && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
             this.setChanged();
         }
+        return retVal;
     }
 
     @Override

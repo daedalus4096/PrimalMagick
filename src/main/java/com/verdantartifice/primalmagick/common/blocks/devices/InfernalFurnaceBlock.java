@@ -120,7 +120,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                Containers.dropContents(pLevel, pPos, furnaceTile);
+                furnaceTile.dropContents(pLevel, pPos);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

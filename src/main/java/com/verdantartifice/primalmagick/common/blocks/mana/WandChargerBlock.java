@@ -68,8 +68,8 @@ public class WandChargerBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof WandChargerTileEntity) {
-                Containers.dropContents(worldIn, pos, (WandChargerTileEntity)tile);
+            if (tile instanceof WandChargerTileEntity chargerTile) {
+                chargerTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

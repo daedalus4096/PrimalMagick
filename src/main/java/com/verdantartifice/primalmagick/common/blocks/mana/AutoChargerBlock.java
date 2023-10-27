@@ -87,7 +87,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity castTile) {
-                Containers.dropContents(worldIn, pos, castTile);
+                castTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

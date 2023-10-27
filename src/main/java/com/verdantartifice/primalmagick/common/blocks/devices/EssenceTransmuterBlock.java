@@ -113,7 +113,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                Containers.dropContents(worldIn, pos, transmuterTile);
+                transmuterTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

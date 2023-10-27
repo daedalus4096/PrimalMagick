@@ -107,8 +107,8 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AbstractCalcinatorTileEntity) {
-                Containers.dropContents(worldIn, pos, (AbstractCalcinatorTileEntity)tile);
+            if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
+                calcinatorTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

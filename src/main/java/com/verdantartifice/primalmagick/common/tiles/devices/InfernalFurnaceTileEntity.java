@@ -225,7 +225,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         boolean fuelPopulated = !fuelStack.isEmpty();
         if (entity.isCharged() && inputPopulated) {
             Recipe<?> recipe = getActiveRecipe(level, entity).orElse(null);
-            int furnaceMaxStackSize = entity.getMaxStackSize();
+            int furnaceMaxStackSize = entity.getMaxStackSize(INPUT_SLOT_INDEX);
             
             // Handle supercharge burn
             if (!entity.isSupercharged() && fuelPopulated && entity.canBurn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
@@ -438,14 +438,15 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
+    public ItemStack setItem(int index, ItemStack stack) {
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.items.get(index), stack);
-        super.setItem(index, stack);
+        ItemStack retVal = super.setItem(index, stack);
         if (index == INPUT_SLOT_INDEX && !flag) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
         }
+        return retVal;
     }
 
     @Override

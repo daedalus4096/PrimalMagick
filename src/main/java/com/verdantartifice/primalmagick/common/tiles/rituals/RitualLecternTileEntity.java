@@ -47,7 +47,7 @@ public class RitualLecternTileEntity extends TileInventoryPM implements IRitualP
     }
     
     @Override
-    public int getMaxStackSize() {
+    public int getMaxStackSize(int slot) {
         return 1;
     }
     

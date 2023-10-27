@@ -182,8 +182,8 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
         }
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualLecternTileEntity) {
-                Containers.dropContents(worldIn, pos, (RitualLecternTileEntity)tile);
+            if (tile instanceof RitualLecternTileEntity lecternTile) {
+                lecternTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
         }
