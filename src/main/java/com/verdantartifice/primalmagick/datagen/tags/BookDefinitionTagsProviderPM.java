@@ -31,6 +31,8 @@ public class BookDefinitionTagsProviderPM extends IntrinsicHolderTagsProvider<Bo
         this.tag(BookDefinitionTagsPM.ILLAGER_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
         this.tag(BookDefinitionTagsPM.EARTH_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
         this.tag(BookDefinitionTagsPM.SEA_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
+        this.tag(BookDefinitionTagsPM.SKY_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
         this.tag(BookDefinitionTagsPM.SUN_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
+        this.tag(BookDefinitionTagsPM.MOON_BOOKS).add(BooksPM.TEST_BOOK.get(), BooksPM.DREAM_JOURNAL.get(), BooksPM.SOURCE_PRIMER.get());
     }
 }

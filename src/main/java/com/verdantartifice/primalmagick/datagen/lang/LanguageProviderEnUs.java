@@ -1590,7 +1590,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
         this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").build();
         this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").build();
+        this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").build();
         this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
+        this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").build();
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")

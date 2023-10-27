@@ -17,7 +17,9 @@ public class BookDefinitionTagsPM {
     public static final TagKey<BookDefinition> ILLAGER_BOOKS = create("in_language/illager");
     public static final TagKey<BookDefinition> EARTH_BOOKS = create("in_language/earth");
     public static final TagKey<BookDefinition> SEA_BOOKS = create("in_language/sea");
+    public static final TagKey<BookDefinition> SKY_BOOKS = create("in_language/sky");
     public static final TagKey<BookDefinition> SUN_BOOKS = create("in_language/sun");
+    public static final TagKey<BookDefinition> MOON_BOOKS = create("in_language/moon");
     
     private static TagKey<BookDefinition> create(String name) {
         return BooksPM.createTagKey(name);

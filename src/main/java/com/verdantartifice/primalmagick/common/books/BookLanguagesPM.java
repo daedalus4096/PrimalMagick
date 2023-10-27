@@ -38,5 +38,7 @@ public class BookLanguagesPM {
     public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), Style.EMPTY.withFont(new ResourceLocation("illageralt")), 20, BookDefinitionTagsPM.ILLAGER_BOOKS));
     public static final RegistryObject<BookLanguage> EARTH = register("earth", () -> new BookLanguage(PrimalMagick.resource("earth"), Style.EMPTY.withFont(PrimalMagick.resource("earth")), 20, BookDefinitionTagsPM.EARTH_BOOKS));
     public static final RegistryObject<BookLanguage> SEA = register("sea", () -> new BookLanguage(PrimalMagick.resource("sea"), Style.EMPTY.withFont(PrimalMagick.resource("sea")), 20, BookDefinitionTagsPM.SEA_BOOKS));
+    public static final RegistryObject<BookLanguage> SKY = register("sky", () -> new BookLanguage(PrimalMagick.resource("sky"), Style.EMPTY.withFont(PrimalMagick.resource("sky")), 20, BookDefinitionTagsPM.SKY_BOOKS));
     public static final RegistryObject<BookLanguage> SUN = register("sun", () -> new BookLanguage(PrimalMagick.resource("sun"), Style.EMPTY.withFont(PrimalMagick.resource("sun")), 20, BookDefinitionTagsPM.SUN_BOOKS));
+    public static final RegistryObject<BookLanguage> MOON = register("moon", () -> new BookLanguage(PrimalMagick.resource("moon"), Style.EMPTY.withFont(PrimalMagick.resource("moon")), 20, BookDefinitionTagsPM.MOON_BOOKS));
 }

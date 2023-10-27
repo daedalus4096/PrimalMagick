@@ -1,0 +1,64 @@
+{
+  "entries": [
+    {
+      "style": {
+        "color": "#20702B"
+      },
+      "translationKey": "source.primalmagick.earth"
+    },
+    {
+      "style": {
+        "color": "#117899"
+      },
+      "translationKey": "source.primalmagick.sea"
+    },
+    {
+      "style": {
+        "color": "#87CEEB"
+      },
+      "translationKey": "source.primalmagick.sky"
+    },
+    {
+      "style": {
+        "color": "#F9C81C"
+      },
+      "translationKey": "source.primalmagick.sun"
+    },
+    {
+      "style": {
+        "color": "#D1DDE3"
+      },
+      "translationKey": "source.primalmagick.moon"
+    },
+    {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
+      "style": {
+        "color": "#8A0303",
+        "obfuscated": true
+      },
+      "translationKey": "source.primalmagick.blood"
+    },
+    {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
+      "style": {
+        "color": "#ED2F1B",
+        "obfuscated": true
+      },
+      "translationKey": "source.primalmagick.infernal"
+    },
+    {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
+      "style": {
+        "color": "#551A8B",
+        "obfuscated": true
+      },
+      "translationKey": "source.primalmagick.void"
+    },
+    {
+      "style": {
+        "color": "#EEEBD9"
+      },
+      "translationKey": "source.primalmagick.hallowed"
+    }
+  ]
+}
