@@ -1,117 +1,62 @@
 {
   "aid_blocks": [],
-  "key": "primalmagick:trade",
+  "key": "primalmagick:prosperous_trade",
   "material_options": [
+    {
+      "type": "tag",
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "name": "forge:gems/emerald",
+      "quantity": 2,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:lava_bucket",
+      "weight": 1.0
+    },
     {
       "type": "tag",
       "bonus_reward": 0.25,
       "consumed": true,
-      "name": "forge:gems/emerald",
+      "name": "forge:gems/diamond",
       "quantity": 1,
-      "weight": 2.0
+      "weight": 3.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
       "stack": "minecraft:coal;2",
-      "weight": 3.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:ingots/iron",
-      "quantity": 1,
-      "weight": 3.0
-    },
-    {
-      "type": "item",
-      "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:chicken;2",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:porkchop",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:paper;4",
-      "weight": 2.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:glass_panes",
-      "quantity": 2,
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:rotten_flesh;4",
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:crops/wheat",
-      "quantity": 3,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:crops/potato",
-      "quantity": 3,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:crops/carrot",
-      "quantity": 3,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:crops/beetroot",
-      "quantity": 3,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:string",
-      "quantity": 3,
       "weight": 2.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "minecraft:cod;2",
+      "stack": "minecraft:mutton;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:beef;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:compass",
       "weight": 1.0
     },
     {
       "type": "tag",
       "consumed": true,
-      "name": "forge:rods/wooden",
-      "quantity": 4,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:leather",
+      "name": "forge:ingots/gold",
       "quantity": 1,
       "weight": 1.0
     },
@@ -119,46 +64,113 @@
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "minecraft:book",
+      "stack": "minecraft:glowstone",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "minecraft:clay_ball;2",
+      "stack": "minecraft:melon",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "minecraft:stone;2",
+      "stack": "minecraft:cake",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:salmon;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:tropical_fish",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:flint;3",
+      "weight": 3.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:feathers",
+      "quantity": 3,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:rabbit_hide",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:ink_sac",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:writable_book",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:granite",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:andesite",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:diorite",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:shears;1;{Damage:0}",
       "weight": 1.0
     },
     {
       "type": "tag",
       "consumed": true,
-      "name": "minecraft:wool",
-      "quantity": 2,
-      "weight": 1.0
-    },
-    {
-      "type": "tag",
-      "consumed": true,
-      "name": "forge:dyes",
-      "quantity": 2,
+      "name": "minecraft:beds",
+      "quantity": 1,
       "weight": 1.0
     }
   ],
-  "reward_multiplier": 0.25,
+  "required_research": "t_discover_infernal",
+  "reward_multiplier": 0.5,
   "weight_function": {
     "type": "progressive",
     "modifiers": [
-      {
-        "research_key": "t_discover_infernal",
-        "weight_modifier": -2.0
-      },
       {
         "research_key": "t_discover_void",
         "weight_modifier": -2.0

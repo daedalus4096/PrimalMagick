@@ -1,0 +1,194 @@
+{
+  "aid_blocks": [],
+  "key": "primalmagick:rich_trade",
+  "material_options": [
+    {
+      "type": "tag",
+      "bonus_reward": 1.0,
+      "consumed": true,
+      "name": "forge:gems/emerald",
+      "quantity": 4,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:shield;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_chestplate;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:dried_kelp_block;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:sweet_berries;4",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:item_frame",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "minecraft:banners",
+      "quantity": 1,
+      "weight": 2.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:glass_bottle;3",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:crops/nether_wart",
+      "quantity": 4,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:golden_carrot",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:glistering_melon_slice",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:pufferfish",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "minecraft:boats",
+      "quantity": 1,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:tripwire_hook;2",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:crossbow;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:leather_horse_armor",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:saddle",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:clock",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.5,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:name_tag",
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "forge:gems/quartz",
+      "quantity": 2,
+      "weight": 1.0
+    },
+    {
+      "type": "tag",
+      "consumed": true,
+      "name": "minecraft:terracotta",
+      "quantity": 1,
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:painting",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.25,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_axe;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.25,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_pickaxe;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "bonus_reward": 0.25,
+      "consumed": true,
+      "match_nbt": false,
+      "stack": "minecraft:diamond_sword;1;{Damage:0}",
+      "weight": 1.0
+    }
+  ],
+  "required_research": "t_discover_void",
+  "reward_multiplier": 1.0,
+  "weight_function": {
+    "type": "constant",
+    "weight": 5.0
+  }
+}
