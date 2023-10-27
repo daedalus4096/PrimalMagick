@@ -1833,6 +1833,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("master_ritual_practice").name("Master Ritual Practice").text("The most powerful rituals are also the most dangerous.  Best to get some practice in before attempting one.").build();
         this.researchProject("magitech_tinkering").name("Magitech Tinkering").text("You spend some time tinkering with your magitech devices, to better understand the relationship between magick and technology.").build();
         this.researchProject("conduit_forces").name("Conduit Forces").text("A Conduit is a powerful artifact of the Sea, but is it magickal or something else?  Study one to try to find some answers.").build();
+        this.researchProject("advanced_wand_tinkering").name("Adv. Wand Tinkering").text("You experiment with more exotic wand materials that you've discovered in your studies.  Knowledge will surely follow.").build();
+        this.researchProject("advanced_spellwork").name("Advanced Spellwork").text("You devise and cast more complex spells, pushing the limits of your sorcerous knowledge.  That's the only way to expand them, after all.").build();
+        this.researchProject("master_spellwork").name("Master Spellwork").text("You devise and cast reality-warping incantations which would have been major works in the past.  Now?  They're just practice.").build();
+        this.researchProject("advanced_enchanting_studies").name("Adv. Enchanting Studies").text("The more you learn about manaweaving, the more intricate its relationship with enchanting.  Further experimentation is called for.").build();
+        this.researchProject("master_enchanting_studies").name("Master Enchanting Studies").text("Testing the limits of what can be done with enchanting has taught you much about manaweaving.  Push those limits further.").build();
+        this.researchProject("prosperous_trade").name("Prosperous Trade").text("Now that you've established yourself, the villagers should be willing to open more of their secrets to you.  Not for free, of course.").build();
+        this.researchProject("rich_trade").name("Rich Trade").text("You and the villagers have cultivated a very profitable relationship.  Their deepest secrets should now be on the bargaining table.").build();
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();

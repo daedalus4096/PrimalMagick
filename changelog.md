@@ -1,8 +1,10 @@
 v4.0.8
 ------
 * Fixed a bug where Incense Braziers could be chosen for activation twice in a row during a ritual
-* Added several new theorycrafting projects to the pool
+* Added many new theorycrafting projects to the pool
 * Increased rewards for some theorycrafting projects and bonus materials
+* Rebalanced material requirements for some theorycrafting projects
+* Made some low-value theorycrafting projects less likely to show up as you advance in research
 * Added Synthetic Gem Buds, for a different kind of farming
 
 v4.0.7

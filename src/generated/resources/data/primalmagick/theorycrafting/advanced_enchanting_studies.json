@@ -1,83 +1,97 @@
 {
   "aid_blocks": [],
-  "key": "primalmagick:redstone_tinkering",
+  "key": "primalmagick:advanced_enchanting_studies",
   "material_options": [
     {
-      "type": "item",
+      "type": "tag",
       "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:detector_rail",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:activator_rail",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:dispenser",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:dropper",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:daylight_detector",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:piston",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:hopper",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:redstone_lamp",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:sticky_piston",
-      "weight": 1.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "minecraft:comparator",
-      "weight": 1.0
+      "name": "primalmagick:enchanting_tables",
+      "quantity": 1,
+      "weight": 5.0
     },
     {
       "type": "tag",
       "consumed": true,
-      "name": "forge:dusts/redstone",
-      "quantity": 4,
-      "weight": 3.0
+      "name": "forge:gems/lapis",
+      "quantity": 2,
+      "weight": 5.0
+    },
+    {
+      "type": "experience",
+      "bonus_reward": 0.25,
+      "consumed": true,
+      "levels": 2,
+      "weight": 5.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "minecraft:book",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_sword;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_pickaxe;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_shovel;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_axe;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_hoe;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_head;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_chest;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_legs;1;{Damage:0}",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": false,
+      "match_nbt": false,
+      "stack": "primalmagick:primalite_feet;1;{Damage:0}",
+      "weight": 1.0
     },
     {
       "type": "observation",
@@ -86,25 +100,17 @@
       "weight": 5.0
     }
   ],
-  "required_research": "BASIC_MAGITECH",
-  "reward_multiplier": 0.25,
+  "required_research": "EXPERT_MANAWEAVING&&PRIMALITE",
+  "reward_multiplier": 0.5,
   "weight_function": {
     "type": "progressive",
     "modifiers": [
       {
-        "research_key": "BASIC_MAGITECH",
+        "research_key": "MASTER_MANAWEAVING",
         "weight_modifier": -1.0
       },
       {
-        "research_key": "EXPERT_MAGITECH",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "MASTER_MAGITECH",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "SUPREME_MAGITECH",
+        "research_key": "SUPREME_MANAWEAVING",
         "weight_modifier": -1.0
       }
     ],

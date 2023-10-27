@@ -139,5 +139,27 @@
     }
   ],
   "required_research": "?2:RITUAL_LECTERN,RITUAL_BELL,PRIMAL_SHOVEL,PRIMAL_FISHING_ROD,PRIMAL_AXE,PRIMAL_HOE,PRIMAL_PICKAXE",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "BASIC_RITUAL",
+        "weight_modifier": 1.0
+      },
+      {
+        "research_key": "EXPERT_RITUAL",
+        "weight_modifier": 1.0
+      },
+      {
+        "research_key": "MASTER_RITUAL",
+        "weight_modifier": -1.0
+      },
+      {
+        "research_key": "SUPREME_RITUAL",
+        "weight_modifier": -1.0
+      }
+    ],
+    "starting_weight": 3.0
+  }
 }

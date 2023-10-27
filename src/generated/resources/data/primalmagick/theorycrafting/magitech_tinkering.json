@@ -94,5 +94,15 @@
     }
   ],
   "required_research": "?3:ARCANOMETER,CONCOCTING_TINCTURES,ENTROPY_SINK,AUTO_CHARGER,ESSENCE_TRANSMUTER,DISSOLUTION_CHAMBER,INFERNAL_FURNACE",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "MASTER_MAGITECH",
+        "weight_modifier": 2.0
+      }
+    ],
+    "starting_weight": 3.0
+  }
 }

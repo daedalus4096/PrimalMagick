@@ -1,6 +1,6 @@
 {
   "aid_blocks": [],
-  "key": "primalmagick:spellwork",
+  "key": "primalmagick:master_spellwork",
   "material_options": [
     {
       "type": "item",
@@ -21,57 +21,74 @@
       "type": "item",
       "consumed": false,
       "match_nbt": false,
-      "required_research": "WAND_CHARGER",
-      "stack": "primalmagick:wand_charger",
+      "required_research": "MANA_NEXUS",
+      "stack": "primalmagick:mana_nexus",
       "weight": 2.0
-    },
-    {
-      "type": "item",
-      "consumed": false,
-      "match_nbt": false,
-      "stack": "primalmagick:mundane_wand",
-      "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:spell_scroll_blank",
+      "stack": "primalmagick:spell_scroll_blank;4",
       "weight": 5.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:essence_dust_earth",
+      "stack": "primalmagick:essence_crystal_earth",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:essence_dust_sea",
+      "stack": "primalmagick:essence_crystal_sea",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:essence_dust_sky",
+      "stack": "primalmagick:essence_crystal_sky",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:essence_dust_sun",
+      "stack": "primalmagick:essence_crystal_sun",
       "weight": 1.0
     },
     {
       "type": "item",
       "consumed": true,
       "match_nbt": false,
-      "stack": "primalmagick:essence_dust_moon",
+      "stack": "primalmagick:essence_crystal_moon",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_blood",
+      "stack": "primalmagick:essence_crystal_blood",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_infernal",
+      "stack": "primalmagick:essence_crystal_infernal",
+      "weight": 1.0
+    },
+    {
+      "type": "item",
+      "consumed": true,
+      "match_nbt": false,
+      "required_research": "t_discover_void",
+      "stack": "primalmagick:essence_crystal_void",
       "weight": 1.0
     },
     {
@@ -81,24 +98,10 @@
       "weight": 5.0
     }
   ],
-  "required_research": "BASIC_SORCERY",
-  "reward_multiplier": 0.25,
+  "required_research": "MASTER_SORCERY&&CRYSTAL_SYNTHESIS",
+  "reward_multiplier": 1.0,
   "weight_function": {
-    "type": "progressive",
-    "modifiers": [
-      {
-        "research_key": "EXPERT_SORCERY",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "MASTER_SORCERY",
-        "weight_modifier": -1.0
-      },
-      {
-        "research_key": "SUPREME_SORCERY",
-        "weight_modifier": -2.0
-      }
-    ],
-    "starting_weight": 5.0
+    "type": "constant",
+    "weight": 5.0
   }
 }

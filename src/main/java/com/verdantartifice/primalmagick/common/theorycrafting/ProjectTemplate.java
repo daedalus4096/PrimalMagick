@@ -17,6 +17,8 @@ import com.verdantartifice.primalmagick.common.research.IResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -40,9 +42,11 @@ public class ProjectTemplate {
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
     protected List<ResourceLocation> aidBlocks = new ArrayList<>();
+    protected Optional<IWeightFunction> weightFunction = Optional.empty();
     
     protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nullable IResearchKey requiredResearch,
-            @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks) {
+            @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks,
+            @Nonnull Optional<IWeightFunction> weightFunction) {
         this.key = key;
         this.materialOptions = materialOptions;
         this.requiredResearch = requiredResearch;
@@ -50,6 +54,7 @@ public class ProjectTemplate {
         this.baseSuccessChanceOverride = baseSuccessChanceOverride;
         this.rewardMultiplier = rewardMultiplier;
         this.aidBlocks = aidBlocks;
+        this.weightFunction = weightFunction;
     }
 
     public ResourceLocation getKey() {
@@ -59,6 +64,14 @@ public class ProjectTemplate {
     @Nullable
     public List<ResourceLocation> getAidBlocks() {
         return this.aidBlocks;
+    }
+    
+    public double getWeight(Player player) {
+        if (this.weightFunction.isPresent()) {
+            return this.weightFunction.get().getWeight(player);
+        } else {
+            return 1D;
+        }
     }
     
     @Nullable
@@ -188,7 +201,15 @@ public class ProjectTemplate {
                 }
             }
             
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks);
+            Optional<IWeightFunction> weightOpt = Optional.empty();
+            if (json.has("weight_function")) {
+                JsonObject weightObj = json.getAsJsonObject("weight_function");
+                String functionType = weightObj.getAsJsonPrimitive("type").getAsString();
+                IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
+                weightOpt = Optional.ofNullable(serializer.read(templateId, weightObj));
+            }
+            
+            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
         }
 
         @Override
@@ -217,7 +238,16 @@ public class ProjectTemplate {
                 }
             }
             
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks);
+            Optional<IWeightFunction> weightOpt;
+            if (buf.readBoolean()) {
+                String functionType = buf.readUtf();
+                IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
+                weightOpt = Optional.ofNullable(serializer.fromNetwork(buf));
+            } else {
+                weightOpt = Optional.empty();
+            }
+            
+            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
         }
 
         @Override
@@ -251,6 +281,13 @@ public class ProjectTemplate {
                 buf.writeUtf(material.getMaterialType());
                 material.toNetwork(buf);
             }
+            template.weightFunction.ifPresentOrElse(weight -> {
+                buf.writeBoolean(true);
+                buf.writeUtf(weight.getFunctionType());
+                weight.getSerializer().toNetwork(buf, weight);
+            }, () -> {
+                buf.writeBoolean(false);
+            });
         }
     }
 }

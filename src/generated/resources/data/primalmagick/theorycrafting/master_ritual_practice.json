@@ -111,5 +111,9 @@
     }
   ],
   "required_research": "?2:BLOODLETTER,SOUL_ANVIL,FORBIDDEN_TRIDENT,FORBIDDEN_SWORD,FORBIDDEN_BOW",
-  "reward_multiplier": 1.0
+  "reward_multiplier": 1.0,
+  "weight_function": {
+    "type": "constant",
+    "weight": 5.0
+  }
 }

@@ -166,5 +166,15 @@
     }
   ],
   "required_research": "CRYSTAL_SYNTHESIS",
-  "reward_multiplier": 0.5
+  "reward_multiplier": 0.5,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "CLUSTER_SYNTHESIS",
+        "weight_modifier": -2.0
+      }
+    ],
+    "starting_weight": 5.0
+  }
 }

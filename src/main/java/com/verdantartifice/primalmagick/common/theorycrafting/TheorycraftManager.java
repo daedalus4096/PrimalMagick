@@ -13,6 +13,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import net.minecraft.core.BlockPos;
@@ -36,11 +39,20 @@ public class TheorycraftManager {
             .put(ExperienceProjectMaterial.TYPE, ExperienceProjectMaterial.SERIALIZER)
             .put(ObservationProjectMaterial.TYPE, ObservationProjectMaterial.SERIALIZER)
             .build();
+    protected static final Map<String, IWeightFunctionSerializer<?>> WEIGHT_SERIALIZERS = new ImmutableMap.Builder<String, IWeightFunctionSerializer<?>>()
+            .put(ConstantWeight.TYPE, ConstantWeight.SERIALIZER)
+            .put(ProgressiveWeight.TYPE, ProgressiveWeight.SERIALIZER)
+            .build();
     protected static final Map<ResourceLocation, ProjectTemplate> TEMPLATES = new HashMap<>();
     
     @Nullable
     public static IProjectMaterialSerializer<?> getMaterialSerializer(@Nullable String type) {
         return MATERIAL_SERIALIZERS.get(type);
+    }
+    
+    @Nullable
+    public static IWeightFunctionSerializer<?> getWeightFunctionSerializer(@Nullable String type) {
+        return WEIGHT_SERIALIZERS.get(type);
     }
     
     public static void clearAllTemplates() {
@@ -65,7 +77,7 @@ public class TheorycraftManager {
     public static Project createRandomProject(@Nonnull ServerPlayer player, @Nonnull BlockPos tablePos) {
         WeightedRandomBag<ProjectTemplate> templateBag = new WeightedRandomBag<>();
         for (ProjectTemplate template : TEMPLATES.values()) {
-            templateBag.add(template, 1);
+            templateBag.add(template, template.getWeight(player));
         }
         
         // Determine what blocks are nearby so that aid blocks can be checked

@@ -171,5 +171,19 @@
     }
   ],
   "required_research": "BASIC_ALCHEMY",
-  "reward_multiplier": 0.25
+  "reward_multiplier": 0.25,
+  "weight_function": {
+    "type": "progressive",
+    "modifiers": [
+      {
+        "research_key": "CRYSTAL_SYNTHESIS",
+        "weight_modifier": -2.0
+      },
+      {
+        "research_key": "CLUSTER_SYNTHESIS",
+        "weight_modifier": -2.0
+      }
+    ],
+    "starting_weight": 5.0
+  }
 }
