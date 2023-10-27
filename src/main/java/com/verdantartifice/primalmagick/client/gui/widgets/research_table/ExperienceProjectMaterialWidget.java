@@ -44,13 +44,13 @@ public class ExperienceProjectMaterialWidget extends AbstractProjectMaterialWidg
         guiGraphics.pose().scale(0.25F, 0.25F, 0.25F);
         RenderSystem.setShaderColor(r, g, b, a);
         guiGraphics.blit(EXPERIENCE_ORB_TEXTURES, 0, 0, uMin, vMin, 63, 63);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         guiGraphics.pose().popPose();
 
         // If applicable, draw level count string
         if (this.material.getLevels() > 1) {
             Component amountText = Component.literal(Integer.toString(this.material.getLevels()));
             int width = mc.font.width(amountText);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 200.0F);
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
