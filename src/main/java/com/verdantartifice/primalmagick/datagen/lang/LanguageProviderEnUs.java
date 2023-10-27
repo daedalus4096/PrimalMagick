@@ -1838,7 +1838,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchProject("master_spellwork").name("Master Spellwork").text("You devise and cast reality-warping incantations which would have been major works in the past.  Now?  They're just practice.").build();
         this.researchProject("advanced_enchanting_studies").name("Adv. Enchanting Studies").text("The more you learn about manaweaving, the more intricate its relationship with enchanting.  Further experimentation is called for.").build();
         this.researchProject("master_enchanting_studies").name("Master Enchanting Studies").text("Testing the limits of what can be done with enchanting has taught you much about manaweaving.  Push those limits further.").build();
-        this.researchProject("prosperous_trade").name("Prosperous Trade").text("Now that you've established yourself, the villagers should be willing to open more their secrets to you.  Not for free, of course.").build();
+        this.researchProject("prosperous_trade").name("Prosperous Trade").text("Now that you've established yourself, the villagers should be willing to open more of their secrets to you.  Not for free, of course.").build();
         this.researchProject("rich_trade").name("Rich Trade").text("You and the villagers have cultivated a very profitable relationship.  Their deepest secrets should now be on the bargaining table.").build();
 
         // Generate research requirement localizations
