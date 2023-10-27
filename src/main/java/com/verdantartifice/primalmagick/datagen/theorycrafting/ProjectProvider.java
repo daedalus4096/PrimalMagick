@@ -177,7 +177,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemTagMaterialBuilder.tag(ItemTags.BEACON_PAYMENT_ITEMS, true).weight(1).build())
             .build(consumer);
         ProjectBuilder.project("brewing_experiments").rewardMultiplier(0.5D).requiredResearch(Source.INFERNAL.getDiscoverKey())
-            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())    // TODO Add more advanced versions and adjust
+            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BREWING_STAND, false).weight(5).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.CROPS_NETHER_WART, true).weight(3).build())
             .material(ItemMaterialBuilder.item(Items.FERMENTED_SPIDER_EYE, true).weight(1).build())
