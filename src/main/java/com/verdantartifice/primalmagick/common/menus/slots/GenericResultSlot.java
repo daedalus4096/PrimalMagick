@@ -1,20 +1,20 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Custom GUI slot for generic device outputs.
  * 
  * @author Daedalus4096
  */
-public class GenericResultSlot extends Slot {
+public class GenericResultSlot extends SlotItemHandler {
     protected final Player player;
     protected int removeCount = 0;
     
-    public GenericResultSlot(Player player, Container inventoryIn, int index, int xPosition, int yPosition) {
+    public GenericResultSlot(Player player, IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         super(inventoryIn, index, xPosition, yPosition);
         this.player = player;
     }

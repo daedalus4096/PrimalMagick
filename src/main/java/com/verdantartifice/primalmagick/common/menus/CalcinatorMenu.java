@@ -4,8 +4,6 @@ import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,6 +12,10 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the calcinator GUI.
@@ -21,31 +23,33 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class CalcinatorMenu extends AbstractContainerMenu {
-    protected final Container calcinatorInv;
+    protected final AbstractCalcinatorTileEntity tile;
+    protected final IItemHandler calcinatorInv;
     protected final ContainerData calcinatorData;
     protected final Level world;
     
     public CalcinatorMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
+        this(id, playerInv, null, new SimpleContainerData(4));
     }
     
-    public CalcinatorMenu(int id, Inventory playerInv, Container calcinatorInv, ContainerData calcinatorData) {
+    public CalcinatorMenu(int id, Inventory playerInv, AbstractCalcinatorTileEntity calcinator, ContainerData calcinatorData) {
         super(MenuTypesPM.CALCINATOR.get(), id);
-        checkContainerSize(calcinatorInv, 11);
         checkContainerDataCount(calcinatorData, 4);
-        this.calcinatorInv = calcinatorInv;
+        this.tile = calcinator;
+        IItemHandler inv = calcinator == null ? new ItemStackHandler(11) : calcinator.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        this.calcinatorInv = inv;
         this.calcinatorData = calcinatorData;
         this.world = playerInv.player.level();
         
         // Slot 0: calcinator input
-        this.addSlot(new Slot(this.calcinatorInv, 0, 34, 17));
+        this.addSlot(new SlotItemHandler(this.calcinatorInv, 0, 34, 17));
         
         // Slot 1: calcinator fuel
         this.addSlot(new CalcinatorFuelSlot(this, this.calcinatorInv, 1, 34, 53));
         
         // Slots 2-10: calcinator output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new CalcinatorResultSlot(playerInv.player, calcinatorInv, i + 2, 90 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(new CalcinatorResultSlot(playerInv.player, this.calcinatorInv, i + 2, 90 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slots 11-37: player backpack
@@ -65,7 +69,7 @@ public class CalcinatorMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return this.calcinatorInv.stillValid(playerIn);
+        return this.tile == null ? false : this.tile.stillValid(playerIn);
     }
 
     public boolean isFuel(ItemStack stack) {
