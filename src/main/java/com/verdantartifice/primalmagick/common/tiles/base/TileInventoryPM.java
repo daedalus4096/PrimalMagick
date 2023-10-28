@@ -41,6 +41,7 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
+    protected final int inventorySize;              // Number of slots in the tile's inventory
 
     protected ItemStackHandler itemHandler;             // Forge item handler capability instance
     protected final LazyOptional<IItemHandler> itemHandlerOpt = LazyOptional.of(() -> this.itemHandler);
@@ -51,11 +52,16 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
         this.syncedItems = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedSlotIndices = this.getSyncedSlotIndices();
         this.itemHandler = new ItemStackHandler(this.items);
+        this.inventorySize = invSize;
     }
     
     protected Set<Integer> getSyncedSlotIndices() {
         // Determine which inventory slots should be synced to the client
         return Collections.emptySet();
+    }
+    
+    public int getInventorySize() {
+        return this.inventorySize;
     }
     
     @Override

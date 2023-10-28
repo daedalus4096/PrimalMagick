@@ -4,13 +4,11 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -22,43 +20,40 @@ import net.minecraft.world.item.Items;
  * 
  * @author Daedalus4096
  */
-public class HoneyExtractorMenu extends AbstractContainerMenu {
+public class HoneyExtractorMenu extends AbstractTileInventoryMenu<HoneyExtractorTileEntity> {
     public static final ResourceLocation BOTTLE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_bottle_slot");
     public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = PrimalMagick.resource("item/empty_honeycomb_slot");
 
-    protected final Container extractorInv;
     protected final ContainerData extractorData;
     protected final Slot honeycombSlot;
     protected final Slot bottleSlot;
     protected final Slot wandSlot;
 
     public HoneyExtractorMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(5), new SimpleContainerData(4));
+        this(id, playerInv, null, new SimpleContainerData(4));
     }
     
-    public HoneyExtractorMenu(int id, Inventory playerInv, Container extractorInv, ContainerData extractorData) {
-        super(MenuTypesPM.HONEY_EXTRACTOR.get(), id);
-        checkContainerSize(extractorInv, 5);
+    public HoneyExtractorMenu(int id, Inventory playerInv, HoneyExtractorTileEntity extractor, ContainerData extractorData) {
+        super(MenuTypesPM.HONEY_EXTRACTOR.get(), id, extractor);
         checkContainerDataCount(extractorData, 4);
-        this.extractorInv = extractorInv;
         this.extractorData = extractorData;
         
         // Slot 0: honeycomb input
-        this.honeycombSlot = this.addSlot(new FilteredSlot(this.extractorInv, 0, 30, 35,
+        this.honeycombSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 30, 35,
                 new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
-        this.bottleSlot = this.addSlot(new FilteredSlot(this.extractorInv, 1, 52, 35, 
+        this.bottleSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 52, 35, 
                 new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.extractorInv, 2, 108, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 2, 108, 35));
         
         // Slot 3: beeswax output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.extractorInv, 3, 130, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 3, 130, 35));
         
         // Slot 4: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.extractorInv, 4, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 4, 8, 62, false));
         
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {
@@ -75,11 +70,6 @@ public class HoneyExtractorMenu extends AbstractContainerMenu {
         this.addDataSlots(this.extractorData);
     }
 
-    @Override
-    public boolean stillValid(Player playerIn) {
-        return this.extractorInv.stillValid(playerIn);
-    }
-    
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;

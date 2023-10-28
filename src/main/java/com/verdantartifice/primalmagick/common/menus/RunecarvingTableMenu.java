@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
@@ -37,19 +38,17 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableMenu extends AbstractContainerMenu implements ContainerListener {
+public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
     public static final ResourceLocation BASE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_slab_slot");
     public static final ResourceLocation ETCHING_SLOT_TEXTURE = PrimalMagick.resource("item/empty_lapis_slot");
 
     protected final ContainerLevelAccess worldPosCallable;
     protected final DataSlot selectedRecipe = DataSlot.standalone();
     protected final Player player;
-    protected final Level world;
     
     protected final Slot inputSlabSlot;
     protected final Slot inputLapisSlot;
     protected final Slot outputSlot;
-    protected final Container tableInv;
     protected final ResultContainer outputInventory = new ResultContainer();
 
     protected List<IRunecarvingRecipe> recipes = new ArrayList<>();
@@ -65,17 +64,14 @@ public class RunecarvingTableMenu extends AbstractContainerMenu implements Conta
     protected Runnable inventoryUpdateListener = () -> {};
 
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos) {
-        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
+        this(windowId, inv, null, ContainerLevelAccess.create(inv.player.level(), pos));
         ((SimpleContainer)this.tableInv).addListener(this);
     }
     
-    public RunecarvingTableMenu(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess worldPosCallable) {
-        super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId);
+    public RunecarvingTableMenu(int windowId, Inventory inv, RunecarvingTableTileEntity table, ContainerLevelAccess worldPosCallable) {
+        super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, table);
         this.worldPosCallable = worldPosCallable;
         this.player = inv.player;
-        this.world = inv.player.level();
-        checkContainerSize(tableInv, 2);
-        this.tableInv = tableInv;
         
         // Slot 0: input slabs
         this.inputSlabSlot = this.addSlot(new FilteredSlot(this.tableInv, 0, 20, 21,
@@ -177,7 +173,7 @@ public class RunecarvingTableMenu extends AbstractContainerMenu implements Conta
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
         if (!slabStack.isEmpty() && !lapisStack.isEmpty()) {
-            this.recipes = this.world.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.world).stream()
+            this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
                     .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
                     .collect(Collectors.toList());
         }

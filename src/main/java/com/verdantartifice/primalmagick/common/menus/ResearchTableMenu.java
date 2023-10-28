@@ -12,16 +12,15 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
+import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
@@ -34,34 +33,31 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableMenu extends AbstractContainerMenu implements ContainerListener {
+public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
     public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
     public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
     
     protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
-    protected final Container writingInv;
     protected final Slot paperSlot;
     protected final Slot pencilSlot;
     protected final DataSlot writingReady = DataSlot.standalone();
 
     public ResearchTableMenu(int windowId, Inventory inv, BlockPos pos) {
-        this(windowId, inv, new SimpleContainer(2), ContainerLevelAccess.create(inv.player.level(), pos));
+        this(windowId, inv, null, ContainerLevelAccess.create(inv.player.level(), pos));
     }
 
-    public ResearchTableMenu(int windowId, Inventory inv, Container tableInv, ContainerLevelAccess callable) {
-        super(MenuTypesPM.RESEARCH_TABLE.get(), windowId);
+    public ResearchTableMenu(int windowId, Inventory inv, ResearchTableTileEntity table, ContainerLevelAccess callable) {
+        super(MenuTypesPM.RESEARCH_TABLE.get(), windowId, table);
         this.worldPosCallable = callable;
         this.player = inv.player;
-        checkContainerSize(tableInv, 2);
-        this.writingInv = tableInv;
         
         // Slot 0: Pencil
-        this.pencilSlot = this.addSlot(new FilteredSlot(this.writingInv, 0, 8, 8,
+        this.pencilSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 8, 8,
                 new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
-        this.paperSlot = this.addSlot(new FilteredSlot(this.writingInv, 1, 206, 8,
+        this.paperSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 206, 8,
                 new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack
@@ -80,11 +76,6 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
         this.checkWritingImplements();
     }
 
-    @Override
-    public boolean stillValid(Player playerIn) {
-        return this.writingInv.stillValid(playerIn);
-    }
-    
     protected void checkWritingImplements() {
         // Set whether the container has writing tools ready; 1 for yes, 0 for no
         boolean ready = (!this.getWritingImplementStack().isEmpty() && !this.getPaperStack().isEmpty());
@@ -155,12 +146,12 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
     
     @Nonnull
     protected ItemStack getWritingImplementStack() {
-        return this.writingInv.getItem(0);
+        return this.tileInv.getStackInSlot(0);
     }
     
     @Nonnull
     protected ItemStack getPaperStack() {
-        return this.writingInv.getItem(1);
+        return this.tileInv.getStackInSlot(1);
     }
     
     public boolean isWritingReady() {
@@ -177,7 +168,7 @@ public class ResearchTableMenu extends AbstractContainerMenu implements Containe
             }
 
             // Consume paper
-            this.writingInv.removeItem(1, 1);
+            this.tileInv.extractItem(1, 1, false);
         }
     }
     
