@@ -241,13 +241,6 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         return contentsTag;
     }
 
-    @Override
-    public void clearContent() {
-        this.items.clear();
-        this.contents.clear();
-        this.syncSlots(null);
-    }
-
     public void dropContents() {
         this.dropContents(this.level, this.worldPosition);
         for (Table.Cell<EssenceType, Source, Integer> cell : this.contents.cellSet()) {
@@ -257,19 +250,19 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         }
     }
 
-    @Override
-    public void startOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
-            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
-        }
-    }
-
-    @Override
-    public void stopOpen(Player player) {
-        if (!this.remove && !player.isSpectator()) {
-            this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
-        }
-    }
+//    @Override
+//    public void startOpen(Player player) {
+//        if (!this.remove && !player.isSpectator()) {
+//            this.openersCounter.incrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+//        }
+//    }
+//
+//    @Override
+//    public void stopOpen(Player player) {
+//        if (!this.remove && !player.isSpectator()) {
+//            this.openersCounter.decrementOpeners(player, this.getLevel(), this.getBlockPos(), this.getBlockState());
+//        }
+//    }
     
     public void recheckOpen() {
         if (!this.remove) {

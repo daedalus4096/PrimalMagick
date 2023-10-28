@@ -32,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.WorldlyContainer;
@@ -56,6 +57,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
@@ -280,7 +282,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     private boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
         if (!items.get(INPUT_SLOT_INDEX).isEmpty() && recipe != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<WorldlyContainer>)recipe).assemble(this, registryAccess);
+            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(this.itemHandler), registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
@@ -304,7 +306,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         if (recipe != null && this.canBurn(registryAccess, recipe, items, maxFurnaceStackSize)) {
             ItemStack inputStack = items.get(INPUT_SLOT_INDEX);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<WorldlyContainer>)recipe).assemble(this, registryAccess);
+            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(this.itemHandler), registryAccess);
             ItemStack existingOutput = items.get(OUTPUT_SLOT_INDEX);
             if (existingOutput.isEmpty()) {
                 items.set(OUTPUT_SLOT_INDEX, recipeOutput.copy());
