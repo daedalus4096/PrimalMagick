@@ -244,7 +244,7 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.items = NonNullList.withSize(this.itemHandler.getSlots(), ItemStack.EMPTY);
+        this.items = NonNullList.withSize(this.inventorySize, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(compound, this.items);
         this.itemHandler = new ItemStackHandler(this.items);
     }
