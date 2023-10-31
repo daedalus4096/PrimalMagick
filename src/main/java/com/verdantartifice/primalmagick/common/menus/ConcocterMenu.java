@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -31,12 +32,13 @@ public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity
     protected final ContainerData concocterData;
     protected final Slot wandSlot;
     
-    public ConcocterMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(4));
+    public ConcocterMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public ConcocterMenu(int id, Inventory playerInv, ConcocterTileEntity concocter, ContainerData concocterData) {
-        super(MenuTypesPM.CONCOCTER.get(), id, concocter);
+    @SuppressWarnings("resource")
+    public ConcocterMenu(int id, Inventory playerInv, BlockPos tilePos, ConcocterTileEntity concocter, ContainerData concocterData) {
+        super(MenuTypesPM.CONCOCTER.get(), id, ConcocterTileEntity.class, playerInv.player.level(), tilePos, concocter);
         checkContainerDataCount(concocterData, 4);
         this.concocterData = concocterData;
         

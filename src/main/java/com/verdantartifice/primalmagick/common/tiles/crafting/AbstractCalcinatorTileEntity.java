@@ -277,7 +277,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new CalcinatorMenu(windowId, playerInv, this, this.calcinatorData);
+        return new CalcinatorMenu(windowId, playerInv, this.getBlockPos(), this, this.calcinatorData);
     }
 
     @Override

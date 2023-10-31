@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,12 +31,12 @@ public class DissolutionChamberMenu extends AbstractTileInventoryMenu<Dissolutio
     protected final Slot inputSlot;
     protected final Slot wandSlot;
     
-    public DissolutionChamberMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(4));
+    public DissolutionChamberMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public DissolutionChamberMenu(int id, Inventory playerInv, DissolutionChamberTileEntity chamber, ContainerData chamberData) {
-        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id, chamber);
+    public DissolutionChamberMenu(int id, Inventory playerInv, BlockPos tilePos, DissolutionChamberTileEntity chamber, ContainerData chamberData) {
+        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id, DissolutionChamberTileEntity.class, playerInv.player.level(), tilePos, chamber);
         checkContainerDataCount(chamberData, 4);
         this.chamberData = chamberData;
         

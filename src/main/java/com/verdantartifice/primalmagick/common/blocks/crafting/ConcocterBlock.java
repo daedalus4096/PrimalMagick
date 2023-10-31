@@ -119,11 +119,11 @@ public class ConcocterBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ConcocterTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (ConcocterTileEntity)tile);
+            if (tile instanceof ConcocterTileEntity concocterTile) {
+                NetworkHooks.openScreen(serverPlayer, concocterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

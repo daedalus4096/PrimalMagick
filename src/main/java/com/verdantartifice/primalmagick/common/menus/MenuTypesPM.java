@@ -40,7 +40,7 @@ public class MenuTypesPM {
         return new AnalysisTableMenu(windowId, inv);
     }));
     public static final RegistryObject<MenuType<CalcinatorMenu>> CALCINATOR = MENU_TYPES.register("calcinator", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new CalcinatorMenu(windowId, inv);
+        return new CalcinatorMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<WandInscriptionTableMenu>> WAND_INSCRIPTION_TABLE = MENU_TYPES.register("wand_inscription_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new WandInscriptionTableMenu(windowId, inv);
@@ -73,13 +73,13 @@ public class MenuTypesPM {
         return new HoneyExtractorMenu(windowId, inv);
     }));
     public static final RegistryObject<MenuType<ConcocterMenu>> CONCOCTER = MENU_TYPES.register("concocter", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ConcocterMenu(windowId, inv);
+        return new ConcocterMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<EssenceTransmuterMenu>> ESSENCE_TRANSMUTER = MENU_TYPES.register("essence_transmuter", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new EssenceTransmuterMenu(windowId, inv);
     }));
     public static final RegistryObject<MenuType<DissolutionChamberMenu>> DISSOLUTION_CHAMBER = MENU_TYPES.register("dissolution_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new DissolutionChamberMenu(windowId, inv);
+        return new DissolutionChamberMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<EssenceCaskMenu>> ESSENCE_CASK = MENU_TYPES.register("essence_cask", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new EssenceCaskMenu(windowId, inv, data.readBlockPos());

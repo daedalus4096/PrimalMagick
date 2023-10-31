@@ -77,11 +77,11 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AbstractCalcinatorTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (AbstractCalcinatorTileEntity)tile);
+            if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
+                NetworkHooks.openScreen(serverPlayer, calcinatorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

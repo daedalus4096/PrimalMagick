@@ -113,7 +113,7 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new DissolutionChamberMenu(windowId, playerInv, this, this.chamberData);
+        return new DissolutionChamberMenu(windowId, playerInv, this.getBlockPos(), this, this.chamberData);
     }
 
     @Override

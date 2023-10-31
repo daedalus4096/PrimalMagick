@@ -144,7 +144,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new ConcocterMenu(windowId, playerInv, this, this.concocterData);
+        return new ConcocterMenu(windowId, playerInv, this.getBlockPos(), this, this.concocterData);
     }
 
     @Override

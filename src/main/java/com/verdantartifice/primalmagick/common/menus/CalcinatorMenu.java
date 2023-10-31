@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -20,12 +21,12 @@ import net.minecraftforge.items.SlotItemHandler;
 public class CalcinatorMenu extends AbstractTileInventoryMenu<AbstractCalcinatorTileEntity> {
     protected final ContainerData calcinatorData;
     
-    public CalcinatorMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(4));
+    public CalcinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public CalcinatorMenu(int id, Inventory playerInv, AbstractCalcinatorTileEntity calcinator, ContainerData calcinatorData) {
-        super(MenuTypesPM.CALCINATOR.get(), id, calcinator);
+    public CalcinatorMenu(int id, Inventory playerInv, BlockPos tilePos, AbstractCalcinatorTileEntity calcinator, ContainerData calcinatorData) {
+        super(MenuTypesPM.CALCINATOR.get(), id, AbstractCalcinatorTileEntity.class, playerInv.player.level(), tilePos, calcinator);
         checkContainerDataCount(calcinatorData, 4);
         this.calcinatorData = calcinatorData;
         

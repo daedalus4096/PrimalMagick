@@ -99,7 +99,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
             // Open the GUI for the dissolution chamber
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof DissolutionChamberTileEntity chamberTile) {
-                NetworkHooks.openScreen(serverPlayer, chamberTile);
+                NetworkHooks.openScreen(serverPlayer, chamberTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
