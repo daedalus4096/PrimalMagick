@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.menus;
+package com.verdantartifice.primalmagick.common.menus.base;
 
 import java.util.List;
 

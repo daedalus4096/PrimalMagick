@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;

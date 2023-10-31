@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.menus.IArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
