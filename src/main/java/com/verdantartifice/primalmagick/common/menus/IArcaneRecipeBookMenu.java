@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCateg
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ServerPlaceArcaneRecipe;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.StackedContents;
@@ -34,6 +35,8 @@ public interface IArcaneRecipeBookMenu<C extends Container> {
     int getGridWidth();
 
     int getGridHeight();
+    
+    NonNullList<Slot> getSlots();
     
     Slot getSlot(int slotId);
 

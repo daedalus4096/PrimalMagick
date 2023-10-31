@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RunescribingResultSlot;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -90,7 +91,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMen
     protected abstract Slot addRuneSlots();
     
     protected static Slot makeRuneSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
-        return new FilteredSlot(inventoryIn, index, xPosition, yPosition,
+        return new FilteredSlot(InventoryUtils.wrapInventory(inventoryIn, null), index, xPosition, yPosition,
                 new FilteredSlot.Properties().background(RUNE_SLOT_TEXTURE).typeOf(RuneItem.class));
     }
     

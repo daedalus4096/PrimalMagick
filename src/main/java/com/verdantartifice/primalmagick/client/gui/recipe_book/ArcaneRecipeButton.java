@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
 import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.IArcaneRecipeBookMenu;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,7 +31,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     public static final int TICKS_TO_SWAP = 30;
     protected static final Component MORE_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.moreRecipes");
     
-    protected AbstractArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?> menu;
     protected ArcaneRecipeBook book;
     protected ArcaneRecipeCollection collection;
     protected float time;
@@ -44,7 +45,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     public void init(ArcaneRecipeCollection recipeCollection, ArcaneRecipeBookPage page) {
         Minecraft mc = page.getMinecraft();
         this.collection = recipeCollection;
-        this.menu = (AbstractArcaneRecipeBookMenu<?>)mc.player.containerMenu;
+        this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeBookMenu ? recipeBookMenu : null;
         this.book = page.getArcaneRecipeBook();
         List<Recipe<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         

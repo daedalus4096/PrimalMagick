@@ -3,10 +3,10 @@ package com.verdantartifice.primalmagick.common.menus.slots;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * Custom GUI slot for infernal furnace outputs.
@@ -14,8 +14,8 @@ import net.minecraftforge.event.ForgeEventFactory;
  * @author Daedalus4096
  */
 public class InfernalFurnaceResultSlot extends GenericResultSlot {
-    public InfernalFurnaceResultSlot(Player pPlayer, Container pContainer, int pSlot, int pXPosition, int pYPosition) {
-        super(pPlayer, pContainer, pSlot, pXPosition, pYPosition);
+    public InfernalFurnaceResultSlot(Player pPlayer, IItemHandler itemHandler, int pSlot, int pXPosition, int pYPosition) {
+        super(pPlayer, itemHandler, pSlot, pXPosition, pYPosition);
     }
 
     @Override

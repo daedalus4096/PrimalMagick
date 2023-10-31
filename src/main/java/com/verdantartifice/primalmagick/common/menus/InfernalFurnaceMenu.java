@@ -6,7 +6,9 @@ import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -20,46 +22,42 @@ import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the infernal furnace GUI.
  * 
  * @author Daedalus4096
  */
-public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container> {
+public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<Container> {
     public static final ResourceLocation IGNYX_SLOT_TEXTURE = PrimalMagick.resource("item/empty_ignyx_slot");
 
-    protected final Container furnaceInv;
     protected final ContainerData furnaceData;
     protected final Slot inputSlot;
     protected final Slot ignyxSlot;
     protected final Slot wandSlot;
-    protected final Level level;
     
     public InfernalFurnaceMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(4), new SimpleContainerData(6));
+        this(id, playerInv, null, new SimpleContainerData(6));
     }
     
-    public InfernalFurnaceMenu(int id, Inventory playerInv, Container furnaceInv, ContainerData furnaceData) {
-        super(MenuTypesPM.INFERNAL_FURNACE.get(), id);
-        checkContainerSize(furnaceInv, 3);
+    public InfernalFurnaceMenu(int id, Inventory playerInv, InfernalFurnaceTileEntity furnace, ContainerData furnaceData) {
+        super(MenuTypesPM.INFERNAL_FURNACE.get(), id, furnace);
         checkContainerDataCount(furnaceData, 4);
-        this.furnaceInv = furnaceInv;
         this.furnaceData = furnaceData;
-        this.level = playerInv.player.level();
         
         // Slot 0: chamber output
-        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.furnaceInv, 0, 125, 35));
+        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.tileInv, 0, 125, 35));
         
         // Slot 1: material input
-        this.inputSlot = this.addSlot(new Slot(this.furnaceInv, 1, 44, 17));
+        this.inputSlot = this.addSlot(new SlotItemHandler(this.tileInv, 1, 44, 17));
         
         // Slot 2: ignyx input
-        this.ignyxSlot = this.addSlot(new FilteredSlot(this.furnaceInv, 2, 44, 53, 
+        this.ignyxSlot = this.addSlot(new FilteredSlot(this.tileInv, 2, 44, 53, 
                 new FilteredSlot.Properties().background(IGNYX_SLOT_TEXTURE).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.furnaceInv, 3, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 3, 8, 62, false));
         
         // Slots 4-30: player backpack
         for (int i = 0; i < 3; i++) {
@@ -104,7 +102,7 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents contents) {
-        if (this.furnaceInv instanceof StackedContentsCompatible stackedContainer) {
+        if (this.tile instanceof StackedContentsCompatible stackedContainer) {
             stackedContainer.fillStackedContents(contents);
         }
     }
@@ -153,6 +151,11 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
     @Override
     public boolean isSingleIngredientMenu() {
         return true;
+    }
+
+    @Override
+    public NonNullList<Slot> getSlots() {
+        return this.slots;
     }
 
     @Override
@@ -213,10 +216,5 @@ public class InfernalFurnaceMenu extends AbstractArcaneRecipeBookMenu<Container>
         }
         
         return stack;
-    }
-
-    @Override
-    public boolean stillValid(Player pPlayer) {
-        return this.furnaceInv.stillValid(pPlayer);
     }
 }
