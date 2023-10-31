@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -113,5 +114,13 @@ public class TilePM extends BlockEntity {
      */
     public void onMessageFromServer(CompoundTag nbt) {
         // Do nothing by default
+    }
+
+    public boolean stillValid(Player player) {
+        if (this.level.getBlockEntity(this.worldPosition) != this) {
+            return false;
+        } else {
+            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
+        }
     }
 }
