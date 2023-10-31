@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 
@@ -27,10 +27,10 @@ import net.minecraft.world.item.crafting.Recipe;
 public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe<Integer> {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected final StackedNbtContents stackedContents = new StackedNbtContents();
-    protected final AbstractArcaneRecipeBookMenu<C> menu;
+    protected final IArcaneRecipeBookMenu<C> menu;
     protected Inventory inventory;
     
-    public ServerPlaceArcaneRecipe(AbstractArcaneRecipeBookMenu<C> menu) {
+    public ServerPlaceArcaneRecipe(IArcaneRecipeBookMenu<C> menu) {
         this.menu = menu;
     }
     
