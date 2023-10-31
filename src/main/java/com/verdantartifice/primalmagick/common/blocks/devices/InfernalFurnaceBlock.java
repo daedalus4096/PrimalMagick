@@ -100,7 +100,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
             // Open the GUI for the furnace
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                NetworkHooks.openScreen(serverPlayer, furnaceTile);
+                NetworkHooks.openScreen(serverPlayer, furnaceTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

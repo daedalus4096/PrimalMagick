@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -37,12 +38,12 @@ public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurna
     protected final Slot ignyxSlot;
     protected final Slot wandSlot;
     
-    public InfernalFurnaceMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(6));
+    public InfernalFurnaceMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(6));
     }
     
-    public InfernalFurnaceMenu(int id, Inventory playerInv, InfernalFurnaceTileEntity furnace, ContainerData furnaceData) {
-        super(MenuTypesPM.INFERNAL_FURNACE.get(), id, furnace);
+    public InfernalFurnaceMenu(int id, Inventory playerInv, BlockPos tilePos, InfernalFurnaceTileEntity furnace, ContainerData furnaceData) {
+        super(MenuTypesPM.INFERNAL_FURNACE.get(), id, InfernalFurnaceTileEntity.class, playerInv.player.level(), tilePos, furnace);
         checkContainerDataCount(furnaceData, 4);
         this.furnaceData = furnaceData;
         

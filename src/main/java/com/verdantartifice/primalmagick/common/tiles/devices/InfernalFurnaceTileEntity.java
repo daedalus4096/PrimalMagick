@@ -166,7 +166,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new InfernalFurnaceMenu(pContainerId, pPlayerInventory, this, this.furnaceData);
+        return new InfernalFurnaceMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this, this.furnaceData);
     }
 
     @Override

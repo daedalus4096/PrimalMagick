@@ -91,7 +91,7 @@ public class MenuTypesPM {
         return new RunicGrindstoneMenu(windowId, inv);
     }));
     public static final RegistryObject<MenuType<InfernalFurnaceMenu>> INFERNAL_FURNACE = MENU_TYPES.register("infernal_furnace", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new InfernalFurnaceMenu(windowId, inv);
+        return new InfernalFurnaceMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<ManaBatteryMenu>> MANA_BATTERY = MENU_TYPES.register("mana_battery", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ManaBatteryMenu(windowId, inv);
