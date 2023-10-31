@@ -24,6 +24,8 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.network.chat.Component;
@@ -34,7 +36,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
@@ -49,7 +50,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarMenu extends AbstractContainerMenu {
+public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
     protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("spellcrafting");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
@@ -69,11 +70,11 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
     protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
 
     public SpellcraftingAltarMenu(int windowId, Inventory inv) {
-        this(windowId, inv, ContainerLevelAccess.NULL);
+        this(windowId, inv, null, ContainerLevelAccess.NULL);
     }
 
-    public SpellcraftingAltarMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), windowId);
+    public SpellcraftingAltarMenu(int windowId, Inventory inv, SpellcraftingAltarTileEntity altar, ContainerLevelAccess callable) {
+        super(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), windowId, altar);
         this.worldPosCallable = callable;
         this.player = inv.player;
         for (SpellComponent comp : SpellComponent.values()) {
@@ -84,10 +85,10 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8, false));
+        this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(this.scrollInv, 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
+        this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

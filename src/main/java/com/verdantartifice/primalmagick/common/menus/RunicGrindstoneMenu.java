@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
 import net.minecraft.ChatFormatting;
@@ -136,7 +137,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
     }
     
     protected static Slot makeInputSlot(Container pContainer, int pSlot, int pX, int pY) {
-        return new FilteredSlot(pContainer, pSlot, pX, pY,
+        return new FilteredSlot(InventoryUtils.wrapInventory(pContainer, null), pSlot, pX, pY,
                 new FilteredSlot.Properties().filter(stack -> stack.isDamageableItem() || stack.is(Items.ENCHANTED_BOOK) || stack.isEnchanted() || stack.canGrindstoneRepair() || RuneManager.hasRunes(stack)));
     }
     

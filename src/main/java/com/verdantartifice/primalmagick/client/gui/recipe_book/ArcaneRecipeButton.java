@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.IArcaneRecipeBookMenu;
 
 import net.minecraft.client.Minecraft;

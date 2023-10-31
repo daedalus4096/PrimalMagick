@@ -51,7 +51,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new SpellcraftingAltarMenu(windowId, playerInv, ContainerLevelAccess.create(this.level, this.getBlockPos()));
+        return new SpellcraftingAltarMenu(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.getBlockPos()));
     }
 
     @Override
