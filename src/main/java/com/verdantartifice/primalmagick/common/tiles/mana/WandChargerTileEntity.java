@@ -12,7 +12,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
@@ -186,33 +185,33 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
         }
     }
 
-    @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 0) {
-            return stack.getItem() instanceof EssenceItem;
-        } else {
-            return stack.getItem() instanceof IWand;
-        }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+//        if (slotIndex == 0) {
+//            return stack.getItem() instanceof EssenceItem;
+//        } else {
+//            return stack.getItem() instanceof IWand;
+//        }
+//    }
+//
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        if (side == Direction.UP) {
+//            return SLOTS_FOR_UP;
+//        } else if (side == Direction.DOWN) {
+//            return SLOTS_FOR_DOWN;
+//        } else {
+//            return SLOTS_FOR_SIDES;
+//        }
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 }

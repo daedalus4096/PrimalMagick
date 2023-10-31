@@ -266,37 +266,37 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
         this.syncTile(true);
     }
 
-    @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 2 || slotIndex == 3) {
-            return false;
-        } else if (slotIndex == 4) {
-            return stack.getItem() instanceof IWand;
-        } else if (slotIndex == 1) {
-            return stack.is(Items.GLASS_BOTTLE);
-        } else {
-            return stack.is(Items.HONEYCOMB);
-        }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+//        if (slotIndex == 2 || slotIndex == 3) {
+//            return false;
+//        } else if (slotIndex == 4) {
+//            return stack.getItem() instanceof IWand;
+//        } else if (slotIndex == 1) {
+//            return stack.is(Items.GLASS_BOTTLE);
+//        } else {
+//            return stack.is(Items.HONEYCOMB);
+//        }
+//    }
+//
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        if (side == Direction.UP) {
+//            return SLOTS_FOR_UP;
+//        } else if (side == Direction.DOWN) {
+//            return SLOTS_FOR_DOWN;
+//        } else {
+//            return SLOTS_FOR_SIDES;
+//        }
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 }

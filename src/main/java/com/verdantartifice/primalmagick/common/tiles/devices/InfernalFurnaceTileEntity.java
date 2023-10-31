@@ -35,7 +35,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -406,26 +405,26 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         this.syncTile(true);
     }
 
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        if (side == Direction.UP) {
+//            return SLOTS_FOR_UP;
+//        } else if (side == Direction.DOWN) {
+//            return SLOTS_FOR_DOWN;
+//        } else {
+//            return SLOTS_FOR_SIDES;
+//        }
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 
     @Override
     public void setRecipeUsed(Recipe<?> pRecipe) {

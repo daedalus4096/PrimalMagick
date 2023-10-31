@@ -9,10 +9,8 @@ import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -60,18 +58,18 @@ public class OfferingPedestalTileEntity extends TileInventoryPM {
         }
     }
 
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        return SLOTS;
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        return SLOTS;
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 }

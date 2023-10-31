@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -107,23 +106,23 @@ public class AutoChargerTileEntity extends TileInventoryPM {
         }
     }
 
-    @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        return SLOTS;
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+//        return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+//    }
+//
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        return SLOTS;
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 }

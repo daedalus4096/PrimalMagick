@@ -274,37 +274,37 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
         this.syncTile(true);
     }
 
-    @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == WAND_SLOT_INDEX) {
-            return stack.getItem() instanceof IWand;
-        } else if (slotIndex == INPUT_SLOT_INDEX) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
+//    @Override
+//    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
+//        if (slotIndex == WAND_SLOT_INDEX) {
+//            return stack.getItem() instanceof IWand;
+//        } else if (slotIndex == INPUT_SLOT_INDEX) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
+//
+//    @Override
+//    public int[] getSlotsForFace(Direction side) {
+//        if (side == Direction.UP) {
+//            return SLOTS_FOR_UP;
+//        } else if (side == Direction.DOWN) {
+//            return SLOTS_FOR_DOWN;
+//        } else {
+//            return SLOTS_FOR_SIDES;
+//        }
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
+//        return this.canPlaceItem(index, itemStackIn);
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return true;
+//    }
 
     @Override
     public void fillStackedContents(StackedContents stackedContents) {

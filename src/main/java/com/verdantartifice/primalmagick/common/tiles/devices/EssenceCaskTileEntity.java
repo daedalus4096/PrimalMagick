@@ -19,7 +19,6 @@ import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -268,18 +267,18 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         }
     }
 
-    @Override
-    public int[] getSlotsForFace(Direction direction) {
-        return direction == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_OTHER;
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return index == INPUT_SLOT_INDEX && stack.getItem() instanceof EssenceItem && direction == Direction.UP;
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return false;
-    }
+//    @Override
+//    public int[] getSlotsForFace(Direction direction) {
+//        return direction == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_OTHER;
+//    }
+//
+//    @Override
+//    public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return index == INPUT_SLOT_INDEX && stack.getItem() instanceof EssenceItem && direction == Direction.UP;
+//    }
+//
+//    @Override
+//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
+//        return false;
+//    }
 }
