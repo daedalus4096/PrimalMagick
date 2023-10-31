@@ -7,7 +7,6 @@ import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberT
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -17,8 +16,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the dissolution chamber GUI.
@@ -145,7 +145,11 @@ public class DissolutionChamberMenu extends AbstractTileInventoryMenu<Dissolutio
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(this.chamberInv, this.level);
+        if (this.tileInv instanceof IItemHandlerModifiable modifiable) {
+            return recipe.matches(new RecipeWrapper(modifiable), this.level);
+        } else {
+            return false;
+        }
     }
 
     @Override
