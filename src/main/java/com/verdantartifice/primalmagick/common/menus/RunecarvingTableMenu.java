@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -13,7 +14,9 @@ import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
@@ -22,16 +25,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the runecarving table GUI.
@@ -50,6 +52,7 @@ public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingT
     protected final Slot inputLapisSlot;
     protected final Slot outputSlot;
     protected final ResultContainer outputInventory = new ResultContainer();
+    protected final Optional<RecipeWrapper> tileInvWrapper;
 
     protected List<IRunecarvingRecipe> recipes = new ArrayList<>();
     
@@ -65,24 +68,29 @@ public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingT
 
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, null, ContainerLevelAccess.create(inv.player.level(), pos));
-        ((SimpleContainer)this.tableInv).addListener(this);
+        this.worldPosCallable.execute((level, blockPos) -> {
+            if (level.getBlockEntity(blockPos) instanceof TileInventoryPM clientTile) {
+                clientTile.addListener(this);
+            }
+        });
     }
     
     public RunecarvingTableMenu(int windowId, Inventory inv, RunecarvingTableTileEntity table, ContainerLevelAccess worldPosCallable) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, table);
         this.worldPosCallable = worldPosCallable;
         this.player = inv.player;
+        this.tileInvWrapper = this.tileInv instanceof IItemHandlerModifiable modifiable ? Optional.of(new RecipeWrapper(modifiable)) : Optional.empty();
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.tableInv, 0, 20, 21,
+        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 20, 21,
                 new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.tableInv, 1, 20, 46,
+        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 20, 46,
                 new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
-        this.outputSlot = this.addSlot(new GenericResultSlot(this.player, this.outputInventory, 0, 143, 33) {
+        this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {
             @Override
             public void onTake(Player thePlayer, ItemStack stack) {
                 RunecarvingTableMenu.this.inputSlabSlot.remove(1);
@@ -123,7 +131,9 @@ public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingT
         this.addDataSlot(this.selectedRecipe);
         
         // Do an immediate update of the table GUI
-        this.containerChanged(this.tableInv);
+        if (this.tileInvWrapper.isPresent()) {
+            this.containerChanged(this.tileInvWrapper.get());
+        }
     }
 
     public int getSelectedRecipe() {
@@ -180,9 +190,9 @@ public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingT
     }
     
     protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
-        if (!this.recipes.isEmpty()) {
+        if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
-            this.outputSlot.set(recipe.assemble(this.tableInv, registryAccess));
+            this.outputSlot.set(recipe.assemble(this.tileInvWrapper.get(), registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);
         }
