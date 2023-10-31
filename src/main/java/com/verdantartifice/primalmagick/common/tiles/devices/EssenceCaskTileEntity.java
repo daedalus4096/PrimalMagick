@@ -130,7 +130,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceCaskMenu(windowId, playerInv, this, this.caskData, this.worldPosition);
+        return new EssenceCaskMenu(windowId, playerInv, this.getBlockPos(), this, this.caskData);
     }
 
     @Override

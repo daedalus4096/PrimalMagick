@@ -106,7 +106,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new HoneyExtractorMenu(windowId, playerInv, this, this.extractorData);
+        return new HoneyExtractorMenu(windowId, playerInv, this.getBlockPos(), this, this.extractorData);
     }
 
     @Override

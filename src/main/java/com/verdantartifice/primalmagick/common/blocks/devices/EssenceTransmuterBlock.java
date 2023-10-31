@@ -99,7 +99,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
             // Open the GUI for the essence transmuter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                NetworkHooks.openScreen(serverPlayer, transmuterTile);
+                NetworkHooks.openScreen(serverPlayer, transmuterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

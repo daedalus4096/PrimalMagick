@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -23,12 +24,12 @@ public class EssenceTransmuterMenu extends AbstractTileInventoryMenu<EssenceTran
     protected final Slot inputSlot;
     protected final Slot wandSlot;
 
-    public EssenceTransmuterMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(4));
+    public EssenceTransmuterMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public EssenceTransmuterMenu(int id, Inventory playerInv, EssenceTransmuterTileEntity transmuter, ContainerData transmuterData) {
-        super(MenuTypesPM.ESSENCE_TRANSMUTER.get(), id, transmuter);
+    public EssenceTransmuterMenu(int id, Inventory playerInv, BlockPos tilePos, EssenceTransmuterTileEntity transmuter, ContainerData transmuterData) {
+        super(MenuTypesPM.ESSENCE_TRANSMUTER.get(), id, EssenceTransmuterTileEntity.class, playerInv.player.level(), tilePos, transmuter);
         checkContainerDataCount(transmuterData, 4);
         this.transmuterData = transmuterData;
         

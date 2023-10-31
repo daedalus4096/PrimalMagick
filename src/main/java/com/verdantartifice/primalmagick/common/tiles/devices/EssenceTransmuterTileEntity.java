@@ -153,7 +153,7 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new EssenceTransmuterMenu(windowId, playerInv, this, this.transmuterData);
+        return new EssenceTransmuterMenu(windowId, playerInv, this.getBlockPos(), this, this.transmuterData);
     }
 
     @Override

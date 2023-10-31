@@ -302,7 +302,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ManaBatteryMenu(pContainerId, pPlayerInventory, this, this.chargerData);
+        return new ManaBatteryMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override

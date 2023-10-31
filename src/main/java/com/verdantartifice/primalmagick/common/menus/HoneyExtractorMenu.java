@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -29,12 +30,12 @@ public class HoneyExtractorMenu extends AbstractTileInventoryMenu<HoneyExtractor
     protected final Slot bottleSlot;
     protected final Slot wandSlot;
 
-    public HoneyExtractorMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(4));
+    public HoneyExtractorMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public HoneyExtractorMenu(int id, Inventory playerInv, HoneyExtractorTileEntity extractor, ContainerData extractorData) {
-        super(MenuTypesPM.HONEY_EXTRACTOR.get(), id, extractor);
+    public HoneyExtractorMenu(int id, Inventory playerInv, BlockPos tilePos, HoneyExtractorTileEntity extractor, ContainerData extractorData) {
+        super(MenuTypesPM.HONEY_EXTRACTOR.get(), id, HoneyExtractorTileEntity.class, playerInv.player.level(), tilePos, extractor);
         checkContainerDataCount(extractorData, 4);
         this.extractorData = extractorData;
         

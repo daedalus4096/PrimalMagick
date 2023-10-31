@@ -70,13 +70,13 @@ public class MenuTypesPM {
         return new RunecarvingTableMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<HoneyExtractorMenu>> HONEY_EXTRACTOR = MENU_TYPES.register("honey_extractor", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new HoneyExtractorMenu(windowId, inv);
+        return new HoneyExtractorMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<ConcocterMenu>> CONCOCTER = MENU_TYPES.register("concocter", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ConcocterMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<EssenceTransmuterMenu>> ESSENCE_TRANSMUTER = MENU_TYPES.register("essence_transmuter", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new EssenceTransmuterMenu(windowId, inv);
+        return new EssenceTransmuterMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<DissolutionChamberMenu>> DISSOLUTION_CHAMBER = MENU_TYPES.register("dissolution_chamber", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new DissolutionChamberMenu(windowId, inv, data.readBlockPos());
@@ -94,6 +94,6 @@ public class MenuTypesPM {
         return new InfernalFurnaceMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<ManaBatteryMenu>> MANA_BATTERY = MENU_TYPES.register("mana_battery", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new ManaBatteryMenu(windowId, inv);
+        return new ManaBatteryMenu(windowId, inv, data.readBlockPos());
     }));
 }

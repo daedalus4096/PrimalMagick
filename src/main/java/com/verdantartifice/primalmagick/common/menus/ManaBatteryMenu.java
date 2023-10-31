@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -28,12 +29,12 @@ public class ManaBatteryMenu extends AbstractTileInventoryMenu<ManaBatteryTileEn
     protected final Slot chargeSlot;
     protected final Player player;
     
-    public ManaBatteryMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(20));
+    public ManaBatteryMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(20));
     }
     
-    public ManaBatteryMenu(int id, Inventory playerInv, ManaBatteryTileEntity tile, ContainerData data) {
-        super(MenuTypesPM.MANA_BATTERY.get(), id, tile);
+    public ManaBatteryMenu(int id, Inventory playerInv, BlockPos tilePos, ManaBatteryTileEntity tile, ContainerData data) {
+        super(MenuTypesPM.MANA_BATTERY.get(), id, ManaBatteryTileEntity.class, playerInv.player.level(), tilePos, tile);
         checkContainerDataCount(data, 20);
         this.player = playerInv.player;
         this.data = data;

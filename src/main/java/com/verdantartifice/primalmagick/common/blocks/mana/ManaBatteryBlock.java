@@ -72,7 +72,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                NetworkHooks.openScreen(serverPlayer, batteryTile);
+                NetworkHooks.openScreen(serverPlayer, batteryTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

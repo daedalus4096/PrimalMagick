@@ -18,17 +18,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 public class EssenceCaskMenu extends AbstractTileInventoryMenu<EssenceCaskTileEntity> {
     protected final ContainerData caskData;
     protected final Slot inputSlot;
-    protected final BlockPos tilePos;
 
     public EssenceCaskMenu(int id, Inventory playerInv, BlockPos pos) {
-        this(id, playerInv, null, new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS), pos);
+        this(id, playerInv, pos, null, new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS));
     }
     
-    public EssenceCaskMenu(int id, Inventory playerInv, EssenceCaskTileEntity cask, ContainerData caskData, BlockPos pos) {
-        super(MenuTypesPM.ESSENCE_CASK.get(), id, cask);
+    public EssenceCaskMenu(int id, Inventory playerInv, BlockPos pos, EssenceCaskTileEntity cask, ContainerData caskData) {
+        super(MenuTypesPM.ESSENCE_CASK.get(), id, EssenceCaskTileEntity.class, playerInv.player.level(), pos, cask);
         checkContainerDataCount(caskData, EssenceCaskTileEntity.NUM_SLOTS);
         this.caskData = caskData;
-        this.tilePos = pos;
         
         this.tile.startOpen(playerInv.player);
         
@@ -103,10 +101,6 @@ public class EssenceCaskMenu extends AbstractTileInventoryMenu<EssenceCaskTileEn
 
     public int getEssenceCount(int index) {
         return this.caskData.get(index);
-    }
-    
-    public BlockPos getTilePos() {
-        return this.tilePos;
     }
     
     public int getTotalEssenceCount() {
