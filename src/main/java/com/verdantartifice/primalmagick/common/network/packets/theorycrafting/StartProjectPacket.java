@@ -44,7 +44,7 @@ public class StartProjectPacket implements IMessageToServer {
                 ServerPlayer player = ctx.get().getSender();
                 PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
                     if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu) {
-                        ((ResearchTableMenu)player.containerMenu).getWorldPosCallable().execute((world, blockPos) -> {
+                        ((ResearchTableMenu)player.containerMenu).getContainerLevelAccess().execute((world, blockPos) -> {
                             knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                         });
                         knowledge.sync(player);

@@ -56,7 +56,7 @@ public class CompleteProjectPacket implements IMessageToServer {
                     // Consume paper and ink
                     if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu researchMenu) {
                         researchMenu.consumeWritingImplements();
-                        researchMenu.getWorldPosCallable().execute((world, blockPos) -> {
+                        researchMenu.getContainerLevelAccess().execute((world, blockPos) -> {
                             // Determine if current project is a success
                             Project project = knowledge.getActiveResearchProject();
                             RandomSource rand = player.getRandom();

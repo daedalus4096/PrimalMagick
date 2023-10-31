@@ -21,7 +21,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -37,19 +36,17 @@ public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTi
     public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
     public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
     
-    protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     protected final Slot paperSlot;
     protected final Slot pencilSlot;
     protected final DataSlot writingReady = DataSlot.standalone();
 
     public ResearchTableMenu(int windowId, Inventory inv, BlockPos pos) {
-        this(windowId, inv, null, ContainerLevelAccess.create(inv.player.level(), pos));
+        this(windowId, inv, pos, null);
     }
 
-    public ResearchTableMenu(int windowId, Inventory inv, ResearchTableTileEntity table, ContainerLevelAccess callable) {
-        super(MenuTypesPM.RESEARCH_TABLE.get(), windowId, table);
-        this.worldPosCallable = callable;
+    public ResearchTableMenu(int windowId, Inventory inv, BlockPos pos, ResearchTableTileEntity table) {
+        super(MenuTypesPM.RESEARCH_TABLE.get(), windowId, ResearchTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
         
         // Slot 0: Pencil
@@ -173,13 +170,8 @@ public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTi
     }
     
     @Nonnull
-    public ContainerLevelAccess getWorldPosCallable() {
-        return this.worldPosCallable;
-    }
-    
-    @Nonnull
     public List<Component> getNearbyAidBlockNames() {
-        Set<Block> nearby = this.worldPosCallable.evaluate((level, pos) -> {
+        Set<Block> nearby = this.containerLevelAccess.evaluate((level, pos) -> {
             return TheorycraftManager.getNearbyAidBlocks(this.player.level(), pos);
         }, Collections.emptySet());
         return nearby.stream().map(b -> b.getName()).distinct().sorted(Comparator.comparing(c -> c.getString())).collect(Collectors.toList());

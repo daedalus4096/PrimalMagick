@@ -46,10 +46,10 @@ public class MenuTypesPM {
         return new WandInscriptionTableMenu(windowId, inv);
     }));
     public static final RegistryObject<MenuType<SpellcraftingAltarMenu>> SPELLCRAFTING_ALTAR = MENU_TYPES.register("spellcrafting_altar", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new SpellcraftingAltarMenu(windowId, inv);
+        return new SpellcraftingAltarMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<WandChargerMenu>> WAND_CHARGER = MENU_TYPES.register("wand_charger", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new WandChargerMenu(windowId, inv);
+        return new WandChargerMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<ResearchTableMenu>> RESEARCH_TABLE = MENU_TYPES.register("research_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ResearchTableMenu(windowId, inv, data.readBlockPos());

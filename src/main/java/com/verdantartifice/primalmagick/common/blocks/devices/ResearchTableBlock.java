@@ -74,11 +74,11 @@ public class ResearchTableBlock extends BaseEntityBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ResearchTableTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (ResearchTableTileEntity)tile, tile.getBlockPos());
+            if (tile instanceof ResearchTableTileEntity tableTile) {
+                NetworkHooks.openScreen(serverPlayer, tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

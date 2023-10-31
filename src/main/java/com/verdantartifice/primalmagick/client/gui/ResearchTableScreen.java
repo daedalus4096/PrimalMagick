@@ -185,7 +185,7 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
                 Component text = Component.translatable("label.primalmagick.research_table.completing");
                 this.addRenderableWidget(new InactiveWidget(this.leftPos + 38, this.topPos + 111, 154, 20, text));
             } else {
-                this.menu.getWorldPosCallable().execute((level, tablePos) -> {
+                this.menu.getContainerLevelAccess().execute((level, tablePos) -> {
                     // Render complete project button
                     Player player = this.minecraft.player;
                     double chance = 100.0D * this.project.getSuccessChance();

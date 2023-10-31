@@ -20,7 +20,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -51,7 +50,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new SpellcraftingAltarMenu(windowId, playerInv, this, ContainerLevelAccess.create(this.level, this.getBlockPos()));
+        return new SpellcraftingAltarMenu(windowId, playerInv, this.getBlockPos(), this);
     }
 
     @Override

@@ -98,7 +98,7 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new WandChargerMenu(windowId, playerInv, this, this.chargerData);
+        return new WandChargerMenu(windowId, playerInv, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override

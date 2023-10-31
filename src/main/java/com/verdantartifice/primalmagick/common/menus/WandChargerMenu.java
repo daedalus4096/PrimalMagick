@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -23,12 +24,12 @@ public class WandChargerMenu extends AbstractTileInventoryMenu<WandChargerTileEn
     protected final Slot essenceSlot;
     protected final Slot wandSlot;
     
-    public WandChargerMenu(int id, Inventory playerInv) {
-        this(id, playerInv, null, new SimpleContainerData(2));
+    public WandChargerMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(2));
     }
     
-    public WandChargerMenu(int id, Inventory playerInv, WandChargerTileEntity charger, ContainerData chargerData) {
-        super(MenuTypesPM.WAND_CHARGER.get(), id, charger);
+    public WandChargerMenu(int id, Inventory playerInv, BlockPos tilePos, WandChargerTileEntity charger, ContainerData chargerData) {
+        super(MenuTypesPM.WAND_CHARGER.get(), id, WandChargerTileEntity.class, playerInv.player.level(), tilePos, charger);
         checkContainerDataCount(chargerData, 2);
         this.chargerData = chargerData;
         
