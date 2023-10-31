@@ -137,15 +137,13 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
 //        return stack;
 //    }
 
-    // TODO Check callers to see who needs to process the un-insertable return value
-    public ItemStack setItem(int index, ItemStack stack) {
-        ItemStack retVal = this.itemHandler.insertItem(index, stack, false);
+    public void setItem(int index, ItemStack stack) {
+        this.itemHandler.setStackInSlot(index, stack);
         this.setChanged();
         if (this.isSyncedSlot(index)) {
             // Sync the inventory change to nearby clients
             this.syncSlots(null);
         }
-        return retVal;
     }
 
     @Override

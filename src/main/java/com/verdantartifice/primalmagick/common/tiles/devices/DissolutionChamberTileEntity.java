@@ -212,15 +212,14 @@ public class DissolutionChamberTileEntity extends TileInventoryPM implements Men
     }
     
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override

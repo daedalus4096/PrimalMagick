@@ -440,15 +440,14 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
 
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.items.get(index), stack);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         if (index == INPUT_SLOT_INDEX && !flag) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override

@@ -175,16 +175,15 @@ public class WandChargerTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index == 0 && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override

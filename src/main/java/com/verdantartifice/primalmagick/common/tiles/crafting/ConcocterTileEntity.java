@@ -362,16 +362,15 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
         if (index >= 0 && index < MAX_INPUT_ITEMS && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override

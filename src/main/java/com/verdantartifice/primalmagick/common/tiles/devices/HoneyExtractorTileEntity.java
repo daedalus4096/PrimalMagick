@@ -205,15 +205,14 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         if ((index == 0 || index == 1) && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override

@@ -272,16 +272,15 @@ public class EssenceTransmuterTileEntity extends TileInventoryPM implements Menu
     }
 
     @Override
-    public ItemStack setItem(int index, ItemStack stack) {
+    public void setItem(int index, ItemStack stack) {
         ItemStack slotStack = this.items.get(index);
-        ItemStack retVal = super.setItem(index, stack);
+        super.setItem(index, stack);
         if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.processTimeTotal = this.getProcessTimeTotal();
             this.processTime = 0;
             this.nextOutputSource = null;
             this.setChanged();
         }
-        return retVal;
     }
 
     @Override
