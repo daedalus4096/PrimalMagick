@@ -188,15 +188,38 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             this.inventories.set(invIndex, NonNullList.withSize(this.getInventorySize(invIndex), ItemStack.EMPTY));
         }
-        if (pTag.contains("Inventories", Tag.TAG_LIST)) {
-            ListTag listTag = pTag.getList("Inventories", Tag.TAG_COMPOUND);
+        if (pTag.contains("TileSidedInventoriesPM")) {
+            LOGGER.debug("Tile at {} loading sided items", this.getBlockPos().toString());
+            ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
             for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
                 CompoundTag invTag = listTag.getCompound(invIndex);
                 ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
                 this.itemHandlers.set(invIndex, new ItemStackHandler(this.inventories.get(invIndex)));
             }
+        } else if (pTag.contains("Items")) {
+            // Compatibility layer for tiles that used to be TileInventoryPM instances pre-4.0.8
+            // TODO Remove in next major revision
+            LOGGER.debug("Tile at {} loading legacy items", this.getBlockPos().toString());
+            int legacySize = 0;
+            for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+                this.itemHandlers.set(invIndex, new ItemStackHandler(this.inventories.get(invIndex)));
+                legacySize += this.getInventorySize(invIndex);
+            }
+            NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
+            ContainerHelper.loadAllItems(pTag, legacyItems);
+            this.loadLegacyItems(legacyItems);
         }
     }
+    
+    /**
+     * Load a given list of TileInventoryPM-formatted items into the multi-inventory format used by
+     * this tile type.  Should only ever be called at most once for any given block entity instance,
+     * when it's first loaded into the new format.
+     * 
+     * @param legacyItems the list of all items loaded for this tile in the legacy format
+     */
+    // TODO Remove in next major revision
+    protected abstract void loadLegacyItems(NonNullList<ItemStack> legacyItems);
 
     @Override
     protected void saveAdditional(CompoundTag pTag) {
@@ -207,7 +230,7 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
             ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
             listTag.add(invIndex, invTag);
         }
-        pTag.put("Inventories", listTag);
+        pTag.put("TileSidedInventoriesPM", listTag);
     }
 
     @Override
