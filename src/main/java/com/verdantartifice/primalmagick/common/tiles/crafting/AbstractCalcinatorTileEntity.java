@@ -24,8 +24,8 @@ import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.core.BlockPos;
@@ -56,7 +56,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock}
  * @see {@link net.minecraft.tileentity.FurnaceTileEntity}
  */
-public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM implements MenuProvider, IOwnedTileEntity {
+public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IOwnedTileEntity {
+    protected static final int INPUT_INV_INDEX = 0;
+    protected static final int FUEL_INV_INDEX = 1;
+    protected static final int OUTPUT_INV_INDEX = 2;
     protected static final int OUTPUT_CAPACITY = 9;
     
     protected int burnTime;
@@ -114,10 +117,34 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     };
     
     public AbstractCalcinatorTileEntity(BlockEntityType<? extends AbstractCalcinatorTileEntity> tileEntityType, BlockPos pos, BlockState state) {
-        super(tileEntityType, pos, state, OUTPUT_CAPACITY + 2);
+        super(tileEntityType, pos, state);
         this.researchCache = new TileResearchCache();
     }
     
+    @Override
+    protected int getInventoryCount() {
+        return 3;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX -> 1;
+            case FUEL_INV_INDEX -> 1;
+            case OUTPUT_INV_INDEX -> OUTPUT_CAPACITY;
+            default -> 0;
+        };
+    }
+
+    @Override
+    protected int getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> INPUT_INV_INDEX;
+            case DOWN -> OUTPUT_INV_INDEX;
+            default -> FUEL_INV_INDEX;
+        };
+    }
+
     protected boolean isBurning() {
         return this.burnTime > 0;
     }
@@ -171,8 +198,8 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
             entity.burnTime--;
         }
         if (!level.isClientSide) {
-            ItemStack inputStack = entity.items.get(0);
-            ItemStack fuelStack = entity.items.get(1);
+            ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
+            ItemStack fuelStack = entity.getItem(FUEL_INV_INDEX, 0);
             if (entity.isBurning() || !fuelStack.isEmpty() && !inputStack.isEmpty()) {
                 // If the calcinator isn't burning, but has meltable input in place, light it up
                 if (!entity.isBurning() && entity.canCalcinate(inputStack)) {
@@ -182,12 +209,12 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
                         shouldMarkDirty = true;
                         if (fuelStack.hasCraftingRemainingItem()) {
                             // If the fuel has a container item (e.g. a lava bucket), place the empty container in the fuel slot
-                            entity.items.set(1, fuelStack.getCraftingRemainingItem());
+                            entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
                         } else if (!fuelStack.isEmpty()) {
                             // Otherwise, shrink the fuel stack
                             fuelStack.shrink(1);
                             if (fuelStack.isEmpty()) {
-                                entity.items.set(1, fuelStack.getCraftingRemainingItem());
+                                entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
                             }
                         }
                     }
@@ -223,15 +250,15 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
 
     protected void doCalcination() {
-        ItemStack inputStack = this.items.get(0);
+        ItemStack inputStack = this.getItem(INPUT_INV_INDEX, 0);
         if (!inputStack.isEmpty() && this.canCalcinate(inputStack)) {
             // Merge the items already in the output inventory with the new output items from the melting
-            List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
+            List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
             List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, false);
             List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
             for (int index = 0; index < Math.min(mergedOutputs.size(), OUTPUT_CAPACITY); index++) {
                 ItemStack out = mergedOutputs.get(index);
-                this.items.set(index + 2, (out == null ? ItemStack.EMPTY : out));
+                this.setItem(OUTPUT_INV_INDEX, index, (out == null ? ItemStack.EMPTY : out));
             }
             
             // Shrink the input stack
@@ -252,7 +279,7 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
             AffinityManager.getInstance().getAffinityValues(inputStack, this.level).ifPresent(sources -> {
                 if (!sources.isEmpty()) {
                     // Merge the items already in the output inventory with the new output items from the melting
-                    List<ItemStack> currentOutputs = this.items.subList(2, this.items.size());
+                    List<ItemStack> currentOutputs = this.inventories.get(OUTPUT_INV_INDEX);
                     List<ItemStack> newOutputs = this.getCalcinationOutput(inputStack, true);   // Force dreg generation to prevent random overflow
                     List<ItemStack> mergedOutputs = ItemUtils.mergeItemStackLists(currentOutputs, newOutputs);
                     retVal.setValue(mergedOutputs.size() <= OUTPUT_CAPACITY);
@@ -286,11 +313,11 @@ public abstract class AbstractCalcinatorTileEntity extends TileInventoryPM imple
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+    protected void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
-        if (index == 0 && !flag) {
+        if (invIndex == INPUT_INV_INDEX && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.setChanged();

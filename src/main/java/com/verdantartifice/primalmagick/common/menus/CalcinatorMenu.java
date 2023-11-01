@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -19,7 +20,7 @@ import net.minecraftforge.items.SlotItemHandler;
  * 
  * @author Daedalus4096
  */
-public class CalcinatorMenu extends AbstractTileInventoryMenu<AbstractCalcinatorTileEntity> {
+public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalcinatorTileEntity> {
     protected final ContainerData calcinatorData;
     
     public CalcinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
@@ -32,14 +33,14 @@ public class CalcinatorMenu extends AbstractTileInventoryMenu<AbstractCalcinator
         this.calcinatorData = calcinatorData;
         
         // Slot 0: calcinator input
-        this.addSlot(new SlotItemHandler(this.tileInv, 0, 34, 17));
+        this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 34, 17));
         
         // Slot 1: calcinator fuel
-        this.addSlot(new CalcinatorFuelSlot(this, this.tileInv, 1, 34, 53));
+        this.addSlot(new CalcinatorFuelSlot(this, this.getTileInventory(Direction.NORTH), 0, 34, 53));
         
         // Slots 2-10: calcinator output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new CalcinatorResultSlot(playerInv.player, this.tileInv, i + 2, 90 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(new CalcinatorResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 90 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slots 11-37: player backpack

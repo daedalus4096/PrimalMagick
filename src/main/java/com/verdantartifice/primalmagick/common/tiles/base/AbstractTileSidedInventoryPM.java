@@ -205,7 +205,7 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             CompoundTag invTag = new CompoundTag();
             ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
-            listTag.set(invIndex, invTag);
+            listTag.add(invIndex, invTag);
         }
         pTag.put("Inventories", listTag);
     }
@@ -230,5 +230,18 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     
     public void dropContents(Level level, BlockPos pos) {
         this.inventories.forEach(inv -> Containers.dropContents(level, pos, inv));
+    }
+    
+    protected ItemStack getItem(int invIndex, int slotIndex) {
+        return this.itemHandlers.get(invIndex).getStackInSlot(slotIndex);
+    }
+    
+    protected void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
+        this.setChanged();
+        if (this.isSyncedSlot(invIndex, slotIndex)) {
+            // Sync the inventory change to nearby clients
+            this.syncSlots(null);
+        }
     }
 }
