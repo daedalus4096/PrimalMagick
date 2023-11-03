@@ -20,7 +20,6 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -105,9 +104,7 @@ public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurna
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents contents) {
-        if (this.tile instanceof StackedContentsCompatible stackedContainer) {
-            stackedContainer.fillStackedContents(contents);
-        }
+        this.tile.fillStackedContents(contents);
     }
 
     @Override

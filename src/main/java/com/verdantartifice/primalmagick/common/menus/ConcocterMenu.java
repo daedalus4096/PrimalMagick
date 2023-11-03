@@ -18,7 +18,6 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -147,9 +146,7 @@ public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
-        if (this.tile instanceof StackedContentsCompatible stackedContainer) {
-            stackedContainer.fillStackedContents(stackedContents);
-        }
+        this.tile.fillStackedContents(stackedContents);
     }
 
     @Override
