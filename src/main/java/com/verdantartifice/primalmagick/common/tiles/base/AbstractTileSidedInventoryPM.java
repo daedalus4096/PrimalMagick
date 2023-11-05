@@ -55,18 +55,21 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         // Initialize each inventory to the appropriate size
         this.inventories = NonNullList.withSize(this.getInventoryCount(), NonNullList.create());
         this.syncedInventories = NonNullList.withSize(this.getInventoryCount(), NonNullList.create());
-        this.itemHandlers = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
-        this.itemHandlerOpts = NonNullList.withSize(this.getInventoryCount(), LazyOptional.empty());
-        this.listeners = NonNullList.withSize(this.getInventoryCount(), new ArrayList<>());
         for (int index = 0; index < this.getInventoryCount(); index++) {
-            NonNullList<ItemStack> inv = NonNullList.withSize(this.getInventorySize(index), ItemStack.EMPTY);
-            this.inventories.set(index, inv);
+            this.inventories.set(index, NonNullList.withSize(this.getInventorySize(index), ItemStack.EMPTY));
             this.syncedInventories.set(index, NonNullList.withSize(this.getInventorySize(index), ItemStack.EMPTY));
-            ItemStackHandler handler = new ItemStackHandler(inv);
-            this.itemHandlers.set(index, handler);
+        }
+        
+        // Create item handler capabilities
+        this.itemHandlers = this.createHandlers();
+        this.itemHandlerOpts = NonNullList.withSize(this.getInventoryCount(), LazyOptional.empty());
+        for (int index = 0; index < this.itemHandlers.size(); index++) {
             final int optIndex = index;
             this.itemHandlerOpts.set(index, LazyOptional.of(() -> this.itemHandlers.get(optIndex)));
         }
+        
+        // Create container listener list
+        this.listeners = NonNullList.withSize(this.getInventoryCount(), new ArrayList<>());
     }
     
     protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
@@ -83,6 +86,8 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     protected abstract int getInventorySize(int inventoryIndex);
     
     protected abstract int getInventoryIndexForFace(Direction face);
+    
+    protected abstract NonNullList<ItemStackHandler> createHandlers();
 
     @Override
     public void invalidateCaps() {

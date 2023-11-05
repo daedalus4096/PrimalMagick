@@ -48,6 +48,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Base definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
@@ -144,6 +145,32 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
             case DOWN -> OUTPUT_INV_INDEX;
             default -> FUEL_INV_INDEX;
         };
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)));
+        
+        // Create fuel handler
+        retVal.set(FUEL_INV_INDEX, new ItemStackHandler(this.inventories.get(FUEL_INV_INDEX)) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return isFuel(stack);
+            }
+        });
+
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
+            }
+        });
+        
+        return retVal;
     }
 
     protected boolean isBurning() {
