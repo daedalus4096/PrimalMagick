@@ -95,12 +95,11 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualAltarTileEntity) {
-                RitualAltarTileEntity altarTile = (RitualAltarTileEntity)tile;
-                if (!altarTile.getItem(0).isEmpty() && player.getItemInHand(handIn).isEmpty()) {
+            if (tile instanceof RitualAltarTileEntity altarTile) {
+                if (!altarTile.getItem().isEmpty() && player.getItemInHand(handIn).isEmpty()) {
                     // When activating a full altar with an empty hand, pick up the item
-                    ItemStack stack = altarTile.getItem(0).copy();
-                    altarTile.setItem(0, ItemStack.EMPTY);
+                    ItemStack stack = altarTile.getItem().copy();
+                    altarTile.setItem(ItemStack.EMPTY);
                     player.setItemInHand(handIn, stack);
                     player.getInventory().setChanged();
                     worldIn.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
