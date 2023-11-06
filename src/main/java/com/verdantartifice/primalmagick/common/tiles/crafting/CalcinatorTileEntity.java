@@ -26,10 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
-    protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { 1 };
-    
     public CalcinatorTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CALCINATOR.get(), pos, state);
     }
