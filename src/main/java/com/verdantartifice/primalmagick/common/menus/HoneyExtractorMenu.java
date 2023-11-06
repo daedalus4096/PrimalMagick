@@ -1,13 +1,14 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +23,7 @@ import net.minecraft.world.item.Items;
  * 
  * @author Daedalus4096
  */
-public class HoneyExtractorMenu extends AbstractTileInventoryMenu<HoneyExtractorTileEntity> {
+public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtractorTileEntity> {
     public static final ResourceLocation BOTTLE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_bottle_slot");
     public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = PrimalMagick.resource("item/empty_honeycomb_slot");
 
@@ -41,21 +42,21 @@ public class HoneyExtractorMenu extends AbstractTileInventoryMenu<HoneyExtractor
         this.extractorData = extractorData;
         
         // Slot 0: honeycomb input
-        this.honeycombSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 30, 35,
+        this.honeycombSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35,
                 new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
-        this.bottleSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 52, 35, 
+        this.bottleSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 52, 35, 
                 new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 2, 108, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));
         
         // Slot 3: beeswax output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 3, 130, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 1, 130, 35));
         
         // Slot 4: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 4, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 5-31: player backpack
         for (int i = 0; i < 3; i++) {
