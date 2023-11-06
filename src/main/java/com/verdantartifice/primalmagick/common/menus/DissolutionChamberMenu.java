@@ -1,13 +1,14 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +28,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberMenu extends AbstractTileInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<Container> {
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
@@ -42,13 +43,13 @@ public class DissolutionChamberMenu extends AbstractTileInventoryMenu<Dissolutio
         this.chamberData = chamberData;
         
         // Slot 0: chamber output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 0, 125, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: ore input
-        this.inputSlot = this.addSlot(new SlotItemHandler(this.tileInv, 1, 44, 35));
+        this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 1, 44, 35));
         
         // Slot 2: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 2, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 2, 8, 62, false));
         
         // Slots 3-29: player backpack
         for (int i = 0; i < 3; i++) {
@@ -145,7 +146,7 @@ public class DissolutionChamberMenu extends AbstractTileInventoryMenu<Dissolutio
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        if (this.tileInv instanceof IItemHandlerModifiable modifiable) {
+        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.matches(new RecipeWrapper(modifiable), this.level);
         } else {
             return false;
