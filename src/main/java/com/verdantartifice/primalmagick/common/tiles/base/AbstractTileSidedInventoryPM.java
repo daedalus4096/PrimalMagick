@@ -274,6 +274,10 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         return this.inventories.get(invIndex).get(slotIndex);
     }
     
+    public ItemStack getSyncedItem(int invIndex, int slotIndex) {
+        return this.syncedInventories.get(invIndex).get(slotIndex);
+    }
+    
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         this.inventories.get(invIndex).set(slotIndex, stack);
         this.setChanged();

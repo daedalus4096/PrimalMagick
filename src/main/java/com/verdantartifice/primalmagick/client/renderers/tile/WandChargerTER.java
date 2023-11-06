@@ -23,7 +23,7 @@ public class WandChargerTER implements BlockEntityRenderer<WandChargerTileEntity
     
     @Override
     public void render(WandChargerTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        ItemStack wandStack = tileEntityIn.getSyncedStackInSlot(1).copy();
+        ItemStack wandStack = tileEntityIn.getSyncedItem(WandChargerTileEntity.CHARGE_INV_INDEX, 0).copy();
         if (!wandStack.isEmpty()) {
             // Render the wand in the center of the charger
             wandStack.setCount(1);
