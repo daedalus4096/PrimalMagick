@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,7 +30,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileEntity> implements IArcaneRecipeBookMenu<Container> {
     protected final ContainerData concocterData;
     protected final Slot wandSlot;
     
@@ -44,7 +45,7 @@ public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity
         this.concocterData = concocterData;
         
         // Slot 0: Output slot
-        this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, 10, 138, 35) {
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 10, 138, 35) {
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
                 super.checkTakeAchievements(stack);
@@ -56,12 +57,12 @@ public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new SlotItemHandler(this.tileInv, j + i * 3, 44 + j * 18, 17 + i * 18));
+                this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), j + i * 3, 44 + j * 18, 17 + i * 18));
             }
         }
         
         // Slot 10: Wand slot
-        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 9, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 9, 8, 62, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -158,7 +159,7 @@ public class ConcocterMenu extends AbstractTileInventoryMenu<ConcocterTileEntity
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        if (this.tileInv instanceof IItemHandlerModifiable modifiable) {
+        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.matches(new RecipeWrapper(modifiable), this.level);
         } else {
             return false;
