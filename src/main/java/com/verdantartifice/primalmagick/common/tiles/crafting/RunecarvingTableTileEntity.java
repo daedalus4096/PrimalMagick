@@ -61,7 +61,6 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
 
     @Override
     protected OptionalInt getInventoryIndexForFace(Direction face) {
-        // TODO Auto-generated method stub
         return switch (face) {
             case DOWN -> OptionalInt.empty();
             default -> OptionalInt.of(INPUT_INV_INDEX);
