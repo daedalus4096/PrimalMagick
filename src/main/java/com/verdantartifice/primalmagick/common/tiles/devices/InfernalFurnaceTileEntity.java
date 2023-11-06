@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
@@ -17,7 +18,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
@@ -56,20 +57,23 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
+/**
+ * Definition of an infernal furnace tile entity.  Performs the smelting for the corresponding block.
+ * 
+ * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock}
+ * @author Daedalus4096
+ */
+public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
     protected static final int MANA_PER_HALF_SECOND = 1;
     protected static final int DEFAULT_COOK_TIME = 100;
     protected static final int LIT_GRACE_TICKS_MAX = 5;
-    protected static final int OUTPUT_SLOT_INDEX = 0;
-    protected static final int INPUT_SLOT_INDEX = 1;
-    protected static final int IGNYX_SLOT_INDEX = 2;
-    protected static final int WAND_SLOT_INDEX = 3;
-    protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { OUTPUT_SLOT_INDEX };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { IGNYX_SLOT_INDEX };
+    protected static final int OUTPUT_INV_INDEX = 0;
+    protected static final int INPUT_INV_INDEX = 1;
+    protected static final int FUEL_INV_INDEX = 2;
     
     protected int superchargeTime;
     protected int superchargeTimeTotal;
@@ -129,7 +133,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     };
     
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.INFERNAL_FURNACE.get(), pos, state, 4);
+        super(TileEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Source.INFERNAL);
     }
 
@@ -188,7 +192,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
     
     private static Optional<SmeltingRecipe> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
-        SimpleContainer testInv = new SimpleContainer(entity.items.get(INPUT_SLOT_INDEX));
+        SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
     }
     
@@ -206,7 +210,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
+            ItemStack wandStack = entity.getItem(FUEL_INV_INDEX, 1);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
@@ -221,38 +225,38 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
             --entity.superchargeTime;
         }
         
-        ItemStack fuelStack = entity.items.get(IGNYX_SLOT_INDEX);
-        boolean inputPopulated = !entity.items.get(INPUT_SLOT_INDEX).isEmpty();
+        ItemStack fuelStack = entity.getItem(FUEL_INV_INDEX, 0);
+        boolean inputPopulated = !entity.getItem(INPUT_INV_INDEX, 0).isEmpty();
         boolean fuelPopulated = !fuelStack.isEmpty();
         if (entity.isCharged() && inputPopulated) {
             Recipe<?> recipe = getActiveRecipe(level, entity).orElse(null);
-            int furnaceMaxStackSize = entity.getMaxStackSize(INPUT_SLOT_INDEX);
+            int furnaceMaxStackSize = entity.itemHandlers.get(INPUT_INV_INDEX).getSlotLimit(0);
             
             // Handle supercharge burn
-            if (!entity.isSupercharged() && fuelPopulated && entity.canBurn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+            if (!entity.isSupercharged() && fuelPopulated && canBurn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
                 entity.superchargeTimeTotal = entity.getSuperchargeDuration(fuelStack);
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
                     shouldMarkDirty = true;
                     if (fuelStack.hasCraftingRemainingItem()) {
-                        entity.items.set(IGNYX_SLOT_INDEX, fuelStack.getCraftingRemainingItem());
+                        entity.setItem(FUEL_INV_INDEX, 0, fuelStack.getCraftingRemainingItem());
                     } else {
                         fuelStack.shrink(1);
                         if (fuelStack.isEmpty()) {
-                            entity.items.set(IGNYX_SLOT_INDEX, ItemStack.EMPTY);
+                            entity.setItem(FUEL_INV_INDEX, 0, ItemStack.EMPTY);
                         }
                     }
                 }
             }
             
             // Process the item being smelted
-            if (entity.isCharged() && entity.canBurn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+            if (entity.isCharged() && canBurn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
                 entity.processTime += (entity.isSupercharged() ? SUPERCHARGE_MULTIPLIER : 1);
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = getTotalCookTime(level, entity, DEFAULT_COOK_TIME);
                     entity.litGraceTicks = LIT_GRACE_TICKS_MAX;
-                    if (entity.burn(level.registryAccess(), recipe, entity.items, furnaceMaxStackSize)) {
+                    if (burn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
                         entity.setRecipeUsed(recipe);
                     }
                     shouldMarkDirty = true;
@@ -278,14 +282,14 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         }
    }
     
-    private boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
-        if (!items.get(INPUT_SLOT_INDEX).isEmpty() && recipe != null) {
+    private static boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+        if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipe != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(this.itemHandler), registryAccess);
+            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
-                ItemStack existingOutput = items.get(OUTPUT_SLOT_INDEX);
+                ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
                 if (existingOutput.isEmpty()) {
                     return true;
                 } else if (!ItemStack.isSameItem(recipeOutput, existingOutput)) {
@@ -301,20 +305,20 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         }
     }
     
-    private boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, NonNullList<ItemStack> items, int maxFurnaceStackSize) {
-        if (recipe != null && this.canBurn(registryAccess, recipe, items, maxFurnaceStackSize)) {
-            ItemStack inputStack = items.get(INPUT_SLOT_INDEX);
+    private static boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+        if (recipe != null && canBurn(registryAccess, recipe, entity, maxFurnaceStackSize)) {
+            ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(this.itemHandler), registryAccess);
-            ItemStack existingOutput = items.get(OUTPUT_SLOT_INDEX);
+            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
             if (existingOutput.isEmpty()) {
-                items.set(OUTPUT_SLOT_INDEX, recipeOutput.copy());
+                entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());
             } else if (ItemStack.isSameItem(recipeOutput, existingOutput)) {
                 existingOutput.grow(recipeOutput.getCount());
             }
             
-            if (this.manaStorage.canExtract(Source.INFERNAL)) {
-                this.manaStorage.extractMana(Source.INFERNAL, getManaNeeded(this.getLevel(), this), false);
+            if (entity.manaStorage.canExtract(Source.INFERNAL)) {
+                entity.manaStorage.extractMana(Source.INFERNAL, getManaNeeded(entity.getLevel(), entity), false);
             }
             inputStack.shrink(1);
             return true;
@@ -339,7 +343,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
         // Return centimana per ten ticks of cooking time of the current recipe, or zero if no recipe is active
-        return pBlockEntity.items.get(INPUT_SLOT_INDEX).isEmpty() ? 0 : (getTotalCookTime(pLevel, pBlockEntity, 0) / 10) * MANA_PER_HALF_SECOND;
+        return pBlockEntity.getItem(INPUT_INV_INDEX, 0).isEmpty() ? 0 : (getTotalCookTime(pLevel, pBlockEntity, 0) / 10) * MANA_PER_HALF_SECOND;
     }
     
     public static boolean isSuperchargeFuel(ItemStack pStack) {
@@ -348,8 +352,10 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
 
     @Override
     public void fillStackedContents(StackedContents pHelper) {
-        for (ItemStack stack : this.items) {
-            pHelper.accountStack(stack);
+        for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+            for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
+                pHelper.accountStack(this.getItem(invIndex, slotIndex));
+            }
         }
     }
 
@@ -405,27 +411,6 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
         this.syncTile(true);
     }
 
-//    @Override
-//    public int[] getSlotsForFace(Direction side) {
-//        if (side == Direction.UP) {
-//            return SLOTS_FOR_UP;
-//        } else if (side == Direction.DOWN) {
-//            return SLOTS_FOR_DOWN;
-//        } else {
-//            return SLOTS_FOR_SIDES;
-//        }
-//    }
-//
-//    @Override
-//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-//        return this.canPlaceItem(index, itemStackIn);
-//    }
-//
-//    @Override
-//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-//        return true;
-//    }
-
     @Override
     public void setRecipeUsed(Recipe<?> pRecipe) {
         if (pRecipe != null) {
@@ -439,10 +424,10 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.items.get(index), stack);
-        super.setItem(index, stack);
-        if (index == INPUT_SLOT_INDEX && !flag) {
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.getItem(invIndex, slotIndex), stack);
+        super.setItem(invIndex, slotIndex, stack);
+        if (invIndex == INPUT_INV_INDEX && !flag) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
@@ -457,7 +442,7 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
     public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
         List<Recipe<?>> recipes = this.getRecipesToAwardAndPopExperience(pPlayer.serverLevel(), pPlayer.position());
         pPlayer.awardRecipes(recipes);
-        recipes.stream().filter(Predicate.not(Objects::isNull)).forEach(r -> pPlayer.triggerRecipeCrafted(r, this.items));
+        recipes.stream().filter(Predicate.not(Objects::isNull)).forEach(r -> pPlayer.triggerRecipeCrafted(r, this.inventories.get(INPUT_INV_INDEX)));
         this.recipesUsed.clear();
     }
     
@@ -479,5 +464,75 @@ public class InfernalFurnaceTileEntity extends TileInventoryPM implements MenuPr
             i++;
         }
         ExperienceOrb.award(pLevel, pPopVec, i);
+    }
+
+    @Override
+    protected int getInventoryCount() {
+        return 3;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX, OUTPUT_INV_INDEX -> 1;
+            case FUEL_INV_INDEX -> 2;
+            default -> 0;
+        };
+    }
+
+    @Override
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
+            default -> OptionalInt.of(FUEL_INV_INDEX);
+        };
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)));
+        
+        // Create fuel handler
+        retVal.set(FUEL_INV_INDEX, new ItemStackHandler(this.inventories.get(FUEL_INV_INDEX)) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                if (slot == 0) {
+                    return stack.is(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL);
+                } else if (slot == 1) {
+                    return stack.getItem() instanceof IWand;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
+            }
+        });
+        
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the output item stack
+        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
+
+        // Slot 1 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(1));
+
+        // Slot 2 was the supercharge fuel item stack
+        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(2));
+
+        // Slot 3 was the wand item stack
+        this.setItem(FUEL_INV_INDEX, 1, legacyItems.get(3));
     }
 }

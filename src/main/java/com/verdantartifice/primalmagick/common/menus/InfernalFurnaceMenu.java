@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.InfernalFurnaceResultSlot;
@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -31,7 +32,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<Container> {
+public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<Container> {
     public static final ResourceLocation IGNYX_SLOT_TEXTURE = PrimalMagick.resource("item/empty_ignyx_slot");
 
     protected final ContainerData furnaceData;
@@ -45,21 +46,21 @@ public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurna
     
     public InfernalFurnaceMenu(int id, Inventory playerInv, BlockPos tilePos, InfernalFurnaceTileEntity furnace, ContainerData furnaceData) {
         super(MenuTypesPM.INFERNAL_FURNACE.get(), id, InfernalFurnaceTileEntity.class, playerInv.player.level(), tilePos, furnace);
-        checkContainerDataCount(furnaceData, 4);
+        checkContainerDataCount(furnaceData, 6);
         this.furnaceData = furnaceData;
         
         // Slot 0: chamber output
-        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.tileInv, 0, 125, 35));
+        this.addSlot(new InfernalFurnaceResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: material input
-        this.inputSlot = this.addSlot(new SlotItemHandler(this.tileInv, 1, 44, 17));
+        this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 44, 17));
         
         // Slot 2: ignyx input
-        this.ignyxSlot = this.addSlot(new FilteredSlot(this.tileInv, 2, 44, 53, 
+        this.ignyxSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 44, 53, 
                 new FilteredSlot.Properties().background(IGNYX_SLOT_TEXTURE).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 3, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 1, 8, 62, false));
         
         // Slots 4-30: player backpack
         for (int i = 0; i < 3; i++) {
@@ -115,7 +116,7 @@ public class InfernalFurnaceMenu extends AbstractTileInventoryMenu<InfernalFurna
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        if (this.tileInv instanceof IItemHandlerModifiable modifiable) {
+        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
             return recipe.matches(new RecipeWrapper(modifiable), this.level);
         } else {
             return false;
