@@ -40,11 +40,11 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i + 1, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slot 10: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 10, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 11-37: player backpack
         for (int i = 0; i < 3; i++) {

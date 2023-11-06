@@ -45,7 +45,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
         this.concocterData = concocterData;
         
         // Slot 0: Output slot
-        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 10, 138, 35) {
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 138, 35) {
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
                 super.checkTakeAchievements(stack);
@@ -62,7 +62,7 @@ public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileE
         }
         
         // Slot 10: Wand slot
-        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 9, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
