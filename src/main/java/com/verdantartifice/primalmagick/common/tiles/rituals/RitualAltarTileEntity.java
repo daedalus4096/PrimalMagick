@@ -392,9 +392,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         List<ItemStack> offerings = new ArrayList<>();
         for (BlockPos offeringPos : this.pedestalPositions) {
             BlockEntity tile = this.level.getBlockEntity(offeringPos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                ItemStack stack = pedestalTile.getItem(0);
+            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                ItemStack stack = pedestalTile.getItem();
                 if (stack != null && !stack.isEmpty()) {
                     offerings.add(stack);
                 }
@@ -659,10 +658,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             for (BlockPos pedestalPos : this.pedestalPositions) {
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
                 Block block = this.level.getBlockState(pedestalPos).getBlock();
-                if (tile instanceof OfferingPedestalTileEntity && block instanceof ISaltPowered) {
-                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                    ISaltPowered saltBlock = (ISaltPowered)block;
-                    if (requiredOffering.test(pedestalTile.getItem(0)) && saltBlock.isBlockSaltPowered(this.level, pedestalPos)) {
+                if (tile instanceof OfferingPedestalTileEntity pedestalTile && block instanceof ISaltPowered saltBlock) {
+                    if (requiredOffering.test(pedestalTile.getItem()) && saltBlock.isBlockSaltPowered(this.level, pedestalPos)) {
                         // Upon finding an ingredient match, start channeling it
                         this.channeledOfferingPos = pedestalPos;
                         this.nextCheckCount = this.activeCount + 60;
@@ -688,19 +685,18 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             Block block = this.level.getBlockState(this.channeledOfferingPos).getBlock();
             
             // Confirm that the channeled offering is still valid
-            if ( tile instanceof OfferingPedestalTileEntity &&
-                 block instanceof ISaltPowered &&
-                 requiredOffering.test(((OfferingPedestalTileEntity)tile).getItem(0)) &&
-                 ((ISaltPowered)block).isBlockSaltPowered(this.level, this.channeledOfferingPos) ) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+            if ( tile instanceof OfferingPedestalTileEntity pedestalTile &&
+                 block instanceof ISaltPowered saltBlock &&
+                 requiredOffering.test(pedestalTile.getItem()) &&
+                 saltBlock.isBlockSaltPowered(this.level, this.channeledOfferingPos) ) {
                 if (this.activeCount >= this.nextCheckCount) {
                     // Once the channel is complete, consume it and mark the step as complete
-                    pedestalTile.removeItem(0, 1);
+                    pedestalTile.removeItem(1);
                     this.currentStepComplete = true;
                     this.channeledOfferingPos = null;
                 } else {
                     // If the channel is still in progress, spawn particles
-                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getItem(0));
+                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getItem());
                 }
                 return true;
             } else {
@@ -930,9 +926,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
             BlockEntity tile = this.level.getBlockEntity(pedestalPos);
             if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
-                if (!pedestalTile.getItem(0).isEmpty()) {
+                if (!pedestalTile.getItem().isEmpty()) {
                     if (destroy) {
-                        pedestalTile.setItem(0, ItemStack.EMPTY);
+                        pedestalTile.setItem(ItemStack.EMPTY);
                     } else {
                         pedestalTile.dropContents(this.level, pedestalPos);
                     }
@@ -992,9 +988,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
                 BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
-                if (tile instanceof OfferingPedestalTileEntity) {
-                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                    if (!pedestalTile.getItem(0).isEmpty()) {
+                if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                    if (!pedestalTile.getItem().isEmpty()) {
                         target = pedestalPos;
                         break;
                     }
