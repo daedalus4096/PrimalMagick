@@ -191,7 +191,7 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-            this.inventories.set(invIndex, NonNullList.withSize(this.getInventorySize(invIndex), ItemStack.EMPTY));
+            this.inventories.get(invIndex).clear();
         }
         if (pTag.contains("TileSidedInventoriesPM")) {
             LOGGER.debug("Tile at {} loading sided items", this.getBlockPos().toString());
@@ -199,7 +199,6 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
             for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
                 CompoundTag invTag = listTag.getCompound(invIndex);
                 ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
-                this.itemHandlers.set(invIndex, new ItemStackHandler(this.inventories.get(invIndex)));
             }
         } else if (pTag.contains("Items")) {
             // Compatibility layer for tiles that used to be TileInventoryPM instances pre-4.0.8
@@ -207,7 +206,6 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
             LOGGER.debug("Tile at {} loading legacy items", this.getBlockPos().toString());
             int legacySize = 0;
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                this.itemHandlers.set(invIndex, new ItemStackHandler(this.inventories.get(invIndex)));
                 legacySize += this.getInventorySize(invIndex);
             }
             NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);

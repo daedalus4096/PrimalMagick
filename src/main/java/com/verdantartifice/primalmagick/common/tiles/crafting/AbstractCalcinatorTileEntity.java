@@ -173,6 +173,22 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         return retVal;
     }
 
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        LOGGER.debug("Calcinator at {} calling legacy load for {} items", this.getBlockPos().toString(), legacyItems.size());
+        
+        // Slot 0 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
+        
+        // Slot 1 was the fuel item stack
+        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(1));
+        
+        // Slots 2-10 were the output item stacks
+        for (int outputIndex = 0; outputIndex < OUTPUT_CAPACITY; outputIndex++) {
+            this.setItem(OUTPUT_INV_INDEX, outputIndex, legacyItems.get(outputIndex + 2));
+        }
+    }
+
     protected boolean isBurning() {
         return this.burnTime > 0;
     }
@@ -196,22 +212,6 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         }
     }
     
-    @Override
-    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        LOGGER.debug("Calcinator at {} calling legacy load for {} items", this.getBlockPos().toString(), legacyItems.size());
-        
-        // Slot 0 was the input item stack
-        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
-        
-        // Slot 1 was the fuel item stack
-        this.setItem(FUEL_INV_INDEX, 0, legacyItems.get(1));
-        
-        // Slots 2-10 were the output item stacks
-        for (int outputIndex = 0; outputIndex < OUTPUT_CAPACITY; outputIndex++) {
-            this.setItem(OUTPUT_INV_INDEX, outputIndex, legacyItems.get(outputIndex + 2));
-        }
-    }
-
     @Override
     protected void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
