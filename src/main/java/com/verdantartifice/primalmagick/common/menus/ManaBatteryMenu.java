@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerLarge;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +25,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ManaBatteryMenu extends AbstractTileInventoryMenu<ManaBatteryTileEntity> {
+public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryTileEntity> {
     protected final ContainerData data;
     protected final Slot inputSlot;
     protected final Slot chargeSlot;
@@ -41,10 +42,10 @@ public class ManaBatteryMenu extends AbstractTileInventoryMenu<ManaBatteryTileEn
         this.data = data;
         
         // Slot 0: input slot
-        this.inputSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class)));
         
         // Slot 1: charge slot
-        this.chargeSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 206, 34, 
+        this.chargeSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
                 new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())));
 
         // Slots 2-28: player backpack
