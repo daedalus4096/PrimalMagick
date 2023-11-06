@@ -58,17 +58,17 @@ public class AutoChargerBlock extends BaseEntityBlock {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 ItemStack stack = player.getItemInHand(handIn);
-                if (charger.getItem(0).isEmpty() && (stack.getItem() instanceof IWand wand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
+                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand wand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
-                    charger.setItem(0, stack);
+                    charger.setItem(stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
                     player.getInventory().setChanged();
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);
                     return InteractionResult.SUCCESS;
-                } else if (!charger.getItem(0).isEmpty() && stack.isEmpty()) {
+                } else if (!charger.getItem().isEmpty() && stack.isEmpty()) {
                     // If the hand is empty and a wand is in the charger, remove the wand
-                    ItemStack chargerStack = charger.getItem(0);
-                    charger.setItem(0, ItemStack.EMPTY);
+                    ItemStack chargerStack = charger.getItem();
+                    charger.setItem(ItemStack.EMPTY);
                     player.setItemInHand(handIn, chargerStack);
                     player.getInventory().setChanged();
                     level.playSound(null, pos, SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 0.4F, 1.0F);

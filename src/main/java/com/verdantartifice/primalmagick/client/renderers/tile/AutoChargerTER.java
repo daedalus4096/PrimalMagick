@@ -23,7 +23,7 @@ public class AutoChargerTER implements BlockEntityRenderer<AutoChargerTileEntity
     
     @Override
     public void render(AutoChargerTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        ItemStack wandStack = tileEntityIn.getSyncedStackInSlot(0).copy();
+        ItemStack wandStack = tileEntityIn.getSyncedStack().copy();
         if (!wandStack.isEmpty()) {
             // Render the wand in the center of the charger
             wandStack.setCount(1);
