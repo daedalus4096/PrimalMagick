@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -20,7 +21,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class EssenceTransmuterMenu extends AbstractTileInventoryMenu<EssenceTransmuterTileEntity> {
+public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<EssenceTransmuterTileEntity> {
     protected final ContainerData transmuterData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
@@ -35,15 +36,15 @@ public class EssenceTransmuterMenu extends AbstractTileInventoryMenu<EssenceTran
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new GenericResultSlot(playerInv.player, this.tileInv, i + 1, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i + 1, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slot 10: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.tileInv, 10, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 10, 8, 62, false));
         
         // Slots 11-37: player backpack
         for (int i = 0; i < 3; i++) {
