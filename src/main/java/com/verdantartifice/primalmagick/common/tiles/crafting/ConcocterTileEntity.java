@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.Collections;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -431,11 +432,11 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     }
 
     @Override
-    protected int getInventoryIndexForFace(Direction face) {
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case UP -> INPUT_INV_INDEX;
-            case DOWN -> OUTPUT_INV_INDEX;
-            default -> WAND_INV_INDEX;
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
+            default -> OptionalInt.of(WAND_INV_INDEX);
         };
     }
 

@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTi
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +39,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
+public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
     public static final ResourceLocation BASE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_slab_slot");
     public static final ResourceLocation ETCHING_SLOT_TEXTURE = PrimalMagick.resource("item/empty_lapis_slot");
 
@@ -65,20 +66,20 @@ public class RunecarvingTableMenu extends AbstractTileInventoryMenu<RunecarvingT
 
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, pos, null);
-        this.tile.addListener(this);
+        this.tile.addListener(Direction.UP, this);
     }
     
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos, RunecarvingTableTileEntity table) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, RunecarvingTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
-        this.tileInvWrapper = this.tileInv instanceof IItemHandlerModifiable modifiable ? Optional.of(new RecipeWrapper(modifiable)) : Optional.empty();
+        this.tileInvWrapper = this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable ? Optional.of(new RecipeWrapper(modifiable)) : Optional.empty();
         
         // Slot 0: input slabs
-        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 20, 21,
+        this.inputSlabSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
                 new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
-        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 20, 46,
+        this.inputLapisSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
                 new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output

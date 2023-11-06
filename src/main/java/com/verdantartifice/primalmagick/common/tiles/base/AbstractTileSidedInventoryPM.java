@@ -3,9 +3,12 @@ package com.verdantartifice.primalmagick.common.tiles.base;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -46,10 +49,11 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         
         for (Direction dir : Direction.values()) {
             // Validate the outputs of the face-inventory mapping function
-            int invIndex = this.getInventoryIndexForFace(dir);
-            if (invIndex < 0 || invIndex >= this.getInventoryCount()) {
-                throw new IllegalArgumentException("Face inventory mapping yields invalid index for direction " + dir.toString());
-            }
+            this.getInventoryIndexForFace(dir).ifPresent(invIndex -> {
+                if (invIndex < 0 || invIndex >= this.getInventoryCount()) {
+                    throw new IllegalArgumentException("Face inventory mapping yields invalid index for direction " + dir.toString());
+                }
+            });
         }
         
         // Initialize each inventory to the appropriate size
@@ -78,14 +82,18 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     }
     
     public int getInventorySize(Direction face) {
-        return this.getInventorySize(this.getInventoryIndexForFace(face));
+        MutableInt retVal = new MutableInt(0);
+        this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
+            retVal.setValue(this.getInventorySize(invIndex));
+        });
+        return retVal.getValue();
     }
     
     protected abstract int getInventoryCount();
     
     protected abstract int getInventorySize(int inventoryIndex);
     
-    protected abstract int getInventoryIndexForFace(Direction face);
+    protected abstract OptionalInt getInventoryIndexForFace(Direction face);
     
     protected abstract NonNullList<ItemStackHandler> createHandlers();
 
@@ -98,14 +106,20 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction face) {
         if (!this.remove && cap == ForgeCapabilities.ITEM_HANDLER) {
-            return this.itemHandlerOpts.get(this.getInventoryIndexForFace(face)).cast();
+            if (this.getInventoryIndexForFace(face).isPresent()) {
+                return this.itemHandlerOpts.get(this.getInventoryIndexForFace(face).getAsInt()).cast();
+            } else {
+                return LazyOptional.empty();
+            }
         } else {
             return super.getCapability(cap, face);
         }
     }
 
     public void addListener(Direction face, ContainerListener listener) {
-        this.listeners.get(this.getInventoryIndexForFace(face)).add(listener);
+        this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
+            this.listeners.get(invIndex).add(listener);
+        });
     }
     
     public void removeListener(ContainerListener listener) {
