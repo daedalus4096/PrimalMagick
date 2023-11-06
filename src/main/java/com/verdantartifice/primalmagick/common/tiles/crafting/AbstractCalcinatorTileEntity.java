@@ -175,8 +175,6 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
 
     @Override
     protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        LOGGER.debug("Calcinator at {} calling legacy load for {} items", this.getBlockPos().toString(), legacyItems.size());
-        
         // Slot 0 was the input item stack
         this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
         

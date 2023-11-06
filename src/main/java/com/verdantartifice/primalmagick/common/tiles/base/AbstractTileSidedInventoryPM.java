@@ -194,7 +194,6 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
             this.inventories.get(invIndex).clear();
         }
         if (pTag.contains("TileSidedInventoriesPM")) {
-            LOGGER.debug("Tile at {} loading sided items", this.getBlockPos().toString());
             ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
             for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
                 CompoundTag invTag = listTag.getCompound(invIndex);
@@ -203,7 +202,6 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         } else if (pTag.contains("Items")) {
             // Compatibility layer for tiles that used to be TileInventoryPM instances pre-4.0.8
             // TODO Remove in next major revision
-            LOGGER.debug("Tile at {} loading legacy items", this.getBlockPos().toString());
             int legacySize = 0;
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
                 legacySize += this.getInventorySize(invIndex);
