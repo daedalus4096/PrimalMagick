@@ -270,12 +270,12 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
         this.inventories.forEach(inv -> Containers.dropContents(level, pos, inv));
     }
     
-    protected ItemStack getItem(int invIndex, int slotIndex) {
-        return this.itemHandlers.get(invIndex).getStackInSlot(slotIndex);
+    public ItemStack getItem(int invIndex, int slotIndex) {
+        return this.inventories.get(invIndex).get(slotIndex);
     }
     
-    protected void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        this.inventories.get(invIndex).set(slotIndex, stack);
         this.setChanged();
         if (this.isSyncedSlot(invIndex, slotIndex)) {
             // Sync the inventory change to nearby clients

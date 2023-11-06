@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.theorycrafting.IWritingImplement;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -27,13 +28,14 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 /**
  * Server data container for the research table GUI.
  * 
  * @author Daedalus4096
  */
-public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
+public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
     public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
     public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
     
@@ -51,11 +53,11 @@ public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTi
         this.player = inv.player;
         
         // Slot 0: Pencil
-        this.pencilSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 8, 8,
+        this.pencilSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8,
                 new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
-        this.paperSlot = this.addSlot(new FilteredSlot(this.tileInv, 1, 206, 8,
+        this.paperSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 206, 8,
                 new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack
@@ -144,12 +146,12 @@ public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTi
     
     @Nonnull
     protected ItemStack getWritingImplementStack() {
-        return this.tileInv.getStackInSlot(0);
+        return this.tile.getItem(0, 0);
     }
     
     @Nonnull
     protected ItemStack getPaperStack() {
-        return this.tileInv.getStackInSlot(1);
+        return this.tile.getItem(0, 1);
     }
     
     public boolean isWritingReady() {
@@ -166,7 +168,7 @@ public class ResearchTableMenu extends AbstractTileInventoryMenu<ResearchTableTi
             }
 
             // Consume paper
-            this.tileInv.extractItem(1, 1, false);
+            this.tile.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).ifPresent(inv -> inv.extractItem(1, 1, false));
         }
     }
     

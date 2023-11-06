@@ -356,7 +356,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    protected void setItem(int invIndex, int slotIndex, ItemStack stack) {
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         ItemStack slotStack = this.getItem(invIndex, slotIndex);
         super.setItem(invIndex, slotIndex, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
