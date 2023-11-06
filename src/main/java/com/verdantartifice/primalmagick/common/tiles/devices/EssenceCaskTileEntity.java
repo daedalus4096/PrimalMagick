@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.OptionalInt;
 
 import javax.annotation.Nullable;
 
@@ -15,10 +16,12 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.network.chat.Component;
@@ -35,19 +38,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of an essence cask tile entity.
  * 
  * @author Daedalus4096
  */
-public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvider {
+public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     public static final int NUM_ROWS = EssenceType.values().length;
     public static final int NUM_COLS = Source.SORTED_SOURCES.size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
-    protected static final int INPUT_SLOT_INDEX = 0;
-    protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
-    protected static final int[] SLOTS_FOR_OTHER = new int[] {};
+    protected static final int INPUT_INV_INDEX = 0;
 
     protected static final Map<DeviceTier, Integer> CAPACITY = Util.make(new HashMap<>(), map -> {
         map.put(DeviceTier.ENCHANTED, 4096);
@@ -98,7 +100,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     };
     
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state, 1);
+        super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state);
         for (EssenceType row : EssenceType.values()) {
             for (Source col : Source.SORTED_SOURCES) {
                 this.contents.put(row, col, 0);
@@ -107,8 +109,8 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
     }
     
     public static void tick(Level level, BlockPos pos, BlockState state, EssenceCaskTileEntity entity) {
-        if (!level.isClientSide && !entity.items.isEmpty()) {
-            ItemStack stack = entity.items.get(0);
+        if (!level.isClientSide && !entity.inventories.get(INPUT_INV_INDEX).isEmpty()) {
+            ItemStack stack = entity.getItem(INPUT_INV_INDEX, 0);
             if (stack.getItem() instanceof EssenceItem essenceItem) {
                 EssenceType essenceType = essenceItem.getEssenceType();
                 Source essenceSource = essenceItem.getSource();
@@ -118,7 +120,7 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
                 int capacity = entity.getTotalEssenceCapacity();
                 if (totalCount + inputCount <= capacity) {
                     entity.contents.put(essenceType, essenceSource, currentCount + inputCount);
-                    entity.items.set(0, ItemStack.EMPTY);
+                    entity.setItem(INPUT_INV_INDEX, 0, ItemStack.EMPTY);
                 } else {
                     int addable = capacity - totalCount;
                     entity.contents.put(essenceType, essenceSource, currentCount + addable);
@@ -267,18 +269,45 @@ public class EssenceCaskTileEntity extends TileInventoryPM implements MenuProvid
         }
     }
 
-//    @Override
-//    public int[] getSlotsForFace(Direction direction) {
-//        return direction == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_OTHER;
-//    }
-//
-//    @Override
-//    public boolean canPlaceItemThroughFace(int index, ItemStack stack, Direction direction) {
-//        return index == INPUT_SLOT_INDEX && stack.getItem() instanceof EssenceItem && direction == Direction.UP;
-//    }
-//
-//    @Override
-//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-//        return false;
-//    }
+    @Override
+    protected int getInventoryCount() {
+        return 1;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX -> 1;
+            default -> 0;
+        };
+    }
+
+    @Override
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            default -> OptionalInt.empty();
+        };
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.getItem() instanceof EssenceItem;
+            }
+        });
+
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
+    }
 }

@@ -1,13 +1,14 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.menus.base.AbstractTileInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -16,7 +17,12 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class EssenceCaskMenu extends AbstractTileInventoryMenu<EssenceCaskTileEntity> {
+/**
+ * Server data container for the essence cask GUI.
+ * 
+ * @author Daedalus4096
+ */
+public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskTileEntity> {
     protected final ContainerData caskData;
     protected final Slot inputSlot;
 
@@ -32,7 +38,7 @@ public class EssenceCaskMenu extends AbstractTileInventoryMenu<EssenceCaskTileEn
         this.tile.startOpen(playerInv.player);
         
         // Slot 0: Cask input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.tileInv, 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-27: Player backpack
         for (int i = 0; i < 3; i++) {
