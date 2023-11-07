@@ -33,7 +33,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileInventoryPM extends TilePM {
+public abstract class AbstractTileInventoryPM extends AbstractTilePM {
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change

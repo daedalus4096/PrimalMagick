@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.menus.base;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileMenu<T extends TilePM> extends AbstractContainerMenu {
+public abstract class AbstractTileMenu<T extends AbstractTilePM> extends AbstractContainerMenu {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final T tile;

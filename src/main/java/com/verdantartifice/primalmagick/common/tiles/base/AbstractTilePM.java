@@ -27,10 +27,10 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class TilePM extends BlockEntity {
+public abstract class AbstractTilePM extends BlockEntity {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    public TilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public AbstractTilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
     

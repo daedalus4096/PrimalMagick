@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePac
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -28,7 +28,7 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractManaFontTileEntity extends TilePM implements IInteractWithWand {
+public abstract class AbstractManaFontTileEntity extends AbstractTilePM implements IInteractWithWand {
     protected static final int RECHARGE_TICKS = 20;
     
     protected int ticksExisted = 0;

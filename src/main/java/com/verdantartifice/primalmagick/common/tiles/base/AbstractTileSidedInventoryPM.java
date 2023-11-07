@@ -37,7 +37,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileSidedInventoryPM extends TilePM {
+public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     protected final NonNullList<NonNullList<ItemStack>> inventories;
     protected final NonNullList<NonNullList<ItemStack>> syncedInventories;
     protected final NonNullList<ItemStackHandler> itemHandlers;

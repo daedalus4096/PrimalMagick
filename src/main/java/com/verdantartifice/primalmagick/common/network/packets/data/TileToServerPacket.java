@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -56,8 +56,8 @@ public class TileToServerPacket implements IMessageToServer {
                 // resource thrashing from falsified packets.
                 if (world != null && world.hasChunkAt(message.pos)) {
                     BlockEntity tile = world.getBlockEntity(message.pos);
-                    if (tile != null && tile instanceof TilePM) {
-                        ((TilePM)tile).onMessageFromClient(message.data == null ? new CompoundTag() : message.data, sender);
+                    if (tile != null && tile instanceof AbstractTilePM) {
+                        ((AbstractTilePM)tile).onMessageFromClient(message.data == null ? new CompoundTag() : message.data, sender);
                     }
                 }
             });
