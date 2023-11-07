@@ -33,24 +33,22 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
-    protected static final int[] NULL_SLOTS = new int[0];
-    
+public abstract class AbstractTileInventoryPM extends TilePM {
     protected NonNullList<ItemStack> items;         // The tile's inventory
     protected NonNullList<ItemStack> syncedItems;   // Client-side inventory data received from the server
     protected List<ContainerListener> listeners;    // Listeners to be informed when the inventory contents change
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
     protected final int inventorySize;              // Number of slots in the tile's inventory
 
-    protected ItemStackHandler itemHandler;             // Forge item handler capability instance
+    protected ItemStackHandler itemHandler;         // Forge item handler capability instance
     protected final LazyOptional<IItemHandler> itemHandlerOpt = LazyOptional.of(() -> this.itemHandler);
 
-    public TileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
+    public AbstractTileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
         super(type, pos, state);
         this.items = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedItems = NonNullList.withSize(invSize, ItemStack.EMPTY);
         this.syncedSlotIndices = this.getSyncedSlotIndices();
-        this.itemHandler = new ItemStackHandler(this.items);
+        this.itemHandler = this.createHandler();
         this.inventorySize = invSize;
     }
     
@@ -61,6 +59,10 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
     
     public int getInventorySize() {
         return this.inventorySize;
+    }
+    
+    protected ItemStackHandler createHandler() {
+        return new ItemStackHandler(this.items);
     }
     
     @Override
@@ -89,21 +91,6 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
         this.listeners.remove(listener);
     }
     
-//    @Override
-//    public int getContainerSize() {
-//        return this.items.size();
-//    }
-
-//    @Override
-//    public boolean isEmpty() {
-//        for (ItemStack stack : this.items) {
-//            if (!stack.isEmpty()) {
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
-
     public ItemStack getItem(int index) {
         return this.itemHandler.getStackInSlot(index);
     }
@@ -126,17 +113,6 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
         return stack;
     }
 
-//    @Override
-//    public ItemStack removeItemNoUpdate(int index) {
-//        ItemStack stack = ContainerHelper.takeItem(this.items, index);
-//        if (!stack.isEmpty() && this.isSyncedSlot(index)) {
-//            // Sync the inventory change to nearby clients
-//            this.syncSlots(null);
-//        }
-//        this.setChanged();
-//        return stack;
-//    }
-
     public void setItem(int index, ItemStack stack) {
         this.itemHandler.setStackInSlot(index, stack);
         this.setChanged();
@@ -154,32 +130,6 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
             this.listeners.forEach((listener) -> { listener.containerChanged(wrapper); });
         }
     }
-
-//    @Override
-//    public void clearContent() {
-//        this.items.clear();
-//        if (!this.syncedSlotIndices.isEmpty()) {
-//            this.syncSlots(null);
-//        }
-//    }
-
-//    @Override
-//    public int[] getSlotsForFace(Direction side) {
-//        // Disable piping by default
-//        return NULL_SLOTS;
-//    }
-
-//    @Override
-//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-//        // Disable piping by default
-//        return false;
-//    }
-
-//    @Override
-//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-//        // Disable piping by default
-//        return false;
-//    }
 
     protected boolean isSyncedSlot(int index) {
         return this.syncedSlotIndices.contains(Integer.valueOf(index));
@@ -244,9 +194,8 @@ public class TileInventoryPM extends TilePM /* implements WorldlyContainer */ {
     @Override
     public void load(CompoundTag compound) {
         super.load(compound);
-        this.items = NonNullList.withSize(this.inventorySize, ItemStack.EMPTY);
+        this.items.clear();
         ContainerHelper.loadAllItems(compound, this.items);
-        this.itemHandler = new ItemStackHandler(this.items);
     }
     
     @Override

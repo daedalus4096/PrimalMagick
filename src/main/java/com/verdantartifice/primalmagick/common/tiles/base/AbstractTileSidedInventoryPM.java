@@ -214,7 +214,7 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
                 ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
             }
         } else if (pTag.contains("Items")) {
-            // Compatibility layer for tiles that used to be TileInventoryPM instances pre-4.0.8
+            // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
             // TODO Remove in next major revision
             int legacySize = 0;
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
@@ -227,7 +227,7 @@ public abstract class AbstractTileSidedInventoryPM extends TilePM {
     }
     
     /**
-     * Load a given list of TileInventoryPM-formatted items into the multi-inventory format used by
+     * Load a given list of AbstractTileInventoryPM-formatted items into the multi-inventory format used by
      * this tile type.  Should only ever be called at most once for any given block entity instance,
      * when it's first loaded into the new format.
      * 

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.base;
 
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileInventoryPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
@@ -14,7 +14,7 @@ import net.minecraftforge.items.ItemStackHandler;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileInventoryMenu<T extends TileInventoryPM> extends AbstractTileMenu<T> {
+public abstract class AbstractTileInventoryMenu<T extends AbstractTileInventoryPM> extends AbstractTileMenu<T> {
     protected final IItemHandler tileInv;
     
     protected AbstractTileInventoryMenu(MenuType<?> menuType, int containerId, Class<T> tileClass, Level level, BlockPos tilePos, T tile) {
