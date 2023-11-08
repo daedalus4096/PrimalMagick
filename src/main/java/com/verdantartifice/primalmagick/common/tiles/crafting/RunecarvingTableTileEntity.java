@@ -28,9 +28,6 @@ import net.minecraftforge.items.ItemStackHandler;
  */
 public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     protected static final int INPUT_INV_INDEX = 0;
-//    protected static final int[] SLOTS_FOR_UP = new int[] { 1 };
-//    protected static final int[] SLOTS_FOR_DOWN = NULL_SLOTS;
-//    protected static final int[] SLOTS_FOR_SIDES = new int[] { 0 };
     
     public RunecarvingTableTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.RUNECARVING_TABLE.get(), pos, state);
@@ -90,39 +87,10 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
 
     @Override
     protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
-        // TODO Auto-generated method stub
+        // Slot 0 was the slab item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
         
+        // Slot 1 was the lapis item stack
+        this.setItem(INPUT_INV_INDEX, 1, legacyItems.get(1));
     }
-
-//    @Override
-//    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-//        if (slotIndex == 1) {
-//            return stack.is(Tags.Items.GEMS_LAPIS);
-//        } else if (slotIndex == 0) {
-//            return stack.is(Items.STONE_SLAB);
-//        } else {
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public int[] getSlotsForFace(Direction side) {
-//        if (side == Direction.UP) {
-//            return SLOTS_FOR_UP;
-//        } else if (side == Direction.DOWN) {
-//            return SLOTS_FOR_DOWN;
-//        } else {
-//            return SLOTS_FOR_SIDES;
-//        }
-//    }
-//
-//    @Override
-//    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-//        return this.canPlaceItem(index, itemStackIn);
-//    }
-//
-//    @Override
-//    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-//        return true;
-//    }
 }

@@ -40,12 +40,14 @@ public abstract class AbstractTilePM extends BlockEntity {
      * @param rerender whether to re-render the tile's block
      */
     public void syncTile(boolean rerender) {
-        BlockState state = this.level.getBlockState(this.worldPosition);
-        int flags = Block.UPDATE_CLIENTS;
-        if (!rerender) {
-            flags |= Block.UPDATE_INVISIBLE;
+        if (this.hasLevel()) {
+            BlockState state = this.level.getBlockState(this.worldPosition);
+            int flags = Block.UPDATE_CLIENTS;
+            if (!rerender) {
+                flags |= Block.UPDATE_INVISIBLE;
+            }
+            this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
         }
-        this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
     }
     
     @Override

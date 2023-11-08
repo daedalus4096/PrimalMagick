@@ -427,7 +427,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(this.getItem(invIndex, slotIndex), stack);
         super.setItem(invIndex, slotIndex, stack);
-        if (invIndex == INPUT_INV_INDEX && !flag) {
+        if (invIndex == INPUT_INV_INDEX && !flag && this.hasLevel()) {
             this.processTimeTotal = getTotalCookTime(this.level, this, DEFAULT_COOK_TIME);
             this.processTime = 0;
             this.setChanged();
