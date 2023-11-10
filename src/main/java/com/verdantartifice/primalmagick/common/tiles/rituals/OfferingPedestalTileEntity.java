@@ -110,6 +110,22 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
             public int getSlotLimit(int slot) {
                 return 1;
             }
+
+            @Override
+            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+                ItemStack retVal = super.insertItem(slot, stack, simulate);
+                OfferingPedestalTileEntity.this.syncTile(true);
+                OfferingPedestalTileEntity.this.setChanged();
+                return retVal;
+            }
+
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                ItemStack retVal = super.extractItem(slot, amount, simulate);
+                OfferingPedestalTileEntity.this.syncTile(true);
+                OfferingPedestalTileEntity.this.setChanged();
+                return retVal;
+            }
         });
 
         return retVal;
