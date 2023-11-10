@@ -98,11 +98,6 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
     }
     
     @Override
-    public boolean stillValid(Player playerIn) {
-        return this.altarInv.stillValid(playerIn);
-    }
-    
-    @Override
     public void removed(Player playerIn) {
         super.removed(playerIn);
         this.clearContainer(playerIn, this.altarInv);
