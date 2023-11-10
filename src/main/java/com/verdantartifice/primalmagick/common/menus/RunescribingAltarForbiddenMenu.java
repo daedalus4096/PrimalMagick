@@ -2,6 +2,9 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import javax.annotation.Nonnull;
 
+import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
+
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -13,8 +16,12 @@ import net.minecraft.world.inventory.Slot;
 public class RunescribingAltarForbiddenMenu extends AbstractRunescribingAltarMenu {
     protected static final int RUNE_CAPACITY = 7;
     
-    public RunescribingAltarForbiddenMenu(int id, @Nonnull Inventory playerInv) {
-        super(MenuTypesPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), id, playerInv);
+    public RunescribingAltarForbiddenMenu(int windowId, Inventory inv, BlockPos pos) {
+        this(windowId, inv, pos, null);
+    }
+
+    public RunescribingAltarForbiddenMenu(int id, @Nonnull Inventory playerInv, BlockPos tilePos, RunescribingAltarTileEntity altar) {
+        super(MenuTypesPM.RUNESCRIBING_ALTAR_FORBIDDEN.get(), id, playerInv, tilePos, altar);
     }
     
     @Override

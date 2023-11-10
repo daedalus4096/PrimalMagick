@@ -55,16 +55,16 @@ public class MenuTypesPM {
         return new ResearchTableMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunescribingAltarBasicMenu>> RUNESCRIBING_ALTAR_BASIC = MENU_TYPES.register("runescribing_altar_basic", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarBasicMenu(windowId, inv);
+        return new RunescribingAltarBasicMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunescribingAltarEnchantedMenu>> RUNESCRIBING_ALTAR_ENCHANTED = MENU_TYPES.register("runescribing_altar_enchanted", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarEnchantedMenu(windowId, inv);
+        return new RunescribingAltarEnchantedMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunescribingAltarForbiddenMenu>> RUNESCRIBING_ALTAR_FORBIDDEN = MENU_TYPES.register("runescribing_altar_forbidden", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarForbiddenMenu(windowId, inv);
+        return new RunescribingAltarForbiddenMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunescribingAltarHeavenlyMenu>> RUNESCRIBING_ALTAR_HEAVENLY = MENU_TYPES.register("runescribing_altar_heavenly", () -> IForgeMenuType.create((windowId, inv, data) -> {
-        return new RunescribingAltarHeavenlyMenu(windowId, inv);
+        return new RunescribingAltarHeavenlyMenu(windowId, inv, data.readBlockPos());
     }));
     public static final RegistryObject<MenuType<RunecarvingTableMenu>> RUNECARVING_TABLE = MENU_TYPES.register("runecarving_table", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new RunecarvingTableMenu(windowId, inv, data.readBlockPos());

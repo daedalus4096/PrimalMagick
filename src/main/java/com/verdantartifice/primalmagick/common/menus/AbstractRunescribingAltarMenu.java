@@ -8,12 +8,15 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.RunescribingResultSlot;
 import com.verdantartifice.primalmagick.common.runes.Rune;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
+import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarTileEntity;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +24,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
@@ -36,7 +38,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMenu {
+public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
     public static final ResourceLocation RUNE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_rune_slot");
 
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
@@ -50,8 +52,8 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractContainerMen
     protected final Level world;
     protected final Slot runeSlot;
 
-    public AbstractRunescribingAltarMenu(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv) {
-        super(type, id);
+    public AbstractRunescribingAltarMenu(@Nonnull MenuType<?> type, int id, @Nonnull Inventory playerInv, BlockPos tilePos, RunescribingAltarTileEntity altar) {
+        super(type, id, RunescribingAltarTileEntity.class, playerInv.player.level(), tilePos, altar);
         this.player = playerInv.player;
         this.world = this.player.level();
         

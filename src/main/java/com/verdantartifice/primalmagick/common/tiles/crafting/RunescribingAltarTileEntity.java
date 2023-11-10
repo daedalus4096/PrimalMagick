@@ -30,10 +30,10 @@ public class RunescribingAltarTileEntity extends AbstractTilePM implements MenuP
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         if (this.getBlockState().getBlock() instanceof RunescribingAltarBlock altarBlock) {
             return switch (altarBlock.getDeviceTier()) {
-                case BASIC -> new RunescribingAltarBasicMenu(windowId, playerInv);
-                case ENCHANTED -> new RunescribingAltarEnchantedMenu(windowId, playerInv);
-                case FORBIDDEN -> new RunescribingAltarForbiddenMenu(windowId, playerInv);
-                case HEAVENLY -> new RunescribingAltarHeavenlyMenu(windowId, playerInv);
+                case BASIC -> new RunescribingAltarBasicMenu(windowId, playerInv, this.getBlockPos());
+                case ENCHANTED -> new RunescribingAltarEnchantedMenu(windowId, playerInv, this.getBlockPos());
+                case FORBIDDEN -> new RunescribingAltarForbiddenMenu(windowId, playerInv, this.getBlockPos());
+                case HEAVENLY -> new RunescribingAltarHeavenlyMenu(windowId, playerInv, this.getBlockPos());
                 default -> throw new IllegalStateException("Unsupported device tier for runescribing altar menu");
             };
         } else {
