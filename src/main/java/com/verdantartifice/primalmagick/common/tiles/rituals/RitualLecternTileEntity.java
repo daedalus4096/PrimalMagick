@@ -98,7 +98,8 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
 
     @Override
     protected OptionalInt getInventoryIndexForFace(Direction face) {
-        return OptionalInt.of(INPUT_INV_INDEX);
+        // Don't connect pipes on any side of the lectern
+        return OptionalInt.empty();
     }
 
     @Override
