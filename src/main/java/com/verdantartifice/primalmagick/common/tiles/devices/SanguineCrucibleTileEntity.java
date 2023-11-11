@@ -94,7 +94,7 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                     if (!level.isClientSide) {
                         if (!entity.getItem(INPUT_INV_INDEX, 0).isDamageableItem() || entity.getItem(INPUT_INV_INDEX, 0).hurt(1, level.random, null)) {
                             entity.getItem(INPUT_INV_INDEX, 0).shrink(1);
-                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Block.UPDATE_ALL_IMMEDIATE);
+                            entity.updateLitState();
                         }
                         
                         int attempts = 0;
@@ -110,6 +110,12 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
                     }
                 }
             }
+        }
+    }
+    
+    protected void updateLitState() {
+        if (this.hasLevel()) {
+            this.getLevel().setBlock(this.getBlockPos(), this.getBlockState().setValue(SanguineCrucibleBlock.LIT, !this.getItem().isEmpty()), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
     
@@ -247,6 +253,12 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return stack.getItem() instanceof SanguineCoreItem;
+            }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                SanguineCrucibleTileEntity.this.updateLitState();
             }
         });
 
