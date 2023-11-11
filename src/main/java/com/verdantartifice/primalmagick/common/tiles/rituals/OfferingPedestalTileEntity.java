@@ -76,13 +76,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     }
     
     public ItemStack removeItem(int count) {
-        ItemStack stack = this.itemHandlers.get(INPUT_INV_INDEX).extractItem(0, count, false);
-        if (!stack.isEmpty()) {
-            // Sync the inventory change to nearby clients
-            this.syncSlots(null);
-        }
-        this.setChanged();
-        return stack;
+        return this.itemHandlers.get(INPUT_INV_INDEX).extractItem(0, count, false);
     }
 
     @Override
@@ -112,19 +106,9 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
             }
 
             @Override
-            public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-                ItemStack retVal = super.insertItem(slot, stack, simulate);
+            protected void onContentsChanged(int slot) {
                 OfferingPedestalTileEntity.this.syncTile(true);
                 OfferingPedestalTileEntity.this.setChanged();
-                return retVal;
-            }
-
-            @Override
-            public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                ItemStack retVal = super.extractItem(slot, amount, simulate);
-                OfferingPedestalTileEntity.this.syncTile(true);
-                OfferingPedestalTileEntity.this.setChanged();
-                return retVal;
             }
         });
 

@@ -148,7 +148,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
         ListTag tagList = new ListTag();
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
-                ItemStack stack = this.inventories.get(invIndex).get(slotIndex);
+                ItemStack stack = this.getItem(invIndex, slotIndex);
                 if (this.isSyncedSlot(invIndex, slotIndex) && !stack.isEmpty()) {
                     // Only include populated, sync-tagged slots to lessen packet size
                     CompoundTag slotTag = new CompoundTag();
@@ -159,11 +159,9 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
                 }
             }
         }
-        if (!tagList.isEmpty()) {
-            CompoundTag nbt = new CompoundTag();
-            nbt.put("ItemsSynced", tagList);
-            this.sendMessageToClient(nbt, player);
-        }
+        CompoundTag nbt = new CompoundTag();
+        nbt.put("ItemsSynced", tagList);
+        this.sendMessageToClient(nbt, player);
     }
     
     @Override
@@ -187,7 +185,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
         super.onMessageFromServer(nbt);
         if (nbt.contains("ItemsSynced")) {
             for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                this.syncedInventories.set(invIndex, NonNullList.withSize(this.getInventorySize(invIndex), ItemStack.EMPTY));
+                this.syncedInventories.get(invIndex).clear();
             }
             ListTag tagList = nbt.getList("ItemsSynced", Tag.TAG_COMPOUND);
             for (int tagIndex = 0; tagIndex < tagList.size(); tagIndex++) {
@@ -195,7 +193,8 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
                 byte invIndex = slotTag.getByte("Inv");
                 byte slotIndex = slotTag.getByte("Slot");
                 if (this.isSyncedSlot(invIndex, slotIndex)) {
-                    this.syncedInventories.get(invIndex).set(slotIndex, ItemStack.of(slotTag));
+                    ItemStack stack = ItemStack.of(slotTag);
+                    this.syncedInventories.get(invIndex).set(slotIndex, stack);
                 }
             }
         }
@@ -279,11 +278,6 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     }
     
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
-        this.inventories.get(invIndex).set(slotIndex, stack);
-        this.setChanged();
-        if (this.isSyncedSlot(invIndex, slotIndex)) {
-            // Sync the inventory change to nearby clients
-            this.syncSlots(null);
-        }
+        this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
     }
 }

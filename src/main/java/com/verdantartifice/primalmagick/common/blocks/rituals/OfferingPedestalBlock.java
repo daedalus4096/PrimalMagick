@@ -72,8 +72,7 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
                 if (pedestalTile.getItem().isEmpty() && !player.getItemInHand(handIn).isEmpty()) {
                     // When activating an empty pedestal with an item in hand, place it on the pedestal
                     ItemStack stack = player.getItemInHand(handIn).copy();
