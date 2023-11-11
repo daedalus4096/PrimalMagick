@@ -17,6 +17,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.blocks.crafting.AbstractCalcinatorBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -49,7 +50,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Base definition of a calcinator tile entity.  Provides the melting functionality for the corresponding
@@ -149,14 +149,14 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)));
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this));
         
         // Create fuel handler
-        retVal.set(FUEL_INV_INDEX, new ItemStackHandler(this.inventories.get(FUEL_INV_INDEX)) {
+        retVal.set(FUEL_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(FUEL_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return isFuel(stack);
@@ -164,7 +164,7 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
         });
 
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return false;

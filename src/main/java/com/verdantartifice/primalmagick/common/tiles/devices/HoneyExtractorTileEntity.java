@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import java.util.OptionalInt;
 
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -31,7 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a honey extractor tile entity.  Performs the extraction for the corresponding block.
@@ -294,11 +294,11 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 if (slot == 0) {
@@ -312,7 +312,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         });
         
         // Create fuel handler
-        retVal.set(WAND_INV_INDEX, new ItemStackHandler(this.inventories.get(WAND_INV_INDEX)) {
+        retVal.set(WAND_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(WAND_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return stack.getItem() instanceof IWand;
@@ -320,7 +320,7 @@ public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM imple
         });
 
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return false;

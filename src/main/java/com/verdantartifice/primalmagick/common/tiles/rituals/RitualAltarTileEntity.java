@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBl
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -89,7 +90,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -1050,11 +1050,11 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return false;

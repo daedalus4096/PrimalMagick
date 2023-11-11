@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus.base;
 
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileInventoryPM;
 
 import net.minecraft.core.BlockPos;
@@ -7,7 +8,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Base class for a menu that serves a mod block entity with an attached item handler.
@@ -19,7 +19,7 @@ public abstract class AbstractTileInventoryMenu<T extends AbstractTileInventoryP
     
     protected AbstractTileInventoryMenu(MenuType<?> menuType, int containerId, Class<T> tileClass, Level level, BlockPos tilePos, T tile) {
         super(menuType, containerId, tileClass, level, tilePos, tile);
-        this.tileInv = this.tile == null ? new ItemStackHandler(this.tile.getInventorySize()) : this.tile.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
+        this.tileInv = this.tile == null ? new ItemStackHandlerPM(this.tile.getInventorySize(), this.tile) : this.tile.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseThrow(IllegalStateException::new);
     }
     
     public IItemHandler getTileInventory() {

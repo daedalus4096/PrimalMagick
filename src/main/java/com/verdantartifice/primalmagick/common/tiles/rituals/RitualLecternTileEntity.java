@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.rituals;
 
 import java.util.OptionalInt;
 
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -14,7 +15,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a ritual lectern tile entity.  Holds the lectern's inventory.
@@ -102,11 +102,11 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create output handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public int getSlotLimit(int slot) {
                 return 1;

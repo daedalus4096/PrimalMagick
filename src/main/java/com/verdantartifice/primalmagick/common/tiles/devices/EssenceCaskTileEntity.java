@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.common.blocks.devices.EssenceCaskBlock;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
@@ -38,7 +39,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of an essence cask tile entity.
@@ -291,11 +291,11 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return stack.getItem() instanceof EssenceItem;

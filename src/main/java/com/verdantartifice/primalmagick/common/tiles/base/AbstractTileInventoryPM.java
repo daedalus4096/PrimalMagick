@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -25,7 +27,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
@@ -40,7 +41,7 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
     protected final Set<Integer> syncedSlotIndices; // Which slots of the inventory should be synced to the client
     protected final int inventorySize;              // Number of slots in the tile's inventory
 
-    protected ItemStackHandler itemHandler;         // Forge item handler capability instance
+    protected ItemStackHandlerPM itemHandler;         // Forge item handler capability instance
     protected final LazyOptional<IItemHandler> itemHandlerOpt = LazyOptional.of(() -> this.itemHandler);
 
     public AbstractTileInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state, int invSize) {
@@ -61,8 +62,8 @@ public abstract class AbstractTileInventoryPM extends AbstractTilePM {
         return this.inventorySize;
     }
     
-    protected ItemStackHandler createHandler() {
-        return new ItemStackHandler(this.items);
+    protected ItemStackHandlerPM createHandler() {
+        return new ItemStackHandlerPM(this.items, this);
     }
     
     @Override

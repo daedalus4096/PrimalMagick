@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
@@ -31,7 +32,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a sanguine crucible tile entity.  Holds the crucible's core inventory and souls,
@@ -234,11 +234,11 @@ public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create output handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public int getSlotLimit(int slot) {
                 return 1;

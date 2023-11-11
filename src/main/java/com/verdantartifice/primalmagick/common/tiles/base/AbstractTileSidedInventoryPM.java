@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -28,7 +30,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
@@ -40,7 +41,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     protected final NonNullList<NonNullList<ItemStack>> inventories;
     protected final NonNullList<NonNullList<ItemStack>> syncedInventories;
-    protected final NonNullList<ItemStackHandler> itemHandlers;
+    protected final NonNullList<ItemStackHandlerPM> itemHandlers;
     protected final NonNullList<LazyOptional<IItemHandler>> itemHandlerOpts;
     protected final NonNullList<List<ContainerListener>> listeners;
     
@@ -95,7 +96,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     
     protected abstract OptionalInt getInventoryIndexForFace(Direction face);
     
-    protected abstract NonNullList<ItemStackHandler> createHandlers();
+    protected abstract NonNullList<ItemStackHandlerPM> createHandlers();
 
     @Override
     public void invalidateCaps() {

@@ -10,6 +10,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
@@ -57,7 +58,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
@@ -490,14 +490,14 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)));
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this));
         
         // Create fuel handler
-        retVal.set(FUEL_INV_INDEX, new ItemStackHandler(this.inventories.get(FUEL_INV_INDEX)) {
+        retVal.set(FUEL_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(FUEL_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 if (slot == 0) {
@@ -511,7 +511,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         });
 
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return false;

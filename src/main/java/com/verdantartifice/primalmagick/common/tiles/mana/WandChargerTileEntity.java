@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.menus.WandChargerMenu;
@@ -27,7 +28,6 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a wand charger tile entity.  Provides the recharge and wand interaction functionality
@@ -211,11 +211,11 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)) {
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return stack.getItem() instanceof EssenceItem;
@@ -223,7 +223,7 @@ public class WandChargerTileEntity extends AbstractTileSidedInventoryPM implemen
         });
         
         // Create charge handler
-        retVal.set(CHARGE_INV_INDEX, new ItemStackHandler(this.inventories.get(CHARGE_INV_INDEX)) {
+        retVal.set(CHARGE_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(CHARGE_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();

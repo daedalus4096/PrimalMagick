@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
@@ -53,7 +54,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.ItemStackHandler;
 
 public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
     protected static final int INPUT_INV_INDEX = 0;
@@ -409,14 +409,14 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     }
 
     @Override
-    protected NonNullList<ItemStackHandler> createHandlers() {
-        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandler());
+    protected NonNullList<ItemStackHandlerPM> createHandlers() {
+        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
-        retVal.set(INPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(INPUT_INV_INDEX)));
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this));
         
         // Create fuel handler
-        retVal.set(WAND_INV_INDEX, new ItemStackHandler(this.inventories.get(WAND_INV_INDEX)) {
+        retVal.set(WAND_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(WAND_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return stack.getItem() instanceof IWand;
@@ -424,7 +424,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         });
 
         // Create output handler
-        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandler(this.inventories.get(OUTPUT_INV_INDEX)) {
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 return false;
