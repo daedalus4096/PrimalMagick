@@ -86,8 +86,13 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {
             @Override
             public void onTake(Player thePlayer, ItemStack stack) {
-                RunecarvingTableMenu.this.inputSlabSlot.remove(1);
-                RunecarvingTableMenu.this.inputLapisSlot.remove(1);
+//                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(0, 1, false);
+//                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(1, 1, false);
+                RunecarvingTableMenu.this.tile.deductMaterials();
+//                RunecarvingTableMenu.LOGGER.info("Deducting slab");
+//                RunecarvingTableMenu.this.inputSlabSlot.remove(1);
+//                RunecarvingTableMenu.LOGGER.info("Deducting lapis");
+//                RunecarvingTableMenu.this.inputLapisSlot.remove(1);
                 RunecarvingTableMenu.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
                 
                 stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
@@ -156,6 +161,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     
     @Override
     public void containerChanged(Container inventoryIn) {
+        LOGGER.info("Running RunecarvingTableMenu#containerChanged");
         ItemStack slabStack = this.inputSlabSlot.getItem();
         ItemStack lapisStack = this.inputLapisSlot.getItem();
         if (slabStack.getItem() != this.slabInput.getItem() || lapisStack.getItem() != this.lapisInput.getItem()) {
@@ -178,10 +184,13 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     }
     
     protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
+        LOGGER.info("RunecarvingTableMenu calling updateRecipeResultSlot");
         if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
+            LOGGER.info("Setting result slot to {}", recipe.getId().toString());
             this.outputSlot.set(recipe.assemble(this.tileInvWrapper.get(), registryAccess));
         } else {
+            LOGGER.info("Clearing result slot");
             this.outputSlot.set(ItemStack.EMPTY);
         }
         this.broadcastChanges();

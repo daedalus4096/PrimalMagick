@@ -42,6 +42,24 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
     public Component getDisplayName() {
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
+    
+    public void deductMaterials() {
+        // TODO
+        LOGGER.info("Deducting runecarving materials");
+        ItemStack slabStack = this.inventories.get(INPUT_INV_INDEX).get(0);
+        if (!slabStack.isEmpty()) {
+            slabStack.shrink(1);
+        }
+        ItemStack lapisStack = this.inventories.get(INPUT_INV_INDEX).get(1);
+        if (!lapisStack.isEmpty()) {
+            lapisStack.shrink(1);
+        }
+        
+        // Only sync with client once so that both materials are deducted atomically
+        LOGGER.info("Syncing tile as part of material deduction");
+        this.syncTile(false);
+        this.setChanged();
+    }
 
     @Override
     protected int getInventoryCount() {
