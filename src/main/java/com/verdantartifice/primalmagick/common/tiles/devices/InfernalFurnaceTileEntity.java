@@ -265,7 +265,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             } else {
                 entity.processTime = 0;
             }
-        } else if (!entity.isCharged() && entity.processTime > 0) {
+        } else if (entity.processTime > 0) {
             // Decay progress if not enough mana is available
             entity.processTime = Mth.clamp(entity.processTime - 2, 0, entity.processTimeTotal);
         }
