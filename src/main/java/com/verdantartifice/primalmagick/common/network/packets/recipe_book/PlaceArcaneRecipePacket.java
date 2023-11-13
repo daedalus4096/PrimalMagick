@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
 import java.util.function.Supplier;
 
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -53,7 +53,7 @@ public class PlaceArcaneRecipePacket implements IMessageToServer {
             ctx.get().enqueueWork(() -> {
                 ServerPlayer player = ctx.get().getSender();
                 player.resetLastActionTime();
-                if (!player.isSpectator() && player.containerMenu.containerId == message.containerId && player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> bookMenu) {
+                if (!player.isSpectator() && player.containerMenu.containerId == message.containerId && player.containerMenu instanceof IArcaneRecipeBookMenu<?> bookMenu) {
                     player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
                         bookMenu.handlePlacement(message.shiftDown, recipe, player);
                     });

@@ -14,9 +14,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -28,10 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
-    protected static final int[] SLOTS_FOR_UP = new int[] { 0 };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { 1 };
-    
     public CalcinatorTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CALCINATOR.get(), pos, state);
     }
@@ -101,42 +95,6 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
             };
         } else {
             throw new IllegalStateException("Unknown block type " + block);
-        }
-    }
-
-    @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 0) {
-            return true;
-        } else if (slotIndex == 1) {
-            return isFuel(stack);
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        if (direction == Direction.DOWN && index == 1) {
-            return stack.is(Items.BUCKET);
-        } else {
-            return true;
         }
     }
 }

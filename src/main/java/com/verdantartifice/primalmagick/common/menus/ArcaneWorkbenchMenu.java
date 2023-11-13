@@ -9,16 +9,20 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.ArcaneCraftingResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
@@ -35,7 +39,7 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class ArcaneWorkbenchMenu extends AbstractArcaneRecipeBookMenu<CraftingContainer> {
+public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcaneRecipeBookMenu<CraftingContainer> {
     protected final CraftingContainer craftingInv = new TransientCraftingContainer(this, 3, 3);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
@@ -65,7 +69,7 @@ public class ArcaneWorkbenchMenu extends AbstractArcaneRecipeBookMenu<CraftingCo
         }
         
         // Slot 10: Crafting wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 19, 52, false));
+        this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 19, 52, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -259,5 +263,10 @@ public class ArcaneWorkbenchMenu extends AbstractArcaneRecipeBookMenu<CraftingCo
     @Override
     public boolean shouldMoveToInventory(int index) {
         return index != this.getResultSlotIndex();
+    }
+
+    @Override
+    public NonNullList<Slot> getSlots() {
+        return this.slots;
     }
 }

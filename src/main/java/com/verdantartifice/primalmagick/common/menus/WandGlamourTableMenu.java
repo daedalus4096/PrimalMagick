@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -27,6 +28,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandler;
 
 public class WandGlamourTableMenu extends AbstractContainerMenu {
     public static final ResourceLocation CAP_SLOT_TEXTURE = WandAssemblyTableMenu.CAP_SLOT_TEXTURE;
@@ -52,22 +54,24 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
+        IItemHandler componentInvWrapper = InventoryUtils.wrapInventory(this.componentInv, null);
+        
         // Slot 0: Result
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Wand/staff
-        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 66, 35, true));
+        this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 66, 35, true));
         
         // Slot 2: Wand core
-        this.coreSlot = this.addSlot(new FilteredSlot(this.componentInv, 1, 30, 17,
+        this.coreSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 30, 17,
                 new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).typeOf(WandCoreItem.class, StaffCoreItem.class)));
         
         // Slot 3: Wand caps
-        this.capSlot = this.addSlot(new FilteredSlot(this.componentInv, 2, 30, 35,
+        this.capSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 2, 30, 35,
                 new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).typeOf(WandCapItem.class)));
         
         // Slot 4: Wand gem
-        this.gemSlot = this.addSlot(new FilteredSlot(this.componentInv, 3, 30, 53,
+        this.gemSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 3, 30, 53,
                 new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).typeOf(WandGemItem.class)));
         
         // Slots 5-31: Player backpack

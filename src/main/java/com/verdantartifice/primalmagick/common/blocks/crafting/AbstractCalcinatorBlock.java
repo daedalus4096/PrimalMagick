@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -78,11 +77,11 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AbstractCalcinatorTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (AbstractCalcinatorTileEntity)tile);
+            if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
+                NetworkHooks.openScreen(serverPlayer, calcinatorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -107,8 +106,8 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof AbstractCalcinatorTileEntity) {
-                Containers.dropContents(worldIn, pos, (AbstractCalcinatorTileEntity)tile);
+            if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
+                calcinatorTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

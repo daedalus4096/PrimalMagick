@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +27,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * Server data container for the wand assembly table GUI.
@@ -55,20 +57,22 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
+        IItemHandler componentInvWrapper = InventoryUtils.wrapInventory(this.componentInv, null);
+        
         // Slot 0: Result
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Wand core
-        this.coreSlot = this.addSlot(new FilteredSlot(this.componentInv, 0, 48, 35,
+        this.coreSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 0, 48, 35,
                 new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).typeOf(WandCoreItem.class, StaffCoreItem.class)));
         
         // Slot 2: Wand gem
-        this.gemSlot = this.addSlot(new FilteredSlot(this.componentInv, 1, 48, 17,
+        this.gemSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 48, 17,
                 new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).typeOf(WandGemItem.class)));
         
         // Slots 3-4: Wand caps
-        this.capSlot = this.addSlot(makeCapSlot(this.componentInv, 2, 30, 53));
-        this.addSlot(makeCapSlot(this.componentInv, 3, 66, 17));
+        this.capSlot = this.addSlot(makeCapSlot(componentInvWrapper, 2, 30, 53));
+        this.addSlot(makeCapSlot(componentInvWrapper, 3, 66, 17));
         
         // Slots 5-31: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -83,7 +87,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
         }
     }
     
-    protected static Slot makeCapSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
+    protected static Slot makeCapSlot(IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         return new FilteredSlot(inventoryIn, index, xPosition, yPosition, 
                 new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).typeOf(WandCapItem.class));
     }

@@ -1,49 +1,51 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the concocter GUI.
  * 
  * @author Daedalus4096
  */
-public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
-    protected final Container concocterInv;
+public class ConcocterMenu extends AbstractTileSidedInventoryMenu<ConcocterTileEntity> implements IArcaneRecipeBookMenu<Container> {
     protected final ContainerData concocterData;
-    protected final Level world;
     protected final Slot wandSlot;
     
-    public ConcocterMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
+    public ConcocterMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public ConcocterMenu(int id, Inventory playerInv, Container concocterInv, ContainerData concocterData) {
-        super(MenuTypesPM.CONCOCTER.get(), id);
-        checkContainerSize(concocterInv, 11);
+    @SuppressWarnings("resource")
+    public ConcocterMenu(int id, Inventory playerInv, BlockPos tilePos, ConcocterTileEntity concocter, ContainerData concocterData) {
+        super(MenuTypesPM.CONCOCTER.get(), id, ConcocterTileEntity.class, playerInv.player.level(), tilePos, concocter);
         checkContainerDataCount(concocterData, 4);
-        this.concocterInv = concocterInv;
         this.concocterData = concocterData;
-        this.world = playerInv.player.level();
         
         // Slot 0: Output slot
-        this.addSlot(new GenericResultSlot(playerInv.player, this.concocterInv, 10, 138, 35) {
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 138, 35) {
             @Override
             protected void checkTakeAchievements(ItemStack stack) {
                 super.checkTakeAchievements(stack);
@@ -55,12 +57,12 @@ public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
         int i, j;
         for (i = 0; i < 3; i++) {
             for (j = 0; j < 3; j++) {
-                this.addSlot(new Slot(this.concocterInv, j + i * 3, 44 + j * 18, 17 + i * 18));
+                this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), j + i * 3, 44 + j * 18, 17 + i * 18));
             }
         }
         
         // Slot 10: Wand slot
-        this.wandSlot = this.addSlot(new WandSlot(this.concocterInv, 9, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 11-37: Player backpack
         for (i = 0; i < 3; i++) {
@@ -77,11 +79,6 @@ public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
         this.addDataSlots(this.concocterData);
     }
     
-    @Override
-    public boolean stillValid(Player playerIn) {
-        return this.concocterInv.stillValid(playerIn);
-    }
-
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
         ItemStack stack = ItemStack.EMPTY;
@@ -150,9 +147,7 @@ public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents stackedContents) {
-        if (this.concocterInv instanceof StackedContentsCompatible stackedContainer) {
-            stackedContainer.fillStackedContents(stackedContents);
-        }
+        this.tile.fillStackedContents(stackedContents);
     }
 
     @Override
@@ -164,7 +159,11 @@ public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(this.concocterInv, this.world);
+        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
+            return recipe.matches(new RecipeWrapper(modifiable), this.level);
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -195,5 +194,10 @@ public class ConcocterMenu extends AbstractArcaneRecipeBookMenu<Container> {
     @Override
     public boolean shouldMoveToInventory(int index) {
         return index != this.getResultSlotIndex();
+    }
+
+    @Override
+    public NonNullList<Slot> getSlots() {
+        return this.slots;
     }
 }

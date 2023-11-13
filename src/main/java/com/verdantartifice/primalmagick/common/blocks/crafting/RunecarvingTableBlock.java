@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTi
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -93,7 +92,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunecarvingTableTileEntity castTile) {
-                Containers.dropContents(worldIn, pos, castTile);
+                castTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

@@ -1,22 +1,26 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import java.util.HashSet;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of an auto-charger tile entity.  Provides the siphoning functionality for the
@@ -25,20 +29,20 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.AutoChargerBlock}
  */
-public class AutoChargerTileEntity extends TileInventoryPM {
-    protected static final int[] SLOTS = new int[] { 0 };
+public class AutoChargerTileEntity extends AbstractTileSidedInventoryPM {
+    protected static final int INPUT_INV_INDEX = 0;
     
     protected final Set<BlockPos> fontLocations = new HashSet<>();
     protected int chargeTime;
 
     public AutoChargerTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.AUTO_CHARGER.get(), pos, state, 1);
+        super(TileEntityTypesPM.AUTO_CHARGER.get(), pos, state);
     }
     
     @Override
-    protected Set<Integer> getSyncedSlotIndices() {
+    protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the charger's wand stack for client rendering use
-        return ImmutableSet.of(Integer.valueOf(0));
+        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
     }
     
     @Override
@@ -54,7 +58,7 @@ public class AutoChargerTileEntity extends TileInventoryPM {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, AutoChargerTileEntity entity) {
-        ItemStack chargeStack = entity.getItem(0);
+        ItemStack chargeStack = entity.getItem(INPUT_INV_INDEX, 0);
         if (!level.isClientSide) {
             if (entity.chargeTime % 20 == 0) {
                 // Scan surroundings for mana fonts once a second
@@ -95,35 +99,63 @@ public class AutoChargerTileEntity extends TileInventoryPM {
             }
         }
     }
+    
+    public ItemStack getItem() {
+        return this.getItem(INPUT_INV_INDEX, 0);
+    }
+    
+    public ItemStack getSyncedStack() {
+        return this.syncedInventories.get(INPUT_INV_INDEX).get(0);
+    }
+    
+    public void setItem(ItemStack stack) {
+        this.setItem(INPUT_INV_INDEX, 0, stack);
+    }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
-        if (index == 0 && !flag) {
+        if (invIndex == INPUT_INV_INDEX && !flag) {
             this.chargeTime = 0;
             this.setChanged();
         }
     }
 
     @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+    protected int getInventoryCount() {
+        return 1;
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        return SLOTS;
+    protected int getInventorySize(int inventoryIndex) {
+        return inventoryIndex == INPUT_INV_INDEX ? 1 : 0;
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return OptionalInt.of(INPUT_INV_INDEX);
     }
 
     @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+            }
+        });
+
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

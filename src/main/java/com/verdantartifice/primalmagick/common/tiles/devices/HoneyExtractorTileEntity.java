@@ -1,6 +1,9 @@
 package com.verdantartifice.primalmagick.common.tiles.devices;
 
+import java.util.OptionalInt;
+
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -9,11 +12,12 @@ import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -28,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a honey extractor tile entity.  Performs the extraction for the corresponding block.
@@ -35,10 +40,10 @@ import net.minecraftforge.common.util.LazyOptional;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBlock}
  * @author Daedalus4096
  */
-public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
-    protected static final int[] SLOTS_FOR_UP = new int[] { 0, 1 };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { 2, 3 };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { 4 };
+public class HoneyExtractorTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
+    protected static final int INPUT_INV_INDEX = 0;
+    protected static final int OUTPUT_INV_INDEX = 1;
+    protected static final int WAND_INV_INDEX = 2;
     
     protected int spinTime;
     protected int spinTimeTotal;
@@ -84,7 +89,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     };
     
     public HoneyExtractorTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state, 5);
+        super(TileEntityTypesPM.HONEY_EXTRACTOR.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 100, 100, Source.SKY);
     }
 
@@ -106,7 +111,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new HoneyExtractorMenu(windowId, playerInv, this, this.extractorData);
+        return new HoneyExtractorMenu(windowId, playerInv, this.getBlockPos(), this, this.extractorData);
     }
 
     @Override
@@ -133,7 +138,7 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
 
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = entity.items.get(4);
+            ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.SKY) - entity.manaStorage.getManaStored(Source.SKY);
@@ -145,8 +150,8 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
             }
             
             // Process ingredients
-            ItemStack honeycombStack = entity.items.get(0);
-            ItemStack bottleStack = entity.items.get(1);
+            ItemStack honeycombStack = entity.getItem(INPUT_INV_INDEX, 0);
+            ItemStack bottleStack = entity.getItem(INPUT_INV_INDEX, 1);
             if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && entity.manaStorage.getManaStored(Source.SKY) >= entity.getManaCost()) {
                 // If spinnable input is in place, process it
                 if (entity.canSpin()) {
@@ -172,28 +177,28 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     protected boolean canSpin() {
-        ItemStack honeyOutput = this.items.get(2);
-        ItemStack beeswaxOutput = this.items.get(3);
-        return (honeyOutput.getCount() < this.getMaxStackSize() &&
+        ItemStack honeyOutput = this.getItem(OUTPUT_INV_INDEX, 0);
+        ItemStack beeswaxOutput = this.getItem(OUTPUT_INV_INDEX, 1);
+        return (honeyOutput.getCount() < this.itemHandlers.get(OUTPUT_INV_INDEX).getSlotLimit(0) &&
                 honeyOutput.getCount() < honeyOutput.getMaxStackSize() &&
-                beeswaxOutput.getCount() < this.getMaxStackSize() &&
+                beeswaxOutput.getCount() < this.itemHandlers.get(OUTPUT_INV_INDEX).getSlotLimit(1) &&
                 beeswaxOutput.getCount() < beeswaxOutput.getMaxStackSize());
     }
     
     protected void doExtraction() {
-        ItemStack honeycombStack = this.items.get(0);
-        ItemStack bottleStack = this.items.get(1);
+        ItemStack honeycombStack = this.getItem(INPUT_INV_INDEX, 0);
+        ItemStack bottleStack = this.getItem(INPUT_INV_INDEX, 1);
         if (!honeycombStack.isEmpty() && !bottleStack.isEmpty() && this.canSpin() && this.manaStorage.getManaStored(Source.SKY) >= this.getManaCost()) {
-            ItemStack honeyStack = this.items.get(2);
+            ItemStack honeyStack = this.getItem(OUTPUT_INV_INDEX, 0);
             if (honeyStack.isEmpty()) {
-                this.items.set(2, new ItemStack(Items.HONEY_BOTTLE));
+                this.setItem(OUTPUT_INV_INDEX, 0, new ItemStack(Items.HONEY_BOTTLE));
             } else {
                 honeyStack.grow(1);
             }
             
-            ItemStack beeswaxStack = this.items.get(3);
+            ItemStack beeswaxStack = this.getItem(OUTPUT_INV_INDEX, 1);
             if (beeswaxStack.isEmpty()) {
-                this.items.set(3, new ItemStack(ItemsPM.BEESWAX.get()));
+                this.setItem(OUTPUT_INV_INDEX, 1, new ItemStack(ItemsPM.BEESWAX.get()));
             } else {
                 beeswaxStack.grow(1);
             }
@@ -205,10 +210,10 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
-        if ((index == 0 || index == 1) && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.spinTimeTotal = this.getSpinTimeTotal();
             this.spinTime = 0;
             this.setChanged();
@@ -267,36 +272,76 @@ public class HoneyExtractorTileEntity extends TileInventoryPM implements MenuPro
     }
 
     @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 2 || slotIndex == 3) {
-            return false;
-        } else if (slotIndex == 4) {
-            return stack.getItem() instanceof IWand;
-        } else if (slotIndex == 1) {
-            return stack.is(Items.GLASS_BOTTLE);
-        } else {
-            return stack.is(Items.HONEYCOMB);
-        }
+    protected int getInventoryCount() {
+        return 3;
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX, OUTPUT_INV_INDEX -> 2;
+            case WAND_INV_INDEX -> 1;
+            default -> 0;
+        };
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
+            default -> OptionalInt.of(WAND_INV_INDEX);
+        };
     }
 
     @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                if (slot == 0) {
+                    return stack.is(Items.HONEYCOMB);
+                } else if (slot == 1) {
+                    return stack.is(Items.GLASS_BOTTLE);
+                } else {
+                    return false;
+                }
+            }
+        });
+        
+        // Create fuel handler
+        retVal.set(WAND_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(WAND_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.getItem() instanceof IWand;
+            }
+        });
+
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
+            }
+        });
+        
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slots 0-1 were the input item stacks
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
+        this.setItem(INPUT_INV_INDEX, 1, legacyItems.get(1));
+        
+        // Slots 2-3 were the output item stacks
+        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(2));
+        this.setItem(OUTPUT_INV_INDEX, 1, legacyItems.get(3));
+        
+        // Slot 4 was the wand item stack
+        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(4));
     }
 }

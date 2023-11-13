@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneRecipeBookCategories;
 import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 
 import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
@@ -39,7 +39,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         builder.addAll(vanillaBook.getCollection(this.category.getVanillaCategory()).stream().map(ArcaneRecipeCollection::new).collect(Collectors.toList()));
         List<ArcaneRecipeCollection> list = builder.build();
         
-        if (mc.player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> recipeMenu) {
+        if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeMenu) {
             for (ArcaneRecipeCollection recipeCollection : list) {
                 for (Recipe<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
                     if (arcaneBook.getData().willHighlight(recipe) || vanillaBook.willHighlight(recipe)) {

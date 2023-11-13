@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.client.recipe_book.ClientArcaneRecipeBoo
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.StackedNbtContents;
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.ChangeArcaneRecipeBookSettingsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
@@ -46,6 +46,7 @@ import net.minecraft.client.searchtree.SearchRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -75,7 +76,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected ArcaneRecipeBookTabButton selectedTab;
     protected StateSwitchingButton filterButton;
     protected final Object filterButtonLock = new Object();
-    protected AbstractArcaneRecipeBookMenu<?> menu;
+    protected IArcaneRecipeBookMenu<?> menu;
     protected Minecraft mc;
     @Nullable
     protected EditBox searchBox;
@@ -91,14 +92,14 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected boolean useFurnaceStyle;
     protected boolean isLoading = true;
 
-    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, AbstractArcaneRecipeBookMenu<?> menu) {
+    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?> menu) {
         this.mc = mc;
         this.width = width;
         this.height = height;
         this.menu = menu;
         this.widthTooNarrow = tooNarrow;
         this.useFurnaceStyle = useFurnaceStyle;
-        mc.player.containerMenu = menu;
+        mc.player.containerMenu = menu instanceof AbstractContainerMenu containerMenu ? containerMenu : null;
         this.vanillaBook = mc.player.getRecipeBook();
         this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
         
@@ -548,7 +549,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     public void addItemToSlot(Iterator<Ingredient> iterator, int slotIndex, int count, int p_135418_, int p_135419_) {
         Ingredient ingredient = iterator.next();
         if (!ingredient.isEmpty()) {
-            Slot slot = this.menu.slots.get(slotIndex);
+            Slot slot = this.menu.getSlots().get(slotIndex);
             this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);
         }
     }

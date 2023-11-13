@@ -2,20 +2,23 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.awt.Color;
 import java.util.Objects;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.items.misc.SanguineCoreItem;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.WandPoofPacket;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -29,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a sanguine crucible tile entity.  Holds the crucible's core inventory and souls,
@@ -36,7 +40,8 @@ import net.minecraftforge.event.ForgeEventFactory;
  * 
  * @author Daedalus4096
  */
-public class SanguineCrucibleTileEntity extends TileInventoryPM {
+public class SanguineCrucibleTileEntity extends AbstractTileSidedInventoryPM {
+    protected static final int INPUT_INV_INDEX = 0;
     protected static final int FLUID_CAPACITY = 1000;
     protected static final int FLUID_DRAIN = 200;
     protected static final int CHARGE_MAX = 100;
@@ -48,13 +53,13 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     protected int counter = 0;
     
     public SanguineCrucibleTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state, 1);
+        super(TileEntityTypesPM.SANGUINE_CRUCIBLE.get(), pos, state);
     }
 
     @Override
-    protected Set<Integer> getSyncedSlotIndices() {
+    protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the crucible's core stack for client-side use
-        return ImmutableSet.of(Integer.valueOf(0));
+        return inventoryIndex == INPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
     }
     
     @Override
@@ -88,9 +93,9 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
                     entity.souls -= core.getSoulsPerSpawn();
                     
                     if (!level.isClientSide) {
-                        if (!entity.getItem(0).isDamageableItem() || entity.getItem(0).hurt(1, level.random, null)) {
-                            entity.getItem(0).shrink(1);
-                            level.setBlock(pos, state.setValue(SanguineCrucibleBlock.LIT, false), Block.UPDATE_ALL_IMMEDIATE);
+                        if (!entity.getItem(INPUT_INV_INDEX, 0).isDamageableItem() || entity.getItem(INPUT_INV_INDEX, 0).hurt(1, level.random, null)) {
+                            entity.getItem(INPUT_INV_INDEX, 0).shrink(1);
+                            entity.updateLitState();
                         }
                         
                         int attempts = 0;
@@ -106,6 +111,12 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
                     }
                 }
             }
+        }
+    }
+    
+    protected void updateLitState() {
+        if (this.hasLevel()) {
+            this.getLevel().setBlock(this.getBlockPos(), this.getBlockState().setValue(SanguineCrucibleBlock.LIT, !this.getItem().isEmpty()), Block.UPDATE_ALL_IMMEDIATE);
         }
     }
     
@@ -139,10 +150,10 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
-        if (index == 0 && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
+        if (invIndex == INPUT_INV_INDEX && (stack.isEmpty() || !ItemStack.isSameItemSameTags(stack, slotStack))) {
             this.charge = 0;
             this.setChanged();
             this.syncTile(false);
@@ -176,7 +187,7 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     }
     
     public boolean hasCore() {
-        return !this.items.get(0).isEmpty();
+        return !this.getItem(INPUT_INV_INDEX, 0).isEmpty();
     }
     
     public boolean showBubble(RandomSource rand) {
@@ -185,11 +196,79 @@ public class SanguineCrucibleTileEntity extends TileInventoryPM {
     
     @Nullable
     protected SanguineCoreItem getCoreItem() {
-        ItemStack stack = this.level.isClientSide ? this.getSyncedStackInSlot(0) : this.getItem(0);
-        if (stack.getItem() instanceof SanguineCoreItem) {
-            return ((SanguineCoreItem)stack.getItem());
+        ItemStack stack = this.level.isClientSide ? this.getSyncedItem(INPUT_INV_INDEX, 0) : this.getItem(INPUT_INV_INDEX, 0);
+        if (stack.getItem() instanceof SanguineCoreItem core) {
+            return core;
         } else {
             return null;
         }
+    }
+    
+    public ItemStack getItem() {
+        return this.getItem(INPUT_INV_INDEX, 0);
+    }
+    
+    public void setItem(ItemStack stack) {
+        this.setItem(INPUT_INV_INDEX, 0, stack);
+    }
+    
+    public ItemStack removeItem(int count) {
+        ItemStack stack = this.itemHandlers.get(INPUT_INV_INDEX).extractItem(0, count, false);
+        if (!stack.isEmpty()) {
+            // Sync the inventory change to nearby clients
+            this.syncSlots(null);
+        }
+        this.setChanged();
+        return stack;
+    }
+
+    @Override
+    protected int getInventoryCount() {
+        return 1;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return inventoryIndex == INPUT_INV_INDEX ? 1 : 0;
+    }
+
+    @Override
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP, DOWN -> OptionalInt.empty();
+            default -> OptionalInt.of(INPUT_INV_INDEX);
+        };
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create output handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
+            @Override
+            public int getSlotLimit(int slot) {
+                return 1;
+            }
+
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.getItem() instanceof SanguineCoreItem;
+            }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                super.onContentsChanged(slot);
+                SanguineCrucibleTileEntity.this.updateLitState();
+            }
+        });
+
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

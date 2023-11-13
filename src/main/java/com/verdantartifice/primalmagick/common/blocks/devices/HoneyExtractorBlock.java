@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -90,11 +89,11 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the honey extractor
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof HoneyExtractorTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (HoneyExtractorTileEntity)tile);
+            if (tile instanceof HoneyExtractorTileEntity extractorTile) {
+                NetworkHooks.openScreen(serverPlayer, extractorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -106,8 +105,8 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof HoneyExtractorTileEntity) {
-                Containers.dropContents(worldIn, pos, (HoneyExtractorTileEntity)tile);
+            if (tile instanceof HoneyExtractorTileEntity extractorTile) {
+                extractorTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

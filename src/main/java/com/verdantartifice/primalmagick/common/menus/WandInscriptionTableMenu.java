@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +25,7 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandler;
 
 /**
  * Server data container for the wand inscription table GUI.
@@ -49,14 +51,16 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.worldPosCallable = callable;
         this.player = inv.player;
         
+        IItemHandler componentInvWrapper = InventoryUtils.wrapInventory(this.componentInv, null);
+        
         // Slot 0: Result
         this.addSlot(new ResultSlot(this.player, this.componentInv, this.resultInv, 0, 124, 35));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(this.componentInv, 0, 30, 35, true));
+        this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 30, 35, true));
         
         // Slot 2: Input scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(this.componentInv, 1, 66, 35, new FilteredSlot.Properties().typeOf(SpellScrollItem.class)));
+        this.scrollSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlot.Properties().typeOf(SpellScrollItem.class)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

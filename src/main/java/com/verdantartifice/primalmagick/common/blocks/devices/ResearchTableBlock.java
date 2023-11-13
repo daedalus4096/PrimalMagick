@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEn
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -75,11 +74,11 @@ public class ResearchTableBlock extends BaseEntityBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ResearchTableTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (ResearchTableTileEntity)tile, tile.getBlockPos());
+            if (tile instanceof ResearchTableTileEntity tableTile) {
+                NetworkHooks.openScreen(serverPlayer, tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -102,7 +101,7 @@ public class ResearchTableBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ResearchTableTileEntity castTile) {
-                Containers.dropContents(worldIn, pos, castTile);
+                castTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

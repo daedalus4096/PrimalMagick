@@ -10,7 +10,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellcraftingRunePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +20,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -31,7 +30,7 @@ import net.minecraft.world.phys.Vec3;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider {
+public class SpellcraftingAltarTileEntity extends AbstractTilePM implements MenuProvider {
     public static final int BOB_CYCLE_TIME_TICKS = 200;
     protected static final int TICKS_PER_SEGMENT_ROTATION = 10;
     protected static final int TICKS_PER_PAUSE = 20;
@@ -51,7 +50,7 @@ public class SpellcraftingAltarTileEntity extends TilePM implements MenuProvider
     
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new SpellcraftingAltarMenu(windowId, playerInv, ContainerLevelAccess.create(this.level, this.getBlockPos()));
+        return new SpellcraftingAltarMenu(windowId, playerInv, this.getBlockPos(), this);
     }
 
     @Override

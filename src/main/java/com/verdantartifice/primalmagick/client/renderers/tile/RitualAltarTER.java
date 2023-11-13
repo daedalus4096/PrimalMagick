@@ -84,7 +84,7 @@ public class RitualAltarTER implements BlockEntityRenderer<RitualAltarTileEntity
 
         // Render the held item stack above the altar
         Minecraft mc = Minecraft.getInstance();
-        ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
+        ItemStack stack = tileEntityIn.getSyncedStack().copy();
         if (!stack.isEmpty()) {
             int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);
             matrixStack.pushPose();

@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -52,11 +51,11 @@ public class WandChargerBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the wand charger
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof WandChargerTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (WandChargerTileEntity)tile);
+            if (tile instanceof WandChargerTileEntity chargerTile) {
+                NetworkHooks.openScreen(serverPlayer, chargerTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -68,8 +67,8 @@ public class WandChargerBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof WandChargerTileEntity) {
-                Containers.dropContents(worldIn, pos, (WandChargerTileEntity)tile);
+            if (tile instanceof WandChargerTileEntity chargerTile) {
+                chargerTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

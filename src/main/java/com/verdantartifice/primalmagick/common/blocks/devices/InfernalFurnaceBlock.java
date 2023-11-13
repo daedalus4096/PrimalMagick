@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -101,7 +100,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
             // Open the GUI for the furnace
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                NetworkHooks.openScreen(serverPlayer, furnaceTile);
+                NetworkHooks.openScreen(serverPlayer, furnaceTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -120,7 +119,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                Containers.dropContents(pLevel, pPos, furnaceTile);
+                furnaceTile.dropContents(pLevel, pPos);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

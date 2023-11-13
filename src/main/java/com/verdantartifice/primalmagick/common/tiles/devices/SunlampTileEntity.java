@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import com.verdantartifice.primalmagick.common.util.RayTraceUtils;
 
 import net.minecraft.core.BlockPos;
@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * 
  * @author Daedalus4096
  */
-public class SunlampTileEntity extends TilePM {
+public class SunlampTileEntity extends AbstractTilePM {
     protected int ticksExisted = 0;
     
     public SunlampTileEntity(BlockPos pos, BlockState state) {

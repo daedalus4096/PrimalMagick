@@ -12,7 +12,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -110,8 +109,8 @@ public class ConcocterBlock extends BaseEntityBlock {
         // Drop the tile entity's inventory into the world when the block is replaced
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ConcocterTileEntity) {
-                Containers.dropContents(worldIn, pos, (ConcocterTileEntity)tile);
+            if (tile instanceof ConcocterTileEntity concocterTile) {
+                concocterTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -120,11 +119,11 @@ public class ConcocterBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof ConcocterTileEntity) {
-                NetworkHooks.openScreen((ServerPlayer)player, (ConcocterTileEntity)tile);
+            if (tile instanceof ConcocterTileEntity concocterTile) {
+                NetworkHooks.openScreen(serverPlayer, concocterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

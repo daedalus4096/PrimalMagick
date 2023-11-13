@@ -9,6 +9,9 @@ v4.0.8
 * Made the Earthshatter Hammer and Dissolution Chamber able to refine and multiply Rock Salt
 * Reduced break time of the Celestial Harp to a more reasonable level
 * Made datapack template generation tool include sourceless entities as well as items
+* Made devices which were previously compatible with hoppers also compatible with modded pipes, etc
+* Made Essence Furnace compatible with both hoppers and pipes
+* Fixed a bug with the Infernal Furnace which could delete existing output upon selecting a recipe book entry
 
 v4.0.7
 ------

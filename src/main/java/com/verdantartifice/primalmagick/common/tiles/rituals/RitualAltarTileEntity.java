@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
@@ -28,6 +29,7 @@ import com.verdantartifice.primalmagick.common.blocks.rituals.OfferingPedestalBl
 import com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.SaltTrailBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.SaltSide;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -52,7 +54,7 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
@@ -61,6 +63,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -87,6 +90,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -96,7 +100,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  * @see {@link com.verdantartifice.primalmagick.common.blocks.rituals.RitualAltarBlock}
  */
-public class RitualAltarTileEntity extends TileInventoryPM implements IInteractWithWand {
+public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implements IInteractWithWand {
+    protected static final int OUTPUT_INV_INDEX = 0;
     protected static final float MIN_STABILITY = -100.0F;
     protected static final float MAX_STABILITY = 25.0F;
     protected static final int RITUAL_SOUND_LENGTH = 58;
@@ -127,7 +132,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected Map<Block, Integer> blockCounts = new HashMap<>();
     
     public RitualAltarTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.RITUAL_ALTAR.get(), pos, state, 1);
+        super(TileEntityTypesPM.RITUAL_ALTAR.get(), pos, state);
         this.mishaps = Util.make(new WeightedRandomBag<>(), bag -> {
             bag.add(new Mishap(this::mishapOffering, false, 0.0F), 6.0D);
             bag.add(new Mishap(this::mishapSalt, false, 10.0F), 3.0D);
@@ -173,9 +178,9 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     }
     
     @Override
-    protected Set<Integer> getSyncedSlotIndices() {
+    protected Set<Integer> getSyncedSlotIndices(int inventoryIndex) {
         // Sync the altar's stack for client rendering use
-        return ImmutableSet.of(Integer.valueOf(0));
+        return inventoryIndex == OUTPUT_INV_INDEX ? ImmutableSet.of(Integer.valueOf(0)) : ImmutableSet.of();
     }
     
     public Color getOrbColor() {
@@ -392,9 +397,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
         List<ItemStack> offerings = new ArrayList<>();
         for (BlockPos offeringPos : this.pedestalPositions) {
             BlockEntity tile = this.level.getBlockEntity(offeringPos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                ItemStack stack = pedestalTile.getItem(0);
+            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                ItemStack stack = pedestalTile.getItem();
                 if (stack != null && !stack.isEmpty()) {
                     offerings.add(stack);
                 }
@@ -483,7 +487,7 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
     protected void finishCraft() {
         IRitualRecipe recipe = this.getActiveRecipe();
         if (recipe != null) {
-            this.setItem(0, recipe.getResultItem(this.getLevel().registryAccess()).copy());
+            this.setItem(OUTPUT_INV_INDEX, 0, recipe.getResultItem(this.getLevel().registryAccess()).copy());
         }
         if (this.getActivePlayer() != null) {
             this.getActivePlayer().displayClientMessage(Component.translatable("ritual.primalmagick.info.complete"), false);
@@ -659,10 +663,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             for (BlockPos pedestalPos : this.pedestalPositions) {
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
                 Block block = this.level.getBlockState(pedestalPos).getBlock();
-                if (tile instanceof OfferingPedestalTileEntity && block instanceof ISaltPowered) {
-                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                    ISaltPowered saltBlock = (ISaltPowered)block;
-                    if (requiredOffering.test(pedestalTile.getItem(0)) && saltBlock.isBlockSaltPowered(this.level, pedestalPos)) {
+                if (tile instanceof OfferingPedestalTileEntity pedestalTile && block instanceof ISaltPowered saltBlock) {
+                    if (requiredOffering.test(pedestalTile.getItem()) && saltBlock.isBlockSaltPowered(this.level, pedestalPos)) {
                         // Upon finding an ingredient match, start channeling it
                         this.channeledOfferingPos = pedestalPos;
                         this.nextCheckCount = this.activeCount + 60;
@@ -688,19 +690,18 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             Block block = this.level.getBlockState(this.channeledOfferingPos).getBlock();
             
             // Confirm that the channeled offering is still valid
-            if ( tile instanceof OfferingPedestalTileEntity &&
-                 block instanceof ISaltPowered &&
-                 requiredOffering.test(((OfferingPedestalTileEntity)tile).getItem(0)) &&
-                 ((ISaltPowered)block).isBlockSaltPowered(this.level, this.channeledOfferingPos) ) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
+            if ( tile instanceof OfferingPedestalTileEntity pedestalTile &&
+                 block instanceof ISaltPowered saltBlock &&
+                 requiredOffering.test(pedestalTile.getItem()) &&
+                 saltBlock.isBlockSaltPowered(this.level, this.channeledOfferingPos) ) {
                 if (this.activeCount >= this.nextCheckCount) {
                     // Once the channel is complete, consume it and mark the step as complete
-                    pedestalTile.removeItemNoUpdate(0);
+                    pedestalTile.removeItem(1);
                     this.currentStepComplete = true;
                     this.channeledOfferingPos = null;
                 } else {
                     // If the channel is still in progress, spawn particles
-                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getItem(0));
+                    this.spawnOfferingParticles(this.channeledOfferingPos, pedestalTile.getItem());
                 }
                 return true;
             } else {
@@ -929,13 +930,12 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             // Search for a populated offering pedestal
             BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
             BlockEntity tile = this.level.getBlockEntity(pedestalPos);
-            if (tile instanceof OfferingPedestalTileEntity) {
-                OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                if (!pedestalTile.getItem(0).isEmpty()) {
+            if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                if (!pedestalTile.getItem().isEmpty()) {
                     if (destroy) {
-                        pedestalTile.setItem(0, ItemStack.EMPTY);
+                        pedestalTile.setItem(ItemStack.EMPTY);
                     } else {
-                        Containers.dropContents(this.level, pedestalPos, pedestalTile);
+                        pedestalTile.dropContents(this.level, pedestalPos);
                     }
                     pedestalTile.setChanged();
                     pedestalTile.syncTile(false);
@@ -993,9 +993,8 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             while (attempts++ < 25 && !this.pedestalPositions.isEmpty()) {
                 BlockPos pedestalPos = this.pedestalPositions.get(this.level.random.nextInt(this.pedestalPositions.size()));
                 BlockEntity tile = this.level.getBlockEntity(pedestalPos);
-                if (tile instanceof OfferingPedestalTileEntity) {
-                    OfferingPedestalTileEntity pedestalTile = (OfferingPedestalTileEntity)tile;
-                    if (!pedestalTile.getItem(0).isEmpty()) {
+                if (tile instanceof OfferingPedestalTileEntity pedestalTile) {
+                    if (!pedestalTile.getItem().isEmpty()) {
                         target = pedestalPos;
                         break;
                     }
@@ -1022,5 +1021,53 @@ public class RitualAltarTileEntity extends TileInventoryPM implements IInteractW
             float force = central ? 3.0F + this.level.random.nextFloat() : 2.0F;
             this.level.explode(null, target.getX() + 0.5D, target.getY() + 0.5D, target.getZ() + 0.5D, force, Level.ExplosionInteraction.TNT);
         }
+    }
+
+    public ItemStack getItem() {
+        return this.getItem(OUTPUT_INV_INDEX, 0);
+    }
+    
+    public ItemStack getSyncedStack() {
+        return this.syncedInventories.get(OUTPUT_INV_INDEX).get(0);
+    }
+    
+    public void setItem(ItemStack stack) {
+        this.setItem(OUTPUT_INV_INDEX, 0, stack);
+    }
+    
+    @Override
+    protected int getInventoryCount() {
+        return 1;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return inventoryIndex == OUTPUT_INV_INDEX ? 1 : 0;
+    }
+
+    @Override
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return OptionalInt.of(OUTPUT_INV_INDEX);
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
+            }
+        });
+
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the output item stack
+        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(0));
     }
 }

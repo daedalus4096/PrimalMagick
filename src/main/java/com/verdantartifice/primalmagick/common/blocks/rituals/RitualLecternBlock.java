@@ -18,7 +18,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -127,11 +126,11 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
         if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RitualLecternTileEntity lecternTile) {
-                ItemStack bookStack = lecternTile.getItem(0);
+                ItemStack bookStack = lecternTile.getItem();
                 if (bookStack.isEmpty() && player.getItemInHand(handIn).is(Items.ENCHANTED_BOOK)) {
                     // When activating an empty lectern with an enchanted book in hand, place it on the lectern
                     ItemStack stack = player.getItemInHand(handIn).copyWithCount(1);
-                    lecternTile.setItem(0, stack);
+                    lecternTile.setItem(stack);
                     player.getItemInHand(handIn).shrink(1);
                     if (player.getItemInHand(handIn).getCount() <= 0) {
                         player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -150,7 +149,7 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
                     if (player.isSecondaryUseActive()) {
                         // When activating a full lectern while sneaking, pick up the book
                         ItemStack stack = bookStack.copy();
-                        lecternTile.setItem(0, ItemStack.EMPTY);
+                        lecternTile.setItem(ItemStack.EMPTY);
                         if (!player.getInventory().add(stack)) {
                             player.drop(stack, false);
                         }
@@ -182,8 +181,8 @@ public class RitualLecternBlock extends BaseEntityBlock implements IRitualPropBl
         }
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
-            if (tile instanceof RitualLecternTileEntity) {
-                Containers.dropContents(worldIn, pos, (RitualLecternTileEntity)tile);
+            if (tile instanceof RitualLecternTileEntity lecternTile) {
+                lecternTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
         }

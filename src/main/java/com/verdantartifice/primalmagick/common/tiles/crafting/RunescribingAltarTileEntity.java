@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.menus.RunescribingAltarEnchantedM
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarForbiddenMenu;
 import com.verdantartifice.primalmagick.common.menus.RunescribingAltarHeavenlyMenu;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class RunescribingAltarTileEntity extends TilePM implements MenuProvider {
+public class RunescribingAltarTileEntity extends AbstractTilePM implements MenuProvider {
     public RunescribingAltarTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.RUNESCRIBING_ALTAR.get(), pos, state);
     }
@@ -30,10 +30,10 @@ public class RunescribingAltarTileEntity extends TilePM implements MenuProvider 
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
         if (this.getBlockState().getBlock() instanceof RunescribingAltarBlock altarBlock) {
             return switch (altarBlock.getDeviceTier()) {
-                case BASIC -> new RunescribingAltarBasicMenu(windowId, playerInv);
-                case ENCHANTED -> new RunescribingAltarEnchantedMenu(windowId, playerInv);
-                case FORBIDDEN -> new RunescribingAltarForbiddenMenu(windowId, playerInv);
-                case HEAVENLY -> new RunescribingAltarHeavenlyMenu(windowId, playerInv);
+                case BASIC -> new RunescribingAltarBasicMenu(windowId, playerInv, this.getBlockPos(), this);
+                case ENCHANTED -> new RunescribingAltarEnchantedMenu(windowId, playerInv, this.getBlockPos(), this);
+                case FORBIDDEN -> new RunescribingAltarForbiddenMenu(windowId, playerInv, this.getBlockPos(), this);
+                case HEAVENLY -> new RunescribingAltarHeavenlyMenu(windowId, playerInv, this.getBlockPos(), this);
                 default -> throw new IllegalStateException("Unsupported device tier for runescribing altar menu");
             };
         } else {

@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.Collections;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -11,6 +12,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.blocks.crafting.ConcocterBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.ITileResearchCache;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
@@ -25,12 +27,13 @@ import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -51,14 +54,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
 
-public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements  MenuProvider, IOwnedTileEntity, IManaContainer, StackedContentsCompatible {
+    protected static final int INPUT_INV_INDEX = 0;
+    protected static final int WAND_INV_INDEX = 1;
+    protected static final int OUTPUT_INV_INDEX = 2;
     protected static final int MAX_INPUT_ITEMS = 9;
-    protected static final int WAND_SLOT_INDEX = 9;
-    protected static final int OUTPUT_SLOT_INDEX = 10;
-    protected static final int[] SLOTS_FOR_UP = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-    protected static final int[] SLOTS_FOR_DOWN = new int[] { 10 };
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { 9 };
     
     protected int cookTime;
     protected int cookTimeTotal;
@@ -110,7 +112,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     };
     
     public ConcocterTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.CONCOCTER.get(), pos, state, MAX_INPUT_ITEMS + 2);
+        super(TileEntityTypesPM.CONCOCTER.get(), pos, state);
         this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
         this.researchCache = new TileResearchCache();
     }
@@ -144,7 +146,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
 
     @Override
     public AbstractContainerMenu createMenu(int windowId, Inventory playerInv, Player player) {
-        return new ConcocterMenu(windowId, playerInv, this, this.concocterData);
+        return new ConcocterMenu(windowId, playerInv, this.getBlockPos(), this, this.concocterData);
     }
 
     @Override
@@ -211,7 +213,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
         
         if (!level.isClientSide) {
             // Fill up internal mana storage with that from any inserted wands
-            ItemStack wandStack = entity.items.get(WAND_SLOT_INDEX);
+            ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
                 int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
@@ -225,7 +227,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
             SimpleContainer realInv = new SimpleContainer(MAX_INPUT_ITEMS);
             SimpleContainer testInv = new SimpleContainer(MAX_INPUT_ITEMS);
             for (int index = 0; index < MAX_INPUT_ITEMS; index++) {
-                ItemStack invStack = entity.items.get(index);
+                ItemStack invStack = entity.getItem(INPUT_INV_INDEX, index);
                 realInv.setItem(index, invStack);
                 // Don't consider fuse length when testing item inputs for recipe determination
                 testInv.setItem(index, ConcoctionUtils.isBomb(invStack) ? ConcoctionUtils.setFuseType(invStack.copy(), FuseType.MEDIUM) : invStack);
@@ -262,12 +264,13 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
             } else if (!this.isResearchKnown(recipe.getRequiredResearch())) {
                 return false;
             } else {
-                ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+                ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
                 if (currentOutput.isEmpty()) {
                     return true;
                 } else if (!ItemStack.isSameItem(currentOutput, output)) {
                     return false;
-                } else if (currentOutput.getCount() + output.getCount() <= this.getMaxStackSize() && currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
+                } else if (currentOutput.getCount() + output.getCount() <= this.itemHandlers.get(OUTPUT_INV_INDEX).getSlotLimit(0) && 
+                        currentOutput.getCount() + output.getCount() <= currentOutput.getMaxStackSize()) {
                     return true;
                 } else {
                     return currentOutput.getCount() + output.getCount() <= output.getMaxStackSize();
@@ -281,9 +284,9 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     protected void doConcoction(Container inputInv, RegistryAccess registryAccess, @Nullable IConcoctingRecipe recipe) {
         if (recipe != null && this.canConcoct(inputInv, registryAccess, recipe)) {
             ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
-            ItemStack currentOutput = this.items.get(OUTPUT_SLOT_INDEX);
+            ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
-                this.items.set(OUTPUT_SLOT_INDEX, recipeOutput);
+                this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
             } else if (ItemStack.isSameItemSameTags(recipeOutput, currentOutput)) {
                 currentOutput.grow(recipeOutput.getCount());
             }
@@ -299,7 +302,7 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
     
     protected boolean showBottle() {
-        return this.cookTime > 0 || !this.items.get(OUTPUT_SLOT_INDEX).isEmpty();
+        return this.cookTime > 0 || !this.getItem(OUTPUT_INV_INDEX, 0).isEmpty();
     }
     
     protected int getCookTimeTotal() {
@@ -362,11 +365,11 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.items.get(index);
-        super.setItem(index, stack);
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
-        if (index >= 0 && index < MAX_INPUT_ITEMS && !flag) {
+        if (invIndex == INPUT_INV_INDEX && !flag) {
             this.cookTimeTotal = this.getCookTimeTotal();
             this.cookTime = 0;
             this.setChanged();
@@ -374,41 +377,75 @@ public class ConcocterTileEntity extends TileInventoryPM implements  MenuProvide
     }
 
     @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == 10) {
-            return false;
-        } else if (slotIndex == 9) {
-            return stack.getItem() instanceof IWand;
-        } else {
-            return true;
-        }
-    }
-
-    @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
-    }
-
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
-    }
-
-    @Override
     public void fillStackedContents(StackedContents stackedContents) {
-        for (ItemStack stack : this.items) {
-            stackedContents.accountStack(stack);
+        for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+            for (int slotIndex = 0; slotIndex < this.getInventorySize(invIndex); slotIndex++) {
+                stackedContents.accountStack(this.getItem(invIndex, slotIndex));
+            }
         }
+    }
+
+    @Override
+    protected int getInventoryCount() {
+        return 3;
+    }
+
+    @Override
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX -> MAX_INPUT_ITEMS;
+            case WAND_INV_INDEX -> 1;
+            case OUTPUT_INV_INDEX -> 1;
+            default -> 0;
+        };
+    }
+
+    @Override
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
+            default -> OptionalInt.of(WAND_INV_INDEX);
+        };
+    }
+
+    @Override
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this));
+        
+        // Create fuel handler
+        retVal.set(WAND_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(WAND_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.getItem() instanceof IWand;
+            }
+        });
+
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
+            }
+        });
+        
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slots 0-8 were the input item stacks
+        for (int inputIndex = 0; inputIndex < MAX_INPUT_ITEMS; inputIndex++) {
+            this.setItem(INPUT_INV_INDEX, inputIndex, legacyItems.get(inputIndex));
+        }
+        
+        // Slot 9 was the wand item stack
+        this.setItem(WAND_INV_INDEX, 0, legacyItems.get(MAX_INPUT_ITEMS));
+        
+        // Slot 10 was the output item stack
+        this.setItem(OUTPUT_INV_INDEX, 0, legacyItems.get(MAX_INPUT_ITEMS + 1));
     }
 }

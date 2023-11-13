@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -100,7 +99,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
             // Open the GUI for the dissolution chamber
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof DissolutionChamberTileEntity chamberTile) {
-                NetworkHooks.openScreen(serverPlayer, chamberTile);
+                NetworkHooks.openScreen(serverPlayer, chamberTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -113,7 +112,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof DissolutionChamberTileEntity chamberTile) {
-                Containers.dropContents(worldIn, pos, chamberTile);
+                chamberTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.rituals;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropTileEntity;
-import com.verdantartifice.primalmagick.common.tiles.base.TilePM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractRitualPropTileEntity extends TilePM implements IRitualPropTileEntity {
+public abstract class AbstractRitualPropTileEntity extends AbstractTilePM implements IRitualPropTileEntity {
     protected BlockPos altarPos = null;
     protected boolean isOpen = false;
     

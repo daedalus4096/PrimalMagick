@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBook;
-import com.verdantartifice.primalmagick.common.menus.AbstractArcaneRecipeBookMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -47,7 +47,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         this.mc = mc;
         this.collection = recipeCollection;
         boolean isFiltering = false;
-        if (mc.player.containerMenu instanceof AbstractArcaneRecipeBookMenu<?> arcaneMenu) {
+        if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> arcaneMenu) {
             this.useFurnaceStyle = arcaneMenu.isSingleIngredientMenu();
             isFiltering = book.isFiltering(arcaneMenu.getRecipeBookType());
         } else {

@@ -23,7 +23,7 @@ public class OfferingPedestalTER implements BlockEntityRenderer<OfferingPedestal
 
     @Override
     public void render(OfferingPedestalTileEntity tileEntityIn, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-        ItemStack stack = tileEntityIn.getSyncedStackInSlot(0).copy();
+        ItemStack stack = tileEntityIn.getSyncedStack().copy();
         if (!stack.isEmpty()) {
             // Render the held item stack above the pedestal
             int rot = (int)(tileEntityIn.getLevel().getLevelData().getGameTime() % 360);

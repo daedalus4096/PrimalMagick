@@ -1,54 +1,55 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
+import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.tiles.devices.DissolutionChamberTileEntity;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.SlotItemHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 /**
  * Server data container for the dissolution chamber GUI.
  * 
  * @author Daedalus4096
  */
-public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Container> {
-    protected final Container chamberInv;
+public class DissolutionChamberMenu extends AbstractTileSidedInventoryMenu<DissolutionChamberTileEntity> implements IArcaneRecipeBookMenu<Container> {
     protected final ContainerData chamberData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
-    protected final Level world;
     
-    public DissolutionChamberMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(3), new SimpleContainerData(4));
+    public DissolutionChamberMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public DissolutionChamberMenu(int id, Inventory playerInv, Container chamberInv, ContainerData chamberData) {
-        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id);
-        checkContainerSize(chamberInv, 3);
+    public DissolutionChamberMenu(int id, Inventory playerInv, BlockPos tilePos, DissolutionChamberTileEntity chamber, ContainerData chamberData) {
+        super(MenuTypesPM.DISSOLUTION_CHAMBER.get(), id, DissolutionChamberTileEntity.class, playerInv.player.level(), tilePos, chamber);
         checkContainerDataCount(chamberData, 4);
-        this.chamberInv = chamberInv;
         this.chamberData = chamberData;
-        this.world = playerInv.player.level();
         
         // Slot 0: chamber output
-        this.addSlot(new GenericResultSlot(playerInv.player, this.chamberInv, 0, 125, 35));
+        this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 125, 35));
         
         // Slot 1: ore input
-        this.inputSlot = this.addSlot(new Slot(this.chamberInv, 1, 44, 35));
+        this.inputSlot = this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 44, 35));
         
         // Slot 2: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.chamberInv, 2, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 3-29: player backpack
         for (int i = 0; i < 3; i++) {
@@ -63,11 +64,6 @@ public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Contain
         }
 
         this.addDataSlots(this.chamberData);
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return this.chamberInv.stillValid(player);
     }
 
     @Override
@@ -139,9 +135,7 @@ public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Contain
 
     @Override
     public void fillCraftSlotsStackedContents(StackedContents contents) {
-        if (this.chamberInv instanceof StackedContentsCompatible stackedContainer) {
-            stackedContainer.fillStackedContents(contents);
-        }
+        this.tile.fillStackedContents(contents);
     }
 
     @Override
@@ -152,7 +146,11 @@ public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Contain
 
     @Override
     public boolean recipeMatches(Recipe<? super Container> recipe) {
-        return recipe.matches(this.chamberInv, this.world);
+        if (this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable) {
+            return recipe.matches(new RecipeWrapper(modifiable), this.level);
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -188,5 +186,10 @@ public class DissolutionChamberMenu extends AbstractArcaneRecipeBookMenu<Contain
     @Override
     public boolean isSingleIngredientMenu() {
         return true;
+    }
+
+    @Override
+    public NonNullList<Slot> getSlots() {
+        return this.slots;
     }
 }

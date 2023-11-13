@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.tiles.mana;
 
 import java.util.HashSet;
+import java.util.OptionalInt;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
+import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.ManaStorage;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
@@ -14,13 +16,14 @@ import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
-import com.verdantartifice.primalmagick.common.tiles.base.TileInventoryPM;
+import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.network.chat.Component;
@@ -36,14 +39,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.ItemStackHandler;
 
-public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvider, IManaContainer {
+/**
+ * Definition of a mana battery tile entity.  Holds the charge for the corresponding block.
+ * 
+ * @see {@link com.verdantartifice.primalmagick.common.blocks.mana.ManaBatteryBlock}
+ * @author Daedalus4096
+ */
+public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer {
     protected static final int FONT_RANGE = 5;
-    protected static final int INPUT_SLOT_INDEX = 0;
-    protected static final int CHARGE_SLOT_INDEX = 1;
-    protected static final int[] SLOTS_FOR_UP = new int[] { INPUT_SLOT_INDEX };
-    protected static final int[] SLOTS_FOR_DOWN = new int[0];
-    protected static final int[] SLOTS_FOR_SIDES = new int[] { CHARGE_SLOT_INDEX };
+    protected static final int INPUT_INV_INDEX = 0;
+    protected static final int CHARGE_INV_INDEX = 1;
     
     protected int chargeTime;
     protected int chargeTimeTotal;
@@ -102,7 +109,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     };
     
     public ManaBatteryTileEntity(BlockPos pos, BlockState state) {
-        super(TileEntityTypesPM.MANA_BATTERY.get(), pos, state, 2);
+        super(TileEntityTypesPM.MANA_BATTERY.get(), pos, state);
         this.manaStorage = new ManaStorage(this.getBatteryCapacity(), this.getBatteryTransferCap(), Source.SORTED_SOURCES.toArray(new Source[0]));
     }
     
@@ -137,8 +144,8 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
         boolean shouldMarkDirty = false;
         
         if (!level.isClientSide) {
-            ItemStack inputStack = entity.getItem(INPUT_SLOT_INDEX);
-            ItemStack chargeStack = entity.getItem(CHARGE_SLOT_INDEX);
+            ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
+            ItemStack chargeStack = entity.getItem(CHARGE_INV_INDEX, 0);
             
             // Scan surroundings for mana fonts once a second
             if (entity.fontSiphonTime % 20 == 0) {
@@ -302,7 +309,7 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new ManaBatteryMenu(pContainerId, pPlayerInventory, this, this.chargerData);
+        return new ManaBatteryMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this, this.chargerData);
     }
 
     @Override
@@ -363,11 +370,11 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     }
 
     @Override
-    public void setItem(int index, ItemStack stack) {
-        ItemStack slotStack = this.getItem(index);
-        super.setItem(index, stack);
+    public void setItem(int invIndex, int slotIndex, ItemStack stack) {
+        ItemStack slotStack = this.getItem(invIndex, slotIndex);
+        super.setItem(invIndex, slotIndex, stack);
         boolean flag = !stack.isEmpty() && ItemStack.isSameItemSameTags(stack, slotStack);
-        if (index == 0 && !flag) {
+        if (invIndex == INPUT_INV_INDEX && !flag) {
             this.chargeTimeTotal = this.getChargeTimeTotal();
             this.chargeTime = 0;
             this.setChanged();
@@ -375,34 +382,56 @@ public class ManaBatteryTileEntity extends TileInventoryPM implements MenuProvid
     }
 
     @Override
-    public boolean canPlaceItem(int slotIndex, ItemStack stack) {
-        if (slotIndex == INPUT_SLOT_INDEX) {
-            return stack.getItem() instanceof EssenceItem || stack.getItem() instanceof IWand;
-        } else if (slotIndex == CHARGE_SLOT_INDEX) {
-            return stack.getItem() instanceof IWand;
-        } else {
-            return false;
-        }
+    protected int getInventoryCount() {
+        return 2;
     }
 
     @Override
-    public int[] getSlotsForFace(Direction side) {
-        if (side == Direction.UP) {
-            return SLOTS_FOR_UP;
-        } else if (side == Direction.DOWN) {
-            return SLOTS_FOR_DOWN;
-        } else {
-            return SLOTS_FOR_SIDES;
-        }
+    protected int getInventorySize(int inventoryIndex) {
+        return switch (inventoryIndex) {
+            case INPUT_INV_INDEX, CHARGE_INV_INDEX -> 1;
+            default -> 0;
+        };
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) {
-        return this.canPlaceItem(index, itemStackIn);
+    protected OptionalInt getInventoryIndexForFace(Direction face) {
+        return switch (face) {
+            case UP -> OptionalInt.of(INPUT_INV_INDEX);
+            case DOWN -> OptionalInt.empty();
+            default -> OptionalInt.of(CHARGE_INV_INDEX);
+        };
     }
 
     @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return true;
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+        
+        // Create input handler
+        retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return (stack.getItem() instanceof IWand) || (stack.getItem() instanceof EssenceItem);
+            }
+        });
+        
+        // Create charge handler
+        retVal.set(CHARGE_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(CHARGE_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent();
+            }
+        });
+
+        return retVal;
+    }
+
+    @Override
+    protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
+        // Slot 0 was the input item stack
+        this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
+        
+        // Slot 1 was the charge item stack
+        this.setItem(CHARGE_INV_INDEX, 0, legacyItems.get(1));
     }
 }

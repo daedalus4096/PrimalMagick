@@ -1,15 +1,16 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
@@ -20,33 +21,30 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class EssenceTransmuterMenu extends AbstractContainerMenu {
-    protected final Container transmuterInv;
+public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<EssenceTransmuterTileEntity> {
     protected final ContainerData transmuterData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
 
-    public EssenceTransmuterMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(11), new SimpleContainerData(4));
+    public EssenceTransmuterMenu(int id, Inventory playerInv, BlockPos tilePos) {
+        this(id, playerInv, tilePos, null, new SimpleContainerData(4));
     }
     
-    public EssenceTransmuterMenu(int id, Inventory playerInv, Container transmuterInv, ContainerData transmuterData) {
-        super(MenuTypesPM.ESSENCE_TRANSMUTER.get(), id);
-        checkContainerSize(transmuterInv, 11);
+    public EssenceTransmuterMenu(int id, Inventory playerInv, BlockPos tilePos, EssenceTransmuterTileEntity transmuter, ContainerData transmuterData) {
+        super(MenuTypesPM.ESSENCE_TRANSMUTER.get(), id, EssenceTransmuterTileEntity.class, playerInv.player.level(), tilePos, transmuter);
         checkContainerDataCount(transmuterData, 4);
-        this.transmuterInv = transmuterInv;
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.transmuterInv, 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new GenericResultSlot(playerInv.player, this.transmuterInv, i + 1, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
+            this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), i, 98 + ((i % 3) * 18), 17 + ((i / 3) * 18)));
         }
         
         // Slot 10: wand input
-        this.wandSlot = this.addSlot(new WandSlot(this.transmuterInv, 10, 8, 62, false));
+        this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 0, 8, 62, false));
         
         // Slots 11-37: player backpack
         for (int i = 0; i < 3; i++) {
@@ -61,11 +59,6 @@ public class EssenceTransmuterMenu extends AbstractContainerMenu {
         }
 
         this.addDataSlots(this.transmuterData);
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return this.transmuterInv.stillValid(player);
     }
 
     @Override

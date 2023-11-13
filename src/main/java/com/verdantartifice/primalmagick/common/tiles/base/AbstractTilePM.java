@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -26,10 +27,10 @@ import net.minecraft.world.level.block.state.BlockState;
  * 
  * @author Daedalus4096
  */
-public class TilePM extends BlockEntity {
+public abstract class AbstractTilePM extends BlockEntity {
     protected static final Logger LOGGER = LogManager.getLogger();
     
-    public TilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public AbstractTilePM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
     
@@ -39,12 +40,14 @@ public class TilePM extends BlockEntity {
      * @param rerender whether to re-render the tile's block
      */
     public void syncTile(boolean rerender) {
-        BlockState state = this.level.getBlockState(this.worldPosition);
-        int flags = Block.UPDATE_CLIENTS;
-        if (!rerender) {
-            flags |= Block.UPDATE_INVISIBLE;
+        if (this.hasLevel()) {
+            BlockState state = this.level.getBlockState(this.worldPosition);
+            int flags = Block.UPDATE_CLIENTS;
+            if (!rerender) {
+                flags |= Block.UPDATE_INVISIBLE;
+            }
+            this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
         }
-        this.level.sendBlockUpdated(this.worldPosition, state, state, flags);
     }
     
     @Override
@@ -113,5 +116,13 @@ public class TilePM extends BlockEntity {
      */
     public void onMessageFromServer(CompoundTag nbt) {
         // Do nothing by default
+    }
+
+    public boolean stillValid(Player player) {
+        if (this.level.getBlockEntity(this.worldPosition) != this) {
+            return false;
+        } else {
+            return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
+        }
     }
 }

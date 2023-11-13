@@ -1,48 +1,44 @@
 package com.verdantartifice.primalmagick.common.menus;
 
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class EssenceCaskMenu extends AbstractContainerMenu {
-    protected final Container caskInv;
+/**
+ * Server data container for the essence cask GUI.
+ * 
+ * @author Daedalus4096
+ */
+public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskTileEntity> {
     protected final ContainerData caskData;
-    protected final Level level;
     protected final Slot inputSlot;
-    protected final BlockPos tilePos;
 
     public EssenceCaskMenu(int id, Inventory playerInv, BlockPos pos) {
-        this(id, playerInv, new SimpleContainer(1), new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS), pos);
+        this(id, playerInv, pos, null, new SimpleContainerData(EssenceCaskTileEntity.NUM_SLOTS));
     }
     
-    public EssenceCaskMenu(int id, Inventory playerInv, Container caskInv, ContainerData caskData, BlockPos pos) {
-        super(MenuTypesPM.ESSENCE_CASK.get(), id);
-        checkContainerSize(caskInv, 1);
+    public EssenceCaskMenu(int id, Inventory playerInv, BlockPos pos, EssenceCaskTileEntity cask, ContainerData caskData) {
+        super(MenuTypesPM.ESSENCE_CASK.get(), id, EssenceCaskTileEntity.class, playerInv.player.level(), pos, cask);
         checkContainerDataCount(caskData, EssenceCaskTileEntity.NUM_SLOTS);
-        this.caskInv = caskInv;
         this.caskData = caskData;
-        this.level = playerInv.player.level();
-        this.tilePos = pos;
         
-        this.caskInv.startOpen(playerInv.player);
+        this.tile.startOpen(playerInv.player);
         
         // Slot 0: Cask input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.caskInv, 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
         
         // Slots 1-27: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -105,26 +101,13 @@ public class EssenceCaskMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
-        return this.caskInv.stillValid(player);
-    }
-
-    @Override
     public void removed(Player player) {
         super.removed(player);
-        this.caskInv.stopOpen(player);
+        this.tile.stopOpen(player);
     }
 
     public int getEssenceCount(int index) {
         return this.caskData.get(index);
-    }
-    
-    public BlockPos getTilePos() {
-        return this.tilePos;
-    }
-    
-    public Container getContainer() {
-        return this.caskInv;
     }
     
     public int getTotalEssenceCount() {

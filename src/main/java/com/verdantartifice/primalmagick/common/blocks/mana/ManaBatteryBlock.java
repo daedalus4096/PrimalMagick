@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -73,7 +72,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                NetworkHooks.openScreen(serverPlayer, batteryTile);
+                NetworkHooks.openScreen(serverPlayer, batteryTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -92,7 +91,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
         if (pState.getBlock() != pNewState.getBlock()) {
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                Containers.dropContents(pLevel, pPos, batteryTile);
+                batteryTile.dropContents(pLevel, pPos);
                 pLevel.updateNeighbourForOutputSignal(pPos, this);
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);

@@ -11,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -100,7 +99,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
             // Open the GUI for the essence transmuter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                NetworkHooks.openScreen(serverPlayer, transmuterTile);
+                NetworkHooks.openScreen(serverPlayer, transmuterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
@@ -113,7 +112,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
         if (state.getBlock() != newState.getBlock()) {
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                Containers.dropContents(worldIn, pos, transmuterTile);
+                transmuterTile.dropContents(worldIn, pos);
                 worldIn.updateNeighbourForOutputSignal(pos, this);
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);

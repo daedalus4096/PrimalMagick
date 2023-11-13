@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.WandInventory;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
+import com.verdantartifice.primalmagick.common.menus.base.AbstractTileMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.SpellcraftingResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
@@ -24,8 +25,11 @@ import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.payloads.ISpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.ISpellVehicle;
+import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
+import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -34,8 +38,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
@@ -49,13 +51,12 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarMenu extends AbstractContainerMenu {
+public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
     protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("spellcrafting");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);
     protected final ResultContainer resultInv = new ResultContainer();
-    protected final ContainerLevelAccess worldPosCallable;
     protected final Player player;
     protected final Slot wandSlot;
     protected final Slot scrollSlot;
@@ -68,13 +69,12 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
     protected SpellPackage spellPackageCache = null;
     protected Map<SpellComponent, Map<String, Integer>> spellPropertyCache = new HashMap<>();
 
-    public SpellcraftingAltarMenu(int windowId, Inventory inv) {
-        this(windowId, inv, ContainerLevelAccess.NULL);
+    public SpellcraftingAltarMenu(int windowId, Inventory inv, BlockPos tilePos) {
+        this(windowId, inv, tilePos, null);
     }
 
-    public SpellcraftingAltarMenu(int windowId, Inventory inv, ContainerLevelAccess callable) {
-        super(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), windowId);
-        this.worldPosCallable = callable;
+    public SpellcraftingAltarMenu(int windowId, Inventory inv, BlockPos tilePos, SpellcraftingAltarTileEntity altar) {
+        super(MenuTypesPM.SPELLCRAFTING_ALTAR.get(), windowId, SpellcraftingAltarTileEntity.class, inv.player.level(), tilePos, altar);
         this.player = inv.player;
         for (SpellComponent comp : SpellComponent.values()) {
             this.spellPropertyCache.put(comp, new HashMap<>());
@@ -84,10 +84,10 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         this.addSlot(new SpellcraftingResultSlot(this.player, this.scrollInv, this.wandInv, this::getManaCosts, this.resultInv, 0, 206, 8));
         
         // Slot 1: Input wand
-        this.wandSlot = this.addSlot(new WandSlot(this.wandInv, 0, 8, 8, false));
+        this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(this.scrollInv, 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
+        this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {
@@ -104,7 +104,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return stillValid(this.worldPosCallable, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
+        return stillValid(this.containerLevelAccess, playerIn, BlocksPM.SPELLCRAFTING_ALTAR.get());
     }
 
     public SourceList getManaCosts() {
@@ -168,7 +168,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         // Clear the spell package cache and trigger a regeneration of the output item on change
         this.spellName = name;
         this.spellPackageCache = null;
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -195,7 +195,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         index = Mth.clamp(index, 0, SpellManager.getVehicleTypes(this.player).size() - 1);
         this.spellVehicleTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -222,7 +222,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         index = Mth.clamp(index, 0, SpellManager.getPayloadTypes(this.player).size() - 1);
         this.spellPayloadTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -249,7 +249,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellPrimaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -276,7 +276,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         index = Mth.clamp(index, 0, SpellManager.getModTypes(this.player).size() - 1);
         this.spellSecondaryModTypeIndex = index;
         this.spellPackageCache = null;
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
@@ -300,7 +300,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
         if (property != null) {
             property.setValue(value);
             this.spellPropertyCache.get(component).put(name, value);
-            this.worldPosCallable.execute((world, blockPos) -> {
+            this.containerLevelAccess.execute((world, blockPos) -> {
                 this.slotChangedCraftingGrid(world);
             });
         }
@@ -385,7 +385,7 @@ public class SpellcraftingAltarMenu extends AbstractContainerMenu {
     @Override
     public void slotsChanged(Container inventoryIn) {
         super.slotsChanged(inventoryIn);
-        this.worldPosCallable.execute((world, blockPos) -> {
+        this.containerLevelAccess.execute((world, blockPos) -> {
             this.slotChangedCraftingGrid(world);
         });
     }
