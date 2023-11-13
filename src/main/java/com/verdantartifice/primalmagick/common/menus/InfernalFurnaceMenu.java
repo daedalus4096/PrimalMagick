@@ -140,7 +140,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
 
     @Override
     public int getSize() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -150,7 +150,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
 
     @Override
     public boolean shouldMoveToInventory(int index) {
-        return index != this.getResultSlotIndex();
+        return true;
     }
 
     @Override
