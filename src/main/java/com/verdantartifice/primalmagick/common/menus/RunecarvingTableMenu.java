@@ -66,13 +66,13 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
 
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, pos, null);
-        this.tile.addListener(Direction.UP, this);
     }
     
     public RunecarvingTableMenu(int windowId, Inventory inv, BlockPos pos, RunecarvingTableTileEntity table) {
         super(MenuTypesPM.RUNECARVING_TABLE.get(), windowId, RunecarvingTableTileEntity.class, inv.player.level(), pos, table);
         this.player = inv.player;
         this.tileInvWrapper = this.getTileInventory(Direction.UP) instanceof IItemHandlerModifiable modifiable ? Optional.of(new RecipeWrapper(modifiable)) : Optional.empty();
+        this.tile.addListener(Direction.UP, this);
         
         // Slot 0: input slabs
         this.inputSlabSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
@@ -86,13 +86,8 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {
             @Override
             public void onTake(Player thePlayer, ItemStack stack) {
-//                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(0, 1, false);
-//                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(1, 1, false);
-                RunecarvingTableMenu.this.tile.deductMaterials();
-//                RunecarvingTableMenu.LOGGER.info("Deducting slab");
-//                RunecarvingTableMenu.this.inputSlabSlot.remove(1);
-//                RunecarvingTableMenu.LOGGER.info("Deducting lapis");
-//                RunecarvingTableMenu.this.inputLapisSlot.remove(1);
+                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(0, 1, false);
+                RunecarvingTableMenu.this.getTileInventory(Direction.UP).extractItem(1, 1, false);
                 RunecarvingTableMenu.this.updateRecipeResultSlot(thePlayer.level().registryAccess());
                 
                 stack.getItem().onCraftedBy(stack, thePlayer.level(), thePlayer);
@@ -161,7 +156,6 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     
     @Override
     public void containerChanged(Container inventoryIn) {
-        LOGGER.info("Running RunecarvingTableMenu#containerChanged");
         ItemStack slabStack = this.inputSlabSlot.getItem();
         ItemStack lapisStack = this.inputLapisSlot.getItem();
         if (slabStack.getItem() != this.slabInput.getItem() || lapisStack.getItem() != this.lapisInput.getItem()) {
@@ -176,21 +170,16 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.recipes.clear();
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
-        if (!slabStack.isEmpty() && !lapisStack.isEmpty()) {
-            this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
-                    .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
-                    .collect(Collectors.toList());
-        }
+        this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
+                .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
+                .collect(Collectors.toList());
     }
     
     protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
-        LOGGER.info("RunecarvingTableMenu calling updateRecipeResultSlot");
         if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
             IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
-            LOGGER.info("Setting result slot to {}", recipe.getId().toString());
             this.outputSlot.set(recipe.assemble(this.tileInvWrapper.get(), registryAccess));
         } else {
-            LOGGER.info("Clearing result slot");
             this.outputSlot.set(ItemStack.EMPTY);
         }
         this.broadcastChanges();

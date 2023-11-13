@@ -15,6 +15,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a ritual lectern tile entity.  Holds the lectern's inventory.
@@ -103,8 +104,8 @@ public class RitualLecternTileEntity extends AbstractTileSidedInventoryPM implem
     }
 
     @Override
-    protected NonNullList<ItemStackHandlerPM> createHandlers() {
-        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create output handler
         retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {

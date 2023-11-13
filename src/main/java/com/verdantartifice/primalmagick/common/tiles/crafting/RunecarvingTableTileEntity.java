@@ -19,6 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.items.ItemStackHandler;
 
 /**
  * Definition of a runecarving table tile entity.  Holds the crafting materials for the corresponding block.
@@ -43,24 +44,6 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
         return Component.translatable(this.getBlockState().getBlock().getDescriptionId());
     }
     
-    public void deductMaterials() {
-        // TODO
-        LOGGER.info("Deducting runecarving materials");
-        ItemStack slabStack = this.inventories.get(INPUT_INV_INDEX).get(0);
-        if (!slabStack.isEmpty()) {
-            slabStack.shrink(1);
-        }
-        ItemStack lapisStack = this.inventories.get(INPUT_INV_INDEX).get(1);
-        if (!lapisStack.isEmpty()) {
-            lapisStack.shrink(1);
-        }
-        
-        // Only sync with client once so that both materials are deducted atomically
-        LOGGER.info("Syncing tile as part of material deduction");
-        this.syncTile(false);
-        this.setChanged();
-    }
-
     @Override
     protected int getInventoryCount() {
         return 1;
@@ -83,8 +66,8 @@ public class RunecarvingTableTileEntity extends AbstractTileSidedInventoryPM imp
     }
 
     @Override
-    protected NonNullList<ItemStackHandlerPM> createHandlers() {
-        NonNullList<ItemStackHandlerPM> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
+    protected NonNullList<ItemStackHandler> createHandlers() {
+        NonNullList<ItemStackHandler> retVal = NonNullList.withSize(this.getInventoryCount(), new ItemStackHandlerPM(this));
         
         // Create input handler
         retVal.set(INPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(INPUT_INV_INDEX), this) {
