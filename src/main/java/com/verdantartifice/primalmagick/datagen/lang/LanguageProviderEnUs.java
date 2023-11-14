@@ -1593,6 +1593,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").build();
         this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
         this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").build();
+        this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").build();
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
