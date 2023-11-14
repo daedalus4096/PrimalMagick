@@ -14,6 +14,7 @@ v4.0.8
 * Fixed a bug with the Infernal Furnace which could delete existing output upon selecting a recipe book entry
 * Fixed client crashes when an item's affinities cannot be calculated due to cyclic recipe chains
 * Fixed a client crash when picking up the Dream Journal in some modpacks
+* Fixed a bug causing upcoming research entries to be hidden in the Grimoire when they shouldn't be
 
 v4.0.7
 ------
