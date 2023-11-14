@@ -13,6 +13,7 @@ v4.0.8
 * Made Essence Furnace compatible with both hoppers and pipes
 * Fixed a bug with the Infernal Furnace which could delete existing output upon selecting a recipe book entry
 * Fixed client crashes when an item's affinities cannot be calculated due to cyclic recipe chains
+* Fixed a client crash when picking up the Dream Journal in some modpacks
 
 v4.0.7
 ------

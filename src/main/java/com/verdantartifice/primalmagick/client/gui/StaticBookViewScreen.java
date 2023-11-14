@@ -10,12 +10,12 @@ import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
-import com.verdantartifice.primalmagick.client.books.BookHelper;
-import com.verdantartifice.primalmagick.client.books.BookView;
+import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -44,9 +44,9 @@ public class StaticBookViewScreen extends Screen {
     public static final int PAGE_INDICATOR_TEXT_Y_OFFSET = 16;
     public static final int PAGE_TEXT_X_OFFSET = 36;
     public static final int PAGE_TEXT_Y_OFFSET = 30;
-    protected static final int TEXT_WIDTH = BookHelper.TEXT_WIDTH;
-    protected static final int TEXT_HEIGHT = BookHelper.TEXT_HEIGHT;
-    protected static final int LINE_HEIGHT = BookHelper.LINE_HEIGHT;
+    protected static final int TEXT_WIDTH = ClientBookHelper.TEXT_WIDTH;
+    protected static final int TEXT_HEIGHT = ClientBookHelper.TEXT_HEIGHT;
+    protected static final int LINE_HEIGHT = ClientBookHelper.LINE_HEIGHT;
     protected static final int IMAGE_WIDTH = 192;
     protected static final int IMAGE_HEIGHT = 192;
 
@@ -124,7 +124,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     private int getNumPages() {
-        return BookHelper.getNumPages(this.bookView, this.font);
+        return ClientBookHelper.getNumPages(this.bookView, this.font);
     }
     
     protected void pageBack() {
@@ -185,7 +185,7 @@ public class StaticBookViewScreen extends Screen {
         guiGraphics.drawString(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
 
         // Draw the text lines for the current page
-        List<FormattedCharSequence> page = BookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
+        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
         for (int index = 0; index < page.size(); index++) {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);

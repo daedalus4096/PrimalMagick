@@ -8,8 +8,11 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.books.Lexicon;
+import com.verdantartifice.primalmagick.common.books.LexiconManager;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -65,6 +68,7 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
 
         // Invalidate book helper caches
         BookHelper.invalidate();
+        ClientBookHelper.invalidate();
 
         LOGGER.info("Loaded {} lexicons", LexiconManager.getAllLexicons().size());
     }
@@ -73,7 +77,7 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
         LOGGER.info("Updating lexicons with tagged data");
         BookLanguagesPM.LANGUAGES.get().getValues().stream().forEach(lang -> {
             Lexicon lexicon = new Lexicon();
-            BooksPM.BOOKS.get().tags().getTag(lang.booksTag()).forEach(bookDef -> lexicon.addWords(BookHelper.getUnencodedWords(bookDef)));
+            BooksPM.BOOKS.get().tags().getTag(lang.booksTag()).forEach(bookDef -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookDef)));
             LexiconManager.setLexicon(lang.languageId(), lexicon);
         });
     }

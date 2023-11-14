@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.books;
+package com.verdantartifice.primalmagick.common.books;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

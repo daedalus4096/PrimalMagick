@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.client.books;
+package com.verdantartifice.primalmagick.common.books;
 
 import java.util.Collection;
 import java.util.Comparator;

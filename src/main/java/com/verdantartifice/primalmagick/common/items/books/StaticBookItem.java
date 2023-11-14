@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-import com.verdantartifice.primalmagick.client.books.BookHelper;
-import com.verdantartifice.primalmagick.client.books.BookView;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
+import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -204,7 +204,7 @@ public class StaticBookItem extends Item {
         }
         pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
-        if (hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
+        if (pLevel.isClientSide && hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
             Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
             BookDefinition def = getBookDefinition(pStack);
             OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
