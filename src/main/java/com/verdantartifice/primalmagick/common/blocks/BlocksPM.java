@@ -42,6 +42,7 @@ import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemSourceB
 import com.verdantartifice.primalmagick.common.blocks.minerals.GemBudType;
 import com.verdantartifice.primalmagick.common.blocks.minerals.QuartzOreBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.SkyglassBlock;
@@ -405,6 +406,7 @@ public class BlocksPM {
     public static final RegistryObject<Block> IGNYX_BLOCK = BLOCKS.register("ignyx_block", () -> new Block(Block.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(5.0F, 6.0F)));
     public static final RegistryObject<Block> SALT_BLOCK = BLOCKS.register("salt_block", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 3.0F)));
     public static final RegistryObject<TreefolkSproutBlock> TREEFOLK_SPROUT = BLOCKS.register("treefolk_sprout", () -> new TreefolkSproutBlock(Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
+    public static final RegistryObject<EnderwardBlock> ENDERWARD = BLOCKS.register("enderward", EnderwardBlock::new);
 
     // Helper functions for block properties
     protected static boolean never(BlockState state, BlockGetter reader, BlockPos pos) {
