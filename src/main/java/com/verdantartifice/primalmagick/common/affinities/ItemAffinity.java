@@ -61,7 +61,7 @@ public class ItemAffinity extends AbstractAffinity {
             return CompletableFuture.completedFuture(this.setValues);
         } else if (this.baseEntryId != null) {
             return AffinityManager.getInstance().getOrGenerateItemAffinityAsync(this.baseEntryId, recipeManager, registryAccess, history).thenCompose(baseEntry -> {
-                return baseEntry.getTotalAsync(recipeManager, registryAccess, history);
+                return baseEntry == null ? CompletableFuture.completedFuture(SourceList.EMPTY) : baseEntry.getTotalAsync(recipeManager, registryAccess, history);
             }).thenApply(baseSources -> {
                 if (this.addValues != null) {
                     baseSources = baseSources.add(this.addValues);

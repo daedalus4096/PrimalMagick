@@ -12,6 +12,7 @@ v4.0.8
 * Made devices which were previously compatible with hoppers also compatible with modded pipes, etc
 * Made Essence Furnace compatible with both hoppers and pipes
 * Fixed a bug with the Infernal Furnace which could delete existing output upon selecting a recipe book entry
+* Fixed client crashes when an item's affinities cannot be calculated due to cyclic recipe chains
 
 v4.0.7
 ------

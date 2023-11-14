@@ -273,8 +273,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
                 return entityAffinity.getTotalAsync(null, registryAccess, new ArrayList<>()).thenApply(sources -> this.capAffinities(sources, MAX_AFFINITY)).join();
             }
         }, Util.backgroundExecutor()).exceptionally(e -> {
-            LOGGER.error("Failed to generate affinity values for entity", e);
-            return null;
+            LOGGER.error("Failed to generate affinity values for entity " + type.toString(), e);
+            return SourceList.EMPTY;
         });
     }
     
@@ -319,8 +319,8 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
         return CompletableFuture.supplyAsync(() -> {
             return this.getAffinityValuesAsync(stack, level.getRecipeManager(), level.registryAccess(), new ArrayList<>()).join();
         }, Util.backgroundExecutor()).exceptionally(e -> {
-            LOGGER.error("Failed to generate affinity values for item stack", e);
-            return null;
+            LOGGER.error("Failed to generate affinity values for item stack " + stack.toString(), e);
+            return SourceList.EMPTY;
         });
     }
     
