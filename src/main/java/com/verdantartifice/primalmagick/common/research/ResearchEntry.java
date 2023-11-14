@@ -258,7 +258,7 @@ public class ResearchEntry {
     
     public boolean isUpcoming(@Nonnull Player player) {
         for (SimpleResearchKey parentKey : this.getParentResearch().getKeys()) {
-            if (ResearchManager.isOpaque(parentKey)) {
+            if (ResearchManager.isOpaque(parentKey) && !parentKey.isKnownBy(player)) {
                 return false;
             } else {
                 ResearchEntry parent = ResearchEntries.getEntry(parentKey);
