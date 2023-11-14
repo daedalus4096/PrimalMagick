@@ -156,6 +156,9 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         var wardableArmorTag = this.tag(ItemTagsPM.WARDABLE_ARMOR);
         WardingModuleItem.getApplicableItems().forEach(itemSupplier -> wardableArmorTag.add(itemSupplier.get()));
         
+        this.tag(ItemTagsPM.FOOD_BAKED_POTATO).add(Items.BAKED_POTATO, ItemsPM.SALTED_BAKED_POTATO.get());
+        this.tag(ItemTagsPM.FOOD_COOKED_BEEF).add(Items.COOKED_BEEF, ItemsPM.SALTED_COOKED_BEEF.get());
+        
         this.tag(ItemTagsPM.ROBES).addTag(ItemTagsPM.ROBES_HELMETS).addTag(ItemTagsPM.ROBES_CHESTPLATES).addTag(ItemTagsPM.ROBES_LEGGINGS).addTag(ItemTagsPM.ROBES_BOOTS);
         this.tag(ItemTagsPM.ROBES_HELMETS).add(ItemsPM.IMBUED_WOOL_HEAD.get(), ItemsPM.SPELLCLOTH_HEAD.get(), ItemsPM.HEXWEAVE_HEAD.get(), ItemsPM.SAINTSWOOL_HEAD.get());
         this.tag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.IMBUED_WOOL_CHEST.get(), ItemsPM.SPELLCLOTH_CHEST.get(), ItemsPM.HEXWEAVE_CHEST.get(), ItemsPM.SAINTSWOOL_CHEST.get());

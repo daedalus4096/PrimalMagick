@@ -44,6 +44,9 @@ public class ItemTagsPM {
     
     public static final TagKey<Item> WARDABLE_ARMOR = tag("wardable_armor");
     
+    public static final TagKey<Item> FOOD_BAKED_POTATO = tag("food/baked_potato");
+    public static final TagKey<Item> FOOD_COOKED_BEEF = tag("food/cooked_beef");
+    
     public static final TagKey<Item> ROBES = tag("robes");
     public static final TagKey<Item> ROBES_HELMETS = tag("robes/helmets");
     public static final TagKey<Item> ROBES_CHESTPLATES = tag("robes/chestplates");

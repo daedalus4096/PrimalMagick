@@ -24,17 +24,17 @@
       "weight": 2.0
     },
     {
-      "type": "item",
+      "type": "tag",
       "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:cooked_beef",
+      "name": "primalmagick:food/cooked_beef",
+      "quantity": 1,
       "weight": 1.0
     },
     {
-      "type": "item",
+      "type": "tag",
       "consumed": true,
-      "match_nbt": false,
-      "stack": "minecraft:baked_potato",
+      "name": "primalmagick:food/baked_potato",
+      "quantity": 1,
       "weight": 1.0
     },
     {

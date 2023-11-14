@@ -15,6 +15,7 @@ v4.0.8
 * Fixed client crashes when an item's affinities cannot be calculated due to cyclic recipe chains
 * Fixed a client crash when picking up the Dream Journal in some modpacks
 * Fixed a bug causing upcoming research entries to be hidden in the Grimoire when they shouldn't be
+* Allowed salted steak and potato variants to be used as materials in research projects
 
 v4.0.7
 ------
