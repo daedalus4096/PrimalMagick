@@ -42,8 +42,8 @@ public class EnderwardBlock extends Block {
     private static final Map<Direction, VoxelShape> AABBS = new EnumMap<>(ImmutableMap.<Direction, VoxelShape>builder()
             .put(Direction.NORTH, BASE_AABB)
             .put(Direction.SOUTH, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.CLOCKWISE_180))
-            .put(Direction.WEST, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90))
-            .put(Direction.EAST, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.CLOCKWISE_90))
+            .put(Direction.WEST, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.CLOCKWISE_90))
+            .put(Direction.EAST, VoxelShapeUtils.rotate(BASE_AABB, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90))
             .build());
 
     public EnderwardBlock() {
