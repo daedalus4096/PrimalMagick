@@ -634,6 +634,7 @@
   "event.primalmagick.dream_vision_talisman.drained": "You awake from a vision-filled dream and record your newfound observations.",
   "event.primalmagick.dream_vision_talisman.set_active": "The talisman will now absorb experience.",
   "event.primalmagick.dream_vision_talisman.set_inactive": "The talisman will no longer absorb experience.",
+  "event.primalmagick.enderward.block": "An unseen force blocks your teleportation",
   "event.primalmagick.env_earth": "You have visited the dark depths of the earth and feel enlightened.",
   "event.primalmagick.env_moon": "You have seen the moonlight filtered through the forest trees and feel enlightened.",
   "event.primalmagick.env_sea": "You have beheld the vast blue of the ocean and feel enlightened.",

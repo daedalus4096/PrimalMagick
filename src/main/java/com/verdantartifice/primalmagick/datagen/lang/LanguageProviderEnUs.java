@@ -1547,6 +1547,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
         this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
         this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
+        this.event("enderward").sub("block").output("An unseen force blocks your teleportation").end().build();
         
         this.tip("thanks").name("Thanks for playing Primal Magick! You rock!").build();
         this.tip("discord").name("Looking to connect with fellow Primal Magick players? Join our Discord! You can find an invite link on either CurseForge or Modrinth.").build();

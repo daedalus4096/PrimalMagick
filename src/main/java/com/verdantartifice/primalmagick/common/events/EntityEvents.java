@@ -1,6 +1,8 @@
 package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
@@ -12,6 +14,9 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.DamageTypeTagsPM;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
@@ -48,6 +54,9 @@ public class EntityEvents {
         if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
         }
+        
+        // Check to see if an enderward blocks the teleport
+        checkEnderward(event, event.getEntityLiving());
     }
     
     @SubscribeEvent
@@ -56,6 +65,9 @@ public class EntityEvents {
         if (event.isCancelable() && event.getPlayer().hasEffect(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
         }
+        
+        // Check to see if an enderward blocks the teleport
+        checkEnderward(event, event.getPlayer());
     }
     
     @SubscribeEvent
@@ -63,6 +75,22 @@ public class EntityEvents {
         // Prevent the teleport if the teleporter is afflicted with Enderlock
         if (event.isCancelable() && event.getEntityLiving().hasEffect(EffectsPM.ENDERLOCK.get())) {
             event.setCanceled(true);
+        }
+        
+        // Check to see if an enderward blocks the teleport
+        checkEnderward(event, event.getEntityLiving());
+    }
+    
+    private static void checkEnderward(EntityTeleportEvent event, LivingEntity entity) {
+        if (event.isCancelable() && !event.isCanceled()) {
+            double edgeLength = 2D * EnderwardBlock.EFFECT_RADIUS;
+            AABB searchAABB = AABB.ofSize(event.getTarget(), edgeLength, edgeLength, edgeLength);
+            if (BlockPos.betweenClosedStream(searchAABB).anyMatch(pos -> entity.level().getBlockState(pos).is(BlocksPM.ENDERWARD.get()))) {
+                event.setCanceled(true);
+                if (entity instanceof Player player) {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.enderward.block").withStyle(ChatFormatting.RED), true);
+                }
+            }
         }
     }
     
