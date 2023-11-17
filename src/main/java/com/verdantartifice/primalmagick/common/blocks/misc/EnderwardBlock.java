@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.util.VoxelShapeUtils;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -108,7 +109,18 @@ public class EnderwardBlock extends Block {
 
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
-        // TODO Auto-generated method stub
-        super.animateTick(pState, pLevel, pPos, pRandom);
+        Direction stepDir = pState.getValue(FACING).getOpposite();
+        for (int i = 0; i < 3; i++) {
+            int j = pRandom.nextInt(2) * 2 - 1;
+            int k = pRandom.nextInt(2) * 2 - 1;
+            int l = pRandom.nextInt(2) * 2 - 1;
+            double d0 = (double)pPos.getX() + 0.5D + (stepDir.getStepX() * 0.4375D) + 0.125D * (double)j;
+            double d1 = (double)pPos.getY() + 0.5D + 0.125D * (double)k;
+            double d2 = (double)pPos.getZ() + 0.5D + (stepDir.getStepZ() * 0.4375D) + 0.125D * (double)l;
+            double d3 = (double)(pRandom.nextFloat() * (float)j);
+            double d4 = (double)(pRandom.nextFloat() * (float)k);
+            double d5 = (double)(pRandom.nextFloat() * (float)l);
+            pLevel.addParticle(ParticleTypes.PORTAL, d0, d1, d2, d3, d4, d5);
+        }
     }
 }
