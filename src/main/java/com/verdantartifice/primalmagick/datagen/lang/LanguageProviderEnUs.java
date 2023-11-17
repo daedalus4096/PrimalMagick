@@ -348,6 +348,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK).name("Damaged Budding Quartz Block").build();
         this.block(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK).name("Chipped Budding Quartz Block").build();
         this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
+        this.block(BlocksPM.ENDERWARD).name("Enderward").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -1546,6 +1547,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.event("attunement").sub("suppression_loss").output("Your attunement to the %1$s has been restored").end().build();
         this.event("linguistics_item").sub("success").output("Your linguistics knowledge has improved").end().build();
         this.event("linguistics_item").sub("fluent").output("You are already fluent in this language").end().build();
+        this.event("enderward").sub("block").output("An unseen force blocks your teleportation").end().build();
         
         this.tip("thanks").name("Thanks for playing Primal Magick! You rock!").build();
         this.tip("discord").name("Looking to connect with fellow Primal Magick players? Join our Discord! You can find an invite link on either CurseForge or Modrinth.").build();
@@ -2997,6 +2999,16 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("Being able to customize my armor with trim is really cool.  It's so stylish!  But what if it was functional, too?")
                 .add("I've discovered how to make my own armor trim based on the runes I've been learning about.  This runic armor trim, in addition to looking snazzy, will modify the mana discount that I get from the robes I wear.<BR>First I need to make the template, the recipe for which is included here.  Then I combine it with a piece of magickal cloth armor and a source rune at a smithing table as normal.  The modified armor will grant me double the normal mana discount for the source signified by the rune I used, at the cost of no longer providing any discount for any other sources.<BR>I should consider carefully before applying this trim, as once added it cannot be removed, only replaced with a different trim.")
+                .end()
+            .build();
+        this.researchEntry("ENDERWARD").name("Enderward")
+            .stages()
+                .add("I am so tired of Endermen.  They teleport into my territory, tear up the ground, and attack me if I so much as look at them funny.  There has to be a way to keep them out.")
+                .add("Finally, some peace.  I've devised a runic ward that will block the sort of teleportation that Endermen use, keeping them at bay.<BR>This Enderward will prevent anyone from teleporting into a space within sixteen blocks of where it's hung.  This includes the use of Ender Pearls, Chorus Fruit, and Endermen's natural abilities.  It won't necessarily prevent them from teleporting out, which is fine, but it will stop them from getting in.")
+                .end()
+            .addenda()
+                .add("After some experimentation, I've determined that the Enderward does NOT block the use of Recall Stones, as it's based on different principles.  This is fine by me, as it will let me get home quickly.")
+                .add("The Enderward will also block teleportation sorcery, as it uses the same principles as Ender teleportation.  Inconvenient for me, but I can live with it.")
                 .end()
             .build();
         this.researchEntry("BASIC_RITUAL").name("Basic Ritual Magick")

@@ -428,6 +428,7 @@ public class ItemsPM {
     public static final RegistryObject<BurnableBlockItem> IGNYX_BLOCK = registerSupplier("ignyx_block", () -> new BurnableBlockItem(BlocksPM.IGNYX_BLOCK.get(), 128000, new Item.Properties()));
     public static final RegistryObject<BlockItem> SALT_BLOCK = registerSupplier("salt_block", () -> new BlockItem(BlocksPM.SALT_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<ItemNameBlockItem> TREEFOLK_SEED = registerSupplier("treefolk_seed", () -> new ItemNameBlockItem(BlocksPM.TREEFOLK_SPROUT.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> ENDERWARD = registerSupplier("enderward", () -> new BlockItem(BlocksPM.ENDERWARD.get(), new Item.Properties().stacksTo(16)));
     
     // Register salted food items
     public static final RegistryObject<Item> SALTED_BAKED_POTATO = registerSupplier("salted_baked_potato", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.72F).build())));

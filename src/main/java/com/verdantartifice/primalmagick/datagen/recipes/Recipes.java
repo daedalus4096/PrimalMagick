@@ -597,6 +597,17 @@ public class Recipes extends RecipeProvider {
             .define('#', ItemsPM.LORE_TABLET_FRAGMENT.get())
             .unlockedBy("has_lore_tablet_fragment", has(ItemsPM.LORE_TABLET_FRAGMENT.get()))
             .save(consumer);
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ENDERWARD.get())
+            .patternLine("SKS")
+            .patternLine("KRK")
+            .patternLine("PKP")
+            .key('S', Tags.Items.STRING)
+            .key('K', Tags.Items.RODS_WOODEN)
+            .key('R', ItemsPM.RUNE_DISPEL.get())
+            .key('P', Tags.Items.ENDER_PEARLS)
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("ENDERWARD")))
+            .manaCost(SourceList.EMPTY.add(Source.VOID, 50))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

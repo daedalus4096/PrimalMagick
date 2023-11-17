@@ -291,7 +291,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.IGNYX_BLOCK.get());
         this.simpleCubeBlockWithItem(BlocksPM.SALT_BLOCK.get());
         this.crossBlockWithItem(BlocksPM.TREEFOLK_SPROUT.get(), this.key(ItemsPM.TREEFOLK_SEED.get()));
-        
+        this.horizontalExistingBlockWithBasicItem(BlocksPM.ENDERWARD.get());
+
         // TODO Genreate arcanometer blockstates
     }
 
@@ -603,6 +604,19 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void horizontalBlockWithItem(Block block, Function<BlockState, ModelFile> modelFunc) {
         this.horizontalBlock(block, modelFunc);
         this.simpleBlockItem(block, modelFunc.apply(block.defaultBlockState()));
+    }
+    
+    private void horizontalExistingBlockWithBasicItem(Block block) {
+        this.horizontalExistingBlockWithBasicItem(block, this.defaultModel(block));
+    }
+    
+    private void horizontalExistingBlockWithBasicItem(Block block, ResourceLocation modelFile) {
+        this.horizontalBlockWithBasicItem(block, this.models().getExistingFile(modelFile));
+    }
+    
+    private void horizontalBlockWithBasicItem(Block block, ModelFile model) {
+        this.horizontalBlock(block, model);
+        this.itemModels().basicItem(block.asItem());
     }
     
     private void horizontalExistingBlockWithRightHandAdjustmentsAndItem(Block block) {

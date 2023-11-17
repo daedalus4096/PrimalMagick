@@ -128,6 +128,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> ESSENCE_CASK_HEAVENLY = register("essence_cask_heavenly", () -> new ResearchName("ESSENCE_CASK_HEAVENLY"));
     public static final RegistryObject<ResearchName> WAND_GLAMOUR_TABLE = register("wand_glamour_table", () -> new ResearchName("WAND_GLAMOUR_TABLE"));
     public static final RegistryObject<ResearchName> ATTUNEMENT_SHACKLES = register("attunement_shackles", () -> new ResearchName("ATTUNEMENT_SHACKLES"));
+    public static final RegistryObject<ResearchName> ENDERWARD = register("enderward", () -> new ResearchName("ENDERWARD"));
     
     // Register Alchemy research
     public static final RegistryObject<ResearchName> BASIC_ALCHEMY = register("basic_alchemy", () -> new ResearchName("BASIC_ALCHEMY"));

@@ -1,0 +1,45 @@
+{
+  "addenda": [
+    {
+      "required_research": [
+        "RECALL_STONE"
+      ],
+      "text": "research.primalmagick.enderward.text.addenda.1"
+    },
+    {
+      "required_research": [
+        "SPELL_PAYLOAD_TELEPORT"
+      ],
+      "text": "research.primalmagick.enderward.text.addenda.2"
+    }
+  ],
+  "discipline": "RUNEWORKING",
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:enderward"
+  },
+  "key": "ENDERWARD",
+  "name": "research.primalmagick.enderward.title",
+  "parents": [
+    "MASTER_RUNEWORKING",
+    "RUNE_DISPEL",
+    "t_discover_void"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "THEORY;2"
+      ],
+      "text": "research.primalmagick.enderward.text.stage.1"
+    },
+    {
+      "attunements": {
+        "void": 3
+      },
+      "recipes": [
+        "primalmagick:enderward"
+      ],
+      "text": "research.primalmagick.enderward.text.stage.2"
+    }
+  ]
+}
