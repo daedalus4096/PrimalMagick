@@ -69,6 +69,7 @@
   "block.primalmagick.damaged_budding_quartz_block": "Damaged Budding Quartz Block",
   "block.primalmagick.dissolution_chamber": "溶解室",
   "block.primalmagick.emberflower": "Emberflower",
+  "block.primalmagick.enderward": "Enderward",
   "block.primalmagick.entropy_sink": "熵洗池",
   "block.primalmagick.essence_cask_enchanted": "附魔精华桶",
   "block.primalmagick.essence_cask_forbidden": "禁忌精华桶",
@@ -633,6 +634,7 @@
   "event.primalmagick.dream_vision_talisman.drained": "你从充满幻象的梦中醒来，记录下你的新发现。",
   "event.primalmagick.dream_vision_talisman.set_active": "护身符现在会吸收经验。",
   "event.primalmagick.dream_vision_talisman.set_inactive": "护身符不再吸收经验。",
+  "event.primalmagick.enderward.block": "An unseen force blocks your teleportation",
   "event.primalmagick.env_earth": "你参观了大地的黑暗深处，感到豁然开朗。",
   "event.primalmagick.env_moon": "你看到月光透过树林，感到豁然开朗。",
   "event.primalmagick.env_sea": "你看到了浩瀚的蓝色海洋，感到豁然开朗。",
@@ -1529,6 +1531,11 @@
   "research.primalmagick.emberflower.text.stage.1": "The Hydromelon was a great success, so I'd like to keep at it.  This time perhaps I can infuse some plant life with Infernal magick.  The Nether is home to a surprising array of plant life, but I'd like something with a little more touch of home in it.",
   "research.primalmagick.emberflower.text.stage.2": "Very good.  Infusing a sunflower with Infernal essence has created a very hot plant.  Its flower burns and smokes, giving off modest light, and can be ground down into valuable blaze powder.  It can even survive when planted in soul sand or soul soil, though I question what absorbing nutrients from such material would do to the plant.",
   "research.primalmagick.emberflower.title": "Emberflower",
+  "research.primalmagick.enderward.text.addenda.1": "After some experimentation, I've determined that the Enderward does NOT block the use of Recall Stones, as it's based on different principles.  This is fine by me, as it will let me get home quickly.",
+  "research.primalmagick.enderward.text.addenda.2": "The Enderward will also block teleportation sorcery, as it uses the same principles as Ender teleportation.  Inconvenient for me, but I can live with it.",
+  "research.primalmagick.enderward.text.stage.1": "I am so tired of Endermen.  They teleport into my territory, tear up the ground, and attack me if I so much as look at them funny.  There has to be a way to keep them out.",
+  "research.primalmagick.enderward.text.stage.2": "Finally, some peace.  I've devised a runic ward that will block the sort of teleportation that Endermen use, keeping them at bay.<BR>This Enderward will prevent anyone from teleporting into a space within sixteen blocks of where it's hung.  This includes the use of Ender Pearls, Chorus Fruit, and Endermen's natural abilities.  It won't necessarily prevent them from teleporting out, which is fine, but it will stop them from getting in.",
+  "research.primalmagick.enderward.title": "Enderward",
   "research.primalmagick.entropy_sink.text.stage.1": "仪式魔法很危险，我明白了。即使是最简单的仪式也会迅速动摇。也许我可以设计一个装置让它们更安全？",
   "research.primalmagick.entropy_sink.text.stage.2": "我设计了一种机器能捕获环境中游离的神奇能量并将其转化为无害的光。这台机器的功能就像一个普通的仪式道具，但它可以用于任何仪式。要激活它，我必须在仪式需要的时候在装置上使用一个魔法精华单位;如果我在那之前做了，机器就没有作用了。一旦激活，它将产生一股稳定的爆发，并允许仪式进行，更有效的精华产生崇高的稳定收益。与大多数道具不同，熵吸收不需要手动重置。然而，使用后需要一分钟冷却，在此之前不能在仪式中使用。",
   "research.primalmagick.entropy_sink.title": "熵洗池",
@@ -2673,5 +2680,6 @@
   "written_language.primalmagick.moon": "Ancient Lunarese",
   "written_language.primalmagick.sea": "Ancient Hydroglyphic",
   "written_language.primalmagick.sky": "Ancient Aeroform",
-  "written_language.primalmagick.sun": "Ancient Sunskrit"
+  "written_language.primalmagick.sun": "Ancient Sunskrit",
+  "written_language.primalmagick.trade": "Ancient Trade Jargon"
 }
