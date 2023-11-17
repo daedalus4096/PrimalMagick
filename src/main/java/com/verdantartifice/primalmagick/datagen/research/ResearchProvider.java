@@ -1001,6 +1001,12 @@ public class ResearchProvider implements DataProvider {
                     .requiredItemStack(ItemsPM.RUNE_SKY.get()).requiredItemStack(ItemsPM.RUNE_SUN.get()).requiredItemStack(ItemsPM.RUNE_MOON.get()).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).build())
             .build(consumer);
+        ResearchEntryBuilder.entry("ENDERWARD", discipline).icon(ItemsPM.ENDERWARD.get()).parent("MASTER_RUNEWORKING").parent("RUNE_DISPEL").parent(Source.VOID.getDiscoverKey())
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
+            .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 3).recipe(ItemsPM.ENDERWARD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("RECALL_STONE").build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("SPELL_PAYLOAD_TELEPORT").build())
+            .build(consumer);
     }
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {
