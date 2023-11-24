@@ -399,7 +399,7 @@ public class GrimoireScreen extends Screen {
             // Append each entry from the list to the page, breaking where necessary
             properties.page.addContent(entry);
             properties.heightRemaining -= 12;
-            if (properties.heightRemaining < 12 && !properties.page.getContents().isEmpty()) {
+            if (properties.heightRemaining <= 12 && !properties.page.getContents().isEmpty()) {
                 properties.heightRemaining = 156;
                 this.pages.add(properties.page);
                 properties.page = new DisciplinePage(discipline);

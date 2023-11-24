@@ -2,6 +2,7 @@ v4.0.9
 ------
 * Fixed a client crash when picking up the Dream Journal in some modpacks
 * Fixed a potential server crash in instances of malformed theorycrafting data packs
+* Fixed a bug where research entries in the Grimoire would sometimes overrun available space
 
 v4.0.8
 ------
