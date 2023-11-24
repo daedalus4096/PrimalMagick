@@ -1,3 +1,7 @@
+v4.0.9
+------
+* Fixed a client crash when picking up the Dream Journal in some modpacks
+
 v4.0.8
 ------
 * Fixed a bug where Incense Braziers could be chosen for activation twice in a row during a ritual

@@ -36,7 +36,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
@@ -178,7 +177,7 @@ public class StaticBookItem extends Item {
     }
     
     private static BookView makeBookView(ItemStack pStack) {
-        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+        Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
         ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, getBookId(pStack).get());
         BookLanguage language = getBookLanguage(pStack);
         int comprehension = Math.max(player == null ? 0 : LinguisticsManager.getComprehension(player, language), getTranslatedComprehension(pStack).orElse(0));
@@ -187,7 +186,7 @@ public class StaticBookItem extends Item {
 
     @Override
     public Component getName(ItemStack pStack) {
-        if (getBookId(pStack).isPresent()) {
+        if (FMLEnvironment.dist.isClient() && getBookId(pStack).isPresent()) {
             return BookHelper.getTitleText(makeBookView(pStack));
         } else {
             return super.getName(pStack);
@@ -198,14 +197,14 @@ public class StaticBookItem extends Item {
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         BookLanguage lang = getBookLanguage(pStack);
-        if (hasAuthor(pStack)) {
+        if (pLevel.isClientSide && hasAuthor(pStack)) {
             Component authorText = BookHelper.getAuthorText(makeBookView(pStack), getAuthor(pStack));
             pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
         if (pLevel.isClientSide && hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
-            Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+            Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
             BookDefinition def = getBookDefinition(pStack);
             OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
             int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, lang));
