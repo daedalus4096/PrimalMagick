@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -147,6 +150,8 @@ public class ProjectTemplate {
     }
     
     public static class Serializer implements IProjectTemplateSerializer {
+        private static final Logger LOGGER = LogManager.getLogger();
+        
         @Override
         public ProjectTemplate read(ResourceLocation templateId, JsonObject json) {
             String keyStr = json.getAsJsonPrimitive("key").getAsString();
@@ -206,7 +211,12 @@ public class ProjectTemplate {
                 JsonObject weightObj = json.getAsJsonObject("weight_function");
                 String functionType = weightObj.getAsJsonPrimitive("type").getAsString();
                 IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
-                weightOpt = Optional.ofNullable(serializer.read(templateId, weightObj));
+                if (serializer != null) {
+                    weightOpt = Optional.ofNullable(serializer.read(templateId, weightObj));
+                } else {
+                    LOGGER.warn("Unknown weight function type {} in JSON for project template {}", functionType, templateId.toString());
+                    weightOpt = Optional.empty();
+                }
             }
             
             return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
@@ -242,7 +252,12 @@ public class ProjectTemplate {
             if (buf.readBoolean()) {
                 String functionType = buf.readUtf();
                 IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);
-                weightOpt = Optional.ofNullable(serializer.fromNetwork(buf));
+                if (serializer != null) {
+                    weightOpt = Optional.ofNullable(serializer.fromNetwork(buf));
+                } else {
+                    LOGGER.warn("Unknown weight function type {} from network for project template {}", functionType, key.toString());
+                    weightOpt = Optional.empty();
+                }
             } else {
                 weightOpt = Optional.empty();
             }
