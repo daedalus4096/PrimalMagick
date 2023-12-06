@@ -1,0 +1,59 @@
+{
+  "entries": [
+    {
+      "style": {
+        "color": "#20702B"
+      },
+      "translationKey": "source.primalmagick.earth"
+    },
+    {
+      "style": {
+        "color": "#117899"
+      },
+      "translationKey": "source.primalmagick.sea"
+    },
+    {
+      "style": {
+        "color": "#87CEEB"
+      },
+      "translationKey": "source.primalmagick.sky"
+    },
+    {
+      "style": {
+        "color": "#F9C81C"
+      },
+      "translationKey": "source.primalmagick.sun"
+    },
+    {
+      "style": {
+        "color": "#D1DDE3"
+      },
+      "translationKey": "source.primalmagick.moon"
+    },
+    {
+      "style": {
+        "color": "#8A0303"
+      },
+      "translationKey": "source.primalmagick.blood"
+    },
+    {
+      "style": {
+        "color": "#ED2F1B"
+      },
+      "translationKey": "source.primalmagick.infernal"
+    },
+    {
+      "style": {
+        "color": "#551A8B"
+      },
+      "translationKey": "source.primalmagick.void"
+    },
+    {
+      "style": {
+        "color": "#EEEBD9",
+        "strikethrough": true
+      },
+      "translationKey": "source.primalmagick.hallowed"
+    }
+  ]
+}

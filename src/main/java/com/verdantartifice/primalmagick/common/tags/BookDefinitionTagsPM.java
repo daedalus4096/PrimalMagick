@@ -21,6 +21,8 @@ public class BookDefinitionTagsPM {
     public static final TagKey<BookDefinition> SUN_BOOKS = create("in_language/sun");
     public static final TagKey<BookDefinition> MOON_BOOKS = create("in_language/moon");
     public static final TagKey<BookDefinition> TRADE_BOOKS = create("in_language/trade");
+    public static final TagKey<BookDefinition> FORBIDDEN_BOOKS = create("in_language/forbidden");
+    public static final TagKey<BookDefinition> HALLOWED_BOOKS = create("in_language/hallowed");
     
     private static TagKey<BookDefinition> create(String name) {
         return BooksPM.createTagKey(name);

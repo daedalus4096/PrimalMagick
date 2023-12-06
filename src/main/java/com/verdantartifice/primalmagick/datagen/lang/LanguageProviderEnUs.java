@@ -1600,6 +1600,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
         this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").build();
         this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").build();
+        this.language(BookLanguagesPM.FORBIDDEN).name("Ancient Cultist Cant").build();
+        this.language(BookLanguagesPM.HALLOWED).name("Ancient High Speech").build();
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
