@@ -40,6 +40,15 @@ public class GenericResultSlot extends SlotItemHandler {
     }
     
     @Override
+    public void onQuickCraft(ItemStack oldStackIn, ItemStack newStackIn) {
+        // Restore functionality occluded by SlotItemHandler
+        int delta = newStackIn.getCount() - oldStackIn.getCount();
+        if (delta > 0) {
+            this.onQuickCraft(newStackIn, delta);
+        }
+    }
+
+    @Override
     protected void onQuickCraft(ItemStack stack, int amount) {
         this.removeCount += amount;
         this.checkTakeAchievements(stack);
