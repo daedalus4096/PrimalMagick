@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_sun_expert"
+      ],
       "required_item": [
         "tag:primalmagick:sunwood_logs",
         "tag:forge:sandstone"

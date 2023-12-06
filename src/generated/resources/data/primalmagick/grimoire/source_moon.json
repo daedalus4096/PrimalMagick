@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_moon_expert"
+      ],
       "required_item": [
         "tag:primalmagick:moonwood_logs",
         "tag:forge:mushrooms"

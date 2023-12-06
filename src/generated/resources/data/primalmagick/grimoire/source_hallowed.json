@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_hallowed_expert"
+      ],
       "required_item": [
         "tag:forge:nether_stars"
       ],

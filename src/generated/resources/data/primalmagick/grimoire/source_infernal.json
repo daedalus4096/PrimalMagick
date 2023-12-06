@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_infernal_expert"
+      ],
       "required_item": [
         "tag:forge:rods/blaze",
         "minecraft:soul_sand"

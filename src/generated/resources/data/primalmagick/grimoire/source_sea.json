@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_sea_expert"
+      ],
       "required_item": [
         "tag:primalmagick:coral_blocks",
         "minecraft:ice"

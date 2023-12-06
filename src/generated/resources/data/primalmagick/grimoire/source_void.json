@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_void_expert"
+      ],
       "required_item": [
         "tag:forge:end_stones",
         "tag:forge:ender_pearls"

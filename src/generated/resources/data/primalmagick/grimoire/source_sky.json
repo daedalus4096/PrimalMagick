@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_sky_expert"
+      ],
       "required_item": [
         "minecraft:bamboo",
         "tag:minecraft:leaves"

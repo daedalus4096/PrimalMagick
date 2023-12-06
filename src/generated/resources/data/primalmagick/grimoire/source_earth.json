@@ -12,6 +12,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_earth_expert"
+      ],
       "required_item": [
         "tag:forge:obsidian",
         "tag:forge:gems/diamond"

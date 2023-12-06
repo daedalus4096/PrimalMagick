@@ -117,7 +117,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.OBSIDIAN).requiredItemTag(Tags.Items.GEMS_DIAMOND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_earth").requiredResearch("m_env_earth").requiredResearch("t_mana_spent_earth_expert")
+                    .requiredResearch("m_found_shrine_earth").requiredResearch("m_env_earth").requiredResearch("t_mana_spent_earth_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.EARTH, 5).build())
             .build(consumer);
@@ -125,7 +125,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredItemStack(Items.ICE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sea").requiredResearch("m_env_sea").requiredResearch("t_mana_spent_sea_expert")
+                    .requiredResearch("m_found_shrine_sea").requiredResearch("m_env_sea").requiredResearch("t_mana_spent_sea_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SEA, 5).build())
             .build(consumer);
@@ -133,7 +133,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemStack(Items.BAMBOO).requiredItemTag(ItemTags.LEAVES)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sky").requiredResearch("m_env_sky").requiredResearch("t_mana_spent_sky_expert")
+                    .requiredResearch("m_found_shrine_sky").requiredResearch("m_env_sky").requiredResearch("t_mana_spent_sky_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SKY, 5).build())
             .build(consumer);
@@ -141,7 +141,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.SUNWOOD_LOGS).requiredItemTag(Tags.Items.SANDSTONE)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sun").requiredResearch("m_env_sun").requiredResearch("t_mana_spent_sun_expert")
+                    .requiredResearch("m_found_shrine_sun").requiredResearch("m_env_sun").requiredResearch("t_mana_spent_sun_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.SUN, 5).build())
             .build(consumer);
@@ -149,7 +149,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.MOONWOOD_LOGS).requiredItemTag(Tags.Items.MUSHROOMS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_moon").requiredResearch("m_env_moon").requiredResearch("t_mana_spent_moon_expert")
+                    .requiredResearch("m_found_shrine_moon").requiredResearch("m_env_moon").requiredResearch("t_mana_spent_moon_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.MOON, 5).build())
             .build(consumer);
@@ -160,7 +160,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.BONES).requiredItemStack(ItemsPM.BLOODY_FLESH.get())
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_blood_expert")
+                    .requiredResearch("t_mana_spent_blood_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.BLOOD, 5).build())
             .build(consumer);
@@ -168,7 +168,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.RODS_BLAZE).requiredItemStack(Items.SOUL_SAND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_infernal_expert")
+                    .requiredResearch("t_mana_spent_infernal_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.INFERNAL, 5).build())
             .build(consumer);
@@ -176,7 +176,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.END_STONES).requiredItemTag(Tags.Items.ENDER_PEARLS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_void_expert")
+                    .requiredResearch("t_mana_spent_void_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.VOID, 5).build())
             .build(consumer);
@@ -187,7 +187,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.NETHER_STARS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_hallowed_expert")
+                    .requiredResearch("t_mana_spent_hallowed_expert", true)
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Source.HALLOWED, 5).build())
             .build(consumer);

@@ -13,6 +13,9 @@
   ],
   "stages": [
     {
+      "hints": [
+        "t_mana_spent_blood_expert"
+      ],
       "required_item": [
         "tag:forge:bones",
         "primalmagick:bloody_flesh"
