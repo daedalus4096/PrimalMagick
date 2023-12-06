@@ -5,6 +5,7 @@ v4.0.9
 * Fixed a bug where research entries in the Grimoire would sometimes overrun available space
 * Fixed a bug where shift-clicking device output would not record the item as having been crafted
 * Added hints to some ambiguous research requirements
+* Made the Arcane Workbench show final modified mana costs
 
 v4.0.8
 ------

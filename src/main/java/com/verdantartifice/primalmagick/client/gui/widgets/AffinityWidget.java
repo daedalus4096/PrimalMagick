@@ -1,6 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.verdantartifice.primalmagick.common.sources.Source;
+
+import net.minecraft.network.chat.Component;
 
 /**
  * Display widget for showing how much of a given source is in an item's affinities.
@@ -12,8 +17,8 @@ public class AffinityWidget extends AbstractSourceWidget {
         super(source, amount, xIn, yIn);
     }
 
-    @Override
-    protected String getTooltipTranslationKey() {
-        return "label.primalmagick.analysis.affinity";
+    protected List<Component> getTooltipLines() {
+        Component labelText = Component.translatable("label.primalmagick.analysis.affinity", this.amount, this.getSourceText());
+        return Collections.singletonList(labelText);
     }
 }

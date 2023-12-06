@@ -211,7 +211,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     }
     
     protected boolean wandContainsEnoughMana(Player player, IArcaneRecipe recipe) {
-        ItemStack stack = this.wandInv.getItem(0);
+        ItemStack stack = this.getWand();
         if (stack == null || stack.isEmpty() || !(stack.getItem() instanceof IWand)) {
             return false;
         }
@@ -268,5 +268,13 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
     @Override
     public NonNullList<Slot> getSlots() {
         return this.slots;
+    }
+    
+    public ItemStack getWand() {
+        return this.wandInv.getItem(0);
+    }
+    
+    public Player getPlayer() {
+        return this.player;
     }
 }

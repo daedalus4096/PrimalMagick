@@ -972,6 +972,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
+        this.label("crafting").sub("mana").sub("base").output("Base cost: %1$d").end().build();
+        this.label("crafting").sub("mana").sub("bonus").output("Efficiency bonus: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("penalty").output("Efficiency penalty: %1$s").end().build();
+        this.label("crafting").sub("mana").sub("modified").output("Total %2$s mana: %1$s").end().build();
         this.label("crafting").sub("mana_cost_header").output("Mana cost:").end().build();
         this.label("crafting").sub("no_mana").output("No mana cost").end().build();
         this.label("crafting").sub("research_header").output("Required research:").end().build();

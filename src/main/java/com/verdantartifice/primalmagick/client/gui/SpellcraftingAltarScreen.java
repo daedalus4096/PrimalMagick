@@ -120,7 +120,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         SourceList manaCost = this.menu.getSpellPackage().getManaCost();
         if (manaCost != null && !manaCost.isEmpty()) {
             Source source = manaCost.getSourcesSorted().get(0);
-            this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8)));
+            this.localWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, manaCost.getAmount(source), this.leftPos + 28, this.topPos + 8, this.menu::getWand, this.menu.getPlayer())));
         }
         
         this.texts.put(new Vec3i(x, y + 2, 106), Component.translatable("spells.primalmagick.vehicle.header"));

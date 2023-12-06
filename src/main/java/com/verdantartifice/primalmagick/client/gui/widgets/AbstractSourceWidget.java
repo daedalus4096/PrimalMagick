@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
 import java.awt.Color;
-import java.util.Collections;
+import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -57,28 +57,18 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
         
         // Draw the amount string
         guiGraphics.pose().pushPose();
-        Component amountText = Component.literal(Integer.toString(this.amount));
+        Component amountText = Component.literal(this.getAmountString());
         int width = mc.font.width(amountText.getString());
         guiGraphics.pose().translate(this.getX() + 16 - width / 2, this.getY() + 12, 5.0F);
         guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
-        guiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
+        guiGraphics.drawString(mc.font, amountText, 0, 0, this.getAmountStringColor());
         guiGraphics.pose().popPose();
         
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {
-            Component sourceText = discovered ? 
-                    this.source.getNameText() :
-                    Component.translatable(Source.getUnknownTranslationKey());
-            Component labelText = Component.translatable(this.getTooltipTranslationKey(), this.amount, sourceText);
-            GuiUtils.renderCustomTooltip(guiGraphics, Collections.singletonList(labelText), this.getX(), this.getY());
+            GuiUtils.renderCustomTooltip(guiGraphics, this.getTooltipLines(), p_renderButton_1_, p_renderButton_2_);
         }
     }
-    
-    /**
-     * Get the translation key for this widget's tooltip
-     * @return the translation key for this widget's tooltip
-     */
-    protected abstract String getTooltipTranslationKey();
     
     @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_) {
@@ -89,4 +79,22 @@ public abstract class AbstractSourceWidget extends AbstractWidget {
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
     }
+    
+    protected String getAmountString() {
+        return Integer.toString(this.getAmount());
+    }
+    
+    protected int getAmountStringColor() {
+        return Color.WHITE.getRGB();
+    }
+    
+    protected Component getSourceText() {
+        Minecraft mc = Minecraft.getInstance();
+        boolean discovered = this.source.isDiscovered(mc.player);
+        return discovered ? 
+                this.source.getNameText() :
+                Component.translatable(Source.getUnknownTranslationKey());
+    }
+    
+    protected abstract List<Component> getTooltipLines();
 }

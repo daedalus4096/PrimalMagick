@@ -111,7 +111,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         int x = this.leftPos + 1 + (this.getXSize() - widgetSetWidth) / 2;
         int y = this.topPos + 10;
         for (Source source : Source.SORTED_SOURCES) {
-            this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y)));
+            this.costWidgets.add(this.addRenderableWidget(new ManaCostWidget(source, 0, x, y, this.menu::getWand, this.menu.getPlayer())));
             x += 18;
         }
     }
