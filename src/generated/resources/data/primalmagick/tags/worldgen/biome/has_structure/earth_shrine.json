@@ -1,9 +1,7 @@
 {
   "values": [
+    "#minecraft:is_savanna",
     "minecraft:plains",
-    "minecraft:sunflower_plains",
-    "minecraft:savanna",
-    "minecraft:savanna_plateau",
-    "minecraft:windswept_savanna"
+    "minecraft:sunflower_plains"
   ]
 }

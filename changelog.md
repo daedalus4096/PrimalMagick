@@ -6,6 +6,7 @@ v4.0.9
 * Fixed a bug where shift-clicking device output would not record the item as having been crafted
 * Added hints to some ambiguous research requirements
 * Made the Arcane Workbench show final modified mana costs
+* Added Bamboo Jungles to the list of biomes in which Sky shrines can spawn
 
 v4.0.8
 ------

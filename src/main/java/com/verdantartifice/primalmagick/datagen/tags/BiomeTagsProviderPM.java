@@ -33,9 +33,9 @@ public class BiomeTagsProviderPM extends IntrinsicHolderTagsProvider<Biome> {
     @Override
     protected void addTags(HolderLookup.Provider lookupProvider) {
         // Create custom tags
-        this.tag(BiomeTagsPM.HAS_EARTH_SHRINE).add(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS, Biomes.SAVANNA, Biomes.SAVANNA_PLATEAU, Biomes.WINDSWEPT_SAVANNA);
+        this.tag(BiomeTagsPM.HAS_EARTH_SHRINE).addTag(BiomeTags.IS_SAVANNA).add(Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
         this.tag(BiomeTagsPM.HAS_SEA_SHRINE).addTag(BiomeTags.IS_RIVER).addTag(BiomeTags.IS_BEACH).add(Biomes.SWAMP, Biomes.SNOWY_PLAINS, Biomes.ICE_SPIKES);
-        this.tag(BiomeTagsPM.HAS_SKY_SHRINE).addTag(BiomeTags.IS_HILL).addTag(BiomeTags.IS_MOUNTAIN);
+        this.tag(BiomeTagsPM.HAS_SKY_SHRINE).addTag(BiomeTags.IS_HILL).addTag(BiomeTags.IS_MOUNTAIN).add(Biomes.BAMBOO_JUNGLE);
         this.tag(BiomeTagsPM.HAS_SUN_SHRINE).addTag(BiomeTags.IS_BADLANDS).add(Biomes.DESERT);
         this.tag(BiomeTagsPM.HAS_MOON_SHRINE).addTag(BiomeTags.IS_FOREST);
         
