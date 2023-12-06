@@ -306,7 +306,9 @@ public class PrimalMagickCommand {
             knowledge.clearResearch();
             ResearchManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.research.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -322,7 +324,9 @@ public class PrimalMagickCommand {
             // Grant the specified research to the target player, along with all its parents
             ResearchManager.forceGrantWithAllParents(target, key);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant", target.getName(), key.toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant.target", source.getTextName(), key.toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant.target", source.getTextName(), key.toString()));
+            }
         }
         return 0;
     }
@@ -338,7 +342,9 @@ public class PrimalMagickCommand {
             // Grant the parents of the specified research to the target player, but not the research itself
             ResearchManager.forceGrantParentsOnly(target, key);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_parents", target.getName(), key.toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_parents.target", source.getTextName(), key.toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_parents.target", source.getTextName(), key.toString()));
+            }
         }
         return 0;
     }
@@ -351,7 +357,9 @@ public class PrimalMagickCommand {
             // Grant all research entries to the target player
             ResearchManager.forceGrantAll(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.grant_all", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_all.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.grant_all.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -367,7 +375,9 @@ public class PrimalMagickCommand {
             // Revoke the specified research from the target player, along with all its children
             ResearchManager.forceRevokeWithAllChildren(target, key);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.revoke", target.getName(), key.toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.research.revoke.target", source.getTextName(), key.toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.revoke.target", source.getTextName(), key.toString()));
+            }
         }
         return 0;
     }
@@ -410,7 +420,9 @@ public class PrimalMagickCommand {
             if (ResearchManager.progressResearch(target, key)) {
                 int newStage = knowledge.getResearchStage(key);
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.success", key.toString(), target.getName(), oldStage, newStage), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.research.progress.target", key.toString(), source.getTextName(), oldStage, newStage));
+                }
             } else {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.research.progress.failure", key.toString(), oldStage), true);
             }
@@ -426,7 +438,9 @@ public class PrimalMagickCommand {
             // Remove all observations and theories from the target player
             knowledge.clearKnowledge();
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -458,7 +472,9 @@ public class PrimalMagickCommand {
             // Add the given number of points to the given knowledge type for the target player
             if (ResearchManager.addKnowledge(target, type, points)) {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.add.success", points, type.name(), target.getName()), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.add.target", points, type.name(), source.getTextName()));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.knowledge.add.target", points, type.name(), source.getTextName()));
+                }
             } else {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.knowledge.add.failure", target.getName()), true);
             }
@@ -477,7 +493,9 @@ public class PrimalMagickCommand {
         // Scan the given item for the target player and grant them its research
         if (ResearchManager.setScanned(stack, target)) {
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant.success", target.getName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant.target", source.getTextName(), ForgeRegistries.ITEMS.getKey(item.getItem()).toString()));
+            }
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.scans.grant.failure", target.getName()));            
         }
@@ -488,7 +506,9 @@ public class PrimalMagickCommand {
         // Scan all possible items for the target player and grant them their research
         int count = ResearchManager.setAllScanned(target);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.scans.grant_all", count, target.getName()), true);
-        target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant_all.target", count, source.getTextName()));
+        if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+            target.sendSystemMessage(Component.translatable("commands.primalmagick.scans.grant_all.target", count, source.getTextName()));
+        }
         return 0;
     }
 
@@ -515,7 +535,9 @@ public class PrimalMagickCommand {
         }
         final int totalUnlocked = unlocked;
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock_all", target.getName(), totalUnlocked), true);
-        target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), totalUnlocked));
+        if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+            target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), totalUnlocked));
+        }
         return 0;
     }
 
@@ -529,7 +551,9 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
         } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()));
+            }
         } else {
             source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.failure", target.getName(), tag.toUpperCase()));
         }
@@ -559,7 +583,9 @@ public class PrimalMagickCommand {
             Component statName = Component.translatable(stat.getTranslationKey());
             Component statValue = StatsManager.getFormattedValue(target, stat);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.set", target.getName(), statName, statValue), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.set.target", source.getTextName(), statName, statValue));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.set.target", source.getTextName(), statName, statValue));
+            }
         }
         return 0;
     }
@@ -573,7 +599,9 @@ public class PrimalMagickCommand {
             stats.clear();
             StatsManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.stats.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.stats.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -588,7 +616,9 @@ public class PrimalMagickCommand {
             AttunementManager.removeAllAttributeModifiers(target);
             AttunementManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -625,10 +655,14 @@ public class PrimalMagickCommand {
             Component typeText = Component.translatable(type.getNameTranslationKey());
             if (type.isCapped() && value > type.getMaximum()) {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.set.success.capped", target.getName(), typeText, sourceText, type.getMaximum(), value), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target.capped", target.getName(), typeText, sourceText, type.getMaximum(), value));
+                }
             } else {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.attunements.set.success", target.getName(), typeText, sourceText, value), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target", target.getName(), typeText, sourceText, value));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.attunements.set.target", target.getName(), typeText, sourceText, value));
+                }
             }
         }
         return 0;
@@ -665,7 +699,6 @@ public class PrimalMagickCommand {
     }
 
     private static int writeSourcelessItemDatapack(CommandSourceStack source, Collection<String> excludeNamespaces) {
-
         Logger LOGGER = LogManager.getLogger();
         ServerPlayer target = source.getPlayer();
         ServerLevel level = source.getLevel();
@@ -683,7 +716,7 @@ public class PrimalMagickCommand {
             return 1;
         }
 
-        try{
+        try {
             File tempFile = File.createTempFile("primalMagickDataPack", ".zip");
             String filePath = tempFile.getAbsolutePath();
 
@@ -699,8 +732,6 @@ public class PrimalMagickCommand {
             LOGGER.atError().withThrowable(e).log("unable to write datapack");
             return 1;
         }
-
-
 
         return 0;
     }
@@ -786,7 +817,9 @@ public class PrimalMagickCommand {
             recipeBook.get().clear();
             ArcaneRecipeBookManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -822,7 +855,9 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.error"));
         } else {
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.sync", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.sync.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.sync.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -836,7 +871,9 @@ public class PrimalMagickCommand {
         } else {
             ArcaneRecipeBookManager.addRecipes(Collections.singletonList(recipe), target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.add", target.getName(), recipe.getId().toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.add.target", source.getTextName(), recipe.getId().toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.add.target", source.getTextName(), recipe.getId().toString()));
+            }
         }
         return 0;
     }
@@ -850,7 +887,9 @@ public class PrimalMagickCommand {
         } else {
             ArcaneRecipeBookManager.removeRecipes(Collections.singletonList(recipe), target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.recipes.remove", target.getName(), recipe.getId().toString()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.getId().toString()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.recipes.remove.target", source.getTextName(), recipe.getId().toString()));
+            }
         }
         return 0;
     }
@@ -896,7 +935,9 @@ public class PrimalMagickCommand {
             linguistics.clear();
             LinguisticsManager.scheduleSync(target);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.reset", target.getName()), true);
-            target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.reset.target", source.getTextName()));
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.reset.target", source.getTextName()));
+            }
         }
         return 0;
     }
@@ -920,10 +961,14 @@ public class PrimalMagickCommand {
             int newValue = LinguisticsManager.getComprehension(target, lang);
             if (value > lang.complexity()) {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success.capped", target.getName(), bookLanguageId, lang.complexity(), newValue), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), bookLanguageId, lang.complexity(), newValue));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target.capped", source.getTextName(), bookLanguageId, lang.complexity(), newValue));
+                }
             } else {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), bookLanguageId, newValue), true);
-                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, newValue));
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, newValue));
+                }
             }
         }
         return 0;
