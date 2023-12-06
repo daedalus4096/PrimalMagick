@@ -7,7 +7,7 @@ v4.0.9
 * Added hints to some ambiguous research requirements
 * Made the Arcane Workbench show final modified mana costs
 * Added Bamboo Jungles to the list of biomes in which Sky shrines can spawn
-* Removed redundant output when executing a player executes a debug command on themselves
+* Removed redundant output when a player executes a debug command on themselves
 
 v4.0.8
 ------
