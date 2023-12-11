@@ -1008,6 +1008,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("attunement_gain").sub("text").output("%1$s: %2$s").end().build();
         this.label("recipe_book").sub("loading").output("Loading...").end().build();
         this.label("experience").sub("points").output("Experience points").end().build();
+        this.label("loot_table").sub("piglin_bartering").sub("desc").output("Random piglin goods").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();

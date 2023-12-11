@@ -171,6 +171,7 @@ public class ProjectProvider implements DataProvider {
         ProjectBuilder.project("apiamancy").aid(Blocks.BEEHIVE).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.SMALL_FLOWERS, true).weight(1).build())
+            .otherReward(ItemRewardBuilder.item(Items.HONEYCOMB, 3).build())
             .build(consumer);
         ProjectBuilder.project("beacon_emanations").aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
@@ -278,6 +279,7 @@ public class ProjectProvider implements DataProvider {
         ProjectBuilder.project("hit_the_books").aid(Blocks.BOOKSHELF).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BOOK, false).weight(1).build())
+            .otherReward(ExperienceRewardBuilder.points(5).build())
             .build(consumer);
         ProjectBuilder.project("magitech_tinkering").rewardMultiplier(0.5D).requiredResearch(QuorumResearchKey.builder(3).add("ARCANOMETER", "CONCOCTING_TINCTURES", "ENTROPY_SINK", "AUTO_CHARGER", "ESSENCE_TRANSMUTER", "DISSOLUTION_CHAMBER", "INFERNAL_FURNACE").build())
             .weightFunction(ProgressiveWeightFunctionBuilder.start(3).modifier("MASTER_MAGITECH", 2).build())
@@ -437,6 +439,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.GOLDEN_SHOVEL, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.GOLDEN_SWORD, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.LIGHT_WEIGHTED_PRESSURE_PLATE, true).weight(1).build())
+            .otherReward(LootTableRewardBuilder.table(new ResourceLocation("gameplay/piglin_bartering"), "label.primalmagick.loot_table.piglin_bartering.desc").build())
             .build(consumer);
         ProjectBuilder.project("portal_detritus").aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
