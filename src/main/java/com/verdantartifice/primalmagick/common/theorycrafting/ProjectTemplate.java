@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.research.IResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
@@ -42,7 +42,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ProjectTemplate {
     protected ResourceLocation key;
     protected List<AbstractProjectMaterial> materialOptions = new ArrayList<>();
-    protected List<IReward> otherRewards = new ArrayList<>();
+    protected List<AbstractReward> otherRewards = new ArrayList<>();
     protected IResearchKey requiredResearch;
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
@@ -50,7 +50,7 @@ public class ProjectTemplate {
     protected List<ResourceLocation> aidBlocks = new ArrayList<>();
     protected Optional<IWeightFunction> weightFunction = Optional.empty();
     
-    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nonnull List<IReward> otherRewards, @Nullable IResearchKey requiredResearch,
+    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nonnull List<AbstractReward> otherRewards, @Nullable IResearchKey requiredResearch,
             @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks,
             @Nonnull Optional<IWeightFunction> weightFunction) {
         this.key = key;
@@ -123,7 +123,7 @@ public class ProjectTemplate {
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
+        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
     }
     
     protected int getRequiredMaterialCount(Player player) {
@@ -210,7 +210,7 @@ public class ProjectTemplate {
                 }
             }
             
-            List<IReward> otherRewards = new ArrayList<>();
+            List<AbstractReward> otherRewards = new ArrayList<>();
             if (json.has("other_rewards")) {
                 JsonArray rewardsArray = json.getAsJsonArray("other_rewards");
                 for (JsonElement rewardElement : rewardsArray) {
@@ -266,7 +266,7 @@ public class ProjectTemplate {
                 }
             }
             
-            List<IReward> rewards = new ArrayList<>();
+            List<AbstractReward> rewards = new ArrayList<>();
             int rewardCount = buf.readVarInt();
             for (int index = 0; index < rewardCount; index++) {
                 String rewardType = buf.readUtf();
@@ -327,7 +327,7 @@ public class ProjectTemplate {
                 material.toNetwork(buf);
             }
             buf.writeVarInt(template.otherRewards.size());
-            for (IReward reward : template.otherRewards) {
+            for (AbstractReward reward : template.otherRewards) {
                 buf.writeUtf(reward.getRewardType());
                 reward.getSerializer().toNetwork(buf, reward);
             }

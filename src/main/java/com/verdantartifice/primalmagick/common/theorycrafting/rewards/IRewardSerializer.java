@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public interface IRewardSerializer<T extends IReward> {
+public interface IRewardSerializer<T extends AbstractReward> {
     /**
      * Read a reward definition from JSON
      */

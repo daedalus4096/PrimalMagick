@@ -7,6 +7,7 @@ import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,11 +23,15 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ItemReward implements IReward {
+public class ItemReward extends AbstractReward {
     public static final String TYPE = "item";
     public static final IRewardSerializer<ItemReward> SERIALIZER = new Serializer();
     
-    private final ItemStack stack;
+    private ItemStack stack;
+    
+    public ItemReward() {
+        this.stack = ItemStack.EMPTY;
+    }
     
     protected ItemReward(@Nonnull ItemStack stack) {
         this.stack = stack.copy();
@@ -63,6 +68,19 @@ public class ItemReward implements IReward {
     @Override
     public IRewardSerializer<ItemReward> getSerializer() {
         return SERIALIZER;
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
+        tag.put("Stack", this.stack.save(new CompoundTag()));
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        super.deserializeNBT(nbt);
+        this.stack = ItemStack.of(nbt.getCompound("Stack"));
     }
 
     public static class Serializer implements IRewardSerializer<ItemReward> {

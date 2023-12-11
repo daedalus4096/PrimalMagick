@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,13 +20,19 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
  * 
  * @author Daedalus4096
  */
-public class LootTableReward implements IReward {
+public class LootTableReward extends AbstractReward {
     public static final String TYPE = "loot_table";
     public static final IRewardSerializer<LootTableReward> SERIALIZER = new Serializer();
 
-    private final ResourceLocation lootTable;
-    private final int pullCount;
-    private final String descTranslationKey;
+    private ResourceLocation lootTable;
+    private int pullCount;
+    private String descTranslationKey;
+    
+    public LootTableReward() {
+        this.lootTable = null;
+        this.pullCount = 0;
+        this.descTranslationKey = "";
+    }
     
     protected LootTableReward(ResourceLocation lootTable, int pullCount, String descTranslationKey) {
         this.lootTable = lootTable;
@@ -74,6 +81,23 @@ public class LootTableReward implements IReward {
     @Override
     public IRewardSerializer<LootTableReward> getSerializer() {
         return SERIALIZER;
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        CompoundTag tag = super.serializeNBT();
+        tag.putString("LootTable", this.lootTable.toString());
+        tag.putInt("PullCount", this.pullCount);
+        tag.putString("DescTranslationKey", this.descTranslationKey);
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        super.deserializeNBT(nbt);
+        this.lootTable = new ResourceLocation(nbt.getString("LootTable"));
+        this.pullCount = nbt.getInt("PullCount");
+        this.descTranslationKey = nbt.getString("DescTranslationKey");
     }
 
     public static class Serializer implements IRewardSerializer<LootTableReward> {
