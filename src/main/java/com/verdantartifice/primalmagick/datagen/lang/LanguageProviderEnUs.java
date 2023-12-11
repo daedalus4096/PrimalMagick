@@ -994,6 +994,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("research_table").sub("aid_header").output("Active research aids:").end().build();
         this.label("research_table").sub("theory_gain_preview").sub("positive").output("+%1$s").end().build();
         this.label("research_table").sub("reward").output("%1$dx %2$s").end().build();
+        this.label("research_table").sub("reward").sub("header").output("Other rewards:").end().build();
         this.label("essence_cask").sub("contents").output("Contents: %1$d / %2$d").end().build();
         this.label("essence_cask").sub("left_click").output("Left-click to withdraw one stack").end().build();
         this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();

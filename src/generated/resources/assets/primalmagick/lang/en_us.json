@@ -1337,6 +1337,7 @@
   "label.primalmagick.research_table.missing_writing_supplies": "Missing writing supplies!",
   "label.primalmagick.research_table.ready": "Ready to begin!",
   "label.primalmagick.research_table.reward": "%1$dx %2$s",
+  "label.primalmagick.research_table.reward.header": "Other rewards:",
   "label.primalmagick.research_table.start": "Start Project",
   "label.primalmagick.research_table.starting": "Starting...",
   "label.primalmagick.research_table.theory_gain_preview.positive": "+%1$s",
