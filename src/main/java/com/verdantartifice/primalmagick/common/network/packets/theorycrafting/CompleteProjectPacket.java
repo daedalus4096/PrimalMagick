@@ -63,6 +63,7 @@ public class CompleteProjectPacket implements IMessageToServer {
                             if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
                                 if (rand.nextDouble() < project.getSuccessChance()) {
                                     ResearchManager.addKnowledge(player, KnowledgeType.THEORY, project.getTheoryPointReward());
+                                    project.getOtherRewards().forEach(reward -> reward.grant(player));
                                     StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
                                     PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
                                 } else {
