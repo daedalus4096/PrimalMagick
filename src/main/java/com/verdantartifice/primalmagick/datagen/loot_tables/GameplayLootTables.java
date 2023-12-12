@@ -22,8 +22,11 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 /**
  * Data provider for all of the mod's gameplay loot tables (e.g. treefolk bartering).
@@ -104,6 +107,32 @@ public class GameplayLootTables implements LootTableSubProvider {
                 .add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(1))
                 .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply(new EnchantRandomlyFunction.Builder().withEnchantment(EnchantmentsPM.VERDANT.get())))
                 .add(LootItem.lootTableItem(Items.BOOK).setWeight(5).apply((new EnchantRandomlyFunction.Builder()).withEnchantment(EnchantmentsPM.BOUNTY.get())))));
+        
+        this.registerLootTable(writer, LootTablesPM.THEORYCRAFTING_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.IRON_CHESTPLATE).setWeight(7))
+                .add(LootItem.lootTableItem(Items.IRON_LEGGINGS).setWeight(9))
+                .add(LootItem.lootTableItem(Items.RABBIT_STEW).setWeight(64))
+                .add(LootItem.lootTableItem(Items.COOKED_PORKCHOP).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(5.0F))))
+                .add(LootItem.lootTableItem(Items.COOKED_CHICKEN).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(8.0F))))
+                .add(LootItem.lootTableItem(Items.MAP).setWeight(9))
+                .add(LootItem.lootTableItem(Items.REDSTONE).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))))
+                .add(LootItem.lootTableItem(Items.BREAD).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(6.0F))))
+                .add(LootItem.lootTableItem(Items.APPLE).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
+                .add(LootItem.lootTableItem(Items.COOKED_COD).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(6.0F))))
+                .add(LootItem.lootTableItem(Items.ARROW).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(16.0F))))
+                .add(LootItem.lootTableItem(Items.FLINT).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(10.0F))))
+                .add(LootItem.lootTableItem(Items.LEATHER_LEGGINGS).setWeight(21))
+                .add(LootItem.lootTableItem(Items.LEATHER_CHESTPLATE).setWeight(9))
+                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(1.0F, 15.0F))))
+                .add(LootItem.lootTableItem(Items.BOOKSHELF).setWeight(7))
+                .add(LootItem.lootTableItem(Items.BRICK).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(10.0F))))
+                .add(LootItem.lootTableItem(Items.CHISELED_STONE_BRICKS).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
+                .add(LootItem.lootTableItem(Items.SHEARS).setWeight(32))
+                .add(LootItem.lootTableItem(Items.WHITE_WOOL).setWeight(64))
+                .add(LootItem.lootTableItem(Items.STONE_AXE).setWeight(64))
+                .add(LootItem.lootTableItem(Items.STONE_SHOVEL).setWeight(64))
+                .add(LootItem.lootTableItem(Items.STONE_PICKAXE).setWeight(64))
+                .add(LootItem.lootTableItem(Items.STONE_SWORD).setWeight(64))));
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
