@@ -18,6 +18,7 @@ import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.StructureTags;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunctio
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
+import net.minecraft.world.level.storage.loot.functions.SetStewEffectFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -162,7 +164,29 @@ public class GameplayLootTables implements LootTableSubProvider {
                 .add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
                 .add(LootItem.lootTableItem(Items.IRON_SHOVEL).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
                 .add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
-                .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))));;
+                .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))));
+        this.registerLootTable(writer, LootTablesPM.THEORYCRAFTING_RICH_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.DIAMOND_LEGGINGS).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.DIAMOND_CHESTPLATE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.SUSPICIOUS_STEW).setWeight(70).apply(SetStewEffectFunction.stewEffect().withEffect(MobEffects.NIGHT_VISION, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.JUMP, UniformGenerator.between(7.0F, 10.0F)).withEffect(MobEffects.SATURATION, UniformGenerator.between(7.0F, 10.0F))))
+                .add(LootItem.lootTableItem(Items.ITEM_FRAME).setWeight(10))
+                .add(LootItem.lootTableItem(Items.GLOBE_BANNER_PATTERN).setWeight(9))
+                .add(LootItem.lootTableItem(Items.ENDER_PEARL).setWeight(14))
+                .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE).setWeight(23))
+                .add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(23).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))))
+                .add(LootItem.lootTableItem(Items.GLISTERING_MELON_SLICE).setWeight(18).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))))
+                .add(LootItem.lootTableItem(Items.FISHING_ROD).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.BOW).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.SADDLE).setWeight(12))
+                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(31.0F, 45.0F))))
+                .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(4))
+                .add(LootItem.lootTableItem(Items.QUARTZ_BLOCK).setWeight(70))
+                .add(LootItem.lootTableItem(Items.PAINTING).setWeight(35).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))))
+                .add(LootItem.lootTableItem(Items.DIAMOND_AXE).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.DIAMOND_SHOVEL).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.DIAMOND_PICKAXE).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.DIAMOND_SWORD).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))));
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
