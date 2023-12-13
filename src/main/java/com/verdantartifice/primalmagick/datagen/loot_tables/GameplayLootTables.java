@@ -15,15 +15,20 @@ import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.StructureTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootTableReference;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -133,6 +138,31 @@ public class GameplayLootTables implements LootTableSubProvider {
                 .add(LootItem.lootTableItem(Items.STONE_SHOVEL).setWeight(64))
                 .add(LootItem.lootTableItem(Items.STONE_PICKAXE).setWeight(64))
                 .add(LootItem.lootTableItem(Items.STONE_SWORD).setWeight(64))));
+        this.registerLootTable(writer, LootTablesPM.THEORYCRAFTING_PROSPEROUS_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
+                .add(LootItem.lootTableItem(Items.BELL).setWeight(1))
+                .add(LootItem.lootTableItem(Items.SHIELD).setWeight(7))
+                .add(LootItem.lootTableItem(Items.COOKED_MUTTON).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(5.0F))))
+                .add(LootItem.lootTableItem(Items.COOKED_BEEF).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(8.0F))))
+                .add(LootItem.lootTableItem(Items.MAP).setWeight(3).apply(ExplorationMapFunction.makeExplorationMap().setDestination(StructureTags.ON_TREASURE_MAPS).setMapDecoration(MapDecoration.Type.RED_X).setZoom((byte)1).setSkipKnownStructures(true)).apply(SetNameFunction.setName(Component.translatable("filled_map.buried_treasure"))))
+                .add(LootItem.lootTableItem(Items.MAP).setWeight(3).apply(ExplorationMapFunction.makeExplorationMap().setDestination(StructureTags.ON_OCEAN_EXPLORER_MAPS).setMapDecoration(MapDecoration.Type.RED_X).setZoom((byte)1).setSkipKnownStructures(true)).apply(SetNameFunction.setName(Component.translatable("filled_map.monument"))))
+                .add(LootItem.lootTableItem(Items.MAP).setWeight(3).apply(ExplorationMapFunction.makeExplorationMap().setDestination(StructureTags.ON_WOODLAND_EXPLORER_MAPS).setMapDecoration(MapDecoration.Type.RED_X).setZoom((byte)1).setSkipKnownStructures(true)).apply(SetNameFunction.setName(Component.translatable("filled_map.mansion"))))
+                .add(LootItem.lootTableItem(Items.LAPIS_LAZULI).setWeight(36))
+                .add(LootItem.lootTableItem(Items.GLOWSTONE).setWeight(9))
+                .add(LootItem.lootTableItem(Items.COOKIE).setWeight(12).apply(SetItemCountFunction.setCount(ConstantValue.exactly(18.0F))))
+                .add(LootItem.lootTableItem(Items.CAKE).setWeight(36))
+                .add(LootItem.lootTableItem(Items.COOKED_SALMON).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(6.0F))))
+                .add(LootItem.lootTableItem(Items.BOW).setWeight(18))
+                .add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(12))
+                .add(LootItem.lootTableItem(Items.LEATHER_HORSE_ARMOR).setWeight(6))
+                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(16.0F, 30.0F))))
+                .add(LootItem.lootTableItem(Items.LANTERN).setWeight(36))
+                .add(LootItem.lootTableItem(Items.GLASS).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
+                .add(LootItem.lootTableItem(Items.DRIPSTONE_BLOCK).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
+                .add(LootItem.lootTableItem(Items.WHITE_BED).setWeight(12))
+                .add(LootItem.lootTableItem(Items.IRON_AXE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.IRON_SHOVEL).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
+                .add(LootItem.lootTableItem(Items.IRON_SWORD).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))));;
     }
     
     public static LootTableProvider.SubProviderEntry getSubProviderEntry() {
