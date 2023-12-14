@@ -166,6 +166,14 @@
       "weight": 1.0
     }
   ],
+  "other_rewards": [
+    {
+      "type": "loot_table",
+      "desc": "label.primalmagick.loot_table.prosperous_trade.desc",
+      "pulls": 1,
+      "table": "primalmagick:gameplay/theorycrafting/prosperous_trade"
+    }
+  ],
   "required_research": "t_discover_infernal",
   "reward_multiplier": 0.5,
   "weight_function": {

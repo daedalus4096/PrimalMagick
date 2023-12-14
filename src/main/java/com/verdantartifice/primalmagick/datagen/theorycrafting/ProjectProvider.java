@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -470,6 +471,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.DIORITE, true).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.SHEARS, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.BEDS, true).weight(1).build())
+            .otherReward(LootTableRewardBuilder.table(PrimalMagick.resource("gameplay/theorycrafting/prosperous_trade"), "label.primalmagick.loot_table.prosperous_trade.desc").build())
             .build(consumer);
         ProjectBuilder.project("raiding_the_raiders").rewardMultiplier(0.5D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
@@ -538,6 +540,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.DIAMOND_AXE, true).bonusReward(0.25D).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.DIAMOND_PICKAXE, true).bonusReward(0.25D).weight(1).build())
             .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, true).bonusReward(0.25D).weight(1).build())
+            .otherReward(LootTableRewardBuilder.table(PrimalMagick.resource("gameplay/theorycrafting/rich_trade"), "label.primalmagick.loot_table.rich_trade.desc").build())
             .build(consumer);
         ProjectBuilder.project("ritual_practice").requiredResearch(QuorumResearchKey.builder(2).add("MANAFRUIT", "RITUAL_CANDLES", "INCENSE_BRAZIER", "DOWSING_ROD").build())
             .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("EXPERT_RITUAL", -1).modifier("MASTER_RITUAL", -1).modifier("SUPREME_RITUAL", -2).build())
@@ -606,6 +609,7 @@ public class ProjectProvider implements DataProvider {
             .material(ItemMaterialBuilder.item(Items.STONE, 2, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(ItemTags.WOOL, 2, true).weight(1).build())
             .material(ItemTagMaterialBuilder.tag(Tags.Items.DYES, 2, true).weight(1).build())
+            .otherReward(LootTableRewardBuilder.table(PrimalMagick.resource("gameplay/theorycrafting/trade"), "label.primalmagick.loot_table.trade.desc").build())
             .build(consumer);
         ProjectBuilder.project("wand_tinkering").requiredResearch("BASIC_MANAWEAVING")
             .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("MASTER_MANAWEAVING", -2).build())

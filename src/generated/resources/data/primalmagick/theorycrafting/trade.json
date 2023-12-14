@@ -151,6 +151,14 @@
       "weight": 1.0
     }
   ],
+  "other_rewards": [
+    {
+      "type": "loot_table",
+      "desc": "label.primalmagick.loot_table.trade.desc",
+      "pulls": 1,
+      "table": "primalmagick:gameplay/theorycrafting/trade"
+    }
+  ],
   "reward_multiplier": 0.25,
   "weight_function": {
     "type": "progressive",
