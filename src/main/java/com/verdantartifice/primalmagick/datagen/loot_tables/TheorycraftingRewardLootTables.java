@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
@@ -47,7 +48,7 @@ public class TheorycraftingRewardLootTables extends AbstractGameplayLootTableSub
                 .add(LootItem.lootTableItem(Items.FLINT).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(10.0F))))
                 .add(LootItem.lootTableItem(Items.LEATHER_LEGGINGS).setWeight(21))
                 .add(LootItem.lootTableItem(Items.LEATHER_CHESTPLATE).setWeight(9))
-                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(1.0F, 15.0F))))
+                .add(LootItem.lootTableItem(Items.BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(1.0F, 15.0F))))
                 .add(LootItem.lootTableItem(Items.BOOKSHELF).setWeight(7))
                 .add(LootItem.lootTableItem(Items.BRICK).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(10.0F))))
                 .add(LootItem.lootTableItem(Items.CHISELED_STONE_BRICKS).setWeight(64).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
@@ -73,7 +74,7 @@ public class TheorycraftingRewardLootTables extends AbstractGameplayLootTableSub
                 .add(LootItem.lootTableItem(Items.BOW).setWeight(18))
                 .add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(12))
                 .add(LootItem.lootTableItem(Items.LEATHER_HORSE_ARMOR).setWeight(6))
-                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(16.0F, 30.0F))))
+                .add(LootItem.lootTableItem(Items.BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(16.0F, 30.0F))))
                 .add(LootItem.lootTableItem(Items.LANTERN).setWeight(36))
                 .add(LootItem.lootTableItem(Items.GLASS).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
                 .add(LootItem.lootTableItem(Items.DRIPSTONE_BLOCK).setWeight(36).apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))))
@@ -96,7 +97,7 @@ public class TheorycraftingRewardLootTables extends AbstractGameplayLootTableSub
                 .add(LootItem.lootTableItem(Items.BOW).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
                 .add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(3).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(5.0F, 19.0F))))
                 .add(LootItem.lootTableItem(Items.SADDLE).setWeight(12))
-                .add(LootItem.lootTableItem(Items.ENCHANTED_BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(31.0F, 45.0F))))
+                .add(LootItem.lootTableItem(Items.BOOK).setWeight(2).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(31.0F, 45.0F))))
                 .add(LootItem.lootTableItem(Items.NAME_TAG).setWeight(4))
                 .add(LootItem.lootTableItem(Items.QUARTZ_BLOCK).setWeight(70))
                 .add(LootItem.lootTableItem(Items.PAINTING).setWeight(35).apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))))

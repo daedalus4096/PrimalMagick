@@ -182,7 +182,7 @@
               "treasure": false
             }
           ],
-          "name": "minecraft:enchanted_book",
+          "name": "minecraft:book",
           "weight": 2
         },
         {
