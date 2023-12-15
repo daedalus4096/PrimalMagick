@@ -15,7 +15,6 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class LootTablesPM {
     private static final Set<ResourceLocation> LOCATIONS = new HashSet<>();
-    private static final Set<ResourceLocation> IMMUTABLE_LOCATIONS = Collections.unmodifiableSet(LOCATIONS);
 
     public static final ResourceLocation TREEFOLK_BARTERING = register("gameplay/treefolk_bartering");
     public static final ResourceLocation TREEFOLK_BARTERING_FOOD = register("gameplay/treefolk_bartering/food");
@@ -23,6 +22,10 @@ public class LootTablesPM {
     public static final ResourceLocation TREEFOLK_BARTERING_SEEDS = register("gameplay/treefolk_bartering/seeds");
     public static final ResourceLocation TREEFOLK_BARTERING_JUNK = register("gameplay/treefolk_bartering/junk");
     public static final ResourceLocation TREEFOLK_BARTERING_TREASURE = register("gameplay/treefolk_bartering/treasure");
+    
+    public static final ResourceLocation THEORYCRAFTING_TRADE = register("gameplay/theorycrafting/trade");
+    public static final ResourceLocation THEORYCRAFTING_PROSPEROUS_TRADE = register("gameplay/theorycrafting/prosperous_trade");
+    public static final ResourceLocation THEORYCRAFTING_RICH_TRADE = register("gameplay/theorycrafting/rich_trade");
     
     private static ResourceLocation register(String id) {
         return register(PrimalMagick.resource(id));
@@ -37,6 +40,6 @@ public class LootTablesPM {
     }
 
     public static Set<ResourceLocation> all() {
-        return IMMUTABLE_LOCATIONS;
+        return Collections.unmodifiableSet(LOCATIONS);
     }
 }

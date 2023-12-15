@@ -2,6 +2,11 @@ package com.verdantartifice.primalmagick.common.theorycrafting;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ExperienceReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
+
 import net.minecraft.nbt.CompoundTag;
 
 /**
@@ -30,6 +35,23 @@ public class ProjectFactory {
             retVal = new ObservationProjectMaterial();
         } else if (ExperienceProjectMaterial.TYPE.equals(materialType)) {
             retVal = new ExperienceProjectMaterial();
+        }
+        if (retVal != null) {
+            retVal.deserializeNBT(tag);
+        }
+        return retVal;
+    }
+    
+    @Nullable
+    public static AbstractReward getRewardFromNBT(@Nullable CompoundTag tag) {
+        AbstractReward retVal = null;
+        String rewardType = (tag == null) ? null : tag.getString("RewardType");
+        if (ExperienceReward.TYPE.equals(rewardType)) {
+            retVal = new ExperienceReward();
+        } else if (ItemReward.TYPE.equals(rewardType)) {
+            retVal = new ItemReward();
+        } else if (LootTableReward.TYPE.equals(rewardType)) {
+            retVal = new LootTableReward();
         }
         if (retVal != null) {
             retVal.deserializeNBT(tag);

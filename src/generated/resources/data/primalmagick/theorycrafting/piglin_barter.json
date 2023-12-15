@@ -153,6 +153,14 @@
       "weight": 1.0
     }
   ],
+  "other_rewards": [
+    {
+      "type": "loot_table",
+      "desc": "label.primalmagick.loot_table.piglin_bartering.desc",
+      "pulls": 1,
+      "table": "minecraft:gameplay/piglin_bartering"
+    }
+  ],
   "required_research": "t_discover_infernal",
   "reward_multiplier": 1.0,
   "weight_function": {

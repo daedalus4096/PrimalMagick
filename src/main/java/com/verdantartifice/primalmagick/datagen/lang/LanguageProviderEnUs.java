@@ -993,6 +993,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("research_table").sub("unlock").output("Unlocked by: %1$s").end().build();
         this.label("research_table").sub("aid_header").output("Active research aids:").end().build();
         this.label("research_table").sub("theory_gain_preview").sub("positive").output("+%1$s").end().build();
+        this.label("research_table").sub("reward").output("%1$dx %2$s").end().build();
+        this.label("research_table").sub("reward").sub("header").output("Other rewards:").end().build();
         this.label("essence_cask").sub("contents").output("Contents: %1$d / %2$d").end().build();
         this.label("essence_cask").sub("left_click").output("Left-click to withdraw one stack").end().build();
         this.label("essence_cask").sub("right_click").output("Right-click to withdraw one item").end().build();
@@ -1006,6 +1008,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("attunement_gain").sub("5").output("Extreme").end().build();
         this.label("attunement_gain").sub("text").output("%1$s: %2$s").end().build();
         this.label("recipe_book").sub("loading").output("Loading...").end().build();
+        this.label("experience").sub("points").output("Experience points").end().build();
+        this.label("loot_table").sub("piglin_bartering").sub("desc").output("Random piglin goods").end().build();
+        this.label("loot_table").sub("trade").sub("desc").output("Random basic village goods").end().build();
+        this.label("loot_table").sub("prosperous_trade").sub("desc").output("Random prosperous village goods").end().build();
+        this.label("loot_table").sub("rich_trade").sub("desc").output("Random rich village goods").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();

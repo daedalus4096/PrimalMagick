@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -30,15 +31,18 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class Project implements INBTSerializable<CompoundTag> {
     protected ResourceLocation templateKey;
     protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();
+    protected List<AbstractReward> otherRewards = new ArrayList<>();
     protected double baseSuccessChance;
     protected double baseRewardMultiplier;
     protected ResourceLocation aidBlock;
     
     public Project() {}
     
-    public Project(@Nonnull ResourceLocation templateKey, @Nonnull List<AbstractProjectMaterial> materials, double baseSuccessChance, double baseRewardMultiplier, @Nullable ResourceLocation aidBlock) {
+    public Project(@Nonnull ResourceLocation templateKey, @Nonnull List<AbstractProjectMaterial> materials, @Nonnull List<AbstractReward> otherRewards, double baseSuccessChance, 
+            double baseRewardMultiplier, @Nullable ResourceLocation aidBlock) {
         this.templateKey = templateKey;
         this.activeMaterials = materials;
+        this.otherRewards = otherRewards;
         this.baseSuccessChance = baseSuccessChance;
         this.baseRewardMultiplier = baseRewardMultiplier;
         this.aidBlock = aidBlock;
@@ -59,6 +63,12 @@ public class Project implements INBTSerializable<CompoundTag> {
             materialList.add(material.serializeNBT());
         }
         retVal.put("Materials", materialList);
+        
+        ListTag rewardList = new ListTag();
+        for (AbstractReward reward : this.otherRewards) {
+            rewardList.add(reward.serializeNBT());
+        }
+        retVal.put("OtherRewards", rewardList);
         
         return retVal;
     }
@@ -82,6 +92,15 @@ public class Project implements INBTSerializable<CompoundTag> {
                 this.activeMaterials.add(material);
             }
         }
+        
+        this.otherRewards.clear();
+        ListTag rewardList = nbt.getList("OtherRewards", Tag.TAG_COMPOUND);
+        for (int index = 0; index < rewardList.size(); index++) {
+            AbstractReward reward = ProjectFactory.getRewardFromNBT(rewardList.getCompound(index));
+            if (reward != null) {
+                this.otherRewards.add(reward);
+            }
+        }
     }
 
     @Nonnull
@@ -97,6 +116,11 @@ public class Project implements INBTSerializable<CompoundTag> {
     @Nonnull
     public List<AbstractProjectMaterial> getMaterials() {
         return this.activeMaterials;
+    }
+    
+    @Nonnull
+    public List<AbstractReward> getOtherRewards() {
+        return this.otherRewards;
     }
     
     protected double getSuccessChancePerMaterial() {

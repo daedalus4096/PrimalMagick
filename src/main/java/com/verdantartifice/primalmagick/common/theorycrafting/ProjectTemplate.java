@@ -20,6 +20,8 @@ import com.verdantartifice.primalmagick.common.research.IResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
@@ -40,6 +42,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ProjectTemplate {
     protected ResourceLocation key;
     protected List<AbstractProjectMaterial> materialOptions = new ArrayList<>();
+    protected List<AbstractReward> otherRewards = new ArrayList<>();
     protected IResearchKey requiredResearch;
     protected Optional<Integer> requiredMaterialCountOverride = Optional.empty();
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
@@ -47,11 +50,12 @@ public class ProjectTemplate {
     protected List<ResourceLocation> aidBlocks = new ArrayList<>();
     protected Optional<IWeightFunction> weightFunction = Optional.empty();
     
-    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nullable IResearchKey requiredResearch,
+    protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nonnull List<AbstractReward> otherRewards, @Nullable IResearchKey requiredResearch,
             @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks,
             @Nonnull Optional<IWeightFunction> weightFunction) {
         this.key = key;
         this.materialOptions = materialOptions;
+        this.otherRewards = otherRewards;
         this.requiredResearch = requiredResearch;
         this.requiredMaterialCountOverride = requiredMaterialCountOverride;
         this.baseSuccessChanceOverride = baseSuccessChanceOverride;
@@ -119,7 +123,7 @@ public class ProjectTemplate {
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
+        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
     }
     
     protected int getRequiredMaterialCount(Player player) {
@@ -206,6 +210,20 @@ public class ProjectTemplate {
                 }
             }
             
+            List<AbstractReward> otherRewards = new ArrayList<>();
+            if (json.has("other_rewards")) {
+                JsonArray rewardsArray = json.getAsJsonArray("other_rewards");
+                for (JsonElement rewardElement : rewardsArray) {
+                    try {
+                        JsonObject rewardObj = rewardElement.getAsJsonObject();
+                        IRewardSerializer<?> rewardSerializer = TheorycraftManager.getRewardSerializer(rewardObj.getAsJsonPrimitive("type").getAsString());
+                        otherRewards.add(rewardSerializer.read(templateId, rewardObj));
+                    } catch (Exception e) {
+                        throw new JsonSyntaxException("Invalid reward in project template JSON for " + templateId.toString(), e);
+                    }
+                }
+            }
+            
             Optional<IWeightFunction> weightOpt = Optional.empty();
             if (json.has("weight_function")) {
                 JsonObject weightObj = json.getAsJsonObject("weight_function");
@@ -219,7 +237,7 @@ public class ProjectTemplate {
                 }
             }
             
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
+            return new ProjectTemplate(key, materials, otherRewards, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
         }
 
         @Override
@@ -248,6 +266,18 @@ public class ProjectTemplate {
                 }
             }
             
+            List<AbstractReward> rewards = new ArrayList<>();
+            int rewardCount = buf.readVarInt();
+            for (int index = 0; index < rewardCount; index++) {
+                String rewardType = buf.readUtf();
+                IRewardSerializer<?> serializer = TheorycraftManager.getRewardSerializer(rewardType);
+                if (serializer != null) {
+                    rewards.add(serializer.fromNetwork(buf));
+                } else {
+                    throw new IllegalArgumentException("Unknown theorycrafting project reward type " + rewardType);
+                }
+            }
+            
             Optional<IWeightFunction> weightOpt;
             if (buf.readBoolean()) {
                 String functionType = buf.readUtf();
@@ -262,7 +292,7 @@ public class ProjectTemplate {
                 weightOpt = Optional.empty();
             }
             
-            return new ProjectTemplate(key, materials, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
+            return new ProjectTemplate(key, materials, rewards, requiredResearch, materialCountOverride, baseSuccessChanceOverride, rewardMultiplier, aidBlocks, weightOpt);
         }
 
         @Override
@@ -295,6 +325,11 @@ public class ProjectTemplate {
             for (AbstractProjectMaterial material : template.materialOptions) {
                 buf.writeUtf(material.getMaterialType());
                 material.toNetwork(buf);
+            }
+            buf.writeVarInt(template.otherRewards.size());
+            for (AbstractReward reward : template.otherRewards) {
+                buf.writeUtf(reward.getRewardType());
+                reward.getSerializer().toNetwork(buf, reward);
             }
             template.weightFunction.ifPresentOrElse(weight -> {
                 buf.writeBoolean(true);

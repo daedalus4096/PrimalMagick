@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.util;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,6 +11,7 @@ import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -17,19 +19,27 @@ import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Utility methods for dealing with GUI rendering.
@@ -47,6 +57,67 @@ public class GuiUtils {
             
             // Render the item stack into the GUI and, if applicable, its stack size and/or damage bar
             guiGraphics.renderItem(stack, x, y);
+            if (!hideStackOverlay) {
+                guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
+            }
+            
+            guiGraphics.pose().popPose();
+            
+            retVal = true;
+        }
+        return retVal;
+    }
+    
+    public static boolean renderItemStack(GuiGraphics guiGraphics, ItemStack stack, int x, int y, String text, boolean hideStackOverlay, Optional<Vec3> scaleOpt) {
+        boolean retVal = false;
+        if (stack != null && !stack.isEmpty()) {
+            Minecraft mc = Minecraft.getInstance();
+            ItemRenderer itemRenderer = mc.getItemRenderer();
+            BakedModel bakedModel = itemRenderer.getModel(stack, mc.level, mc.player, 0);
+            
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(0.0F, 0.0F, 32.0F);
+            
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(x + 8, y + 8, 150);
+            
+            try {
+                guiGraphics.pose().mulPoseMatrix((new Matrix4f()).scaling(1.0F, -1.0F, 1.0F));
+                guiGraphics.pose().scale(16.0F, 16.0F, 16.0F);
+                scaleOpt.ifPresent(scale -> {
+                    guiGraphics.pose().scale((float)scale.x, (float)scale.y, (float)scale.z);
+                });
+                
+                boolean flag = !bakedModel.usesBlockLight();
+                if (flag) {
+                    Lighting.setupForFlatItems();
+                }
+                itemRenderer.render(stack, ItemDisplayContext.GUI, false, guiGraphics.pose(), guiGraphics.bufferSource(), 15728880, OverlayTexture.NO_OVERLAY, bakedModel);
+                guiGraphics.flush();
+                if (flag) {
+                    Lighting.setupFor3DItems();
+                }
+            } catch (Throwable throwable) {
+                CrashReport crashreport = CrashReport.forThrowable(throwable, "Rendering item");
+                CrashReportCategory crashreportcategory = crashreport.addCategory("Item being rendered");
+                crashreportcategory.setDetail("Item Type", () -> {
+                    return String.valueOf((Object)stack.getItem());
+                });
+                crashreportcategory.setDetail("Registry Name", () -> String.valueOf(net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem())));
+                crashreportcategory.setDetail("Item Damage", () -> {
+                    return String.valueOf(stack.getDamageValue());
+                });
+                crashreportcategory.setDetail("Item NBT", () -> {
+                    return String.valueOf((Object)stack.getTag());
+                });
+                crashreportcategory.setDetail("Item Foil", () -> {
+                    return String.valueOf(stack.hasFoil());
+                });
+                throw new ReportedException(crashreport);
+            }
+            
+            guiGraphics.pose().popPose();
+
             if (!hideStackOverlay) {
                 guiGraphics.renderItemDecorations(mc.font, stack, x, y, text);
             }

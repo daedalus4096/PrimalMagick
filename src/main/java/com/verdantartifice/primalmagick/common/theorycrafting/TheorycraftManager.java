@@ -13,6 +13,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ExperienceReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
@@ -39,6 +43,11 @@ public class TheorycraftManager {
             .put(ExperienceProjectMaterial.TYPE, ExperienceProjectMaterial.SERIALIZER)
             .put(ObservationProjectMaterial.TYPE, ObservationProjectMaterial.SERIALIZER)
             .build();
+    protected static final Map<String, IRewardSerializer<?>> REWARD_SERIALIZERS = new ImmutableMap.Builder<String, IRewardSerializer<?>>()
+            .put(ExperienceReward.TYPE, ExperienceReward.SERIALIZER)
+            .put(ItemReward.TYPE, ItemReward.SERIALIZER)
+            .put(LootTableReward.TYPE, LootTableReward.SERIALIZER)
+            .build();
     protected static final Map<String, IWeightFunctionSerializer<?>> WEIGHT_SERIALIZERS = new ImmutableMap.Builder<String, IWeightFunctionSerializer<?>>()
             .put(ConstantWeight.TYPE, ConstantWeight.SERIALIZER)
             .put(ProgressiveWeight.TYPE, ProgressiveWeight.SERIALIZER)
@@ -48,6 +57,11 @@ public class TheorycraftManager {
     @Nullable
     public static IProjectMaterialSerializer<?> getMaterialSerializer(@Nullable String type) {
         return MATERIAL_SERIALIZERS.get(type);
+    }
+    
+    @Nullable
+    public static IRewardSerializer<?> getRewardSerializer(@Nullable String type) {
+        return REWARD_SERIALIZERS.get(type);
     }
     
     @Nullable

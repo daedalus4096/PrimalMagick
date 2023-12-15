@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.InactiveWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidListWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.AidUnlockWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.KnowledgeTotalWidget;
+import com.verdantartifice.primalmagick.client.gui.widgets.research_table.OtherRewardWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialSelectionCheckbox;
 import com.verdantartifice.primalmagick.client.gui.widgets.research_table.ProjectMaterialWidgetFactory;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
@@ -179,6 +180,11 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
         } else if (this.isProjectReady()) {
             // Render theory progress widget with gain preview
             this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY, OptionalInt.of(this.project.getTheoryPointReward())));
+            
+            // Render reward widget if non-theory rewards are present for this project
+            if (!this.project.getOtherRewards().isEmpty()) {
+                this.addRenderableWidget(new OtherRewardWidget(this.project.getOtherRewards(), this.leftPos + 203, this.topPos + 97));
+            }
             
             if (this.progressing) {
                 // Render completing widget
