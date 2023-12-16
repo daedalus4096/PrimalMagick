@@ -101,6 +101,17 @@ public class RecipeIndexPage extends AbstractPage {
         }
     }
 
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        if (this.searchBox != null && this.searchBox.mouseClicked(pMouseX, pMouseY, pButton)) {
+            this.searchBox.setFocused(true);
+            return true;
+        } else if (this.searchBox != null) {
+            this.searchBox.setFocused(false);
+        }
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
+    }
+
     private static class IndexItem {
         public final String name;
         public final ItemStack iconStack;

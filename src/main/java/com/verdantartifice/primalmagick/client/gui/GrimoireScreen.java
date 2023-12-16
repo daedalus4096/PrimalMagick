@@ -1100,6 +1100,13 @@ public class GrimoireScreen extends Screen {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
+        } else {
+            for (AbstractPage page : this.pages) {
+                if (page.mouseClicked(xPos, yPos, keyCode)) {
+                    this.setFocused(page);
+                    return true;
+                }
+            }
         }
         return retVal;
     }
