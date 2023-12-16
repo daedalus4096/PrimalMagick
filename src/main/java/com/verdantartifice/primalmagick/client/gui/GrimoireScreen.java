@@ -128,12 +128,7 @@ public class GrimoireScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
-        if (millis > this.lastCheck) {
-            // Update more frequently if waiting for the server to process a progression
-            this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
-            this.initPages();
-            this.initButtons();
-            
+        if ((this.isProgressing() || this.currentStageIndex > this.lastStageIndex) && millis > this.lastCheck) {
             // Reset to the first page of the entry if the current stage has advanced
             if (this.currentStageIndex > this.lastStageIndex) {
                 this.progressing = false;
@@ -141,6 +136,10 @@ public class GrimoireScreen extends Screen {
                 this.currentPage = 0;
                 this.updateNavButtonVisibility();
             }
+            
+            this.lastCheck = millis + 250L;
+            this.initPages();
+            this.initButtons();
         }
         
         this.renderBackground(guiGraphics);
