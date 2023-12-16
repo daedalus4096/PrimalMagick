@@ -1076,18 +1076,37 @@ public class GrimoireScreen extends Screen {
     }
     
     @Override
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        for (AbstractPage page : this.pages) {
+            if (page.charTyped(pCodePoint, pModifiers)) {
+                return true;
+            }
+        }
+        return super.charTyped(pCodePoint, pModifiers);
+    }
+
+    @Override
     public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
         if (keyCode == KeyBindings.GRIMOIRE_PREV_TOPIC.getKey().getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
             }
         } else if (keyCode == KeyBindings.GRIMOIRE_PREV_PAGE.getKey().getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
             }
         } else if (keyCode == KeyBindings.GRIMOIRE_NEXT_PAGE.getKey().getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
+            }
+        } else {
+            for (AbstractPage page : this.pages) {
+                if (page.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_)) {
+                    return true;
+                }
             }
         }
         return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);

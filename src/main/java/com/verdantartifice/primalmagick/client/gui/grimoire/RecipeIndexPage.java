@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeEntryButton;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
@@ -110,6 +112,26 @@ public class RecipeIndexPage extends AbstractPage {
             this.searchBox.setFocused(false);
         }
         return super.mouseClicked(pMouseX, pMouseY, pButton);
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if (this.searchBox != null) {
+            if (this.searchBox.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+                return true;
+            } else if (this.searchBox.isFocused() && this.searchBox.isVisible() && pKeyCode != GLFW.GLFW_KEY_ESCAPE) {
+                return true;
+            }
+        }
+        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+    }
+
+    @Override
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        if (this.searchBox != null && this.searchBox.charTyped(pCodePoint, pModifiers)) {
+            return true;
+        }
+        return super.charTyped(pCodePoint, pModifiers);
     }
 
     private static class IndexItem {
