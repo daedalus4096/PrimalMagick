@@ -270,6 +270,12 @@ public class GrimoireScreen extends Screen {
         }
     }
     
+    @Override
+    public void tick() {
+        super.tick();
+        this.pages.forEach(p -> p.tick());
+    }
+
     private List<ResearchDiscipline> buildDisciplineList() {
         // Gather a list of all research disciplines, sorted by their registration order
         return ResearchDisciplines.getAllDisciplinesSorted();
@@ -874,7 +880,7 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
         
         Minecraft mc = this.getMinecraft();
-        int heightRemaining = 137;
+        int heightRemaining = 113;
         RecipeIndexPage tempPage = new RecipeIndexPage(true);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
