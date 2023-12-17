@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,16 +32,20 @@ public class RecipeIndexPage extends AbstractPage {
     
     protected List<IndexItem> contents = new ArrayList<>();
     protected boolean firstPage;
+    protected String startingSearchText;
     
     @Nullable
     protected EditBox searchBox;
+    @Nullable
+    protected GrimoireScreen screen;
 
     public RecipeIndexPage() {
-        this(false);
+        this(false, "");
     }
     
-    public RecipeIndexPage(boolean first) {
+    public RecipeIndexPage(boolean first, String searchText) {
         this.firstPage = first;
+        this.startingSearchText = searchText;
     }
     
     @Nonnull
@@ -74,6 +79,8 @@ public class RecipeIndexPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
+        this.screen = screen;
+        
         // Initialize a search box for the first side of the first page
         if (this.isFirstPage() && side == 0) {
             Minecraft mc = Minecraft.getInstance();
@@ -82,9 +89,12 @@ public class RecipeIndexPage extends AbstractPage {
             this.searchBox.setBordered(true);
             this.searchBox.setVisible(true);
             this.searchBox.setTextColor(0xFFFFFF);
-            this.searchBox.setValue("");
+            this.searchBox.setValue(this.startingSearchText);
             this.searchBox.setHint(SEARCH_HINT);
             this.searchBox.setEditable(true);
+            if (!this.startingSearchText.isEmpty()) {
+                this.searchBox.setFocused(true);
+            }
             y += 24;
         }
         
@@ -118,6 +128,9 @@ public class RecipeIndexPage extends AbstractPage {
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
         if (this.searchBox != null) {
             if (this.searchBox.keyPressed(pKeyCode, pScanCode, pModifiers)) {
+                if (this.screen != null) {
+                    this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
+                }
                 return true;
             } else if (this.searchBox.isFocused() && this.searchBox.isVisible() && pKeyCode != GLFW.GLFW_KEY_ESCAPE) {
                 return true;
@@ -129,6 +142,9 @@ public class RecipeIndexPage extends AbstractPage {
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
         if (this.searchBox != null && this.searchBox.charTyped(pCodePoint, pModifiers)) {
+            if (this.screen != null) {
+                this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
+            }
             return true;
         }
         return super.charTyped(pCodePoint, pModifiers);
