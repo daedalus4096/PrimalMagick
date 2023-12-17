@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -19,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractPage {
+public abstract class AbstractPage implements GuiEventListener {
     private static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
 
     /**
@@ -89,5 +90,19 @@ public abstract class AbstractPage {
             }
             guiGraphics.pose().popPose();
         }
+    }
+
+    @Override
+    public void setFocused(boolean pFocused) {
+        // Do nothing
+    }
+
+    @Override
+    public boolean isFocused() {
+        return false;
+    }
+    
+    public void tick() {
+        // Do nothing by default
     }
 }

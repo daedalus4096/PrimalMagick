@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.NavigableMap;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -110,6 +111,7 @@ public class GrimoireScreen extends Screen {
     protected IPlayerKnowledge knowledge;
     protected NavigableMap<String, List<Recipe<?>>> indexMap;
     protected Component cachedTip = null;
+    protected Optional<String> lastRecipeSearch = Optional.empty();
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
@@ -128,12 +130,7 @@ public class GrimoireScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         // Determine if we need to update the GUI based on how long it's been since the last refresh
         long millis = System.currentTimeMillis();
-        if (millis > this.lastCheck) {
-            // Update more frequently if waiting for the server to process a progression
-            this.lastCheck = this.progressing ? (millis + 250L) : (millis + 2000L);
-            this.initPages();
-            this.initButtons();
-            
+        if ((this.isProgressing() || this.currentStageIndex > this.lastStageIndex) && millis > this.lastCheck) {
             // Reset to the first page of the entry if the current stage has advanced
             if (this.currentStageIndex > this.lastStageIndex) {
                 this.progressing = false;
@@ -141,6 +138,10 @@ public class GrimoireScreen extends Screen {
                 this.currentPage = 0;
                 this.updateNavButtonVisibility();
             }
+            
+            this.lastCheck = millis + 250L;
+            this.initPages();
+            this.initButtons();
         }
         
         this.renderBackground(guiGraphics);
@@ -202,7 +203,11 @@ public class GrimoireScreen extends Screen {
                 this.parseRecipeIndexPages();
             } else if (TipsPage.TOPIC.getData().equals(data)) {
                 this.parseTipsPages();
+            } else {
+                LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
             }
+        } else {
+            LOGGER.warn("Unexpected research topic type {}", topic.getType().toString());
         }
     }
     
@@ -270,6 +275,12 @@ public class GrimoireScreen extends Screen {
         }
     }
     
+    @Override
+    public void tick() {
+        super.tick();
+        this.pages.forEach(p -> p.tick());
+    }
+
     private List<ResearchDiscipline> buildDisciplineList() {
         // Gather a list of all research disciplines, sorted by their registration order
         return ResearchDisciplines.getAllDisciplinesSorted();
@@ -870,24 +881,37 @@ public class GrimoireScreen extends Screen {
         return this.indexMap.containsKey(name);
     }
     
+    public void checkRecipeSearchStringUpdate(String newString) {
+        if (!newString.equals(this.lastRecipeSearch.orElse(""))) {
+            this.lastRecipeSearch = Optional.ofNullable(newString);
+            this.initPages();
+            this.initButtons();
+        }
+    }
+    
     protected void parseRecipeIndexPages() {
         this.currentStageIndex = 0;
         
         Minecraft mc = this.getMinecraft();
-        int heightRemaining = 137;
-        RecipeIndexPage tempPage = new RecipeIndexPage(true);
+        int heightRemaining = 113;
+        RecipeIndexPage tempPage = new RecipeIndexPage(true, this.lastRecipeSearch);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
-            tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
-            heightRemaining -= 12;
-            if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
-                heightRemaining = 156;
-                this.pages.add(tempPage);
-                tempPage = new RecipeIndexPage();
+            if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.orElse("").toLowerCase(Locale.ROOT))) {
+                tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
+                heightRemaining -= 12;
+                if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
+                    heightRemaining = 156;
+                    this.pages.add(tempPage);
+                    tempPage = new RecipeIndexPage();
+                }
             }
         }
-        if (!tempPage.getContents().isEmpty()) {
+        if (!tempPage.getContents().isEmpty() || (tempPage.getContents().isEmpty() && tempPage.isFirstPage())) {
             this.pages.add(tempPage);
+        }
+        if (this.pages.isEmpty()) {
+            LOGGER.warn("Finished parsing recipe index pages without adding any!");
         }
     }
     
@@ -1070,21 +1094,40 @@ public class GrimoireScreen extends Screen {
     }
     
     @Override
-    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_) {
+    public boolean charTyped(char pCodePoint, int pModifiers) {
+        for (AbstractPage page : this.pages) {
+            if (page.charTyped(pCodePoint, pModifiers)) {
+                return true;
+            }
+        }
+        return super.charTyped(pCodePoint, pModifiers);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (AbstractPage page : this.pages) {
+            if (page.keyPressed(keyCode, scanCode, modifiers)) {
+                return true;
+            }
+        }
+        
         if (keyCode == KeyBindings.GRIMOIRE_PREV_TOPIC.getKey().getValue()) {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
             }
         } else if (keyCode == KeyBindings.GRIMOIRE_PREV_PAGE.getKey().getValue()) {
             if (this.prevPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
             }
         } else if (keyCode == KeyBindings.GRIMOIRE_NEXT_PAGE.getKey().getValue()) {
             if (this.nextPage()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+                return true;
             }
         }
-        return super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_);
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
     
     @Override
@@ -1094,6 +1137,14 @@ public class GrimoireScreen extends Screen {
             if (this.goBack()) {
                 Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
             }
+        } else {
+            for (AbstractPage page : this.pages) {
+                if (page.mouseClicked(xPos, yPos, keyCode)) {
+                    this.setFocused(page);
+                    return true;
+                }
+            }
+            this.setFocused(null);
         }
         return retVal;
     }
