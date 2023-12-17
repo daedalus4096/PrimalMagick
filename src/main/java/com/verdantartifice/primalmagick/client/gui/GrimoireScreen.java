@@ -203,7 +203,11 @@ public class GrimoireScreen extends Screen {
                 this.parseRecipeIndexPages();
             } else if (TipsPage.TOPIC.getData().equals(data)) {
                 this.parseTipsPages();
+            } else {
+                LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
             }
+        } else {
+            LOGGER.warn("Unexpected research topic type {}", topic.getType().toString());
         }
     }
     
@@ -903,8 +907,11 @@ public class GrimoireScreen extends Screen {
                 }
             }
         }
-        if (!tempPage.getContents().isEmpty()) {
+        if (!tempPage.getContents().isEmpty() || (tempPage.getContents().isEmpty() && tempPage.isFirstPage())) {
             this.pages.add(tempPage);
+        }
+        if (this.pages.isEmpty()) {
+            LOGGER.warn("Finished parsing recipe index pages without adding any!");
         }
     }
     
