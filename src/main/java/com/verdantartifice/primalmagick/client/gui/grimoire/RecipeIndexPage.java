@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
