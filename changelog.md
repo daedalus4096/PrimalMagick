@@ -10,6 +10,7 @@ v4.0.9
 * Removed redundant output when a player executes a debug command on themselves
 * Datapacks can now specify additional non-theory rewards for theorycrafting projects, such as experience or items
 * Added additional non-theory rewards to several theorycrafting projects
+* Added text searching to the Recipes section of the Grimoire
 
 v4.0.8
 ------
