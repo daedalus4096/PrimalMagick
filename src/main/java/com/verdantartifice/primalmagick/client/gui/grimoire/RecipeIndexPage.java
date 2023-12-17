@@ -3,11 +3,13 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.lwjgl.glfw.GLFW;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeEntryButton;
@@ -28,10 +30,11 @@ import net.minecraft.world.item.ItemStack;
 public class RecipeIndexPage extends AbstractPage {
     public static final OtherResearchTopic TOPIC = new OtherResearchTopic("recipe_index", 0);
     protected static final Component SEARCH_HINT = (Component.translatable("gui.recipebook.search_hint")).withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GRAY);
+    protected static final Logger LOGGER = LogManager.getLogger();
     
     protected List<IndexItem> contents = new ArrayList<>();
     protected boolean firstPage;
-    protected String startingSearchText;
+    protected Optional<String> startingSearchText;
     
     @Nullable
     protected EditBox searchBox;
@@ -39,10 +42,10 @@ public class RecipeIndexPage extends AbstractPage {
     protected GrimoireScreen screen;
 
     public RecipeIndexPage() {
-        this(false, "");
+        this(false, Optional.empty());
     }
     
-    public RecipeIndexPage(boolean first, String searchText) {
+    public RecipeIndexPage(boolean first, Optional<String> searchText) {
         this.firstPage = first;
         this.startingSearchText = searchText;
     }
@@ -88,12 +91,15 @@ public class RecipeIndexPage extends AbstractPage {
             this.searchBox.setBordered(true);
             this.searchBox.setVisible(true);
             this.searchBox.setTextColor(0xFFFFFF);
-            this.searchBox.setValue(this.startingSearchText);
             this.searchBox.setHint(SEARCH_HINT);
             this.searchBox.setEditable(true);
-            if (!this.startingSearchText.isEmpty()) {
+            this.startingSearchText.ifPresentOrElse(text -> {
+                this.searchBox.setValue(text);
                 this.searchBox.setFocused(true);
-            }
+            }, () -> {
+                this.searchBox.setValue("");
+                this.searchBox.setFocused(false);
+            });
             y += 24;
         }
         
@@ -125,13 +131,11 @@ public class RecipeIndexPage extends AbstractPage {
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        if (this.searchBox != null) {
+        if (this.searchBox != null && this.searchBox.isFocused()) {
             if (this.searchBox.keyPressed(pKeyCode, pScanCode, pModifiers)) {
                 if (this.screen != null) {
                     this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
                 }
-                return true;
-            } else if (this.searchBox.isFocused() && this.searchBox.isVisible() && pKeyCode != GLFW.GLFW_KEY_ESCAPE) {
                 return true;
             }
         }
@@ -140,7 +144,7 @@ public class RecipeIndexPage extends AbstractPage {
 
     @Override
     public boolean charTyped(char pCodePoint, int pModifiers) {
-        if (this.searchBox != null && this.searchBox.charTyped(pCodePoint, pModifiers)) {
+        if (this.searchBox != null && this.searchBox.isFocused() && this.searchBox.charTyped(pCodePoint, pModifiers)) {
             if (this.screen != null) {
                 this.screen.checkRecipeSearchStringUpdate(this.searchBox.getValue());
             }

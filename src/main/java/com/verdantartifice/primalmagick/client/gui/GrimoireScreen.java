@@ -111,7 +111,7 @@ public class GrimoireScreen extends Screen {
     protected IPlayerKnowledge knowledge;
     protected NavigableMap<String, List<Recipe<?>>> indexMap;
     protected Component cachedTip = null;
-    protected String lastRecipeSearch = "";
+    protected Optional<String> lastRecipeSearch = Optional.empty();
     
     protected PageButton nextPageButton;
     protected PageButton prevPageButton;
@@ -882,8 +882,8 @@ public class GrimoireScreen extends Screen {
     }
     
     public void checkRecipeSearchStringUpdate(String newString) {
-        if (!newString.equals(this.lastRecipeSearch)) {
-            this.lastRecipeSearch = newString;
+        if (!newString.equals(this.lastRecipeSearch.orElse(""))) {
+            this.lastRecipeSearch = Optional.ofNullable(newString);
             this.initPages();
             this.initButtons();
         }
@@ -897,7 +897,7 @@ public class GrimoireScreen extends Screen {
         RecipeIndexPage tempPage = new RecipeIndexPage(true, this.lastRecipeSearch);
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
-            if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.toLowerCase(Locale.ROOT))) {
+            if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.orElse("").toLowerCase(Locale.ROOT))) {
                 tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
@@ -1144,6 +1144,7 @@ public class GrimoireScreen extends Screen {
                     return true;
                 }
             }
+            this.setFocused(null);
         }
         return retVal;
     }
