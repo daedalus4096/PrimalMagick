@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.menus.SpellcraftingAltarMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to update a spell package's name on the server in the spellcrafting altar GUI.
@@ -28,6 +27,10 @@ public class SetSpellNamePacket implements IMessageToServer {
         this.name = name;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(SetSpellNamePacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
         buf.writeUtf(message.name);
@@ -40,19 +43,11 @@ public class SetSpellNamePacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SetSpellNamePacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu) {
-                    // Update the spell name if the open menu window matches the given one
-                    ((SpellcraftingAltarMenu)player.containerMenu).setSpellName(message.name);
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(SetSpellNamePacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu menu) {
+            // Update the spell name if the open menu window matches the given one
+            menu.setSpellName(message.name);
         }
     }
 }

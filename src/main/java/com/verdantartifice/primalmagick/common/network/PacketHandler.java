@@ -59,10 +59,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.network.Channel.VersionTest;
+import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.SimpleChannel;
 
 /**
  * Handler class for processing packets.  Responsible for all custom communication between the client and the server.
@@ -70,29 +72,34 @@ import net.minecraftforge.network.simple.SimpleChannel;
  * @author Daedalus4096
  */
 public class PacketHandler {
-    private static final String PROTOCOL_VERSION = Integer.toString(1);
+    private static final int PROTOCOL_VERSION = 1;
     
-    private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
+    private static final SimpleChannel INSTANCE = ChannelBuilder
             .named(PrimalMagick.resource("main_channel"))
-            .clientAcceptedVersions(PROTOCOL_VERSION::equals)
-            .serverAcceptedVersions(PROTOCOL_VERSION::equals)
-            .networkProtocolVersion(() -> PROTOCOL_VERSION)
+            .clientAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
+            .serverAcceptedVersions(VersionTest.exact(PROTOCOL_VERSION))
+            .networkProtocolVersion(PROTOCOL_VERSION)
             .simpleChannel();
     
     public static void registerMessages() {
+        INSTANCE
+            .messageBuilder(SyncKnowledgePacket.class, SyncKnowledgePacket.direction()).encoder(SyncKnowledgePacket::encode).decoder(SyncKnowledgePacket::decode).consumerMainThread(SyncKnowledgePacket::onMessage).add()
+            .messageBuilder(SyncProgressPacket.class, SyncProgressPacket.direction()).encoder(SyncProgressPacket::encode).decoder(SyncProgressPacket::decode).consumerMainThread(SyncProgressPacket::onMessage).add()
+            .messageBuilder(SyncResearchFlagsPacket.class, SyncResearchFlagsPacket.direction()).encoder(SyncResearchFlagsPacket::encode).decoder(SyncResearchFlagsPacket::decode).consumerMainThread(SyncResearchFlagsPacket::onMessage).add()
+            .messageBuilder(WandPoofPacket.class, WandPoofPacket.direction()).encoder(WandPoofPacket::encode).decoder(WandPoofPacket::decode).consumerMainThread(WandPoofPacket::onMessage).add()
+            .messageBuilder(ManaSparklePacket.class, ManaSparklePacket.direction()).encoder(ManaSparklePacket::encode).decoder(ManaSparklePacket::decode).consumerMainThread(ManaSparklePacket::onMessage).add()
+            .messageBuilder(ScanItemPacket.class, ScanItemPacket.direction()).encoder(ScanItemPacket::encode).decoder(ScanItemPacket::decode).consumerMainThread(ScanItemPacket::onMessage).add()
+            .messageBuilder(ScanPositionPacket.class, ScanPositionPacket.direction()).encoder(ScanPositionPacket::encode).decoder(ScanPositionPacket::decode).consumerMainThread(ScanPositionPacket::onMessage).add()
+            .messageBuilder(AnalysisActionPacket.class, AnalysisActionPacket.direction()).encoder(AnalysisActionPacket::encode).decoder(AnalysisActionPacket::decode).consumerMainThread(AnalysisActionPacket::onMessage).add()
+            .messageBuilder(SyncCooldownsPacket.class, SyncCooldownsPacket.direction()).encoder(SyncCooldownsPacket::encode).decoder(SyncCooldownsPacket::decode).consumerMainThread(SyncCooldownsPacket::onMessage).add()
+            .messageBuilder(CycleActiveSpellPacket.class, CycleActiveSpellPacket.direction()).encoder(CycleActiveSpellPacket::encode).decoder(CycleActiveSpellPacket::decode).consumerMainThread(CycleActiveSpellPacket::onMessage).add()
+            .messageBuilder(SetSpellNamePacket.class, SetSpellNamePacket.direction()).encoder(SetSpellNamePacket::encode).decoder(SetSpellNamePacket::decode).consumerMainThread(SetSpellNamePacket::onMessage).add()
+            
+            .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
+            ;
+            
         int disc = 0;
         
-        INSTANCE.registerMessage(disc++, SyncKnowledgePacket.class, SyncKnowledgePacket::encode, SyncKnowledgePacket::decode, SyncKnowledgePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncProgressPacket.class, SyncProgressPacket::encode, SyncProgressPacket::decode, SyncProgressPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncResearchFlagsPacket.class, SyncResearchFlagsPacket::encode, SyncResearchFlagsPacket::decode, SyncResearchFlagsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, WandPoofPacket.class, WandPoofPacket::encode, WandPoofPacket::decode, WandPoofPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, ManaSparklePacket.class, ManaSparklePacket::encode, ManaSparklePacket::decode, ManaSparklePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, ScanItemPacket.class, ScanItemPacket::encode, ScanItemPacket::decode, ScanItemPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, ScanPositionPacket.class, ScanPositionPacket::encode, ScanPositionPacket::decode, ScanPositionPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, AnalysisActionPacket.class, AnalysisActionPacket::encode, AnalysisActionPacket::decode, AnalysisActionPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncCooldownsPacket.class, SyncCooldownsPacket::encode, SyncCooldownsPacket::decode, SyncCooldownsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, CycleActiveSpellPacket.class, CycleActiveSpellPacket::encode, CycleActiveSpellPacket::decode, CycleActiveSpellPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetSpellNamePacket.class, SetSpellNamePacket::encode, SetSpellNamePacket::decode, SetSpellNamePacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket::encode, SetSpellComponentTypeIndexPacket::decode, SetSpellComponentTypeIndexPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode, SetSpellComponentPropertyPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SpellTrailPacket.class, SpellTrailPacket::encode, SpellTrailPacket::decode, SpellTrailPacket.Handler::onMessage);
@@ -132,7 +139,6 @@ public class PacketHandler {
         INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode, OpenEnchantedBookScreenPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, SyncLinguisticsPacket.class, SyncLinguisticsPacket::encode, SyncLinguisticsPacket::decode, SyncLinguisticsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket::encode, ContainerSetVarintDataPacket::decode, ContainerSetVarintDataPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

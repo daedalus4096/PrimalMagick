@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
@@ -9,7 +7,8 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a mana sparkle particle effect on the client.
@@ -43,6 +42,10 @@ public class ManaSparklePacket implements IMessageToClient {
         this(source.getX() + 0.5D, source.getY() + 0.5D, source.getZ() + 0.5D, targetX, targetY, targetZ, maxAge, color);
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(ManaSparklePacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x1);
         buf.writeDouble(message.y1);
@@ -67,15 +70,7 @@ public class ManaSparklePacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(ManaSparklePacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                FxDispatcher.INSTANCE.manaSparkle(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.maxAge, message.color);
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(ManaSparklePacket message, CustomPayloadEvent.Context ctx) {
+        FxDispatcher.INSTANCE.manaSparkle(message.x1, message.y1, message.z1, message.x2, message.y2, message.z2, message.maxAge, message.color);
     }
 }

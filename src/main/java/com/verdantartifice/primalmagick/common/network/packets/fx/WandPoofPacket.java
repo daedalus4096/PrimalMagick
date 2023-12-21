@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -11,7 +9,8 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a wand poof particle effect on the client.
@@ -41,6 +40,10 @@ public class WandPoofPacket implements IMessageToClient {
         this(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, color, sound, facing);
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(WandPoofPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
@@ -61,19 +64,11 @@ public class WandPoofPacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(WandPoofPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                Direction side = null;
-                if (message.face >= 0) {
-                    side = Direction.from3DDataValue(message.face);
-                }
-                FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(WandPoofPacket message, CustomPayloadEvent.Context ctx) {
+        Direction side = null;
+        if (message.face >= 0) {
+            side = Direction.from3DDataValue(message.face);
         }
+        FxDispatcher.INSTANCE.wandPoof(message.x, message.y, message.z, message.color, message.sound, side);
     }
 }

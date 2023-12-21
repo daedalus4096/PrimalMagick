@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.function.Supplier;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +11,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side scan of a given item stack.  Used by the arcanometer for
@@ -34,6 +33,10 @@ public class ScanItemPacket implements IMessageToServer {
         this.stack = stack;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(ScanItemPacket message, FriendlyByteBuf buf) {
         buf.writeItem(message.stack);
     }
@@ -43,30 +46,22 @@ public class ScanItemPacket implements IMessageToServer {
         message.stack = buf.readItem();
         return message;
     }
-
-    public static class Handler {
-        public static void onMessage(ScanItemPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                if (message.stack != null && !message.stack.isEmpty()) {
-                    ServerPlayer player = ctx.get().getSender();
-                    ResearchManager.isScannedAsync(message.stack, player).thenAccept(isScanned -> {
-                        if (isScanned) {
-                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
-                        } else if (ResearchManager.setScanned(message.stack, player)) {
-                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
-                        } else {
-                            player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
-                        }
-                    }).exceptionally(e -> {
-                        LOGGER.error("Failed to scan item stack " + message.stack.toString(), e);
-                        return null;
-                    });
+    
+    public static void onMessage(ScanItemPacket message, CustomPayloadEvent.Context ctx) {
+        if (message.stack != null && !message.stack.isEmpty()) {
+            ServerPlayer player = ctx.getSender();
+            ResearchManager.isScannedAsync(message.stack, player).thenAccept(isScanned -> {
+                if (isScanned) {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.repeat").withStyle(ChatFormatting.RED), true);
+                } else if (ResearchManager.setScanned(message.stack, player)) {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.success").withStyle(ChatFormatting.GREEN), true);
+                } else {
+                    player.displayClientMessage(Component.translatable("event.primalmagick.scan.fail").withStyle(ChatFormatting.RED), true);
                 }
+            }).exceptionally(e -> {
+                LOGGER.error("Failed to scan item stack " + message.stack.toString(), e);
+                return null;
             });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
         }
     }
 }

@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.menus.AnalysisTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side scan of the slotted item on an analysis table.  Necessary to
@@ -26,6 +25,10 @@ public class AnalysisActionPacket implements IMessageToServer {
         this.windowId = windowId;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(AnalysisActionPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.windowId);
     }
@@ -36,19 +39,11 @@ public class AnalysisActionPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(AnalysisActionPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableMenu) {
-                    // Trigger the scan if the open menu window matches the given one
-                    ((AnalysisTableMenu)player.containerMenu).doScan();
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(AnalysisActionPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof AnalysisTableMenu menu) {
+            // Trigger the scan if the open menu window matches the given one
+            menu.doScan();
         }
     }
 }

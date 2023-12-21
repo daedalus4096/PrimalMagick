@@ -1,15 +1,14 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync a menu data slot value from the server to the client as a varint, to allow for
@@ -28,6 +27,10 @@ public class ContainerSetVarintDataPacket implements IMessageToClient {
         this.dataValue = dataValue;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(ContainerSetVarintDataPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.containerId);
         buf.writeVarInt(message.slotId);
@@ -38,18 +41,10 @@ public class ContainerSetVarintDataPacket implements IMessageToClient {
         return new ContainerSetVarintDataPacket(buf.readVarInt(), buf.readVarInt(), buf.readVarInt());
     }
     
-    public static class Handler {
-        public static void onMessage(ContainerSetVarintDataPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                if (player != null && player.containerMenu != null && player.containerMenu.containerId == message.containerId) {
-                    player.containerMenu.setData(message.slotId, message.dataValue);
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(ContainerSetVarintDataPacket message, CustomPayloadEvent.Context ctx) {
+        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+        if (player != null && player.containerMenu != null && player.containerMenu.containerId == message.containerId) {
+            player.containerMenu.setData(message.slotId, message.dataValue);
         }
     }
 }
