@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
@@ -9,7 +7,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet that informs the server that a given recipe has been seen by the player.
@@ -27,6 +26,10 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
         this.recipeId = recipe.getId();
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(SeenArcaneRecipePacket message, FriendlyByteBuf buf) {
         buf.writeResourceLocation(message.recipeId);
     }
@@ -37,21 +40,13 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SeenArcaneRecipePacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
-                    player.getRecipeBook().removeHighlight(recipe);
-                    PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                        recipeBook.get().removeHighlight(recipe);
-                    });
-                });
+    public static void onMessage(SeenArcaneRecipePacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        player.getServer().getRecipeManager().byKey(message.recipeId).ifPresent(recipe -> {
+            player.getRecipeBook().removeHighlight(recipe);
+            PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+                recipeBook.get().removeHighlight(recipe);
             });
-
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+        });
     }
 }
