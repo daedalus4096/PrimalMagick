@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
@@ -10,8 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -36,6 +35,10 @@ public class PlayClientSoundPacket implements IMessageToClient {
         this.pitch = pitch;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(PlayClientSoundPacket message, FriendlyByteBuf buf) {
         buf.writeUtf(message.eventLoc);
         buf.writeFloat(message.volume);
@@ -50,19 +53,11 @@ public class PlayClientSoundPacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(PlayClientSoundPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-            ctx.get().enqueueWork(() -> {
-                ResourceLocation eventLoc = ResourceLocation.tryParse(message.eventLoc);
-                if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {
-                    player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(PlayClientSoundPacket message, CustomPayloadEvent.Context ctx) {
+        Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
+        ResourceLocation eventLoc = ResourceLocation.tryParse(message.eventLoc);
+        if (eventLoc != null && ForgeRegistries.SOUND_EVENTS.containsKey(eventLoc)) {
+            player.playSound(ForgeRegistries.SOUND_EVENTS.getValue(eventLoc), message.volume, message.pitch);
         }
     }
 }

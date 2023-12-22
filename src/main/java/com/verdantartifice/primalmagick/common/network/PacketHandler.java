@@ -94,27 +94,27 @@ public class PacketHandler {
             .messageBuilder(SyncCooldownsPacket.class, SyncCooldownsPacket.direction()).encoder(SyncCooldownsPacket::encode).decoder(SyncCooldownsPacket::decode).consumerMainThread(SyncCooldownsPacket::onMessage).add()
             .messageBuilder(CycleActiveSpellPacket.class, CycleActiveSpellPacket.direction()).encoder(CycleActiveSpellPacket::encode).decoder(CycleActiveSpellPacket::decode).consumerMainThread(CycleActiveSpellPacket::onMessage).add()
             .messageBuilder(SetSpellNamePacket.class, SetSpellNamePacket.direction()).encoder(SetSpellNamePacket::encode).decoder(SetSpellNamePacket::decode).consumerMainThread(SetSpellNamePacket::onMessage).add()
+            .messageBuilder(SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket.direction()).encoder(SetSpellComponentTypeIndexPacket::encode).decoder(SetSpellComponentTypeIndexPacket::decode).consumerMainThread(SetSpellComponentTypeIndexPacket::onMessage).add()
+            .messageBuilder(SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket.direction()).encoder(SetSpellComponentPropertyPacket::encode).decoder(SetSpellComponentPropertyPacket::decode).consumerMainThread(SetSpellComponentPropertyPacket::onMessage).add()
+            .messageBuilder(SpellTrailPacket.class, SpellTrailPacket.direction()).encoder(SpellTrailPacket::encode).decoder(SpellTrailPacket::decode).consumerMainThread(SpellTrailPacket::onMessage).add()
+            .messageBuilder(SpellImpactPacket.class, SpellImpactPacket.direction()).encoder(SpellImpactPacket::encode).decoder(SpellImpactPacket::decode).consumerMainThread(SpellImpactPacket::onMessage).add()
+            .messageBuilder(TileToClientPacket.class, TileToClientPacket.direction()).encoder(TileToClientPacket::encode).decoder(TileToClientPacket::decode).consumerMainThread(TileToClientPacket::onMessage).add()
+            .messageBuilder(TileToServerPacket.class, TileToServerPacket.direction()).encoder(TileToServerPacket::encode).decoder(TileToServerPacket::decode).consumerMainThread(TileToServerPacket::onMessage).add()
+            .messageBuilder(TeleportArrivalPacket.class, TeleportArrivalPacket.direction()).encoder(TeleportArrivalPacket::encode).decoder(TeleportArrivalPacket::decode).consumerMainThread(TeleportArrivalPacket::onMessage).add()
+            .messageBuilder(SpellBoltPacket.class, SpellBoltPacket.direction()).encoder(SpellBoltPacket::encode).decoder(SpellBoltPacket::decode).consumerMainThread(SpellBoltPacket::onMessage).add()
+            .messageBuilder(SyncStatsPacket.class, SyncStatsPacket.direction()).encoder(SyncStatsPacket::encode).decoder(SyncStatsPacket::decode).consumerMainThread(SyncStatsPacket::onMessage).add()
+            .messageBuilder(SyncAttunementsPacket.class, SyncAttunementsPacket.direction()).encoder(SyncAttunementsPacket::encode).decoder(SyncAttunementsPacket::decode).consumerMainThread(SyncAttunementsPacket::onMessage).add()
+            .messageBuilder(ResetFallDistancePacket.class, ResetFallDistancePacket.direction()).encoder(ResetFallDistancePacket::encode).decoder(ResetFallDistancePacket::decode).consumerMainThread(ResetFallDistancePacket::onMessage).add()
+            .messageBuilder(StartProjectPacket.class, StartProjectPacket.direction()).encoder(StartProjectPacket::encode).decoder(StartProjectPacket::decode).consumerMainThread(StartProjectPacket::onMessage).add()
+            .messageBuilder(CompleteProjectPacket.class, CompleteProjectPacket.direction()).encoder(CompleteProjectPacket::encode).decoder(CompleteProjectPacket::decode).consumerMainThread(CompleteProjectPacket::onMessage).add()
+            .messageBuilder(SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket.direction()).encoder(SetProjectMaterialSelectionPacket::encode).decoder(SetProjectMaterialSelectionPacket::decode).consumerMainThread(SetProjectMaterialSelectionPacket::onMessage).add()
+            .messageBuilder(PlayClientSoundPacket.class, PlayClientSoundPacket.direction()).encoder(PlayClientSoundPacket::encode).decoder(PlayClientSoundPacket::decode).consumerMainThread(PlayClientSoundPacket::onMessage).add()
             
             .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
             ;
             
         int disc = 0;
         
-        INSTANCE.registerMessage(disc++, SetSpellComponentTypeIndexPacket.class, SetSpellComponentTypeIndexPacket::encode, SetSpellComponentTypeIndexPacket::decode, SetSpellComponentTypeIndexPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetSpellComponentPropertyPacket.class, SetSpellComponentPropertyPacket::encode, SetSpellComponentPropertyPacket::decode, SetSpellComponentPropertyPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SpellTrailPacket.class, SpellTrailPacket::encode, SpellTrailPacket::decode, SpellTrailPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SpellImpactPacket.class, SpellImpactPacket::encode, SpellImpactPacket::decode, SpellImpactPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, TileToClientPacket.class, TileToClientPacket::encode, TileToClientPacket::decode, TileToClientPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, TileToServerPacket.class, TileToServerPacket::encode, TileToServerPacket::decode, TileToServerPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, TeleportArrivalPacket.class, TeleportArrivalPacket::encode, TeleportArrivalPacket::decode, TeleportArrivalPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SpellBoltPacket.class, SpellBoltPacket::encode, SpellBoltPacket::decode, SpellBoltPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncStatsPacket.class, SyncStatsPacket::encode, SyncStatsPacket::decode, SyncStatsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncAttunementsPacket.class, SyncAttunementsPacket::encode, SyncAttunementsPacket::decode, SyncAttunementsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, ResetFallDistancePacket.class, ResetFallDistancePacket::encode, ResetFallDistancePacket::decode, ResetFallDistancePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, StartProjectPacket.class, StartProjectPacket::encode, StartProjectPacket::decode, StartProjectPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, CompleteProjectPacket.class, CompleteProjectPacket::encode, CompleteProjectPacket::decode, CompleteProjectPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetProjectMaterialSelectionPacket.class, SetProjectMaterialSelectionPacket::encode, SetProjectMaterialSelectionPacket::decode, SetProjectMaterialSelectionPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, PlayClientSoundPacket.class, PlayClientSoundPacket::encode, PlayClientSoundPacket::decode, PlayClientSoundPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, OfferingChannelPacket.class, OfferingChannelPacket::encode, OfferingChannelPacket::decode, OfferingChannelPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, PropMarkerPacket.class, PropMarkerPacket::encode, PropMarkerPacket::decode, PropMarkerPacket.Handler::onMessage);
         INSTANCE.registerMessage(disc++, RemovePropMarkerPacket.class, RemovePropMarkerPacket::encode, RemovePropMarkerPacket::decode, RemovePropMarkerPacket.Handler::onMessage);
