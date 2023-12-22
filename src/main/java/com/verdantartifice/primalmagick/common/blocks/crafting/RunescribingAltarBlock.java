@@ -24,7 +24,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the runescribing altar.  May be used to apply combinations of runes to
@@ -68,7 +67,7 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
             // Open the GUI for the altar
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunescribingAltarTileEntity altarTile) {
-                NetworkHooks.openScreen(serverPlayer, altarTile, tile.getBlockPos());
+                serverPlayer.openMenu(altarTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

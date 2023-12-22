@@ -30,7 +30,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the wand glamour table.  Allows a player to alter the appearance of
@@ -78,7 +77,7 @@ public class WandGlamourTableBlock extends Block {
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the wand glamour table
-            NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
+            serverPlayer.openMenu(new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
                     return new WandGlamourTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));

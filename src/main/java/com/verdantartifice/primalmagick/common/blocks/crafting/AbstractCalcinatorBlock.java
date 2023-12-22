@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Base block definition for the essence furnace and calcinators.  These are like furnaces, but instead of smelting items
@@ -81,7 +80,7 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
             // Open the GUI for the calcinator
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof AbstractCalcinatorTileEntity calcinatorTile) {
-                NetworkHooks.openScreen(serverPlayer, calcinatorTile, tile.getBlockPos());
+                serverPlayer.openMenu(calcinatorTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

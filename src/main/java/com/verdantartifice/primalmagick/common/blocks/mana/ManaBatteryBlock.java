@@ -27,7 +27,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a mana battery, such as the Mana Nexus.  A mana battery will automatically
@@ -72,7 +71,7 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the battery
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof ManaBatteryTileEntity batteryTile) {
-                NetworkHooks.openScreen(serverPlayer, batteryTile, tile.getBlockPos());
+                serverPlayer.openMenu(batteryTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

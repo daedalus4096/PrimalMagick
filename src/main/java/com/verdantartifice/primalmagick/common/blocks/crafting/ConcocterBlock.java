@@ -36,7 +36,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a concocter.  Used to craft multi-dose potions.
@@ -123,7 +122,7 @@ public class ConcocterBlock extends BaseEntityBlock {
             // Open the GUI for the concocter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ConcocterTileEntity concocterTile) {
-                NetworkHooks.openScreen(serverPlayer, concocterTile, tile.getBlockPos());
+                serverPlayer.openMenu(concocterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

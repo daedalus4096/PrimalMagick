@@ -41,7 +41,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a furnace powered by Infernal mana instead of fuel.  If supplemented with Ignyx,
@@ -100,7 +99,7 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
             // Open the GUI for the furnace
             BlockEntity tile = pLevel.getBlockEntity(pPos);
             if (tile instanceof InfernalFurnaceTileEntity furnaceTile) {
-                NetworkHooks.openScreen(serverPlayer, furnaceTile, tile.getBlockPos());
+                serverPlayer.openMenu(furnaceTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

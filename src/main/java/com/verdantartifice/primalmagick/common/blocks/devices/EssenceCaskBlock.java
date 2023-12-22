@@ -32,7 +32,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for essence casks, containers which hold only magical essence, but hold
@@ -113,7 +112,7 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
             // Open the GUI for the essence cask
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof EssenceCaskTileEntity caskTile) {
-                NetworkHooks.openScreen(serverPlayer, caskTile, tile.getBlockPos());
+                serverPlayer.openMenu(caskTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the wand charger.  A wand charger allows a player to charge a wand with mana by
@@ -55,7 +54,7 @@ public class WandChargerBlock extends BaseEntityBlock {
             // Open the GUI for the wand charger
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof WandChargerTileEntity chargerTile) {
-                NetworkHooks.openScreen(serverPlayer, chargerTile, tile.getBlockPos());
+                serverPlayer.openMenu(chargerTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

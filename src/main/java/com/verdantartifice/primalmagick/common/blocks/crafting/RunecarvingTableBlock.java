@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the runecarving table.  The runecarving table lets the player turn stone
@@ -74,7 +73,7 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof RunecarvingTableTileEntity tableTile) {
-                NetworkHooks.openScreen(serverPlayer, tableTile, tile.getBlockPos());
+                serverPlayer.openMenu(tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;
