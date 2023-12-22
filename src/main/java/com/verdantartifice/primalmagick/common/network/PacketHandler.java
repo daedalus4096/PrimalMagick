@@ -122,23 +122,19 @@ public class PacketHandler {
             .messageBuilder(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.direction()).encoder(PlaceArcaneRecipePacket::encode).decoder(PlaceArcaneRecipePacket::decode).consumerMainThread(PlaceArcaneRecipePacket::onMessage).add()
             .messageBuilder(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.direction()).encoder(PlaceGhostArcaneRecipePacket::encode).decoder(PlaceGhostArcaneRecipePacket::decode).consumerMainThread(PlaceGhostArcaneRecipePacket::onMessage).add()
             .messageBuilder(SeenArcaneRecipePacket.class, SeenArcaneRecipePacket.direction()).encoder(SeenArcaneRecipePacket::encode).decoder(SeenArcaneRecipePacket::decode).consumerMainThread(SeenArcaneRecipePacket::onMessage).add()
-            
+            .messageBuilder(ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket.direction()).encoder(ChangeArcaneRecipeBookSettingsPacket::encode).decoder(ChangeArcaneRecipeBookSettingsPacket::decode).consumerMainThread(ChangeArcaneRecipeBookSettingsPacket::onMessage).add()
+            .messageBuilder(SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket.direction()).encoder(SetResearchTopicHistoryPacket::encode).decoder(SetResearchTopicHistoryPacket::decode).consumerMainThread(SetResearchTopicHistoryPacket::onMessage).add()
+            .messageBuilder(SpellcraftingRunePacket.class, SpellcraftingRunePacket.direction()).encoder(SpellcraftingRunePacket::encode).decoder(SpellcraftingRunePacket::decode).consumerMainThread(SpellcraftingRunePacket::onMessage).add()
+            .messageBuilder(SetActiveSpellPacket.class, SetActiveSpellPacket.direction()).encoder(SetActiveSpellPacket::encode).decoder(SetActiveSpellPacket::decode).consumerMainThread(SetActiveSpellPacket::onMessage).add()
+            .messageBuilder(WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket.direction()).encoder(WithdrawCaskEssencePacket::encode).decoder(WithdrawCaskEssencePacket::decode).consumerMainThread(WithdrawCaskEssencePacket::onMessage).add()
+            .messageBuilder(UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket.direction()).encoder(UpdateRuneEnchantmentsPacket::encode).decoder(UpdateRuneEnchantmentsPacket::decode).consumerMainThread(UpdateRuneEnchantmentsPacket::onMessage).add()
+            .messageBuilder(OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket.direction()).encoder(OpenGrimoireScreenPacket::encode).decoder(OpenGrimoireScreenPacket::decode).consumerMainThread(OpenGrimoireScreenPacket::onMessage).add()
+            .messageBuilder(SyncWardPacket.class, SyncWardPacket.direction()).encoder(SyncWardPacket::encode).decoder(SyncWardPacket::decode).consumerMainThread(SyncWardPacket::onMessage).add()
+            .messageBuilder(OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket.direction()).encoder(OpenStaticBookScreenPacket::encode).decoder(OpenStaticBookScreenPacket::decode).consumerMainThread(OpenStaticBookScreenPacket::onMessage).add()
+            .messageBuilder(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.direction()).encoder(OpenEnchantedBookScreenPacket::encode).decoder(OpenEnchantedBookScreenPacket::decode).consumerMainThread(OpenEnchantedBookScreenPacket::onMessage).add()
+            .messageBuilder(SyncLinguisticsPacket.class, SyncLinguisticsPacket.direction()).encoder(SyncLinguisticsPacket::encode).decoder(SyncLinguisticsPacket::decode).consumerMainThread(SyncLinguisticsPacket::onMessage).add()
             .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
             ;
-            
-        int disc = 0;
-        
-        INSTANCE.registerMessage(disc++, ChangeArcaneRecipeBookSettingsPacket.class, ChangeArcaneRecipeBookSettingsPacket::encode, ChangeArcaneRecipeBookSettingsPacket::decode, ChangeArcaneRecipeBookSettingsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetResearchTopicHistoryPacket.class, SetResearchTopicHistoryPacket::encode, SetResearchTopicHistoryPacket::decode, SetResearchTopicHistoryPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SpellcraftingRunePacket.class, SpellcraftingRunePacket::encode, SpellcraftingRunePacket::decode, SpellcraftingRunePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SetActiveSpellPacket.class, SetActiveSpellPacket::encode, SetActiveSpellPacket::decode, SetActiveSpellPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, WithdrawCaskEssencePacket.class, WithdrawCaskEssencePacket::encode, WithdrawCaskEssencePacket::decode, WithdrawCaskEssencePacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, UpdateRuneEnchantmentsPacket.class, UpdateRuneEnchantmentsPacket::encode, UpdateRuneEnchantmentsPacket::decode, UpdateRuneEnchantmentsPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, OpenGrimoireScreenPacket.class, OpenGrimoireScreenPacket::encode, OpenGrimoireScreenPacket::decode, OpenGrimoireScreenPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncWardPacket.class, SyncWardPacket::encode, SyncWardPacket::decode, SyncWardPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, OpenStaticBookScreenPacket.class, OpenStaticBookScreenPacket::encode, OpenStaticBookScreenPacket::decode, OpenStaticBookScreenPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket::encode, OpenEnchantedBookScreenPacket::decode, OpenEnchantedBookScreenPacket.Handler::onMessage);
-        INSTANCE.registerMessage(disc++, SyncLinguisticsPacket.class, SyncLinguisticsPacket::encode, SyncLinguisticsPacket::decode, SyncLinguisticsPacket.Handler::onMessage);
     }
     
     public static void sendToServer(IMessageToServer message) {

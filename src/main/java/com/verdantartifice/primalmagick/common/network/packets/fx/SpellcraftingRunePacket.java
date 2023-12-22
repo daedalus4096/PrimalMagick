@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.tiles.crafting.SpellcraftingAltarTileEntity;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a spellcrafting rune particle effect on the client.
@@ -37,6 +36,10 @@ public class SpellcraftingRunePacket implements IMessageToClient {
         this.color = color;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(SpellcraftingRunePacket message, FriendlyByteBuf buf) {
         buf.writeEnum(message.segment);
         buf.writeDouble(message.x);
@@ -61,34 +64,26 @@ public class SpellcraftingRunePacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SpellcraftingRunePacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                switch (message.segment) {
-                case U1:
-                case U2:
-                    FxDispatcher.INSTANCE.spellcraftingRuneU(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
-                    break;
-                case V1:
-                case V2:
-                    FxDispatcher.INSTANCE.spellcraftingRuneV(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
-                    break;
-                case T1:
-                case T2:
-                    FxDispatcher.INSTANCE.spellcraftingRuneT(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
-                    break;
-                case D1:
-                case D2:
-                    FxDispatcher.INSTANCE.spellcraftingRuneD(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unrecognized spellcrafting altar segment type");
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(SpellcraftingRunePacket message, CustomPayloadEvent.Context ctx) {
+        switch (message.segment) {
+        case U1:
+        case U2:
+            FxDispatcher.INSTANCE.spellcraftingRuneU(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
+            break;
+        case V1:
+        case V2:
+            FxDispatcher.INSTANCE.spellcraftingRuneV(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
+            break;
+        case T1:
+        case T2:
+            FxDispatcher.INSTANCE.spellcraftingRuneT(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
+            break;
+        case D1:
+        case D2:
+            FxDispatcher.INSTANCE.spellcraftingRuneD(message.x, message.y, message.z, message.dx, message.dy, message.dz, message.color);
+            break;
+        default:
+            throw new IllegalArgumentException("Unrecognized spellcrafting altar segment type");
         }
     }
 }

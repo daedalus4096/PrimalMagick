@@ -1,14 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger the opening of the Grimoire GUI on the client.
@@ -18,6 +16,10 @@ import net.minecraftforge.network.NetworkEvent;
 public class OpenGrimoireScreenPacket implements IMessageToClient {
     public OpenGrimoireScreenPacket() {}
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(OpenGrimoireScreenPacket message, FriendlyByteBuf buf) {
         // Nothing to do
     }
@@ -26,17 +28,9 @@ public class OpenGrimoireScreenPacket implements IMessageToClient {
         return new OpenGrimoireScreenPacket();
     }
     
-    public static class Handler {
-        public static void onMessage(OpenGrimoireScreenPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                if (FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openGrimoireScreen();
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(OpenGrimoireScreenPacket message, CustomPayloadEvent.Context ctx) {
+        if (FMLEnvironment.dist.isClient()) {
+            ClientUtils.openGrimoireScreen();
         }
     }
 }

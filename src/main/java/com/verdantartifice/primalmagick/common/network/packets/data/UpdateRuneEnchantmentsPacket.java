@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
@@ -11,7 +10,8 @@ import com.verdantartifice.primalmagick.common.runes.RuneManager;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update rune enchantment definition JSON data on the client from the server.
@@ -39,6 +39,10 @@ public class UpdateRuneEnchantmentsPacket implements IMessageToClient {
         return this.definitions;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(UpdateRuneEnchantmentsPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.definitions.size());
         for (Map.Entry<ResourceLocation, RuneEnchantmentDefinition> entry : message.definitions.entrySet()) {
@@ -51,15 +55,7 @@ public class UpdateRuneEnchantmentsPacket implements IMessageToClient {
         return new UpdateRuneEnchantmentsPacket(buf);
     }
     
-    public static class Handler {
-        public static void onMessage(UpdateRuneEnchantmentsPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                RuneEnchantmentDefinitionLoader.createInstance().replaceRuneEnchantments(message.getDefinitions());
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(UpdateRuneEnchantmentsPacket message, CustomPayloadEvent.Context ctx) {
+        RuneEnchantmentDefinitionLoader.createInstance().replaceRuneEnchantments(message.getDefinitions());
     }
 }

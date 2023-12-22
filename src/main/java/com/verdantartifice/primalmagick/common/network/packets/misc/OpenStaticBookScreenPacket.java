@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.function.Supplier;
-
 import com.google.common.base.Preconditions;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
@@ -14,9 +12,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger the opening of of a static book on the client.
@@ -44,6 +42,10 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         this.bgTexture = bgTexture;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(OpenStaticBookScreenPacket message, FriendlyByteBuf buf) {
         buf.writeResourceKey(message.bookKey);
         buf.writeResourceLocation(message.languageId);
@@ -55,17 +57,9 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         return new OpenStaticBookScreenPacket(buf.readResourceKey(BooksPM.BOOKS.get().getRegistryKey()), buf.readResourceLocation(), buf.readVarInt(), buf.readResourceLocation());
     }
     
-    public static class Handler {
-        public static void onMessage(OpenStaticBookScreenPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                if (FMLEnvironment.dist == Dist.CLIENT) {
-                    ClientUtils.openStaticBookScreen(message.bookKey, message.languageId, message.translatedComprehension, message.bgTexture);
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(OpenStaticBookScreenPacket message, CustomPayloadEvent.Context ctx) {
+        if (FMLEnvironment.dist.isClient()) {
+            ClientUtils.openStaticBookScreen(message.bookKey, message.languageId, message.translatedComprehension, message.bgTexture);
         }
     }
 }

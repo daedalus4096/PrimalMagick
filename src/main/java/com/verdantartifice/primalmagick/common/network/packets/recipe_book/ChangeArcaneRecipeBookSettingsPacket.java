@@ -1,14 +1,13 @@
 package com.verdantartifice.primalmagick.common.network.packets.recipe_book;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet that informs the server of updated settings to the player's arcane recipe book.
@@ -32,6 +31,10 @@ public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
         this.filtering = filtering;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(ChangeArcaneRecipeBookSettingsPacket message, FriendlyByteBuf buf) {
         buf.writeEnum(message.type);
         buf.writeBoolean(message.open);
@@ -46,18 +49,10 @@ public class ChangeArcaneRecipeBookSettingsPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(ChangeArcaneRecipeBookSettingsPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
-                    recipeBook.get().setBookSettings(message.type, message.open, message.filtering);
-                });
-            });
-
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(ChangeArcaneRecipeBookSettingsPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        PrimalMagickCapabilities.getArcaneRecipeBook(player).ifPresent(recipeBook -> {
+            recipeBook.get().setBookSettings(message.type, message.open, message.filtering);
+        });
     }
 }

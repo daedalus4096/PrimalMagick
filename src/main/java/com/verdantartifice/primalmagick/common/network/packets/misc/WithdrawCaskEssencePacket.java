@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.misc;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -14,7 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to trigger a server-side withdrawl of essence from an essence cask.
@@ -41,6 +40,10 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
         this.caskPos = pos;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(WithdrawCaskEssencePacket message, FriendlyByteBuf buf) {
         buf.writeUtf(message.essenceType.toString());
         buf.writeUtf(message.essenceSource.getTag());
@@ -57,34 +60,26 @@ public class WithdrawCaskEssencePacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(WithdrawCaskEssencePacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                Level level = player.getCommandSenderWorld();
+    public static void onMessage(WithdrawCaskEssencePacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        Level level = player.getCommandSenderWorld();
 
-                // Only process blocks that are currently loaded into the world.  Safety check to prevent
-                // resource thrashing from falsified packets.
-                if (message.caskPos != null && level.isLoaded(message.caskPos)) {
-                    BlockEntity tile = level.getBlockEntity(message.caskPos);
-                    if (tile instanceof EssenceCaskTileEntity caskTile) {
-                        int curCount = caskTile.getEssenceCount(message.essenceType, message.essenceSource);
-                        int toRemove = Math.min(message.amount, curCount);
-                        if (toRemove > 0) {
-                            int newCount = Math.max(0, curCount - toRemove);
-                            caskTile.setEssenceCount(message.essenceType, message.essenceSource, newCount);
-                            ItemStack stack = EssenceItem.getEssence(message.essenceType, message.essenceSource, toRemove);
-                            if (!player.getInventory().add(stack)) {
-                                player.drop(stack, false);
-                            }
-                        }
+        // Only process blocks that are currently loaded into the world.  Safety check to prevent
+        // resource thrashing from falsified packets.
+        if (message.caskPos != null && level.isLoaded(message.caskPos)) {
+            BlockEntity tile = level.getBlockEntity(message.caskPos);
+            if (tile instanceof EssenceCaskTileEntity caskTile) {
+                int curCount = caskTile.getEssenceCount(message.essenceType, message.essenceSource);
+                int toRemove = Math.min(message.amount, curCount);
+                if (toRemove > 0) {
+                    int newCount = Math.max(0, curCount - toRemove);
+                    caskTile.setEssenceCount(message.essenceType, message.essenceSource, newCount);
+                    ItemStack stack = EssenceItem.getEssence(message.essenceType, message.essenceSource, toRemove);
+                    if (!player.getInventory().add(stack)) {
+                        player.drop(stack, false);
                     }
                 }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+            }
         }
     }
 }
