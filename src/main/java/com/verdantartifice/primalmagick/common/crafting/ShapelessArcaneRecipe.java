@@ -31,7 +31,6 @@ import net.minecraftforge.common.util.RecipeMatcher;
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
 public class ShapelessArcaneRecipe implements IArcaneRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
@@ -39,8 +38,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
-    public ShapelessArcaneRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
-        this.id = id;
+    public ShapelessArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
@@ -88,11 +86,6 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override
@@ -144,7 +137,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
         }
         
         @Override
-        public ShapelessArcaneRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public ShapelessArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             
@@ -157,7 +150,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             }
             
             ItemStack result = buffer.readItem();
-            return new ShapelessArcaneRecipe(recipeId, group, research, manaCosts, result, ingredients);
+            return new ShapelessArcaneRecipe(group, research, manaCosts, result, ingredients);
         }
 
         @Override

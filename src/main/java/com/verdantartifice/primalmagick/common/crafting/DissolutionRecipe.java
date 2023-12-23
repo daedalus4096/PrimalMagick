@@ -23,14 +23,12 @@ import net.minecraftforge.common.crafting.CraftingHelper;
  * @author Daedalus4096
  */
 public class DissolutionRecipe implements IDissolutionRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final Ingredient ingredient;
     protected final ItemStack result;
     protected final SourceList manaCosts;
     
-    public DissolutionRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
-        this.id = id;
+    public DissolutionRecipe(String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
         this.group = group;
         this.ingredient = ingredient;
         this.result = result;
@@ -65,11 +63,6 @@ public class DissolutionRecipe implements IDissolutionRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.DISSOLUTION.get();
     }
@@ -95,12 +88,12 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         }
 
         @Override
-        public DissolutionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public DissolutionRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             Ingredient ing = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new DissolutionRecipe(recipeId, group, ing, result, manaCosts);
+            return new DissolutionRecipe(group, ing, result, manaCosts);
         }
 
         @Override

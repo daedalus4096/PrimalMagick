@@ -26,13 +26,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Recipe category class for a ritual recipe.
  * 
  * @author Daedalus4096
  */
-public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
+public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualRecipe>> {
     public static final ResourceLocation UID = PrimalMagick.resource("ritual_altar");
     private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/ritual_altar.png");
     private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
@@ -53,7 +54,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IRitualRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IRitualRecipe> recipeHolder, IFocusGroup focuses) {
+        IRitualRecipe recipe = recipeHolder.value();
         List<Ingredient> offerings = recipe.getIngredients();
         List<Ingredient> props = recipe.getProps().stream().map(b -> b.asIngredient()).toList();
         int ingredientCount = recipe.getIngredients().size();
@@ -69,11 +71,12 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public void draw(IRitualRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
         Minecraft mc = Minecraft.getInstance();
         guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.offerings.header"), 0, 2, Color.BLACK.getRGB(), false);
         guiGraphics.drawString(mc.font, Component.translatable("jei.primalmagick.ritual.props.header"), 0, 51, Color.BLACK.getRGB(), false);
         
+        IRitualRecipe recipe = recipeHolder.value();
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -86,7 +89,8 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
     }
 
     @Override
-    public List<Component> getTooltipStrings(IRitualRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        IRitualRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
         CompoundResearchKey compoundResearch = recipe.getRequiredResearch();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
@@ -98,12 +102,12 @@ public class RitualRecipeCategory extends RecipeCategoryPM<IRitualRecipe> {
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
             return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
         } else {
-            return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
+            return super.getTooltipStrings(recipeHolder, recipeSlotsView, mouseX, mouseY);
         }
     }
 
     @Override
-    public RecipeType<IRitualRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<IRitualRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.RITUAL;
     }
 }

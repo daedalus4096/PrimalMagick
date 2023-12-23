@@ -31,7 +31,6 @@ import net.minecraftforge.common.util.RecipeMatcher;
  * @author Daedalus4096
  */
 public class ConcoctingRecipe implements IConcoctingRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
@@ -39,8 +38,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
 
-    public ConcoctingRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
-        this.id = id;
+    public ConcoctingRecipe(String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
@@ -88,11 +86,6 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override
@@ -144,7 +137,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
         }
         
         @Override
-        public ConcoctingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public ConcoctingRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             
@@ -157,7 +150,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
             }
             
             ItemStack result = buffer.readItem();
-            return new ConcoctingRecipe(recipeId, group, research, manaCosts, result, ingredients);
+            return new ConcoctingRecipe(group, research, manaCosts, result, ingredients);
         }
 
         @Override

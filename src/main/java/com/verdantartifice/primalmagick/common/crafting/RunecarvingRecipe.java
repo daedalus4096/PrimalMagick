@@ -23,15 +23,13 @@ import net.minecraftforge.common.crafting.CraftingHelper;
  * @author Daedalus4096
  */
 public class RunecarvingRecipe implements IRunecarvingRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
     protected final ItemStack result;
     
-    public RunecarvingRecipe(ResourceLocation id, String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
-        this.id = id;
+    public RunecarvingRecipe(String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
         this.group = group;
         this.research = research;
         this.ingredient1 = ingredient1;
@@ -68,11 +66,6 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-    
-    @Override
     public String getGroup() {
         return this.group;
     }
@@ -107,13 +100,13 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
         }
 
         @Override
-        public RunecarvingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public RunecarvingRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(recipeId, group, research, ing1, ing2, result);
+            return new RunecarvingRecipe(group, research, ing1, ing2, result);
         }
 
         @Override

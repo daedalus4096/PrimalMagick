@@ -24,8 +24,9 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
-public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe> {
+public class ConcoctingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IConcoctingRecipe>> {
     public static final ResourceLocation UID = PrimalMagick.resource("concocter");
     private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/arcane_workbench.png");
     private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
@@ -48,17 +49,18 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IConcoctingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IConcoctingRecipe> recipe, IFocusGroup focuses) {
         // Initialize recipe output
-        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe)));
+        this.craftingGridHelper.createAndSetOutputs(builder, VanillaTypes.ITEM_STACK, List.of(RecipeUtils.getResultItem(recipe.value())));
         
         // Initialize recipe inputs
-        List<List<ItemStack>> inputs = recipe.getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
+        List<List<ItemStack>> inputs = recipe.value().getIngredients().stream().map(ingredient -> List.of(ingredient.getItems())).toList();
         this.craftingGridHelper.createAndSetInputs(builder, VanillaTypes.ITEM_STACK, inputs, 0, 0);
     }
 
     @Override
-    public void draw(IConcoctingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+    public void draw(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        IConcoctingRecipe recipe = recipeHolder.value();
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
@@ -71,7 +73,8 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
     }
 
     @Override
-    public List<Component> getTooltipStrings(IConcoctingRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(RecipeHolder<IConcoctingRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        IConcoctingRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
         CompoundResearchKey compoundResearch = recipe.getRequiredResearch();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
@@ -83,12 +86,12 @@ public class ConcoctingRecipeCategory extends RecipeCategoryPM<IConcoctingRecipe
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
             return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
         } else {
-            return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
+            return super.getTooltipStrings(recipeHolder, recipeSlotsView, mouseX, mouseY);
         }
     }
 
     @Override
-    public RecipeType<IConcoctingRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<IConcoctingRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.CONCOCTING;
     }
 }

@@ -38,13 +38,11 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     protected final int recipeHeight;
     protected final NonNullList<Ingredient> recipeItems;
     protected final ItemStack recipeOutput;
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
-        this.id = id;
+    public ShapedArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
@@ -111,11 +109,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override
@@ -286,7 +279,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         }
         
         @Override
-        public ShapedArcaneRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public ShapedArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
             String group = buffer.readUtf(32767);
@@ -297,7 +290,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 list.set(index, Ingredient.fromNetwork(buffer));
             }
             ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, list, stack);
+            return new ShapedArcaneRecipe(group, research, manaCosts, width, height, list, stack);
         }
 
         @Override

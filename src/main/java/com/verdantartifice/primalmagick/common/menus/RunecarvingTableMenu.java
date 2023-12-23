@@ -31,6 +31,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -52,7 +53,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
     protected final ResultContainer outputInventory = new ResultContainer();
     protected final Optional<RecipeWrapper> tileInvWrapper;
 
-    protected List<IRunecarvingRecipe> recipes = new ArrayList<>();
+    protected List<RecipeHolder<IRunecarvingRecipe>> recipes = new ArrayList<>();
     
     protected ItemStack slabInput = ItemStack.EMPTY;
     protected ItemStack lapisInput = ItemStack.EMPTY;
@@ -133,7 +134,7 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         return this.selectedRecipe.get();
     }
 
-    public List<IRunecarvingRecipe> getRecipeList() {
+    public List<RecipeHolder<IRunecarvingRecipe>> getRecipeList() {
         return this.recipes;
     }
 
@@ -171,13 +172,13 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         this.selectedRecipe.set(-1);
         this.outputSlot.set(ItemStack.EMPTY);
         this.recipes = this.level.getRecipeManager().getRecipesFor(RecipeTypesPM.RUNECARVING.get(), inventoryIn, this.level).stream()
-                .filter(r -> r != null && (r.getRequiredResearch() == null || r.getRequiredResearch().isKnownByStrict(this.player)))
+                .filter(r -> r != null && (r.value().getRequiredResearch() == null || r.value().getRequiredResearch().isKnownByStrict(this.player)))
                 .collect(Collectors.toList());
     }
     
     protected void updateRecipeResultSlot(RegistryAccess registryAccess) {
         if (!this.recipes.isEmpty() && this.tileInvWrapper.isPresent()) {
-            IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get());
+            IRunecarvingRecipe recipe = this.recipes.get(this.selectedRecipe.get()).value();
             this.outputSlot.set(recipe.assemble(this.tileInvWrapper.get(), registryAccess));
         } else {
             this.outputSlot.set(ItemStack.EMPTY);

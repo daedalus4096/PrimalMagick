@@ -22,13 +22,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Recipe category for a dissolution recipe.
  * 
  * @author Daedalus4096
  */
-public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionRecipe> {
+public class DissolutionRecipeCategory extends RecipeCategoryPM<RecipeHolder<IDissolutionRecipe>> {
     public static final ResourceLocation UID = PrimalMagick.resource("dissolution_chamber");
     private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/dissolution_chamber.png");
     private static final int MANA_COST_X_OFFSET = 28;
@@ -44,21 +45,21 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IDissolutionRecipe recipe, IFocusGroup focuses) {
-        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addIngredients(recipe.getIngredients().get(0));
-        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(RecipeUtils.getResultItem(recipe));
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IDissolutionRecipe> recipe, IFocusGroup focuses) {
+        builder.addSlot(RecipeIngredientRole.INPUT, 1, 19).addIngredients(recipe.value().getIngredients().get(0));
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 61, 19).addItemStack(RecipeUtils.getResultItem(recipe.value()));
     }
 
     @Override
-    public void draw(IDissolutionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
+    public void draw(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        if (recipe.value().getManaCosts() != null && !recipe.value().getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
     }
 
     @Override
-    public List<Component> getTooltipStrings(IDissolutionRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        SourceList manaCosts = recipe.getManaCosts();
+    public List<Component> getTooltipStrings(RecipeHolder<IDissolutionRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        SourceList manaCosts = recipe.value().getManaCosts();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
@@ -69,7 +70,7 @@ public class DissolutionRecipeCategory extends RecipeCategoryPM<IDissolutionReci
     }
 
     @Override
-    public RecipeType<IDissolutionRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<IDissolutionRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.DISSOLUTION;
     }
 }

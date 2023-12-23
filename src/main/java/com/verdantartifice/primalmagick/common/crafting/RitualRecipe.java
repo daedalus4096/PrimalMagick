@@ -34,7 +34,6 @@ public class RitualRecipe implements IRitualRecipe {
     public static final int MIN_INSTABILITY = 0;
     public static final int MAX_INSTABILITY = 10;
     
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
@@ -44,8 +43,7 @@ public class RitualRecipe implements IRitualRecipe {
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
-    public RitualRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
-        this.id = id;
+    public RitualRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
@@ -103,11 +101,6 @@ public class RitualRecipe implements IRitualRecipe {
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
-    }
-
-    @Override
-    public ResourceLocation getId() {
-        return this.id;
     }
 
     @Override
@@ -175,7 +168,7 @@ public class RitualRecipe implements IRitualRecipe {
         }
 
         @Override
-        public RitualRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public RitualRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             int instability = buffer.readVarInt();
@@ -195,7 +188,7 @@ public class RitualRecipe implements IRitualRecipe {
             }
             
             ItemStack result = buffer.readItem();
-            return new RitualRecipe(recipeId, group, research, manaCosts, instability, result, ingredients, props);
+            return new RitualRecipe(group, research, manaCosts, instability, result, ingredients, props);
         }
 
         @Override
