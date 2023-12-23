@@ -10,6 +10,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +20,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.StringRepresentable;
 
 /**
  * Definition of a list of primal sources and their respective amounts.  Used for anything requiring
@@ -27,6 +30,10 @@ import net.minecraft.network.chat.MutableComponent;
  */
 @Immutable
 public class SourceList {
+    public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {
+        return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Source.SORTED_SOURCES.toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
+    });
+    
     public static final SourceList EMPTY = new SourceList();
 
     protected final Object2IntOpenHashMap<Source> sources;
