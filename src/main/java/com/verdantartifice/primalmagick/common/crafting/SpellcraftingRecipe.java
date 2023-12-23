@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -17,8 +16,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class SpellcraftingRecipe extends CustomRecipe {
-    public SpellcraftingRecipe(ResourceLocation idIn, CraftingBookCategory category) {
-        super(idIn, category);
+    public SpellcraftingRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

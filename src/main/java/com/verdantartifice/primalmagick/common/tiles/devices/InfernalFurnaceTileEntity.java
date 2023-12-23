@@ -43,11 +43,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.AbstractCookingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -67,7 +68,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * @see {@link com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock}
  * @author Daedalus4096
  */
-public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeHolder, StackedContentsCompatible {
+public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider, IManaContainer, RecipeCraftingHolder, StackedContentsCompatible {
     protected static final int SUPERCHARGE_MULTIPLIER = 5;
     protected static final int MANA_PER_HALF_SECOND = 1;
     protected static final int DEFAULT_COOK_TIME = 100;
@@ -192,7 +193,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         return this.superchargeTime > 0;
     }
     
-    private static Optional<SmeltingRecipe> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
+    private static Optional<RecipeHolder<SmeltingRecipe>> getActiveRecipe(Level level, InfernalFurnaceTileEntity entity) {
         SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
         return level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, testInv, level);
     }
@@ -230,11 +231,11 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         boolean inputPopulated = !entity.getItem(INPUT_INV_INDEX, 0).isEmpty();
         boolean fuelPopulated = !fuelStack.isEmpty();
         if (entity.isCharged() && inputPopulated) {
-            Recipe<?> recipe = getActiveRecipe(level, entity).orElse(null);
+            RecipeHolder<?> recipeHolder = getActiveRecipe(level, entity).orElse(null);
             int furnaceMaxStackSize = entity.itemHandlers.get(INPUT_INV_INDEX).getSlotLimit(0);
             
             // Handle supercharge burn
-            if (!entity.isSupercharged() && fuelPopulated && canBurn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
+            if (!entity.isSupercharged() && fuelPopulated && canBurn(level.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
                 entity.superchargeTimeTotal = entity.getSuperchargeDuration(fuelStack);
                 entity.superchargeTime = entity.superchargeTimeTotal;
                 if (entity.isSupercharged()) {
@@ -251,14 +252,14 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             }
             
             // Process the item being smelted
-            if (entity.isCharged() && canBurn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
+            if (entity.isCharged() && canBurn(level.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
                 entity.processTime += (entity.isSupercharged() ? SUPERCHARGE_MULTIPLIER : 1);
                 if (entity.processTime >= entity.processTimeTotal) {
                     entity.processTime = 0;
                     entity.processTimeTotal = getTotalCookTime(level, entity, DEFAULT_COOK_TIME);
                     entity.litGraceTicks = LIT_GRACE_TICKS_MAX;
-                    if (burn(level.registryAccess(), recipe, entity, furnaceMaxStackSize)) {
-                        entity.setRecipeUsed(recipe);
+                    if (burn(level.registryAccess(), recipeHolder, entity, furnaceMaxStackSize)) {
+                        entity.setRecipeUsed(recipeHolder);
                     }
                     shouldMarkDirty = true;
                 }
@@ -283,10 +284,10 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         }
    }
     
-    private static boolean canBurn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
-        if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipe != null) {
+    private static boolean canBurn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+        if (!entity.getItem(INPUT_INV_INDEX, 0).isEmpty() && recipeHolder != null) {
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
             if (recipeOutput.isEmpty()) {
                 return false;
             } else {
@@ -306,11 +307,11 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
         }
     }
     
-    private static boolean burn(RegistryAccess registryAccess, @Nullable Recipe<?> recipe, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
-        if (recipe != null && canBurn(registryAccess, recipe, entity, maxFurnaceStackSize)) {
+    private static boolean burn(RegistryAccess registryAccess, @Nullable RecipeHolder<?> recipeHolder, InfernalFurnaceTileEntity entity, int maxFurnaceStackSize) {
+        if (recipeHolder != null && canBurn(registryAccess, recipeHolder, entity, maxFurnaceStackSize)) {
             ItemStack inputStack = entity.getItem(INPUT_INV_INDEX, 0);
             @SuppressWarnings("unchecked")
-            ItemStack recipeOutput = ((Recipe<Container>)recipe).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
+            ItemStack recipeOutput = ((Recipe<Container>)recipeHolder.value()).assemble(new RecipeWrapper(entity.itemHandlers.get(INPUT_INV_INDEX)), registryAccess);
             ItemStack existingOutput = entity.getItem(OUTPUT_INV_INDEX, 0);
             if (existingOutput.isEmpty()) {
                 entity.setItem(OUTPUT_INV_INDEX, 0, recipeOutput.copy());
@@ -339,7 +340,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
 
     private static int getTotalCookTime(Level pLevel, InfernalFurnaceTileEntity pBlockEntity, int defaultTime) {
         // Infernal furnaces take half as long to smelt items as normal
-        return getActiveRecipe(pLevel, pBlockEntity).map(AbstractCookingRecipe::getCookingTime).map(t -> t / 2).orElse(defaultTime);
+        return getActiveRecipe(pLevel, pBlockEntity).map(RecipeHolder::value).map(AbstractCookingRecipe::getCookingTime).map(t -> t / 2).orElse(defaultTime);
     }
     
     private static int getManaNeeded(Level pLevel, InfernalFurnaceTileEntity pBlockEntity) {
@@ -413,14 +414,14 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
 
     @Override
-    public void setRecipeUsed(Recipe<?> pRecipe) {
-        if (pRecipe != null) {
-            this.recipesUsed.addTo(pRecipe.getId(), 1);
+    public void setRecipeUsed(RecipeHolder<?> pRecipeHolder) {
+        if (pRecipeHolder != null) {
+            this.recipesUsed.addTo(pRecipeHolder.id(), 1);
         }
     }
 
     @Override
-    public Recipe<?> getRecipeUsed() {
+    public RecipeHolder<?> getRecipeUsed() {
         return null;
     }
 
@@ -441,18 +442,18 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
     
     public void awardUsedRecipesAndPopExperience(ServerPlayer pPlayer) {
-        List<Recipe<?>> recipes = this.getRecipesToAwardAndPopExperience(pPlayer.serverLevel(), pPlayer.position());
+        List<RecipeHolder<?>> recipes = this.getRecipesToAwardAndPopExperience(pPlayer.serverLevel(), pPlayer.position());
         pPlayer.awardRecipes(recipes);
         recipes.stream().filter(Predicate.not(Objects::isNull)).forEach(r -> pPlayer.triggerRecipeCrafted(r, this.inventories.get(INPUT_INV_INDEX)));
         this.recipesUsed.clear();
     }
     
-    public List<Recipe<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
-        List<Recipe<?>> retVal = new ArrayList<>();
+    public List<RecipeHolder<?>> getRecipesToAwardAndPopExperience(ServerLevel pLevel, Vec3 pPopVec) {
+        List<RecipeHolder<?>> retVal = new ArrayList<>();
         for (Object2IntMap.Entry<ResourceLocation> entry : this.recipesUsed.object2IntEntrySet()) {
-            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
-                retVal.add(recipe);
-                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)recipe).getExperience());
+            pLevel.getRecipeManager().byKey(entry.getKey()).ifPresent(recipeHolder -> {
+                retVal.add(recipeHolder);
+                createExperience(pLevel, pPopVec, entry.getIntValue(), ((AbstractCookingRecipe)recipeHolder.value()).getExperience());
             });
         }
         return retVal;
