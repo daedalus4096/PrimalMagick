@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -10,6 +11,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.JsonUtils;
@@ -34,6 +37,9 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
 public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<CraftingContainer> {
+    protected static final int MAX_WIDTH = 3;
+    protected static final int MAX_HEIGHT = 3;
+
     protected final int recipeWidth;
     protected final int recipeHeight;
     protected final NonNullList<Ingredient> recipeItems;
@@ -141,52 +147,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return this.group;
     }
 
-    protected static Map<String, Ingredient> deserializeKey(JsonObject jsonObject) {
-        Map<String, Ingredient> map = new HashMap<>();
-        for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            // Validate each key in the given JSON object
-            if (entry.getKey().length() != 1) {
-                throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
-            }
-            if (" ".equals(entry.getKey())) {
-                throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
-            }
-            
-            // Store the key and corresponding deserialized ingredient for return
-            map.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
-        }
-        
-        // Include an entry for empty space in the recipe
-        map.put(" ", Ingredient.EMPTY);
-        return map;
-    }
-
-    protected static NonNullList<Ingredient> deserializeIngredients(String[] pattern, Map<String, Ingredient> keys, int width, int height) {
-        NonNullList<Ingredient> list = NonNullList.withSize(width * height, Ingredient.EMPTY);
-        Set<String> keySet = new HashSet<>(keys.keySet());
-        keySet.remove(" ");
-        
-        for (int i = 0; i < pattern.length; i++) {
-            for (int j = 0; j < pattern[0].length(); j++) {
-                // For each symbol in the pattern, add the corresponding ingredient from the key to the returned list
-                String s = pattern[i].substring(j, j + 1);
-                Ingredient ingredient = keys.get(s);
-                if (ingredient == null) {
-                    throw new JsonSyntaxException("Pattern references symbol '" + s + "' but it's not defined in the key");
-                }
-                keySet.remove(s);
-                list.set(j + width * i, ingredient);
-            }
-        }
-        
-        // Make sure all ingredients from the key were used in the pattern
-        if (!keySet.isEmpty()) {
-            throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + keySet);
-        } else {
-            return list;
-        }
-    }
-
     protected static String[] shrink(String... toShrink) {
         int i = Integer.MAX_VALUE;
         int j = 0;
@@ -240,30 +200,34 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return i;
     }
 
-    protected static String[] patternFromJson(JsonArray jsonArray) {
-        String[] astring = new String[jsonArray.size()];
-        
-        // Validate the pattern strings in the given JSON array
-        if (astring.length > 3) {
-            throw new JsonSyntaxException("Invalid pattern: too many rows, 3 is maximum");
-        } else if (astring.length == 0) {
-            throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
-        } else {
-            for(int i = 0; i < astring.length; ++i) {
-                String s = GsonHelper.convertToString(jsonArray.get(i), "pattern[" + i + "]");
-                if (s.length() > 3) {
-                    throw new JsonSyntaxException("Invalid pattern: too many columns, 3 is maximum");
-                }
-                if (i > 0 && astring[0].length() != s.length()) {
-                    throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
-                }
-                astring[i] = s;
-            }
-            return astring;
-        }
-    }
-
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
+        protected static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
+            if (list.size() > MAX_HEIGHT) {
+                return DataResult.error(() -> "Invalid pattern: too many rows, " + MAX_HEIGHT + " is maximum");
+            } else if (list.isEmpty()) {
+                return DataResult.error(() -> "Invalid pattern: empty pattern not allowed");
+            } else {
+                int strLength = list.get(0).length();
+                for (String str : list) {
+                    if (str.length() > MAX_WIDTH) {
+                        return DataResult.error(() -> "Invalid pattern: too many columns, " + MAX_WIDTH  + " is maximum");
+                    }
+                    if (strLength != str.length()) {
+                        return DataResult.error(() -> "Invalid pattern: each row must be the same width");
+                    }
+                }
+                return DataResult.success(list);
+            }
+        }, DataResult::success);
+        
+        protected static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(str -> {
+            if (str.length() != 1) {
+                return DataResult.error(() -> "Invalid key entry: '" + str + "' is an invalid symbol (must be 1 character only).");
+            } else {
+                return " ".equals(str) ? DataResult.error(() -> "Invalid key entry: ' ' is a reserved symbol.") : DataResult.success(str);
+            }
+        }, DataResult::success);
+        
         @Override
         public ShapedArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
             String group = GsonHelper.getAsString(json, "group", "");
