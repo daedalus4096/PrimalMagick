@@ -5,7 +5,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -25,9 +25,9 @@ public class PlaceGhostArcaneRecipePacket implements IMessageToClient {
         this.recipeId = null;
     }
     
-    public PlaceGhostArcaneRecipePacket(int containerId, Recipe<?> recipe) {
+    public PlaceGhostArcaneRecipePacket(int containerId, RecipeHolder<?> recipe) {
         this.containerId = containerId;
-        this.recipeId = recipe.getId();
+        this.recipeId = recipe.id();
     }
     
     public static NetworkDirection direction() {

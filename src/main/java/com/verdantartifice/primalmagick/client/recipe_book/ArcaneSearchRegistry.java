@@ -25,7 +25,7 @@ public class ArcaneSearchRegistry {
         Minecraft.getInstance().getSearchTreeManager().register(ArcaneSearchRegistry.ARCANE_RECIPE_COLLECTIONS, (contents) -> {
             return new FullTextSearchTree<>((arc) -> {
                 return arc.getRecipes().stream().flatMap((r) -> {
-                    return r.getResultItem(arc.registryAccess()).getTooltipLines((Player)null, TooltipFlag.Default.NORMAL).stream();
+                    return r.value().getResultItem(arc.registryAccess()).getTooltipLines((Player)null, TooltipFlag.Default.NORMAL).stream();
                 }).map((c) -> {
                     return ChatFormatting.stripFormatting(c.getString()).trim();
                 }).filter((s) -> {
@@ -33,7 +33,7 @@ public class ArcaneSearchRegistry {
                 });
             }, (arc) -> {
                 return arc.getRecipes().stream().map((r) -> {
-                    return BuiltInRegistries.ITEM.getKey(r.getResultItem(arc.registryAccess()).getItem());
+                    return BuiltInRegistries.ITEM.getKey(r.value().getResultItem(arc.registryAccess()).getItem());
                 });
             }, contents);
         });

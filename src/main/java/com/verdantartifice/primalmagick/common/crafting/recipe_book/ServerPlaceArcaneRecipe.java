@@ -23,6 +23,7 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe<Integer> {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -34,21 +35,21 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
         this.menu = menu;
     }
     
-    public void recipeClicked(ServerPlayer player, @Nullable Recipe<C> recipe, boolean shiftDown) {
-        if (recipe != null) {
-            boolean inVanillaBook = player.getRecipeBook().contains(recipe);
-            boolean inArcaneBook = ArcaneRecipeBookManager.containsRecipe(player, recipe);
+    public void recipeClicked(ServerPlayer player, @Nullable RecipeHolder<? extends Recipe<C>> recipeHolder, boolean shiftDown) {
+        if (recipeHolder != null) {
+            boolean inVanillaBook = player.getRecipeBook().contains(recipeHolder);
+            boolean inArcaneBook = ArcaneRecipeBookManager.containsRecipe(player, recipeHolder);
             if (inVanillaBook || inArcaneBook) {
                 this.inventory = player.getInventory();
                 if (this.testClearGrid() || player.isCreative()) {
                     this.stackedContents.clear();
                     player.getInventory().fillStackedContents(this.stackedContents);
                     this.menu.fillCraftSlotsStackedContents(this.stackedContents);
-                    if (this.stackedContents.canCraft(recipe, null)) {
-                        this.handleRecipeClicked(recipe, shiftDown);
+                    if (this.stackedContents.canCraft(recipeHolder.value(), null)) {
+                        this.handleRecipeClicked(recipeHolder, shiftDown);
                     } else {
                         this.clearGrid();
-                        PacketHandler.sendToPlayer(new PlaceGhostArcaneRecipePacket(player.containerMenu.containerId, recipe), player);
+                        PacketHandler.sendToPlayer(new PlaceGhostArcaneRecipePacket(player.containerMenu.containerId, recipeHolder), player);
                     }
                     player.getInventory().setChanged();
                 }
@@ -67,9 +68,9 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
         this.menu.clearCraftingContent();
     }
     
-    protected void handleRecipeClicked(Recipe<C> recipe, boolean shiftDown) {
-        boolean matches = this.menu.recipeMatches(recipe);
-        int i = this.stackedContents.getBiggestCraftableStack(recipe, null);
+    protected void handleRecipeClicked(RecipeHolder<? extends Recipe<C>> recipeHolder, boolean shiftDown) {
+        boolean matches = this.menu.recipeMatches(recipeHolder);
+        int i = this.stackedContents.getBiggestCraftableStack(recipeHolder, null);
         
         if (matches) {
             for (int index = 0; index < this.menu.getGridHeight() * this.menu.getGridWidth() + 1; index++) {
@@ -84,7 +85,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
         
         int stackSize = this.getStackSize(shiftDown, i, matches);
         IntList list = new IntArrayList();
-        if (this.stackedContents.canCraft(recipe, list, stackSize)) {
+        if (this.stackedContents.canCraft(recipeHolder.value(), list, stackSize)) {
             int curSize = stackSize;
             for (int value : list) {
                 int size = StackedContents.fromStackingIndex(value).getMaxStackSize();
@@ -92,9 +93,9 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
                     curSize = size;
                 }
             }
-            if (this.stackedContents.canCraft(recipe, list, curSize)) {
+            if (this.stackedContents.canCraft(recipeHolder.value(), list, curSize)) {
                 this.clearGrid();
-                this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, list.iterator(), curSize);
+                this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipeHolder, list.iterator(), curSize);
             }
         }
     }

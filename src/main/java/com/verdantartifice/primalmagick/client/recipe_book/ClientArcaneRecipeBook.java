@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombI
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.common.Tags;
@@ -42,8 +43,8 @@ public class ClientArcaneRecipeBook {
         this.book = book;
     }
     
-    public void setupCollections(Iterable<Recipe<?>> recipes, RegistryAccess registryAccess) {
-        Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> recipeListMap = categorizeAndGroupRecipes(recipes, registryAccess);
+    public void setupCollections(Iterable<RecipeHolder<?>> recipes, RegistryAccess registryAccess) {
+        Map<ArcaneRecipeBookCategories, List<List<RecipeHolder<?>>>> recipeListMap = categorizeAndGroupRecipes(recipes, registryAccess);
         Map<ArcaneRecipeBookCategories, List<ArcaneRecipeCollection>> recipeCollectionMap = new HashMap<>();
         Builder<ArcaneRecipeCollection> builder = ImmutableList.builder();
 
@@ -62,24 +63,25 @@ public class ClientArcaneRecipeBook {
         this.allCollections = builder.build();
     }
     
-    protected static Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> categorizeAndGroupRecipes(Iterable<Recipe<?>> recipes, RegistryAccess registryAccess) {
-        Map<ArcaneRecipeBookCategories, List<List<Recipe<?>>>> retVal = new HashMap<>();
-        Table<ArcaneRecipeBookCategories, String, List<Recipe<?>>> table = HashBasedTable.create();
+    protected static Map<ArcaneRecipeBookCategories, List<List<RecipeHolder<?>>>> categorizeAndGroupRecipes(Iterable<RecipeHolder<?>> recipes, RegistryAccess registryAccess) {
+        Map<ArcaneRecipeBookCategories, List<List<RecipeHolder<?>>>> retVal = new HashMap<>();
+        Table<ArcaneRecipeBookCategories, String, List<RecipeHolder<?>>> table = HashBasedTable.create();
 
-        for (Recipe<?> recipe : recipes) {
-            if ((ArcaneRecipeBook.isValid(recipe) || !recipe.isSpecial()) && !recipe.isIncomplete()) {
+        for (RecipeHolder<?> recipeHolder : recipes) {
+            Recipe<?> recipe = recipeHolder.value();
+            if ((ArcaneRecipeBook.isValid(recipeHolder) || !recipe.isSpecial()) && !recipe.isIncomplete()) {
                 ArcaneRecipeBookCategories category = getCategory(recipe, registryAccess);
                 String group = recipe.getGroup();
                 if (group.isEmpty()) {
-                    retVal.computeIfAbsent(category, c -> new ArrayList<>()).add(ImmutableList.of(recipe));
+                    retVal.computeIfAbsent(category, c -> new ArrayList<>()).add(ImmutableList.of(recipeHolder));
                 } else {
-                    List<Recipe<?>> list = table.get(category, group);
+                    List<RecipeHolder<?>> list = table.get(category, group);
                     if (list == null) {
                         list = new ArrayList<>();
                         table.put(category, group, list);
                         retVal.computeIfAbsent(category, c -> new ArrayList<>()).add(list);
                     }
-                    list.add(recipe);
+                    list.add(recipeHolder);
                 }
             }
         }

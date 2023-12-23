@@ -20,7 +20,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
@@ -47,10 +47,10 @@ public class ArcaneRecipeBookManager {
         }
     }
     
-    public static void addRecipes(Collection<Recipe<?>> recipes, ServerPlayer serverPlayer) {
+    public static void addRecipes(Collection<RecipeHolder<?>> recipes, ServerPlayer serverPlayer) {
         PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
-            for (Recipe<?> recipe : recipes) {
-                if (recipe instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial()) {
+            for (RecipeHolder<?> recipe : recipes) {
+                if (recipe.value() instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial()) {
                     recipeBook.get().add(recipe);
                     recipeBook.get().addHighlight(recipe);
                 }
@@ -59,16 +59,16 @@ public class ArcaneRecipeBookManager {
         scheduleSync(serverPlayer);
     }
     
-    public static void removeRecipes(Collection<Recipe<?>> recipes, ServerPlayer serverPlayer) {
+    public static void removeRecipes(Collection<RecipeHolder<?>> recipes, ServerPlayer serverPlayer) {
         PrimalMagickCapabilities.getArcaneRecipeBook(serverPlayer).ifPresent(recipeBook -> {
-            for (Recipe<?> recipe : recipes) {
+            for (RecipeHolder<?> recipe : recipes) {
                 recipeBook.get().remove(recipe);
             }
         });
         scheduleSync(serverPlayer);
     }
     
-    public static boolean containsRecipe(Player player, Recipe<?> recipe) {
+    public static boolean containsRecipe(Player player, RecipeHolder<?> recipe) {
         IPlayerArcaneRecipeBook book = PrimalMagickCapabilities.getArcaneRecipeBook(player).orElse(null);
         return book != null && book.get().contains(recipe);
     }

@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -22,8 +23,8 @@ public class SeenArcaneRecipePacket implements IMessageToServer {
         this.recipeId = null;
     }
     
-    public SeenArcaneRecipePacket(Recipe<?> recipe) {
-        this.recipeId = recipe.getId();
+    public SeenArcaneRecipePacket(RecipeHolder<?> recipe) {
+        this.recipeId = recipe.id();
     }
     
     public static NetworkDirection direction() {

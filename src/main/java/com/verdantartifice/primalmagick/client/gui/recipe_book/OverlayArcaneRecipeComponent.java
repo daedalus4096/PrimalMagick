@@ -25,6 +25,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
     protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
@@ -39,7 +40,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     protected Minecraft mc;
     protected ArcaneRecipeCollection collection;
     @Nullable
-    protected Recipe<?> lastRecipeClicked;
+    protected RecipeHolder<?> lastRecipeClicked;
     protected float time;
     protected boolean useFurnaceStyle;
     
@@ -54,8 +55,8 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             this.useFurnaceStyle = false;
         }
         
-        List<Recipe<?>> visibleRecipes = this.collection.getDisplayRecipes(true);
-        List<Recipe<?>> invisibleRecipes = isFiltering ? Collections.emptyList() : this.collection.getDisplayRecipes(false);
+        List<RecipeHolder<?>> visibleRecipes = this.collection.getDisplayRecipes(true);
+        List<RecipeHolder<?>> invisibleRecipes = isFiltering ? Collections.emptyList() : this.collection.getDisplayRecipes(false);
         int visibleSize = visibleRecipes.size();
         int totalSize = visibleSize + invisibleRecipes.size();
         int maxRowSize = (totalSize <= 16) ? MAX_ROW : MAX_ROW_LARGE;
@@ -86,7 +87,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
         
         for (int index = 0; index < totalSize; index++) {
             boolean isVisible = index < visibleSize;
-            Recipe<?> recipe = isVisible ? visibleRecipes.get(index) : invisibleRecipes.get(index - visibleSize);
+            RecipeHolder<?> recipe = isVisible ? visibleRecipes.get(index) : invisibleRecipes.get(index - visibleSize);
             int slotX = this.x + 4 + 25 * (index % maxRowSize);
             int slotY = this.y + 5 + 25 * (index / maxRowSize);
             if (this.useFurnaceStyle) {
@@ -104,7 +105,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
 
     @Nullable
-    public Recipe<?> getLastRecipeClicked() {
+    public RecipeHolder<?> getLastRecipeClicked() {
         return this.lastRecipeClicked;
     }
 
@@ -170,11 +171,11 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
 
     protected class OverlayArcaneRecipeButton extends AbstractWidget implements PlaceRecipe<Ingredient> {
-        protected final Recipe<?> recipe;
+        protected final RecipeHolder<?> recipe;
         protected final boolean isCraftable;
         protected final List<OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton.Pos> ingredientPos = new ArrayList<>();
         
-        public OverlayArcaneRecipeButton(int xPos, int yPos, Recipe<?> recipe, boolean isCraftable) {
+        public OverlayArcaneRecipeButton(int xPos, int yPos, RecipeHolder<?> recipe, boolean isCraftable) {
             super(xPos, yPos, 200, 20, Component.empty());
             this.width = 24;
             this.height = 24;
@@ -183,8 +184,8 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             this.calculateIngredientsPositions(recipe);
         }
         
-        protected void calculateIngredientsPositions(Recipe<?> recipe) {
-            this.placeRecipe(3, 3, -1, recipe, recipe.getIngredients().iterator(), 0);
+        protected void calculateIngredientsPositions(RecipeHolder<?> recipe) {
+            this.placeRecipe(3, 3, -1, recipe, recipe.value().getIngredients().iterator(), 0);
         }
         
         @Override
@@ -245,7 +246,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
     }
     
     protected class OverlayArcaneSingleIngredientRecipeButton extends OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton {
-        public OverlayArcaneSingleIngredientRecipeButton(int xPos, int yPos, Recipe<?> recipe, boolean isCraftable) {
+        public OverlayArcaneSingleIngredientRecipeButton(int xPos, int yPos, RecipeHolder<?> recipe, boolean isCraftable) {
             super(xPos, yPos, recipe, isCraftable);
         }
 

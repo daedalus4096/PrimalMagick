@@ -17,6 +17,7 @@ import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI page for the arcane recipe book.
@@ -185,7 +186,7 @@ public class ArcaneRecipeBookPage {
         }
     }
     
-    public void recipesShown(List<Recipe<?>> recipes) {
+    public void recipesShown(List<RecipeHolder<?>> recipes) {
         for (RecipeShownListener listener : this.showListeners) {
             listener.recipesShown(recipes);
         }

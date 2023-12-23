@@ -12,6 +12,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Interface for a menu that's compatible with the arcane recipe book.
@@ -20,15 +21,15 @@ import net.minecraft.world.item.crafting.Recipe;
  */
 public interface IArcaneRecipeBookMenu<C extends Container> {
     @SuppressWarnings("unchecked")
-    default void handlePlacement(boolean shiftDown, Recipe<?> recipe, ServerPlayer player) {
-        new ServerPlaceArcaneRecipe<C>(this).recipeClicked(player, (Recipe<C>)recipe, shiftDown);
+    default void handlePlacement(boolean shiftDown, RecipeHolder<?> recipe, ServerPlayer player) {
+        new ServerPlaceArcaneRecipe<C>(this).recipeClicked(player, (RecipeHolder<? extends Recipe<C>>)recipe, shiftDown);
     }
     
     void fillCraftSlotsStackedContents(StackedContents contents);
 
     void clearCraftingContent();
 
-    boolean recipeMatches(Recipe<? super C> recipe);
+    boolean recipeMatches(RecipeHolder<? extends Recipe<? super C>> recipe);
 
     int getResultSlotIndex();
 

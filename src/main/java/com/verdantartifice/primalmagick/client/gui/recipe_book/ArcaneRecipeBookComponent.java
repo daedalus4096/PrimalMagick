@@ -51,6 +51,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Screen component for the arcane recipe book.
@@ -528,8 +529,8 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     @Override
-    public void recipesShown(List<Recipe<?>> recipes) {
-        for (Recipe<?> recipe : recipes) {
+    public void recipesShown(List<RecipeHolder<?>> recipes) {
+        for (RecipeHolder<?> recipe : recipes) {
             this.mc.player.removeRecipeHighlight(recipe);
             if (this.arcaneBook.getData().willHighlight(recipe)) {
                 this.arcaneBook.getData().removeHighlight(recipe);
@@ -538,11 +539,11 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         }
     }
     
-    public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
-        ItemStack stack = recipe.getResultItem(this.mc.level.registryAccess());
+    public void setupGhostRecipe(RecipeHolder<?> recipe, List<Slot> slots) {
+        ItemStack stack = recipe.value().getResultItem(this.mc.level.registryAccess());
         this.ghostRecipe.setRecipe(recipe);
         this.ghostRecipe.addIngredient(Ingredient.of(stack), (slots.get(0)).x, (slots.get(0)).y);
-        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.getIngredients().iterator(), 0);
+        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.value().getIngredients().iterator(), 0);
     }
 
     @Override
