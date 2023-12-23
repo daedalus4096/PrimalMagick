@@ -15,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Tab button for an arcane recipe book category.
@@ -41,7 +42,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
         
         if (mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeMenu) {
             for (ArcaneRecipeCollection recipeCollection : list) {
-                for (Recipe<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
+                for (RecipeHolder<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
                     if (arcaneBook.getData().willHighlight(recipe) || vanillaBook.willHighlight(recipe)) {
                         this.animationTime = ANIMATION_TIME;
                         return;

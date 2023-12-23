@@ -24,6 +24,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
 
@@ -167,10 +168,9 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         if (!world.isClientSide && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<? extends Recipe<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
-            if (opt.isPresent() && opt.get() instanceof WandInscriptionRecipe) {
+            Optional<RecipeHolder<? extends Recipe<?>>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            if (opt.isPresent() && opt.get().value() instanceof WandInscriptionRecipe recipe) {
                 // If the inputs are valid for inscribing a spell onto a wand, show the output
-                WandInscriptionRecipe recipe = (WandInscriptionRecipe)opt.get();
                 if (recipe.matches(this.componentInv, world)) {
                     stack = recipe.assemble(this.componentInv, world.registryAccess());
                 }

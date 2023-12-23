@@ -83,7 +83,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -169,9 +169,9 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
     @Nullable
     protected IRitualRecipe getActiveRecipe() {
         if (this.activeRecipeId != null) {
-            Optional<? extends Recipe<?>> recipeOpt = this.level.getServer().getRecipeManager().byKey(this.activeRecipeId);
-            if (recipeOpt.isPresent() && recipeOpt.get() instanceof IRitualRecipe) {
-                return (IRitualRecipe)recipeOpt.get();
+            Optional<RecipeHolder<?>> recipeOpt = this.level.getServer().getRecipeManager().byKey(this.activeRecipeId);
+            if (recipeOpt.isPresent() && recipeOpt.get().value() instanceof IRitualRecipe ritualRecipe) {
+                return ritualRecipe;
             }
         }
         return null;
@@ -411,12 +411,12 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         for (ItemStack offering : offerings) {
             inv.setItem(offeringIndex++, offering);
         }
-        Optional<IRitualRecipe> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv, this.level);
+        Optional<RecipeHolder<IRitualRecipe>> recipeOpt = this.level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.RITUAL.get(), inv, this.level);
         if (recipeOpt.isPresent()) {
             // Determine if the player has the research and mana to start this recipe
-            IRitualRecipe recipe = recipeOpt.get();
+            RecipeHolder<IRitualRecipe> recipe = recipeOpt.get();
             if (this.canUseRitualRecipe(wandStack, player, recipe) && this.generateRitualSteps(recipe)) {
-                this.activeRecipeId = recipe.getId();
+                this.activeRecipeId = recipe.id();
                 this.currentStep = null;
                 this.currentStepComplete = false;
                 return true;
@@ -428,16 +428,16 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         }
     }
     
-    protected boolean generateRitualSteps(@Nonnull IRitualRecipe recipe) {
+    protected boolean generateRitualSteps(@Nonnull RecipeHolder<IRitualRecipe> recipe) {
         LinkedList<AbstractRitualStep> offeringSteps = new LinkedList<>();
         LinkedList<AbstractRitualStep> propSteps = new LinkedList<>();
         LinkedList<AbstractRitualStep> newSteps = new LinkedList<>();
 
         // Add steps for the recipe offerings and props
-        for (int index = 0; index < recipe.getIngredients().size(); index++) {
+        for (int index = 0; index < recipe.value().getIngredients().size(); index++) {
             offeringSteps.add(new RecipeRitualStep(RitualStepType.OFFERING, index));
         }
-        for (int index = 0; index < recipe.getProps().size(); index++) {
+        for (int index = 0; index < recipe.value().getProps().size(); index++) {
             propSteps.add(new RecipeRitualStep(RitualStepType.PROP, index));
         }
         
@@ -498,8 +498,9 @@ public class RitualAltarTileEntity extends AbstractTileSidedInventoryPM implemen
         this.reset();
     }
     
-    protected boolean canUseRitualRecipe(ItemStack wandStack, Player player, IRitualRecipe recipe) {
+    protected boolean canUseRitualRecipe(ItemStack wandStack, Player player, RecipeHolder<IRitualRecipe> recipeHolder) {
         // Players must know the correct research and the wand must have enough mana in order to use the recipe
+        IRitualRecipe recipe = recipeHolder.value();
         return (recipe.getRequiredResearch() == null || recipe.getRequiredResearch().isKnownByStrict(player)) &&
                 (recipe.getManaCosts().isEmpty() || this.consumeMana(wandStack, player, recipe));
     }

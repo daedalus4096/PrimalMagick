@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -26,9 +26,9 @@ public class PlaceArcaneRecipePacket implements IMessageToServer {
         this.shiftDown = false;
     }
     
-    public PlaceArcaneRecipePacket(int containerId, Recipe<?> recipe, boolean shiftDown) {
+    public PlaceArcaneRecipePacket(int containerId, RecipeHolder<?> recipe, boolean shiftDown) {
         this.containerId = containerId;
-        this.recipeId = recipe.getId();
+        this.recipeId = recipe.id();
         this.shiftDown = shiftDown;
     }
     

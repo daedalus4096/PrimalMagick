@@ -16,7 +16,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI button for a recipe collection in the arcane recipe book.
@@ -46,9 +46,9 @@ public class ArcaneRecipeButton extends AbstractWidget {
         this.collection = recipeCollection;
         this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeBookMenu ? recipeBookMenu : null;
         this.book = page.getArcaneRecipeBook();
-        List<Recipe<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
+        List<RecipeHolder<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         
-        for (Recipe<?> recipe : list) {
+        for (RecipeHolder<?> recipe : list) {
             if (this.book.willHighlight(recipe)) {
                 page.recipesShown(list);
                 this.animationTime = ANIMATION_TIME;
@@ -95,9 +95,9 @@ public class ArcaneRecipeButton extends AbstractWidget {
         }
         
         guiGraphics.blit(RECIPE_BOOK_LOCATION, this.getX(), this.getY(), texX, texY, this.width, this.height);
-        List<Recipe<?>> recipeList = this.getOrderedRecipes();
+        List<RecipeHolder<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();
-        ItemStack stack = recipeList.get(this.currentIndex).getResultItem(mc.level.registryAccess());
+        ItemStack stack = recipeList.get(this.currentIndex).value().getResultItem(mc.level.registryAccess());
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
             guiGraphics.renderItem(stack, this.getX() + k + 1, this.getY() + k + 1, 0, 10);
@@ -110,8 +110,8 @@ public class ArcaneRecipeButton extends AbstractWidget {
         }
     }
     
-    protected List<Recipe<?>> getOrderedRecipes() {
-        List<Recipe<?>> retVal = this.collection.getDisplayRecipes(true);
+    protected List<RecipeHolder<?>> getOrderedRecipes() {
+        List<RecipeHolder<?>> retVal = this.collection.getDisplayRecipes(true);
         if (!this.book.isFiltering(this.menu.getRecipeBookType())) {
             retVal.addAll(this.collection.getDisplayRecipes(false));
         }
@@ -122,13 +122,13 @@ public class ArcaneRecipeButton extends AbstractWidget {
         return this.getOrderedRecipes().size() == 1;
     }
 
-    public Recipe<?> getRecipe() {
+    public RecipeHolder<?> getRecipe() {
         return this.getOrderedRecipes().get(this.currentIndex);
     }
     
     public List<Component> getTooltipText(Screen screen) {
         Minecraft mc = screen.getMinecraft();
-        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
+        ItemStack stack = this.getRecipe().value().getResultItem(mc.level.registryAccess());
         List<Component> retVal = new ArrayList<>(Screen.getTooltipFromItem(mc, stack));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             retVal.add(MORE_RECIPES_TOOLTIP);
@@ -139,7 +139,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
         Minecraft mc = Minecraft.getInstance();
-        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
+        ItemStack stack = this.getRecipe().value().getResultItem(mc.level.registryAccess());
         output.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", stack.getHoverName()));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             output.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"), Component.translatable("narration.recipe.usage.more"));

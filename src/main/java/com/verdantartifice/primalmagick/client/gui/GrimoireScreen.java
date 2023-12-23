@@ -81,6 +81,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -109,7 +110,7 @@ public class GrimoireScreen extends Screen {
     protected boolean progressing = false;
     protected List<AbstractPage> pages = new ArrayList<>();
     protected IPlayerKnowledge knowledge;
-    protected NavigableMap<String, List<Recipe<?>>> indexMap;
+    protected NavigableMap<String, List<RecipeHolder<?>>> indexMap;
     protected Component cachedTip = null;
     protected Optional<String> lastRecipeSearch = Optional.empty();
     
@@ -144,7 +145,7 @@ public class GrimoireScreen extends Screen {
             this.initButtons();
         }
         
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -603,7 +604,7 @@ public class GrimoireScreen extends Screen {
             }
         }
         for (ResourceLocation recipeLoc : locList) {
-            Optional<? extends Recipe<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
+            Optional<RecipeHolder<? extends Recipe<?>>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
             if (opt.isPresent()) {
                 AbstractRecipePage page = RecipePageFactory.createPage(opt.get(), this.minecraft.level.registryAccess());
                 if (page != null) {
@@ -862,14 +863,14 @@ public class GrimoireScreen extends Screen {
     
     protected void generateIndexMap() {
         Minecraft mc = this.getMinecraft();
-        Comparator<Recipe<?>> displayNameComparator = Comparator.comparing(r -> r.getResultItem(mc.level.registryAccess()).getHoverName().getString());
-        Comparator<Recipe<?>> recipeIdComparator = Comparator.comparing(r -> r.getId());
-        List<Recipe<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
+        Comparator<RecipeHolder<?>> displayNameComparator = Comparator.comparing(r -> r.value().getResultItem(mc.level.registryAccess()).getHoverName().getString());
+        Comparator<RecipeHolder<?>> recipeIdComparator = Comparator.comparing(r -> r.id());
+        List<RecipeHolder<?>> processedRecipes = mc.level.getRecipeManager().getRecipes().stream().filter(GrimoireScreen::isValidRecipeIndexEntry)
                 .sorted(displayNameComparator.thenComparing(recipeIdComparator)).collect(Collectors.toList());
 
         this.indexMap = new TreeMap<>();
-        for (Recipe<?> recipe : processedRecipes) {
-            String recipeName = recipe.getResultItem(mc.level.registryAccess()).getHoverName().getString();
+        for (RecipeHolder<?> recipe : processedRecipes) {
+            String recipeName = recipe.value().getResultItem(mc.level.registryAccess()).getHoverName().getString();
             if (!this.indexMap.containsKey(recipeName)) {
                 this.indexMap.put(recipeName, new ArrayList<>());
             }
@@ -898,7 +899,7 @@ public class GrimoireScreen extends Screen {
         
         for (String recipeName : this.indexMap.navigableKeySet()) {
             if (recipeName.toLowerCase(Locale.ROOT).contains(this.lastRecipeSearch.orElse("").toLowerCase(Locale.ROOT))) {
-                tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).getResultItem(mc.level.registryAccess()));
+                tempPage.addContent(recipeName, this.indexMap.get(recipeName).get(0).value().getResultItem(mc.level.registryAccess()));
                 heightRemaining -= 12;
                 if (heightRemaining < 12 && !tempPage.getContents().isEmpty()) {
                     heightRemaining = 156;
@@ -915,16 +916,16 @@ public class GrimoireScreen extends Screen {
         }
     }
     
-    protected static boolean isValidRecipeIndexEntry(Recipe<?> recipe) {
+    protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        if (!recipe.getId().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe, mc.level.registryAccess()) == null) {
+        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe, mc.level.registryAccess()) == null) {
             return false;
         }
-        if (recipe instanceof IHasRequiredResearch hrr) {
+        if (recipe.value() instanceof IHasRequiredResearch hrr) {
             CompoundResearchKey parents = hrr.getRequiredResearch();
             return (parents == null || parents.isKnownByStrict(mc.player));
         } else {
-            return ResearchManager.isRecipeVisible(recipe.getId(), mc.player);
+            return ResearchManager.isRecipeVisible(recipe.id(), mc.player);
         }
     }
     
@@ -932,8 +933,8 @@ public class GrimoireScreen extends Screen {
         Minecraft mc = Minecraft.getInstance();
         this.currentStageIndex = 0;
         boolean firstPage = true;
-        List<Recipe<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
-        for (Recipe<?> recipe : recipes) {
+        List<RecipeHolder<?>> recipes = this.indexMap.getOrDefault(recipeName, Collections.emptyList());
+        for (RecipeHolder<?> recipe : recipes) {
             AbstractRecipePage page = RecipePageFactory.createPage(recipe, mc.level.registryAccess());
             if (page != null) {
                 this.pages.add(new RecipeMetadataPage(recipe, mc.level.registryAccess(), firstPage));

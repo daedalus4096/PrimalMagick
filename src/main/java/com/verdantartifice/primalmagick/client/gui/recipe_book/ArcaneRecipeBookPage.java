@@ -42,7 +42,7 @@ public class ArcaneRecipeBookPage {
     protected RecipeBook vanillaBook;
     protected ArcaneRecipeBook arcaneBook;
     @Nullable
-    protected Recipe<?> lastClickedRecipe;
+    protected RecipeHolder<?> lastClickedRecipe;
     @Nullable
     protected ArcaneRecipeCollection lastClickedRecipeCollection;
 
@@ -133,12 +133,12 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().getResultItem(this.mc.level.registryAccess()));
+            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
         }
     }
     
     @Nullable
-    public Recipe<?> getLastClickedRecipe() {
+    public RecipeHolder<?> getLastClickedRecipe() {
         return this.lastClickedRecipe;
     }
     

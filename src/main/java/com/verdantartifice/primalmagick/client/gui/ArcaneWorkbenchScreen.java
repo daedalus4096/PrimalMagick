@@ -24,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI screen for arcane workbench block.
@@ -73,7 +74,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.adjustCostWidgets();
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
             this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -95,8 +96,8 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         // Generate text in the case that the current recipe, or lack there of, does not have a mana cost
-        IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
-        if (activeArcaneRecipe == null || activeArcaneRecipe.getManaCosts() == null || activeArcaneRecipe.getManaCosts().isEmpty()) {
+        RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
+        if (activeArcaneRecipe == null || activeArcaneRecipe.value().getManaCosts() == null || activeArcaneRecipe.value().getManaCosts().isEmpty()) {
             Component text = Component.translatable("label.primalmagick.crafting.no_mana");
             int width = this.font.width(text.getString());
             int x = 1 + (this.getXSize() - width) / 2;
@@ -117,9 +118,9 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
     }
     
     protected void adjustCostWidgets() {
-        IArcaneRecipe activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
+        RecipeHolder<IArcaneRecipe> activeArcaneRecipe = this.menu.getActiveArcaneRecipe();
         if (activeArcaneRecipe != null) {
-            SourceList manaCosts = activeArcaneRecipe.getManaCosts();
+            SourceList manaCosts = activeArcaneRecipe.value().getManaCosts();
             int widgetSetWidth = manaCosts.getSourcesSorted().size() * 18;
             int dx = 0;
             for (ManaCostWidget widget : this.costWidgets) {

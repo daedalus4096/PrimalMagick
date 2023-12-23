@@ -388,7 +388,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     public boolean mouseClicked(double mouseX, double mouseY, int buttonIndex) {
         if (this.isVisible() && !this.mc.player.isSpectator()) {
             if (this.recipeBookPage.mouseClicked(mouseX, mouseY, buttonIndex, (this.width - IMAGE_WIDTH) / 2 - this.xOffset, (this.height - IMAGE_HEIGHT) / 2, IMAGE_WIDTH, IMAGE_HEIGHT)) {
-                Recipe<?> recipe = this.recipeBookPage.getLastClickedRecipe();
+                RecipeHolder<?> recipe = this.recipeBookPage.getLastClickedRecipe();
                 ArcaneRecipeCollection collection = this.recipeBookPage.getLastClickedRecipeCollection();
                 if (recipe != null && collection != null) {
                     if (!collection.isCraftable(recipe) && this.ghostRecipe.getRecipe() == recipe) {
