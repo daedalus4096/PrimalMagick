@@ -2,26 +2,25 @@ package com.verdantartifice.primalmagick.common.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
 
 /**
@@ -109,33 +108,30 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
+        protected static final Codec<ShapelessArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    SourceList.CODEC.fieldOf("manaCosts").forGetter(sar -> sar.manaCosts),
+                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("recipeOutput").forGetter(sar -> sar.recipeOutput),
+                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("recipeItems").flatXmap(ingredients -> {
+                        Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
+                        if (ingArray.length == 0) {
+                            return DataResult.error(() -> "No ingredients for shapeless arcane recipe");
+                        } else if (ingArray.length > ShapedArcaneRecipe.MAX_WIDTH * ShapedArcaneRecipe.MAX_HEIGHT) {
+                            return DataResult.error(() -> "Too many ingredients for shapeless arcane recipe");
+                        } else {
+                            return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
+                        }
+                    }, DataResult::success).forGetter(sar -> sar.recipeItems)
+                ).apply(instance, ShapelessArcaneRecipe::new);
+        });
+        
         @Override
-        public ShapelessArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
-            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            NonNullList<Ingredient> ingredients = this.readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
-            if (ingredients.isEmpty()) {
-                throw new JsonParseException("No ingredients for shapeless arcane recipe");
-            } else if (ingredients.size() > 9) {
-                throw new JsonParseException("Too many ingredients for shapeless arcane recipe the max is 9");
-            } else {
-                return new ShapelessArcaneRecipe(recipeId, group, research, manaCosts, result, ingredients);
-            }
+        public Codec<ShapelessArcaneRecipe> codec() {
+            return CODEC;
         }
 
-        protected NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
-            NonNullList<Ingredient> retVal = NonNullList.create();
-            for (int i = 0; i < jsonArray.size(); ++i) {
-                Ingredient ingredient = Ingredient.fromJson(jsonArray.get(i));
-                if (!ingredient.isEmpty()) {
-                    retVal.add(ingredient);
-                }
-            }
-            return retVal;
-        }
-        
         @Override
         public ShapelessArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);

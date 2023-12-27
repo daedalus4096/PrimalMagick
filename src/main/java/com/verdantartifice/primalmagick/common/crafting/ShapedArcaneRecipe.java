@@ -32,8 +32,8 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
 public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<CraftingContainer> {
-    protected static final int MAX_WIDTH = 3;
-    protected static final int MAX_HEIGHT = 3;
+    public static final int MAX_WIDTH = 3;
+    public static final int MAX_HEIGHT = 3;
 
     protected final int recipeWidth;
     protected final int recipeHeight;
