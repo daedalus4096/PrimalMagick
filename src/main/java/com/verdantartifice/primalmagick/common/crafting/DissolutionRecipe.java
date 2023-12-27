@@ -1,20 +1,19 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 
 /**
  * Definition for a dissolution recipe.  Similar to a smelting recipe, but used by the dissolution chamber
@@ -78,13 +77,18 @@ public class DissolutionRecipe implements IDissolutionRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
+        protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
+                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("result").forGetter(dr -> dr.result),
+                    SourceList.CODEC.fieldOf("manaCosts").forGetter(dr -> dr.manaCosts)
+                ).apply(instance, DissolutionRecipe::new);
+        });
+        
         @Override
-        public DissolutionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            Ingredient ing = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-            return new DissolutionRecipe(recipeId, group, ing, result, manaCosts);
+        public Codec<DissolutionRecipe> codec() {
+            return CODEC;
         }
 
         @Override
