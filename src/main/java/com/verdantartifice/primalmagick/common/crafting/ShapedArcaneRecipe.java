@@ -1,33 +1,28 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import org.apache.commons.lang3.NotImplementedException;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
@@ -147,14 +142,14 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return this.group;
     }
 
-    protected static String[] shrink(String... toShrink) {
+    protected static String[] shrink(List<String> toShrink) {
         int i = Integer.MAX_VALUE;
         int j = 0;
         int k = 0;
         int l = 0;
         
-        for (int i1 = 0; i1 < toShrink.length; ++i1) {
-            String s = toShrink[i1];
+        for (int i1 = 0; i1 < toShrink.size(); ++i1) {
+            String s = toShrink.get(i1);
             i = Math.min(i, firstNonSpace(s));
             int j1 = lastNonSpace(s);
             j = Math.max(j, j1);
@@ -167,12 +162,12 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 l = 0;
             }
         }
-        if (toShrink.length == l) {
+        if (toShrink.size() == l) {
             return new String[0];
         } else {
-            String[] astring = new String[toShrink.length - l - k];
+            String[] astring = new String[toShrink.size() - l - k];
             for (int k1 = 0; k1 < astring.length; ++k1) {
-               astring[k1] = toShrink[k1 + k].substring(i, j + 1);
+               astring[k1] = toShrink.get(k1 + k).substring(i, j + 1);
             }
             return astring;
         }
@@ -220,28 +215,41 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             }
         }, DataResult::success);
         
-        protected static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(str -> {
-            if (str.length() != 1) {
-                return DataResult.error(() -> "Invalid key entry: '" + str + "' is an invalid symbol (must be 1 character only).");
-            } else {
-                return " ".equals(str) ? DataResult.error(() -> "Invalid key entry: ' ' is a reserved symbol.") : DataResult.success(str);
+        protected static final Codec<ShapedArcaneRecipe> CODEC = ShapedArcaneRecipe.Serializer.RawShapedArcaneRecipe.CODEC.flatXmap(rsar -> {
+            String[] patternArray = ShapedArcaneRecipe.shrink(rsar.pattern);
+            int width = patternArray[0].length();
+            int height = patternArray.length;
+            NonNullList<Ingredient> ingredients = NonNullList.withSize(width * height, Ingredient.EMPTY);
+            Set<String> symbols = new HashSet<>(rsar.key.keySet());
+            
+            for (int i = 0; i < height; i++) {
+                String line = patternArray[i];
+                for (int j = 0; j < line.length(); j++) {
+                    String symbol = line.substring(j, j + 1);
+                    Ingredient ing = " ".equals(symbol) ? Ingredient.EMPTY : rsar.key.get(symbol);
+                    if (ing == null) {
+                        return DataResult.error(() -> "Pattern references symbol '" + symbol + "' but it's not defined in the key");
+                    }
+                    symbols.remove(symbol);
+                    ingredients.set(j + width * i, ing);
+                }
             }
-        }, DataResult::success);
+            
+            if (!symbols.isEmpty()) {
+                return DataResult.error(() -> "Key defines symbols that aren't used in pattern: " + symbols.toString());
+            } else {
+                ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(rsar.group, rsar.research, rsar.manaCosts, width, height, ingredients, rsar.result);
+                return DataResult.success(recipe);
+            }
+        }, sr -> {
+            throw new NotImplementedException("Serializing ShapedArcaneRecipe is not implemented yet.");
+        });
         
         @Override
-        public ShapedArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
-            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
-            Map<String, Ingredient> map = ShapedArcaneRecipe.deserializeKey(GsonHelper.getAsJsonObject(json, "key"));
-            String[] patternStrs = ShapedArcaneRecipe.shrink(ShapedArcaneRecipe.patternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
-            int width = patternStrs[0].length();
-            int height = patternStrs.length;
-            NonNullList<Ingredient> ingredients = ShapedArcaneRecipe.deserializeIngredients(patternStrs, map, width, height);
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, ingredients, result);
+        public Codec<ShapedArcaneRecipe> codec() {
+            return CODEC;
         }
-        
+
         @Override
         public ShapedArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             int width = buffer.readVarInt();
@@ -268,6 +276,19 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 ingredient.toNetwork(buffer);
             }
             buffer.writeItem(recipe.recipeOutput);
+        }
+        
+        protected static record RawShapedArcaneRecipe(String group, Map<String, Ingredient> key, List<String> pattern, ItemStack result, CompoundResearchKey research, SourceList manaCosts) {
+            public static final Codec<ShapedArcaneRecipe.Serializer.RawShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+                return instance.group(
+                        ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rsar -> rsar.group),
+                        ExtraCodecs.strictUnboundedMap(CodecUtils.SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("key").forGetter(rsar -> rsar.key),
+                        ShapedArcaneRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(rsar -> rsar.pattern),
+                        CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("result").forGetter(rsar -> rsar.result),
+                        CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
+                        SourceList.CODEC.fieldOf("manaCosts").forGetter(rsar -> rsar.manaCosts)
+                    ).apply(instance, RawShapedArcaneRecipe::new);
+            });
         }
     }
 }
