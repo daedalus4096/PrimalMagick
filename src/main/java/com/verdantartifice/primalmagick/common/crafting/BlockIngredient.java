@@ -7,21 +7,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -37,13 +36,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class BlockIngredient implements Predicate<Block> {
     public static final BlockIngredient EMPTY = new BlockIngredient(Stream.empty());
     
-    protected final BlockIngredient.IBlockList[] acceptedBlocks;
+    public static final Codec<BlockIngredient> CODEC = codec(true);
+    public static final Codec<BlockIngredient> CODEC_NONEMPTY = codec(false);
+    
+    protected final BlockIngredient.Value[] acceptedBlocks;
     protected Block[] matchingBlocks = null;
     
-    protected BlockIngredient(Stream<? extends BlockIngredient.IBlockList> blockLists) {
+    protected BlockIngredient(Stream<? extends BlockIngredient.Value> blockLists) {
         this.acceptedBlocks = blockLists.toArray(count -> {
-            return new BlockIngredient.IBlockList[count];
+            return new BlockIngredient.Value[count];
         });
+    }
+    
+    private BlockIngredient(BlockIngredient.Value[] values) {
+        this.acceptedBlocks = values;
     }
     
     public Block[] getMatchingBlocks() {
@@ -84,18 +90,6 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
-    public JsonElement serialize() {
-        if (this.acceptedBlocks.length == 1) {
-            return this.acceptedBlocks[0].serialize();
-        } else {
-            JsonArray arr = new JsonArray();
-            for (BlockIngredient.IBlockList list : this.acceptedBlocks) {
-                arr.add(list.serialize());
-            }
-            return arr;
-        }
-    }
-    
     public boolean hasNoMatchingBlocks() {
         return this.acceptedBlocks.length == 0 && (this.matchingBlocks == null || this.matchingBlocks.length == 0);
     }
@@ -104,116 +98,85 @@ public class BlockIngredient implements Predicate<Block> {
         return Ingredient.of(Arrays.stream(this.acceptedBlocks).flatMap(ibl -> ibl.getBlocks().stream()).toArray(ItemLike[]::new));
     }
     
-    protected static BlockIngredient fromBlockListStream(Stream<? extends BlockIngredient.IBlockList> stream) {
+    protected static BlockIngredient fromBlockListStream(Stream<? extends BlockIngredient.Value> stream) {
         BlockIngredient ing = new BlockIngredient(stream);
         return ing.acceptedBlocks.length == 0 ? EMPTY : ing;
     }
     
     public static BlockIngredient fromBlocks(Block... blocks) {
         return fromBlockListStream(Arrays.stream(blocks).map(b -> {
-            return new BlockIngredient.SingleBlockList(b);
+            return new BlockIngredient.SingleBlockValue(b);
         }));
     }
     
     public static BlockIngredient fromTag(TagKey<Block> tag) {
-        return fromBlockListStream(Stream.of(new BlockIngredient.TagList(tag)));
+        return fromBlockListStream(Stream.of(new BlockIngredient.TagValue(tag)));
     }
     
     public static BlockIngredient read(FriendlyByteBuf buf) {
         int size = buf.readVarInt();
         return fromBlockListStream(Stream.generate(() -> {
             ResourceLocation loc = buf.readResourceLocation();
-            return new BlockIngredient.SingleBlockList(ForgeRegistries.BLOCKS.getValue(loc));
+            return new BlockIngredient.SingleBlockValue(ForgeRegistries.BLOCKS.getValue(loc));
         }).limit((long)size));
     }
     
-    protected static BlockIngredient.IBlockList deserializeBlockList(JsonObject json) {
-        if (json.has("block") && json.has("tag")) {
-            throw new JsonParseException("A block ingredient entry is either a tag or a block, not both");
-        } else if (json.has("block")) {
-            ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "block"));
-            Block block = ForgeRegistries.BLOCKS.getValue(loc);
-            if (block == null) {
-                throw new JsonSyntaxException("Unknown block '" + loc.toString() + "'");
+    private static Codec<BlockIngredient> codec(boolean allowEmpty) {
+        Codec<BlockIngredient.Value[]> innerCodec = Codec.list(BlockIngredient.Value.CODEC).comapFlatMap(valueList -> {
+            return !allowEmpty && valueList.size() < 1 ?
+                    DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
+                    DataResult.success(valueList.toArray(BlockIngredient.Value[]::new));
+        }, List::of);
+        return ExtraCodecs.either(innerCodec, BlockIngredient.Value.CODEC).flatComapMap(either -> {
+            return either.map(BlockIngredient::new, val -> new BlockIngredient(new BlockIngredient.Value[] {val}));
+        }, ing -> {
+            if (ing.acceptedBlocks.length == 1) {
+                return DataResult.success(Either.right(ing.acceptedBlocks[0]));
             } else {
-                return new BlockIngredient.SingleBlockList(block);
+                return ing.acceptedBlocks.length == 0 && !allowEmpty ?
+                        DataResult.error(() -> "Block array cannot be empty, at least one block must be defined") :
+                        DataResult.success(Either.left(ing.acceptedBlocks));
             }
-        } else if (json.has("tag")) {
-            ResourceLocation loc = new ResourceLocation(GsonHelper.getAsString(json, "tag"));
-            TagKey<Block> tag = TagKey.create(Registries.BLOCK, loc);
-            return new BlockIngredient.TagList(tag);
-        } else {
-            throw new JsonParseException("A block ingredient entry needs either a tag or a block");
-        }
+        });
     }
     
-    public static BlockIngredient deserialize(@Nullable JsonElement json) {
-        if (json != null && !json.isJsonNull()) {
-            if (json.isJsonObject()) {
-                return fromBlockListStream(Stream.of(deserializeBlockList(json.getAsJsonObject())));
-            } else if (json.isJsonArray()) {
-                JsonArray arr = json.getAsJsonArray();
-                if (arr.size() == 0) {
-                    throw new JsonSyntaxException("Block array cannot be empty, at least one block must be defined");
-                } else {
-                    return fromBlockListStream(StreamSupport.stream(arr.spliterator(), false).map(element -> {
-                        return deserializeBlockList(GsonHelper.convertToJsonObject(element, "block"));
-                    }));
-                }
+    protected interface Value {
+        Codec<BlockIngredient.Value> CODEC = ExtraCodecs.xor(BlockIngredient.SingleBlockValue.CODEC, BlockIngredient.TagValue.CODEC).xmap(either -> {
+            return either.map(l -> l, r -> r);
+        }, val -> {
+            if (val instanceof BlockIngredient.SingleBlockValue sbv) {
+                return Either.left(sbv);
+            } else if (val instanceof BlockIngredient.TagValue tv) {
+                return Either.right(tv);
             } else {
-                throw new JsonSyntaxException("Expected block to be object or array of objects");
+                throw new UnsupportedOperationException("This is neither a single block value nor a tag value");
             }
-        } else {
-            throw new JsonSyntaxException("Block cannot be null");
-        }
-    }
-
-    protected interface IBlockList {
-        Collection<Block> getBlocks();
-        JsonObject serialize();
-    }
-    
-    protected static class SingleBlockList implements BlockIngredient.IBlockList {
-        private final Block block;
+        });
         
-        public SingleBlockList(Block block) {
-            this.block = block;
-        }
+        Collection<Block> getBlocks();
+    }
+    
+    protected static record SingleBlockValue(Block block) implements BlockIngredient.Value {
+        protected static final Codec<BlockIngredient.SingleBlockValue> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(CodecUtils.BLOCK_NONAIR_CODEC.fieldOf("block").forGetter(sbl -> sbl.block)).apply(instance, BlockIngredient.SingleBlockValue::new);
+        });
         
         @Override
         public Collection<Block> getBlocks() {
             return Collections.singleton(this.block);
         }
-
-        @Override
-        public JsonObject serialize() {
-            JsonObject json = new JsonObject();
-            json.addProperty("block", ForgeRegistries.BLOCKS.getKey(this.block).toString());
-            return json;
-        }
     }
     
-    protected static class TagList implements BlockIngredient.IBlockList {
-        private final TagKey<Block> tag;
-        
-        public TagList(TagKey<Block> tag) {
-            this.tag = tag;
-        }
+    protected static record TagValue(TagKey<Block> tag) implements BlockIngredient.Value {
+        protected static final Codec<BlockIngredient.TagValue> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(TagKey.codec(Registries.BLOCK).fieldOf("tag").forGetter(tl -> tl.tag)).apply(instance, BlockIngredient.TagValue::new);
+        });
         
         @Override
         public Collection<Block> getBlocks() {
             List<Block> retVal = new ArrayList<Block>();
-            for (Block block : ForgeRegistries.BLOCKS.tags().getTag(this.tag)) {
-                retVal.add(block);
-            }
+            ForgeRegistries.BLOCKS.tags().getTag(this.tag).stream().forEach(retVal::add);
             return retVal;
-        }
-
-        @Override
-        public JsonObject serialize() {
-            JsonObject json = new JsonObject();
-            json.addProperty("tag", this.tag.location().toString());
-            return json;
         }
     }
 }

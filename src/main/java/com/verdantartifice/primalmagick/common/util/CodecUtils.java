@@ -4,12 +4,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class CodecUtils {
     public static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(str -> {
@@ -20,8 +22,7 @@ public class CodecUtils {
         }
     }, DataResult::success);
 
-    @SuppressWarnings("deprecation")
-    private static final Codec<Item> ITEM_NONAIR_CODEC = ExtraCodecs.validate(BuiltInRegistries.ITEM.byNameCodec(), item -> {
+    private static final Codec<Item> ITEM_NONAIR_CODEC = ExtraCodecs.validate(ForgeRegistries.ITEMS.getCodec(), item -> {
         return item == Items.AIR ? DataResult.error(() -> "Item must not be minecraft:air") : DataResult.success(item);
     });
 
@@ -31,5 +32,9 @@ public class CodecUtils {
                 ExtraCodecs.strictOptionalField(ExtraCodecs.POSITIVE_INT, "count", 1).forGetter(ItemStack::getCount),
                 CompoundTag.CODEC.optionalFieldOf("tag", null).forGetter(ItemStack::getTag)
             ).apply(instance, ItemStack::new);
+    });
+    
+    public static final Codec<Block> BLOCK_NONAIR_CODEC = ExtraCodecs.validate(ForgeRegistries.BLOCKS.getCodec(), block -> {
+        return block == Blocks.AIR ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block);
     });
 }
