@@ -90,12 +90,6 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
         return !this.nameField.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) && !this.nameField.canConsumeInput() ? super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_) : true;
     }
     
-    @Override
-    protected void containerTick() {
-        super.containerTick();
-        this.nameField.tick();
-    }
-
     protected void regenerateWidgets() {
         for (GuiEventListener widget : this.localWidgets) {
             this.removeWidget(widget);

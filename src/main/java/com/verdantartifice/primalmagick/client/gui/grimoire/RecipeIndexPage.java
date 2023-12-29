@@ -111,14 +111,6 @@ public class RecipeIndexPage extends AbstractPage {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        if (this.searchBox != null) {
-            this.searchBox.tick();
-        }
-    }
-
-    @Override
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         if (this.searchBox != null && this.searchBox.mouseClicked(pMouseX, pMouseY, pButton)) {
             this.searchBox.setFocused(true);

@@ -302,7 +302,6 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
                 this.updateStackedContents();
                 this.timesInventoryChanged = this.mc.player.getInventory().getTimesChanged();
             }
-            this.searchBox.tick();
         }
     }
     
