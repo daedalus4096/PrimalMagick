@@ -194,7 +194,7 @@ public class SpellcraftingAltarScreen extends AbstractContainerScreen<Spellcraft
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.regenerateWidgets();
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
         RenderSystem.disableBlend();

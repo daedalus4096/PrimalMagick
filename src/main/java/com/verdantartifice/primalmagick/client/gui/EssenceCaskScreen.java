@@ -88,7 +88,7 @@ public class EssenceCaskScreen extends AbstractContainerScreen<EssenceCaskMenu> 
             this.initWidgets();
         }
         
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
         

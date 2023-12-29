@@ -62,7 +62,7 @@ public class InfernalFurnaceScreen extends AbstractContainerScreen<InfernalFurna
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.manaGauge.setCurrentMana(this.menu.getCurrentMana());
         this.manaGauge.setMaxMana(this.menu.getMaxMana());
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         if (this.recipeBookComponent.isVisible() && this.widthTooNarrow) {
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
             this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);

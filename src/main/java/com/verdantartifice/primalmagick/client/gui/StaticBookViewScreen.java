@@ -168,7 +168,7 @@ public class StaticBookViewScreen extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.renderedLines.clear();
         
-        this.renderBackground(guiGraphics);
+        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
         guiGraphics.blit(this.requestedBgTexture, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
