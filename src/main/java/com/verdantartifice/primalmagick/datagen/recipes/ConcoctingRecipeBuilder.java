@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -26,7 +27,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
+import net.minecraftforge.common.crafting.ingredients.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -127,23 +128,7 @@ public class ConcoctingRecipeBuilder {
         this.build(consumer, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final ItemStack result;
-        protected final List<Ingredient> ingredients;
-        protected final String group;
-        protected final CompoundResearchKey research;
-        protected final SourceList manaCosts;
-        
-        public Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, String group, CompoundResearchKey research, SourceList manaCosts) {
-            this.id = id;
-            this.result = result;
-            this.ingredients = ingredients;
-            this.group = group;
-            this.research = research;
-            this.manaCosts = manaCosts;
-        }
-
+    public static record Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, String group, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
@@ -163,7 +148,7 @@ public class ConcoctingRecipeBuilder {
             
             JsonArray ingredientsJson = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson());
+                ingredientsJson.add(ingredient.toJson(true));
             }
             json.add("ingredients", ingredientsJson);
             
@@ -177,24 +162,14 @@ public class ConcoctingRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.CONCOCTING.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Concocting recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }

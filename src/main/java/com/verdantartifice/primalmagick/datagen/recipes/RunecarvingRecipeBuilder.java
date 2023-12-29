@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -201,25 +202,7 @@ public class RunecarvingRecipeBuilder {
         }
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final Item result;
-        protected final int count;
-        protected final String group;
-        protected final Ingredient ingredient1;
-        protected final Ingredient ingredient2;
-        protected final CompoundResearchKey research;
-        
-        public Result(ResourceLocation id, Item result, int count, String group, Ingredient ing1, Ingredient ing2, CompoundResearchKey research) {
-            this.id = id;
-            this.result = result;
-            this.count = count;
-            this.group = group;
-            this.ingredient1 = ing1;
-            this.ingredient2 = ing2;
-            this.research = research;
-        }
-
+    public static record Result(ResourceLocation id, Item result, int count, String group, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             // Serialize the recipe group, if present
@@ -233,8 +216,8 @@ public class RunecarvingRecipeBuilder {
             }
             
             // Serialize the recipe ingredients
-            json.add("ingredient1", this.ingredient1.toJson());
-            json.add("ingredient2", this.ingredient2.toJson());
+            json.add("ingredient1", this.ingredient1.toJson(true));
+            json.add("ingredient2", this.ingredient2.toJson(true));
             
             // Serialize the recipe result
             JsonObject resultJson = new JsonObject();
@@ -246,24 +229,14 @@ public class RunecarvingRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.RUNECARVING.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Runecarving recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }

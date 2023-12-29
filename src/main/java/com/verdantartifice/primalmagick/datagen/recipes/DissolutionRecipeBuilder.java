@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -78,21 +79,7 @@ public class DissolutionRecipeBuilder {
         consumer.accept(new DissolutionRecipeBuilder.Result(id, this.result, this.ingredient, this.group, this.manaCosts));
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final ItemStack result;
-        protected final Ingredient ingredient;
-        protected final String group;
-        protected final SourceList manaCosts;
-        
-        public Result(ResourceLocation id, ItemStack result, Ingredient ingredient, String group, SourceList manaCosts) {
-            this.id = id;
-            this.result = result;
-            this.ingredient = ingredient;
-            this.group = group;
-            this.manaCosts = manaCosts;
-        }
-
+    public static record Result(ResourceLocation id, ItemStack result, Ingredient ingredient, String group, SourceList manaCosts) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
@@ -107,7 +94,7 @@ public class DissolutionRecipeBuilder {
                 json.add("mana", manaJson);
             }
 
-            json.add("ingredient", this.ingredient.toJson());
+            json.add("ingredient", this.ingredient.toJson(true));
             
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result.getItem()).toString());
@@ -119,24 +106,14 @@ public class DissolutionRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.DISSOLUTION.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Dissolution recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }
