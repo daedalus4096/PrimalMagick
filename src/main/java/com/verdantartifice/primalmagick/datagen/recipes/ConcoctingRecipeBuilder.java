@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -17,6 +16,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -113,19 +113,19 @@ public class ConcoctingRecipeBuilder {
         }
     }
     
-    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
         String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(this.result)).getPath() : this.group;
-        consumer.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, groupStr, this.research, this.manaCosts));
+        output.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, groupStr, this.research, this.manaCosts));
     }
     
-    public void build(Consumer<FinishedRecipe> consumer) {
+    public void build(RecipeOutput output) {
         Potion potion = PotionUtils.getPotion(this.result);
         ConcoctionType type = ConcoctionUtils.getConcoctionType(this.result);
         if (type == null || potion == null || potion == Potions.EMPTY) {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
-        this.build(consumer, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
+        this.build(output, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
     }
     
     public static record Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, String group, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {

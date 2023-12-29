@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.function.Consumer;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -9,6 +7,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -74,9 +73,9 @@ public class DissolutionRecipeBuilder {
         }
     }
     
-    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new DissolutionRecipeBuilder.Result(id, this.result, this.ingredient, this.group, this.manaCosts));
+        output.accept(new DissolutionRecipeBuilder.Result(id, this.result, this.ingredient, this.group, this.manaCosts));
     }
     
     public static record Result(ResourceLocation id, ItemStack result, Ingredient ingredient, String group, SourceList manaCosts) implements FinishedRecipe {

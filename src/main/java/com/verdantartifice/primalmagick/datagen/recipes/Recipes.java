@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.function.Consumer;
-
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
@@ -21,8 +19,8 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
@@ -50,7 +48,7 @@ public class Recipes extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(RecipeOutput consumer) {
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
@@ -645,7 +643,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.MODID + ":static_book_cloning");
     }
 
-    protected void registerMarbleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerMarbleRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BRICK_SLAB.get(), 6)
             .pattern("MMM")
             .define('M', BlocksPM.MARBLE_BRICKS.get())
@@ -761,7 +759,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("marble_tiles_from_marble_bricks_stonecutting"));
     }
 
-    protected void registerEnchantedMarbleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerEnchantedMarbleRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(BlocksPM.MARBLE_ENCHANTED.get(), 9)
             .addIngredient(BlocksPM.MARBLE_RAW.get(), 9)
             .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
@@ -870,7 +868,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("marble_enchanted_wall_from_marble_enchanted_stonecutting"));
     }
     
-    protected void registerSmokedMarbleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSmokedMarbleRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED.get(), 8)
             .patternLine("MMM")
             .patternLine("MCM")
@@ -983,7 +981,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("marble_smoked_wall_from_marble_smoked_stonecutting"));
     }
     
-    protected void registerHallowedMarbleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerHallowedMarbleRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED.get(), 8)
             .patternLine("MMM")
             .patternLine("MDM")
@@ -1096,7 +1094,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("marble_hallowed_wall_from_marble_hallowed_stonecutting"));
     }
 
-    protected void registerSunwoodRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSunwoodRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.SUNWOOD_WOOD.get(), 3)
             .pattern("WW")
             .pattern("WW")
@@ -1139,7 +1137,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
     }
     
-    protected void registerMoonwoodRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerMoonwoodRecipes(RecipeOutput consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemsPM.MOONWOOD_WOOD.get(), 3)
             .pattern("WW")
             .pattern("WW")
@@ -1182,7 +1180,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
     }
     
-    protected void registerHallowoodRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerHallowoodRecipes(RecipeOutput consumer) {
         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ItemsPM.HALLOWOOD_SAPLING.get())
             .requires(ItemsPM.HALLOWED_ORB.get())
             .requires(ItemTags.SAPLINGS)
@@ -1230,7 +1228,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
     }
 
-    protected void registerEssenceUpgradeRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerEssenceUpgradeRecipes(RecipeOutput consumer) {
         for (Source source : Source.SORTED_SOURCES) {
             for (EssenceType baseType : EssenceType.values()) {
                 EssenceType upgradeType = baseType.getUpgrade();
@@ -1262,7 +1260,7 @@ public class Recipes extends RecipeProvider {
         }
     }
     
-    protected void registerEssenceDowngradeRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerEssenceDowngradeRecipes(RecipeOutput consumer) {
         for (Source source : Source.SORTED_SOURCES) {
             for (EssenceType baseType : EssenceType.values()) {
                 EssenceType downgradeType = baseType.getDowngrade();
@@ -1289,7 +1287,7 @@ public class Recipes extends RecipeProvider {
         }
     }
 
-    protected void registerSaltRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSaltRecipes(RecipeOutput consumer) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(BlocksPM.ROCK_SALT_ORE.get()), RecipeCategory.MISC, ItemsPM.ROCK_SALT.get(), 0, 200)
             .unlockedBy("has_rock_salt_ore", has(BlocksPM.ROCK_SALT_ORE.get()))
             .save(consumer, PrimalMagick.resource("rock_salt_from_smelting"));
@@ -1383,7 +1381,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
     }
     
-    protected void registerSkyglassRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSkyglassRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS.get(), 8)
             .patternLine("GGG")
             .patternLine("GDG")
@@ -1538,7 +1536,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerSkyglassPaneRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSkyglassPaneRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS_PANE.get(), 16)
             .patternLine("GGG")
             .patternLine("GGG")
@@ -1803,7 +1801,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagick.resource("stained_skyglass_pane_yellow_from_panes"));
     }
 
-    protected void registerEarthshatterHammerRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerEarthshatterHammerRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.EARTHSHATTER_HAMMER.get())
             .patternLine("III")
             .patternLine("IEI")
@@ -1887,7 +1885,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("refined_salt_from_earthshatter_hammer"));
     }
 
-    protected void registerMineralRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerMineralRecipes(RecipeOutput consumer) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.IRON_GRIT.get()), RecipeCategory.MISC, Items.IRON_INGOT, 0.7F, 200)
             .unlockedBy("has_grit", has(ItemsPM.IRON_GRIT.get()))
             .group("iron_ingot")
@@ -1931,7 +1929,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("quartz_from_nuggets"));
     }
     
-    protected void registerPrimaliteRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerPrimaliteRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.PRIMALITE_INGOT.get())
             .addIngredient(Tags.Items.INGOTS_IRON)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
@@ -2066,7 +2064,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerHexiumRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerHexiumRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HEXIUM_INGOT.get())
             .addIngredient(ItemTagsPM.INGOTS_PRIMALITE)
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
@@ -2199,7 +2197,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerHallowsteelRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerHallowsteelRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HALLOWSTEEL_INGOT.get())
             .addIngredient(ItemTagsPM.INGOTS_HEXIUM)
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get())
@@ -2330,7 +2328,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerWandComponentRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerWandComponentRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get())
             .patternLine(" H")
             .patternLine("H ")
@@ -2635,7 +2633,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerRitualCandleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerRitualCandleRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.TALLOW.get())
             .addIngredient(Items.ROTTEN_FLESH)
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
@@ -2757,7 +2755,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer);
     }
     
-    protected void registerRuneRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerRuneRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.RUNECARVING_TABLE.get())
             .addIngredient(ItemsPM.WOOD_TABLE.get())
             .addIngredient(Items.STONE_SLAB)
@@ -2939,7 +2937,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
 
-    protected void registerGolemControllerRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerGolemControllerRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get())
             .patternLine("PIP")
             .patternLine("IRI")
@@ -2972,7 +2970,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerPixieRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerPixieRecipes(RecipeOutput consumer) {
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_EARTH_PIXIE.get())
             .addIngredient(ItemsPM.MANA_SALTS.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
@@ -3470,7 +3468,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagick.resource("pixie_majestic_hallowed_revive"));
     }
 
-    protected void registerAmbrosiaRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerAmbrosiaRecipes(RecipeOutput consumer) {
         RitualRecipeBuilder.ritualRecipe(ItemsPM.BASIC_EARTH_AMBROSIA.get())
             .addIngredient(ItemsPM.MANAFRUIT.get())
             .addIngredient(ItemsPM.MANA_PRISM.get())
@@ -3842,7 +3840,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerSanguineCrucibleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerSanguineCrucibleRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SANGUINE_CRUCIBLE.get())
             .patternLine("ICI")
             .patternLine("IWI")
@@ -4366,7 +4364,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerTinctureRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerTinctureRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SKYGLASS_FLASK.get(), 3)
             .patternLine("# #")
             .patternLine(" # ")
@@ -4663,7 +4661,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerPhilterRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerPhilterRecipes(RecipeOutput consumer) {
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.PHILTER))
             .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
@@ -4943,7 +4941,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerElixirRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerElixirRecipes(RecipeOutput consumer) {
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.ELIXIR))
             .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
@@ -5223,7 +5221,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerAlchemicalBombRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerAlchemicalBombRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BOMB_CASING.get())
             .patternLine(" S ")
             .patternLine("IFI")
@@ -5581,7 +5579,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerClothRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerClothRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.SPELLCLOTH.get())
             .patternLine("ESE")
             .patternLine(" C ")
@@ -5722,7 +5720,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerPrimalToolRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerPrimalToolRecipes(RecipeOutput consumer) {
         RitualRecipeBuilder.ritualRecipe(ItemsPM.PRIMAL_SHOVEL.get().getDefaultInstance())
             .addIngredient(ItemsPM.PRIMALITE_SHOVEL.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get(), 2)
@@ -5830,7 +5828,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerManaFontRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerManaFontRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get())
             .patternLine("IMI")
             .patternLine(" E ")
@@ -6148,7 +6146,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerManaArrowRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerManaArrowRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.MANA_ARROW_EARTH.get(), 4)
             .patternLine(" A ")
             .patternLine("ADA")
@@ -6241,7 +6239,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerDissolutionChamberRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerDissolutionChamberRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.DISSOLUTION_CHAMBER.get())
             .patternLine("DDD")
             .patternLine("DCD")
@@ -6333,7 +6331,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagick.resource("refined_salt_from_dissolving_rock_salt"));
     }
     
-    protected void registerHummingArtifactRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerHummingArtifactRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get())
             .addIngredient(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
@@ -6399,7 +6397,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerEssenceCaskRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerEssenceCaskRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ESSENCE_CASK_ENCHANTED.get())
             .patternLine("WEW")
             .patternLine("MBM")
@@ -6435,7 +6433,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerAttunementShacklesRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerAttunementShacklesRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get())
             .patternLine("CSC")
             .patternLine("C C")
@@ -6519,7 +6517,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerWardingModuleRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerWardingModuleRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(ItemsPM.BASIC_WARDING_MODULE.get())
             .patternLine(" R ")
             .patternLine("PES")
@@ -6558,11 +6556,11 @@ public class Recipes extends RecipeProvider {
             .build(consumer);
     }
     
-    protected void registerCodexRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerCodexRecipes(RecipeOutput consumer) {
         // TODO Re-add codex ritual recipes once the book project is ready to deploy
     }
     
-    protected void registerStonemeldingRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerStonemeldingRecipes(RecipeOutput consumer) {
         ArcaneShapedRecipeBuilder.arcaneShapedRecipe(Items.STONE, 8)
             .patternLine("SSS")
             .patternLine("SDS")
@@ -6597,7 +6595,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagick.resource("gravel_from_stonemelding"));
     }
     
-    protected void registerCryotreatmentRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerCryotreatmentRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(Items.ICE)
             .addIngredient(Items.WATER_BUCKET)
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
@@ -6615,7 +6613,7 @@ public class Recipes extends RecipeProvider {
             .build(consumer, PrimalMagick.resource("slime_ball_from_cryotreatment"));
     }
     
-    protected void registerCropRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerCropRecipes(RecipeOutput consumer) {
         RitualRecipeBuilder.ritualRecipe(ItemsPM.HYDROMELON_SEEDS.get())
             .addIngredient(Tags.Items.SEEDS_MELON)
             .addIngredient(Items.WATER_BUCKET)
@@ -6665,7 +6663,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("blaze_powder_from_emberflower"));
     }
     
-    protected void registerIgnyxRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerIgnyxRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.IGNYX.get())
             .addIngredient(ItemTags.COALS)
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
@@ -6687,7 +6685,7 @@ public class Recipes extends RecipeProvider {
             .save(consumer, PrimalMagick.resource("torch_from_ignyx"));
     }
     
-    protected void registerGemBudRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void registerGemBudRecipes(RecipeOutput consumer) {
         ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.ENERGIZED_AMETHYST.get())
             .addIngredient(Tags.Items.GEMS_AMETHYST)
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())

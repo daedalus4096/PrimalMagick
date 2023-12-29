@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -16,6 +15,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -277,38 +277,38 @@ public class RitualRecipeBuilder {
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new RitualRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
+        output.accept(new RitualRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(Consumer)} if save is the same as the ID for
+     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(RecipeOutput)} if save is the same as the ID for
      * the result.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer, String save) {
+    public void build(RecipeOutput output, String save) {
         ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Ritual Recipe " + save + " should remove its 'save' argument");
         } else {
-            this.build(consumer, saveLoc);
+            this.build(output, saveLoc);
         }
     }
     
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer) {
-        this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
+    public void build(RecipeOutput output) {
+        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
     
     /**
