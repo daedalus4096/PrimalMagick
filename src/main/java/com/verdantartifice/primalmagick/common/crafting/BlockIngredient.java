@@ -10,12 +10,15 @@ import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
+import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
+import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -90,6 +93,11 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
+    public JsonElement toJson(boolean pAllowEmpty) {
+        Codec<BlockIngredient> codec = pAllowEmpty ? CODEC : CODEC_NONEMPTY;
+        return Util.getOrThrow(codec.encodeStart(JsonOps.INSTANCE, this), IllegalStateException::new);
+     }
+
     public boolean isEmpty() {
         return this.acceptedBlocks.length == 0;
      }

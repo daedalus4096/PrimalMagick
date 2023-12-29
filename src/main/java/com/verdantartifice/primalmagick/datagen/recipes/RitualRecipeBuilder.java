@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +25,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.crafting.PartialNBTIngredient;
+import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -327,27 +328,7 @@ public class RitualRecipeBuilder {
         }
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final ItemStack result;
-        protected final String group;
-        protected final List<Ingredient> ingredients;
-        protected final List<BlockIngredient> props;
-        protected final CompoundResearchKey research;
-        protected final SourceList manaCosts;
-        protected final int instability;
-
-        public Result(ResourceLocation id, ItemStack result, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
-            this.id = id;
-            this.result = result;
-            this.group = group;
-            this.ingredients = ingredients;
-            this.props = props;
-            this.research = research;
-            this.manaCosts = manaCosts;
-            this.instability = instability;
-        }
-
+    public static record Result(ResourceLocation id, ItemStack result, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             // Serialize the recipe group, if present
@@ -375,7 +356,7 @@ public class RitualRecipeBuilder {
             // Serialize the recipe ingredient list
             JsonArray ingredientsJson = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson());
+                ingredientsJson.add(ingredient.toJson(true));
             }
             json.add("ingredients", ingredientsJson);
             
@@ -383,7 +364,7 @@ public class RitualRecipeBuilder {
             if (this.props != null && !this.props.isEmpty()) {
                 JsonArray propsJson = new JsonArray();
                 for (BlockIngredient prop : this.props) {
-                    propsJson.add(prop.serialize());
+                    propsJson.add(prop.toJson(true));
                 }
                 json.add("props", propsJson);
             }
@@ -401,24 +382,14 @@ public class RitualRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.RITUAL.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Ritual recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }
