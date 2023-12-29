@@ -90,6 +90,10 @@ public class BlockIngredient implements Predicate<Block> {
         }
     }
     
+    public boolean isEmpty() {
+        return this.acceptedBlocks.length == 0;
+     }
+
     public boolean hasNoMatchingBlocks() {
         return this.acceptedBlocks.length == 0 && (this.matchingBlocks == null || this.matchingBlocks.length == 0);
     }
