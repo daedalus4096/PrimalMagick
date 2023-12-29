@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -210,25 +211,7 @@ public class ArcaneShapelessRecipeBuilder {
         }
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final Item result;
-        protected final int count;
-        protected final String group;
-        protected final List<Ingredient> ingredients;
-        protected final CompoundResearchKey research;
-        protected final SourceList manaCosts;
-        
-        public Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, CompoundResearchKey research, SourceList manaCosts) {
-            this.id = id;
-            this.result = result;
-            this.count = count;
-            this.group = group;
-            this.ingredients = ingredients;
-            this.research = research;
-            this.manaCosts = manaCosts;
-        }
-
+    public static record Result(ResourceLocation id, Item result, int count, String group, List<Ingredient> ingredients, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
@@ -248,7 +231,7 @@ public class ArcaneShapelessRecipeBuilder {
             
             JsonArray ingredientsJson = new JsonArray();
             for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson());
+                ingredientsJson.add(ingredient.toJson(true));
             }
             json.add("ingredients", ingredientsJson);
             
@@ -261,24 +244,14 @@ public class ArcaneShapelessRecipeBuilder {
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Arcane recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }
