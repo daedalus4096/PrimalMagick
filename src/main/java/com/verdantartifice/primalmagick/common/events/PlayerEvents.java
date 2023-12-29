@@ -187,7 +187,7 @@ public class PlayerEvents {
         }
         
         AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH);
+        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
         if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);

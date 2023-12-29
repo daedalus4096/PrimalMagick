@@ -259,7 +259,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                             }
                         }
                     }
-                    this.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_DRINKING);
+                    this.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_DRINKING.getId());
                 }
             } else {
                 Potion potion = null;
@@ -282,7 +282,7 @@ public class FriendlyWitchEntity extends AbstractVillager implements NeutralMob,
                     }
 
                     AttributeInstance attr = this.getAttribute(Attributes.MOVEMENT_SPEED);
-                    attr.removeModifier(SPEED_MODIFIER_DRINKING);
+                    attr.removeModifier(SPEED_MODIFIER_DRINKING.getId());
                     attr.addTransientModifier(SPEED_MODIFIER_DRINKING);
                 }
             }
