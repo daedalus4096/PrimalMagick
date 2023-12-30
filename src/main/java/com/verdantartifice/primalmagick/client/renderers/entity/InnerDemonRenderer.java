@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EnderDragonRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -38,7 +39,7 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
     public ResourceLocation getTextureLocation(InnerDemonEntity entity) {
         // Use the viewing player's skin texture
         Minecraft mc = Minecraft.getInstance();
-        return mc.player.getSkinTextureLocation();
+        return mc.player.getSkin().texture();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class InnerDemonRenderer extends HumanoidMobRenderer<InnerDemonEntity, Pl
         if (!this.modelFinalized) {
             // Can't get the player's skin type at renderer registration time, so monkey-patch it after we're already going
             Minecraft mc = Minecraft.getInstance();
-            boolean slimModel = mc.player.getModelName().equals("slim");
+            boolean slimModel = mc.player.getSkin().model().equals(PlayerSkin.Model.SLIM);
             
             this.model = new PlayerModel<InnerDemonEntity>(this.context.bakeLayer(slimModel ? ModelLayers.PLAYER_SLIM : ModelLayers.PLAYER), slimModel);
             
