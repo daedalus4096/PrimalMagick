@@ -111,7 +111,7 @@ public class ConcoctingRecipe implements IConcoctingRecipe {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
-                    SourceList.CODEC.fieldOf("mana").forGetter(sar -> sar.manaCosts),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.recipeOutput),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);

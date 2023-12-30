@@ -131,7 +131,7 @@ public class RitualRecipe implements IRitualRecipe {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
-                    SourceList.CODEC.fieldOf("mana").forGetter(rr -> rr.manaCosts),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.recipeOutput),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {

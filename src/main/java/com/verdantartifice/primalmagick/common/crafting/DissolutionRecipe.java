@@ -81,7 +81,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.result),
-                    SourceList.CODEC.fieldOf("mana").forGetter(dr -> dr.manaCosts)
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionRecipe::new);
         });
         
