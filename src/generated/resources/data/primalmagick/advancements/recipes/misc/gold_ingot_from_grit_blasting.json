@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_grit",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_grit"
     ]
   ],
   "rewards": {

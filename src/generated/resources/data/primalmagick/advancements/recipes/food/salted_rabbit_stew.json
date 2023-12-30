@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_salt",
-      "has_rabbit_stew",
-      "has_the_recipe"
+      "has_rabbit_stew"
     ]
   ],
   "rewards": {

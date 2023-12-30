@@ -3,9 +3,16 @@
   "ingredients": [
     {
       "type": "forge:nbt",
-      "count": 1,
-      "item": "primalmagick:alchemical_bomb",
-      "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
+      "stack": {
+        "Count": 1,
+        "id": "primalmagick:alchemical_bomb",
+        "tag": {
+          "BombFuse": "medium",
+          "ConcoctionDoses": 6,
+          "ConcoctionType": "bomb",
+          "Potion": "minecraft:water"
+        }
+      }
     },
     {
       "item": "primalmagick:essence_shard_sun"

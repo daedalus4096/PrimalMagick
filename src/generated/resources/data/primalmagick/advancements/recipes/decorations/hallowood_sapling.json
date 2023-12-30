@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_hallowed_orb",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_hallowed_orb"
     ]
   ],
   "rewards": {

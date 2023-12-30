@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_salt",
-      "has_beetroot_soup",
-      "has_the_recipe"
+      "has_beetroot_soup"
     ]
   ],
   "rewards": {
