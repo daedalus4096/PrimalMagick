@@ -646,7 +646,7 @@ public class PlayerEvents {
             BlockPos pos = context.getClickedPos();
             BlockState state = level.getBlockState(pos);
             if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
-                if (mealBlock.isValidBonemealTarget(level, pos, state, level.isClientSide)) {
+                if (mealBlock.isValidBonemealTarget(level, pos, state)) {
                     if (level instanceof ServerLevel serverLevel) {
                         if (mealBlock.isBonemealSuccess(level, level.random, pos, state)) {
                             mealBlock.performBonemeal(serverLevel, level.random, pos, state);

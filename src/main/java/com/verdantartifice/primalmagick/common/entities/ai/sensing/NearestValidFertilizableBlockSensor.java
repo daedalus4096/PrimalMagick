@@ -43,7 +43,7 @@ public class NearestValidFertilizableBlockSensor extends Sensor<PathfinderMob> {
                     BlockPos scanPos = blockPos.offset(x, y, z);
                     BlockState scanState = pLevel.getBlockState(scanPos);
                     if (scanState.getBlock() instanceof BonemealableBlock bonemealable && 
-                            bonemealable.isValidBonemealTarget(pLevel, scanPos, scanState, pLevel.isClientSide) &&
+                            bonemealable.isValidBonemealTarget(pLevel, scanPos, scanState) &&
                             !scanState.is(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT)) {
                         nearby.add(scanPos);
                     }
