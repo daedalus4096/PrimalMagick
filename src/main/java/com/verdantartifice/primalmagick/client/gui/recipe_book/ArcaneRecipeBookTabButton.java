@@ -13,8 +13,10 @@ import net.minecraft.client.ClientRecipeBook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
+import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
@@ -23,7 +25,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * @author Daedalus4096
  */
 public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
-    protected static final float ANIMATION_TIME = 15.0F;
+    protected static final float ANIMATION_TIME_TOTAL = 15.0F;
+    protected static final WidgetSprites SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/tab"), new ResourceLocation("recipe_book/tab_selected"));
 
     protected final ArcaneRecipeBookCategories category;
     protected float animationTime;
@@ -31,7 +34,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     public ArcaneRecipeBookTabButton(ArcaneRecipeBookCategories category) {
         super(0, 0, 35, 27, false);
         this.category = category;
-        this.initTextureValues(153, 2, 35, 0, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
+        this.initTextureValues(SPRITES);
     }
     
     public void startAnimation(Minecraft mc, ClientRecipeBook vanillaBook, ClientArcaneRecipeBook arcaneBook) {
@@ -44,7 +47,7 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
             for (ArcaneRecipeCollection recipeCollection : list) {
                 for (RecipeHolder<?> recipe : recipeCollection.getRecipes(arcaneBook.getData().isFiltering(recipeMenu.getRecipeBookType()))) {
                     if (arcaneBook.getData().willHighlight(recipe) || vanillaBook.willHighlight(recipe)) {
-                        this.animationTime = ANIMATION_TIME;
+                        this.animationTime = ANIMATION_TIME_TOTAL;
                         return;
                     }
                 }
@@ -53,43 +56,35 @@ public class ArcaneRecipeBookTabButton extends StateSwitchingButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int p_94632_, int p_94633_, float p_94634_) {
-        if (this.animationTime > 0.0F) {
-            float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
-            guiGraphics.pose().scale(1.0F, f, 1.0F);
-            guiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
-        }
-        
-        RenderSystem.disableDepthTest();
-        
-        int texX = this.xTexStart;
-        int texY = this.yTexStart;
-        if (this.isStateTriggered) {
-            texX += this.xDiffTex;
-        }
-        if (this.isHoveredOrFocused()) {
-            texY += this.yDiffTex;
-        }
-        
-        int localX = this.getX();
-        if (this.isStateTriggered) {
-            localX -= 2;
-        }
-        
-        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
-        guiGraphics.blit(this.resourceLocation, localX, this.getY(), texX, texY, this.width, this.height);
-        RenderSystem.enableDepthTest();
-        this.renderIcon(guiGraphics);
-
-        if (this.animationTime > 0.0F) {
-            guiGraphics.pose().popPose();
-            this.animationTime -= p_94634_;
+    public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        if (this.sprites != null) {
+            if (this.animationTime > 0.0F) {
+                float f = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / ANIMATION_TIME_TOTAL * (float)Math.PI));
+                pGuiGraphics.pose().pushPose();
+                pGuiGraphics.pose().translate((double)(this.getX() + 8), (double)(this.getY() + 12), 0.0D);
+                pGuiGraphics.pose().scale(1.0F, f, 1.0F);
+                pGuiGraphics.pose().translate((double)(-(this.getX() + 8)), (double)(-(this.getY() + 12)), 0.0D);
+            }
+            
+            Minecraft mc = Minecraft.getInstance();
+            RenderSystem.disableDepthTest();
+            ResourceLocation spriteLoc = this.sprites.get(true, this.isStateTriggered);
+            int x = this.getX();
+            if (this.isStateTriggered) {
+                x -= 2;
+            }
+            
+            pGuiGraphics.blitSprite(spriteLoc, x, this.getY(), this.width, this.height);
+            RenderSystem.enableDepthTest();
+            this.renderIcon(pGuiGraphics, mc.getItemRenderer());
+            if (this.animationTime > 0.0F) {
+                pGuiGraphics.pose().popPose();
+                this.animationTime -= pPartialTick;
+            }
         }
     }
     
-    protected void renderIcon(GuiGraphics guiGraphics) {
+    protected void renderIcon(GuiGraphics guiGraphics, ItemRenderer pItemRenderer) {
         List<ItemStack> list = this.category.getIconItems();
         int dx = this.isStateTriggered ? -2 : 0;
         if (list.size() == 1) {

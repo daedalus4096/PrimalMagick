@@ -29,6 +29,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
     protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
+    private static final ResourceLocation OVERLAY_RECIPE_SPRITE = new ResourceLocation("recipe_book/overlay_recipe");
     protected static final int MAX_ROW = 4;
     protected static final int MAX_ROW_LARGE = 5;
     protected static final float ITEM_RENDER_SCALE = 0.375F;
@@ -141,7 +142,7 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
             int maxRowSize = (this.recipeButtons.size() <= 16) ? MAX_ROW : MAX_ROW_LARGE;
             int colCount = Math.min(this.recipeButtons.size(), maxRowSize);
             int rowCount = Mth.ceil((float)this.recipeButtons.size() / (float)maxRowSize);
-            guiGraphics.blitNineSliced(RECIPE_BOOK_LOCATION, this.x, this.y, colCount * 25 + 8, rowCount * 25 + 8, 4, 32, 32, 82, 208);
+            guiGraphics.blitSprite(OVERLAY_RECIPE_SPRITE, this.x, this.y, colCount * 25 + 8, rowCount * 25 + 8);
             RenderSystem.disableBlend();
 
             for (OverlayArcaneRecipeComponent.OverlayArcaneRecipeButton recipeButton : this.recipeButtons) {
