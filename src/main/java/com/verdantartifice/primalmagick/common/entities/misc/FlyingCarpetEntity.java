@@ -104,17 +104,12 @@ public class FlyingCarpetEntity extends Entity {
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return -0.1D;
-    }
-
-    @Override
     public boolean isPickable() {
         return this.isAlive();
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
+    public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements) {
         this.lerpX = x;
         this.lerpY = y;
         this.lerpZ = z;
