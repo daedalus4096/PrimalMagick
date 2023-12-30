@@ -58,7 +58,7 @@ public class PlacedFeaturesPM {
         
         // Register placed ore features
         context.register(ORE_MARBLE_RAW_UPPER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_MARBLE_RAW), rareOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128)))));
-        context.register(ORE_MARBLE_RAW_LOWER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_MARBLE_RAW), commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60)))));
+        context.register(ORE_MARBLE_RAW_LOWER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_MARBLE_RAW), commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(64)))));
         context.register(ORE_ROCK_SALT_UPPER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_ROCK_SALT), rareOrePlacement(6, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128)))));
         context.register(ORE_ROCK_SALT_LOWER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_ROCK_SALT), commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.absolute(0), VerticalAnchor.absolute(60)))));
         context.register(ORE_QUARTZ_UPPER, new PlacedFeature(features.getOrThrow(ConfiguredFeaturesPM.ORE_QUARTZ), commonOrePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.absolute(64), VerticalAnchor.absolute(128)))));
