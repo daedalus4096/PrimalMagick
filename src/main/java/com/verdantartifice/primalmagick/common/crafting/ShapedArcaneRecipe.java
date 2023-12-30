@@ -284,7 +284,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                         ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rsar -> rsar.group),
                         ExtraCodecs.strictUnboundedMap(CodecUtils.SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("key").forGetter(rsar -> rsar.key),
                         ShapedArcaneRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(rsar -> rsar.pattern),
-                        CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("result").forGetter(rsar -> rsar.result),
+                        ItemStack.CODEC.fieldOf("result").forGetter(rsar -> rsar.result),
                         CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
                         SourceList.CODEC.fieldOf("manaCosts").forGetter(rsar -> rsar.manaCosts)
                     ).apply(instance, RawShapedArcaneRecipe::new);

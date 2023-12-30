@@ -9,7 +9,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -113,7 +112,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
                     SourceList.CODEC.fieldOf("manaCosts").forGetter(sar -> sar.manaCosts),
-                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("recipeOutput").forGetter(sar -> sar.recipeOutput),
+                    ItemStack.CODEC.fieldOf("recipeOutput").forGetter(sar -> sar.recipeOutput),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("recipeItems").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {

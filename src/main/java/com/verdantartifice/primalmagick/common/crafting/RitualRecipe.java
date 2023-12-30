@@ -9,7 +9,6 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -134,7 +133,7 @@ public class RitualRecipe implements IRitualRecipe {
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
                     SourceList.CODEC.fieldOf("manaCosts").forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
-                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("recipeOutput").forGetter(rr -> rr.recipeOutput),
+                    ItemStack.CODEC.fieldOf("recipeOutput").forGetter(rr -> rr.recipeOutput),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("recipeItems").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {

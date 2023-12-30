@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -81,7 +80,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
-                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("result").forGetter(dr -> dr.result),
+                    ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.result),
                     SourceList.CODEC.fieldOf("manaCosts").forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionRecipe::new);
         });

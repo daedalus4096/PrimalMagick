@@ -2,13 +2,8 @@ package com.verdantartifice.primalmagick.common.util;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,18 +17,6 @@ public class CodecUtils {
         }
     }, DataResult::success);
 
-    private static final Codec<Item> ITEM_NONAIR_CODEC = ExtraCodecs.validate(ForgeRegistries.ITEMS.getCodec(), item -> {
-        return item == Items.AIR ? DataResult.error(() -> "Item must not be minecraft:air") : DataResult.success(item);
-    });
-
-    public static final Codec<ItemStack> ITEMSTACK_WITH_NBT_CODEC = RecordCodecBuilder.create(instance -> {
-        return instance.group(
-                ITEM_NONAIR_CODEC.fieldOf("item").forGetter(ItemStack::getItem),
-                ExtraCodecs.strictOptionalField(ExtraCodecs.POSITIVE_INT, "count", 1).forGetter(ItemStack::getCount),
-                CompoundTag.CODEC.optionalFieldOf("tag", null).forGetter(ItemStack::getTag)
-            ).apply(instance, ItemStack::new);
-    });
-    
     public static final Codec<Block> BLOCK_NONAIR_CODEC = ExtraCodecs.validate(ForgeRegistries.BLOCKS.getCodec(), block -> {
         return block == Blocks.AIR ? DataResult.error(() -> "Block must not be minecraft:air") : DataResult.success(block);
     });

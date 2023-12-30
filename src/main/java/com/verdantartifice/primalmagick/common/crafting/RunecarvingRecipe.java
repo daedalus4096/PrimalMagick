@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -86,7 +85,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    CodecUtils.ITEMSTACK_WITH_NBT_CODEC.fieldOf("result").forGetter(rr -> rr.result)
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.result)
                 ).apply(instance, RunecarvingRecipe::new);
         });
         
