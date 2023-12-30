@@ -2,16 +2,21 @@ package com.verdantartifice.primalmagick.datagen.recipes;
 
 import java.util.Optional;
 
+import javax.json.stream.JsonGenerationException;
+
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
+import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
@@ -23,16 +28,14 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class RunecarvingRecipeBuilder {
-    protected final Item result;
-    protected final int count;
+    protected final ItemStack result;
     protected Ingredient ingredient1;
     protected Ingredient ingredient2;
     protected String group;
     protected CompoundResearchKey research;
     
     protected RunecarvingRecipeBuilder(ItemLike item, int count) {
-        this.result = item.asItem();
-        this.count = count;
+        this.result = new ItemStack(item, count);
     }
     
     /**
@@ -158,7 +161,7 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new RunecarvingRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.ingredient1, this.ingredient2, this.research));
+        output.accept(new RunecarvingRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredient1, this.ingredient2, this.research));
     }
     
     /**
@@ -169,7 +172,7 @@ public class RunecarvingRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Runecarving Recipe " + save + " should remove its 'save' argument");
@@ -184,7 +187,7 @@ public class RunecarvingRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, ForgeRegistries.ITEMS.getKey(this.result));
+        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
     
     /**
@@ -202,7 +205,7 @@ public class RunecarvingRecipeBuilder {
         }
     }
     
-    public static record Result(ResourceLocation id, Item result, int count, String group, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) implements FinishedRecipe {
+    public static record Result(ResourceLocation id, ItemStack result, String group, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             // Serialize the recipe group, if present
@@ -220,12 +223,7 @@ public class RunecarvingRecipeBuilder {
             json.add("ingredient2", this.ingredient2.toJson(true));
             
             // Serialize the recipe result
-            JsonObject resultJson = new JsonObject();
-            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            if (this.count > 1) {
-                resultJson.addProperty("count", this.count);
-            }
-            json.add("result", resultJson);
+            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
         }
 
         @Override

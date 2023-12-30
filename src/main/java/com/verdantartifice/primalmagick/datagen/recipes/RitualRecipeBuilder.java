@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.json.stream.JsonGenerationException;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -343,11 +346,7 @@ public class RitualRecipeBuilder {
             
             // Serialize the recipe mana costs, if present
             if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                JsonObject manaJson = new JsonObject();
-                for (Source source : this.manaCosts.getSourcesSorted()) {
-                    manaJson.addProperty(source.getTag(), this.manaCosts.getAmount(source));
-                }
-                json.add("mana", manaJson);
+                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
             }
             
             // Serialize the instability rating
@@ -370,15 +369,7 @@ public class RitualRecipeBuilder {
             }
             
             // Serialize the recipe result
-            JsonObject resultJson = new JsonObject();
-            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result.getItem()).toString());
-            if (this.result.getCount() > 1) {
-                resultJson.addProperty("count", this.result.getCount());
-            }
-            if (this.result.hasTag()) {
-                resultJson.addProperty("nbt", this.result.getTag().toString());
-            }
-            json.add("result", resultJson);
+            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
         }
 
         @Override

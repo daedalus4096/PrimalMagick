@@ -9,19 +9,23 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.json.stream.JsonGenerationException;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
@@ -34,8 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @see {@link net.minecraft.data.ShapedRecipeBuilder}
  */
 public class ArcaneShapedRecipeBuilder {
-    protected final Item result;
-    protected final int count;
+    protected final ItemStack result;
     protected final List<String> pattern = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected String group;
@@ -43,8 +46,7 @@ public class ArcaneShapedRecipeBuilder {
     protected SourceList manaCosts;
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
-        this.result = result.asItem();
-        this.count = count;
+        this.result = new ItemStack(result, count);
     }
     
     /**
@@ -174,7 +176,7 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
+        output.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
     }
     
     /**
@@ -185,7 +187,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param save custom ID for the finished recipe
      */
     public void build(RecipeOutput output, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
@@ -200,7 +202,7 @@ public class ArcaneShapedRecipeBuilder {
      * @param output a consumer for the finished recipe
      */
     public void build(RecipeOutput output) {
-        this.build(output, ForgeRegistries.ITEMS.getKey(this.result));
+        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
 
     /**
@@ -235,7 +237,7 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
-    public static record Result(ResourceLocation id, Item result, int count, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
+    public static record Result(ResourceLocation id, ItemStack result, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
@@ -246,11 +248,7 @@ public class ArcaneShapedRecipeBuilder {
             }
             
             if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                JsonObject manaJson = new JsonObject();
-                for (Source source : this.manaCosts.getSourcesSorted()) {
-                    manaJson.addProperty(source.getTag(), this.manaCosts.getAmount(source));
-                }
-                json.add("mana", manaJson);
+                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
             }
             
             JsonArray patternJson = new JsonArray();
@@ -265,12 +263,7 @@ public class ArcaneShapedRecipeBuilder {
             }
             json.add("key", keyJson);
             
-            JsonObject resultJson = new JsonObject();
-            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            if (this.count > 1) {
-                resultJson.addProperty("count", this.count);
-            }
-            json.add("result", resultJson);
+            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
         }
 
         @Override
