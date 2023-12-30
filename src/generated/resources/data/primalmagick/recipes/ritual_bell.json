@@ -12,7 +12,9 @@
     }
   },
   "mana": {
-    "sea": 10
+    "sources": {
+      "sea": 10
+    }
   },
   "pattern": [
     "PPP",
@@ -21,6 +23,7 @@
   ],
   "research": "RITUAL_BELL",
   "result": {
-    "item": "primalmagick:ritual_bell"
+    "Count": 1,
+    "id": "primalmagick:ritual_bell"
   }
 }

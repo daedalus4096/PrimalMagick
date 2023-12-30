@@ -18,6 +18,7 @@
   ],
   "research": "INCENSE_BRAZIER",
   "result": {
-    "item": "primalmagick:incense_brazier"
+    "Count": 1,
+    "id": "primalmagick:incense_brazier"
   }
 }

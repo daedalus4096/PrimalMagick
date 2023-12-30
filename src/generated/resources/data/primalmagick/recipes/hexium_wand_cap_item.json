@@ -6,11 +6,13 @@
     }
   },
   "mana": {
-    "earth": 50,
-    "moon": 50,
-    "sea": 50,
-    "sky": 50,
-    "sun": 50
+    "sources": {
+      "earth": 50,
+      "moon": 50,
+      "sea": 50,
+      "sky": 50,
+      "sun": 50
+    }
   },
   "pattern": [
     "NNN",
@@ -18,6 +20,7 @@
   ],
   "research": "WAND_CAP_HEXIUM",
   "result": {
-    "item": "primalmagick:hexium_wand_cap_item"
+    "Count": 1,
+    "id": "primalmagick:hexium_wand_cap_item"
   }
 }

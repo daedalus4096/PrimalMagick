@@ -31,9 +31,11 @@
   ],
   "instability": 7,
   "mana": {
-    "blood": 100,
-    "infernal": 100,
-    "void": 100
+    "sources": {
+      "blood": 100,
+      "infernal": 100,
+      "void": 100
+    }
   },
   "props": [
     {
@@ -54,6 +56,7 @@
   ],
   "research": "CLEANSING_RITE",
   "result": {
-    "item": "primalmagick:sanguine_core_inner_demon"
+    "Count": 1,
+    "id": "primalmagick:sanguine_core_inner_demon"
   }
 }

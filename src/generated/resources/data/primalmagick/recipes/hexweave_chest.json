@@ -12,6 +12,10 @@
   ],
   "research": "HEXWEAVE",
   "result": {
-    "item": "primalmagick:hexweave_chest"
+    "Count": 1,
+    "id": "primalmagick:hexweave_chest",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

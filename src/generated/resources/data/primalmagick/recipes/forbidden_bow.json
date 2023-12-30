@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "infernal": 40
+    "sources": {
+      "infernal": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "FORBIDDEN_BOW",
   "result": {
-    "item": "primalmagick:forbidden_bow",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:soulpiercing\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:forbidden_bow",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:soulpiercing",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

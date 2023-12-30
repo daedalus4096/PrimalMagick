@@ -4,10 +4,12 @@
     "item": "primalmagick:rock_salt"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 3,
-    "item": "primalmagick:refined_salt"
+    "Count": 3,
+    "id": "primalmagick:refined_salt"
   }
 }

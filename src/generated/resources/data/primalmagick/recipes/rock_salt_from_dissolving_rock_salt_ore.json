@@ -4,10 +4,12 @@
     "item": "primalmagick:rock_salt_ore"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 12,
-    "item": "primalmagick:rock_salt"
+    "Count": 12,
+    "id": "primalmagick:rock_salt"
   }
 }

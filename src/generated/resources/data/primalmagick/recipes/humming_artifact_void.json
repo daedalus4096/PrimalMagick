@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "void": 40
+    "sources": {
+      "void": 40
+    }
   },
   "research": "HUMMING_ARTIFACT&&t_discover_void",
   "result": {
-    "item": "primalmagick:humming_artifact_void"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_void"
   }
 }

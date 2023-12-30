@@ -16,6 +16,7 @@
   ],
   "research": "CLUSTER_SYNTHESIS&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:essence_cluster_hallowed"
+    "Count": 1,
+    "id": "primalmagick:essence_cluster_hallowed"
   }
 }

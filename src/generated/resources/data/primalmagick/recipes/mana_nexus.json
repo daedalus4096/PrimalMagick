@@ -15,11 +15,13 @@
     }
   },
   "mana": {
-    "earth": 250,
-    "moon": 250,
-    "sea": 250,
-    "sky": 250,
-    "sun": 250
+    "sources": {
+      "earth": 250,
+      "moon": 250,
+      "sea": 250,
+      "sky": 250,
+      "sun": 250
+    }
   },
   "pattern": [
     "APA",
@@ -28,6 +30,7 @@
   ],
   "research": "MANA_NEXUS",
   "result": {
-    "item": "primalmagick:mana_nexus"
+    "Count": 1,
+    "id": "primalmagick:mana_nexus"
   }
 }

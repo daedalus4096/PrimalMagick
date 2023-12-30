@@ -16,11 +16,13 @@
     }
   },
   "mana": {
-    "earth": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "sources": {
+      "earth": 20,
+      "moon": 20,
+      "sea": 20,
+      "sky": 20,
+      "sun": 20
+    }
   },
   "pattern": [
     " R ",
@@ -29,6 +31,7 @@
   ],
   "research": "EXPERT_RUNEWORKING",
   "result": {
-    "item": "primalmagick:runescribing_altar_enchanted"
+    "Count": 1,
+    "id": "primalmagick:runescribing_altar_enchanted"
   }
 }

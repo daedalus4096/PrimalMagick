@@ -12,14 +12,17 @@
     }
   ],
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "research": "MANA_SALTS",
   "result": {
-    "item": "primalmagick:mana_salts"
+    "Count": 1,
+    "id": "primalmagick:mana_salts"
   }
 }

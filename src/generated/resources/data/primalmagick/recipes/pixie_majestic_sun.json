@@ -22,7 +22,9 @@
   ],
   "instability": 7,
   "mana": {
-    "sun": 200
+    "sources": {
+      "sun": 200
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "MAJESTIC_PIXIES",
   "result": {
-    "item": "primalmagick:pixie_majestic_sun"
+    "Count": 1,
+    "id": "primalmagick:pixie_majestic_sun"
   }
 }

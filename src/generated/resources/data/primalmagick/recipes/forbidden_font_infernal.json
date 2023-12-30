@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "infernal": 750
+    "sources": {
+      "infernal": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS&&t_discover_infernal",
   "result": {
-    "item": "primalmagick:forbidden_font_infernal"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_infernal"
   }
 }

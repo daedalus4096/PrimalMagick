@@ -10,7 +10,7 @@
   ],
   "research": "SUPREME_MANAWEAVING",
   "result": {
-    "count": 6,
-    "item": "primalmagick:marble_hallowed_slab"
+    "Count": 6,
+    "id": "primalmagick:marble_hallowed_slab"
   }
 }

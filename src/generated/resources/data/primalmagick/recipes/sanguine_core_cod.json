@@ -14,6 +14,10 @@
   ],
   "research": "SANGUINE_CORE_SEA_CREATURES",
   "result": {
-    "item": "primalmagick:sanguine_core_cod"
+    "Count": 1,
+    "id": "primalmagick:sanguine_core_cod",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

@@ -11,6 +11,7 @@
   ],
   "research": "HALLOWSTEEL",
   "result": {
-    "item": "primalmagick:hallowsteel_ingot"
+    "Count": 1,
+    "id": "primalmagick:hallowsteel_ingot"
   }
 }

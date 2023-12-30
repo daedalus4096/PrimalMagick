@@ -16,6 +16,7 @@
   ],
   "research": "CRYSTAL_SYNTHESIS&&t_discover_void",
   "result": {
-    "item": "primalmagick:essence_crystal_void"
+    "Count": 1,
+    "id": "primalmagick:essence_crystal_void"
   }
 }

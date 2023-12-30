@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "infernal": 40
+    "sources": {
+      "infernal": 40
+    }
   },
   "pattern": [
     "CPC",
@@ -24,6 +26,7 @@
   ],
   "research": "CONCOCTING_TINCTURES",
   "result": {
-    "item": "primalmagick:concocter"
+    "Count": 1,
+    "id": "primalmagick:concocter"
   }
 }

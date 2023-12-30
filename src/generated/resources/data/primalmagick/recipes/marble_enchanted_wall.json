@@ -11,7 +11,7 @@
   ],
   "research": "EXPERT_MANAWEAVING",
   "result": {
-    "count": 6,
-    "item": "primalmagick:marble_enchanted_wall"
+    "Count": 6,
+    "id": "primalmagick:marble_enchanted_wall"
   }
 }

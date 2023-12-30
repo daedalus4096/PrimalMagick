@@ -22,7 +22,9 @@
   ],
   "instability": 5,
   "mana": {
-    "hallowed": 100
+    "sources": {
+      "hallowed": 100
+    }
   },
   "props": [
     {
@@ -37,6 +39,7 @@
   ],
   "research": "GRAND_PIXIES&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:pixie_grand_hallowed"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_hallowed"
   }
 }

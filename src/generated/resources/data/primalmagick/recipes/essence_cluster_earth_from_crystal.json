@@ -16,6 +16,7 @@
   ],
   "research": "CLUSTER_SYNTHESIS",
   "result": {
-    "item": "primalmagick:essence_cluster_earth"
+    "Count": 1,
+    "id": "primalmagick:essence_cluster_earth"
   }
 }

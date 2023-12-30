@@ -10,6 +10,7 @@
   ],
   "research": "MAJESTIC_PIXIES&&t_discover_blood",
   "result": {
-    "item": "primalmagick:pixie_majestic_blood"
+    "Count": 1,
+    "id": "primalmagick:pixie_majestic_blood"
   }
 }

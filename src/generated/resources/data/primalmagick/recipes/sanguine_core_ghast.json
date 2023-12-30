@@ -14,6 +14,10 @@
   ],
   "research": "SANGUINE_CORE_DEMONS",
   "result": {
-    "item": "primalmagick:sanguine_core_ghast"
+    "Count": 1,
+    "id": "primalmagick:sanguine_core_ghast",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

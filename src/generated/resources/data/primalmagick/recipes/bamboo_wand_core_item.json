@@ -9,11 +9,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 15,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 15,
+      "sun": 5
+    }
   },
   "pattern": [
     "D#",
@@ -21,6 +23,7 @@
   ],
   "research": "WAND_CORE_BAMBOO",
   "result": {
-    "item": "primalmagick:bamboo_wand_core_item"
+    "Count": 1,
+    "id": "primalmagick:bamboo_wand_core_item"
   }
 }

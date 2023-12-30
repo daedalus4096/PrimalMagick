@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "void": 40
+    "sources": {
+      "void": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES&&t_discover_void",
   "result": {
-    "item": "primalmagick:pixie_basic_void"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_void"
   }
 }

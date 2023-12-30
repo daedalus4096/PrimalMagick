@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "hallowed": 100
+    "sources": {
+      "hallowed": 100
+    }
   },
   "pattern": [
     "SIS",
@@ -22,6 +24,7 @@
   ],
   "research": "SUPREME_MAGITECH",
   "result": {
-    "item": "primalmagick:magitech_parts_heavenly"
+    "Count": 1,
+    "id": "primalmagick:magitech_parts_heavenly"
   }
 }

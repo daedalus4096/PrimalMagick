@@ -22,14 +22,16 @@
   ],
   "instability": 5,
   "mana": {
-    "blood": 50,
-    "earth": 50,
-    "infernal": 50,
-    "moon": 50,
-    "sea": 50,
-    "sky": 50,
-    "sun": 50,
-    "void": 50
+    "sources": {
+      "blood": 50,
+      "earth": 50,
+      "infernal": 50,
+      "moon": 50,
+      "sea": 50,
+      "sky": 50,
+      "sun": 50,
+      "void": 50
+    }
   },
   "props": [
     {
@@ -50,6 +52,7 @@
   ],
   "research": "WAND_CORE_DARK_PRIMAL",
   "result": {
-    "item": "primalmagick:dark_primal_wand_core_item"
+    "Count": 1,
+    "id": "primalmagick:dark_primal_wand_core_item"
   }
 }

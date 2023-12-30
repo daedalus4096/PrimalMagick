@@ -16,6 +16,7 @@
   ],
   "research": "RITUAL_CANDLES",
   "result": {
-    "item": "primalmagick:ritual_candle_white"
+    "Count": 1,
+    "id": "primalmagick:ritual_candle_white"
   }
 }

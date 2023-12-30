@@ -15,11 +15,13 @@
     }
   },
   "mana": {
-    "earth": 40,
-    "moon": 40,
-    "sea": 40,
-    "sky": 40,
-    "sun": 40
+    "sources": {
+      "earth": 40,
+      "moon": 40,
+      "sea": 40,
+      "sky": 40,
+      "sun": 40
+    }
   },
   "pattern": [
     "WEW",
@@ -28,6 +30,7 @@
   ],
   "research": "ESSENCE_CASK_ENCHANTED",
   "result": {
-    "item": "primalmagick:essence_cask_enchanted"
+    "Count": 1,
+    "id": "primalmagick:essence_cask_enchanted"
   }
 }

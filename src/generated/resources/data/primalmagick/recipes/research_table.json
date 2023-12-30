@@ -13,6 +13,7 @@
   ],
   "research": "THEORYCRAFTING@2",
   "result": {
-    "item": "primalmagick:research_table"
+    "Count": 1,
+    "id": "primalmagick:research_table"
   }
 }

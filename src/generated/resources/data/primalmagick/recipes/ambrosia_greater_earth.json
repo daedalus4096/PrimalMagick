@@ -22,7 +22,9 @@
   ],
   "instability": 6,
   "mana": {
-    "earth": 100
+    "sources": {
+      "earth": 100
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "GREATER_AMBROSIA",
   "result": {
-    "item": "primalmagick:ambrosia_greater_earth"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_greater_earth"
   }
 }

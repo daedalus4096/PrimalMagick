@@ -9,11 +9,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 15,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 15,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "D#",
@@ -21,6 +23,7 @@
   ],
   "research": "WAND_CORE_CORAL",
   "result": {
-    "item": "primalmagick:coral_wand_core_item"
+    "Count": 1,
+    "id": "primalmagick:coral_wand_core_item"
   }
 }

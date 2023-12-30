@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sea": 40
+    "sources": {
+      "sea": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES",
   "result": {
-    "item": "primalmagick:pixie_basic_sea"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_sea"
   }
 }

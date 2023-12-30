@@ -8,6 +8,7 @@
   },
   "research": "RUNE_ABSORB",
   "result": {
-    "item": "primalmagick:rune_absorb"
+    "Count": 1,
+    "id": "primalmagick:rune_absorb"
   }
 }

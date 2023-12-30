@@ -16,6 +16,7 @@
   ],
   "research": "CLUSTER_SYNTHESIS&&t_discover_blood",
   "result": {
-    "item": "primalmagick:essence_cluster_blood"
+    "Count": 1,
+    "id": "primalmagick:essence_cluster_blood"
   }
 }

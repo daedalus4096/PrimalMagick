@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "blood": 40
+    "sources": {
+      "blood": 40
+    }
   },
   "pattern": [
     "CSC",
@@ -18,6 +20,7 @@
   ],
   "research": "ATTUNEMENT_SHACKLES&&t_discover_blood",
   "result": {
-    "item": "primalmagick:attunement_shackles_blood"
+    "Count": 1,
+    "id": "primalmagick:attunement_shackles_blood"
   }
 }

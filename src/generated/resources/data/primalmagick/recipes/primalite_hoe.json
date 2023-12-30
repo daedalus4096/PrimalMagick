@@ -15,6 +15,10 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_hoe"
+    "Count": 1,
+    "id": "primalmagick:primalite_hoe",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

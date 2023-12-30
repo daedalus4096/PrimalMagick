@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "sky": 10
+    "sources": {
+      "sky": 10
+    }
   },
   "pattern": [
     "HWB",
@@ -24,6 +26,7 @@
   ],
   "research": "HONEY_EXTRACTOR",
   "result": {
-    "item": "primalmagick:honey_extractor"
+    "Count": 1,
+    "id": "primalmagick:honey_extractor"
   }
 }

@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "blood": 750
+    "sources": {
+      "blood": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS&&t_discover_blood",
   "result": {
-    "item": "primalmagick:forbidden_font_blood"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_blood"
   }
 }

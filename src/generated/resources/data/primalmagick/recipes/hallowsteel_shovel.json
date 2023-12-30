@@ -15,6 +15,10 @@
   ],
   "research": "HALLOWSTEEL",
   "result": {
-    "item": "primalmagick:hallowsteel_shovel"
+    "Count": 1,
+    "id": "primalmagick:hallowsteel_shovel",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

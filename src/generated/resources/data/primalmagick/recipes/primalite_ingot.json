@@ -23,6 +23,7 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_ingot"
+    "Count": 1,
+    "id": "primalmagick:primalite_ingot"
   }
 }

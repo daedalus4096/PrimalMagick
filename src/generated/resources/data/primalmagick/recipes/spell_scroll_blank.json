@@ -15,6 +15,7 @@
   ],
   "research": "BASIC_SORCERY",
   "result": {
-    "item": "primalmagick:spell_scroll_blank"
+    "Count": 1,
+    "id": "primalmagick:spell_scroll_blank"
   }
 }

@@ -15,6 +15,7 @@
   ],
   "research": "FIRST_STEPS@2",
   "result": {
-    "item": "primalmagick:wood_table"
+    "Count": 1,
+    "id": "primalmagick:wood_table"
   }
 }

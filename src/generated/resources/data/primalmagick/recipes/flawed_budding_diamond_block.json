@@ -10,6 +10,7 @@
   ],
   "research": "SYNTHETIC_GEM_BUDS&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:flawed_budding_diamond_block"
+    "Count": 1,
+    "id": "primalmagick:flawed_budding_diamond_block"
   }
 }

@@ -18,6 +18,7 @@
   ],
   "research": "BASIC_MANAWEAVING",
   "result": {
-    "item": "primalmagick:mana_prism"
+    "Count": 1,
+    "id": "primalmagick:mana_prism"
   }
 }

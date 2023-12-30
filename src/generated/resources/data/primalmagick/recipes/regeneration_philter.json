@@ -28,12 +28,18 @@
     }
   ],
   "mana": {
-    "infernal": 3
+    "sources": {
+      "infernal": 3
+    }
   },
   "research": "CONCOCTING_PHILTERS&&t_discover_blood",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:6,ConcoctionType:\"philter\",Potion:\"minecraft:regeneration\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 6,
+      "ConcoctionType": "philter",
+      "Potion": "minecraft:regeneration"
+    }
   }
 }

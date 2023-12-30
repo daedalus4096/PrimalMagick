@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_HALLOWED",
   "result": {
-    "item": "primalmagick:rune_hallowed"
+    "Count": 1,
+    "id": "primalmagick:rune_hallowed"
   }
 }

@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "sun": 2500
+    "sources": {
+      "sun": 2500
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "HEAVENLY_MANA_FONTS",
   "result": {
-    "item": "primalmagick:heavenly_font_sun"
+    "Count": 1,
+    "id": "primalmagick:heavenly_font_sun"
   }
 }

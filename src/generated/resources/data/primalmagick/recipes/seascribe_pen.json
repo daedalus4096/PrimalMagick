@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "sea": 10
+    "sources": {
+      "sea": 10
+    }
   },
   "pattern": [
     " GP",
@@ -24,6 +26,7 @@
   ],
   "research": "SEASCRIBE_PEN",
   "result": {
-    "item": "primalmagick:seascribe_pen"
+    "Count": 1,
+    "id": "primalmagick:seascribe_pen"
   }
 }

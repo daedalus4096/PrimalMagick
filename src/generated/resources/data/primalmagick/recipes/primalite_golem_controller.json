@@ -12,11 +12,13 @@
     }
   },
   "mana": {
-    "earth": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "sources": {
+      "earth": 20,
+      "moon": 20,
+      "sea": 20,
+      "sky": 20,
+      "sun": 20
+    }
   },
   "pattern": [
     "PIP",
@@ -25,6 +27,7 @@
   ],
   "research": "PRIMALITE_GOLEM",
   "result": {
-    "item": "primalmagick:primalite_golem_controller"
+    "Count": 1,
+    "id": "primalmagick:primalite_golem_controller"
   }
 }

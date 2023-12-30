@@ -5,10 +5,12 @@
     "tag": "forge:raw_materials/gold"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 3,
-    "item": "primalmagick:gold_grit"
+    "Count": 3,
+    "id": "primalmagick:gold_grit"
   }
 }

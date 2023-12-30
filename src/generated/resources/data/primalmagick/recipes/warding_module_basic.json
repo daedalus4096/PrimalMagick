@@ -18,7 +18,9 @@
     }
   },
   "mana": {
-    "earth": 100
+    "sources": {
+      "earth": 100
+    }
   },
   "pattern": [
     " R ",
@@ -27,6 +29,7 @@
   ],
   "research": "WARDING_MODULE",
   "result": {
-    "item": "primalmagick:warding_module_basic"
+    "Count": 1,
+    "id": "primalmagick:warding_module_basic"
   }
 }

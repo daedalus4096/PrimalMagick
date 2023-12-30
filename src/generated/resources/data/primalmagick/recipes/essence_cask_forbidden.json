@@ -15,9 +15,11 @@
     }
   },
   "mana": {
-    "blood": 100,
-    "infernal": 100,
-    "void": 100
+    "sources": {
+      "blood": 100,
+      "infernal": 100,
+      "void": 100
+    }
   },
   "pattern": [
     "WEW",
@@ -26,6 +28,7 @@
   ],
   "research": "ESSENCE_CASK_FORBIDDEN",
   "result": {
-    "item": "primalmagick:essence_cask_forbidden"
+    "Count": 1,
+    "id": "primalmagick:essence_cask_forbidden"
   }
 }

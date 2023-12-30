@@ -18,7 +18,9 @@
     }
   },
   "mana": {
-    "void": 40
+    "sources": {
+      "void": 40
+    }
   },
   "pattern": [
     "IPI",
@@ -27,6 +29,7 @@
   ],
   "research": "VOID_TURBINE",
   "result": {
-    "item": "primalmagick:void_turbine"
+    "Count": 1,
+    "id": "primalmagick:void_turbine"
   }
 }

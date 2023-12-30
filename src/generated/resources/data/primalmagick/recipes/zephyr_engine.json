@@ -18,7 +18,9 @@
     }
   },
   "mana": {
-    "sky": 40
+    "sources": {
+      "sky": 40
+    }
   },
   "pattern": [
     "IPI",
@@ -27,6 +29,7 @@
   ],
   "research": "ZEPHYR_ENGINE",
   "result": {
-    "item": "primalmagick:zephyr_engine"
+    "Count": 1,
+    "id": "primalmagick:zephyr_engine"
   }
 }

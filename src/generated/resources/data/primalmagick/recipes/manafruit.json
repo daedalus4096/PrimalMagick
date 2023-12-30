@@ -13,11 +13,13 @@
   ],
   "instability": 1,
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "props": [
     {
@@ -26,6 +28,7 @@
   ],
   "research": "MANAFRUIT",
   "result": {
-    "item": "primalmagick:manafruit"
+    "Count": 1,
+    "id": "primalmagick:manafruit"
   }
 }

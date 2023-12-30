@@ -9,12 +9,14 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5,
-    "void": 15
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5,
+      "void": 15
+    }
   },
   "pattern": [
     "D#",
@@ -22,6 +24,7 @@
   ],
   "research": "WAND_CORE_PURPUR",
   "result": {
-    "item": "primalmagick:purpur_wand_core_item"
+    "Count": 1,
+    "id": "primalmagick:purpur_wand_core_item"
   }
 }

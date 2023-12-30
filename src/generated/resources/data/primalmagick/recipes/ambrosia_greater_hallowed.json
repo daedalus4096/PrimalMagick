@@ -22,7 +22,9 @@
   ],
   "instability": 6,
   "mana": {
-    "hallowed": 100
+    "sources": {
+      "hallowed": 100
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "GREATER_AMBROSIA&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:ambrosia_greater_hallowed"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_greater_hallowed"
   }
 }

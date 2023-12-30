@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_VOID",
   "result": {
-    "item": "primalmagick:rune_void"
+    "Count": 1,
+    "id": "primalmagick:rune_void"
   }
 }

@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "pattern": [
     "CSC",
@@ -18,6 +20,7 @@
   ],
   "research": "ATTUNEMENT_SHACKLES",
   "result": {
-    "item": "primalmagick:attunement_shackles_moon"
+    "Count": 1,
+    "id": "primalmagick:attunement_shackles_moon"
   }
 }

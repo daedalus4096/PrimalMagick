@@ -8,7 +8,7 @@
   ],
   "research": "SHARD_DESYNTHESIS&&t_discover_infernal",
   "result": {
-    "count": 4,
-    "item": "primalmagick:essence_dust_infernal"
+    "Count": 4,
+    "id": "primalmagick:essence_dust_infernal"
   }
 }

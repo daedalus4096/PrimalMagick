@@ -11,6 +11,10 @@
   ],
   "research": "HEXWEAVE",
   "result": {
-    "item": "primalmagick:hexweave_feet"
+    "Count": 1,
+    "id": "primalmagick:hexweave_feet",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

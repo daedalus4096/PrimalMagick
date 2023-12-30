@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "sea": 250
+    "sources": {
+      "sea": 250
+    }
   },
   "pattern": [
     "IMI",
@@ -22,6 +24,7 @@
   ],
   "research": "ARTIFICIAL_MANA_FONTS",
   "result": {
-    "item": "primalmagick:artificial_font_sea"
+    "Count": 1,
+    "id": "primalmagick:artificial_font_sea"
   }
 }

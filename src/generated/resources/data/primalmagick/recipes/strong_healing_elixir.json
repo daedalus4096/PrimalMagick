@@ -31,12 +31,18 @@
     }
   ],
   "mana": {
-    "infernal": 9
+    "sources": {
+      "infernal": 9
+    }
   },
   "research": "CONCOCTING_ELIXIRS&&t_discover_blood",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:strong_healing\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 9,
+      "ConcoctionType": "elixir",
+      "Potion": "minecraft:strong_healing"
+    }
   }
 }

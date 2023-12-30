@@ -9,14 +9,17 @@
     }
   ],
   "mana": {
-    "earth": 30,
-    "moon": 30,
-    "sea": 30,
-    "sky": 30,
-    "sun": 30
+    "sources": {
+      "earth": 30,
+      "moon": 30,
+      "sea": 30,
+      "sky": 30,
+      "sun": 30
+    }
   },
   "research": "WAND_GEM_ADEPT",
   "result": {
-    "item": "primalmagick:adept_wand_gem_item"
+    "Count": 1,
+    "id": "primalmagick:adept_wand_gem_item"
   }
 }

@@ -19,7 +19,9 @@
   ],
   "instability": 4,
   "mana": {
-    "infernal": 50
+    "sources": {
+      "infernal": 50
+    }
   },
   "props": [
     {
@@ -31,7 +33,7 @@
   ],
   "research": "EMBERFLOWER",
   "result": {
-    "count": 2,
-    "item": "primalmagick:emberflower"
+    "Count": 2,
+    "id": "primalmagick:emberflower"
   }
 }

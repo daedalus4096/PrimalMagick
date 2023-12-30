@@ -13,6 +13,7 @@
   ],
   "research": "FIRST_STEPS@2",
   "result": {
-    "item": "primalmagick:analysis_table"
+    "Count": 1,
+    "id": "primalmagick:analysis_table"
   }
 }

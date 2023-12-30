@@ -28,12 +28,18 @@
     }
   ],
   "mana": {
-    "infernal": 9
+    "sources": {
+      "infernal": 9
+    }
   },
   "research": "CONCOCTING_ELIXIRS&&t_discover_infernal",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:long_fire_resistance\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 9,
+      "ConcoctionType": "elixir",
+      "Potion": "minecraft:long_fire_resistance"
+    }
   }
 }

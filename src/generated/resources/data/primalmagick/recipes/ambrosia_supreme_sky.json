@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "sky": 200
+    "sources": {
+      "sky": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_sky"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_sky"
   }
 }

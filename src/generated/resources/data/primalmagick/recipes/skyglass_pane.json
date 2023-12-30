@@ -11,7 +11,7 @@
   ],
   "research": "SKYGLASS",
   "result": {
-    "count": 16,
-    "item": "primalmagick:skyglass_pane"
+    "Count": 16,
+    "id": "primalmagick:skyglass_pane"
   }
 }

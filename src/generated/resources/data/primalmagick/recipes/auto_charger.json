@@ -15,11 +15,13 @@
     }
   },
   "mana": {
-    "earth": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "sources": {
+      "earth": 20,
+      "moon": 20,
+      "sea": 20,
+      "sky": 20,
+      "sun": 20
+    }
   },
   "pattern": [
     "EME",
@@ -28,6 +30,7 @@
   ],
   "research": "AUTO_CHARGER",
   "result": {
-    "item": "primalmagick:auto_charger"
+    "Count": 1,
+    "id": "primalmagick:auto_charger"
   }
 }

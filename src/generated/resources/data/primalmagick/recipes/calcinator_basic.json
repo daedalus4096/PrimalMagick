@@ -13,11 +13,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "MMM",
@@ -26,6 +28,7 @@
   ],
   "research": "CALCINATOR_BASIC",
   "result": {
-    "item": "primalmagick:calcinator_basic"
+    "Count": 1,
+    "id": "primalmagick:calcinator_basic"
   }
 }

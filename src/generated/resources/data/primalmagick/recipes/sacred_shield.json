@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "hallowed": 40
+    "sources": {
+      "hallowed": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "SACRED_SHIELD",
   "result": {
-    "item": "primalmagick:sacred_shield",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:bulwark\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:sacred_shield",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:bulwark",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

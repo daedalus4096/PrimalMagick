@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "hallowed": 200
+    "sources": {
+      "hallowed": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_hallowed"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_hallowed"
   }
 }

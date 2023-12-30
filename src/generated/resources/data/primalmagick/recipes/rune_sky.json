@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_SKY",
   "result": {
-    "item": "primalmagick:rune_sky"
+    "Count": 1,
+    "id": "primalmagick:rune_sky"
   }
 }

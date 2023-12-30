@@ -12,7 +12,9 @@
     }
   },
   "mana": {
-    "infernal": 50
+    "sources": {
+      "infernal": 50
+    }
   },
   "pattern": [
     "MMM",
@@ -21,6 +23,7 @@
   ],
   "research": "INFERNAL_FURNACE",
   "result": {
-    "item": "primalmagick:infernal_furnace"
+    "Count": 1,
+    "id": "primalmagick:infernal_furnace"
   }
 }

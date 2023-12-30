@@ -13,11 +13,13 @@
     }
   },
   "mana": {
-    "earth": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "sources": {
+      "earth": 20,
+      "moon": 20,
+      "sea": 20,
+      "sky": 20,
+      "sun": 20
+    }
   },
   "pattern": [
     "MMM",
@@ -26,6 +28,7 @@
   ],
   "research": "CALCINATOR_ENCHANTED",
   "result": {
-    "item": "primalmagick:calcinator_enchanted"
+    "Count": 1,
+    "id": "primalmagick:calcinator_enchanted"
   }
 }

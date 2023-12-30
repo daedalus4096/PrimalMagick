@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "blood": 200
+    "sources": {
+      "blood": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA&&t_discover_blood",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_blood"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_blood"
   }
 }

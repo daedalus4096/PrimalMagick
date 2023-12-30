@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sun": 40
+    "sources": {
+      "sun": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "PRIMAL_HOE",
   "result": {
-    "item": "primalmagick:primal_hoe",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:verdant\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:primal_hoe",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:verdant",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "moon": 10
+    "sources": {
+      "moon": 10
+    }
   },
   "pattern": [
     "SSS",
@@ -18,6 +20,7 @@
   ],
   "research": "RITUAL_LECTERN",
   "result": {
-    "item": "primalmagick:ritual_lectern"
+    "Count": 1,
+    "id": "primalmagick:ritual_lectern"
   }
 }

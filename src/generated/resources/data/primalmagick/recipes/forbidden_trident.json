@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "blood": 40
+    "sources": {
+      "blood": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "FORBIDDEN_TRIDENT",
   "result": {
-    "item": "primalmagick:forbidden_trident",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:rending\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:forbidden_trident",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:rending",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

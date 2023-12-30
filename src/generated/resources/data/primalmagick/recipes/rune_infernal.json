@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_INFERNAL",
   "result": {
-    "item": "primalmagick:rune_infernal"
+    "Count": 1,
+    "id": "primalmagick:rune_infernal"
   }
 }

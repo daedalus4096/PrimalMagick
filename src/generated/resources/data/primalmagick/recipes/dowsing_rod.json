@@ -9,11 +9,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "  S",
@@ -22,6 +24,10 @@
   ],
   "research": "DOWSING_ROD",
   "result": {
-    "item": "primalmagick:dowsing_rod"
+    "Count": 1,
+    "id": "primalmagick:dowsing_rod",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

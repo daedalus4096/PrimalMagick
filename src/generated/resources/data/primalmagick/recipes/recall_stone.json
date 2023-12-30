@@ -15,11 +15,13 @@
     }
   },
   "mana": {
-    "earth": 40,
-    "moon": 40,
-    "sea": 40,
-    "sky": 40,
-    "sun": 40
+    "sources": {
+      "earth": 40,
+      "moon": 40,
+      "sea": 40,
+      "sky": 40,
+      "sun": 40
+    }
   },
   "pattern": [
     " A ",
@@ -28,6 +30,7 @@
   ],
   "research": "RECALL_STONE",
   "result": {
-    "item": "primalmagick:recall_stone"
+    "Count": 1,
+    "id": "primalmagick:recall_stone"
   }
 }

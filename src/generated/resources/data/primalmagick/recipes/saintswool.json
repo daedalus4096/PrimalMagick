@@ -12,7 +12,9 @@
     }
   },
   "mana": {
-    "hallowed": 50
+    "sources": {
+      "hallowed": 50
+    }
   },
   "pattern": [
     "ESE",
@@ -21,6 +23,7 @@
   ],
   "research": "SAINTSWOOL",
   "result": {
-    "item": "primalmagick:saintswool"
+    "Count": 1,
+    "id": "primalmagick:saintswool"
   }
 }

@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "hallowed": 750
+    "sources": {
+      "hallowed": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:forbidden_font_hallowed"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_hallowed"
   }
 }

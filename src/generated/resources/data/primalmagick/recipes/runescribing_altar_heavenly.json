@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "hallowed": 100
+    "sources": {
+      "hallowed": 100
+    }
   },
   "pattern": [
     " R ",
@@ -25,6 +27,7 @@
   ],
   "research": "SUPREME_RUNEWORKING",
   "result": {
-    "item": "primalmagick:runescribing_altar_heavenly"
+    "Count": 1,
+    "id": "primalmagick:runescribing_altar_heavenly"
   }
 }

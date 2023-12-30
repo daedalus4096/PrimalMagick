@@ -15,7 +15,7 @@
   ],
   "research": "STONEMELDING",
   "result": {
-    "count": 8,
-    "item": "minecraft:stone"
+    "Count": 8,
+    "id": "minecraft:stone"
   }
 }

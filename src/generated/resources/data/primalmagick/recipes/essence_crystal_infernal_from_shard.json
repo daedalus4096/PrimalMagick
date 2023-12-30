@@ -16,6 +16,7 @@
   ],
   "research": "CRYSTAL_SYNTHESIS&&t_discover_infernal",
   "result": {
-    "item": "primalmagick:essence_crystal_infernal"
+    "Count": 1,
+    "id": "primalmagick:essence_crystal_infernal"
   }
 }

@@ -10,7 +10,9 @@
     }
   },
   "mana": {
-    "blood": 5
+    "sources": {
+      "blood": 5
+    }
   },
   "pattern": [
     " A ",
@@ -19,7 +21,7 @@
   ],
   "research": "MANA_ARROWS&&t_discover_blood",
   "result": {
-    "count": 4,
-    "item": "primalmagick:mana_arrow_blood"
+    "Count": 4,
+    "id": "primalmagick:mana_arrow_blood"
   }
 }

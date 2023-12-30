@@ -11,6 +11,7 @@
   ],
   "research": "EXPERT_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_enchanted_chiseled"
+    "Count": 1,
+    "id": "primalmagick:marble_enchanted_chiseled"
   }
 }

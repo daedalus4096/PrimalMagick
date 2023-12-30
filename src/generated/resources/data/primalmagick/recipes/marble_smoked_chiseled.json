@@ -11,6 +11,7 @@
   ],
   "research": "MASTER_MANAWEAVING",
   "result": {
-    "item": "primalmagick:marble_smoked_chiseled"
+    "Count": 1,
+    "id": "primalmagick:marble_smoked_chiseled"
   }
 }

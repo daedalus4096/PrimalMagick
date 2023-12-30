@@ -10,6 +10,7 @@
   ],
   "research": "RUNE_GRACE",
   "result": {
-    "item": "primalmagick:rune_grace"
+    "Count": 1,
+    "id": "primalmagick:rune_grace"
   }
 }

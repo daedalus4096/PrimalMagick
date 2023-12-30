@@ -12,6 +12,10 @@
   ],
   "research": "SAINTSWOOL",
   "result": {
-    "item": "primalmagick:saintswool_chest"
+    "Count": 1,
+    "id": "primalmagick:saintswool_chest",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

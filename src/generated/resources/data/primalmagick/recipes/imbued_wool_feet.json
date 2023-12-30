@@ -6,11 +6,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "# #",
@@ -18,6 +20,10 @@
   ],
   "research": "IMBUED_WOOL",
   "result": {
-    "item": "primalmagick:imbued_wool_feet"
+    "Count": 1,
+    "id": "primalmagick:imbued_wool_feet",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

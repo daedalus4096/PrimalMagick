@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "earth": 40
+    "sources": {
+      "earth": 40
+    }
   },
   "research": "HUMMING_ARTIFACT",
   "result": {
-    "item": "primalmagick:humming_artifact_earth"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_earth"
   }
 }

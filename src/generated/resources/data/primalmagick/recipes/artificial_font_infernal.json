@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "infernal": 250
+    "sources": {
+      "infernal": 250
+    }
   },
   "pattern": [
     "IMI",
@@ -22,6 +24,7 @@
   ],
   "research": "ARTIFICIAL_MANA_FONTS&&t_discover_infernal",
   "result": {
-    "item": "primalmagick:artificial_font_infernal"
+    "Count": 1,
+    "id": "primalmagick:artificial_font_infernal"
   }
 }

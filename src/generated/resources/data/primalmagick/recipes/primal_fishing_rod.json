@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sea": 40
+    "sources": {
+      "sea": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "PRIMAL_FISHING_ROD",
   "result": {
-    "item": "primalmagick:primal_fishing_rod",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:bounty\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:primal_fishing_rod",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:bounty",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

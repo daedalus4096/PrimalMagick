@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "sea": 40
+    "sources": {
+      "sea": 40
+    }
   },
   "research": "HUMMING_ARTIFACT",
   "result": {
-    "item": "primalmagick:humming_artifact_sea"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_sea"
   }
 }

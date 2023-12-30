@@ -25,12 +25,18 @@
     }
   ],
   "mana": {
-    "infernal": 1
+    "sources": {
+      "infernal": 1
+    }
   },
   "research": "CONCOCTING_TINCTURES",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:slow_falling\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 3,
+      "ConcoctionType": "tincture",
+      "Potion": "minecraft:slow_falling"
+    }
   }
 }

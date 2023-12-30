@@ -13,6 +13,7 @@
   ],
   "research": "SYNTHETIC_GEM_BUDS",
   "result": {
-    "item": "primalmagick:energized_amethyst"
+    "Count": 1,
+    "id": "primalmagick:energized_amethyst"
   }
 }

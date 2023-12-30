@@ -15,7 +15,7 @@
   ],
   "research": "EXPERT_MANAWEAVING",
   "result": {
-    "count": 5,
-    "item": "primalmagick:marble_enchanted_runed"
+    "Count": 5,
+    "id": "primalmagick:marble_enchanted_runed"
   }
 }

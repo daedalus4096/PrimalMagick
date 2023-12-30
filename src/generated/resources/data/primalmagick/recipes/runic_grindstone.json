@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "earth": 25
+    "sources": {
+      "earth": 25
+    }
   },
   "pattern": [
     " D ",
@@ -24,6 +26,7 @@
   ],
   "research": "RUNIC_GRINDSTONE",
   "result": {
-    "item": "primalmagick:runic_grindstone"
+    "Count": 1,
+    "id": "primalmagick:runic_grindstone"
   }
 }

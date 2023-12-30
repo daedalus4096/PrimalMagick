@@ -18,6 +18,7 @@
   ],
   "research": "WAND_CHARGER",
   "result": {
-    "item": "primalmagick:wand_charger"
+    "Count": 1,
+    "id": "primalmagick:wand_charger"
   }
 }

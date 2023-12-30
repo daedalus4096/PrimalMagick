@@ -12,10 +12,13 @@
     }
   ],
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "research": "WAND_GLAMOUR_TABLE",
   "result": {
-    "item": "primalmagick:wand_glamour_table"
+    "Count": 1,
+    "id": "primalmagick:wand_glamour_table"
   }
 }

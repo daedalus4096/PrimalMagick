@@ -12,6 +12,10 @@
   ],
   "research": "SAINTSWOOL",
   "result": {
-    "item": "primalmagick:saintswool_legs"
+    "Count": 1,
+    "id": "primalmagick:saintswool_legs",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

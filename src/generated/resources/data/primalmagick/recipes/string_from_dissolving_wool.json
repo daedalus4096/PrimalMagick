@@ -4,10 +4,12 @@
     "tag": "minecraft:wool"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 4,
-    "item": "minecraft:string"
+    "Count": 4,
+    "id": "minecraft:string"
   }
 }

@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "research": "HUMMING_ARTIFACT",
   "result": {
-    "item": "primalmagick:humming_artifact_moon"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_moon"
   }
 }

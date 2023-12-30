@@ -12,6 +12,10 @@
   ],
   "research": "HEXIUM",
   "result": {
-    "item": "primalmagick:hexium_legs"
+    "Count": 1,
+    "id": "primalmagick:hexium_legs",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

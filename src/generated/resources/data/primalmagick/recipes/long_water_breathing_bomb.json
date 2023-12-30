@@ -31,12 +31,19 @@
     }
   ],
   "mana": {
-    "infernal": 3
+    "sources": {
+      "infernal": 3
+    }
   },
   "research": "CONCOCTING_BOMBS",
   "result": {
-    "count": 1,
-    "item": "primalmagick:alchemical_bomb",
-    "nbt": "{BombFuse:\"medium\",ConcoctionDoses:6,ConcoctionType:\"bomb\",Potion:\"minecraft:long_water_breathing\"}"
+    "Count": 1,
+    "id": "primalmagick:alchemical_bomb",
+    "tag": {
+      "BombFuse": "medium",
+      "ConcoctionDoses": 6,
+      "ConcoctionType": "bomb",
+      "Potion": "minecraft:long_water_breathing"
+    }
   }
 }

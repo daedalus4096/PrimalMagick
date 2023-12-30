@@ -12,7 +12,9 @@
     }
   },
   "mana": {
-    "earth": 20
+    "sources": {
+      "earth": 20
+    }
   },
   "pattern": [
     "III",
@@ -21,6 +23,10 @@
   ],
   "research": "EARTHSHATTER_HAMMER",
   "result": {
-    "item": "primalmagick:earthshatter_hammer"
+    "Count": 1,
+    "id": "primalmagick:earthshatter_hammer",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

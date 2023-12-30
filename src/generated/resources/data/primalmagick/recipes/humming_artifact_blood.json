@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "blood": 40
+    "sources": {
+      "blood": 40
+    }
   },
   "research": "HUMMING_ARTIFACT&&t_discover_blood",
   "result": {
-    "item": "primalmagick:humming_artifact_blood"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_blood"
   }
 }

@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "sky": 750
+    "sources": {
+      "sky": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS",
   "result": {
-    "item": "primalmagick:forbidden_font_sky"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_sky"
   }
 }

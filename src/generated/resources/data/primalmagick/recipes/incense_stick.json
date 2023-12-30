@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "sky": 1
+    "sources": {
+      "sky": 1
+    }
   },
   "pattern": [
     " F",
@@ -17,6 +19,7 @@
   ],
   "research": "INCENSE_BRAZIER",
   "result": {
-    "item": "primalmagick:incense_stick"
+    "Count": 1,
+    "id": "primalmagick:incense_stick"
   }
 }

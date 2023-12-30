@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sea": 50
+    "sources": {
+      "sea": 50
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "HYDROMELON",
   "result": {
-    "item": "primalmagick:hydromelon_seeds"
+    "Count": 1,
+    "id": "primalmagick:hydromelon_seeds"
   }
 }

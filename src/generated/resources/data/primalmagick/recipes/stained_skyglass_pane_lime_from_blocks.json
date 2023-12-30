@@ -12,7 +12,7 @@
   ],
   "research": "SKYGLASS",
   "result": {
-    "count": 16,
-    "item": "primalmagick:stained_skyglass_pane_lime"
+    "Count": 16,
+    "id": "primalmagick:stained_skyglass_pane_lime"
   }
 }
