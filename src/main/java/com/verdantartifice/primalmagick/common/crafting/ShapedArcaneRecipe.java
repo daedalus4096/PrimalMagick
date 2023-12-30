@@ -286,7 +286,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                         ShapedArcaneRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(rsar -> rsar.pattern),
                         ItemStack.CODEC.fieldOf("result").forGetter(rsar -> rsar.result),
                         CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
-                        SourceList.CODEC.fieldOf("manaCosts").forGetter(rsar -> rsar.manaCosts)
+                        SourceList.CODEC.fieldOf("mana").forGetter(rsar -> rsar.manaCosts)
                     ).apply(instance, RawShapedArcaneRecipe::new);
             });
         }

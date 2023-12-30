@@ -131,10 +131,10 @@ public class RitualRecipe implements IRitualRecipe {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
-                    SourceList.CODEC.fieldOf("manaCosts").forGetter(rr -> rr.manaCosts),
+                    SourceList.CODEC.fieldOf("mana").forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
-                    ItemStack.CODEC.fieldOf("recipeOutput").forGetter(rr -> rr.recipeOutput),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("recipeItems").flatXmap(ingredients -> {
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.recipeOutput),
+                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {
                             return DataResult.error(() -> "No offerings for ritual recipe");
@@ -142,7 +142,7 @@ public class RitualRecipe implements IRitualRecipe {
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(rr -> rr.recipeItems),
-                    BlockIngredient.CODEC_NONEMPTY.listOf().fieldOf("recipeProps").flatXmap(ingredients -> {
+                    BlockIngredient.CODEC_NONEMPTY.listOf().fieldOf("props").flatXmap(ingredients -> {
                         BlockIngredient[] ingArray = ingredients.stream().filter(Predicate.not(BlockIngredient::isEmpty)).toArray(BlockIngredient[]::new);
                         if (ingArray.length == 0) {
                             return DataResult.error(() -> "No props for ritual recipe");

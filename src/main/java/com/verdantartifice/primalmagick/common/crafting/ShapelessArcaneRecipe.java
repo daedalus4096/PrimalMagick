@@ -111,9 +111,9 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
-                    SourceList.CODEC.fieldOf("manaCosts").forGetter(sar -> sar.manaCosts),
-                    ItemStack.CODEC.fieldOf("recipeOutput").forGetter(sar -> sar.recipeOutput),
-                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("recipeItems").flatXmap(ingredients -> {
+                    SourceList.CODEC.fieldOf("mana").forGetter(sar -> sar.manaCosts),
+                    ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.recipeOutput),
+                    Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {
                             return DataResult.error(() -> "No ingredients for shapeless arcane recipe");
