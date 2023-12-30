@@ -46,7 +46,7 @@ public class RobeArmorItem extends ArmorItem implements IManaDiscountGear {
 
     @Override
     public int getBestManaDiscount(ItemStack stack, Player player) {
-        Optional<ArmorTrim> trimOpt = player == null ? Optional.empty() : ArmorTrim.getTrim(player.level().registryAccess(), stack);
+        Optional<ArmorTrim> trimOpt = player == null ? Optional.empty() : ArmorTrim.getTrim(player.level().registryAccess(), stack, true);
         if (trimOpt.isPresent() && trimOpt.get().pattern().is(TrimPatternsPM.RUNIC)) {
             // If the robe has runic armor trim, return the bonus-multiplied discount for its attuned source
             return 2 * this.manaDiscount;
@@ -58,7 +58,7 @@ public class RobeArmorItem extends ArmorItem implements IManaDiscountGear {
 
     @Override
     public Optional<Source> getAttunedSource(ItemStack stack, Player player) {
-        Optional<ArmorTrim> trimOpt = player == null ? Optional.empty() : ArmorTrim.getTrim(player.level().registryAccess(), stack);
+        Optional<ArmorTrim> trimOpt = player == null ? Optional.empty() : ArmorTrim.getTrim(player.level().registryAccess(), stack, true);
         if (trimOpt.isPresent() && trimOpt.get().pattern().is(TrimPatternsPM.RUNIC)) {
             Item trimItem = trimOpt.get().material().value().ingredient().value();
             if (trimItem instanceof RuneItem runeItem && runeItem.getRune() instanceof SourceRune sourceRune) {
