@@ -86,13 +86,13 @@ public abstract class AbstractConjureFluidSpellPayload extends AbstractSpellPayl
         Block block = state.getBlock();
         boolean isSolid = state.isSolid();
         boolean isReplaceable = state.canBeReplaced();
-        if (world.isEmptyBlock(pos) || !isSolid || isReplaceable || (block instanceof LiquidBlockContainer && ((LiquidBlockContainer)block).canPlaceLiquid(world, pos, state, this.fluid))) {
+        if (world.isEmptyBlock(pos) || !isSolid || isReplaceable || (block instanceof LiquidBlockContainer lbc && lbc.canPlaceLiquid(player, world, pos, state, this.fluid))) {
             if (world.dimensionType().ultraWarm() && this.fluid.is(FluidTags.WATER)) {
                 // Do nothing for water in the Nether or similar dimensions
                 return;
-            } else if (block instanceof LiquidBlockContainer && this.fluid == Fluids.WATER) {
+            } else if (block instanceof LiquidBlockContainer lbc && this.fluid == Fluids.WATER) {
                 // If the block is a liquid container and we're dealing with water, place the water into the container
-                ((LiquidBlockContainer)block).placeLiquid(world, pos, state, this.fluid.getSource(false));
+                lbc.placeLiquid(world, pos, state, this.fluid.getSource(false));
             } else {
                 // Destroy the existing block at the target location if fluid would replace it
                 if (!world.isClientSide && (!isSolid || isReplaceable) && !state.liquid()) {
