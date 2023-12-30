@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,7 +28,6 @@ import net.minecraft.world.inventory.Slot;
 public class DissolutionChamberScreen extends AbstractContainerScreen<DissolutionChamberMenu> implements ArcaneRecipeUpdateListener {
     protected static final Logger LOGGER = LogManager.getLogger();
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/dissolution_chamber.png");
-    protected static final ResourceLocation RECIPE_BUTTON_LOCATION = new ResourceLocation("textures/gui/recipe_button.png");
     
     protected final ArcaneRecipeBookComponent recipeBookComponent = new ArcaneRecipeBookComponent();
     protected boolean widthTooNarrow;
@@ -65,7 +65,7 @@ public class DissolutionChamberScreen extends AbstractContainerScreen<Dissolutio
         
         this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.EARTH, this.menu.getCurrentMana(), this.menu.getMaxMana()));
         
-        this.addRenderableWidget(new ImageButton(this.leftPos + 80, this.topPos + 52, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+        this.addRenderableWidget(new ImageButton(this.leftPos + 80, this.topPos + 52, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (button) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
             ((ImageButton)button).setPosition(this.leftPos + 80, this.topPos + 52);
