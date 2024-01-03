@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.books;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -12,10 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
@@ -24,6 +28,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
@@ -31,6 +36,7 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
@@ -52,6 +58,13 @@ public class ClientBookHelper {
     private static final Style FOREWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     private static final Style AFTERWORD_TEXT_STYLE = Style.EMPTY.withItalic(true);
     
+    private static final Map<BookType, BookSprites> SPRITES = ImmutableMap.<BookType, BookSprites>builder()
+            .put(BookType.BOOK, BookSprites.VANILLA)
+            .put(BookType.TABLET, new BookSprites(PrimalMagick.resource("textures/gui/tablet.png"), 
+                    new WidgetSprites(PrimalMagick.resource("books/tablet/page_forward"), new ResourceLocation("books/tablet/page_forward_highlighted")), 
+                    new WidgetSprites(PrimalMagick.resource("books/tablet/page_backward"), new ResourceLocation("books/tablet/page_backward_highlighted"))))
+            .build();
+
     private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(ClientBookHelper::getTextLinesInner);
     private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
     private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
@@ -60,6 +73,10 @@ public class ClientBookHelper {
         memoizedTextLines = Util.memoize(ClientBookHelper::getTextLinesInner);
         memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
         memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
+    }
+    
+    public static BookSprites getSprites(BookType type) {
+        return SPRITES.getOrDefault(type, BookSprites.VANILLA);
     }
     
     private static String getForewordTranslationKey(ResourceKey<?> bookKey) {

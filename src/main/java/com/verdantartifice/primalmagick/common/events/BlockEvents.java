@@ -191,7 +191,7 @@ public class BlockEvents {
             } else if (lecternEntity.getBook().is(ItemsPM.STATIC_BOOK.get())) {
                 // Open the static book screen
                 if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK.getBackgroundTexture()), serverPlayer);
+                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(lecternEntity.getBook(), BookType.BOOK), serverPlayer);
                 }
                 return InteractionResult.SUCCESS;
             } else if (lecternEntity.getBook().is(Items.ENCHANTED_BOOK)) {

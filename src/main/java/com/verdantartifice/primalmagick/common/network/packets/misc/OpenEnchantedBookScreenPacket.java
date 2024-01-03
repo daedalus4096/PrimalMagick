@@ -43,7 +43,7 @@ public class OpenEnchantedBookScreenPacket implements IMessageToClient {
     
     public static void onMessage(OpenEnchantedBookScreenPacket message, CustomPayloadEvent.Context ctx) {
         if (FMLEnvironment.dist.isClient()) {
-            ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId(), 0, BookType.BOOK.getBackgroundTexture());
+            ClientUtils.openStaticBookScreen(message.bookKey, BookLanguagesPM.GALACTIC.getId(), 0, BookType.BOOK);
         }
     }
 }

@@ -55,11 +55,11 @@ public class StaticBookItem extends Item {
     protected static final DecimalFormat COMPREHENSION_FORMATTER = new DecimalFormat("###.#");
     protected static final Map<BookType, StaticBookItem> TYPE_MAP = new HashMap<>();
     
-    protected final ResourceLocation bgTexture;
+    protected final BookType bookType;
 
     public StaticBookItem(BookType type, Item.Properties properties) {
         super(properties);
-        this.bgTexture = type.getBackgroundTexture();
+        this.bookType = type;
         TYPE_MAP.put(type, this);
     }
     
@@ -224,7 +224,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bgTexture), serverPlayer);
+            PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
     }
