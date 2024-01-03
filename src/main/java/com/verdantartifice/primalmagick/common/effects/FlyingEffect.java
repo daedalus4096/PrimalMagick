@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.effects;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -19,21 +18,22 @@ public class FlyingEffect extends MobEffect {
     }
 
     @Override
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
+        return pDuration <= 1;
+    }
+
+    @Override
     public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+        // End flying effect on the last tick, because there's no equivalent to onEffectStarted for effects ending
         Level level = pLivingEntity.level();
-        super.applyEffectTick(pLivingEntity, pAmplifier);
         if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
-            // End flying effect on the last tick, because there's no equivalent to onEffectStarted for effects ending
-            MobEffectInstance effectInstance = player.getEffect(EffectsPM.FLYING.get());
-            if (effectInstance.getDuration() <= 1) {
-                GameType type = player.gameMode.getGameModeForPlayer();
-                player.getAbilities().mayfly = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
-                if (!player.getAbilities().mayfly) {
-                    // If flying is no longer allowed, end the player's flight
-                    player.getAbilities().flying = false;
-                }
-                player.onUpdateAbilities();   // Send ability changes to clients
+            GameType type = player.gameMode.getGameModeForPlayer();
+            player.getAbilities().mayfly = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
+            if (!player.getAbilities().mayfly) {
+                // If flying is no longer allowed, end the player's flight
+                player.getAbilities().flying = false;
             }
+            player.onUpdateAbilities();   // Send ability changes to clients
         }
     }
 
