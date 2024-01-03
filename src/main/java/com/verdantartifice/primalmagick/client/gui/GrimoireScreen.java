@@ -145,7 +145,6 @@ public class GrimoireScreen extends Screen {
             this.initButtons();
         }
         
-        this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
@@ -254,7 +253,10 @@ public class GrimoireScreen extends Screen {
         abstractPage.initWidgets(this, side, x, y);
     }
 
-    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    @Override
+    public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        super.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
+
         // Render the grimoire background
         guiGraphics.pose().pushPose();
         guiGraphics.pose().translate(this.scaledLeft, this.scaledTop, 0.0F);
