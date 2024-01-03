@@ -145,7 +145,6 @@ public class GrimoireScreen extends Screen {
             this.initButtons();
         }
         
-        this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
