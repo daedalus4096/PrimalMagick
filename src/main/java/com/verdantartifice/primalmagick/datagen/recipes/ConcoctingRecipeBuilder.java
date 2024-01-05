@@ -33,7 +33,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
-import net.minecraftforge.common.crafting.ingredients.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
