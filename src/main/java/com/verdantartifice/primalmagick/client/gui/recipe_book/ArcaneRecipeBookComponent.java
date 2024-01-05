@@ -138,9 +138,9 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
         this.mc.player.getInventory().fillStackedContents(this.stackedContents);
         this.menu.fillCraftSlotsStackedContents(this.stackedContents);
         String s = this.searchBox != null ? this.searchBox.getValue() : "";
-        this.searchBox = new EditBox(this.mc.font, xPos + 25, yPos + 14, 80, 9 + 5, Component.translatable("itemGroup.search"));
+        this.searchBox = new EditBox(this.mc.font, xPos + 25, yPos + 13, 81, 9 + 5, Component.translatable("itemGroup.search"));
         this.searchBox.setMaxLength(50);
-        this.searchBox.setBordered(false);
+        this.searchBox.setBordered(true);
         this.searchBox.setVisible(true);
         this.searchBox.setTextColor(0xFFFFFF);
         this.searchBox.setValue(s);
@@ -321,12 +321,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
             int xPos = (this.width - 147) / 2 - this.xOffset;
             int yPos = (this.height - 166) / 2;
             guiGraphics.blit(RECIPE_BOOK_LOCATION, xPos, yPos, 1, 1, IMAGE_WIDTH, IMAGE_HEIGHT);
-            
-            if (!this.searchBox.isFocused() && this.searchBox.getValue().isEmpty()) {
-                guiGraphics.drawString(this.mc.font, SEARCH_HINT, xPos + 25, yPos + 14, -1);
-            } else {
-                this.searchBox.render(guiGraphics, mouseX, mouseY, partialTicks);
-            }
+            this.searchBox.render(guiGraphics, mouseX, mouseY, partialTicks);
             
             synchronized (this.tabButtons) {
                 for (ArcaneRecipeBookTabButton tab : this.tabButtons) {
