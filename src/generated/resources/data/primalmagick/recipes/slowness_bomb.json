@@ -2,17 +2,11 @@
   "type": "primalmagick:concocting",
   "ingredients": [
     {
-      "type": "forge:nbt",
-      "stack": {
-        "Count": 1,
-        "id": "primalmagick:alchemical_bomb",
-        "tag": {
-          "BombFuse": "medium",
-          "ConcoctionDoses": 6,
-          "ConcoctionType": "bomb",
-          "Potion": "minecraft:water"
-        }
-      }
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:alchemical_bomb"
+      ],
+      "nbt": "{ConcoctionType:\"bomb\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagick:essence_shard_sky"

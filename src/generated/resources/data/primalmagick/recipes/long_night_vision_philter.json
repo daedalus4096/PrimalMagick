@@ -3,16 +3,11 @@
   "group": "long_night_vision",
   "ingredients": [
     {
-      "type": "forge:nbt",
-      "stack": {
-        "Count": 1,
-        "id": "primalmagick:concoction",
-        "tag": {
-          "ConcoctionDoses": 1,
-          "ConcoctionType": "water",
-          "Potion": "minecraft:water"
-        }
-      }
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:concoction"
+      ],
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagick:essence_shard_moon"

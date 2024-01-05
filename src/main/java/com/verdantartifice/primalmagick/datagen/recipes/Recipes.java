@@ -4383,7 +4383,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 40))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4392,7 +4392,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4402,7 +4402,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4412,7 +4412,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4423,7 +4423,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4432,7 +4432,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4442,7 +4442,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4452,7 +4452,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -4461,7 +4461,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -4471,7 +4471,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4480,7 +4480,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4490,7 +4490,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4500,7 +4500,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4509,7 +4509,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4519,7 +4519,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4529,7 +4529,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4539,7 +4539,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4550,7 +4550,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4560,7 +4560,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4571,7 +4571,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4581,7 +4581,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4592,7 +4592,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_DUST_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4603,7 +4603,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4612,7 +4612,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4622,7 +4622,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4632,7 +4632,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -4641,7 +4641,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -4651,7 +4651,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 1))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.TINCTURE))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_DUST_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
@@ -4663,7 +4663,7 @@ public class Recipes extends RecipeProvider {
     
     protected void registerPhilterRecipes(RecipeOutput consumer) {
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4672,7 +4672,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4682,7 +4682,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4692,7 +4692,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4703,7 +4703,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4712,7 +4712,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4722,7 +4722,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4732,7 +4732,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -4741,7 +4741,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -4751,7 +4751,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4760,7 +4760,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4770,7 +4770,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -4780,7 +4780,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4789,7 +4789,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4799,7 +4799,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -4809,7 +4809,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4819,7 +4819,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4830,7 +4830,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4840,7 +4840,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4851,7 +4851,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4861,7 +4861,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4872,7 +4872,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -4883,7 +4883,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4892,7 +4892,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4902,7 +4902,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -4912,7 +4912,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -4921,7 +4921,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -4931,7 +4931,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.PHILTER))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
@@ -4943,7 +4943,7 @@ public class Recipes extends RecipeProvider {
     
     protected void registerElixirRecipes(RecipeOutput consumer) {
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.NIGHT_VISION, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4952,7 +4952,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_NIGHT_VISION, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4962,7 +4962,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.INVISIBILITY, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4972,7 +4972,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_INVISIBILITY, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -4983,7 +4983,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LEAPING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -4992,7 +4992,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_LEAPING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -5002,7 +5002,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_LEAPING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -5012,7 +5012,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.FIRE_RESISTANCE, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -5021,7 +5021,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_FIRE_RESISTANCE, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -5031,7 +5031,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SWIFTNESS, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5040,7 +5040,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SWIFTNESS, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5050,7 +5050,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_SWIFTNESS, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5060,7 +5060,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.TURTLE_MASTER, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5069,7 +5069,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5079,7 +5079,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_TURTLE_MASTER, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5089,7 +5089,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.WATER_BREATHING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5099,7 +5099,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_WATER_BREATHING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5110,7 +5110,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.HEALING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5120,7 +5120,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_HEALING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5131,7 +5131,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.REGENERATION, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5141,7 +5141,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_REGENERATION, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5152,7 +5152,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_REGENERATION, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5163,7 +5163,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRENGTH, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5172,7 +5172,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_STRENGTH, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5182,7 +5182,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.STRONG_STRENGTH, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5192,7 +5192,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.SLOW_FALLING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -5201,7 +5201,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LONG_SLOW_FALLING, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -5211,7 +5211,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 9))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newConcoction(Potions.LUCK, ConcoctionType.ELIXIR))
-            .addIngredient(ConcoctionUtils.newConcoction(Potions.WATER, ConcoctionType.WATER))
+            .addWaterFlaskIngredient()
             .addIngredient(ItemsPM.ESSENCE_CRYSTAL_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())
@@ -5232,7 +5232,7 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("CONCOCTING_BOMBS")))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.NIGHT_VISION, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -5240,7 +5240,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_NIGHT_VISION, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -5249,7 +5249,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.INVISIBILITY, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -5258,7 +5258,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_INVISIBILITY, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GOLDEN_CARROT)
@@ -5268,7 +5268,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LEAPING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -5276,7 +5276,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_LEAPING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -5285,7 +5285,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_LEAPING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.RABBIT_FOOT)
@@ -5294,7 +5294,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.FIRE_RESISTANCE, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -5302,7 +5302,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_FIRE_RESISTANCE, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.MAGMA_CREAM)
@@ -5311,7 +5311,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SWIFTNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5319,7 +5319,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SWIFTNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5328,7 +5328,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SWIFTNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.SUGAR)
@@ -5337,7 +5337,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.TURTLE_MASTER, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5345,7 +5345,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_TURTLE_MASTER, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5354,7 +5354,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_TURTLE_MASTER, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.TURTLE_HELMET)
@@ -5363,7 +5363,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WATER_BREATHING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5372,7 +5372,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WATER_BREATHING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SEA.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5382,7 +5382,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HEALING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5391,7 +5391,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HEALING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5401,7 +5401,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.REGENERATION, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5410,7 +5410,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_REGENERATION, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5420,7 +5420,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_REGENERATION, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SUN.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5430,7 +5430,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRENGTH, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5438,7 +5438,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_STRENGTH, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5447,7 +5447,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_STRENGTH, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.BLAZE_POWDER)
@@ -5456,7 +5456,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOW_FALLING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -5464,7 +5464,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOW_FALLING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.PHANTOM_MEMBRANE)
@@ -5473,7 +5473,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.SLOWNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5483,7 +5483,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_SLOWNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5494,7 +5494,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_SLOWNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_SKY.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5505,7 +5505,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.HARMING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
@@ -5514,7 +5514,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_HARMING, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(Items.GLISTERING_MELON_SLICE)
@@ -5524,7 +5524,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.POISON, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5533,7 +5533,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_POISON, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5543,7 +5543,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.STRONG_POISON, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_BLOOD.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
@@ -5553,7 +5553,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.WEAKNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
@@ -5561,7 +5561,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LONG_WEAKNESS, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_EARTH.get())
             .addIngredient(ItemsPM.ESSENCE_SHARD_VOID.get())
             .addIngredient(Items.FERMENTED_SPIDER_EYE)
@@ -5570,7 +5570,7 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.INFERNAL, 3))
             .build(consumer);
         ConcoctingRecipeBuilder.concoctingRecipe(ConcoctionUtils.newBomb(Potions.LUCK, FuseType.MEDIUM))
-            .addIngredient(ConcoctionUtils.newBomb(Potions.WATER, FuseType.MEDIUM))
+            .addWaterBombIngredient()
             .addIngredient(ItemsPM.ESSENCE_SHARD_MOON.get())
             .addIngredient(Tags.Items.CROPS_NETHER_WART)
             .addIngredient(ItemsPM.FOUR_LEAF_CLOVER.get())

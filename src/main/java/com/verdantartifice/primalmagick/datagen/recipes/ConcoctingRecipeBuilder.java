@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -20,6 +21,7 @@ import net.minecraft.Util;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
 import net.minecraftforge.common.crafting.ingredients.StrictNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -39,6 +42,15 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ConcoctingRecipeBuilder {
+    protected static final CompoundTag WATER_FLASK_TAG = Util.make(new CompoundTag(), tag -> {
+        tag.putString("Potion", "minecraft:water");
+        tag.putString("ConcoctionType", ConcoctionType.WATER.getSerializedName());
+    });
+    protected static final CompoundTag WATER_BOMB_TAG = Util.make(new CompoundTag(), tag -> {
+        tag.putString("Potion", "minecraft:water");
+        tag.putString("ConcoctionType", ConcoctionType.BOMB.getSerializedName());
+    });
+    
     protected final ItemStack result;
     protected final List<Ingredient> ingredients = new ArrayList<>();
     protected String group;
@@ -73,14 +85,20 @@ public class ConcoctingRecipeBuilder {
         return this.addIngredient(Ingredient.of(item), quantity);
     }
     
-    public ConcoctingRecipeBuilder addIngredient(ItemStack stack) {
-        ItemStack copy = stack.copy();
-        copy.setCount(1);
-        return this.addIngredient(StrictNBTIngredient.of(stack));
-    }
-    
     public ConcoctingRecipeBuilder addIngredient(TagKey<Item> tag) {
         return this.addIngredient(Ingredient.of(tag));
+    }
+    
+    public ConcoctingRecipeBuilder addWaterFlaskIngredient() {
+        // Can't use strict NBT ingredients because the Mojang codec turns the integer doses field into a
+        // byte during deserialization, causing the strict NBT comparison to fail when querying recipes.
+        return this.addIngredient(PartialNBTIngredient.of(ItemsPM.CONCOCTION.get(), WATER_FLASK_TAG));
+    }
+    
+    public ConcoctingRecipeBuilder addWaterBombIngredient() {
+        // Can't use strict NBT ingredients because the Mojang codec turns the integer doses field into a
+        // byte during deserialization, causing the strict NBT comparison to fail when querying recipes.
+        return this.addIngredient(PartialNBTIngredient.of(ItemsPM.ALCHEMICAL_BOMB.get(), WATER_BOMB_TAG));
     }
     
     public ConcoctingRecipeBuilder setGroup(String group) {
