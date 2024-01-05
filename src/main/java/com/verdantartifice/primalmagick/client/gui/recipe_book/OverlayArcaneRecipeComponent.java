@@ -16,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -28,8 +29,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListener {
-    protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
     private static final ResourceLocation OVERLAY_RECIPE_SPRITE = new ResourceLocation("recipe_book/overlay_recipe");
+    protected static final WidgetSprites CRAFTING_OVERLAY_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/crafting_overlay"), new ResourceLocation("recipe_book/crafting_overlay_disabled"), new ResourceLocation("recipe_book/crafting_overlay_highlighted"), new ResourceLocation("recipe_book/crafting_overlay_disabled_highlighted"));
+    protected static final WidgetSprites FURNACE_OVERLAY_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/furnace_overlay"), new ResourceLocation("recipe_book/furnace_overlay_disabled"), new ResourceLocation("recipe_book/furnace_overlay_highlighted"), new ResourceLocation("recipe_book/furnace_overlay_disabled_highlighted"));
     protected static final int MAX_ROW = 4;
     protected static final int MAX_ROW_LARGE = 5;
     protected static final float ITEM_RENDER_SCALE = 0.375F;
@@ -204,17 +206,9 @@ public class OverlayArcaneRecipeComponent implements Renderable, GuiEventListene
 
         @Override
         public void renderWidget(GuiGraphics guiGraphics, int p_93677_, int p_93678_, float p_93679_) {
-            int texX = 152;
-            if (!this.isCraftable) {
-                texX += 26;
-            }
-            
-            int texY = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? 130 : 78;
-            if (this.isHoveredOrFocused()) {
-                texY += 26;
-            }
-            
-            guiGraphics.blit(OverlayArcaneRecipeComponent.RECIPE_BOOK_LOCATION, this.getX(), this.getY(), texX, texY, this.width, this.height);
+            WidgetSprites sprites = OverlayArcaneRecipeComponent.this.useFurnaceStyle ? OverlayArcaneRecipeComponent.FURNACE_OVERLAY_SPRITES : OverlayArcaneRecipeComponent.CRAFTING_OVERLAY_SPRITES;
+            ResourceLocation spriteLoc = sprites.get(this.isCraftable, this.isHoveredOrFocused());
+            guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
             PoseStack modelViewStack = RenderSystem.getModelViewStack();
             modelViewStack.pushPose();
             modelViewStack.translate((double)(this.getX() + 2), (double)(this.getY() + 2), 125.0D);
