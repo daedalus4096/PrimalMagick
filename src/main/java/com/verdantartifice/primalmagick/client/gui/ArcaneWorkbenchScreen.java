@@ -78,8 +78,8 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
             this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
             this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
         } else {
-            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
             super.render(guiGraphics, mouseX, mouseY, partialTicks);
+            this.recipeBookComponent.render(guiGraphics, mouseX, mouseY, partialTicks);
             this.recipeBookComponent.renderGhostRecipe(guiGraphics, this.leftPos, this.topPos, true, partialTicks);
         }
         this.renderTooltip(guiGraphics, mouseX, mouseY);
