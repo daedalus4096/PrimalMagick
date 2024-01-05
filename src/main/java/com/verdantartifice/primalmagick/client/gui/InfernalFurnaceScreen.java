@@ -43,7 +43,7 @@ public class InfernalFurnaceScreen extends AbstractContainerScreen<InfernalFurna
     protected void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
-        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
+        this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, true, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
         
         this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.INFERNAL, this.menu.getCurrentMana(), this.menu.getMaxMana()));

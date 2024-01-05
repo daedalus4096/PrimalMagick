@@ -67,7 +67,8 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     private static final int OFFSET_X_POSITION = 86;
     private static final Component ONLY_CRAFTABLES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.craftable");
     private static final Component ALL_RECIPES_TOOLTIP = Component.translatable("gui.recipebook.toggleRecipes.all");
-    private static final WidgetSprites FILTER_BUTTON_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/filter_enabled"), new ResourceLocation("recipe_book/filter_disabled"), new ResourceLocation("recipe_book/filter_enabled_highlighted"), new ResourceLocation("recipe_book/filter_disabled_highlighted"));
+    private static final WidgetSprites FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/filter_enabled"), new ResourceLocation("recipe_book/filter_disabled"), new ResourceLocation("recipe_book/filter_enabled_highlighted"), new ResourceLocation("recipe_book/filter_disabled_highlighted"));
+    private static final WidgetSprites FURNACE_FILTER_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/furnace_filter_enabled"), new ResourceLocation("recipe_book/furnace_filter_disabled"), new ResourceLocation("recipe_book/furnace_filter_enabled_highlighted"), new ResourceLocation("recipe_book/furnace_filter_disabled_highlighted"));
 
     protected int xOffset;
     protected int width;
@@ -91,14 +92,16 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     protected boolean ignoreTextInput;
     protected boolean visible;
     protected boolean widthTooNarrow;
+    protected boolean useFurnaceStyle;
     protected boolean isLoading = true;
 
-    public void init(int width, int height, Minecraft mc, boolean tooNarrow, IArcaneRecipeBookMenu<?> menu) {
+    public void init(int width, int height, Minecraft mc, boolean tooNarrow, boolean useFurnaceStyle, IArcaneRecipeBookMenu<?> menu) {
         this.mc = mc;
         this.width = width;
         this.height = height;
         this.menu = menu;
         this.widthTooNarrow = tooNarrow;
+        this.useFurnaceStyle = useFurnaceStyle;
         mc.player.containerMenu = menu instanceof AbstractContainerMenu containerMenu ? containerMenu : null;
         this.vanillaBook = mc.player.getRecipeBook();
         this.arcaneBook = new ClientArcaneRecipeBook(PrimalMagickCapabilities.getArcaneRecipeBook(mc.player).orElseThrow(() -> new IllegalArgumentException("No arcane recipe book for player")).get());
@@ -181,7 +184,7 @@ public class ArcaneRecipeBookComponent implements Renderable, GuiEventListener, 
     }
 
     protected void initFilterButtonTextures() {
-        this.filterButton.initTextureValues(FILTER_BUTTON_SPRITES);
+        this.filterButton.initTextureValues(this.useFurnaceStyle ? FURNACE_FILTER_SPRITES : FILTER_SPRITES);
     }
     
     public int updateScreenPosition(int width, int imageWidth) {
