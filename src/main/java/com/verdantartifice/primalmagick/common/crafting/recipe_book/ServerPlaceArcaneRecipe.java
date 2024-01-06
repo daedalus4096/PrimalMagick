@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.Place
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipebook.PlaceRecipe;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -30,6 +32,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
     protected final StackedNbtContents stackedContents = new StackedNbtContents();
     protected final IArcaneRecipeBookMenu<C> menu;
     protected Inventory inventory;
+    protected RecipeHolder<? extends Recipe<C>> activeRecipeHolder;
     
     public ServerPlaceArcaneRecipe(IArcaneRecipeBookMenu<C> menu) {
         this.menu = menu;
@@ -46,6 +49,7 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
                     player.getInventory().fillStackedContents(this.stackedContents);
                     this.menu.fillCraftSlotsStackedContents(this.stackedContents);
                     if (this.stackedContents.canCraft(recipeHolder.value(), null)) {
+                        this.activeRecipeHolder = recipeHolder;
                         this.handleRecipeClicked(recipeHolder, shiftDown);
                     } else {
                         this.clearGrid();
@@ -106,13 +110,28 @@ public class ServerPlaceArcaneRecipe<C extends Container> implements PlaceRecipe
         int itemId = iterator.next();
         ItemStack stack = StackedContents.fromStackingIndex(itemId);
         if (this.stackedContents.hasNbtData(itemId)) {
-            stack.setTag(this.stackedContents.getNbtData(itemId));
+            stack.setTag(this.findMatchingTag(itemId, stack));
         }
         if (!stack.isEmpty()) {
             for (int index = 0; index < count; index++) {
                 this.moveItemToGrid(slot, stack);
             }
         }
+    }
+    
+    protected CompoundTag findMatchingTag(int itemId, ItemStack baseStack) {
+        ItemStack workingStack = baseStack.copy();
+        if (this.activeRecipeHolder != null && this.activeRecipeHolder.value() != null) {
+            for (CompoundTag tag : this.stackedContents.getNbtData(itemId)) {
+                for (Ingredient ing : this.activeRecipeHolder.value().getIngredients()) {
+                    workingStack.setTag(tag);
+                    if (ing.test(workingStack)) {
+                        return tag;
+                    }
+                }
+            }
+        }
+        return new CompoundTag();
     }
 
     protected int getStackSize(boolean shiftDown, int stackSize, boolean matches) {
