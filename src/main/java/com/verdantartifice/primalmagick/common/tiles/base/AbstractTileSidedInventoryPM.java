@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.OptionalInt;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -83,9 +84,11 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     
     public int getInventorySize(Direction face) {
         MutableInt retVal = new MutableInt(0);
-        this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
-            retVal.setValue(this.getInventorySize(invIndex));
-        });
+        if (face != null) {
+            this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
+                retVal.setValue(this.getInventorySize(invIndex));
+            });
+        }
         return retVal.getValue();
     }
     
@@ -93,7 +96,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     
     protected abstract int getInventorySize(int inventoryIndex);
     
-    protected abstract OptionalInt getInventoryIndexForFace(Direction face);
+    protected abstract OptionalInt getInventoryIndexForFace(@Nonnull Direction face);
     
     protected abstract NonNullList<ItemStackHandler> createHandlers();
 
@@ -106,7 +109,7 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction face) {
         if (!this.remove && cap == ForgeCapabilities.ITEM_HANDLER) {
-            if (this.getInventoryIndexForFace(face).isPresent()) {
+            if (face != null && this.getInventoryIndexForFace(face).isPresent()) {
                 return this.itemHandlerOpts.get(this.getInventoryIndexForFace(face).getAsInt()).cast();
             } else {
                 return LazyOptional.empty();
@@ -117,9 +120,11 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     }
 
     public void addListener(Direction face, ContainerListener listener) {
-        this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
-            this.listeners.get(invIndex).add(listener);
-        });
+        if (face != null) {
+            this.getInventoryIndexForFace(face).ifPresent(invIndex -> {
+                this.listeners.get(invIndex).add(listener);
+            });
+        }
     }
     
     public void removeListener(ContainerListener listener) {
