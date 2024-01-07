@@ -1,3 +1,7 @@
+v4.1.0-beta
+-----------
+* Updated to Minecraft 1.20.2
+
 v4.0.9
 ------
 * Fixed a client crash when picking up the Dream Journal in some modpacks
