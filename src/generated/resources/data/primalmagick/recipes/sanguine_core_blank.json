@@ -12,8 +12,10 @@
     }
   },
   "mana": {
-    "blood": 50,
-    "infernal": 50
+    "sources": {
+      "blood": 50,
+      "infernal": 50
+    }
   },
   "pattern": [
     " H ",
@@ -22,6 +24,7 @@
   ],
   "research": "SANGUINE_CRUCIBLE",
   "result": {
-    "item": "primalmagick:sanguine_core_blank"
+    "Count": 1,
+    "id": "primalmagick:sanguine_core_blank"
   }
 }

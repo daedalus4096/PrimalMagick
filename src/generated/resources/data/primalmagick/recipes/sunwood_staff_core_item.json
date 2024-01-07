@@ -9,11 +9,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 15
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 15
+    }
   },
   "pattern": [
     " D#",
@@ -22,6 +24,7 @@
   ],
   "research": "STAVES&&WAND_CORE_SUNWOOD",
   "result": {
-    "item": "primalmagick:sunwood_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:sunwood_staff_core_item"
   }
 }

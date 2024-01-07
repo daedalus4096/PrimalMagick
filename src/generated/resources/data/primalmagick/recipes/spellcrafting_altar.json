@@ -15,6 +15,7 @@
   ],
   "research": "BASIC_SORCERY",
   "result": {
-    "item": "primalmagick:spellcrafting_altar"
+    "Count": 1,
+    "id": "primalmagick:spellcrafting_altar"
   }
 }

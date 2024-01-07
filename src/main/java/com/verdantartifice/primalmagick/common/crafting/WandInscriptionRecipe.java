@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.items.wands.SpellScrollItem;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -18,8 +17,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandInscriptionRecipe extends CustomRecipe {
-    public WandInscriptionRecipe(ResourceLocation idIn, CraftingBookCategory category) {
-        super(idIn, category);
+    public WandInscriptionRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

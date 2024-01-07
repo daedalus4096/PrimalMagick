@@ -13,6 +13,7 @@
   ],
   "research": "SYNTHETIC_GEM_BUDS&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:energized_emerald"
+    "Count": 1,
+    "id": "primalmagick:energized_emerald"
   }
 }

@@ -10,7 +10,9 @@
     }
   },
   "mana": {
-    "hallowed": 5
+    "sources": {
+      "hallowed": 5
+    }
   },
   "pattern": [
     " A ",
@@ -19,7 +21,7 @@
   ],
   "research": "MANA_ARROWS&&t_discover_hallowed",
   "result": {
-    "count": 4,
-    "item": "primalmagick:mana_arrow_hallowed"
+    "Count": 4,
+    "id": "primalmagick:mana_arrow_hallowed"
   }
 }

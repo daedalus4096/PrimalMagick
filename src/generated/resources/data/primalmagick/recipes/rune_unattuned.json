@@ -8,6 +8,7 @@
   },
   "research": "BASIC_RUNEWORKING",
   "result": {
-    "item": "primalmagick:rune_unattuned"
+    "Count": 1,
+    "id": "primalmagick:rune_unattuned"
   }
 }

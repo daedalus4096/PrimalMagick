@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "void": 250
+    "sources": {
+      "void": 250
+    }
   },
   "pattern": [
     "IMI",
@@ -22,6 +24,7 @@
   ],
   "research": "ARTIFICIAL_MANA_FONTS&&t_discover_void",
   "result": {
-    "item": "primalmagick:artificial_font_void"
+    "Count": 1,
+    "id": "primalmagick:artificial_font_void"
   }
 }

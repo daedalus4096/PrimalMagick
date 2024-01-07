@@ -15,6 +15,10 @@
   ],
   "research": "HEXIUM",
   "result": {
-    "item": "primalmagick:hexium_trident"
+    "Count": 1,
+    "id": "primalmagick:hexium_trident",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

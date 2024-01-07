@@ -4,10 +4,12 @@
     "tag": "primalmagick:deep_stone"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 2,
-    "item": "minecraft:cobbled_deepslate"
+    "Count": 2,
+    "id": "minecraft:cobbled_deepslate"
   }
 }

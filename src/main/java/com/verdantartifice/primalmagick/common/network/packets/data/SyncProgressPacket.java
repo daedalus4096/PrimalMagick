@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.function.Supplier;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +18,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to progress a research entry to its next stage on the server.
@@ -52,6 +51,10 @@ public class SyncProgressPacket implements IMessageToServer {
         this.noPopups = noPopups;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(SyncProgressPacket message, FriendlyByteBuf buf) {
         buf.writeUtf(message.key.getRootKey());
         buf.writeBoolean(message.firstSync);
@@ -70,64 +73,56 @@ public class SyncProgressPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SyncProgressPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                if (message.key != null) {
-                    Player player = ctx.get().getSender();
-                    if (message.firstSync != message.key.isKnownBy(player)) {
-                        // If called for, ensure that prerequisites for the next stage are checked and consumed
-                        if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
-                            return;
-                        }
-                        // Do the actual progression
-                        LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
-                        ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
-                    }
+    public static void onMessage(SyncProgressPacket message, CustomPayloadEvent.Context ctx) {
+        if (message.key != null) {
+            Player player = ctx.getSender();
+            if (message.firstSync != message.key.isKnownBy(player)) {
+                // If called for, ensure that prerequisites for the next stage are checked and consumed
+                if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
+                    return;
                 }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+                // Do the actual progression
+                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
+                ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
+            }
+        }
+    }
+    
+    protected static boolean checkAndConsumePrerequisites(Player player, SimpleResearchKey key) {
+        ResearchEntry entry = ResearchEntries.getEntry(key);
+        if (entry == null || entry.getStages().isEmpty()) {
+            return true;
+        }
+
+        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
+        if (knowledge == null) {
+            return false;
+        }
+
+        // Get the current stage of the given key's entry
+        int currentStageNum = knowledge.getResearchStage(key);
+        if (currentStageNum < 0) {
+            return false;
+        }
+        if (currentStageNum >= entry.getStages().size()) {
+            return true;
         }
         
-        protected static boolean checkAndConsumePrerequisites(Player player, SimpleResearchKey key) {
-            ResearchEntry entry = ResearchEntries.getEntry(key);
-            if (entry == null || entry.getStages().isEmpty()) {
-                return true;
-            }
-
-            IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-            if (knowledge == null) {
-                return false;
-            }
-
-            // Get the current stage of the given key's entry
-            int currentStageNum = knowledge.getResearchStage(key);
-            if (currentStageNum < 0) {
-                return false;
-            }
-            if (currentStageNum >= entry.getStages().size()) {
-                return true;
-            }
-            
-            ResearchStage stage = entry.getStages().get(currentStageNum);
-            boolean retVal = stage.arePrerequisitesMet(player);
-            if (retVal) {
-                // Consume the met prerequisite items and knowledge
-                for (Object obj : stage.getMustObtain()) {
-                    if (obj instanceof ItemStack) {
-                        InventoryUtils.consumeItem(player, (ItemStack)obj);
-                    } else if (obj instanceof ResourceLocation) {
-                        InventoryUtils.consumeItem(player, (ResourceLocation)obj, 1);
-                    }
-                }
-                for (Knowledge know : stage.getRequiredKnowledge()) {
-                    ResearchManager.addKnowledge(player, know.getType(), -(know.getAmount() * know.getType().getProgression()));
+        ResearchStage stage = entry.getStages().get(currentStageNum);
+        boolean retVal = stage.arePrerequisitesMet(player);
+        if (retVal) {
+            // Consume the met prerequisite items and knowledge
+            for (Object obj : stage.getMustObtain()) {
+                if (obj instanceof ItemStack) {
+                    InventoryUtils.consumeItem(player, (ItemStack)obj);
+                } else if (obj instanceof ResourceLocation) {
+                    InventoryUtils.consumeItem(player, (ResourceLocation)obj, 1);
                 }
             }
-            return retVal;
+            for (Knowledge know : stage.getRequiredKnowledge()) {
+                ResearchManager.addKnowledge(player, know.getType(), -(know.getAmount() * know.getType().getProgression()));
+            }
         }
+        return retVal;
     }
 }

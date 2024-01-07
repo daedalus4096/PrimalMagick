@@ -22,7 +22,9 @@
   ],
   "instability": 4,
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "props": [
     {
@@ -37,7 +39,10 @@
   ],
   "research": "DREAM_VISION_TALISMAN",
   "result": {
-    "item": "primalmagick:dream_vision_talisman",
-    "nbt": "{Damage:0}"
+    "Count": 1,
+    "id": "primalmagick:dream_vision_talisman",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

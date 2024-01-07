@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_MOON",
   "result": {
-    "item": "primalmagick:rune_moon"
+    "Count": 1,
+    "id": "primalmagick:rune_moon"
   }
 }

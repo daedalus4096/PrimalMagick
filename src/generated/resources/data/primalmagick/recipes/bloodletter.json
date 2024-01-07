@@ -12,7 +12,9 @@
     }
   },
   "mana": {
-    "blood": 50
+    "sources": {
+      "blood": 50
+    }
   },
   "pattern": [
     "MSM",
@@ -21,6 +23,7 @@
   ],
   "research": "BLOODLETTER",
   "result": {
-    "item": "primalmagick:bloodletter"
+    "Count": 1,
+    "id": "primalmagick:bloodletter"
   }
 }

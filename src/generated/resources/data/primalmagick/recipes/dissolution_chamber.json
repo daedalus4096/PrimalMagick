@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "earth": 100
+    "sources": {
+      "earth": 100
+    }
   },
   "pattern": [
     "DDD",
@@ -24,6 +26,7 @@
   ],
   "research": "DISSOLUTION_CHAMBER",
   "result": {
-    "item": "primalmagick:dissolution_chamber"
+    "Count": 1,
+    "id": "primalmagick:dissolution_chamber"
   }
 }

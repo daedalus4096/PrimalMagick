@@ -12,14 +12,17 @@
     }
   ],
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "research": "BASIC_RUNEWORKING",
   "result": {
-    "item": "primalmagick:runecarving_table"
+    "Count": 1,
+    "id": "primalmagick:runecarving_table"
   }
 }

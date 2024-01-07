@@ -9,11 +9,13 @@
     }
   },
   "mana": {
-    "earth": 15,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 15,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     " D#",
@@ -22,6 +24,7 @@
   ],
   "research": "STAVES&&WAND_CORE_OBSIDIAN",
   "result": {
-    "item": "primalmagick:obsidian_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:obsidian_staff_core_item"
   }
 }

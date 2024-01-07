@@ -50,7 +50,7 @@ public class TrimPatternsPM {
     }
     
     private static void register(BootstapContext<TrimPattern> context, Item templateItem, ResourceKey<TrimPattern> patternKey) {
-        context.register(patternKey, new TrimPattern(patternKey.location(), ForgeRegistries.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location()))));
+        context.register(patternKey, new TrimPattern(patternKey.location(), ForgeRegistries.ITEMS.getHolder(templateItem).orElseThrow(), Component.translatable(Util.makeDescriptionId("trim_pattern", patternKey.location())), false));
     }
     
     public static void bootstrap(BootstapContext<TrimPattern> context) {

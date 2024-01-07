@@ -34,7 +34,6 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a dissolution chamber.  Uses earth mana to dissolve ore into grit for ore
@@ -99,7 +98,7 @@ public class DissolutionChamberBlock extends BaseEntityBlock {
             // Open the GUI for the dissolution chamber
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof DissolutionChamberTileEntity chamberTile) {
-                NetworkHooks.openScreen(serverPlayer, chamberTile, tile.getBlockPos());
+                serverPlayer.openMenu(chamberTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

@@ -8,6 +8,7 @@
   },
   "research": "RUNE_AREA",
   "result": {
-    "item": "primalmagick:rune_area"
+    "Count": 1,
+    "id": "primalmagick:rune_area"
   }
 }

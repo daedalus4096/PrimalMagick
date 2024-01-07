@@ -12,11 +12,13 @@
     }
   },
   "mana": {
-    "earth": 40,
-    "moon": 40,
-    "sea": 40,
-    "sky": 40,
-    "sun": 40
+    "sources": {
+      "earth": 40,
+      "moon": 40,
+      "sea": 40,
+      "sky": 40,
+      "sun": 40
+    }
   },
   "pattern": [
     "#R#",
@@ -25,6 +27,7 @@
   ],
   "research": "RUNIC_TRIM",
   "result": {
-    "item": "primalmagick:runic_armor_trim_smithing_template"
+    "Count": 1,
+    "id": "primalmagick:runic_armor_trim_smithing_template"
   }
 }

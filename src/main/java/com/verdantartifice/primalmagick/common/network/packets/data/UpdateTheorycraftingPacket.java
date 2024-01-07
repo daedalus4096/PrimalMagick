@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
@@ -11,7 +10,8 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update theorycrafting project template JSON data on the client from the server.
@@ -39,6 +39,10 @@ public class UpdateTheorycraftingPacket implements IMessageToClient {
         return this.templates;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(UpdateTheorycraftingPacket message, FriendlyByteBuf buf) {
         buf.writeVarInt(message.templates.size());
         for (Map.Entry<ResourceLocation, ProjectTemplate> entry : message.templates.entrySet()) {
@@ -51,15 +55,7 @@ public class UpdateTheorycraftingPacket implements IMessageToClient {
         return new UpdateTheorycraftingPacket(buf);
     }
     
-    public static class Handler {
-        public static void onMessage(UpdateTheorycraftingPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ProjectTemplateLoader.createInstance().replaceTemplates(message.getTemplates());
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(UpdateTheorycraftingPacket message, CustomPayloadEvent.Context ctx) {
+        ProjectTemplateLoader.createInstance().replaceTemplates(message.getTemplates());
     }
 }

@@ -11,6 +11,10 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_feet"
+    "Count": 1,
+    "id": "primalmagick:primalite_feet",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

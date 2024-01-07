@@ -11,6 +11,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Re-implementation of CategoryRecipeValidator from the full JEI mod, but only requiring the API.
@@ -21,42 +22,42 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int INVALID_COUNT = -1;
     
-    private final IRecipeCategory<T> recipeCategory;
+    private final IRecipeCategory<RecipeHolder<T>> recipeCategory;
     private final int maxInputs;
     private final boolean checkSpecial;     // Check for valid inputs and outputs even for special recipes
     
-    public CategoryRecipeValidatorPM(IRecipeCategory<T> recipeCategory, int maxInputs) {
+    public CategoryRecipeValidatorPM(IRecipeCategory<RecipeHolder<T>> recipeCategory, int maxInputs) {
         this(recipeCategory, maxInputs, false);
     }
 
-    public CategoryRecipeValidatorPM(IRecipeCategory<T> recipeCategory, int maxInputs, boolean checkSpecial) {
+    public CategoryRecipeValidatorPM(IRecipeCategory<RecipeHolder<T>> recipeCategory, int maxInputs, boolean checkSpecial) {
         this.recipeCategory = recipeCategory;
         this.maxInputs = maxInputs;
         this.checkSpecial = checkSpecial;
     }
 
-    public boolean isRecipeValid(T recipe) {
+    public boolean isRecipeValid(RecipeHolder<T> recipe) {
         return hasValidInputsAndOutputs(recipe);
     }
 
-    public boolean isRecipeHandled(T recipe) {
+    public boolean isRecipeHandled(RecipeHolder<T> recipe) {
         return this.recipeCategory.isHandled(recipe);
     }
 
-    private boolean hasValidInputsAndOutputs(T recipe) {
-        if (recipe.isSpecial() && !this.checkSpecial) {
+    private boolean hasValidInputsAndOutputs(RecipeHolder<T> recipe) {
+        if (recipe.value().isSpecial() && !this.checkSpecial) {
             return true;
         }
         
-        ItemStack recipeOutput = RecipeUtils.getResultItem(recipe);
+        ItemStack recipeOutput = RecipeUtils.getResultItem(recipe.value());
         if (recipeOutput == null || recipeOutput.isEmpty()) {
-            LOGGER.error("Recipe has no output. {}", recipe.getId().toString());
+            LOGGER.error("Recipe has no output. {}", recipe.id().toString());
             return false;
         }
         
-        List<Ingredient> ingredients = recipe.getIngredients();
+        List<Ingredient> ingredients = recipe.value().getIngredients();
         if (ingredients == null) {
-            LOGGER.error("Recipe has no input Ingredients. {}", recipe.getId().toString());
+            LOGGER.error("Recipe has no input Ingredients. {}", recipe.id().toString());
             return false;
         }
         
@@ -64,10 +65,10 @@ public class CategoryRecipeValidatorPM<T extends Recipe<?>> {
         if (inputCount == INVALID_COUNT) {
             return false;
         } else if (inputCount > maxInputs) {
-            LOGGER.error("Recipe has too many inputs. {}", recipe.getId().toString());
+            LOGGER.error("Recipe has too many inputs. {}", recipe.id().toString());
             return false;
         } else if (inputCount == 0 && maxInputs > 0) {
-            LOGGER.error("Recipe has no inputs. {}", recipe.getId().toString());
+            LOGGER.error("Recipe has no inputs. {}", recipe.id().toString());
             return false;
         }
         return true;

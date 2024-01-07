@@ -11,6 +11,10 @@
   ],
   "research": "HALLOWSTEEL",
   "result": {
-    "item": "primalmagick:hallowsteel_feet"
+    "Count": 1,
+    "id": "primalmagick:hallowsteel_feet",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

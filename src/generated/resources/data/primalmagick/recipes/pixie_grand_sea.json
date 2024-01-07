@@ -22,7 +22,9 @@
   ],
   "instability": 5,
   "mana": {
-    "sea": 100
+    "sources": {
+      "sea": 100
+    }
   },
   "props": [
     {
@@ -37,6 +39,7 @@
   ],
   "research": "GRAND_PIXIES",
   "result": {
-    "item": "primalmagick:pixie_grand_sea"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_sea"
   }
 }

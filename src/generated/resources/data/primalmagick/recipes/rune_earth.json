@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_EARTH",
   "result": {
-    "item": "primalmagick:rune_earth"
+    "Count": 1,
+    "id": "primalmagick:rune_earth"
   }
 }

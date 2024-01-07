@@ -9,14 +9,17 @@
     }
   ],
   "mana": {
-    "earth": 100,
-    "moon": 100,
-    "sea": 100,
-    "sky": 100,
-    "sun": 100
+    "sources": {
+      "earth": 100,
+      "moon": 100,
+      "sea": 100,
+      "sky": 100,
+      "sun": 100
+    }
   },
   "research": "WAND_GEM_WIZARD",
   "result": {
-    "item": "primalmagick:wizard_wand_gem_item"
+    "Count": 1,
+    "id": "primalmagick:wizard_wand_gem_item"
   }
 }

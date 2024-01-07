@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the wand assembly table.  A wand assembly table allows a player to construct a
@@ -64,9 +63,9 @@ public class WandAssemblyTableBlock extends Block {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // Open the GUI for the wand assembly table
-            NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
+            serverPlayer.openMenu(new MenuProvider() {
                 @Override
                 public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
                     return new WandAssemblyTableMenu(windowId, inv, ContainerLevelAccess.create(worldIn, pos));

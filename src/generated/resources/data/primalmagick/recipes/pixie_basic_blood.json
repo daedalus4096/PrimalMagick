@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "blood": 40
+    "sources": {
+      "blood": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES&&t_discover_blood",
   "result": {
-    "item": "primalmagick:pixie_basic_blood"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_blood"
   }
 }

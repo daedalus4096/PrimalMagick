@@ -15,6 +15,10 @@
   ],
   "research": "HALLOWSTEEL",
   "result": {
-    "item": "primalmagick:hallowsteel_trident"
+    "Count": 1,
+    "id": "primalmagick:hallowsteel_trident",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

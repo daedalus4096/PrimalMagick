@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "hallowed": 400
+    "sources": {
+      "hallowed": 400
+    }
   },
   "pattern": [
     "WEW",
@@ -24,6 +26,7 @@
   ],
   "research": "ESSENCE_CASK_HEAVENLY",
   "result": {
-    "item": "primalmagick:essence_cask_heavenly"
+    "Count": 1,
+    "id": "primalmagick:essence_cask_heavenly"
   }
 }

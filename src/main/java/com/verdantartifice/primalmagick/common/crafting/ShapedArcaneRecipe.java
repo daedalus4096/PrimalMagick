@@ -1,30 +1,29 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import org.apache.commons.lang3.NotImplementedException;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
@@ -34,17 +33,18 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
 public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<CraftingContainer> {
+    public static final int MAX_WIDTH = 3;
+    public static final int MAX_HEIGHT = 3;
+
     protected final int recipeWidth;
     protected final int recipeHeight;
     protected final NonNullList<Ingredient> recipeItems;
     protected final ItemStack recipeOutput;
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(ResourceLocation id, String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
-        this.id = id;
+    public ShapedArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
         this.group = group;
         this.research = research;
         this.manaCosts = manaCosts;
@@ -114,11 +114,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
     }
@@ -148,60 +143,14 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return this.group;
     }
 
-    protected static Map<String, Ingredient> deserializeKey(JsonObject jsonObject) {
-        Map<String, Ingredient> map = new HashMap<>();
-        for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
-            // Validate each key in the given JSON object
-            if (entry.getKey().length() != 1) {
-                throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
-            }
-            if (" ".equals(entry.getKey())) {
-                throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
-            }
-            
-            // Store the key and corresponding deserialized ingredient for return
-            map.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
-        }
-        
-        // Include an entry for empty space in the recipe
-        map.put(" ", Ingredient.EMPTY);
-        return map;
-    }
-
-    protected static NonNullList<Ingredient> deserializeIngredients(String[] pattern, Map<String, Ingredient> keys, int width, int height) {
-        NonNullList<Ingredient> list = NonNullList.withSize(width * height, Ingredient.EMPTY);
-        Set<String> keySet = new HashSet<>(keys.keySet());
-        keySet.remove(" ");
-        
-        for (int i = 0; i < pattern.length; i++) {
-            for (int j = 0; j < pattern[0].length(); j++) {
-                // For each symbol in the pattern, add the corresponding ingredient from the key to the returned list
-                String s = pattern[i].substring(j, j + 1);
-                Ingredient ingredient = keys.get(s);
-                if (ingredient == null) {
-                    throw new JsonSyntaxException("Pattern references symbol '" + s + "' but it's not defined in the key");
-                }
-                keySet.remove(s);
-                list.set(j + width * i, ingredient);
-            }
-        }
-        
-        // Make sure all ingredients from the key were used in the pattern
-        if (!keySet.isEmpty()) {
-            throw new JsonSyntaxException("Key defines symbols that aren't used in pattern: " + keySet);
-        } else {
-            return list;
-        }
-    }
-
-    protected static String[] shrink(String... toShrink) {
+    protected static String[] shrink(List<String> toShrink) {
         int i = Integer.MAX_VALUE;
         int j = 0;
         int k = 0;
         int l = 0;
         
-        for (int i1 = 0; i1 < toShrink.length; ++i1) {
-            String s = toShrink[i1];
+        for (int i1 = 0; i1 < toShrink.size(); ++i1) {
+            String s = toShrink.get(i1);
             i = Math.min(i, firstNonSpace(s));
             int j1 = lastNonSpace(s);
             j = Math.max(j, j1);
@@ -214,12 +163,12 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 l = 0;
             }
         }
-        if (toShrink.length == l) {
+        if (toShrink.size() == l) {
             return new String[0];
         } else {
-            String[] astring = new String[toShrink.length - l - k];
+            String[] astring = new String[toShrink.size() - l - k];
             for (int k1 = 0; k1 < astring.length; ++k1) {
-               astring[k1] = toShrink[k1 + k].substring(i, j + 1);
+               astring[k1] = toShrink.get(k1 + k).substring(i, j + 1);
             }
             return astring;
         }
@@ -229,9 +178,9 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     public boolean isIncomplete() {
         NonNullList<Ingredient> ingredients = this.getIngredients();
         return ingredients.isEmpty() || ingredients.stream().filter(i -> {
-            return !i.isEmpty();
+            return !i.isEmpty() && i.getItems() != null;
         }).anyMatch(i -> {
-            return i.getItems().length == 0;
+            return ForgeHooks.hasNoElements(i);
         });
     }
 
@@ -247,46 +196,63 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
         return i;
     }
 
-    protected static String[] patternFromJson(JsonArray jsonArray) {
-        String[] astring = new String[jsonArray.size()];
-        
-        // Validate the pattern strings in the given JSON array
-        if (astring.length > 3) {
-            throw new JsonSyntaxException("Invalid pattern: too many rows, 3 is maximum");
-        } else if (astring.length == 0) {
-            throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
-        } else {
-            for(int i = 0; i < astring.length; ++i) {
-                String s = GsonHelper.convertToString(jsonArray.get(i), "pattern[" + i + "]");
-                if (s.length() > 3) {
-                    throw new JsonSyntaxException("Invalid pattern: too many columns, 3 is maximum");
-                }
-                if (i > 0 && astring[0].length() != s.length()) {
-                    throw new JsonSyntaxException("Invalid pattern: each row must be the same width");
-                }
-                astring[i] = s;
-            }
-            return astring;
-        }
-    }
-
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
-        @Override
-        public ShapedArcaneRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
-            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
-            Map<String, Ingredient> map = ShapedArcaneRecipe.deserializeKey(GsonHelper.getAsJsonObject(json, "key"));
-            String[] patternStrs = ShapedArcaneRecipe.shrink(ShapedArcaneRecipe.patternFromJson(GsonHelper.getAsJsonArray(json, "pattern")));
-            int width = patternStrs[0].length();
-            int height = patternStrs.length;
-            NonNullList<Ingredient> ingredients = ShapedArcaneRecipe.deserializeIngredients(patternStrs, map, width, height);
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, ingredients, result);
-        }
+        protected static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
+            if (list.size() > MAX_HEIGHT) {
+                return DataResult.error(() -> "Invalid pattern: too many rows, " + MAX_HEIGHT + " is maximum");
+            } else if (list.isEmpty()) {
+                return DataResult.error(() -> "Invalid pattern: empty pattern not allowed");
+            } else {
+                int strLength = list.get(0).length();
+                for (String str : list) {
+                    if (str.length() > MAX_WIDTH) {
+                        return DataResult.error(() -> "Invalid pattern: too many columns, " + MAX_WIDTH  + " is maximum");
+                    }
+                    if (strLength != str.length()) {
+                        return DataResult.error(() -> "Invalid pattern: each row must be the same width");
+                    }
+                }
+                return DataResult.success(list);
+            }
+        }, DataResult::success);
+        
+        protected static final Codec<ShapedArcaneRecipe> CODEC = ShapedArcaneRecipe.Serializer.RawShapedArcaneRecipe.CODEC.flatXmap(rsar -> {
+            String[] patternArray = ShapedArcaneRecipe.shrink(rsar.pattern);
+            int width = patternArray[0].length();
+            int height = patternArray.length;
+            NonNullList<Ingredient> ingredients = NonNullList.withSize(width * height, Ingredient.EMPTY);
+            Set<String> symbols = new HashSet<>(rsar.key.keySet());
+            
+            for (int i = 0; i < height; i++) {
+                String line = patternArray[i];
+                for (int j = 0; j < line.length(); j++) {
+                    String symbol = line.substring(j, j + 1);
+                    Ingredient ing = " ".equals(symbol) ? Ingredient.EMPTY : rsar.key.get(symbol);
+                    if (ing == null) {
+                        return DataResult.error(() -> "Pattern references symbol '" + symbol + "' but it's not defined in the key");
+                    }
+                    symbols.remove(symbol);
+                    ingredients.set(j + width * i, ing);
+                }
+            }
+            
+            if (!symbols.isEmpty()) {
+                return DataResult.error(() -> "Key defines symbols that aren't used in pattern: " + symbols.toString());
+            } else {
+                ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(rsar.group, rsar.research, rsar.manaCosts, width, height, ingredients, rsar.result);
+                return DataResult.success(recipe);
+            }
+        }, sr -> {
+            throw new NotImplementedException("Serializing ShapedArcaneRecipe is not implemented yet.");
+        });
         
         @Override
-        public ShapedArcaneRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public Codec<ShapedArcaneRecipe> codec() {
+            return CODEC;
+        }
+
+        @Override
+        public ShapedArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             int width = buffer.readVarInt();
             int height = buffer.readVarInt();
             String group = buffer.readUtf(32767);
@@ -297,7 +263,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 list.set(index, Ingredient.fromNetwork(buffer));
             }
             ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(recipeId, group, research, manaCosts, width, height, list, stack);
+            return new ShapedArcaneRecipe(group, research, manaCosts, width, height, list, stack);
         }
 
         @Override
@@ -311,6 +277,19 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
                 ingredient.toNetwork(buffer);
             }
             buffer.writeItem(recipe.recipeOutput);
+        }
+        
+        protected static record RawShapedArcaneRecipe(String group, Map<String, Ingredient> key, List<String> pattern, ItemStack result, CompoundResearchKey research, SourceList manaCosts) {
+            public static final Codec<ShapedArcaneRecipe.Serializer.RawShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+                return instance.group(
+                        ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rsar -> rsar.group),
+                        ExtraCodecs.strictUnboundedMap(CodecUtils.SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY).fieldOf("key").forGetter(rsar -> rsar.key),
+                        ShapedArcaneRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(rsar -> rsar.pattern),
+                        ItemStack.CODEC.fieldOf("result").forGetter(rsar -> rsar.result),
+                        CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
+                        SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
+                    ).apply(instance, RawShapedArcaneRecipe::new);
+            });
         }
     }
 }

@@ -10,6 +10,7 @@
   ],
   "research": "RITUAL_CANDLES",
   "result": {
-    "item": "primalmagick:tallow"
+    "Count": 1,
+    "id": "primalmagick:tallow"
   }
 }

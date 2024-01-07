@@ -12,11 +12,13 @@
     }
   },
   "mana": {
-    "earth": 10,
-    "moon": 10,
-    "sea": 10,
-    "sky": 10,
-    "sun": 10
+    "sources": {
+      "earth": 10,
+      "moon": 10,
+      "sea": 10,
+      "sky": 10,
+      "sun": 10
+    }
   },
   "pattern": [
     "GRG",
@@ -24,6 +26,7 @@
   ],
   "research": "BASIC_RITUAL",
   "result": {
-    "item": "primalmagick:ritual_altar"
+    "Count": 1,
+    "id": "primalmagick:ritual_altar"
   }
 }

@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "void": 50
+    "sources": {
+      "void": 50
+    }
   },
   "pattern": [
     "SKS",
@@ -24,6 +26,7 @@
   ],
   "research": "ENDERWARD",
   "result": {
-    "item": "primalmagick:enderward"
+    "Count": 1,
+    "id": "primalmagick:enderward"
   }
 }

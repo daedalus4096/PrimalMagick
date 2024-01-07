@@ -13,10 +13,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.StateSwitchingButton;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.RecipeShownListener;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.RecipeBook;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI page for the arcane recipe book.
@@ -25,7 +27,9 @@ import net.minecraft.world.item.crafting.Recipe;
  */
 public class ArcaneRecipeBookPage {
     public static final int ITEMS_PER_PAGE = 20;
-    
+    private static final WidgetSprites PAGE_FORWARD_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/page_forward"), new ResourceLocation("recipe_book/page_forward_highlighted"));
+    private static final WidgetSprites PAGE_BACKWARD_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/page_backward"), new ResourceLocation("recipe_book/page_backward_highlighted"));
+
     protected final List<ArcaneRecipeButton> buttons = new ArrayList<>(ITEMS_PER_PAGE);
     protected final OverlayArcaneRecipeComponent overlay = new OverlayArcaneRecipeComponent();
     protected final List<RecipeShownListener> showListeners = new ArrayList<>();
@@ -41,7 +45,7 @@ public class ArcaneRecipeBookPage {
     protected RecipeBook vanillaBook;
     protected ArcaneRecipeBook arcaneBook;
     @Nullable
-    protected Recipe<?> lastClickedRecipe;
+    protected RecipeHolder<?> lastClickedRecipe;
     @Nullable
     protected ArcaneRecipeCollection lastClickedRecipeCollection;
 
@@ -62,9 +66,9 @@ public class ArcaneRecipeBookPage {
         }
         
         this.forwardButton = new StateSwitchingButton(xPos + 93, yPos + 137, 12, 17, false);
-        this.forwardButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
+        this.forwardButton.initTextureValues(PAGE_FORWARD_SPRITES);
         this.backButton = new StateSwitchingButton(xPos + 38, yPos + 137, 12, 17, true);
-        this.backButton.initTextureValues(1, 208, 13, 18, ArcaneRecipeBookComponent.RECIPE_BOOK_LOCATION);
+        this.backButton.initTextureValues(PAGE_BACKWARD_SPRITES);
         this.updateArrowButtons();
     }
     
@@ -132,12 +136,12 @@ public class ArcaneRecipeBookPage {
     
     public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         if (this.mc.screen != null && this.hoveredButton != null && !this.overlay.isVisible()) {
-            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().getResultItem(this.mc.level.registryAccess()));
+            guiGraphics.renderComponentTooltip(this.mc.font, this.hoveredButton.getTooltipText(this.mc.screen), mouseX, mouseY, this.hoveredButton.getRecipe().value().getResultItem(this.mc.level.registryAccess()));
         }
     }
     
     @Nullable
-    public Recipe<?> getLastClickedRecipe() {
+    public RecipeHolder<?> getLastClickedRecipe() {
         return this.lastClickedRecipe;
     }
     
@@ -185,7 +189,7 @@ public class ArcaneRecipeBookPage {
         }
     }
     
-    public void recipesShown(List<Recipe<?>> recipes) {
+    public void recipesShown(List<RecipeHolder<?>> recipes) {
         for (RecipeShownListener listener : this.showListeners) {
             listener.recipesShown(recipes);
         }

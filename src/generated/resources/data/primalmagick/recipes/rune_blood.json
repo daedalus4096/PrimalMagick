@@ -11,6 +11,7 @@
   ],
   "research": "RUNE_BLOOD",
   "result": {
-    "item": "primalmagick:rune_blood"
+    "Count": 1,
+    "id": "primalmagick:rune_blood"
   }
 }

@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "sea": 750
+    "sources": {
+      "sea": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS",
   "result": {
-    "item": "primalmagick:forbidden_font_sea"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_sea"
   }
 }

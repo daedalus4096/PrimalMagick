@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets;
 
+import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
+import com.verdantartifice.primalmagick.common.books.BookType;
+
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.PageButton;
@@ -12,18 +15,17 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class StaticBookPageButton extends PageButton {
     private final boolean isForward;
-    private final ResourceLocation texture;
+    private final BookType bookType;
     
-    public StaticBookPageButton(int pX, int pY, boolean pIsForward, Button.OnPress pOnPress, boolean pPlayTurnSound, ResourceLocation texture) {
+    public StaticBookPageButton(int pX, int pY, boolean pIsForward, Button.OnPress pOnPress, boolean pPlayTurnSound, BookType bookType) {
         super(pX, pY, pIsForward, pOnPress, pPlayTurnSound);
         this.isForward = pIsForward;
-        this.texture = texture;
+        this.bookType = bookType;
     }
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        int texX = 0 + (this.isHoveredOrFocused() ? 23 : 0);
-        int texY = 192 + (!this.isForward ? 13 : 0);
-        guiGraphics.blit(this.texture, this.getX(), this.getY(), texX, texY, 23, 13);
+        ResourceLocation rl = ClientBookHelper.getSprites(this.bookType).getPageButton(this.isForward, this.isHoveredOrFocused());
+        guiGraphics.blitSprite(rl, this.getX(), this.getY(), 23, 13);
     }
 }

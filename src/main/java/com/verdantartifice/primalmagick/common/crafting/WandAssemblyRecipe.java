@@ -8,7 +8,6 @@ import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -22,8 +21,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WandAssemblyRecipe extends CustomRecipe {
-    public WandAssemblyRecipe(ResourceLocation idIn, CraftingBookCategory category) {
-        super(idIn, category);
+    public WandAssemblyRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

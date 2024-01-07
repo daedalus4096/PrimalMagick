@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "void": 750
+    "sources": {
+      "void": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS&&t_discover_void",
   "result": {
-    "item": "primalmagick:forbidden_font_void"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_void"
   }
 }

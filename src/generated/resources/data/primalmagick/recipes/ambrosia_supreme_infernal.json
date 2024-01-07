@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "infernal": 200
+    "sources": {
+      "infernal": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA&&t_discover_infernal",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_infernal"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_infernal"
   }
 }

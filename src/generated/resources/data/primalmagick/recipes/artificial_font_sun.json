@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "sun": 250
+    "sources": {
+      "sun": 250
+    }
   },
   "pattern": [
     "IMI",
@@ -22,6 +24,7 @@
   ],
   "research": "ARTIFICIAL_MANA_FONTS",
   "result": {
-    "item": "primalmagick:artificial_font_sun"
+    "Count": 1,
+    "id": "primalmagick:artificial_font_sun"
   }
 }

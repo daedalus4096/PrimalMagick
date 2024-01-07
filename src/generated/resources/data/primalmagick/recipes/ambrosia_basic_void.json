@@ -19,7 +19,9 @@
   ],
   "instability": 4,
   "mana": {
-    "void": 40
+    "sources": {
+      "void": 40
+    }
   },
   "props": [
     {
@@ -34,6 +36,7 @@
   ],
   "research": "AMBROSIA&&t_discover_void",
   "result": {
-    "item": "primalmagick:ambrosia_basic_void"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_basic_void"
   }
 }

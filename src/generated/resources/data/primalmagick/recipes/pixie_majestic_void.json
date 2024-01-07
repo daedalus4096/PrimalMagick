@@ -22,7 +22,9 @@
   ],
   "instability": 7,
   "mana": {
-    "void": 200
+    "sources": {
+      "void": 200
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "MAJESTIC_PIXIES&&t_discover_void",
   "result": {
-    "item": "primalmagick:pixie_majestic_void"
+    "Count": 1,
+    "id": "primalmagick:pixie_majestic_void"
   }
 }

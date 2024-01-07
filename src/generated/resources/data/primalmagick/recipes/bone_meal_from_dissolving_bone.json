@@ -4,10 +4,12 @@
     "tag": "forge:bones"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 6,
-    "item": "minecraft:bone_meal"
+    "Count": 6,
+    "id": "minecraft:bone_meal"
   }
 }

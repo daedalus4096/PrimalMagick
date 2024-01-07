@@ -91,7 +91,6 @@ public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMe
             this.initButtons();
         }
 
-        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }

@@ -33,6 +33,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -149,7 +150,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             }
 
             SimpleContainer testInv = new SimpleContainer(entity.getItem(INPUT_INV_INDEX, 0));
-            IDissolutionRecipe recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
+            RecipeHolder<IDissolutionRecipe> recipe = level.getServer().getRecipeManager().getRecipeFor(RecipeTypesPM.DISSOLUTION.get(), testInv, level).orElse(null);
             if (entity.canDissolve(testInv, level.registryAccess(), recipe)) {
                 entity.processTime++;
                 if (entity.processTime >= entity.processTimeTotal) {
@@ -169,12 +170,12 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected boolean canDissolve(Container inputInv, RegistryAccess registryAccess, IDissolutionRecipe recipe) {
+    protected boolean canDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (!inputInv.isEmpty() && recipe != null) {
-            ItemStack output = recipe.getResultItem(registryAccess);
+            ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Source.EARTH) < (100 * recipe.getManaCosts().getAmount(Source.EARTH))) {
+            } else if (this.getMana(Source.EARTH) < (100 * recipe.value().getManaCosts().getAmount(Source.EARTH))) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -194,9 +195,9 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
         }
     }
     
-    protected void doDissolve(Container inputInv, RegistryAccess registryAccess, IDissolutionRecipe recipe) {
+    protected void doDissolve(Container inputInv, RegistryAccess registryAccess, RecipeHolder<IDissolutionRecipe> recipe) {
         if (recipe != null && this.canDissolve(inputInv, registryAccess, recipe)) {
-            ItemStack recipeOutput = recipe.assemble(inputInv, registryAccess);
+            ItemStack recipeOutput = recipe.value().assemble(inputInv, registryAccess);
             ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
             if (currentOutput.isEmpty()) {
                 this.setItem(OUTPUT_INV_INDEX, 0, recipeOutput);
@@ -210,7 +211,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
                     stack.shrink(1);
                 }
             }
-            this.setMana(Source.EARTH, this.getMana(Source.EARTH) - (100 * recipe.getManaCosts().getAmount(Source.EARTH)));
+            this.setMana(Source.EARTH, this.getMana(Source.EARTH) - (100 * recipe.value().getManaCosts().getAmount(Source.EARTH)));
         }
     }
     

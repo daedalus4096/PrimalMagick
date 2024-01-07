@@ -10,6 +10,7 @@
   ],
   "research": "SYNTHETIC_GEM_BUDS",
   "result": {
-    "item": "primalmagick:damaged_budding_amethyst_block"
+    "Count": 1,
+    "id": "primalmagick:damaged_budding_amethyst_block"
   }
 }

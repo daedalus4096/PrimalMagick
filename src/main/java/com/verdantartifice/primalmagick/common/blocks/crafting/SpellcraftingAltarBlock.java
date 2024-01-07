@@ -32,7 +32,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the spellcrafting altar.  A spellcrafting altar allows a player to define a spell
@@ -88,7 +87,7 @@ public class SpellcraftingAltarBlock extends BaseEntityBlock {
             BlockEntity blockEntity = worldIn.getBlockEntity(pos);
             if (blockEntity instanceof SpellcraftingAltarTileEntity altarTile && player instanceof ServerPlayer serverPlayer) {
                 // Open the GUI for the spellcrafting altar
-                NetworkHooks.openScreen(serverPlayer, altarTile, blockEntity.getBlockPos());
+                serverPlayer.openMenu(altarTile, blockEntity.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

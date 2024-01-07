@@ -20,6 +20,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -53,7 +54,6 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         this.initAffinityWidgets();
-        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -118,12 +118,12 @@ public class AnalysisTableScreen extends AbstractContainerScreen<AnalysisTableMe
     }
     
     protected static class AnalyzeButton extends ImageButton {
-        private static final ResourceLocation BUTTON_TEXTURE = PrimalMagick.resource("textures/gui/analysis_button.png");
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("analysis_table/button"), PrimalMagick.resource("analysis_table/button_highlighted"));
         protected static final Component ANALYZE_BUTTON_TOOLTIP_1 = Component.translatable("tooltip.primalmagick.analyze_button.1");
         protected static final Component ANALYZE_BUTTON_TOOLTIP_2 = Component.translatable("tooltip.primalmagick.analyze_button.2").withStyle(ChatFormatting.RED);
 
         public AnalyzeButton(AnalysisTableMenu menu, int leftPos, int topPos) {
-            super(leftPos + 78, topPos + 34, 20, 18, 0, 0, 19, BUTTON_TEXTURE, 256, 256, button -> {
+            super(leftPos + 78, topPos + 34, 20, 18, BUTTON_SPRITES, button -> {
                 PacketHandler.sendToServer(new AnalysisActionPacket(menu.containerId));
             });
             this.setTooltip(Tooltip.create(CommonComponents.joinLines(ANALYZE_BUTTON_TOOLTIP_1, ANALYZE_BUTTON_TOOLTIP_2)));

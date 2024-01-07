@@ -59,7 +59,7 @@ public class AttunementAttributeModifier {
         if (entity != null && !entity.level().isClientSide) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
-                instance.removeModifier(this.getModifier());
+                instance.removeModifier(this.getModifier().getId());
                 instance.addPermanentModifier(this.getModifier());
             }
         }
@@ -69,7 +69,7 @@ public class AttunementAttributeModifier {
         if (entity != null && !entity.level().isClientSide) {
             AttributeInstance instance = entity.getAttribute(this.getAttribute());
             if (instance != null) {
-                instance.removeModifier(this.getModifier());
+                instance.removeModifier(this.getModifier().getId());
             }
         }
     }

@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "hallowed": 5
+    "sources": {
+      "hallowed": 5
+    }
   },
   "pattern": [
     "MMM",
@@ -18,7 +20,7 @@
   ],
   "research": "SUPREME_MANAWEAVING",
   "result": {
-    "count": 8,
-    "item": "primalmagick:marble_hallowed"
+    "Count": 8,
+    "id": "primalmagick:marble_hallowed"
   }
 }

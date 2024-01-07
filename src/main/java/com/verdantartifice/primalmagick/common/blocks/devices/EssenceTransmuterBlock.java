@@ -35,7 +35,6 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for an essence transmuter.  Uses moon mana to turn one type of essence into another.
@@ -99,7 +98,7 @@ public class EssenceTransmuterBlock extends BaseEntityBlock {
             // Open the GUI for the essence transmuter
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof EssenceTransmuterTileEntity transmuterTile) {
-                NetworkHooks.openScreen(serverPlayer, transmuterTile, tile.getBlockPos());
+                serverPlayer.openMenu(transmuterTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

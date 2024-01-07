@@ -13,11 +13,13 @@
     }
   },
   "mana": {
-    "earth": 20,
-    "moon": 20,
-    "sea": 20,
-    "sky": 20,
-    "sun": 20
+    "sources": {
+      "earth": 20,
+      "moon": 20,
+      "sea": 20,
+      "sky": 20,
+      "sun": 20
+    }
   },
   "pattern": [
     "SIS",
@@ -26,6 +28,7 @@
   ],
   "research": "EXPERT_MAGITECH",
   "result": {
-    "item": "primalmagick:magitech_parts_enchanted"
+    "Count": 1,
+    "id": "primalmagick:magitech_parts_enchanted"
   }
 }

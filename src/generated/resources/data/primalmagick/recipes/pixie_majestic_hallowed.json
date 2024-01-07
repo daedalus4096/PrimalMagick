@@ -22,7 +22,9 @@
   ],
   "instability": 7,
   "mana": {
-    "hallowed": 200
+    "sources": {
+      "hallowed": 200
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "MAJESTIC_PIXIES&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:pixie_majestic_hallowed"
+    "Count": 1,
+    "id": "primalmagick:pixie_majestic_hallowed"
   }
 }

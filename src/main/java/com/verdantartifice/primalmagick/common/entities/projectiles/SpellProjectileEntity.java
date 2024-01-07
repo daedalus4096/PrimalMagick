@@ -8,8 +8,6 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.SpellTrailPack
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Definition for a spell projectile entity.  Shot from a wand or scroll, they fly through the world until colliding with a
@@ -107,11 +104,6 @@ public class SpellProjectileEntity extends AbstractArrow {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(COLOR, 0xFFFFFF);
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

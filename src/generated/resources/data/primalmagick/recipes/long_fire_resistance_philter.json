@@ -3,10 +3,11 @@
   "group": "long_fire_resistance",
   "ingredients": [
     {
-      "type": "forge:nbt",
-      "count": 1,
-      "item": "primalmagick:concoction",
-      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:concoction"
+      ],
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagick:essence_shard_infernal"
@@ -22,12 +23,18 @@
     }
   ],
   "mana": {
-    "infernal": 3
+    "sources": {
+      "infernal": 3
+    }
   },
   "research": "CONCOCTING_PHILTERS&&t_discover_infernal",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:6,ConcoctionType:\"philter\",Potion:\"minecraft:long_fire_resistance\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 6,
+      "ConcoctionType": "philter",
+      "Potion": "minecraft:long_fire_resistance"
+    }
   }
 }

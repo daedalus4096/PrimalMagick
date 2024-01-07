@@ -11,7 +11,7 @@
   ],
   "research": "MASTER_MANAWEAVING",
   "result": {
-    "count": 4,
-    "item": "primalmagick:marble_smoked_bricks"
+    "Count": 4,
+    "id": "primalmagick:marble_smoked_bricks"
   }
 }

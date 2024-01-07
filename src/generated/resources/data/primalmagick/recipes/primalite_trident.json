@@ -15,6 +15,10 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_trident"
+    "Count": 1,
+    "id": "primalmagick:primalite_trident",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

@@ -19,7 +19,9 @@
   ],
   "instability": 4,
   "mana": {
-    "sea": 40
+    "sources": {
+      "sea": 40
+    }
   },
   "props": [
     {
@@ -34,6 +36,7 @@
   ],
   "research": "AMBROSIA",
   "result": {
-    "item": "primalmagick:ambrosia_basic_sea"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_basic_sea"
   }
 }

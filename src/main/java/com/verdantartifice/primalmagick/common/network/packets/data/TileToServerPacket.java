@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 
@@ -10,8 +8,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync tile entity data from the client to the server.  Primarily used to request a sync of
@@ -33,6 +31,10 @@ public class TileToServerPacket implements IMessageToServer {
         this.data = data;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(TileToServerPacket message, FriendlyByteBuf buf) {
         buf.writeBlockPos(message.pos);
         buf.writeNbt(message.data);
@@ -45,25 +47,16 @@ public class TileToServerPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        @SuppressWarnings("deprecation")
-        public static void onMessage(TileToServerPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer sender = ctx.get().getSender();
-                Level world = sender.level();
-                // Only process tile entities that are currently loaded into the world.  Safety check to prevent
-                // resource thrashing from falsified packets.
-                if (world != null && world.hasChunkAt(message.pos)) {
-                    BlockEntity tile = world.getBlockEntity(message.pos);
-                    if (tile != null && tile instanceof AbstractTilePM) {
-                        ((AbstractTilePM)tile).onMessageFromClient(message.data == null ? new CompoundTag() : message.data, sender);
-                    }
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    @SuppressWarnings("deprecation")
+    public static void onMessage(TileToServerPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer sender = ctx.getSender();
+        Level world = sender.level();
+        // Only process tile entities that are currently loaded into the world.  Safety check to prevent
+        // resource thrashing from falsified packets.
+        if (world != null && world.hasChunkAt(message.pos)) {
+            if (world.getBlockEntity(message.pos) instanceof AbstractTilePM tile) {
+                tile.onMessageFromClient(message.data == null ? new CompoundTag() : message.data, sender);
+            }
         }
     }
 }

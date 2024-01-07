@@ -15,6 +15,10 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_shovel"
+    "Count": 1,
+    "id": "primalmagick:primalite_shovel",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

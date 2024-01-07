@@ -22,7 +22,9 @@
   ],
   "instability": 5,
   "mana": {
-    "sky": 100
+    "sources": {
+      "sky": 100
+    }
   },
   "props": [
     {
@@ -37,6 +39,7 @@
   ],
   "research": "GRAND_PIXIES",
   "result": {
-    "item": "primalmagick:pixie_grand_sky"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_sky"
   }
 }

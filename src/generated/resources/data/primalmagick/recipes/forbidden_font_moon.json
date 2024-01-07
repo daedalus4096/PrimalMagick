@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "moon": 750
+    "sources": {
+      "moon": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS",
   "result": {
-    "item": "primalmagick:forbidden_font_moon"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_moon"
   }
 }

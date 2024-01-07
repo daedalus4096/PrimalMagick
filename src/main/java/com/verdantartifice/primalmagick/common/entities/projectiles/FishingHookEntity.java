@@ -3,16 +3,13 @@ package com.verdantartifice.primalmagick.common.entities.projectiles;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
+import net.minecraftforge.network.packets.SpawnEntity;
 
 /**
  * Definition of a fishing hook entity that works with any fishing rod derived from FishingRodItem,
@@ -21,7 +18,7 @@ import net.minecraftforge.network.PlayMessages;
  * @author Daedalus4096
  */
 public class FishingHookEntity extends FishingHook implements IEntityAdditionalSpawnData {
-    public FishingHookEntity(PlayMessages.SpawnEntity spawnPacket, Level level) {
+    public FishingHookEntity(SpawnEntity spawnPacket, Level level) {
         super(level.getPlayerByUUID(spawnPacket.getAdditionalData().readUUID()), level, 0, 0);
     }
     
@@ -44,11 +41,6 @@ public class FishingHookEntity extends FishingHook implements IEntityAdditionalS
             this.discard();
             return true;
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override

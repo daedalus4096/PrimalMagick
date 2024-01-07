@@ -4,10 +4,12 @@
     "tag": "forge:rods/blaze"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 4,
-    "item": "minecraft:blaze_powder"
+    "Count": 4,
+    "id": "minecraft:blaze_powder"
   }
 }

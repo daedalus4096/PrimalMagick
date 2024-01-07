@@ -13,11 +13,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "SIS",
@@ -26,6 +28,7 @@
   ],
   "research": "BASIC_MAGITECH",
   "result": {
-    "item": "primalmagick:magitech_parts_basic"
+    "Count": 1,
+    "id": "primalmagick:magitech_parts_basic"
   }
 }

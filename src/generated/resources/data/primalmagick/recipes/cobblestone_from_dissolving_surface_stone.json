@@ -4,10 +4,12 @@
     "tag": "primalmagick:surface_stone"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 2,
-    "item": "minecraft:cobblestone"
+    "Count": 2,
+    "id": "minecraft:cobblestone"
   }
 }

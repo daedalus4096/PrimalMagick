@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 
 /**
  * Definition for a dissolution recipe.  Similar to a smelting recipe, but used by the dissolution chamber
@@ -23,14 +21,12 @@ import net.minecraftforge.common.crafting.CraftingHelper;
  * @author Daedalus4096
  */
 public class DissolutionRecipe implements IDissolutionRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final Ingredient ingredient;
     protected final ItemStack result;
     protected final SourceList manaCosts;
     
-    public DissolutionRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
-        this.id = id;
+    public DissolutionRecipe(String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
         this.group = group;
         this.ingredient = ingredient;
         this.result = result;
@@ -65,11 +61,6 @@ public class DissolutionRecipe implements IDissolutionRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-
-    @Override
     public RecipeSerializer<?> getSerializer() {
         return RecipeSerializersPM.DISSOLUTION.get();
     }
@@ -85,22 +76,27 @@ public class DissolutionRecipe implements IDissolutionRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
+        protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
+                    ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.result),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
+                ).apply(instance, DissolutionRecipe::new);
+        });
+        
         @Override
-        public DissolutionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            SourceList manaCosts = JsonUtils.toSourceList(GsonHelper.getAsJsonObject(json, "mana", new JsonObject()));
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            Ingredient ing = Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient"));
-            return new DissolutionRecipe(recipeId, group, ing, result, manaCosts);
+        public Codec<DissolutionRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public DissolutionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public DissolutionRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             Ingredient ing = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new DissolutionRecipe(recipeId, group, ing, result, manaCosts);
+            return new DissolutionRecipe(group, ing, result, manaCosts);
         }
 
         @Override

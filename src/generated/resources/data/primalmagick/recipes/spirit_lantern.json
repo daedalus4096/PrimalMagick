@@ -9,7 +9,9 @@
     }
   },
   "mana": {
-    "infernal": 10
+    "sources": {
+      "infernal": 10
+    }
   },
   "pattern": [
     "NNN",
@@ -18,6 +20,7 @@
   ],
   "research": "SUNLAMP&&HEXIUM",
   "result": {
-    "item": "primalmagick:spirit_lantern"
+    "Count": 1,
+    "id": "primalmagick:spirit_lantern"
   }
 }

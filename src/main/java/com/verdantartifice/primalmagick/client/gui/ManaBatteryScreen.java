@@ -56,7 +56,6 @@ public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> 
             gauge.setCurrentMana(this.menu.getCurrentMana(source));
             gauge.setMaxMana(this.menu.getMaxMana(source));
         });
-        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }

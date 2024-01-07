@@ -54,7 +54,7 @@ public class StaticBookViewScreen extends Screen {
     protected final ResourceKey<?> requestedBookKey;
     protected final ResourceLocation requestedLanguageId;
     protected final int requestedTranslatedComprehension;
-    protected final ResourceLocation requestedBgTexture;
+    protected final BookType bookType;
     protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
     protected BookView bookView;
     private PageButton forwardButton;
@@ -64,20 +64,20 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, BookType.BOOK.getBackgroundTexture(), false);
+        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, BookType.BOOK, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, ResourceLocation bgTexture) {
-        this(bookKey, languageId, translatedComprehension, bgTexture, true);
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType) {
+        this(bookKey, languageId, translatedComprehension, bookType, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, ResourceLocation bgTexture, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.playTurnSound = playTurnSound;
         this.requestedBookKey = bookKey;
         this.requestedLanguageId = languageId;
         this.requestedTranslatedComprehension = translatedComprehension;
-        this.requestedBgTexture = bgTexture;
+        this.bookType = bookType;
     }
     
     /**
@@ -116,10 +116,10 @@ public class StaticBookViewScreen extends Screen {
         int x = (this.width - IMAGE_WIDTH) / 2;
         this.forwardButton = this.addRenderableWidget(new StaticBookPageButton(x + 116, 159, true, (p_98297_) -> {
             this.pageForward();
-        }, this.playTurnSound, this.requestedBgTexture));
+        }, this.playTurnSound, this.bookType));
         this.backButton = this.addRenderableWidget(new StaticBookPageButton(x + 43, 159, false, (p_98287_) -> {
             this.pageBack();
-        }, this.playTurnSound, this.requestedBgTexture));
+        }, this.playTurnSound, this.bookType));
         this.updateButtonVisibility();
     }
 
@@ -166,13 +166,13 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+
         this.renderedLines.clear();
         
-        this.renderBackground(guiGraphics);
         int xPos = (this.width - IMAGE_WIDTH) / 2;
         int yPos = 2;
-        guiGraphics.blit(this.requestedBgTexture, xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-        
+
         if (this.cachedPage != this.currentPage) {
             // Set the page indicator text
             this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
@@ -202,10 +202,17 @@ public class StaticBookViewScreen extends Screen {
                 guiGraphics.renderComponentHoverEffect(this.font, style, mouseX, mouseY);
             }
         });
-
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
     
+    @Override
+    public void renderBackground(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        
+        int xPos = (this.width - IMAGE_WIDTH) / 2;
+        int yPos = 2;
+        pGuiGraphics.blit(ClientBookHelper.getSprites(this.bookType).background(), xPos, yPos, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+    }
+
     protected Optional<Map.Entry<Vector2i, FormattedCharSequence>> getRenderedLineEntryAt(int x, int y) {
         for (Map.Entry<Vector2i, FormattedCharSequence> entry : this.renderedLines.entrySet()) {
             Vector2i pos = entry.getKey();

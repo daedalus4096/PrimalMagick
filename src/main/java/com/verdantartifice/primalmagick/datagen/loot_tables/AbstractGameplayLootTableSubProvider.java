@@ -41,7 +41,6 @@ public abstract class AbstractGameplayLootTableSubProvider implements LootTableS
         types.forEach(key -> LOGGER.warn("Missing gameplay loot table for {}", key.toString()));
     }
 
-    @SuppressWarnings("unused")
     protected void registerEmptyLootTable(ResourceLocation loc) {
         // Just mark that it's been registered without creating a table builder, to track expectations
         this.registeredLootTableTypes.add(loc);

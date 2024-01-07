@@ -1,5 +1,6 @@
 {
   "asset_id": "primalmagick:runic",
+  "decal": false,
   "description": {
     "translate": "trim_pattern.primalmagick.runic"
   },

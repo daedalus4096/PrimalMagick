@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a potion explosion particle effect on the client.
@@ -35,6 +34,10 @@ public class PotionExplosionPacket implements IMessageToClient {
         this(vec.x, vec.y, vec.z, color, isInstant);
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(PotionExplosionPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
@@ -53,15 +56,7 @@ public class PotionExplosionPacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(PotionExplosionPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                FxDispatcher.INSTANCE.potionExplosion(message.x, message.y, message.z, message.color, message.isInstant);
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(PotionExplosionPacket message, CustomPayloadEvent.Context ctx) {
+        FxDispatcher.INSTANCE.potionExplosion(message.x, message.y, message.z, message.color, message.isInstant);
     }
 }

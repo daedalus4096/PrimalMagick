@@ -8,6 +8,7 @@
   },
   "research": "RUNE_PROTECT",
   "result": {
-    "item": "primalmagick:rune_protect"
+    "Count": 1,
+    "id": "primalmagick:rune_protect"
   }
 }

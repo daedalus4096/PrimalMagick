@@ -16,9 +16,11 @@
     }
   },
   "mana": {
-    "blood": 50,
-    "infernal": 50,
-    "void": 50
+    "sources": {
+      "blood": 50,
+      "infernal": 50,
+      "void": 50
+    }
   },
   "pattern": [
     " R ",
@@ -27,6 +29,7 @@
   ],
   "research": "MASTER_RUNEWORKING",
   "result": {
-    "item": "primalmagick:runescribing_altar_forbidden"
+    "Count": 1,
+    "id": "primalmagick:runescribing_altar_forbidden"
   }
 }

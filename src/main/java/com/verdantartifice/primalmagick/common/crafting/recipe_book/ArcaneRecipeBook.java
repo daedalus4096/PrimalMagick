@@ -19,7 +19,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 
 /**
@@ -57,13 +57,13 @@ public class ArcaneRecipeBook {
         return Collections.unmodifiableSet(this.highlight);
     }
     
-    public static boolean isValid(Recipe<?> recipe) {
-        return recipe instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial();
+    public static boolean isValid(RecipeHolder<?> recipe) {
+        return recipe.value() instanceof IArcaneRecipeBookItem arbi && !arbi.isArcaneSpecial();
     }
     
-    public void add(Recipe<?> recipe) {
+    public void add(RecipeHolder<?> recipe) {
         if (isValid(recipe)) {
-            this.add(recipe.getId());
+            this.add(recipe.id());
         }
     }
     
@@ -71,16 +71,16 @@ public class ArcaneRecipeBook {
         this.known.add(loc);
     }
     
-    public boolean contains(@Nullable Recipe<?> recipe) {
-        return recipe == null ? false : this.contains(recipe.getId());
+    public boolean contains(@Nullable RecipeHolder<?> recipe) {
+        return recipe == null ? false : this.contains(recipe.id());
     }
     
     public boolean contains(ResourceLocation loc) {
         return this.known.contains(loc);
     }
     
-    public void remove(Recipe<?> recipe) {
-        this.remove(recipe.getId());
+    public void remove(RecipeHolder<?> recipe) {
+        this.remove(recipe.id());
     }
     
     protected void remove(ResourceLocation loc) {
@@ -88,16 +88,16 @@ public class ArcaneRecipeBook {
         this.highlight.remove(loc);
     }
     
-    public boolean willHighlight(Recipe<?> recipe) {
-        return this.highlight.contains(recipe.getId());
+    public boolean willHighlight(RecipeHolder<?> recipe) {
+        return this.highlight.contains(recipe.id());
     }
     
-    public void removeHighlight(Recipe<?> recipe) {
-        this.highlight.remove(recipe.getId());
+    public void removeHighlight(RecipeHolder<?> recipe) {
+        this.highlight.remove(recipe.id());
     }
     
-    public void addHighlight(Recipe<?> recipe) {
-        this.highlight.add(recipe.getId());
+    public void addHighlight(RecipeHolder<?> recipe) {
+        this.highlight.add(recipe.id());
     }
     
     public boolean isOpen(ArcaneRecipeBookType type) {
@@ -155,13 +155,13 @@ public class ArcaneRecipeBook {
         this.loadRecipes(tag.getList("ToBeDisplayed", Tag.TAG_STRING), this::addHighlight, recipeManager);
     }
     
-    protected void loadRecipes(ListTag tag, Consumer<Recipe<?>> consumer, RecipeManager recipeManager) {
+    protected void loadRecipes(ListTag tag, Consumer<RecipeHolder<?>> consumer, RecipeManager recipeManager) {
         for (int index = 0; index < tag.size(); index++) {
             String locStr = tag.getString(index);
             
             try {
                 ResourceLocation loc = new ResourceLocation(locStr);
-                Optional<? extends Recipe<?>> recipeOpt = recipeManager.byKey(loc);
+                Optional<RecipeHolder<?>> recipeOpt = recipeManager.byKey(loc);
                 recipeOpt.ifPresentOrElse(recipe -> {
                     consumer.accept(recipe);
                 }, () -> {

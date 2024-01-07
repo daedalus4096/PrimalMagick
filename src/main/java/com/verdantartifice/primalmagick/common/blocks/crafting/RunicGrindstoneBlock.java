@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for a runic grindstone.  Works just like a regular grindstone, except it also
@@ -59,8 +58,8 @@ public class RunicGrindstoneBlock extends GrindstoneBlock {
     
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-        if (!worldIn.isClientSide && player instanceof ServerPlayer) {
-            NetworkHooks.openScreen((ServerPlayer)player, state.getMenuProvider(worldIn, pos));
+        if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(state.getMenuProvider(worldIn, pos));
         }
         return InteractionResult.SUCCESS;
     }

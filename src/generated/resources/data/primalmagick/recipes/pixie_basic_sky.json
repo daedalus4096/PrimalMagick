@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sky": 40
+    "sources": {
+      "sky": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES",
   "result": {
-    "item": "primalmagick:pixie_basic_sky"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_sky"
   }
 }

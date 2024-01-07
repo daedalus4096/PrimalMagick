@@ -12,9 +12,11 @@
     }
   },
   "mana": {
-    "blood": 50,
-    "infernal": 50,
-    "void": 50
+    "sources": {
+      "blood": 50,
+      "infernal": 50,
+      "void": 50
+    }
   },
   "pattern": [
     "PIP",
@@ -23,6 +25,7 @@
   ],
   "research": "HEXIUM_GOLEM",
   "result": {
-    "item": "primalmagick:hexium_golem_controller"
+    "Count": 1,
+    "id": "primalmagick:hexium_golem_controller"
   }
 }

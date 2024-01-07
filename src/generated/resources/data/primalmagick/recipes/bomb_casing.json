@@ -18,6 +18,7 @@
   ],
   "research": "CONCOCTING_BOMBS",
   "result": {
-    "item": "primalmagick:bomb_casing"
+    "Count": 1,
+    "id": "primalmagick:bomb_casing"
   }
 }

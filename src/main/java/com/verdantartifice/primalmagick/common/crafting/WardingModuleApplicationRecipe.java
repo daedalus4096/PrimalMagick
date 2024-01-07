@@ -5,7 +5,6 @@ import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.IntTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -19,8 +18,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class WardingModuleApplicationRecipe extends CustomRecipe {
-    public WardingModuleApplicationRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
+    public WardingModuleApplicationRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

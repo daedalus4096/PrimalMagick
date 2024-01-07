@@ -8,7 +8,7 @@
   ],
   "research": "CLUSTER_DESYNTHESIS&&t_discover_void",
   "result": {
-    "count": 4,
-    "item": "primalmagick:essence_crystal_void"
+    "Count": 4,
+    "id": "primalmagick:essence_crystal_void"
   }
 }

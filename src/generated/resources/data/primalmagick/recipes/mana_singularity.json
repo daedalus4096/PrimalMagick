@@ -15,11 +15,13 @@
     }
   },
   "mana": {
-    "earth": 750,
-    "moon": 750,
-    "sea": 750,
-    "sky": 750,
-    "sun": 750
+    "sources": {
+      "earth": 750,
+      "moon": 750,
+      "sea": 750,
+      "sky": 750,
+      "sun": 750
+    }
   },
   "pattern": [
     "APA",
@@ -28,6 +30,7 @@
   ],
   "research": "MANA_SINGULARITY",
   "result": {
-    "item": "primalmagick:mana_singularity"
+    "Count": 1,
+    "id": "primalmagick:mana_singularity"
   }
 }

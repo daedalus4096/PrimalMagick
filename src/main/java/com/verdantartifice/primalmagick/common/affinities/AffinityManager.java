@@ -54,7 +54,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -384,24 +384,24 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     protected CompletableFuture<RecipeValues> generateItemAffinityValuesFromRecipesAsync(@Nonnull ResourceLocation id, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
         // Look up all recipes with the given item as an output
         List<CompletableFuture<RecipeValues>> recipeValueFutures = recipeManager.getRecipes().stream()
-                .filter(r -> r.getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.getResultItem(registryAccess).getItem()).equals(id))
-                .map(recipe -> {
+                .filter(r -> r.value().getResultItem(registryAccess) != null && ForgeRegistries.ITEMS.getKey(r.value().getResultItem(registryAccess).getItem()).equals(id))
+                .map(recipeHolder -> {
                     // Compute the affinities from the recipe's ingredients
-                    return this.generateItemAffinityValuesFromIngredientsAsync(recipe, recipeManager, registryAccess, history).thenApply(ingSources -> {
+                    return this.generateItemAffinityValuesFromIngredientsAsync(recipeHolder, recipeManager, registryAccess, history).thenApply(ingSources -> {
                         // Add affinities from mana costs, if any
                         SourceList retVal = ingSources.copy();
-                        if (recipe instanceof IHasManaCost manaRecipe) {
+                        if (recipeHolder.value() instanceof IHasManaCost manaRecipe) {
                             SourceList manaCosts = manaRecipe.getManaCosts();
                             for (Source source : manaCosts.getSources()) {
                                 if (manaCosts.getAmount(source) > 0) {
-                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipe.getResultItem(registryAccess).getCount());
+                                    int manaAmount = (int)(Math.sqrt(1 + manaCosts.getAmount(source) / 2) / recipeHolder.value().getResultItem(registryAccess).getCount());
                                     if (manaAmount > 0) {
                                         retVal = retVal.add(source, manaAmount);
                                     }
                                 }
                             }
                         }
-                        return new RecipeValues(Optional.ofNullable(recipe.getId()), retVal);
+                        return new RecipeValues(Optional.ofNullable(recipeHolder.id()), retVal);
                     });
                 }).toList();
         return Util.sequence(recipeValueFutures).thenApply(recipeValuesList -> {
@@ -420,13 +420,13 @@ public class AffinityManager extends SimpleJsonResourceReloadListener {
     }
     
     @Nonnull
-    protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@Nonnull Recipe<?> recipe, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
-        NonNullList<Ingredient> ingredients = recipe.getIngredients();
-        ItemStack output = recipe.getResultItem(registryAccess);
+    protected CompletableFuture<SourceList> generateItemAffinityValuesFromIngredientsAsync(@Nonnull RecipeHolder<?> recipeHolder, @Nonnull RecipeManager recipeManager, @Nonnull RegistryAccess registryAccess, @Nonnull List<ResourceLocation> history) {
+        NonNullList<Ingredient> ingredients = recipeHolder.value().getIngredients();
+        ItemStack output = recipeHolder.value().getResultItem(registryAccess);
         
         // Populate a fake crafting inventory with ingredients to see what container items would be left behind
         CompletableFuture<NonNullList<ItemStack>> containerFuture;
-        if (recipe instanceof CraftingRecipe craftingRecipe) {
+        if (recipeHolder.value() instanceof CraftingRecipe craftingRecipe) {
             CraftingContainer inv = new TransientCraftingContainer(new FakeMenu(), ingredients.size(), 1);
             List<CompletableFuture<ItemStack>> ingFutures = new ArrayList<>();
             for (Ingredient ingredient : ingredients) {

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
@@ -9,9 +7,9 @@ import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to sync ward capability data from the server to the client.
@@ -31,6 +29,10 @@ public class SyncWardPacket implements IMessageToClient {
         });
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(SyncWardPacket message, FriendlyByteBuf buf) {
         buf.writeNbt(message.data);
     }
@@ -41,20 +43,12 @@ public class SyncWardPacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SyncWardPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                Player player = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.getCurrentPlayer() : null;
-                if (player != null) {
-                    PrimalMagickCapabilities.getWard(player).ifPresent(ward -> {
-                        ward.deserializeNBT(message.data);
-                    });
-                }
+    public static void onMessage(SyncWardPacket message, CustomPayloadEvent.Context ctx) {
+        Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
+        if (player != null) {
+            PrimalMagickCapabilities.getWard(player).ifPresent(ward -> {
+                ward.deserializeNBT(message.data);
             });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
         }
     }
 }

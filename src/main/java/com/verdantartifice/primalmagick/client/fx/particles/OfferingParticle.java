@@ -57,22 +57,22 @@ public class OfferingParticle extends TextureSheetParticle {
 
     @Override
     protected float getU0() {
-        return this.sprite.getU((double)((this.uVal + 1.0F) / 4.0F * 16.0F));
+        return this.sprite.getU((this.uVal + 1.0F) / 4.0F);
     }
 
     @Override
     protected float getU1() {
-        return this.sprite.getU((double)(this.uVal / 4.0F * 16.0F));
+        return this.sprite.getU(this.uVal / 4.0F);
     }
 
     @Override
     protected float getV0() {
-        return this.sprite.getV((double)(this.vVal / 4.0F * 16.0F));
+        return this.sprite.getV(this.vVal / 4.0F);
     }
 
     @Override
     protected float getV1() {
-        return this.sprite.getV((double)((this.vVal + 1.0F) / 4.0F * 16.0F));
+        return this.sprite.getV((this.vVal + 1.0F) / 4.0F);
     }
     
     @Override

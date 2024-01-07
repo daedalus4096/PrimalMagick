@@ -4,7 +4,6 @@ import com.verdantartifice.primalmagick.common.items.tools.AbstractTieredShieldI
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BannerItem;
 import net.minecraft.world.item.ItemStack;
@@ -19,8 +18,8 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class TieredShieldDecorationRecipe extends CustomRecipe {
-    public TieredShieldDecorationRecipe(ResourceLocation id, CraftingBookCategory category) {
-        super(id, category);
+    public TieredShieldDecorationRecipe(CraftingBookCategory category) {
+        super(category);
     }
 
     @Override

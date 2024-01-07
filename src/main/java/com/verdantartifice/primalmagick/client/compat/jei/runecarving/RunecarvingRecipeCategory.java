@@ -22,13 +22,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Recipe category for a runecarving recipe.
  * 
  * @author Daedalus4096
  */
-public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingRecipe> {
+public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRunecarvingRecipe>> {
     public static final ResourceLocation UID = PrimalMagick.resource("runecarving_table");
     private static final ResourceLocation BACKGROUND_TEXTURE = PrimalMagick.resource("textures/gui/jei/runecarving_table.png");
     private static final ResourceLocation RESEARCH_TEXTURE = PrimalMagick.resource("textures/item/grimoire.png");
@@ -45,15 +46,16 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, IRunecarvingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<IRunecarvingRecipe> recipeHolder, IFocusGroup focuses) {
+        IRunecarvingRecipe recipe = recipeHolder.value();
         builder.addSlot(RecipeIngredientRole.INPUT, 1, 1).addIngredients(recipe.getIngredients().get(0));
         builder.addSlot(RecipeIngredientRole.INPUT, 50, 1).addIngredients(recipe.getIngredients().get(1));
         builder.addSlot(RecipeIngredientRole.OUTPUT, 108, 1).addItemStack(RecipeUtils.getResultItem(recipe));
     }
 
     @Override
-    public void draw(IRunecarvingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
+    public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+        if (recipe.value().getRequiredResearch() != null && !recipe.value().getRequiredResearch().getKeys().isEmpty()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -62,8 +64,8 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
     }
 
     @Override
-    public List<Component> getTooltipStrings(IRunecarvingRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        CompoundResearchKey compoundResearch = recipe.getRequiredResearch();
+    public List<Component> getTooltipStrings(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        CompoundResearchKey compoundResearch = recipe.value().getRequiredResearch();
         if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
              mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
              mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
@@ -74,7 +76,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<IRunecarvingReci
     }
 
     @Override
-    public RecipeType<IRunecarvingRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<IRunecarvingRecipe>> getRecipeType() {
         return JeiRecipeTypesPM.RUNECARVING;
     }
 }

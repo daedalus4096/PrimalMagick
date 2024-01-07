@@ -13,7 +13,9 @@
     }
   },
   "mana": {
-    "blood": 250
+    "sources": {
+      "blood": 250
+    }
   },
   "pattern": [
     "IMI",
@@ -22,6 +24,7 @@
   ],
   "research": "ARTIFICIAL_MANA_FONTS&&t_discover_blood",
   "result": {
-    "item": "primalmagick:artificial_font_blood"
+    "Count": 1,
+    "id": "primalmagick:artificial_font_blood"
   }
 }

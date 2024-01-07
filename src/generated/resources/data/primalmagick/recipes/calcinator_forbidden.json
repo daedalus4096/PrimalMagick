@@ -19,9 +19,11 @@
     }
   },
   "mana": {
-    "blood": 50,
-    "infernal": 50,
-    "void": 50
+    "sources": {
+      "blood": 50,
+      "infernal": 50,
+      "void": 50
+    }
   },
   "pattern": [
     "MMM",
@@ -30,6 +32,7 @@
   ],
   "research": "CALCINATOR_FORBIDDEN",
   "result": {
-    "item": "primalmagick:calcinator_forbidden"
+    "Count": 1,
+    "id": "primalmagick:calcinator_forbidden"
   }
 }

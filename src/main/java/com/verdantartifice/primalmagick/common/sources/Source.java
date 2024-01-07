@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -47,6 +48,8 @@ public class Source implements StringRepresentable {
     
     public static final ResourceLocation UNKNOWN_IMAGE = PrimalMagick.resource("textures/research/research_unknown.png");
     protected static final ResourceLocation UNKNOWN_ATLAS_LOC = PrimalMagick.resource("research/research_unknown");
+    
+    public static final Codec<Source> CODEC = Codec.STRING.xmap(Source::getSource, Source::getTag);
 
     protected final String tag; // Unique identifier for the source
     protected final int color;  // Color to use for graphical effects

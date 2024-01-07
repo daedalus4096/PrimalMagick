@@ -12,7 +12,7 @@
   ],
   "research": "SUPREME_MANAWEAVING",
   "result": {
-    "count": 4,
-    "item": "primalmagick:marble_hallowed_stairs"
+    "Count": 4,
+    "id": "primalmagick:marble_hallowed_stairs"
   }
 }

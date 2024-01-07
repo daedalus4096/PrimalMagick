@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "PRIMAL_PICKAXE",
   "result": {
-    "item": "primalmagick:primal_pickaxe",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:lucky_strike\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:primal_pickaxe",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:lucky_strike",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

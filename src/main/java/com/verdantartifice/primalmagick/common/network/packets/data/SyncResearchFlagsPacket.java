@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.data;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -9,7 +7,8 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update research entry flag data on the server (e.g. when a user clicks an "updated" entry
@@ -40,6 +39,10 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         });
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(SyncResearchFlagsPacket message, FriendlyByteBuf buf) {
         buf.writeUtf(message.key.getRootKey());
         buf.writeBoolean(message.isNew);
@@ -56,35 +59,27 @@ public class SyncResearchFlagsPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SyncResearchFlagsPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                if (message.key != null) {
-                    Player player = ctx.get().getSender();
-                    PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                        // Add or remove each flag from the research entry as appropriate
-                        if (message.isNew) {
-                            knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
-                        } else {
-                            knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
-                        }
-                        if (message.isUpdated) {
-                            knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.UPDATED);
-                        } else {
-                            knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.UPDATED);
-                        }
-                        if (message.isPopup) {
-                            knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
-                        } else {
-                            knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
-                        }
-                    });
+    public static void onMessage(SyncResearchFlagsPacket message, CustomPayloadEvent.Context ctx) {
+        if (message.key != null) {
+            Player player = ctx.getSender();
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                // Add or remove each flag from the research entry as appropriate
+                if (message.isNew) {
+                    knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
+                } else {
+                    knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.NEW);
+                }
+                if (message.isUpdated) {
+                    knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.UPDATED);
+                } else {
+                    knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.UPDATED);
+                }
+                if (message.isPopup) {
+                    knowledge.addResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
+                } else {
+                    knowledge.removeResearchFlag(message.key, IPlayerKnowledge.ResearchFlag.POPUP);
                 }
             });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
         }
     }
 }

@@ -1,20 +1,18 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 
 /**
  * Definition for a runecarving recipe.  Like a stonecutting recipe, but has two ingredients and a
@@ -23,15 +21,13 @@ import net.minecraftforge.common.crafting.CraftingHelper;
  * @author Daedalus4096
  */
 public class RunecarvingRecipe implements IRunecarvingRecipe {
-    protected final ResourceLocation id;
     protected final String group;
     protected final CompoundResearchKey research;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
     protected final ItemStack result;
     
-    public RunecarvingRecipe(ResourceLocation id, String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
-        this.id = id;
+    public RunecarvingRecipe(String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
         this.group = group;
         this.research = research;
         this.ingredient1 = ingredient1;
@@ -68,11 +64,6 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     @Override
-    public ResourceLocation getId() {
-        return this.id;
-    }
-    
-    @Override
     public String getGroup() {
         return this.group;
     }
@@ -88,32 +79,29 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
     }
 
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
+        protected static final Codec<RunecarvingRecipe> CODEC = RecordCodecBuilder.create(instance -> {
+            return instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.result)
+                ).apply(instance, RunecarvingRecipe::new);
+        });
+        
         @Override
-        public RunecarvingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-            String group = GsonHelper.getAsString(json, "group", "");
-            CompoundResearchKey research = CompoundResearchKey.parse(GsonHelper.getAsString(json, "research", ""));
-            ItemStack result = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-            Ingredient ing1 = GsonHelper.isArrayNode(json, "ingredient1") ?
-                    Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient1")) :
-                    Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient1"));
-            Ingredient ing2 = GsonHelper.isArrayNode(json, "ingredient2") ?
-                    Ingredient.fromJson(GsonHelper.getAsJsonArray(json, "ingredient2")) :
-                    Ingredient.fromJson(GsonHelper.getAsJsonObject(json, "ingredient2"));
-            if (ing1.isEmpty() && ing2.isEmpty()) {
-                throw new JsonParseException("No ingredients for runecarving recipe");
-            } else {
-                return new RunecarvingRecipe(recipeId, group, research, ing1, ing2, result);
-            }
+        public Codec<RunecarvingRecipe> codec() {
+            return CODEC;
         }
 
         @Override
-        public RunecarvingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        public RunecarvingRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(recipeId, group, research, ing1, ing2, result);
+            return new RunecarvingRecipe(group, research, ing1, ing2, result);
         }
 
         @Override

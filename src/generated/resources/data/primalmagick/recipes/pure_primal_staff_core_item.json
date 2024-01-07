@@ -22,15 +22,17 @@
   ],
   "instability": 8,
   "mana": {
-    "blood": 100,
-    "earth": 100,
-    "hallowed": 100,
-    "infernal": 100,
-    "moon": 100,
-    "sea": 100,
-    "sky": 100,
-    "sun": 100,
-    "void": 100
+    "sources": {
+      "blood": 100,
+      "earth": 100,
+      "hallowed": 100,
+      "infernal": 100,
+      "moon": 100,
+      "sea": 100,
+      "sky": 100,
+      "sun": 100,
+      "void": 100
+    }
   },
   "props": [
     {
@@ -54,6 +56,7 @@
   ],
   "research": "STAVES&&WAND_CORE_PURE_PRIMAL",
   "result": {
-    "item": "primalmagick:pure_primal_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:pure_primal_staff_core_item"
   }
 }

@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "sun": 40
+    "sources": {
+      "sun": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES",
   "result": {
-    "item": "primalmagick:pixie_basic_sun"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_sun"
   }
 }

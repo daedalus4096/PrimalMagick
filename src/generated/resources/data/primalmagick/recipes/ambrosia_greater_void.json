@@ -22,7 +22,9 @@
   ],
   "instability": 6,
   "mana": {
-    "void": 100
+    "sources": {
+      "void": 100
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "GREATER_AMBROSIA&&t_discover_void",
   "result": {
-    "item": "primalmagick:ambrosia_greater_void"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_greater_void"
   }
 }

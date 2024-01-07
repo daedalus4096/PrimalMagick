@@ -4,10 +4,12 @@
     "item": "minecraft:ancient_debris"
   },
   "mana": {
-    "earth": 1
+    "sources": {
+      "earth": 1
+    }
   },
   "result": {
-    "count": 3,
-    "item": "minecraft:netherite_scrap"
+    "Count": 3,
+    "id": "minecraft:netherite_scrap"
   }
 }

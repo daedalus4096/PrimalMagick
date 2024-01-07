@@ -17,6 +17,7 @@
   ],
   "research": "HEXIUM",
   "result": {
-    "item": "primalmagick:hexium_ingot"
+    "Count": 1,
+    "id": "primalmagick:hexium_ingot"
   }
 }

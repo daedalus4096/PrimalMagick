@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.menus.base.IArcaneRecipeBookMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -16,7 +17,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI button for a recipe collection in the arcane recipe book.
@@ -24,7 +25,7 @@ import net.minecraft.world.item.crafting.Recipe;
  * @author Daedalus4096
  */
 public class ArcaneRecipeButton extends AbstractWidget {
-    protected static final ResourceLocation RECIPE_BOOK_LOCATION = new ResourceLocation("textures/gui/recipe_book.png");
+    protected static final WidgetSprites SLOT_SPRITES = new WidgetSprites(new ResourceLocation("recipe_book/slot_craftable"), new ResourceLocation("recipe_book/slot_uncraftable"), new ResourceLocation("recipe_book/slot_many_craftable"), new ResourceLocation("recipe_book/slot_many_uncraftable"));
     protected static final float ANIMATION_TIME = 15.0F;
     protected static final int BACKGROUND_SIZE = 25;
     public static final int TICKS_TO_SWAP = 30;
@@ -46,9 +47,9 @@ public class ArcaneRecipeButton extends AbstractWidget {
         this.collection = recipeCollection;
         this.menu = mc.player.containerMenu instanceof IArcaneRecipeBookMenu<?> recipeBookMenu ? recipeBookMenu : null;
         this.book = page.getArcaneRecipeBook();
-        List<Recipe<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
+        List<RecipeHolder<?>> list = this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType()));
         
-        for (Recipe<?> recipe : list) {
+        for (RecipeHolder<?> recipe : list) {
             if (this.book.willHighlight(recipe)) {
                 page.recipesShown(list);
                 this.animationTime = ANIMATION_TIME;
@@ -74,16 +75,6 @@ public class ArcaneRecipeButton extends AbstractWidget {
         
         Minecraft mc = Minecraft.getInstance();
 
-        int texX = 29;
-        if (!this.collection.hasCraftable()) {
-            texX += BACKGROUND_SIZE;
-        }
-        
-        int texY = 206;
-        if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
-            texY += BACKGROUND_SIZE;
-        }
-        
         boolean animating = this.animationTime > 0.0F;
         if (animating) {
             float scale = 1.0F + 0.1F * (float)Math.sin((double)(this.animationTime / 15.0F * (float)Math.PI));
@@ -94,10 +85,11 @@ public class ArcaneRecipeButton extends AbstractWidget {
             this.animationTime -= p_93679_;
         }
         
-        guiGraphics.blit(RECIPE_BOOK_LOCATION, this.getX(), this.getY(), texX, texY, this.width, this.height);
-        List<Recipe<?>> recipeList = this.getOrderedRecipes();
+        ResourceLocation spriteLoc = SLOT_SPRITES.get(this.collection.hasCraftable(), this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1);
+        guiGraphics.blitSprite(spriteLoc, this.getX(), this.getY(), this.width, this.height);
+        List<RecipeHolder<?>> recipeList = this.getOrderedRecipes();
         this.currentIndex = Mth.floor(this.time / (float)TICKS_TO_SWAP) % recipeList.size();
-        ItemStack stack = recipeList.get(this.currentIndex).getResultItem(mc.level.registryAccess());
+        ItemStack stack = recipeList.get(this.currentIndex).value().getResultItem(mc.level.registryAccess());
         int k = 4;
         if (this.collection.hasSingleResultItem() && this.getOrderedRecipes().size() > 1) {
             guiGraphics.renderItem(stack, this.getX() + k + 1, this.getY() + k + 1, 0, 10);
@@ -110,8 +102,8 @@ public class ArcaneRecipeButton extends AbstractWidget {
         }
     }
     
-    protected List<Recipe<?>> getOrderedRecipes() {
-        List<Recipe<?>> retVal = this.collection.getDisplayRecipes(true);
+    protected List<RecipeHolder<?>> getOrderedRecipes() {
+        List<RecipeHolder<?>> retVal = this.collection.getDisplayRecipes(true);
         if (!this.book.isFiltering(this.menu.getRecipeBookType())) {
             retVal.addAll(this.collection.getDisplayRecipes(false));
         }
@@ -122,13 +114,13 @@ public class ArcaneRecipeButton extends AbstractWidget {
         return this.getOrderedRecipes().size() == 1;
     }
 
-    public Recipe<?> getRecipe() {
+    public RecipeHolder<?> getRecipe() {
         return this.getOrderedRecipes().get(this.currentIndex);
     }
     
     public List<Component> getTooltipText(Screen screen) {
         Minecraft mc = screen.getMinecraft();
-        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
+        ItemStack stack = this.getRecipe().value().getResultItem(mc.level.registryAccess());
         List<Component> retVal = new ArrayList<>(Screen.getTooltipFromItem(mc, stack));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             retVal.add(MORE_RECIPES_TOOLTIP);
@@ -139,7 +131,7 @@ public class ArcaneRecipeButton extends AbstractWidget {
     @Override
     public void updateWidgetNarration(NarrationElementOutput output) {
         Minecraft mc = Minecraft.getInstance();
-        ItemStack stack = this.getRecipe().getResultItem(mc.level.registryAccess());
+        ItemStack stack = this.getRecipe().value().getResultItem(mc.level.registryAccess());
         output.add(NarratedElementType.TITLE, Component.translatable("narration.recipe", stack.getHoverName()));
         if (this.collection.getRecipes(this.book.isFiltering(this.menu.getRecipeBookType())).size() > 1) {
             output.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"), Component.translatable("narration.recipe.usage.more"));

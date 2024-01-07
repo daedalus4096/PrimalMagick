@@ -13,9 +13,11 @@
     }
   },
   "mana": {
-    "blood": 50,
-    "infernal": 50,
-    "void": 50
+    "sources": {
+      "blood": 50,
+      "infernal": 50,
+      "void": 50
+    }
   },
   "pattern": [
     "SIS",
@@ -24,6 +26,7 @@
   ],
   "research": "MASTER_MAGITECH",
   "result": {
-    "item": "primalmagick:magitech_parts_forbidden"
+    "Count": 1,
+    "id": "primalmagick:magitech_parts_forbidden"
   }
 }

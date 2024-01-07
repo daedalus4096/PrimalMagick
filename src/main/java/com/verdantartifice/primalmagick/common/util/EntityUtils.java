@@ -241,7 +241,7 @@ public class EntityUtils {
             if (!world.isClientSide) {
                 PacketHandler.sendToAllAround(new TeleportArrivalPacket(event.getTargetX(), event.getTargetY(), event.getTargetZ()), world.dimension(), BlockPos.containing(event.getTarget()), 64.0D);
 
-                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.connection.isConnected() && player.level() == world && !player.isSleeping()) {
+                if (player instanceof ServerPlayer serverPlayer && serverPlayer.connection.getConnection().isConnected() && player.level() == world && !player.isSleeping()) {
                     if (player.isPassenger()) {
                         player.stopRiding();
                     }

@@ -10,6 +10,10 @@
   ],
   "research": "THEORYCRAFTING@2",
   "result": {
-    "item": "primalmagick:enchanted_ink_and_quill"
+    "Count": 1,
+    "id": "primalmagick:enchanted_ink_and_quill",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

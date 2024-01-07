@@ -9,12 +9,14 @@
     }
   },
   "mana": {
-    "blood": 15,
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "blood": 15,
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     " D#",
@@ -23,6 +25,7 @@
   ],
   "research": "STAVES&&WAND_CORE_BONE",
   "result": {
-    "item": "primalmagick:bone_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:bone_staff_core_item"
   }
 }

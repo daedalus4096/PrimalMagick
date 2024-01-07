@@ -15,7 +15,9 @@
     }
   },
   "mana": {
-    "moon": 40
+    "sources": {
+      "moon": 40
+    }
   },
   "pattern": [
     "CCC",
@@ -24,6 +26,7 @@
   ],
   "research": "ESSENCE_TRANSMUTER",
   "result": {
-    "item": "primalmagick:essence_transmuter"
+    "Count": 1,
+    "id": "primalmagick:essence_transmuter"
   }
 }

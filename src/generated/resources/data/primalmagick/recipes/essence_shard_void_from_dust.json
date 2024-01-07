@@ -16,6 +16,7 @@
   ],
   "research": "SHARD_SYNTHESIS&&t_discover_void",
   "result": {
-    "item": "primalmagick:essence_shard_void"
+    "Count": 1,
+    "id": "primalmagick:essence_shard_void"
   }
 }

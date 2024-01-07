@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "void": 40
+    "sources": {
+      "void": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "FORBIDDEN_SWORD",
   "result": {
-    "item": "primalmagick:forbidden_sword",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:essence_thief\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:forbidden_sword",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:essence_thief",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

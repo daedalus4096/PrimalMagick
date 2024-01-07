@@ -8,6 +8,7 @@
   },
   "research": "RUNE_DISPEL",
   "result": {
-    "item": "primalmagick:rune_dispel"
+    "Count": 1,
+    "id": "primalmagick:rune_dispel"
   }
 }

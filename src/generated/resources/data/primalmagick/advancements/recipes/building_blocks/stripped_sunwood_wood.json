@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_sunwood_log",
-      "has_stripped_sunwood_log",
-      "has_the_recipe"
+      "has_stripped_sunwood_log"
     ]
   ],
   "rewards": {

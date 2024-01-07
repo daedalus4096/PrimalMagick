@@ -12,11 +12,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "ESE",
@@ -25,6 +27,7 @@
   ],
   "research": "SPELLCLOTH",
   "result": {
-    "item": "primalmagick:spellcloth"
+    "Count": 1,
+    "id": "primalmagick:spellcloth"
   }
 }

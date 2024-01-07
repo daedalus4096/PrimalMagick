@@ -18,7 +18,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI page to show recipe metadata in the grimoire.
@@ -26,16 +26,16 @@ import net.minecraft.world.item.crafting.Recipe;
  * @author Daedalus4096
  */
 public class RecipeMetadataPage extends AbstractPage {
-    protected final Recipe<?> recipe;
+    protected final RecipeHolder<?> recipeHolder;
     protected final RegistryAccess registryAccess;
     protected final boolean firstPage;
     
-    public RecipeMetadataPage(Recipe<?> recipe, RegistryAccess registryAccess) {
+    public RecipeMetadataPage(RecipeHolder<?> recipe, RegistryAccess registryAccess) {
         this(recipe, registryAccess, false);
     }
     
-    public RecipeMetadataPage(Recipe<?> recipe, RegistryAccess registryAccess, boolean firstPage) {
-        this.recipe = recipe;
+    public RecipeMetadataPage(RecipeHolder<?> recipe, RegistryAccess registryAccess, boolean firstPage) {
+        this.recipeHolder = recipe;
         this.registryAccess = registryAccess;
         this.firstPage = firstPage;
     }
@@ -59,7 +59,7 @@ public class RecipeMetadataPage extends AbstractPage {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipe.getId());
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipeHolder.id());
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
@@ -84,14 +84,14 @@ public class RecipeMetadataPage extends AbstractPage {
 
     @Override
     protected Component getTitleText() {
-        ItemStack stack = this.recipe.getResultItem(this.registryAccess);
+        ItemStack stack = this.recipeHolder.value().getResultItem(this.registryAccess);
         return stack.getItem().getName(stack);
     }
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = screen.getMinecraft();
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipe.getId());
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipeHolder.id());
         if (!this.isFirstPage()) {
             y += 24;
         }

@@ -4,7 +4,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 
@@ -19,22 +18,15 @@ public class FlyingEffect extends MobEffect {
     }
 
     @Override
-    public void addAttributeModifiers(LivingEntity entityLivingBaseIn, AttributeMap attributeMapIn, int amplifier) {
-        Level level = entityLivingBaseIn.level();
-        if (!level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
-            // Set the allowFlying player ability when this effect is applied and send the change to clients
-            ServerPlayer player = (ServerPlayer)entityLivingBaseIn;
-            player.getAbilities().mayfly = true;
-            player.onUpdateAbilities();
-        }
-        super.addAttributeModifiers(entityLivingBaseIn, attributeMapIn, amplifier);
+    public boolean shouldApplyEffectTickThisTick(int pDuration, int pAmplifier) {
+        return pDuration <= 1;
     }
-    
+
     @Override
-    public void removeAttributeModifiers(LivingEntity entityLivingBaseIn, AttributeMap attributeMapIn, int amplifier) {
-        Level level = entityLivingBaseIn.level();
-        if (!level.isClientSide && entityLivingBaseIn instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer)entityLivingBaseIn;
+    public void applyEffectTick(LivingEntity pLivingEntity, int pAmplifier) {
+        // End flying effect on the last tick, because there's no equivalent to onEffectStarted for effects ending
+        Level level = pLivingEntity.level();
+        if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
             GameType type = player.gameMode.getGameModeForPlayer();
             player.getAbilities().mayfly = (type == GameType.CREATIVE || type == GameType.SPECTATOR);   // Cancel flight ability if not appropriate for game mode
             if (!player.getAbilities().mayfly) {
@@ -43,6 +35,16 @@ public class FlyingEffect extends MobEffect {
             }
             player.onUpdateAbilities();   // Send ability changes to clients
         }
-        super.removeAttributeModifiers(entityLivingBaseIn, attributeMapIn, amplifier);
+    }
+
+    @Override
+    public void onEffectStarted(LivingEntity pLivingEntity, int pAmplifier) {
+        Level level = pLivingEntity.level();
+        if (!level.isClientSide && pLivingEntity instanceof ServerPlayer player) {
+            // Set the mayFly player ability when this effect is applied and send the change to clients
+            player.getAbilities().mayfly = true;
+            player.onUpdateAbilities();
+        }
+        super.onEffectStarted(pLivingEntity, pAmplifier);
     }
 }

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.spellcrafting;
 
-import java.util.function.Supplier;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +9,8 @@ import com.verdantartifice.primalmagick.common.spells.SpellComponent;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to update the value of a spell component's type on the server in the spellcrafting altar GUI.
@@ -37,6 +36,10 @@ public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
         this.index = index;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(SetSpellComponentTypeIndexPacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
         buf.writeUtf(message.attr.name());
@@ -57,34 +60,26 @@ public class SetSpellComponentTypeIndexPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(SetSpellComponentTypeIndexPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
-                    // Update the appropriate spell component type if the open menu window matches the given one
-                    switch (message.attr) {
-                    case VEHICLE:
-                        altarMenu.setSpellVehicleTypeIndex(message.index);
-                        break;
-                    case PAYLOAD:
-                        altarMenu.setSpellPayloadTypeIndex(message.index);
-                        break;
-                    case PRIMARY_MOD:
-                        altarMenu.setSpellPrimaryModTypeIndex(message.index);
-                        break;
-                    case SECONDARY_MOD:
-                        altarMenu.setSpellSecondaryModTypeIndex(message.index);
-                        break;
-                    default:
-                        // Do nothing
-                    }
-                }
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
+    public static void onMessage(SetSpellComponentTypeIndexPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof SpellcraftingAltarMenu altarMenu) {
+            // Update the appropriate spell component type if the open menu window matches the given one
+            switch (message.attr) {
+            case VEHICLE:
+                altarMenu.setSpellVehicleTypeIndex(message.index);
+                break;
+            case PAYLOAD:
+                altarMenu.setSpellPayloadTypeIndex(message.index);
+                break;
+            case PRIMARY_MOD:
+                altarMenu.setSpellPrimaryModTypeIndex(message.index);
+                break;
+            case SECONDARY_MOD:
+                altarMenu.setSpellSecondaryModTypeIndex(message.index);
+                break;
+            default:
+                // Do nothing
+            }
         }
     }
 }

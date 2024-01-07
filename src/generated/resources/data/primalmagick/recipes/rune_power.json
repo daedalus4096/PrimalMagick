@@ -16,6 +16,7 @@
   ],
   "research": "RUNE_POWER",
   "result": {
-    "item": "primalmagick:rune_power"
+    "Count": 1,
+    "id": "primalmagick:rune_power"
   }
 }

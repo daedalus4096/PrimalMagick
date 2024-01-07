@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_lore_tablet_fragment",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_lore_tablet_fragment"
     ]
   ],
   "rewards": {

@@ -22,10 +22,11 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
@@ -81,7 +82,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftingInventory);
             
             // Increment the craft counter for the recipe's discipline
-            if (this.container instanceof RecipeHolder recipeHolder && recipeHolder.getRecipeUsed() instanceof IArcaneRecipe arcaneRecipe) {
+            if (this.container instanceof RecipeCraftingHolder recipeHolder && recipeHolder.getRecipeUsed() != null && recipeHolder.getRecipeUsed().value() instanceof IArcaneRecipe arcaneRecipe) {
                 CompoundResearchKey key = arcaneRecipe.getRequiredResearch();
                 List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
                 Set<String> recordedDisciplines = new HashSet<>();
@@ -102,7 +103,7 @@ public class ArcaneCraftingResultSlot extends Slot {
                 }
             }
         }
-        if (this.container instanceof RecipeHolder recipeHolder) {
+        if (this.container instanceof RecipeCraftingHolder recipeHolder) {
             recipeHolder.awardUsedRecipes(this.player, this.craftingInventory.getItems());
         }
         
@@ -115,8 +116,8 @@ public class ArcaneCraftingResultSlot extends Slot {
         this.checkTakeAchievements(stack);
         
         // Do additional processing if the crafted recipe was arcane
-        if (this.container instanceof RecipeHolder holder) {
-            if (holder.getRecipeUsed() != null && holder.getRecipeUsed() instanceof IArcaneRecipe arcaneRecipe) {
+        if (this.container instanceof RecipeCraftingHolder holder) {
+            if (holder.getRecipeUsed() != null && holder.getRecipeUsed().value() instanceof IArcaneRecipe arcaneRecipe) {
                 // Consume the recipe's mana cost from the wand
                 SourceList manaCosts = arcaneRecipe.getManaCosts();
                 if (!manaCosts.isEmpty()) {
@@ -133,13 +134,13 @@ public class ArcaneCraftingResultSlot extends Slot {
         // Get the remaining items from the recipe, checking arcane recipes first, then vanilla recipes
         Level level = thePlayer.level();
         NonNullList<ItemStack> remainingList;
-        Optional<IArcaneRecipe> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, level);
+        Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = level.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInventory, level);
         if (arcaneOptional.isPresent()) {
-            remainingList = arcaneOptional.get().getRemainingItems(this.craftingInventory);
+            remainingList = arcaneOptional.get().value().getRemainingItems(this.craftingInventory);
         } else {
-            Optional<CraftingRecipe> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, level);
+            Optional<RecipeHolder<CraftingRecipe>> vanillaOptional = level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING, this.craftingInventory, level);
             if (vanillaOptional.isPresent()) {
-                remainingList = vanillaOptional.get().getRemainingItems(this.craftingInventory);
+                remainingList = vanillaOptional.get().value().getRemainingItems(this.craftingInventory);
             } else {
                 remainingList = NonNullList.withSize(this.craftingInventory.getContainerSize(), ItemStack.EMPTY);
                 for (int index = 0; index < remainingList.size(); index++) {

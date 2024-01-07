@@ -8,6 +8,7 @@
   },
   "research": "RUNE_ITEM",
   "result": {
-    "item": "primalmagick:rune_item"
+    "Count": 1,
+    "id": "primalmagick:rune_item"
   }
 }

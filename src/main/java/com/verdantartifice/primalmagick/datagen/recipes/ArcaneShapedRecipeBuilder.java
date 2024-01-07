@@ -8,19 +8,24 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
+
+import javax.json.stream.JsonGenerationException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
+import net.minecraft.Util;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
@@ -33,8 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @see {@link net.minecraft.data.ShapedRecipeBuilder}
  */
 public class ArcaneShapedRecipeBuilder {
-    protected final Item result;
-    protected final int count;
+    protected final ItemStack result;
     protected final List<String> pattern = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected String group;
@@ -42,8 +46,7 @@ public class ArcaneShapedRecipeBuilder {
     protected SourceList manaCosts;
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
-        this.result = result.asItem();
-        this.count = count;
+        this.result = new ItemStack(result, count);
     }
     
     /**
@@ -168,38 +171,38 @@ public class ArcaneShapedRecipeBuilder {
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      * @param id the ID of the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer, ResourceLocation id) {
+    public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.count, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
+        output.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
     }
     
     /**
-     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(Consumer)} if save is the same as the ID for
+     * Builds this recipe into an {@link IFinishedRecipe}. Use {@link #build(RecipeOutput)} if save is the same as the ID for
      * the result.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      * @param save custom ID for the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer, String save) {
-        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result);
+    public void build(RecipeOutput output, String save) {
+        ResourceLocation id = ForgeRegistries.ITEMS.getKey(this.result.getItem());
         ResourceLocation saveLoc = new ResourceLocation(save);
         if (saveLoc.equals(id)) {
             throw new IllegalStateException("Arcane Shaped Recipe " + save + " should remove its 'save' argument");
         } else {
-            this.build(consumer, saveLoc);
+            this.build(output, saveLoc);
         }
     }
     
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
-     * @param consumer a consumer for the finished recipe
+     * @param output a consumer for the finished recipe
      */
-    public void build(Consumer<FinishedRecipe> consumer) {
-        this.build(consumer, ForgeRegistries.ITEMS.getKey(this.result));
+    public void build(RecipeOutput output) {
+        this.build(output, ForgeRegistries.ITEMS.getKey(this.result.getItem()));
     }
 
     /**
@@ -234,27 +237,7 @@ public class ArcaneShapedRecipeBuilder {
         }
     }
     
-    public static class Result implements FinishedRecipe {
-        protected final ResourceLocation id;
-        protected final Item result;
-        protected final int count;
-        protected final String group;
-        protected final List<String> pattern;
-        protected final Map<Character, Ingredient> key;
-        protected final CompoundResearchKey research;
-        protected final SourceList manaCosts;
-        
-        public Result(ResourceLocation id, Item result, int count, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) {
-            this.id = id;
-            this.result = result;
-            this.count = count;
-            this.group = group;
-            this.pattern = pattern;
-            this.key = key;
-            this.research = research;
-            this.manaCosts = manaCosts;
-        }
-
+    public static record Result(ResourceLocation id, ItemStack result, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
         @Override
         public void serializeRecipeData(JsonObject json) {
             if (this.group != null && !this.group.isEmpty()) {
@@ -265,11 +248,7 @@ public class ArcaneShapedRecipeBuilder {
             }
             
             if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                JsonObject manaJson = new JsonObject();
-                for (Source source : this.manaCosts.getSourcesSorted()) {
-                    manaJson.addProperty(source.getTag(), this.manaCosts.getAmount(source));
-                }
-                json.add("mana", manaJson);
+                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
             }
             
             JsonArray patternJson = new JsonArray();
@@ -280,37 +259,22 @@ public class ArcaneShapedRecipeBuilder {
             
             JsonObject keyJson = new JsonObject();
             for (Entry<Character, Ingredient> entry : this.key.entrySet()) {
-                keyJson.add(String.valueOf(entry.getKey()), entry.getValue().toJson());
+                keyJson.add(String.valueOf(entry.getKey()), entry.getValue().toJson(true));
             }
             json.add("key", keyJson);
             
-            JsonObject resultJson = new JsonObject();
-            resultJson.addProperty("item", ForgeRegistries.ITEMS.getKey(this.result).toString());
-            if (this.count > 1) {
-                resultJson.addProperty("count", this.count);
-            }
-            json.add("result", resultJson);
+            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
         }
 
         @Override
-        public ResourceLocation getId() {
-            return this.id;
-        }
-
-        @Override
-        public RecipeSerializer<?> getType() {
+        public RecipeSerializer<?> type() {
             return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
         }
 
         @Override
-        public JsonObject serializeAdvancement() {
+        public AdvancementHolder advancement() {
             // Arcane recipes don't use the vanilla advancement unlock system, so return null
             return null;
-        }
-
-        @Override
-        public ResourceLocation getAdvancementId() {
-            return new ResourceLocation("");
         }
     }
 }

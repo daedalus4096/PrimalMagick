@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.common.network.packets.data;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.affinities.AffinityType;
@@ -12,7 +11,8 @@ import com.verdantartifice.primalmagick.common.affinities.IAffinitySerializer;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet to update affinity JSON data on the client from the server.
@@ -32,6 +32,10 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
     
     public List<IAffinity> getAffinities() {
         return this.affinities;
+    }
+    
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
     }
     
     public static void encode(UpdateAffinitiesPacket message, FriendlyByteBuf buf) {
@@ -58,15 +62,7 @@ public class UpdateAffinitiesPacket implements IMessageToClient {
         ((IAffinitySerializer<T>)affinity.getSerializer()).toNetwork(buf, affinity);
     }
     
-    public static class Handler {
-        public static void onMessage(UpdateAffinitiesPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                AffinityManager.getOrCreateInstance().replaceAffinities(message.getAffinities());
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(UpdateAffinitiesPacket message, CustomPayloadEvent.Context ctx) {
+        AffinityManager.getOrCreateInstance().replaceAffinities(message.getAffinities());
     }
 }

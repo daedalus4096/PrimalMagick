@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_salt",
-      "has_cooked_porkchop",
-      "has_the_recipe"
+      "has_cooked_porkchop"
     ]
   ],
   "rewards": {

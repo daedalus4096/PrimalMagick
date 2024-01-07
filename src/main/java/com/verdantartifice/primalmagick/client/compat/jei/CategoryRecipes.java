@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 
@@ -40,32 +41,32 @@ public class CategoryRecipes {
         }
     }
     
-    public List<IArcaneRecipe> getArcaneRecipes(IRecipeCategory<IArcaneRecipe> category) {
+    public List<RecipeHolder<IArcaneRecipe>> getArcaneRecipes(IRecipeCategory<RecipeHolder<IArcaneRecipe>> category) {
         CategoryRecipeValidatorPM<IArcaneRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.ARCANE_CRAFTING.get(), validator);
     }
     
-    public List<IConcoctingRecipe> getConcoctingRecipes(IRecipeCategory<IConcoctingRecipe> category) {
+    public List<RecipeHolder<IConcoctingRecipe>> getConcoctingRecipes(IRecipeCategory<RecipeHolder<IConcoctingRecipe>> category) {
         CategoryRecipeValidatorPM<IConcoctingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 9, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.CONCOCTING.get(), validator);
     }
     
-    public List<IRunecarvingRecipe> getRunecarvingRecipes(IRecipeCategory<IRunecarvingRecipe> category) {
+    public List<RecipeHolder<IRunecarvingRecipe>> getRunecarvingRecipes(IRecipeCategory<RecipeHolder<IRunecarvingRecipe>> category) {
         CategoryRecipeValidatorPM<IRunecarvingRecipe> validator = new CategoryRecipeValidatorPM<>(category, 2, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RUNECARVING.get(), validator);
     }
     
-    public List<IDissolutionRecipe> getDissolutionRecipes(IRecipeCategory<IDissolutionRecipe> category) {
+    public List<RecipeHolder<IDissolutionRecipe>> getDissolutionRecipes(IRecipeCategory<RecipeHolder<IDissolutionRecipe>> category) {
         CategoryRecipeValidatorPM<IDissolutionRecipe> validator = new CategoryRecipeValidatorPM<>(category, 1, true);
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.DISSOLUTION.get(), validator);
     }
     
-    public List<IRitualRecipe> getRitualRecipes(IRecipeCategory<IRitualRecipe> category) {
+    public List<RecipeHolder<IRitualRecipe>> getRitualRecipes(IRecipeCategory<RecipeHolder<IRitualRecipe>> category) {
         CategoryRecipeValidatorPM<IRitualRecipe> validator = new CategoryRecipeValidatorPM<>(category, 100, true);  // TODO Fix max inputs for JEI rituals
         return getValidHandledRecipes(this.recipeManager, RecipeTypesPM.RITUAL.get(), validator);
     }
     
-    private static <C extends Container, T extends Recipe<C>> List<T> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
+    private static <C extends Container, T extends Recipe<C>> List<RecipeHolder<T>> getValidHandledRecipes(RecipeManager recipeManager, RecipeType<T> recipeType, CategoryRecipeValidatorPM<T> validator) {
         return recipeManager.getAllRecipesFor(recipeType).stream().filter(r -> validator.isRecipeValid(r) && validator.isRecipeHandled(r)).toList();
     }
 }

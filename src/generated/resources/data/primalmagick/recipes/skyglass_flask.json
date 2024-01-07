@@ -11,7 +11,7 @@
   ],
   "research": "CONCOCTING_TINCTURES",
   "result": {
-    "count": 3,
-    "item": "primalmagick:skyglass_flask"
+    "Count": 3,
+    "id": "primalmagick:skyglass_flask"
   }
 }

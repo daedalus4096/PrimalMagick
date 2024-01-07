@@ -17,6 +17,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * GUI screen for runecarving table block.
@@ -44,7 +45,6 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
         this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -80,13 +80,13 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     }
     
     protected void drawRecipesItems(GuiGraphics guiGraphics, int mouseX, int mouseY, int left, int top, int recipeIndexOffsetMax) {
-        List<IRunecarvingRecipe> list = this.menu.getRecipeList();
+        List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < recipeIndexOffsetMax && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = left + j % 4 * 16;
             int l = j / 4;
             int i1 = top + l * 18 + 2;
-            ItemStack output = list.get(i).getResultItem(this.minecraft.level.registryAccess());
+            ItemStack output = list.get(i).value().getResultItem(this.minecraft.level.registryAccess());
             guiGraphics.renderItem(output, k, i1);
         }
     }
@@ -94,13 +94,13 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     @Override
     protected void renderTooltip(GuiGraphics pGuiGraphics, int pX, int pY) {
         super.renderTooltip(pGuiGraphics, pX, pY);
-        List<IRunecarvingRecipe> list = this.menu.getRecipeList();
+        List<RecipeHolder<IRunecarvingRecipe>> list = this.menu.getRecipeList();
         for (int i = this.recipeIndexOffset; i < this.recipeIndexOffset + 12 && i < this.menu.getRecipeListSize(); ++i) {
             int j = i - this.recipeIndexOffset;
             int k = this.leftPos + 52 + j % 4 * 16;
             int l = j / 4;
             int i1 = this.topPos + 14 + l * 18 + 2;
-            ItemStack output = list.get(i).getResultItem(this.minecraft.level.registryAccess());
+            ItemStack output = list.get(i).value().getResultItem(this.minecraft.level.registryAccess());
             if (pX >= k && pX < k + 16 && pY >= i1 && pY < i1 + 18) {
                 GuiUtils.renderItemTooltip(pGuiGraphics, output, pX, pY);
             }
@@ -136,24 +136,24 @@ public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingT
     }
     
     @Override
-    public boolean mouseDragged(double p_mouseDragged_1_, double p_mouseDragged_3_, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
+    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         if (this.clickedOnSroll && this.canScroll()) {
             int i = this.topPos + 14;
             int j = i + 54;
-            this.sliderProgress = ((float)p_mouseDragged_3_ - (float)i - 7.5F) / ((float)(j - i) - 15.0F);
+            this.sliderProgress = ((float)pMouseY - (float)i - 7.5F) / ((float)(j - i) - 15.0F);
             this.sliderProgress = Mth.clamp(this.sliderProgress, 0.0F, 1.0F);
             this.recipeIndexOffset = (int)((double)(this.sliderProgress * (float)this.getHiddenRows()) + 0.5D) * 4;
             return true;
         } else {
-            return super.mouseDragged(p_mouseDragged_1_, p_mouseDragged_3_, p_mouseDragged_5_, p_mouseDragged_6_, p_mouseDragged_8_);
+            return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
         }
     }
     
     @Override
-    public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) {
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
         if (this.canScroll()) {
             int i = this.getHiddenRows();
-            this.sliderProgress = (float)((double)this.sliderProgress - p_mouseScrolled_5_ / (double)i);
+            this.sliderProgress = (float)((double)this.sliderProgress - pScrollY / (double)i);
             this.sliderProgress = Mth.clamp(this.sliderProgress, 0.0F, 1.0F);
             this.recipeIndexOffset = (int)((double)(this.sliderProgress * (float)i) + 0.5D) * 4;
         }

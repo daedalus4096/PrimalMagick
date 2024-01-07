@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
+      "has_the_recipe",
       "has_moonwood_log",
-      "has_stripped_moonwood_log",
-      "has_the_recipe"
+      "has_stripped_moonwood_log"
     ]
   ],
   "rewards": {

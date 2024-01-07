@@ -1,12 +1,11 @@
 package com.verdantartifice.primalmagick.common.network.packets.fx;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent from the server to trigger a teleport arrival particle effect on the client.
@@ -26,6 +25,10 @@ public class TeleportArrivalPacket implements IMessageToClient {
         this.z = z;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_CLIENT;
+    }
+    
     public static void encode(TeleportArrivalPacket message, FriendlyByteBuf buf) {
         buf.writeDouble(message.x);
         buf.writeDouble(message.y);
@@ -40,15 +43,7 @@ public class TeleportArrivalPacket implements IMessageToClient {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(TeleportArrivalPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                FxDispatcher.INSTANCE.teleportArrival(message.x, message.y, message.z);
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+    public static void onMessage(TeleportArrivalPacket message, CustomPayloadEvent.Context ctx) {
+        FxDispatcher.INSTANCE.teleportArrival(message.x, message.y, message.z);
     }
 }

@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -19,7 +17,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to complete a research project on the server in the research table GUI.
@@ -37,6 +36,10 @@ public class CompleteProjectPacket implements IMessageToServer {
         this.windowId = windowId;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(CompleteProjectPacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
     }
@@ -47,40 +50,32 @@ public class CompleteProjectPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(CompleteProjectPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                    // Consume paper and ink
-                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu researchMenu) {
-                        researchMenu.consumeWritingImplements();
-                        researchMenu.getContainerLevelAccess().execute((world, blockPos) -> {
-                            // Determine if current project is a success
-                            Project project = knowledge.getActiveResearchProject();
-                            RandomSource rand = player.getRandom();
-                            if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
-                                if (rand.nextDouble() < project.getSuccessChance()) {
-                                    ResearchManager.addKnowledge(player, KnowledgeType.THEORY, project.getTheoryPointReward());
-                                    project.getOtherRewards().forEach(reward -> reward.grant(player));
-                                    StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-                                    PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
-                                } else {
-                                    PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
-                                }
-                            }
-                        
-                            // Set new project
-                            knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
-                        });
-                        knowledge.sync(player);
+    public static void onMessage(CompleteProjectPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            // Consume paper and ink
+            if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu researchMenu) {
+                researchMenu.consumeWritingImplements();
+                researchMenu.getContainerLevelAccess().execute((world, blockPos) -> {
+                    // Determine if current project is a success
+                    Project project = knowledge.getActiveResearchProject();
+                    RandomSource rand = player.getRandom();
+                    if (project != null && project.isSatisfied(player, TheorycraftManager.getSurroundings(world, blockPos)) && project.consumeSelectedMaterials(player)) {
+                        if (rand.nextDouble() < project.getSuccessChance()) {
+                            ResearchManager.addKnowledge(player, KnowledgeType.THEORY, project.getTheoryPointReward());
+                            project.getOtherRewards().forEach(reward -> reward.grant(player));
+                            StatsManager.incrementValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
+                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                        } else {
+                            PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundEvents.GLASS_BREAK, 1.0F, 1.0F + (float)rand.nextGaussian() * 0.05F), player);
+                        }
                     }
+                
+                    // Set new project
+                    knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                 });
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+                knowledge.sync(player);
+            }
+        });
     }
 }

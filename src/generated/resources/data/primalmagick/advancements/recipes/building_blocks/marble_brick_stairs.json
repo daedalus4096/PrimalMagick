@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_marble_raw",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_marble_raw"
     ]
   ],
   "rewards": {

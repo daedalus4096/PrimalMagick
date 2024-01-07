@@ -22,7 +22,9 @@
   ],
   "instability": 5,
   "mana": {
-    "blood": 100
+    "sources": {
+      "blood": 100
+    }
   },
   "props": [
     {
@@ -37,6 +39,7 @@
   ],
   "research": "GRAND_PIXIES&&t_discover_blood",
   "result": {
-    "item": "primalmagick:pixie_grand_blood"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_blood"
   }
 }

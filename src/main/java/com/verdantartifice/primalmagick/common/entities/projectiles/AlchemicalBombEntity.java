@@ -15,8 +15,6 @@ import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
@@ -37,7 +35,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Definition for a thrown alchemcial bomb entity.  Detonates after a short time and applies a loaded
@@ -176,10 +173,5 @@ public class AlchemicalBombEntity extends ThrowableItemProjectile implements Ite
             CampfireBlock.dowse(this.getOwner(), level, pos, state);
             level.setBlockAndUpdate(pos, state.setValue(CampfireBlock.LIT, false));
         }
-    }
-
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 }

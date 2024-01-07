@@ -10,10 +10,13 @@
     }
   ],
   "mana": {
-    "sun": 40
+    "sources": {
+      "sun": 40
+    }
   },
   "research": "HUMMING_ARTIFACT",
   "result": {
-    "item": "primalmagick:humming_artifact_sun"
+    "Count": 1,
+    "id": "primalmagick:humming_artifact_sun"
   }
 }

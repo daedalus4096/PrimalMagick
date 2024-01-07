@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
@@ -23,7 +24,8 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
  */
 public class RecipePageFactory {
     @Nullable
-    public static AbstractRecipePage createPage(@Nonnull Recipe<?> recipe, RegistryAccess registryAccess) {
+    public static AbstractRecipePage createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
+        Recipe<?> recipe = recipeHolder.value();
         if (recipe instanceof ShapelessArcaneRecipe sar) {
             return new ShapelessArcaneRecipePage(sar, registryAccess);
         } else if (recipe instanceof ShapedArcaneRecipe sar) {

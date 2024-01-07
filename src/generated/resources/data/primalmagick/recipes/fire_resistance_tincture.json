@@ -3,10 +3,11 @@
   "group": "fire_resistance",
   "ingredients": [
     {
-      "type": "forge:nbt",
-      "count": 1,
-      "item": "primalmagick:concoction",
-      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:concoction"
+      ],
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagick:essence_dust_infernal"
@@ -19,12 +20,18 @@
     }
   ],
   "mana": {
-    "infernal": 1
+    "sources": {
+      "infernal": 1
+    }
   },
   "research": "CONCOCTING_TINCTURES&&t_discover_infernal",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:3,ConcoctionType:\"tincture\",Potion:\"minecraft:fire_resistance\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 3,
+      "ConcoctionType": "tincture",
+      "Potion": "minecraft:fire_resistance"
+    }
   }
 }

@@ -31,7 +31,9 @@
   ],
   "instability": 6,
   "mana": {
-    "sky": 100
+    "sources": {
+      "sky": 100
+    }
   },
   "props": [
     {
@@ -49,6 +51,7 @@
   ],
   "research": "FLYING_CARPET",
   "result": {
-    "item": "primalmagick:flying_carpet"
+    "Count": 1,
+    "id": "primalmagick:flying_carpet"
   }
 }

@@ -10,6 +10,7 @@
   ],
   "research": "GRAND_PIXIES&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:pixie_grand_hallowed"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_hallowed"
   }
 }

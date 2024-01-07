@@ -187,7 +187,7 @@ public class PlayerEvents {
         }
         
         AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
-        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH);
+        stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
         if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
@@ -646,7 +646,7 @@ public class PlayerEvents {
             BlockPos pos = context.getClickedPos();
             BlockState state = level.getBlockState(pos);
             if (!player.isShiftKeyDown() && state.getBlock() instanceof BonemealableBlock mealBlock) {
-                if (mealBlock.isValidBonemealTarget(level, pos, state, level.isClientSide)) {
+                if (mealBlock.isValidBonemealTarget(level, pos, state)) {
                     if (level instanceof ServerLevel serverLevel) {
                         if (mealBlock.isBonemealSuccess(level, level.random, pos, state)) {
                             mealBlock.performBonemeal(serverLevel, level.random, pos, state);

@@ -15,6 +15,10 @@
   ],
   "research": "PRIMALITE",
   "result": {
-    "item": "primalmagick:primalite_sword"
+    "Count": 1,
+    "id": "primalmagick:primalite_sword",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

@@ -15,7 +15,7 @@
   ],
   "research": "SUPREME_MANAWEAVING",
   "result": {
-    "count": 5,
-    "item": "primalmagick:marble_hallowed_runed"
+    "Count": 5,
+    "id": "primalmagick:marble_hallowed_runed"
   }
 }

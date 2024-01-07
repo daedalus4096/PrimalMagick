@@ -22,7 +22,9 @@
   ],
   "instability": 5,
   "mana": {
-    "void": 100
+    "sources": {
+      "void": 100
+    }
   },
   "props": [
     {
@@ -37,6 +39,7 @@
   ],
   "research": "GRAND_PIXIES&&t_discover_void",
   "result": {
-    "item": "primalmagick:pixie_grand_void"
+    "Count": 1,
+    "id": "primalmagick:pixie_grand_void"
   }
 }

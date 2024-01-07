@@ -8,7 +8,7 @@
   ],
   "research": "CRYSTAL_DESYNTHESIS",
   "result": {
-    "count": 4,
-    "item": "primalmagick:essence_shard_earth"
+    "Count": 4,
+    "id": "primalmagick:essence_shard_earth"
   }
 }

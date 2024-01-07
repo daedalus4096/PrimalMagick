@@ -6,11 +6,13 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     "  H",
@@ -19,6 +21,7 @@
   ],
   "research": "STAVES&&WAND_CORE_HEARTWOOD",
   "result": {
-    "item": "primalmagick:heartwood_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:heartwood_staff_core_item"
   }
 }

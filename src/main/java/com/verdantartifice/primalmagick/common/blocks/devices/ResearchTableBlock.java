@@ -28,7 +28,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 
 /**
  * Block definition for the research table.  The research table allows players to play a minigame
@@ -78,7 +77,7 @@ public class ResearchTableBlock extends BaseEntityBlock {
             // Open the GUI for the research table
             BlockEntity tile = worldIn.getBlockEntity(pos);
             if (tile instanceof ResearchTableTileEntity tableTile) {
-                NetworkHooks.openScreen(serverPlayer, tableTile, tile.getBlockPos());
+                serverPlayer.openMenu(tableTile, tile.getBlockPos());
             }
         }
         return InteractionResult.SUCCESS;

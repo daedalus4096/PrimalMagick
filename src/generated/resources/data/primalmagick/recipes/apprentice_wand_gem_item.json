@@ -9,14 +9,17 @@
     }
   ],
   "mana": {
-    "earth": 10,
-    "moon": 10,
-    "sea": 10,
-    "sky": 10,
-    "sun": 10
+    "sources": {
+      "earth": 10,
+      "moon": 10,
+      "sea": 10,
+      "sky": 10,
+      "sun": 10
+    }
   },
   "research": "WAND_GEM_APPRENTICE",
   "result": {
-    "item": "primalmagick:apprentice_wand_gem_item"
+    "Count": 1,
+    "id": "primalmagick:apprentice_wand_gem_item"
   }
 }

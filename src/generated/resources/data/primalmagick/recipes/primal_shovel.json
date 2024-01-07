@@ -22,7 +22,9 @@
   ],
   "instability": 3,
   "mana": {
-    "earth": 40
+    "sources": {
+      "earth": 40
+    }
   },
   "props": [
     {
@@ -34,7 +36,16 @@
   ],
   "research": "PRIMAL_SHOVEL",
   "result": {
-    "item": "primalmagick:primal_shovel",
-    "nbt": "{Damage:0,Enchantments:[{id:\"primalmagick:reverberation\",lvl:2s}]}"
+    "Count": 1,
+    "id": "primalmagick:primal_shovel",
+    "tag": {
+      "Damage": 0,
+      "Enchantments": [
+        {
+          "id": "primalmagick:reverberation",
+          "lvl": 2
+        }
+      ]
+    }
   }
 }

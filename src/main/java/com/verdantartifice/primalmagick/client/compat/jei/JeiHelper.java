@@ -54,6 +54,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 /**
  * Main class for JEI integration.
@@ -65,15 +66,15 @@ public class JeiHelper implements IModPlugin {
     private static final ResourceLocation UID = PrimalMagick.resource("jei");
     
     @Nullable
-    private IRecipeCategory<IArcaneRecipe> arcaneCategory;
+    private IRecipeCategory<RecipeHolder<IArcaneRecipe>> arcaneCategory;
     @Nullable
-    private IRecipeCategory<IConcoctingRecipe> concoctingCategory;
+    private IRecipeCategory<RecipeHolder<IConcoctingRecipe>> concoctingCategory;
     @Nullable
-    private IRecipeCategory<IRunecarvingRecipe> runecarvingCategory;
+    private IRecipeCategory<RecipeHolder<IRunecarvingRecipe>> runecarvingCategory;
     @Nullable
-    private IRecipeCategory<IDissolutionRecipe> dissolutionCategory;
+    private IRecipeCategory<RecipeHolder<IDissolutionRecipe>> dissolutionCategory;
     @Nullable
-    private IRecipeCategory<IRitualRecipe> ritualCategory;
+    private IRecipeCategory<RecipeHolder<IRitualRecipe>> ritualCategory;
 
     @Override
     public ResourceLocation getPluginUid() {

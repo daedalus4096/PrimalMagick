@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "void": 200
+    "sources": {
+      "void": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA&&t_discover_void",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_void"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_void"
   }
 }

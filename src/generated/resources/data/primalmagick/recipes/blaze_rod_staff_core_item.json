@@ -9,12 +9,14 @@
     }
   },
   "mana": {
-    "earth": 5,
-    "infernal": 15,
-    "moon": 5,
-    "sea": 5,
-    "sky": 5,
-    "sun": 5
+    "sources": {
+      "earth": 5,
+      "infernal": 15,
+      "moon": 5,
+      "sea": 5,
+      "sky": 5,
+      "sun": 5
+    }
   },
   "pattern": [
     " D#",
@@ -23,6 +25,7 @@
   ],
   "research": "STAVES&&WAND_CORE_BLAZE_ROD",
   "result": {
-    "item": "primalmagick:blaze_rod_staff_core_item"
+    "Count": 1,
+    "id": "primalmagick:blaze_rod_staff_core_item"
   }
 }

@@ -11,6 +11,10 @@
   ],
   "research": "SPELLCLOTH",
   "result": {
-    "item": "primalmagick:spellcloth_feet"
+    "Count": 1,
+    "id": "primalmagick:spellcloth_feet",
+    "tag": {
+      "Damage": 0
+    }
   }
 }

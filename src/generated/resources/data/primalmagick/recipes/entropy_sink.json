@@ -18,11 +18,13 @@
     }
   },
   "mana": {
-    "earth": 75,
-    "moon": 75,
-    "sea": 75,
-    "sky": 75,
-    "sun": 75
+    "sources": {
+      "earth": 75,
+      "moon": 75,
+      "sea": 75,
+      "sky": 75,
+      "sun": 75
+    }
   },
   "pattern": [
     "PSP",
@@ -31,6 +33,7 @@
   ],
   "research": "ENTROPY_SINK",
   "result": {
-    "item": "primalmagick:entropy_sink"
+    "Count": 1,
+    "id": "primalmagick:entropy_sink"
   }
 }

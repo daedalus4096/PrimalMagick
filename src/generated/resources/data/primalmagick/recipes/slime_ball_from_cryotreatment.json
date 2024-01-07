@@ -10,6 +10,7 @@
   ],
   "research": "CRYOTREATMENT",
   "result": {
-    "item": "minecraft:slime_ball"
+    "Count": 1,
+    "id": "minecraft:slime_ball"
   }
 }

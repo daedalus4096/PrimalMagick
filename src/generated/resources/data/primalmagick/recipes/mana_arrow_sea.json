@@ -10,7 +10,9 @@
     }
   },
   "mana": {
-    "sea": 5
+    "sources": {
+      "sea": 5
+    }
   },
   "pattern": [
     " A ",
@@ -19,7 +21,7 @@
   ],
   "research": "MANA_ARROWS",
   "result": {
-    "count": 4,
-    "item": "primalmagick:mana_arrow_sea"
+    "Count": 4,
+    "id": "primalmagick:mana_arrow_sea"
   }
 }

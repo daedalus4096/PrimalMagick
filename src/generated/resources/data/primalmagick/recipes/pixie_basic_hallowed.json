@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "hallowed": 40
+    "sources": {
+      "hallowed": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES&&t_discover_hallowed",
   "result": {
-    "item": "primalmagick:pixie_basic_hallowed"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_hallowed"
   }
 }

@@ -13,6 +13,7 @@
   ],
   "research": "THEORYCRAFTING@2",
   "result": {
-    "item": "primalmagick:enchanted_ink"
+    "Count": 1,
+    "id": "primalmagick:enchanted_ink"
   }
 }

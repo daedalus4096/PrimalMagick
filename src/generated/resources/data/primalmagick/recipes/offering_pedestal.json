@@ -15,6 +15,7 @@
   ],
   "research": "BASIC_RITUAL",
   "result": {
-    "item": "primalmagick:offering_pedestal"
+    "Count": 1,
+    "id": "primalmagick:offering_pedestal"
   }
 }

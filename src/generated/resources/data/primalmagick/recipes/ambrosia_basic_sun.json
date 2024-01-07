@@ -19,7 +19,9 @@
   ],
   "instability": 4,
   "mana": {
-    "sun": 40
+    "sources": {
+      "sun": 40
+    }
   },
   "props": [
     {
@@ -34,6 +36,7 @@
   ],
   "research": "AMBROSIA",
   "result": {
-    "item": "primalmagick:ambrosia_basic_sun"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_basic_sun"
   }
 }

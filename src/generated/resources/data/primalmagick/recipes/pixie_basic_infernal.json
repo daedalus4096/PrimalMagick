@@ -16,7 +16,9 @@
   ],
   "instability": 3,
   "mana": {
-    "infernal": 40
+    "sources": {
+      "infernal": 40
+    }
   },
   "props": [
     {
@@ -28,6 +30,7 @@
   ],
   "research": "PIXIES&&t_discover_infernal",
   "result": {
-    "item": "primalmagick:pixie_basic_infernal"
+    "Count": 1,
+    "id": "primalmagick:pixie_basic_infernal"
   }
 }

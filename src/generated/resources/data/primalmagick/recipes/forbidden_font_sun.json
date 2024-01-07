@@ -16,7 +16,9 @@
     }
   },
   "mana": {
-    "sun": 750
+    "sources": {
+      "sun": 750
+    }
   },
   "pattern": [
     "IMI",
@@ -25,6 +27,7 @@
   ],
   "research": "FORBIDDEN_MANA_FONTS",
   "result": {
-    "item": "primalmagick:forbidden_font_sun"
+    "Count": 1,
+    "id": "primalmagick:forbidden_font_sun"
   }
 }

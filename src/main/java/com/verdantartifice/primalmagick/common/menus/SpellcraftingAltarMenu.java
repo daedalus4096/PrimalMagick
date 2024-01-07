@@ -43,7 +43,7 @@ import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
 /**
@@ -394,10 +394,9 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         if (!world.isClientSide && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<? extends Recipe<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
-            if (opt.isPresent() && opt.get() instanceof SpellcraftingRecipe) {
+            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            if (opt.isPresent() && opt.get().value() instanceof SpellcraftingRecipe recipe) {
                 // If the ingredients are present, enough mana is had, and the spell is valid, show the filled scroll in the output
-                SpellcraftingRecipe recipe = (SpellcraftingRecipe)opt.get();
                 if (recipe.matches(this.scrollInv, world) && this.wandContainsEnoughMana(spe) && this.getSpellPackage().isValid()) {
                     stack = recipe.assemble(this.scrollInv, world.registryAccess());
                     if (stack != null && stack.getItem() instanceof SpellScrollItem) {

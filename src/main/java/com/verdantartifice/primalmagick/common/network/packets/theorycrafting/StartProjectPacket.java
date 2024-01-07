@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.network.packets.theorycrafting;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.ResearchTableMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -9,7 +7,8 @@ import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkDirection;
 
 /**
  * Packet sent to start a research project on the server in the research table GUI.
@@ -27,6 +26,10 @@ public class StartProjectPacket implements IMessageToServer {
         this.windowId = windowId;
     }
     
+    public static NetworkDirection direction() {
+        return NetworkDirection.PLAY_TO_SERVER;
+    }
+    
     public static void encode(StartProjectPacket message, FriendlyByteBuf buf) {
         buf.writeInt(message.windowId);
     }
@@ -37,23 +40,15 @@ public class StartProjectPacket implements IMessageToServer {
         return message;
     }
     
-    public static class Handler {
-        public static void onMessage(StartProjectPacket message, Supplier<NetworkEvent.Context> ctx) {
-            // Enqueue the handler work on the main game thread
-            ctx.get().enqueueWork(() -> {
-                ServerPlayer player = ctx.get().getSender();
-                PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                    if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu) {
-                        ((ResearchTableMenu)player.containerMenu).getContainerLevelAccess().execute((world, blockPos) -> {
-                            knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
-                        });
-                        knowledge.sync(player);
-                    }
+    public static void onMessage(StartProjectPacket message, CustomPayloadEvent.Context ctx) {
+        ServerPlayer player = ctx.getSender();
+        PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+            if (player.containerMenu != null && player.containerMenu.containerId == message.windowId && player.containerMenu instanceof ResearchTableMenu menu) {
+                menu.getContainerLevelAccess().execute((world, blockPos) -> {
+                    knowledge.setActiveResearchProject(TheorycraftManager.createRandomProject(player, blockPos));
                 });
-            });
-            
-            // Mark the packet as handled so we don't get warning log spam
-            ctx.get().setPacketHandled(true);
-        }
+                knowledge.sync(player);
+            }
+        });
     }
 }

@@ -22,7 +22,9 @@
   ],
   "instability": 7,
   "mana": {
-    "moon": 200
+    "sources": {
+      "moon": 200
+    }
   },
   "props": [
     {
@@ -40,6 +42,7 @@
   ],
   "research": "MAJESTIC_PIXIES",
   "result": {
-    "item": "primalmagick:pixie_majestic_moon"
+    "Count": 1,
+    "id": "primalmagick:pixie_majestic_moon"
   }
 }

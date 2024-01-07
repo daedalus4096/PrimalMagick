@@ -22,7 +22,9 @@
   ],
   "instability": 8,
   "mana": {
-    "sun": 200
+    "sources": {
+      "sun": 200
+    }
   },
   "props": [
     {
@@ -46,6 +48,7 @@
   ],
   "research": "SUPREME_AMBROSIA",
   "result": {
-    "item": "primalmagick:ambrosia_supreme_sun"
+    "Count": 1,
+    "id": "primalmagick:ambrosia_supreme_sun"
   }
 }

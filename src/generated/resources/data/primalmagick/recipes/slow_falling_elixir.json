@@ -3,10 +3,11 @@
   "group": "slow_falling",
   "ingredients": [
     {
-      "type": "forge:nbt",
-      "count": 1,
-      "item": "primalmagick:concoction",
-      "nbt": "{ConcoctionDoses:1,ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
+      "type": "forge:partial_nbt",
+      "items": [
+        "primalmagick:concoction"
+      ],
+      "nbt": "{ConcoctionType:\"water\",Potion:\"minecraft:water\"}"
     },
     {
       "item": "primalmagick:essence_crystal_sky"
@@ -19,12 +20,18 @@
     }
   ],
   "mana": {
-    "infernal": 9
+    "sources": {
+      "infernal": 9
+    }
   },
   "research": "CONCOCTING_ELIXIRS",
   "result": {
-    "count": 1,
-    "item": "primalmagick:concoction",
-    "nbt": "{ConcoctionDoses:9,ConcoctionType:\"elixir\",Potion:\"minecraft:slow_falling\"}"
+    "Count": 1,
+    "id": "primalmagick:concoction",
+    "tag": {
+      "ConcoctionDoses": 9,
+      "ConcoctionType": "elixir",
+      "Potion": "minecraft:slow_falling"
+    }
   }
 }

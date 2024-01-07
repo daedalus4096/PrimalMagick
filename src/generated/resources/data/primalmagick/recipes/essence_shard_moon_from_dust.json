@@ -16,6 +16,7 @@
   ],
   "research": "SHARD_SYNTHESIS",
   "result": {
-    "item": "primalmagick:essence_shard_moon"
+    "Count": 1,
+    "id": "primalmagick:essence_shard_moon"
   }
 }
