@@ -25,7 +25,6 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
@@ -193,7 +192,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
         if (!world.isClientSide && this.player instanceof ServerPlayer) {
             ServerPlayer spe = (ServerPlayer)this.player;
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<? extends Recipe<?>>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof WandAssemblyRecipe recipe) {
                 // If the inputs make a valid wand, show the output
                 if (recipe.matches(this.componentInv, world)) {

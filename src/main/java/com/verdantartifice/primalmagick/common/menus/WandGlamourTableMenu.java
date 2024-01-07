@@ -26,7 +26,6 @@ import net.minecraft.world.inventory.ResultSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.IItemHandler;
@@ -194,7 +193,7 @@ public class WandGlamourTableMenu extends AbstractContainerMenu {
     protected void slotChangedCraftingGrid(Level world) {
         if (!world.isClientSide && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
-            Optional<RecipeHolder<? extends Recipe<?>>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
+            Optional<RecipeHolder<?>> opt = world.getServer().getRecipeManager().byKey(RECIPE_LOC);
             if (opt.isPresent() && opt.get().value() instanceof WandGlamourRecipe recipe) {
                 // If the inputs are valid, show the output
                 if (recipe.matches(this.componentInv, world)) {

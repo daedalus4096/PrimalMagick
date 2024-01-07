@@ -80,7 +80,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -605,7 +604,7 @@ public class GrimoireScreen extends Screen {
             }
         }
         for (ResourceLocation recipeLoc : locList) {
-            Optional<RecipeHolder<? extends Recipe<?>>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
+            Optional<RecipeHolder<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
             if (opt.isPresent()) {
                 AbstractRecipePage page = RecipePageFactory.createPage(opt.get(), this.minecraft.level.registryAccess());
                 if (page != null) {
