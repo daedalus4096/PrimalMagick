@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
@@ -177,9 +178,9 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     public boolean isIncomplete() {
         NonNullList<Ingredient> ingredients = this.getIngredients();
         return ingredients.isEmpty() || ingredients.stream().filter(i -> {
-            return !i.isEmpty();
+            return !i.isEmpty() && i.getItems() != null;
         }).anyMatch(i -> {
-            return i.getItems().length == 0;
+            return ForgeHooks.hasNoElements(i);
         });
     }
 
