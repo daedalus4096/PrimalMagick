@@ -43,6 +43,40 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public void setComprehension(ResourceLocation languageId, int value);
     
     /**
+     * Gets the player's vocabulary score for the given language.
+     * 
+     * @param languageId the language to be queried
+     * @return the player's vocabulary score
+     */
+    public int getVocabulary(ResourceLocation languageId);
+    
+    /**
+     * Sets the player's vocabulary score for the given language.
+     * 
+     * @param languageId the language to be updated
+     * @param value the new vocabulary score value
+     */
+    public void setVocabulary(ResourceLocation languageId, int value);
+    
+    /**
+     * Gets the number of times that a given book definition in a given language has been studied for vocabulary.
+     * 
+     * @param bookDefinitionId the book definition to be queried
+     * @param languageId the language to be queried
+     * @return the number of times that title has been studied
+     */
+    public int getTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId);
+    
+    /**
+     * Sets the number of times that a given book definition in a given language has been studied for vocabulary.
+     * 
+     * @param bookDefinitionId the book definition to be updated
+     * @param languageId the language to be updated
+     * @param value the new study count value
+     */
+    public void setTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId, int value);
+    
+    /**
      * Sync the given player's linguistics data to the their client.
      * 
      * @param player the player whose client should receive the data

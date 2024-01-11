@@ -67,4 +67,68 @@ public class LinguisticsManager {
             });
         }
     }
+    
+    public static int getVocabulary(@Nullable Player player, @Nullable BookLanguage language) {
+        MutableInt retVal = new MutableInt(0);
+        if (player != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.getVocabulary(language.languageId()));
+            });
+        }
+        return retVal.intValue();
+    }
+    
+    public static void setVocabulary(@Nullable Player player, @Nullable BookLanguage language, int vocabulary) {
+        if (player != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.setVocabulary(language.languageId(), Math.max(0, vocabulary));
+                scheduleSync(player);
+            });
+        }
+    }
+    
+    public static void incrementVocabulary(@Nullable Player player, @Nullable BookLanguage language) {
+        incrementVocabulary(player, language, 1);
+    }
+    
+    public static void incrementVocabulary(@Nullable Player player, @Nullable BookLanguage language, int delta) {
+        if (player != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.setVocabulary(language.languageId(), Math.max(0, linguistics.getVocabulary(language.languageId()) + delta));
+                scheduleSync(player);
+            });
+        }
+    }
+    
+    public static int getTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+        MutableInt retVal = new MutableInt(0);
+        if (player != null && book != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.getTimesStudied(book.bookId(), language.languageId()));
+            });
+        }
+        return retVal.intValue();
+    }
+    
+    public static void setTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int studyCount) {
+        if (player != null && book != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, studyCount));
+                scheduleSync(player);
+            });
+        }
+    }
+    
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+        incrementTimesStudied(player, book, language, 1);
+    }
+    
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int delta) {
+        if (player != null && book != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, linguistics.getTimesStudied(book.bookId(), language.languageId()) + delta));
+                scheduleSync(player);
+            });
+        }
+    }
 }
