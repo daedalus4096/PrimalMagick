@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 import java.util.OptionalInt;
 
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 
@@ -73,8 +75,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 if (slot == 0) {
-                    // TODO Return true if stack is a translatable book
-                    return false;
+                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex();
                 } else if (slot == 1) {
                     return stack.is(Items.WRITABLE_BOOK);
                 } else {
