@@ -7,8 +7,8 @@
 		"1": "primalmagick:block/research_side",
 		"2": "primalmagick:block/wood_table_bottom",
 		"3": "primalmagick:block/research_misc",
-		"4": "item/feather",
 		"5": "primalmagick:block/ink_still",
+		"6": "item/feather",
 		"particle": "primalmagick:block/wood_table_top"
 	},
 	"elements": [
@@ -427,16 +427,15 @@
 			"to": [4.25, 24, 17.3],
 			"rotation": {"angle": -45, "axis": "y", "origin": [4.25, 19, 12.25]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"east": {"uv": [0, 16, 16, 0], "texture": "#4"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"west": {"uv": [16, 16, 0, 0], "texture": "#4"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#4"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#4"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#6"},
+				"east": {"uv": [0, 16, 16, 0], "texture": "#6"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#6"},
+				"west": {"uv": [16, 16, 0, 0], "texture": "#6"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#6"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#6"}
 			}
 		}
 	],
-	"display": {},
 	"groups": [
 		0,
 		1,
