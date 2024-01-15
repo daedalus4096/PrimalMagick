@@ -96,4 +96,13 @@ public class MenuTypesPM {
     public static final RegistryObject<MenuType<ManaBatteryMenu>> MANA_BATTERY = MENU_TYPES.register("mana_battery", () -> IForgeMenuType.create((windowId, inv, data) -> {
         return new ManaBatteryMenu(windowId, inv, data.readBlockPos());
     }));
+    public static final RegistryObject<MenuType<ScribeStudyVocabularyMenu>> SCRIBE_STUDY_VOCABULARY = MENU_TYPES.register("scribe_study_vocabulary", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new ScribeStudyVocabularyMenu(windowId, inv, data.readBlockPos());
+    }));
+    public static final RegistryObject<MenuType<ScribeGainComprehensionMenu>> SCRIBE_GAIN_COMPREHENSION = MENU_TYPES.register("scribe_gain_comprehension", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new ScribeGainComprehensionMenu(windowId, inv, data.readBlockPos());
+    }));
+    public static final RegistryObject<MenuType<ScribeTranscribeWorksMenu>> SCRIBE_TRANSCRIBE_WORKS = MENU_TYPES.register("scribe_transcribe_works", () -> IForgeMenuType.create((windowId, inv, data) -> {
+        return new ScribeTranscribeWorksMenu(windowId, inv, data.readBlockPos());
+    }));
 }
