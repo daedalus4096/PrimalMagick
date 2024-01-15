@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -72,7 +74,11 @@ public class ScribeTableBlock extends BaseEntityBlock {
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
         if (!worldIn.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            // TODO Open the GUI for the scribe table
+            // Open the GUI for the scribe table
+            BlockEntity tile = worldIn.getBlockEntity(pos);
+            if (tile instanceof ScribeTableTileEntity tableTile) {
+                serverPlayer.openMenu(tableTile, tile.getBlockPos());
+            }
         }
         return InteractionResult.SUCCESS;
     }
@@ -84,14 +90,20 @@ public class ScribeTableBlock extends BaseEntityBlock {
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        // TODO Auto-generated method stub
-        return null;
+        return new ScribeTableTileEntity(pPos, pState);
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
-        // TODO Drop the tile entity's inventory into the world when the block is replaced
-        super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (pState.getBlock() != pNewState.getBlock()) {
+            BlockEntity tile = pLevel.getBlockEntity(pPos);
+            if (tile instanceof ScribeTableTileEntity castTile) {
+                castTile.dropContents(pLevel, pPos);
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        }
     }
 }
