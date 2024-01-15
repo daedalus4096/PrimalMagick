@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.HoneyExtractorBloc
 import com.verdantartifice.primalmagick.common.blocks.devices.InfernalFurnaceBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ResearchTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBlock;
+import com.verdantartifice.primalmagick.common.blocks.devices.ScribeTableBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.VoidTurbineBlock;
 import com.verdantartifice.primalmagick.common.blocks.devices.ZephyrEngineBlock;
@@ -392,6 +393,7 @@ public class BlocksPM {
     public static final RegistryObject<ManaBatteryBlock> MANA_NEXUS = BLOCKS.register("mana_nexus", () -> new ManaBatteryBlock(DeviceTier.FORBIDDEN, Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<ManaBatteryBlock> MANA_SINGULARITY = BLOCKS.register("mana_singularity", () -> new ManaBatteryBlock(DeviceTier.HEAVENLY, Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<ManaBatteryBlock> MANA_SINGULARITY_CREATIVE = BLOCKS.register("mana_singularity_creative", () -> new ManaBatteryBlock(DeviceTier.CREATIVE, Block.Properties.of().mapColor(MapColor.DIAMOND).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
+    public static final RegistryObject<ScribeTableBlock> SCRIBE_TABLE = BLOCKS.register("scribe_table", ScribeTableBlock::new);
     
     // Register misc blocks
     public static final RegistryObject<ConsecrationFieldBlock> CONSECRATION_FIELD = BLOCKS.register("consecration_field", ConsecrationFieldBlock::new);
