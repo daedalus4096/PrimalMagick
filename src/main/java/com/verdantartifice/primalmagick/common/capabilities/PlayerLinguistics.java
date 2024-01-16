@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagick.common.capabilities;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguisticsPacket;
 
@@ -33,6 +35,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     
     // Table of book definition IDs to language IDs to study counts
     private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
+    
+    // Current scribe table mode
+    private ScribeTableMode scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
     
     private long syncTimestamp = 0L;    // Last timestamp at which this capability received a sync from the server
 
@@ -77,6 +82,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         }
         rootTag.put("StudyCounts", studyCountList);
         
+        rootTag.putString("ScribeTableMode", this.scribeTableMode.getSerializedName());
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         
         return rootTag;
@@ -110,6 +116,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             CompoundTag tag = studyCountList.getCompound(index);
             this.setTimesStudied(new ResourceLocation(tag.getString("Book")), new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
         }
+        
+        ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));
+        this.scribeTableMode = mode == null ? ScribeTableMode.STUDY_VOCABULARY : mode;
     }
 
     @Override
@@ -117,6 +126,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         this.comprehension.clear();
         this.vocabulary.clear();
         this.studyCounts.clear();
+        this.scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
     }
 
     @Override
@@ -152,6 +162,16 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     @Override
     public void setTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId, int value) {
         this.studyCounts.put(bookDefinitionId, languageId, value);
+    }
+
+    @Override
+    public ScribeTableMode getScribeTableMode() {
+        return this.scribeTableMode;
+    }
+
+    @Override
+    public void setScribeTableMode(ScribeTableMode mode) {
+        this.scribeTableMode = Preconditions.checkNotNull(mode);
     }
 
     @Override

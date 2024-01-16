@@ -2,8 +2,13 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.OptionalInt;
 
+import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
+import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
+import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -19,6 +24,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
 /**
@@ -36,8 +42,16 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
 
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        // TODO Auto-generated method stub
-        return null;
+        LazyOptional<IPlayerLinguistics> capOpt = PrimalMagickCapabilities.getLinguistics(pPlayer);
+        if (capOpt.isPresent()) {
+            return switch (capOpt.resolve().get().getScribeTableMode()) {
+                case STUDY_VOCABULARY -> new ScribeStudyVocabularyMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
+                case GAIN_COMPREHENSION -> new ScribeGainComprehensionMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
+                case TRANSCRIBE_WORKS -> new ScribeTranscribeWorksMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
+            };
+        } else {
+            return null;
+        }
     }
 
     @Override

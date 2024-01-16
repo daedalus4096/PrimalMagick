@@ -1,6 +1,9 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -75,6 +78,21 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
      * @param value the new study count value
      */
     public void setTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId, int value);
+    
+    /**
+     * Gets the current mode being used by scribe tables for the player.
+     * 
+     * @return the current scribe table mode
+     */
+    @Nonnull
+    public ScribeTableMode getScribeTableMode();
+    
+    /**
+     * Sets the current mode being used by scribe tables for the player.
+     * 
+     * @param mode the new scribe table mode
+     */
+    public void setScribeTableMode(@Nonnull ScribeTableMode mode);
     
     /**
      * Sync the given player's linguistics data to the their client.

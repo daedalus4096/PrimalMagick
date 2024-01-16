@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableObject;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
@@ -127,6 +128,25 @@ public class LinguisticsManager {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
                 linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, linguistics.getTimesStudied(book.bookId(), language.languageId()) + delta));
+                scheduleSync(player);
+            });
+        }
+    }
+    
+    public static ScribeTableMode getScribeTableMode(@Nullable Player player) {
+        MutableObject<ScribeTableMode> retVal = new MutableObject<>(ScribeTableMode.STUDY_VOCABULARY);
+        if (player != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.getScribeTableMode());
+            });
+        }
+        return retVal.getValue();
+    }
+    
+    public static void setScribeTableMode(@Nullable Player player, @Nullable ScribeTableMode mode) {
+        if (player != null && mode != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                linguistics.setScribeTableMode(mode);
                 scheduleSync(player);
             });
         }
