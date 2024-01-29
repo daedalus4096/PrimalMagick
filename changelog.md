@@ -1,3 +1,7 @@
+v4.1.1
+------
+* Full release for Minecraft 1.20.2
+
 v4.1.0-beta
 -----------
 * Updated to Minecraft 1.20.2
