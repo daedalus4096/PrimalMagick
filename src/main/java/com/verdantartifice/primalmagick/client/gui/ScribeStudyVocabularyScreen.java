@@ -1,6 +1,11 @@
 package com.verdantartifice.primalmagick.client.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTableModeTabButton;
+import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -17,13 +22,31 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScribeStudyVocabularyScreen extends AbstractContainerScreen<ScribeStudyVocabularyMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
     
+    protected final List<ScribeTableModeTabButton> tabButtons = new ArrayList<>();
+    
     public ScribeStudyVocabularyScreen(ScribeStudyVocabularyMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
     }
 
     @Override
+    protected void init() {
+        super.init();
+        int tabPosX = this.leftPos - 30;
+        int tabPosY = this.topPos + 3;
+        int tabCount = 0;
+        this.tabButtons.clear();
+        for (ScribeTableMode mode : ScribeTableMode.values()) {
+            ScribeTableModeTabButton tab = new ScribeTableModeTabButton(mode);
+            tab.setPosition(tabPosX, tabPosY + 27 * tabCount++);
+            tab.setStateTriggered(mode == ScribeTableMode.STUDY_VOCABULARY);
+            this.tabButtons.add(tab);
+        }
+    }
+
+    @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 
