@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import org.joml.Vector2i;
+
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -25,6 +27,11 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    protected Vector2i getInventorySlotsOffset() {
+        return new Vector2i(27, 56);
     }
 
     @Override

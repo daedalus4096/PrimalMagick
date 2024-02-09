@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import javax.annotation.Nonnull;
 
+import org.joml.Vector2i;
+
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
@@ -27,6 +29,7 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
         super(type, id, ScribeTableTileEntity.class, playerInv.player.level(), tilePos, entity);
         this.player = playerInv.player;
         this.level = this.player.level();
+        Vector2i slotOffset = this.getInventorySlotsOffset();
         
         // Mode-specific menu slots
         this.createModeSlots();
@@ -34,17 +37,21 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
         // Slots (M)-(M+26), where M = mode slot count: Player backpack
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
-                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInv, j + i * 9 + 9, 8 + j * 18 + slotOffset.x, 84 + i * 18 + slotOffset.y));
             }
         }
         
         // Slots (M+27)-(M+35), where M = mode slot count: Player hotbar
         for (int i = 0; i < 9; i++) {
-            this.addSlot(new Slot(playerInv, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(playerInv, i, 8 + i * 18 + slotOffset.x, 142 + slotOffset.y));
         }
     }
     
     protected abstract void createModeSlots();
+    
+    protected Vector2i getInventorySlotsOffset() {
+        return new Vector2i(0, 0);
+    }
     
     @Override
     public void containerChanged(Container pContainer) {
