@@ -1,12 +1,10 @@
-package com.verdantartifice.primalmagick.client.gui;
+package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTableModeTabButton;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
-import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
+import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -15,18 +13,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
- * GUI screen for the study vocabulary mode of the scribe table block.
+ * Base class for GUI screens for the scribe table.
  * 
  * @author Daedalus4096
  */
-public class ScribeStudyVocabularyScreen extends AbstractContainerScreen<ScribeStudyVocabularyMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
-    
+public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMenu> extends AbstractContainerScreen<T> {
     protected final List<ScribeTableModeTabButton> tabButtons = new ArrayList<>();
     
-    public ScribeStudyVocabularyScreen(ScribeStudyVocabularyMenu menu, Inventory inv, Component title) {
+    public AbstractScribeTableScreen(T menu, Inventory inv, Component title) {
         super(menu, inv, title);
     }
+    
+    protected abstract ScribeTableMode getMode();
+    
+    protected abstract ResourceLocation getBgTexture();
 
     @Override
     protected void init() {
@@ -38,7 +38,7 @@ public class ScribeStudyVocabularyScreen extends AbstractContainerScreen<ScribeS
         for (ScribeTableMode mode : ScribeTableMode.values()) {
             ScribeTableModeTabButton tab = new ScribeTableModeTabButton(mode);
             tab.setPosition(tabPosX, tabPosY + 27 * tabCount++);
-            tab.setStateTriggered(mode == ScribeTableMode.STUDY_VOCABULARY);
+            tab.setStateTriggered(mode == this.getMode());
             this.tabButtons.add(tab);
         }
     }
@@ -53,6 +53,6 @@ public class ScribeStudyVocabularyScreen extends AbstractContainerScreen<ScribeS
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         // Render background texture
-        pGuiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        pGuiGraphics.blit(this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

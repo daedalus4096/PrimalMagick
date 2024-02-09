@@ -18,14 +18,14 @@ import com.verdantartifice.primalmagick.client.gui.RunescribingAltarEnchantedScr
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarForbiddenScreen;
 import com.verdantartifice.primalmagick.client.gui.RunescribingAltarHeavenlyScreen;
 import com.verdantartifice.primalmagick.client.gui.RunicGrindstoneScreen;
-import com.verdantartifice.primalmagick.client.gui.ScribeGainComprehensionScreen;
-import com.verdantartifice.primalmagick.client.gui.ScribeStudyVocabularyScreen;
-import com.verdantartifice.primalmagick.client.gui.ScribeTranscribeWorksScreen;
 import com.verdantartifice.primalmagick.client.gui.SpellcraftingAltarScreen;
 import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
