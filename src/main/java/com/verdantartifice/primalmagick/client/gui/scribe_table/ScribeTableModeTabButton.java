@@ -44,8 +44,9 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
     }
 
     protected void renderIcon(GuiGraphics pGuiGraphics) {
-        // TODO Auto-generated method stub
-        
+        ResourceLocation spriteLoc = this.mode.getIconSprite();
+        int dx = this.isStateTriggered() ? -2 : 0;
+        pGuiGraphics.blitSprite(spriteLoc, this.getX() + 9 + dx, this.getY() + 5, 16, 16);
     }
     
     public ScribeTableMode getMode() {

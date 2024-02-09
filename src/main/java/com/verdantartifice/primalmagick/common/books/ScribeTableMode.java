@@ -2,7 +2,10 @@ package com.verdantartifice.primalmagick.common.books;
 
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
+
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -18,10 +21,12 @@ public enum ScribeTableMode implements StringRepresentable {
     
     private final String tag;
     private final Component tooltip;
+    private final ResourceLocation iconSprite;
     
     private ScribeTableMode(String tag) {
         this.tag = tag;
         this.tooltip = Component.translatable("tooltip.primalmagick.scribe_table.mode." + tag);
+        this.iconSprite = PrimalMagick.resource("scribe_table/" + tag);
     }
 
     public String getTag() {
@@ -30,6 +35,10 @@ public enum ScribeTableMode implements StringRepresentable {
     
     public Component getTooltip() {
         return this.tooltip;
+    }
+    
+    public ResourceLocation getIconSprite() {
+        return this.iconSprite;
     }
     
     @Override
