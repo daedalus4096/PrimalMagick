@@ -36,7 +36,7 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
         int tabCount = 0;
         this.tabButtons.clear();
         for (ScribeTableMode mode : ScribeTableMode.values()) {
-            ScribeTableModeTabButton tab = new ScribeTableModeTabButton(mode);
+            ScribeTableModeTabButton tab = new ScribeTableModeTabButton(mode, this);
             tab.setPosition(tabPosX, tabPosY + 27 * tabCount++);
             tab.setStateTriggered(mode == this.getMode());
             this.tabButtons.add(tab);
@@ -54,5 +54,15 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         // Render background texture
         pGuiGraphics.blit(this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+    }
+
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        for (ScribeTableModeTabButton tab : this.tabButtons) {
+            if (tab.mouseClicked(pMouseX, pMouseY, pButton)) {
+                return true;
+            }
+        }
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 }

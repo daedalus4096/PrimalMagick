@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
@@ -19,10 +21,12 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
     protected static final WidgetSprites SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/tab"), PrimalMagick.resource("scribe_table/tab_selected"));
 
     protected final ScribeTableMode mode;
+    protected final AbstractScribeTableScreen<?> owner;
     
-    public ScribeTableModeTabButton(ScribeTableMode mode) {
+    public ScribeTableModeTabButton(ScribeTableMode mode, AbstractScribeTableScreen<?> screen) {
         super(0, 0, 35, 27, false);
         this.mode = mode;
+        this.owner = screen;
         this.initTextureValues(SPRITES);
         this.setTooltip(Tooltip.create(mode.getTooltip()));
     }
@@ -51,5 +55,12 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
     
     public ScribeTableMode getMode() {
         return this.mode;
+    }
+
+    @Override
+    public void onClick(double pMouseX, double pMouseY) {
+        if (!this.isStateTriggered()) {
+            PacketHandler.sendToServer(new ChangeScribeTableModePacket(this.owner.getMenu().containerId, this.getMode()));
+        }
     }
 }
