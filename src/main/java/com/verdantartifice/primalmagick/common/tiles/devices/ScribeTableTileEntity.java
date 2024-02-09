@@ -35,6 +35,7 @@ import net.minecraftforge.items.ItemStackHandler;
  */
 public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     protected static final int INPUT_INV_INDEX = 0;
+    protected static final int OUTPUT_INV_INDEX = 1;
     
     public ScribeTableTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.SCRIBE_TABLE.get(), pos, state);
@@ -61,13 +62,14 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
 
     @Override
     protected int getInventoryCount() {
-        return 1;
+        return 2;
     }
 
     @Override
     protected int getInventorySize(int inventoryIndex) {
         return switch (inventoryIndex) {
             case INPUT_INV_INDEX -> 2;
+            case OUTPUT_INV_INDEX -> 1;
             default -> 0;
         };
     }
@@ -75,7 +77,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected OptionalInt getInventoryIndexForFace(Direction face) {
         return switch (face) {
-            case DOWN -> OptionalInt.empty();
+            case DOWN -> OptionalInt.of(OUTPUT_INV_INDEX);
             default -> OptionalInt.of(INPUT_INV_INDEX);
         };
     }
@@ -95,6 +97,14 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
                 } else {
                     return false;
                 }
+            }
+        });
+        
+        // Create output handler
+        retVal.set(OUTPUT_INV_INDEX, new ItemStackHandlerPM(this.inventories.get(OUTPUT_INV_INDEX), this) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return false;
             }
         });
 
