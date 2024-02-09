@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.books;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -16,13 +17,19 @@ public enum ScribeTableMode implements StringRepresentable {
     TRANSCRIBE_WORKS("transcribe_works");
     
     private final String tag;
+    private final Component tooltip;
     
     private ScribeTableMode(String tag) {
         this.tag = tag;
+        this.tooltip = Component.translatable("tooltip.primalmagick.scribe_table.mode." + tag);
     }
 
     public String getTag() {
         return this.tag;
+    }
+    
+    public Component getTooltip() {
+        return this.tooltip;
     }
     
     @Override

@@ -970,6 +970,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_language").sub("obfuscated_word").output("Your eyes seem to slide off this word, no matter how hard you try to focus.").end().build();
         this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
         this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("study_vocabulary").output("Study Vocabulary").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("gain_comprehension").output("Gain Comprehension").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("transcribe_works").output("Transcribe Works").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

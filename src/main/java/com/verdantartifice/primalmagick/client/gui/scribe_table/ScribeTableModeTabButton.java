@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.StateSwitchingButton;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.resources.ResourceLocation;
 
@@ -23,6 +24,7 @@ public class ScribeTableModeTabButton extends StateSwitchingButton {
         super(0, 0, 35, 27, false);
         this.mode = mode;
         this.initTextureValues(SPRITES);
+        this.setTooltip(Tooltip.create(mode.getTooltip()));
     }
 
     @Override
