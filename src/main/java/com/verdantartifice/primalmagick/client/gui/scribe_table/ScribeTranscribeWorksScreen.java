@@ -1,9 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
+import org.apache.logging.log4j.LogManager;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
 
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -28,5 +33,27 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
     @Override
     protected ResourceLocation getBgTexture() {
         return TEXTURE;
+    }
+    
+    @Override
+    protected void init() {
+        super.init();
+        this.initControlWidgets();
+    }
+
+    protected void initControlWidgets() {
+        this.addRenderableWidget(new TranscribeButton(this.menu, this.leftPos, this.topPos));
+    }
+    
+    protected static class TranscribeButton extends ImageButton {
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/transcribe_button"), PrimalMagick.resource("scribe_table/transcribe_button_highlighted"));
+        protected static final Component TRANSCRIBE_BUTTON_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.button.transcribe");
+
+        public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {
+            super(leftPos + 91, topPos + 34, 20, 18, BUTTON_SPRITES, button -> {
+                LogManager.getLogger().debug("Clicked transcribe button");
+            });
+            this.setTooltip(Tooltip.create(TRANSCRIBE_BUTTON_TOOLTIP));
+        }
     }
 }
