@@ -2,8 +2,7 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.OptionalInt;
 
-import org.apache.logging.log4j.LogManager;
-
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -19,12 +18,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
@@ -119,6 +120,39 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     public void doTranscribe(Player player) {
-        LogManager.getLogger().debug("Player {} clicked transcribe button on scribe table", player.getDisplayName().getString());
+        Level level = this.getLevel();
+        if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+            ItemStack sourceStack = this.getItem(INPUT_INV_INDEX, 0);
+            ItemStack blankStack = this.getItem(INPUT_INV_INDEX, 1);
+            if (sourceStack.is(ItemTagsPM.STATIC_BOOKS) && blankStack.is(Items.WRITABLE_BOOK)) {
+                BookLanguage sourceLanguage = StaticBookItem.getBookLanguage(sourceStack);
+                int sourceGeneration = StaticBookItem.getGeneration(sourceStack);
+                if (sourceLanguage.isComplex() && sourceGeneration < StaticBookItem.MAX_GENERATION) {
+                    PrimalMagickCapabilities.getLinguistics(serverPlayer).ifPresent(linguistics -> {
+                        // Construct the translated result book if all prerequisites are met
+                        ItemStack resultStack = sourceStack.copyWithCount(1);
+                        int playerComprehension = linguistics.getComprehension(sourceLanguage.languageId());
+                        int sourceComprehension = StaticBookItem.getTranslatedComprehension(sourceStack).orElse(0);
+                        int maxComprehension = Math.max(playerComprehension, sourceComprehension);
+                        StaticBookItem.setTranslatedComprehension(resultStack, maxComprehension <= 0 ? OptionalInt.empty() : OptionalInt.of(maxComprehension));
+                        StaticBookItem.setGeneration(resultStack, sourceGeneration + 1);
+                        
+                        // Add the result book to the output slot if there's room, then shrink the blank book stack
+                        ItemStack existingStack = this.getItem(OUTPUT_INV_INDEX, 0);
+                        if (ItemStack.isSameItemSameTags(resultStack, existingStack) && existingStack.getCount() < existingStack.getMaxStackSize()) {
+                            existingStack.grow(1);
+                            blankStack.shrink(1);
+                            this.setChanged();
+                            this.syncTile(false);
+                        } else if (existingStack.isEmpty()) {
+                            this.setItem(OUTPUT_INV_INDEX, 0, resultStack);
+                            blankStack.shrink(1);
+                            this.setChanged();
+                            this.syncTile(false);
+                        }
+                    });
+                }
+            }
+        }
     }
 }
