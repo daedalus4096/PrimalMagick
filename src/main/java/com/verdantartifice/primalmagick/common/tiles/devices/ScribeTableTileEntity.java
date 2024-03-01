@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.OptionalInt;
 
+import org.apache.logging.log4j.LogManager;
+
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -114,5 +116,9 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     @Override
     protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
         // Nothing to do; this tile didn't exist in legacy versions
+    }
+    
+    public void doTranscribe(Player player) {
+        LogManager.getLogger().debug("Player {} clicked transcribe button on scribe table", player.getDisplayName().getString());
     }
 }

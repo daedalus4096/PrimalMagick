@@ -1,10 +1,10 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
-import org.apache.logging.log4j.LogManager;
-
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
 
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -51,7 +51,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
 
         public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {
             super(leftPos + 91, topPos + 34, 20, 18, BUTTON_SPRITES, button -> {
-                LogManager.getLogger().debug("Clicked transcribe button");
+                PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId));
             });
             this.setTooltip(Tooltip.create(TRANSCRIBE_BUTTON_TOOLTIP));
         }

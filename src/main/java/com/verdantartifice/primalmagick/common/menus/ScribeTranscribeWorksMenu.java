@@ -123,4 +123,8 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
     protected void slotChangedCraftingGrid(Level level) {
         // TODO Stub
     }
+    
+    public void doTranscribe() {
+        this.tile.doTranscribe(this.player);
+    }
 }
