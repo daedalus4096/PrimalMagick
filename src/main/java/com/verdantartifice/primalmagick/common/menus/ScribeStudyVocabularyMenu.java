@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import org.apache.logging.log4j.LogManager;
+
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -7,8 +9,10 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
@@ -18,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
+    public final int[] costs = new int[3];
     protected Slot studySlot;
     
     public ScribeStudyVocabularyMenu(int windowId, Inventory inv, BlockPos pos) {
@@ -26,6 +31,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     
     public ScribeStudyVocabularyMenu(int windowId, Inventory inv, BlockPos pos, ScribeTableTileEntity entity) {
         super(MenuTypesPM.SCRIBE_STUDY_VOCABULARY.get(), windowId, inv, pos, entity);
+        this.addDataSlot(DataSlot.shared(this.costs, 0));
+        this.addDataSlot(DataSlot.shared(this.costs, 1));
+        this.addDataSlot(DataSlot.shared(this.costs, 2));
     }
     
     @Override
@@ -33,6 +41,13 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 26, 47, 
                 new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex())));
+    }
+
+    @Override
+    public void containerChanged(Container pContainer) {
+        // TODO Auto-generated method stub
+        super.containerChanged(pContainer);
+        LogManager.getLogger().debug("Container changed in study vocabulary menu");
     }
 
     @Override
