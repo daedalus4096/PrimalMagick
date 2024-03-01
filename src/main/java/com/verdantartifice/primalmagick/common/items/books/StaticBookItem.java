@@ -217,6 +217,11 @@ public class StaticBookItem extends Item {
                     pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
                 }
             }
+            
+            int timesStudied = LinguisticsManager.getTimesStudied(player, def, lang);
+            if (timesStudied > 0) {
+                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
+            }
         }
     }
 

@@ -17,6 +17,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -161,7 +162,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
 
     @Override
     public void setTimesStudied(ResourceLocation bookDefinitionId, ResourceLocation languageId, int value) {
-        this.studyCounts.put(bookDefinitionId, languageId, value);
+        this.studyCounts.put(bookDefinitionId, languageId, Mth.clamp(value, 0, MAX_STUDY_COUNT));
     }
 
     @Override

@@ -16,6 +16,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  * @author Daedalus4096
  */
 public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
+    public static final int MAX_STUDY_COUNT = 3;
+    
     /**
      * Remove all linguistics data from the player.
      */
