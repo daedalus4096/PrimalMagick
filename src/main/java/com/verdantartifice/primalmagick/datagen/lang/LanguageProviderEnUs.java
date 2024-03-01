@@ -1501,6 +1501,14 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("linguistics").sub("comprehension").sub("set").sub("target").output("%1$s has set your %2$s language comprehension to %3$d").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("success").sub("capped").output("Set %2$s language comprehension for %1$s to %3$d (capped from %4$d)").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s language comprehension to %3$d (capped from %4$d)").end().build();
+        this.command("linguistics").sub("vocabulary").sub("get").output("%1$s has %3$d vocabulary for language %2$s").end().build();
+        this.command("linguistics").sub("vocabulary").sub("set").sub("success").output("Set %2$s language vocabulary for %1$s to %3$d").end().build();
+        this.command("linguistics").sub("vocabulary").sub("set").sub("target").output("%1$s has set your %2$s language vocabulary to %3$d").end().build();
+        this.command("linguistics").sub("study_count").sub("get").output("%1$s has studied %2$s %3$s a total of %4$d times").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("success").output("Set %2$s %3$s book study count for %1$s to %4$d").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("target").output("%1$s has set your %2$s %3$s book study count to %4$d").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("success").sub("capped").output("Set %2$s %3$s book study count for %1$s to %4$d (capped from %5$d)").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s %3$s book study count to %4$d (capped from %5$d)").end().build();
         this.command("affinities").sub("explain").sub("from_recipe").output("Affinities for item %1$s are derived from recipe %2$s").end().build();
         this.command("affinities").sub("explain").sub("from_data").output("Affinities for item %1$s are explicitly set").end().build();
         this.command("affinities").sub("explain").sub("not_found").output("Affinity data not found for item %1$s").end().build();
