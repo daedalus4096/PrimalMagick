@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
@@ -37,9 +38,6 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
     /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
     private static final ResourceLocation ENCHANTING_BOOK_LOCATION = new ResourceLocation("textures/entity/enchanting_table_book.png");
-    
-    // TODO Determine style from menu
-    private static final Style STYLE = BookLanguagesPM.TRADE.get().style();
 
     private final RandomSource random = RandomSource.create();
     private BookModel bookModel;
@@ -83,6 +81,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
         EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
+        BookLanguage activeLanguage = this.menu.getBookLanguage();
         
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotLeft = this.leftPos + 60;
@@ -94,7 +93,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             } else {
                 int textWidth = 86;
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
-                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(STYLE), textWidth, Style.EMPTY);
+                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.style()), textWidth, Style.EMPTY);
                 int textColor = 6839882;
                 if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);

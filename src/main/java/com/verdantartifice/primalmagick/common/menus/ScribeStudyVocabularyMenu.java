@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
@@ -8,6 +10,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +26,7 @@ import net.minecraft.world.item.ItemStack;
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public final int[] costs = new int[3];
     private final DataSlot nameSeed = DataSlot.standalone();
+    private final DataSlot languageClue = DataSlot.standalone();
 
     protected Slot studySlot;
     
@@ -36,6 +40,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
         this.addDataSlot(this.nameSeed).set(this.player.getEnchantmentSeed());
+        this.addDataSlot(this.languageClue);
     }
     
     @Override
@@ -50,19 +55,32 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         super.containerChanged(pContainer);
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
-            int studyCount = LinguisticsManager.getTimesStudied(this.player, StaticBookItem.getBookDefinition(bookStack), StaticBookItem.getBookLanguage(bookStack));
+            BookLanguage lang = StaticBookItem.getBookLanguage(bookStack);
+            int studyCount = LinguisticsManager.getTimesStudied(this.player, StaticBookItem.getBookDefinition(bookStack), lang);
             for (int index = 0; index < 3; index++) {
                 this.costs[index] = (index >= studyCount) ? index + 1 : 0;
             }
+            this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());
         } else {
             for (int index = 0; index < 3; index++) {
                 this.costs[index] = 0;
             }
+            this.languageClue.set(BookLanguagesPM.DEFAULT.getId().hashCode());
         }
     }
     
     public int getNameSeed() {
         return this.nameSeed.get();
+    }
+    
+    public BookLanguage getBookLanguage() {
+        int hashCode = this.languageClue.get();
+        for (ResourceLocation key : BookLanguagesPM.LANGUAGES.get().getKeys()) {
+            if (key.hashCode() == hashCode) {
+                return BookLanguagesPM.LANGUAGES.get().getValue(key);
+            }
+        }
+        return BookLanguagesPM.DEFAULT.get();
     }
 
     @Override
