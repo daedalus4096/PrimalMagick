@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -47,9 +48,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         super.containerChanged(pContainer);
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
-            // TODO Replace with costs based on existing study count
+            int studyCount = LinguisticsManager.getTimesStudied(this.player, StaticBookItem.getBookDefinition(bookStack), StaticBookItem.getBookLanguage(bookStack));
             for (int index = 0; index < 3; index++) {
-                this.costs[index] = index + 1;
+                this.costs[index] = (index >= studyCount) ? index + 1 : 0;
             }
         } else {
             for (int index = 0; index < 3; index++) {

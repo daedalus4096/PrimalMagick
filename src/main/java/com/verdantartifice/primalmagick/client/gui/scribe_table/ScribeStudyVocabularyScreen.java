@@ -24,7 +24,12 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<ScribeStudyVocabularyMenu> {
-    protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
+    private static final ResourceLocation[] ENABLED_LEVEL_SPRITES = new ResourceLocation[]{PrimalMagick.resource("scribe_table/level_1"), PrimalMagick.resource("scribe_table/level_2"), PrimalMagick.resource("scribe_table/level_3")};
+    private static final ResourceLocation[] DISABLED_LEVEL_SPRITES = new ResourceLocation[]{PrimalMagick.resource("scribe_table/level_1_disabled"), PrimalMagick.resource("scribe_table/level_2_disabled"), PrimalMagick.resource("scribe_table/level_3_disabled")};
+    private static final ResourceLocation SLOT_DISABLED_SPRITE = PrimalMagick.resource("scribe_table/slot_disabled");
+    private static final ResourceLocation SLOT_HIGHLIGHTED_SPRITE = PrimalMagick.resource("scribe_table/slot_highlighted");
+    private static final ResourceLocation SLOT_SPRITE = PrimalMagick.resource("scribe_table/slot");
+    private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
     /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
     private static final ResourceLocation ENCHANTING_BOOK_LOCATION = new ResourceLocation("textures/entity/enchanting_table_book.png");
 
@@ -70,6 +75,35 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         // TODO
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
+        // TODO Init vocabulary text seed from menu
+        
+        for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
+            int slotLeft = this.leftPos + 60;
+            int slotTextStart = slotLeft + 20;
+            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            int cost = this.menu.costs[slotIndex];
+            if (cost == 0) {
+                pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
+            } else {
+                int textColor = 6839882;
+                if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
+                    pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
+                    pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+                    // TODO Draw random vocabulary text
+                } else {
+                    int dx = pMouseX - slotLeft;
+                    int dy = pMouseY - slotTop;
+                    if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19) {
+                        pGuiGraphics.blitSprite(SLOT_HIGHLIGHTED_SPRITE, slotLeft, slotTop, 108, 19);
+                        textColor = 16777088;
+                    } else {
+                        pGuiGraphics.blitSprite(SLOT_SPRITE, slotLeft, slotTop, 108, 19);
+                    }
+                    pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
+                    // TODO Draw random vocabulary text
+                }
+            }
+        }
     }
 
     private void renderBook(GuiGraphics pGuiGraphics, int pX, int pY, float pPartialTick) {
