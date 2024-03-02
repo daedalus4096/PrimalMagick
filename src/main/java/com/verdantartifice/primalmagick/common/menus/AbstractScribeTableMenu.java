@@ -55,7 +55,6 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     
     @Override
     public void containerChanged(Container pContainer) {
-        // TODO Auto-generated method stub
-
+        // Do nothing by default
     }
 }

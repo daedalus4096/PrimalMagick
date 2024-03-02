@@ -8,14 +8,12 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 
 /**
  * Server data container for the study vocabulary mode of the scribe table GUI.
@@ -112,18 +110,6 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
         return stack;
     }
 
-    @Override
-    public void slotsChanged(Container pContainer) {
-        super.slotsChanged(pContainer);
-        this.containerLevelAccess.execute((level, blockPos) -> {
-            this.slotChangedCraftingGrid(level);
-        });
-    }
-
-    protected void slotChangedCraftingGrid(Level level) {
-        // TODO Stub
-    }
-    
     public void doTranscribe() {
         this.tile.doTranscribe(this.player);
     }

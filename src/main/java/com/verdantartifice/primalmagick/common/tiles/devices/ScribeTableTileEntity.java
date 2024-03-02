@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.capabilities.IPlayerLinguistics;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
@@ -48,11 +49,13 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         LazyOptional<IPlayerLinguistics> capOpt = PrimalMagickCapabilities.getLinguistics(pPlayer);
         if (capOpt.isPresent()) {
-            return switch (capOpt.resolve().get().getScribeTableMode()) {
+            AbstractScribeTableMenu menu = switch (capOpt.resolve().get().getScribeTableMode()) {
                 case STUDY_VOCABULARY -> new ScribeStudyVocabularyMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
                 case GAIN_COMPREHENSION -> new ScribeGainComprehensionMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
                 case TRANSCRIBE_WORKS -> new ScribeTranscribeWorksMenu(pContainerId, pPlayerInventory, this.getBlockPos(), this);
             };
+            this.addListener(Direction.UP, menu);
+            return menu;
         } else {
             return null;
         }

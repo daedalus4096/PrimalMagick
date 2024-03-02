@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.menus;
 
-import org.apache.logging.log4j.LogManager;
-
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -23,6 +21,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public final int[] costs = new int[3];
+    
     protected Slot studySlot;
     
     public ScribeStudyVocabularyMenu(int windowId, Inventory inv, BlockPos pos) {
@@ -45,9 +44,18 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
 
     @Override
     public void containerChanged(Container pContainer) {
-        // TODO Auto-generated method stub
         super.containerChanged(pContainer);
-        LogManager.getLogger().debug("Container changed in study vocabulary menu");
+        ItemStack bookStack = this.studySlot.getItem();
+        if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
+            // TODO Replace with costs based on existing study count
+            for (int index = 0; index < 3; index++) {
+                this.costs[index] = index + 1;
+            }
+        } else {
+            for (int index = 0; index < 3; index++) {
+                this.costs[index] = 0;
+            }
+        }
     }
 
     @Override
