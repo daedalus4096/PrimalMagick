@@ -22,7 +22,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public final int[] costs = new int[3];
-    
+    private final DataSlot nameSeed = DataSlot.standalone();
+
     protected Slot studySlot;
     
     public ScribeStudyVocabularyMenu(int windowId, Inventory inv, BlockPos pos) {
@@ -34,6 +35,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 0));
         this.addDataSlot(DataSlot.shared(this.costs, 1));
         this.addDataSlot(DataSlot.shared(this.costs, 2));
+        this.addDataSlot(this.nameSeed).set(this.player.getEnchantmentSeed());
     }
     
     @Override
@@ -57,6 +59,10 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                 this.costs[index] = 0;
             }
         }
+    }
+    
+    public int getNameSeed() {
+        return this.nameSeed.get();
     }
 
     @Override

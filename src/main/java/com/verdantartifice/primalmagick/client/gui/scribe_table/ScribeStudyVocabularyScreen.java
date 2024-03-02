@@ -4,17 +4,22 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringDecomposer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
@@ -32,6 +37,9 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_study_vocabulary.png");
     /** The ResourceLocation containing the texture for the Book rendered above the enchantment table */
     private static final ResourceLocation ENCHANTING_BOOK_LOCATION = new ResourceLocation("textures/entity/enchanting_table_book.png");
+    
+    // TODO Determine style from menu
+    private static final Style STYLE = BookLanguagesPM.TRADE.get().style();
 
     private final RandomSource random = RandomSource.create();
     private BookModel bookModel;
@@ -72,10 +80,9 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
 
     @Override
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
-        // TODO
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
-        // TODO Init vocabulary text seed from menu
+        EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
         
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotLeft = this.leftPos + 60;
@@ -85,11 +92,14 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             if (cost == 0) {
                 pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
             } else {
+                int textWidth = 86;
+                String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
+                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(STYLE), textWidth, Style.EMPTY);
                 int textColor = 6839882;
                 if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
-                    // TODO Draw random vocabulary text
+                    pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
                     int dx = pMouseX - slotLeft;
                     int dy = pMouseY - slotTop;
@@ -100,7 +110,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                         pGuiGraphics.blitSprite(SLOT_SPRITE, slotLeft, slotTop, 108, 19);
                     }
                     pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
-                    // TODO Draw random vocabulary text
+                    pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
                 }
             }
         }
