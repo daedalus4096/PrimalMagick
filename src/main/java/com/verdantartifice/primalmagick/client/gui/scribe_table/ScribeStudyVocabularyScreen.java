@@ -7,6 +7,8 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
+import com.verdantartifice.primalmagick.common.network.PacketHandler;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
@@ -73,6 +75,21 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     protected void containerTick() {
         super.containerTick();
         this.tickBook();
+    }
+
+    @Override
+    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+        int slotLeft = this.leftPos + 60;
+        for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
+            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            double dx = pMouseX - (double)slotLeft;
+            double dy = pMouseY - (double)slotTop;
+            if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19 && this.menu.checkStudyClick(this.minecraft.player, slotIndex)) {
+                PacketHandler.sendToServer(new StudyVocabularyActionPacket(this.menu.containerId, slotIndex));
+                return true;
+            }
+        }
+        return super.mouseClicked(pMouseX, pMouseY, pButton);
     }
 
     @Override

@@ -1,16 +1,19 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -75,6 +78,52 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                 this.costs[index] = 0;
             }
             this.languageClue.set(BookLanguagesPM.DEFAULT.getId().hashCode());
+        }
+    }
+    
+    public boolean checkStudyClick(Player player, int slotId) {
+        // Check if the given player is allowed to study vocabulary in the given slot
+        if (slotId >= 0 && slotId < this.costs.length) {
+            ItemStack bookStack = this.studySlot.getItem();
+            return (this.costs[slotId] > 0 && !bookStack.isEmpty() && (player.experienceLevel >= this.costs[slotId] || player.getAbilities().instabuild));
+        } else {
+            LOGGER.error("{} pressed invalid study vocabulary slot index {}", player.getName().getString(), slotId);
+            return false;
+        }
+    }
+    
+    public void doStudyClick(Player player, int slotId) {
+        if (this.checkStudyClick(player, slotId)) {
+            // Perform vocabulary study for the given slot
+            this.getContainerLevelAccess().execute((level, blockPos) -> {
+                ItemStack bookStack = this.studySlot.getItem();
+                BookDefinition bookDef = StaticBookItem.getBookDefinition(bookStack);
+                BookLanguage bookLanguage = StaticBookItem.getBookLanguage(bookStack);
+                
+                int studyDelta = 0;
+                for (int costIndex = 0; costIndex <= slotId && costIndex < this.costs.length; costIndex++) {
+                    if (this.costs[costIndex] > 0) {
+                        studyDelta++;
+                    }
+                }
+
+                if (studyDelta > 0) {
+                    // Deduct the experience cost for the study and update the player's enchantment seed
+                    player.onEnchantmentPerformed(ItemStack.EMPTY, this.costs[slotId]);
+                    
+                    // Grant the player increased vocabulary for the book's language
+                    LinguisticsManager.incrementVocabulary(player, bookLanguage, studyDelta);
+                    
+                    // Mark the book as having been studied
+                    LinguisticsManager.incrementTimesStudied(player, bookDef, bookLanguage, studyDelta);
+                    
+                    // TODO Award statistics for study
+                    
+                    this.nameSeed.set(player.getEnchantmentSeed());
+                    level.playSound(null, blockPos, SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                    this.refreshBookData();
+                }
+            });
         }
     }
     

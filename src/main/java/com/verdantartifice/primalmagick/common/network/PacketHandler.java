@@ -49,6 +49,7 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.Place
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
@@ -136,6 +137,7 @@ public class PacketHandler {
             .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
             .messageBuilder(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.direction()).encoder(ChangeScribeTableModePacket::encode).decoder(ChangeScribeTableModePacket::decode).consumerMainThread(ChangeScribeTableModePacket::onMessage).add()
             .messageBuilder(TranscribeActionPacket.class, TranscribeActionPacket.direction()).encoder(TranscribeActionPacket::encode).decoder(TranscribeActionPacket::decode).consumerMainThread(TranscribeActionPacket::onMessage).add()
+            .messageBuilder(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.direction()).encoder(StudyVocabularyActionPacket::encode).decoder(StudyVocabularyActionPacket::decode).consumerMainThread(StudyVocabularyActionPacket::onMessage).add()
             ;
     }
     
