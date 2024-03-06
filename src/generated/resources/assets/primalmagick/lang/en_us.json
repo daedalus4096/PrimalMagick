@@ -2624,6 +2624,7 @@
   "tooltip.primalmagick.runescribed": "Runescribed",
   "tooltip.primalmagick.sanguine_core.1": "Durability: %1$d",
   "tooltip.primalmagick.sanguine_core.2": "Souls per spawn: %1$d",
+  "tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied": "Already studied",
   "tooltip.primalmagick.scribe_table.button.transcribe": "Transcribe",
   "tooltip.primalmagick.scribe_table.mode.gain_comprehension": "Gain Comprehension",
   "tooltip.primalmagick.scribe_table.mode.study_vocabulary": "Study Vocabulary",

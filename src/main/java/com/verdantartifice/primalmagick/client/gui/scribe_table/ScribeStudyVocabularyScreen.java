@@ -87,13 +87,18 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
             int slotTextStart = slotLeft + 20;
             int slotTop = this.topPos + 14 + (19 * slotIndex);
             int cost = this.menu.costs[slotIndex];
-            if (cost == 0) {
+            int textColor = 6839882;
+            int textWidth = 86;
+            if (cost <= 0) {
                 pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
+                if (cost < 0) {
+                    // The drawCenteredString method doesn't have an option to omit the drop shadow, alas, so we do it manually
+                    Component text = Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied");
+                    pGuiGraphics.drawString(this.font, text, slotLeft + 54 - this.font.width(text) / 2, slotTop + 5, (textColor & 16711422) >> 1, false);
+                }
             } else {
-                int textWidth = 86;
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
                 FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.style()), textWidth, Style.EMPTY);
-                int textColor = 6839882;
                 if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);

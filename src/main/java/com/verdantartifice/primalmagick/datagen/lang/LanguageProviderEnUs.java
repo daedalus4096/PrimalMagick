@@ -975,6 +975,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("mode").sub("gain_comprehension").output("Gain Comprehension").end().build();
         this.tooltip("scribe_table").sub("mode").sub("transcribe_works").output("Transcribe Works").end().build();
         this.tooltip("scribe_table").sub("button").sub("transcribe").output("Transcribe").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("already_studied").output("Already studied").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

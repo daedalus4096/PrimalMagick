@@ -58,7 +58,11 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             BookLanguage lang = StaticBookItem.getBookLanguage(bookStack);
             int studyCount = LinguisticsManager.getTimesStudied(this.player, StaticBookItem.getBookDefinition(bookStack), lang);
             for (int index = 0; index < 3; index++) {
-                this.costs[index] = (index >= studyCount) ? index + 1 : 0;
+                // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
+                // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (e.g. 1, 2, and 3 respectively).
+                // Thus, the final costs in the case where none have been studied would be 1, 3, and 6 respectively.  If, rather, the
+                // first slot had been studied, the costs would instead be -1, 2, and 5 respectively.
+                this.costs[index] = (index >= studyCount) ? index + 1 + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
             }
             this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());
         } else {
