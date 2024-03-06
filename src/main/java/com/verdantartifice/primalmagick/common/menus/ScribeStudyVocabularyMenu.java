@@ -41,6 +41,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 2));
         this.addDataSlot(this.nameSeed).set(this.player.getEnchantmentSeed());
         this.addDataSlot(this.languageClue);
+        this.refreshBookData();
     }
     
     @Override
@@ -53,6 +54,10 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     @Override
     public void containerChanged(Container pContainer) {
         super.containerChanged(pContainer);
+        this.refreshBookData();
+    }
+    
+    protected void refreshBookData() {
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
             BookLanguage lang = StaticBookItem.getBookLanguage(bookStack);
