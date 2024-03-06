@@ -82,9 +82,23 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
         BookLanguage activeLanguage = this.menu.getBookLanguage();
         
+        int slotLeft = this.leftPos + 60;
+        int slotTextStart = slotLeft + 20;
+        int hoveredSlotIndex = Integer.MIN_VALUE;
+        
+        // First, determine which, if any, slot is being hovered over
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
-            int slotLeft = this.leftPos + 60;
-            int slotTextStart = slotLeft + 20;
+            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            int dx = pMouseX - slotLeft;
+            int dy = pMouseY - slotTop;
+            if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19) {
+                hoveredSlotIndex = slotIndex;
+                break;
+            }
+        }
+
+        // Then render the slots: background, sprites, and text
+        for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int slotTop = this.topPos + 14 + (19 * slotIndex);
             int cost = this.menu.costs[slotIndex];
             int textColor = 6839882;
@@ -104,9 +118,8 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, (textColor & 16711422) >> 1);
                 } else {
-                    int dx = pMouseX - slotLeft;
-                    int dy = pMouseY - slotTop;
-                    if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19) {
+                    // Highlight all non-disabled slots up to and including the hovered slot
+                    if (slotIndex <= hoveredSlotIndex) {
                         pGuiGraphics.blitSprite(SLOT_HIGHLIGHTED_SPRITE, slotLeft, slotTop, 108, 19);
                         textColor = 16777088;
                     } else {
