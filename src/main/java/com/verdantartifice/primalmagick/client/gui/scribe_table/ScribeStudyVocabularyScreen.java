@@ -1,5 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -10,13 +13,16 @@ import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -144,6 +150,48 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                     }
                     pGuiGraphics.blitSprite(ENABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
                     pGuiGraphics.drawWordWrap(this.font, formattedText, slotTextStart, slotTop + 2, textWidth, textColor);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
+            int cost = this.menu.costs[slotIndex];
+            if (this.isHovering(60, 14 + 19 * slotIndex, 108, 17, (double)pMouseX, (double)pMouseY) && cost > 0) {
+                // Determine how many vocabulary levels are awarded by the slot, if any
+                int studyDelta = 0;
+                for (int costIndex = 0; costIndex <= slotIndex && costIndex < this.menu.costs.length; costIndex++) {
+                    if (this.menu.costs[costIndex] > 0) {
+                        studyDelta++;
+                    }
+                }
+
+                if (studyDelta > 0) {
+                    BookLanguage activeLanguage = this.menu.getBookLanguage();
+                    List<Component> tooltips = new ArrayList<>();
+                    
+                    // Add the vocabulary gain tooltip line to the output
+                    tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count", activeLanguage.getName(), studyDelta).withStyle(ChatFormatting.WHITE));
+                    
+                    // Only process experience level costs if not in creative mode
+                    if (!this.minecraft.player.getAbilities().instabuild) {
+                        tooltips.add(CommonComponents.EMPTY);
+                        if (this.minecraft.player.experienceLevel < cost) {
+                            // Show a warning if the player doesn't have enough levels to perform the study
+                            tooltips.add(Component.translatable("container.enchant.level.requirement", this.menu.costs[slotIndex]).withStyle(ChatFormatting.RED));
+                        } else {
+                            // Add the level cost tooltip line to the output
+                            MutableComponent costLine = cost == 1 ? Component.translatable("container.enchant.level.one") : Component.translatable("container.enchant.level.many", cost);
+                            tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.level_cost", costLine).withStyle(ChatFormatting.GRAY));
+                        }
+                    }
+                    
+                    // Render the output tooltip lines
+                    pGuiGraphics.renderComponentTooltip(this.font, tooltips, pMouseX, pMouseY);
+                    break;
                 }
             }
         }
