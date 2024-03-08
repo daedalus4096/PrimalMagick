@@ -2631,6 +2631,7 @@
   "tooltip.primalmagick.scribe_table.mode.gain_comprehension": "Gain Comprehension",
   "tooltip.primalmagick.scribe_table.mode.study_vocabulary": "Study Vocabulary",
   "tooltip.primalmagick.scribe_table.mode.transcribe_works": "Transcribe Works",
+  "tooltip.primalmagick.scribe_table.widget.language": "%2$d %1$s vocabulary",
   "tooltip.primalmagick.smithing_template.runic_armor_trim.additions_slot_description": "Add source rune",
   "tooltip.primalmagick.smithing_template.runic_armor_trim.applies_to": "Robes",
   "tooltip.primalmagick.smithing_template.runic_armor_trim.base_slot_description": "Add a piece of robe armor",

@@ -4,6 +4,7 @@ import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -11,6 +12,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,12 +27,14 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     private final DataSlot languageClue = DataSlot.standalone();
+    private final DataSlot vocabularyCount = DataSlot.standalone();
 
     protected Slot studySlot;
     
     public ScribeGainComprehensionMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, pos, null);
         this.addDataSlot(this.languageClue);
+        this.addDataSlot(this.vocabularyCount);
         this.refreshBookData();
     }
     
@@ -60,8 +64,23 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         BookLanguage lang = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguage(bookStack) : BookLanguagesPM.DEFAULT.get();
         this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());
+        this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
     }
     
+    public BookLanguage getBookLanguage() {
+        int hashCode = this.languageClue.get();
+        for (ResourceLocation key : BookLanguagesPM.LANGUAGES.get().getKeys()) {
+            if (key.hashCode() == hashCode) {
+                return BookLanguagesPM.LANGUAGES.get().getValue(key);
+            }
+        }
+        return BookLanguagesPM.DEFAULT.get();
+    }
+    
+    public int getVocabularyCount() {
+        return this.vocabularyCount.get();
+    }
+
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
         ItemStack stack = ItemStack.EMPTY;

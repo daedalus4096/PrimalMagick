@@ -36,4 +36,8 @@ public record BookLanguage(ResourceLocation languageId, Style style, int complex
     public MutableComponent getName() {
         return Component.translatable(this.getDescriptionId());
     }
+    
+    public ResourceLocation getGlyphLocation() {
+        return this.languageId().withPrefix("textures/book_languages/");
+    }
 }
