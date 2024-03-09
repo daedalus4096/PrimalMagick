@@ -45,7 +45,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     @Override
     protected void init() {
         super.init();
-        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(this.menu.getBookLanguage(), this.menu.getVocabularyCount(), 207, 7));
+        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(this.menu.getBookLanguage(), this.menu.getVocabularyCount(), this.leftPos + 207, this.topPos + 7));
     }
 
     @Override

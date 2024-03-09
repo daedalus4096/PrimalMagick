@@ -63,8 +63,8 @@ public class VocabularyWidget extends AbstractWidget {
         
         // Render language glyph
         pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate(8, 8, 2.0F);
-        pGuiGraphics.blit(this.getLanguage().getGlyphLocation(), 0, 0, 0, 0, 8, 8);
+        pGuiGraphics.pose().translate(4, 4, 2.0F);
+        pGuiGraphics.blitSprite(this.getLanguage().getGlyphSprite(), 0, 0, 8, 8);
         pGuiGraphics.pose().popPose();
 
         // Render the amount string
@@ -76,11 +76,13 @@ public class VocabularyWidget extends AbstractWidget {
         pGuiGraphics.drawString(mc.font, amountText, 0, 0, Color.WHITE.getRGB());
         pGuiGraphics.pose().popPose();
 
-        // Draw the tooltip if applicable
-        pGuiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().getName(), this.getAmount())), 
-                pMouseX, pMouseY, ItemStack.EMPTY);
-
         pGuiGraphics.pose().popPose();
+
+        // Draw the tooltip if applicable
+        if (this.isHoveredOrFocused()) {
+            pGuiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().getName(), this.getAmount())), 
+                    pMouseX, pMouseY, ItemStack.EMPTY);
+        }
     }
 
     @Override
