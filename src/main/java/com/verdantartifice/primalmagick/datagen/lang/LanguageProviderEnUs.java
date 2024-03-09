@@ -1023,6 +1023,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("loot_table").sub("trade").sub("desc").output("Random basic village goods").end().build();
         this.label("loot_table").sub("prosperous_trade").sub("desc").output("Random prosperous village goods").end().build();
         this.label("loot_table").sub("rich_trade").sub("desc").output("Random rich village goods").end().build();
+        this.label("scribe_table").sub("missing_book").output("Missing translatable book!").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();

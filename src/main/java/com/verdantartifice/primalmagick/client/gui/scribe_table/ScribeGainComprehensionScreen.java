@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
+import java.awt.Color;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<ScribeGainComprehensionMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_gain_comprehension.png");
+    protected static final ResourceLocation PARCHMENT_SPRITE = PrimalMagick.resource("scribe_table/parchment");
     
     protected VocabularyWidget vocabularyWidget;
     
@@ -57,5 +60,19 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.vocabularyWidget.visible = lang.isComplex();
         this.vocabularyWidget.setLanguage(lang);
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
+        
+        if (lang.isComplex()) {
+            // Draw the parchment background for the comprehension grid
+            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().translate(this.leftPos + 34, this.topPos + 7, 0);
+            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
+            pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 324, 256);
+            pGuiGraphics.pose().popPose();
+        } else {
+            // Render missing writing materials text
+            Component text = Component.translatable("label.primalmagick.scribe_table.missing_book");
+            int width = this.minecraft.font.width(text.getString());
+            pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 34 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+        }
     }
 }
