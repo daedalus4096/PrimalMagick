@@ -33,13 +33,13 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     
     public ScribeGainComprehensionMenu(int windowId, Inventory inv, BlockPos pos) {
         this(windowId, inv, pos, null);
-        this.addDataSlot(this.languageClue);
-        this.addDataSlot(this.vocabularyCount);
-        this.refreshBookData();
     }
     
     public ScribeGainComprehensionMenu(int windowId, Inventory inv, BlockPos pos, ScribeTableTileEntity entity) {
         super(MenuTypesPM.SCRIBE_GAIN_COMPREHENSION.get(), windowId, inv, pos, entity);
+        this.addDataSlot(this.languageClue);
+        this.addDataSlot(this.vocabularyCount);
+        this.refreshBookData();
     }
     
     @Override
