@@ -12,4 +12,5 @@ public interface IReward {
     void grant(ServerPlayer player);
     Component getDescription();
     String getRewardType();
+    <T extends IReward> IRewardSerializer<T> getSerializer();
 }

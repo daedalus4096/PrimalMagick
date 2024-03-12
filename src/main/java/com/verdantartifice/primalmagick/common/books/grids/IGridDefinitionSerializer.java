@@ -12,17 +12,17 @@ import net.minecraft.resources.ResourceLocation;
  */
 public interface IGridDefinitionSerializer {
     /**
-     * Read a project template from JSON
+     * Read a grid definition from JSON
      */
     GridDefinition read(ResourceLocation templateId, JsonObject json);
     
     /**
-     * Read a project template from the network
+     * Read a grid definition from the network
      */
     GridDefinition fromNetwork(FriendlyByteBuf buf);
 
     /**
-     * Write a project template to the network
+     * Write a grid definition to the network
      */
     void toNetwork(FriendlyByteBuf buf, GridDefinition template);
 }
