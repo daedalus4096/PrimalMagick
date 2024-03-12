@@ -63,7 +63,7 @@ import net.minecraftforge.fml.common.Mod;
 
             try {
                 // Instantiate grid definition from serializer, then attempt to register it
-                GridDefinition gridDef = LinguisticsManager.GRID_DEFINITION_SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
+                GridDefinition gridDef = GridDefinition.SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
                 if (gridDef == null || !LinguisticsManager.registerGridDefinition(location, gridDef)) {
                     LOGGER.error("Failed to register linguistics grid definition {}", location);
                 }
