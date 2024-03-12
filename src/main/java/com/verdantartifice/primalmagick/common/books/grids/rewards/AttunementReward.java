@@ -44,6 +44,11 @@ public class AttunementReward extends AbstractReward {
     }
 
     @Override
+    public ResourceLocation getIconLocation() {
+        return this.source.getImage();
+    }
+
+    @Override
     public String getRewardType() {
         return TYPE;
     }

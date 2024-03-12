@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -11,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 public interface IReward {
     void grant(ServerPlayer player);
     Component getDescription();
+    ResourceLocation getIconLocation();
     String getRewardType();
     <T extends IReward> IRewardSerializer<T> getSerializer();
 }
