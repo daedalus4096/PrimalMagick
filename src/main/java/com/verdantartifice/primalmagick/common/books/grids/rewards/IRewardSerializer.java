@@ -11,6 +11,23 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public interface IRewardSerializer<T extends IReward> {
+    public static final IRewardSerializer<?> NULL = new IRewardSerializer<>() {
+        @Override
+        public IReward read(ResourceLocation gridId, JsonObject json) {
+            return null;
+        }
+
+        @Override
+        public IReward fromNetwork(FriendlyByteBuf buf) {
+            return null;
+        }
+
+        @Override
+        public void toNetwork(FriendlyByteBuf buf, IReward reward) {
+            // Do nothing
+        }
+    };
+    
     /**
      * Read a reward definition from JSON
      */

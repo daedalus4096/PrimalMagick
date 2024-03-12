@@ -45,9 +45,7 @@ public abstract class AbstractReward implements IReward {
     @Nullable
     public static IReward fromJson(@Nullable JsonObject json, @Nonnull ResourceLocation gridId) {
         try {
-            String rewardType = json.getAsJsonPrimitive("type").getAsString();
-            IRewardSerializer<?> serializer = SERIALIZERS.get(rewardType);
-            return (serializer == null) ? null : serializer.read(gridId, json);
+            return json == null ? null : SERIALIZERS.getOrDefault(json.getAsJsonPrimitive("type").getAsString(), IRewardSerializer.NULL).read(gridId, json);
         } catch (Exception e) {
             throw new JsonSyntaxException("Invalid reward in linguistics grid JSON for " + gridId.toString(), e);
         }
@@ -56,9 +54,7 @@ public abstract class AbstractReward implements IReward {
     @Nullable
     public static IReward fromNetwork(FriendlyByteBuf buf) {
         if (buf.readBoolean()) {
-            String rewardType = buf.readUtf();
-            IRewardSerializer<?> serializer = SERIALIZERS.get(rewardType);
-            return (serializer == null) ? null : serializer.fromNetwork(buf);
+            return SERIALIZERS.getOrDefault(buf.readUtf(), IRewardSerializer.NULL).fromNetwork(buf);
         } else {
             return null;
         }
