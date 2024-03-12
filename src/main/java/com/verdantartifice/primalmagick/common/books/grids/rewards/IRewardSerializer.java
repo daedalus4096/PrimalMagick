@@ -14,7 +14,7 @@ public interface IRewardSerializer<T extends IReward> {
     /**
      * Read a reward definition from JSON
      */
-    T read(ResourceLocation templateId, JsonObject json);
+    T read(ResourceLocation gridId, JsonObject json);
     
     /**
      * Read a reward definition from the network

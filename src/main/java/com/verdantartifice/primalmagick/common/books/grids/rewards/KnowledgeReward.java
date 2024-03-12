@@ -25,10 +25,22 @@ public class KnowledgeReward extends AbstractReward {
     private KnowledgeType knowledgeType;
     private int points;
     
+    static {
+        AbstractReward.register(TYPE, KnowledgeReward::fromNBT, SERIALIZER);
+    }
+    
+    private KnowledgeReward() {}
+    
     protected KnowledgeReward(@Nonnull KnowledgeType type, int points) {
         Verify.verifyNotNull(type, "Invalid knowledge type for knowledge reward");
         this.knowledgeType = type;
         this.points = points;
+    }
+    
+    public static KnowledgeReward fromNBT(CompoundTag tag) {
+        KnowledgeReward retVal = new KnowledgeReward();
+        retVal.deserializeNBT(tag);
+        return retVal;
     }
     
     @Override

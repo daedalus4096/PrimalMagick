@@ -25,10 +25,22 @@ public class AttunementReward extends AbstractReward {
     private Source source;
     private int points;
     
+    static {
+        AbstractReward.register(TYPE, AttunementReward::fromNBT, SERIALIZER);
+    }
+    
+    private AttunementReward() {}
+    
     protected AttunementReward(Source source, int points) {
         Verify.verifyNotNull(source, "Invalid source for attunement reward");
         this.source = source;
         this.points = points;
+    }
+    
+    public static AttunementReward fromNBT(CompoundTag tag) {
+        AttunementReward retVal = new AttunementReward();
+        retVal.deserializeNBT(tag);
+        return retVal;
     }
 
     @Override

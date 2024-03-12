@@ -14,7 +14,7 @@ public interface IGridDefinitionSerializer {
     /**
      * Read a grid definition from JSON
      */
-    GridDefinition read(ResourceLocation templateId, JsonObject json);
+    GridDefinition read(ResourceLocation gridId, JsonObject json);
     
     /**
      * Read a grid definition from the network
@@ -24,5 +24,5 @@ public interface IGridDefinitionSerializer {
     /**
      * Write a grid definition to the network
      */
-    void toNetwork(FriendlyByteBuf buf, GridDefinition template);
+    void toNetwork(FriendlyByteBuf buf, GridDefinition gridDef);
 }

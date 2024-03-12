@@ -27,10 +27,22 @@ public class ComprehensionReward extends AbstractReward {
     private BookLanguage language;
     private int points;
     
+    static {
+        AbstractReward.register(TYPE, ComprehensionReward::fromNBT, SERIALIZER);
+    }
+    
+    private ComprehensionReward() {}
+    
     protected ComprehensionReward(BookLanguage language, int points) {
         Verify.verifyNotNull(language, "Invalid language for comprehension reward");
         this.language = language;
         this.points = points;
+    }
+    
+    public static ComprehensionReward fromNBT(CompoundTag tag) {
+        ComprehensionReward retVal = new ComprehensionReward();
+        retVal.deserializeNBT(tag);
+        return retVal;
     }
     
     @Override

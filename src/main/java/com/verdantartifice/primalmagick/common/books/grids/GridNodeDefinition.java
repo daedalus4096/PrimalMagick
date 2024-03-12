@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagick.common.books.grids;
 
 import com.google.gson.JsonObject;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Class encapsulating a data-defined node definition for a linguistics grid.  These definitions
@@ -12,27 +15,66 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class GridNodeDefinition {
+public class GridNodeDefinition implements INBTSerializable<CompoundTag> {
+    public static final IGridNodeDefinitionSerializer SERIALIZER = new Serializer();
+    
     protected int vocabularyCost;
     protected IReward reward;
     
+    private GridNodeDefinition() {}
+    
+    protected GridNodeDefinition(int vocabularyCost, IReward reward) {
+        this.vocabularyCost = vocabularyCost;
+        this.reward = reward;
+    }
+    
+    public static GridNodeDefinition fromNBT(CompoundTag tag) {
+        GridNodeDefinition retVal = new GridNodeDefinition();
+        retVal.deserializeNBT(tag);
+        return retVal;
+    }
+    
+    public int getVocabularyCost() {
+        return this.vocabularyCost;
+    }
+    
+    public IReward getReward() {
+        return this.reward;
+    }
+
+    @Override
+    public CompoundTag serializeNBT() {
+        CompoundTag retVal = new CompoundTag();
+        retVal.putInt("Cost", this.vocabularyCost);
+        retVal.put("Reward", this.reward.serializeNBT());
+        return retVal;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundTag nbt) {
+        this.vocabularyCost = nbt.getInt("Cost");
+        this.reward = AbstractReward.fromNBT(nbt.getCompound("Reward"));
+    }
+    
     public static class Serializer implements IGridNodeDefinitionSerializer {
         @Override
-        public GridNodeDefinition read(ResourceLocation templateId, JsonObject json) {
-            // TODO Auto-generated method stub
-            return null;
+        public GridNodeDefinition read(ResourceLocation gridId, JsonObject json) {
+            int cost = json.getAsJsonPrimitive("cost").getAsInt();
+            IReward reward = AbstractReward.fromJson(json, gridId);
+            return new GridNodeDefinition(cost, reward);
         }
 
         @Override
         public GridNodeDefinition fromNetwork(FriendlyByteBuf buf) {
-            // TODO Auto-generated method stub
-            return null;
+            int cost = buf.readVarInt();
+            IReward reward = AbstractReward.fromNetwork(buf);
+            return new GridNodeDefinition(cost, reward);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, GridNodeDefinition template) {
-            // TODO Auto-generated method stub
-            
+        public void toNetwork(FriendlyByteBuf buf, GridNodeDefinition nodeDef) {
+            buf.writeVarInt(nodeDef.vocabularyCost);
+            AbstractReward.toNetwork(buf, nodeDef.reward);
         }
     }
 }
