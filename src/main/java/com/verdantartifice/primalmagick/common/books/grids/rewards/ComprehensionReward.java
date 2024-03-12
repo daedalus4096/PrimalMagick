@@ -40,8 +40,7 @@ public class ComprehensionReward extends AbstractReward {
 
     @Override
     public Component getDescription() {
-        // TODO Replace with a dedicated set of strings instead of borrowing the attunement strings
-        Component amountText = Component.translatable("label.primalmagick.attunement_gain." + Mth.clamp(this.points, 0, 5));
+        Component amountText = Component.translatable("label.primalmagick.comprehension_gain." + Mth.clamp(this.points, 0, 5));
         Component langText = this.language.getName();
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.comprehension", langText, amountText);
     }

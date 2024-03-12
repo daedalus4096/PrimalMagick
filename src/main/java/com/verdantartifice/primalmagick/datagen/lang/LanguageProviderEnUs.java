@@ -1026,6 +1026,13 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("scribe_table").sub("missing_book").output("Missing translatable book!").end().build();
         this.label("scribe_table").sub("grid").sub("reward").sub("attunement").output("%2$s permanent %1$s attunement").end().build();
         this.label("scribe_table").sub("grid").sub("reward").sub("comprehension").output("%2$s %1$s comprehension").end().build();
+        this.label("scribe_table").sub("grid").sub("reward").sub("knowledge").output("%2$dx %1$s").end().build();
+        this.label("comprehension_gain").sub("0").output("None").end().build();
+        this.label("comprehension_gain").sub("1").output("Limited").end().build();
+        this.label("comprehension_gain").sub("2").output("Minor").end().build();
+        this.label("comprehension_gain").sub("3").output("Moderate").end().build();
+        this.label("comprehension_gain").sub("4").output("Major").end().build();
+        this.label("comprehension_gain").sub("5").output("Profound").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
