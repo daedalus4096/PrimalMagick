@@ -30,6 +30,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public class GridDefinition implements INBTSerializable<CompoundTag> {
     public static final IGridDefinitionSerializer SERIALIZER = new Serializer();
+    public static final int MIN_POS = 0;
+    public static final int MAX_POS = 7;
     
     protected ResourceLocation key;
     protected BookLanguage language;
