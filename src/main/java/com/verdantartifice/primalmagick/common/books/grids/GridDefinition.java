@@ -4,9 +4,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import org.joml.Vector2i;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 
@@ -40,10 +45,15 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         this.nodes.putAll(nodes);
     }
     
+    @Nullable
     public static GridDefinition fromNBT(CompoundTag tag) {
-        GridDefinition retVal = new GridDefinition();
-        retVal.deserializeNBT(tag);
-        return retVal;
+        if (tag == null) {
+            return null;
+        } else {
+            GridDefinition retVal = new GridDefinition();
+            retVal.deserializeNBT(tag);
+            return retVal;
+        }
     }
     
     public ResourceLocation getKey() {
@@ -99,21 +109,54 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     
     public static class Serializer implements IGridDefinitionSerializer {
         @Override
-        public GridDefinition read(ResourceLocation templateId, JsonObject json) {
-            // TODO Auto-generated method stub
-            return null;
+        public GridDefinition read(ResourceLocation gridId, JsonObject json) {
+            ResourceLocation key = new ResourceLocation(json.getAsJsonPrimitive("key").getAsString());
+            BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
+            Vector2i startPos = new Vector2i(json.getAsJsonPrimitive("startX").getAsInt(), json.getAsJsonPrimitive("startY").getAsInt());
+            
+            Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
+            JsonArray nodesJson = json.getAsJsonArray("nodes");
+            for (JsonElement nodeElement : nodesJson) {
+                try {
+                    JsonObject nodeObj = nodeElement.getAsJsonObject();
+                    Vector2i nodePos = new Vector2i(nodeObj.getAsJsonPrimitive("posX").getAsInt(), nodeObj.getAsJsonPrimitive("posY").getAsInt());
+                    GridNodeDefinition nodeDef = GridNodeDefinition.SERIALIZER.read(gridId, nodeObj.getAsJsonObject("nodeDef"));
+                    nodes.put(nodePos, nodeDef);
+                } catch (Exception e) {
+                    throw new JsonSyntaxException("Invalid node definition in grid definition JSON for " + gridId.toString(), e);
+                }
+            }
+            
+            return new GridDefinition(key, language, startPos, nodes);
         }
 
         @Override
         public GridDefinition fromNetwork(FriendlyByteBuf buf) {
-            // TODO Auto-generated method stub
-            return null;
+            ResourceLocation key = buf.readResourceLocation();
+            BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(buf.readResourceLocation());
+            Vector2i startPos = new Vector2i(buf.readVarInt(), buf.readVarInt());
+            
+            Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
+            int nodeCount = buf.readVarInt();
+            for (int index = 0; index < nodeCount; index++) {
+                nodes.put(new Vector2i(buf.readVarInt(), buf.readVarInt()), GridNodeDefinition.SERIALIZER.fromNetwork(buf));
+            }
+            
+            return new GridDefinition(key, language, startPos, nodes);
         }
 
         @Override
-        public void toNetwork(FriendlyByteBuf buf, GridDefinition template) {
-            // TODO Auto-generated method stub
-            
+        public void toNetwork(FriendlyByteBuf buf, GridDefinition gridDef) {
+            buf.writeResourceLocation(gridDef.key);
+            buf.writeResourceLocation(gridDef.language.languageId());
+            buf.writeVarInt(gridDef.startPos.x());
+            buf.writeVarInt(gridDef.startPos.y());
+            buf.writeVarInt(gridDef.nodes.size());
+            for (Map.Entry<Vector2i, GridNodeDefinition> entry : gridDef.nodes.entrySet()) {
+                buf.writeVarInt(entry.getKey().x());
+                buf.writeVarInt(entry.getKey().y());
+                GridNodeDefinition.SERIALIZER.toNetwork(buf, entry.getValue());
+            }
         }
     }
 }

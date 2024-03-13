@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids;
 
+import javax.annotation.Nullable;
+
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
@@ -28,12 +30,17 @@ public class GridNodeDefinition implements INBTSerializable<CompoundTag> {
         this.reward = reward;
     }
     
-    public static GridNodeDefinition fromNBT(CompoundTag tag) {
-        GridNodeDefinition retVal = new GridNodeDefinition();
-        retVal.deserializeNBT(tag);
-        return retVal;
+    @Nullable
+    public static GridNodeDefinition fromNBT(@Nullable CompoundTag tag) {
+        if (tag == null) {
+            return null;
+        } else {
+            GridNodeDefinition retVal = new GridNodeDefinition();
+            retVal.deserializeNBT(tag);
+            return retVal;
+        }
     }
-    
+
     public int getVocabularyCost() {
         return this.vocabularyCost;
     }
@@ -60,7 +67,7 @@ public class GridNodeDefinition implements INBTSerializable<CompoundTag> {
         @Override
         public GridNodeDefinition read(ResourceLocation gridId, JsonObject json) {
             int cost = json.getAsJsonPrimitive("cost").getAsInt();
-            IReward reward = AbstractReward.fromJson(json, gridId);
+            IReward reward = AbstractReward.fromJson(json.getAsJsonObject("reward"), gridId);
             return new GridNodeDefinition(cost, reward);
         }
 
