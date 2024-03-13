@@ -23,7 +23,7 @@ public class KnowledgeReward extends AbstractReward {
     public static final IRewardSerializer<KnowledgeReward> SERIALIZER = new Serializer();
 
     private KnowledgeType knowledgeType;
-    private int points;
+    private int levels;
     
     static {
         AbstractReward.register(TYPE, KnowledgeReward::fromNBT, SERIALIZER);
@@ -31,10 +31,10 @@ public class KnowledgeReward extends AbstractReward {
     
     private KnowledgeReward() {}
     
-    protected KnowledgeReward(@Nonnull KnowledgeType type, int points) {
+    protected KnowledgeReward(@Nonnull KnowledgeType type, int levels) {
         Verify.verifyNotNull(type, "Invalid knowledge type for knowledge reward");
         this.knowledgeType = type;
-        this.points = points;
+        this.levels = levels;
     }
     
     public static KnowledgeReward fromNBT(CompoundTag tag) {
@@ -45,12 +45,12 @@ public class KnowledgeReward extends AbstractReward {
     
     @Override
     public void grant(ServerPlayer player) {
-        ResearchManager.addKnowledge(player, this.knowledgeType, this.points);
+        ResearchManager.addKnowledge(player, this.knowledgeType, this.levels * this.knowledgeType.getProgression());
     }
 
     @Override
     public Component getDescription() {
-        Component amountText = Component.literal(Integer.toString(this.points));
+        Component amountText = Component.literal(Integer.toString(this.levels));
         Component typeText = Component.translatable(this.knowledgeType.getNameTranslationKey());
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.knowledge", typeText, amountText);
     }
@@ -74,25 +74,25 @@ public class KnowledgeReward extends AbstractReward {
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = super.serializeNBT();
-        tag.putString("Type", this.knowledgeType.getSerializedName());
-        tag.putInt("Points", this.points);
+        tag.putString("KnowledgeType", this.knowledgeType.getSerializedName());
+        tag.putInt("Levels", this.levels);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
-        this.knowledgeType = KnowledgeType.fromName(nbt.getString("Type"));
+        this.knowledgeType = KnowledgeType.fromName(nbt.getString("KnowledgeType"));
         Verify.verifyNotNull(this.knowledgeType, "Invalid knowledge type for knowledge reward");
-        this.points = nbt.getInt("Points");
+        this.levels = nbt.getInt("Levels");
     }
 
     public static class Serializer implements IRewardSerializer<KnowledgeReward> {
         @Override
         public KnowledgeReward read(ResourceLocation templateId, JsonObject json) {
-            KnowledgeType type = KnowledgeType.fromName(json.getAsJsonPrimitive("type").getAsString());
-            int points = json.getAsJsonPrimitive("points").getAsInt();
-            return new KnowledgeReward(type, points);
+            KnowledgeType type = KnowledgeType.fromName(json.getAsJsonPrimitive("knowledge_type").getAsString());
+            int levels = json.getAsJsonPrimitive("levels").getAsInt();
+            return new KnowledgeReward(type, levels);
         }
 
         @Override
@@ -103,7 +103,7 @@ public class KnowledgeReward extends AbstractReward {
         @Override
         public void toNetwork(FriendlyByteBuf buf, KnowledgeReward reward) {
             buf.writeUtf(reward.knowledgeType.getSerializedName());
-            buf.writeVarInt(reward.points);
+            buf.writeVarInt(reward.levels);
         }
     }
 }
