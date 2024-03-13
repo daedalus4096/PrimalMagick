@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagick.common.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateResearchPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
@@ -39,5 +41,6 @@ public class DataEvents {
         PacketHandler.sendToPlayer(new UpdateResearchPacket(ResearchEntries.getAllEntries()), player);
         PacketHandler.sendToPlayer(new UpdateTheorycraftingPacket(TheorycraftManager.getAllTemplates()), player);
         PacketHandler.sendToPlayer(new UpdateRuneEnchantmentsPacket(RuneManager.getAllDefinitions()), player);
+        PacketHandler.sendToPlayer(new UpdateLinguisticsGridsPacket(LinguisticsManager.getAllGridDefinitions()), player);
     }
 }

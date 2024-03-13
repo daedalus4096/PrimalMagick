@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -20,8 +21,13 @@ import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+/**
+ * Resource reload listener for linguistics grid definition data.
+ * 
+ * @author Daedalus4096
+ */
 @Mod.EventBusSubscriber(modid=PrimalMagick.MODID)
- public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
+public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
     protected static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
     
@@ -74,4 +80,13 @@ import net.minecraftforge.fml.common.Mod;
         LOGGER.info("Loaded {} linguistics grid definitions", LinguisticsManager.getAllGridDefinitions().size());
     }
 
+    public void replaceGridDefinitions(Map<ResourceLocation, GridDefinition> gridDefinitions) {
+        LinguisticsManager.clearAllGridDefinitions();
+        for (Map.Entry<ResourceLocation, GridDefinition> entry : gridDefinitions.entrySet()) {
+            if (entry.getValue() == null || !LinguisticsManager.registerGridDefinition(entry.getKey(), entry.getValue())) {
+                LOGGER.error("Failed to update linguistics grid {}", entry.getKey());
+            }
+        }
+        LOGGER.info("Updated {} linguistics grid definitions", TheorycraftManager.getAllTemplates().size());
+    }
 }
