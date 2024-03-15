@@ -106,7 +106,7 @@ public class GridDefinitionBuilder {
     
     public void build(Consumer<IFinishedGrid> consumer, ResourceLocation id) {
         this.validate(id);
-        new Result(this.key, this.bookLanguage, this.startPos, this.nodes);
+        consumer.accept(new Result(this.key, this.bookLanguage, this.startPos, this.nodes));
     }
     
     public static class Result implements IFinishedGrid {
