@@ -1,0 +1,38 @@
+{
+  "key": "primalmagick:sample",
+  "language": "primalmagick:trade",
+  "nodes": [
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 0
+    },
+    {
+      "cost": 2,
+      "reward": {
+        "type": "attunement",
+        "points": 2,
+        "source": "earth"
+      },
+      "x": 1,
+      "y": 0
+    },
+    {
+      "cost": 3,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:trade",
+        "points": 1
+      },
+      "x": 0,
+      "y": 1
+    }
+  ],
+  "start_x": 0,
+  "start_y": 0
+}
