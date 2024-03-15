@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
@@ -43,7 +44,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
     
     // Map of grid definition IDs to sets of unlocked node coordinates
-    private final Map<ResourceLocation, Set<Vector2i>> unlocks = new ConcurrentHashMap<>();
+    private final Map<ResourceLocation, Set<Vector2ic>> unlocks = new ConcurrentHashMap<>();
     
     // Current scribe table mode
     private ScribeTableMode scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
@@ -93,12 +94,12 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         
         // Serialize unlocked node coordinates
         ListTag unlockGridList = new ListTag();
-        for (Map.Entry<ResourceLocation, Set<Vector2i>> gridEntry : this.unlocks.entrySet()) {
+        for (Map.Entry<ResourceLocation, Set<Vector2ic>> gridEntry : this.unlocks.entrySet()) {
             if (gridEntry != null) {
                 CompoundTag gridTag = new CompoundTag();
                 gridTag.putString("GridDef", gridEntry.getKey().toString());
                 ListTag unlockCoordsList = new ListTag();
-                for (Vector2i coords : gridEntry.getValue()) {
+                for (Vector2ic coords : gridEntry.getValue()) {
                     if (coords != null) {
                         CompoundTag coordsTag = new CompoundTag();
                         coordsTag.putInt("X", coords.x());
@@ -218,7 +219,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId) {
+    public Set<Vector2ic> getUnlockedNodes(ResourceLocation gridDefinitionId) {
         return Collections.unmodifiableSet(this.unlocks.getOrDefault(gridDefinitionId, Collections.emptySet()));
     }
 
@@ -228,7 +229,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     }
 
     @Override
-    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos) {
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos) {
         return this.unlocks.computeIfAbsent(gridDefinitionId, k -> new HashSet<>()).add(nodePos);
     }
 

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.network.packets.scribe_table;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
@@ -22,9 +23,9 @@ public class UnlockGridNodeActionPacket implements IMessageToServer {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final ResourceLocation gridDefinitionKey;
-    protected final Vector2i nodePos;
+    protected final Vector2ic nodePos;
     
-    public UnlockGridNodeActionPacket(ResourceLocation key, Vector2i pos) {
+    public UnlockGridNodeActionPacket(ResourceLocation key, Vector2ic pos) {
         this.gridDefinitionKey = key;
         this.nodePos = pos;
     }

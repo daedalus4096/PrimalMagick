@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 
@@ -102,12 +102,12 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     
     /**
      * Gets an unmodifiable view of the currently unlocked node coordinates for the given grid.  To unlock
-     * a new node, use {@link #unlockNode(ResourceLocation, Vector2i)}.
+     * a new node, use {@link #unlockNode(ResourceLocation, Vector2ic)}.
      * 
      * @param gridDefinitionId the grid definition to be queried
      * @return an unmodifiable view of the given grid's unlocked nodes
      */
-    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId);
+    public Set<Vector2ic> getUnlockedNodes(ResourceLocation gridDefinitionId);
     
     /**
      * Clears all unlocked nodes for the given grid.
@@ -124,7 +124,7 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
      * @param nodePos the coordinates to be unlocked
      * @return true if the node was unlocked, false otherwise (i.e. the node was already unlocked)
      */
-    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos);
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos);
     
     /**
      * Sync the given player's linguistics data to the their client.

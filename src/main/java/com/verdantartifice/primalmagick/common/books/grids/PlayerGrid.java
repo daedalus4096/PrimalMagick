@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
@@ -25,14 +26,14 @@ import net.minecraft.world.level.Level;
 public class PlayerGrid {
     protected final Player player;
     protected final GridDefinition definition;
-    protected final Set<Vector2i> unlocked = new HashSet<>();
+    protected final Set<Vector2ic> unlocked = new HashSet<>();
     
     public PlayerGrid(Player player, GridDefinition definition) {
         this.player = player;
         this.definition = definition;
     }
     
-    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2i> unlocked) {
+    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2ic> unlocked) {
         this(player, definition);
         this.unlocked.addAll(unlocked);
     }
@@ -50,7 +51,7 @@ public class PlayerGrid {
      * 
      * @return an unmodifiable copy of the grid's currently unlocked nodes
      */
-    public Set<Vector2i> getUnlocked() {
+    public Set<Vector2ic> getUnlocked() {
         return Collections.unmodifiableSet(this.unlocked);
     }
     
@@ -58,7 +59,7 @@ public class PlayerGrid {
         return this.unlock(new Vector2i(x, y));
     }
     
-    public boolean unlock(Vector2i node) {
+    public boolean unlock(Vector2ic node) {
         if (node == null) {
             // Can't unlock a null node
             return false;
@@ -96,7 +97,7 @@ public class PlayerGrid {
         }
     }
     
-    protected static boolean areAdjacent(Vector2i vec1, Vector2i vec2) {
+    protected static boolean areAdjacent(Vector2ic vec1, Vector2ic vec2) {
         return vec1 != null && vec2 != null && vec1.gridDistance(vec2) == 1;
     }
 }

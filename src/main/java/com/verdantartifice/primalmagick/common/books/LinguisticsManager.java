@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableObject;
-import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.IGridDefinitionSerializer;
@@ -186,8 +186,8 @@ public class LinguisticsManager {
         return GRID_DEFINITIONS.get(gridKey);
     }
     
-    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
-        MutableObject<Set<Vector2i>> retVal = new MutableObject<>(Collections.emptySet());
+    protected static Set<Vector2ic> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
+        MutableObject<Set<Vector2ic>> retVal = new MutableObject<>(Collections.emptySet());
         if (player != null && gridKey != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
                 retVal.setValue(linguistics.getUnlockedNodes(gridKey));

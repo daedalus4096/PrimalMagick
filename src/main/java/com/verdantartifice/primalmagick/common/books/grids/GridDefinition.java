@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -38,12 +39,12 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     
     protected ResourceLocation key;
     protected BookLanguage language;
-    protected Vector2i startPos;
-    protected final Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
+    protected Vector2ic startPos;
+    protected final Map<Vector2ic, GridNodeDefinition> nodes = new HashMap<>();
     
     private GridDefinition() {}
     
-    protected GridDefinition(ResourceLocation key, BookLanguage language, Vector2i startPos, Map<Vector2i, GridNodeDefinition> nodes) {
+    protected GridDefinition(ResourceLocation key, BookLanguage language, Vector2ic startPos, Map<Vector2ic, GridNodeDefinition> nodes) {
         this.key = key;
         this.language = language;
         this.startPos = startPos;
@@ -69,11 +70,11 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         return this.language;
     }
     
-    public Vector2i getStartPos() {
+    public Vector2ic getStartPos() {
         return this.startPos;
     }
     
-    public Map<Vector2i, GridNodeDefinition> getNodes() {
+    public Map<Vector2ic, GridNodeDefinition> getNodes() {
         return Collections.unmodifiableMap(this.nodes);
     }
     
@@ -81,7 +82,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         return this.isValidPos(new Vector2i(x, y));
     }
     
-    public boolean isValidPos(Vector2i pos) {
+    public boolean isValidPos(Vector2ic pos) {
         return this.nodes.containsKey(pos);
     }
 
@@ -94,7 +95,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         retVal.putInt("StartY", this.startPos.y());
         
         ListTag nodeListTag = new ListTag();
-        for (Map.Entry<Vector2i, GridNodeDefinition> entry : this.nodes.entrySet()) {
+        for (Map.Entry<Vector2ic, GridNodeDefinition> entry : this.nodes.entrySet()) {
             CompoundTag nodeTag = new CompoundTag();
             nodeTag.putInt("PosX", entry.getKey().x());
             nodeTag.putInt("PosY", entry.getKey().y());
@@ -129,8 +130,8 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
             
             // Because JSON doesn't do maps with anything but string keys, the X and Y coordinates of the node are packed into
             // the same JSON object as the node definition itself.  These JSON objects are then contained in a single JSON list.
-            Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
-            Set<Vector2i> posSet = new HashSet<>();
+            Map<Vector2ic, GridNodeDefinition> nodes = new HashMap<>();
+            Set<Vector2ic> posSet = new HashSet<>();
             JsonArray nodesJson = json.getAsJsonArray("nodes");
             for (JsonElement nodeElement : nodesJson) {
                 try {
@@ -157,7 +158,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
             BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(buf.readResourceLocation());
             Vector2i startPos = new Vector2i(buf.readVarInt(), buf.readVarInt());
             
-            Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
+            Map<Vector2ic, GridNodeDefinition> nodes = new HashMap<>();
             int nodeCount = buf.readVarInt();
             for (int index = 0; index < nodeCount; index++) {
                 nodes.put(new Vector2i(buf.readVarInt(), buf.readVarInt()), GridNodeDefinition.SERIALIZER.fromNetwork(buf));
@@ -173,7 +174,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
             buf.writeVarInt(gridDef.startPos.x());
             buf.writeVarInt(gridDef.startPos.y());
             buf.writeVarInt(gridDef.nodes.size());
-            for (Map.Entry<Vector2i, GridNodeDefinition> entry : gridDef.nodes.entrySet()) {
+            for (Map.Entry<Vector2ic, GridNodeDefinition> entry : gridDef.nodes.entrySet()) {
                 buf.writeVarInt(entry.getKey().x());
                 buf.writeVarInt(entry.getKey().y());
                 GridNodeDefinition.SERIALIZER.toNetwork(buf, entry.getValue());
