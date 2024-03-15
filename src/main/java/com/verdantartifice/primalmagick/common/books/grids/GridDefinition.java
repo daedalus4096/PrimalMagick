@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -84,6 +85,14 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     
     public boolean isValidPos(Vector2ic pos) {
         return this.nodes.containsKey(pos);
+    }
+    
+    public Optional<GridNodeDefinition> getNode(int x, int y) {
+        return this.getNode(new Vector2i(x, y));
+    }
+    
+    public Optional<GridNodeDefinition> getNode(Vector2ic pos) {
+        return this.isValidPos(pos) ? Optional.ofNullable(this.nodes.get(pos)) : Optional.empty();
     }
 
     @Override

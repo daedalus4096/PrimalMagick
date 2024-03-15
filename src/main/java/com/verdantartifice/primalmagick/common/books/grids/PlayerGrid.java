@@ -60,20 +60,7 @@ public class PlayerGrid {
     }
     
     public boolean unlock(Vector2ic node) {
-        if (node == null) {
-            // Can't unlock a null node
-            return false;
-        }
-        if (this.unlocked.contains(node)) {
-            // Can't unlock a node that's already been unlocked
-            return false;
-        }
-        if (!this.definition.isValidPos(node)) {
-            // Can't unlock a node that isn't in the grid definition
-            return false;
-        }
-        if (!this.definition.getStartPos().equals(node) && !this.unlocked.stream().anyMatch(v -> areAdjacent(node, v))) {
-            // Can't unlock a node that the player doesn't have a path to
+        if (!this.isUnlockable(node)) {
             return false;
         }
         
@@ -95,6 +82,27 @@ public class PlayerGrid {
             });
             return retVal.getValue();
         }
+    }
+    
+    public boolean isUnlockable(Vector2ic node) {
+        if (node == null) {
+            // Can't unlock a null node
+            return false;
+        }
+        if (this.unlocked.contains(node)) {
+            // Can't unlock a node that's already been unlocked
+            return false;
+        }
+        if (!this.definition.isValidPos(node)) {
+            // Can't unlock a node that isn't in the grid definition
+            return false;
+        }
+        if (!this.definition.getStartPos().equals(node) && !this.unlocked.stream().anyMatch(v -> areAdjacent(node, v))) {
+            // Can't unlock a node that the player doesn't have a path to
+            return false;
+        }
+        
+        return true;
     }
     
     protected static boolean areAdjacent(Vector2ic vec1, Vector2ic vec2) {
