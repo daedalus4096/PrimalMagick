@@ -182,23 +182,23 @@ public class LinguisticsManager {
     }
     
     @Nullable
-    protected static GridDefinition getGridDefinition(@Nonnull BookLanguage language) {
-        return GRID_DEFINITIONS.get(language.languageId());
+    protected static GridDefinition getGridDefinition(@Nonnull ResourceLocation gridKey) {
+        return GRID_DEFINITIONS.get(gridKey);
     }
     
-    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable BookLanguage language) {
+    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable ResourceLocation gridKey) {
         MutableObject<Set<Vector2i>> retVal = new MutableObject<>(Collections.emptySet());
-        if (player != null && language != null) {
+        if (player != null && gridKey != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.getUnlockedNodes(language.languageId()));
+                retVal.setValue(linguistics.getUnlockedNodes(gridKey));
             });
         }
         return retVal.getValue();
     }
     
     @Nullable
-    public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull BookLanguage language) {
-        GridDefinition gridDef = getGridDefinition(language);
-        return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, language));
+    public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull ResourceLocation gridKey) {
+        GridDefinition gridDef = getGridDefinition(gridKey);
+        return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, gridKey));
     }
 }

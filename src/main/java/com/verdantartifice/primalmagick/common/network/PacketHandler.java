@@ -52,6 +52,7 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenA
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
@@ -140,6 +141,7 @@ public class PacketHandler {
             .messageBuilder(TranscribeActionPacket.class, TranscribeActionPacket.direction()).encoder(TranscribeActionPacket::encode).decoder(TranscribeActionPacket::decode).consumerMainThread(TranscribeActionPacket::onMessage).add()
             .messageBuilder(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.direction()).encoder(StudyVocabularyActionPacket::encode).decoder(StudyVocabularyActionPacket::decode).consumerMainThread(StudyVocabularyActionPacket::onMessage).add()
             .messageBuilder(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.direction()).encoder(UpdateLinguisticsGridsPacket::encode).decoder(UpdateLinguisticsGridsPacket::decode).consumerMainThread(UpdateLinguisticsGridsPacket::onMessage).add()
+            .messageBuilder(UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.direction()).encoder(UnlockGridNodeActionPacket::encode).decoder(UnlockGridNodeActionPacket::decode).consumerMainThread(UnlockGridNodeActionPacket::onMessage).add()
             ;
     }
     
