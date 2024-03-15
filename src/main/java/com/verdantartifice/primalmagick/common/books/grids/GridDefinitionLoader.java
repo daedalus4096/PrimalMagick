@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
-import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -87,6 +86,6 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
                 LOGGER.error("Failed to update linguistics grid {}", entry.getKey());
             }
         }
-        LOGGER.info("Updated {} linguistics grid definitions", TheorycraftManager.getAllTemplates().size());
+        LOGGER.info("Updated {} linguistics grid definitions", LinguisticsManager.getAllGridDefinitions().size());
     }
 }
