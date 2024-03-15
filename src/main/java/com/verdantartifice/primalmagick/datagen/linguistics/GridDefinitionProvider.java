@@ -48,7 +48,7 @@ public class GridDefinitionProvider implements DataProvider {
     
     protected void registerGrids(Consumer<IFinishedGrid> consumer) {
         // TODO Stub
-        GridDefinitionBuilder.grid("sample").language(BookLanguagesPM.TRADE.get()).startPos(0, 0)
+        GridDefinitionBuilder.grid("trade").language(BookLanguagesPM.TRADE.get()).startPos(0, 0)
                 .node(GridNodeDefinitionBuilder.node(0, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(1, 0).cost(2).reward(AttunementRewardBuilder.reward(Source.EARTH).points(2).build()).build())
                 .node(GridNodeDefinitionBuilder.node(0, 1).cost(3).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.TRADE.get()).points(1).build()).build())
