@@ -7,13 +7,16 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.IGridDefinitionSerializer;
+import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.resources.ResourceLocation;
@@ -176,5 +179,26 @@ public class LinguisticsManager {
             GRID_DEFINITIONS.put(definitionKey, gridDefinition);
             return true;
         }
+    }
+    
+    @Nullable
+    protected static GridDefinition getGridDefinition(@Nonnull BookLanguage language) {
+        return GRID_DEFINITIONS.get(language.languageId());
+    }
+    
+    protected static Set<Vector2i> getUnlockedGridNodes(@Nullable Player player, @Nullable BookLanguage language) {
+        MutableObject<Set<Vector2i>> retVal = new MutableObject<>(Collections.emptySet());
+        if (player != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.getUnlockedNodes(language.languageId()));
+            });
+        }
+        return retVal.getValue();
+    }
+    
+    @Nullable
+    public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull BookLanguage language) {
+        GridDefinition gridDef = getGridDefinition(language);
+        return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, language));
     }
 }

@@ -26,7 +26,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 /**
  * Class encapsulating a data-defined definition for a linguistics grid.  These definitions determine
- * the layout and contents of the linguistics comprehension grids for each ancient language.
+ * the layout and contents of the linguistics comprehension grids for each ancient language.  Node
+ * coordinates increase right and down, with (0,0) being in the top-left corner to match screen coords.
  * 
  * @author Daedalus4096
  */
@@ -74,6 +75,14 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     
     public Map<Vector2i, GridNodeDefinition> getNodes() {
         return Collections.unmodifiableMap(this.nodes);
+    }
+    
+    public boolean isValidPos(int x, int y) {
+        return this.isValidPos(new Vector2i(x, y));
+    }
+    
+    public boolean isValidPos(Vector2i pos) {
+        return this.nodes.containsKey(pos);
     }
 
     @Override
