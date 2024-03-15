@@ -2,7 +2,9 @@ package com.verdantartifice.primalmagick.common.books.grids;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -114,16 +116,24 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         public GridDefinition read(ResourceLocation gridId, JsonObject json) {
             ResourceLocation key = new ResourceLocation(json.getAsJsonPrimitive("key").getAsString());
             BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
-            Vector2i startPos = new Vector2i(json.getAsJsonPrimitive("startX").getAsInt(), json.getAsJsonPrimitive("startY").getAsInt());
+            Vector2i startPos = new Vector2i(json.getAsJsonPrimitive("start_x").getAsInt(), json.getAsJsonPrimitive("start_y").getAsInt());
             
+            // Because JSON doesn't do maps with anything but string keys, the X and Y coordinates of the node are packed into
+            // the same JSON object as the node definition itself.  These JSON objects are then contained in a single JSON list.
             Map<Vector2i, GridNodeDefinition> nodes = new HashMap<>();
+            Set<Vector2i> posSet = new HashSet<>();
             JsonArray nodesJson = json.getAsJsonArray("nodes");
             for (JsonElement nodeElement : nodesJson) {
                 try {
                     JsonObject nodeObj = nodeElement.getAsJsonObject();
-                    Vector2i nodePos = new Vector2i(nodeObj.getAsJsonPrimitive("posX").getAsInt(), nodeObj.getAsJsonPrimitive("posY").getAsInt());
-                    GridNodeDefinition nodeDef = GridNodeDefinition.SERIALIZER.read(gridId, nodeObj.getAsJsonObject("nodeDef"));
-                    nodes.put(nodePos, nodeDef);
+                    Vector2i nodePos = new Vector2i(nodeObj.getAsJsonPrimitive("x").getAsInt(), nodeObj.getAsJsonPrimitive("y").getAsInt());
+                    if (posSet.contains(nodePos)) {
+                        throw new IllegalArgumentException("Duplicate node position (" + nodePos.x() + "," + nodePos.y() + ") detected");
+                    } else {
+                        GridNodeDefinition nodeDef = GridNodeDefinition.SERIALIZER.read(gridId, nodeObj);
+                        nodes.put(nodePos, nodeDef);
+                        posSet.add(nodePos);
+                    }
                 } catch (Exception e) {
                     throw new JsonSyntaxException("Invalid node definition in grid definition JSON for " + gridId.toString(), e);
                 }

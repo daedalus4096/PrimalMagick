@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.datagen.linguistics;
 
 import javax.annotation.Nonnull;
 
-import org.joml.Vector2i;
-
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 
@@ -66,14 +64,11 @@ public class GridNodeDefinitionBuilder {
         }
 
         @Override
-        public Vector2i getPosition() {
-            return new Vector2i(this.xPos, this.yPos);
-        }
-
-        @Override
         public void serialize(JsonObject json) {
-            // TODO Auto-generated method stub
-            
+            json.addProperty("x", this.xPos);
+            json.addProperty("y", this.yPos);
+            json.addProperty("cost", this.cost);
+            json.add("reward", this.reward.getRewardJson());
         }
     }
 }
