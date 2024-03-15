@@ -1,7 +1,11 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.joml.Vector2i;
 
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 
@@ -95,6 +99,32 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
      * @param mode the new scribe table mode
      */
     public void setScribeTableMode(@Nonnull ScribeTableMode mode);
+    
+    /**
+     * Gets an unmodifiable view of the currently unlocked node coordinates for the given grid.  To unlock
+     * a new node, use {@link #unlockNode(ResourceLocation, Vector2i)}.
+     * 
+     * @param gridDefinitionId the grid definition to be queried
+     * @return an unmodifiable view of the given grid's unlocked nodes
+     */
+    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId);
+    
+    /**
+     * Clears all unlocked nodes for the given grid.
+     * 
+     * @param gridDefinitionId the grid definition to be cleared
+     */
+    public void clearUnlockedNodes(ResourceLocation gridDefinitionId);
+    
+    /**
+     * Unlocks a node at the given coordinates for the given grid.  Does *not* perform validity checking,
+     * apart from duplicate checking.
+     * 
+     * @param gridDefinitionId the grid to be modified
+     * @param nodePos the coordinates to be unlocked
+     * @return true if the node was unlocked, false otherwise (i.e. the node was already unlocked)
+     */
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos);
     
     /**
      * Sync the given player's linguistics data to the their client.

@@ -1,7 +1,12 @@
 package com.verdantartifice.primalmagick.common.capabilities;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.joml.Vector2i;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashBasedTable;
@@ -36,6 +41,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     
     // Table of book definition IDs to language IDs to study counts
     private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
+    
+    // Map of grid definition IDs to sets of unlocked node coordinates
+    private final Map<ResourceLocation, Set<Vector2i>> unlocks = new ConcurrentHashMap<>();
     
     // Current scribe table mode
     private ScribeTableMode scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
@@ -83,6 +91,27 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         }
         rootTag.put("StudyCounts", studyCountList);
         
+        // Serialize unlocked node coordinates
+        ListTag unlockGridList = new ListTag();
+        for (Map.Entry<ResourceLocation, Set<Vector2i>> gridEntry : this.unlocks.entrySet()) {
+            if (gridEntry != null) {
+                CompoundTag gridTag = new CompoundTag();
+                gridTag.putString("GridDef", gridEntry.getKey().toString());
+                ListTag unlockCoordsList = new ListTag();
+                for (Vector2i coords : gridEntry.getValue()) {
+                    if (coords != null) {
+                        CompoundTag coordsTag = new CompoundTag();
+                        coordsTag.putInt("X", coords.x());
+                        coordsTag.putInt("Y", coords.y());
+                        unlockCoordsList.add(coordsTag);
+                    }
+                }
+                gridTag.put("Coords", unlockCoordsList);
+                unlockGridList.add(gridTag);
+            }
+        }
+        rootTag.put("Unlocks", unlockGridList);
+        
         rootTag.putString("ScribeTableMode", this.scribeTableMode.getSerializedName());
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         
@@ -118,6 +147,18 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             this.setTimesStudied(new ResourceLocation(tag.getString("Book")), new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
         }
         
+        // Deserialize unlocked node coordinates
+        ListTag unlockGridList = nbt.getList("Unlocks", Tag.TAG_COMPOUND);
+        for (int gridIndex = 0; gridIndex < unlockGridList.size(); gridIndex++) {
+            CompoundTag gridTag = unlockGridList.getCompound(gridIndex);
+            ResourceLocation gridId = new ResourceLocation(gridTag.getString("GridDef"));
+            ListTag coordsList = gridTag.getList("Coords", Tag.TAG_COMPOUND);
+            for (int coordsIndex = 0; coordsIndex < coordsList.size(); coordsIndex++) {
+                CompoundTag coordsTag = coordsList.getCompound(coordsIndex);
+                this.unlockNode(gridId, new Vector2i(coordsTag.getInt("X"), coordsTag.getInt("Y")));
+            }
+        }
+        
         ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));
         this.scribeTableMode = mode == null ? ScribeTableMode.STUDY_VOCABULARY : mode;
     }
@@ -127,6 +168,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         this.comprehension.clear();
         this.vocabulary.clear();
         this.studyCounts.clear();
+        this.unlocks.clear();
         this.scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
     }
 
@@ -173,6 +215,21 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     @Override
     public void setScribeTableMode(ScribeTableMode mode) {
         this.scribeTableMode = Preconditions.checkNotNull(mode);
+    }
+
+    @Override
+    public Set<Vector2i> getUnlockedNodes(ResourceLocation gridDefinitionId) {
+        return Collections.unmodifiableSet(this.unlocks.getOrDefault(gridDefinitionId, Collections.emptySet()));
+    }
+
+    @Override
+    public void clearUnlockedNodes(ResourceLocation gridDefinitionId) {
+        this.unlocks.remove(gridDefinitionId);
+    }
+
+    @Override
+    public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2i nodePos) {
+        return this.unlocks.computeIfAbsent(gridDefinitionId, k -> new HashSet<>()).add(nodePos);
     }
 
     @Override
