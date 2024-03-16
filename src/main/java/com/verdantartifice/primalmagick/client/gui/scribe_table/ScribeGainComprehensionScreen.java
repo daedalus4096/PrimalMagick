@@ -200,7 +200,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Correct calculation to account for scaling
             double xPos = this.getX() / 2;
             double yPos = this.getY() / 2;
-            return this.active && this.visible && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
+            return this.active && this.visible && this.reachable && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
         }
 
         @Override
