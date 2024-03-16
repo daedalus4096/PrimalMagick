@@ -165,6 +165,10 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, this.getX(), this.getY(), this.width * 2, this.height * 2);
+            this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
+                ResourceLocation iconLoc = node.getReward() == null ? new ResourceLocation("textures/item/barrier.png") : node.getReward().getIconLocation();
+                pGuiGraphics.blit(iconLoc, this.getX() + 4, this.getY() + 4, 5, 0, 0, 16, 16, 16, 16);
+            });
             pGuiGraphics.pose().popPose();
         }
 
