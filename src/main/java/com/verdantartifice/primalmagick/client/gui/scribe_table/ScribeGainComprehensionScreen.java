@@ -3,7 +3,6 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalLong;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +41,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
-    protected OptionalLong refreshTime = OptionalLong.empty();
+    protected long nextCheckTime = 0L;
 
     public ScribeGainComprehensionScreen(ScribeGainComprehensionMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -84,12 +83,10 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
         // Update the local player grid if the current language has changed
-        boolean timeUp = this.refreshTime.isPresent() && System.currentTimeMillis() >= this.refreshTime.getAsLong();
+        boolean timeUp = (System.currentTimeMillis() > this.nextCheckTime);
         if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey()) || timeUp) {
             this.refreshGrid();
-            if (timeUp) {
-                this.refreshTime = OptionalLong.empty();
-            }
+            this.nextCheckTime = System.currentTimeMillis() + 250L;
         }
 
         if (lang.isComplex()) {
@@ -120,13 +117,12 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected void refreshGrid() {
         BookLanguage lang = this.menu.getBookLanguage();
-        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
-        this.clearWidgets();
-        this.addRenderableWidget(this.vocabularyWidget);
-    }
-    
-    protected void startRefreshTimer(long delayMillis) {
-        this.refreshTime = OptionalLong.of(System.currentTimeMillis() + delayMillis);
+        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+        if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified()) {
+            this.grid = newGrid;
+            this.clearWidgets();
+            this.addRenderableWidget(this.vocabularyWidget);
+        }
     }
     
     protected static class NodeButton extends ImageButton {
@@ -143,7 +139,6 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 screen.grid.unlock(xIndex, yIndex);
-                screen.startRefreshTimer(250L);
             });
             this.player = screen.minecraft.player;
             this.gridDef = screen.grid.getDefinition();

@@ -46,6 +46,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     // Map of grid definition IDs to sets of unlocked node coordinates
     private final Map<ResourceLocation, Set<Vector2ic>> unlocks = new ConcurrentHashMap<>();
     
+    // Map of grid definition IDs to last modified times
+    private final Map<ResourceLocation, Long> gridModificationTimes = new ConcurrentHashMap<>();
+    
     // Current scribe table mode
     private ScribeTableMode scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
     
@@ -113,6 +116,18 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         }
         rootTag.put("Unlocks", unlockGridList);
         
+        // Serialize grid last modification times
+        ListTag modifiedList = new ListTag();
+        for (Map.Entry<ResourceLocation, Long> entry : this.gridModificationTimes.entrySet()) {
+            if (entry != null) {
+                CompoundTag tag = new CompoundTag();
+                tag.putString("GridDef", entry.getKey().toString());
+                tag.putLong("LastModified", entry.getValue());
+                modifiedList.add(tag);
+            }
+        }
+        rootTag.put("GridModifiedTimes", modifiedList);
+        
         rootTag.putString("ScribeTableMode", this.scribeTableMode.getSerializedName());
         rootTag.putLong("SyncTimestamp", System.currentTimeMillis());
         
@@ -160,6 +175,13 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             }
         }
         
+        // Deserialize grid last modification times
+        ListTag modifiedList = nbt.getList("GridModifiedTimes", Tag.TAG_COMPOUND);
+        for (int index = 0; index < modifiedList.size(); index++) {
+            CompoundTag tag = modifiedList.getCompound(index);
+            this.setLastModified(new ResourceLocation(tag.getString("GridDef")), tag.getLong("LastModified"));
+        }
+        
         ScribeTableMode mode = ScribeTableMode.fromName(nbt.getString("ScribeTableMode"));
         this.scribeTableMode = mode == null ? ScribeTableMode.STUDY_VOCABULARY : mode;
     }
@@ -171,6 +193,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
         this.studyCounts.clear();
         this.unlocks.clear();
         this.scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
+        this.gridModificationTimes.clear();
     }
 
     @Override
@@ -225,12 +248,23 @@ public class PlayerLinguistics implements IPlayerLinguistics {
 
     @Override
     public void clearUnlockedNodes(ResourceLocation gridDefinitionId) {
+        this.setLastModified(gridDefinitionId, System.currentTimeMillis());
         this.unlocks.remove(gridDefinitionId);
     }
 
     @Override
     public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos) {
+        this.setLastModified(gridDefinitionId, System.currentTimeMillis());
         return this.unlocks.computeIfAbsent(gridDefinitionId, k -> new HashSet<>()).add(nodePos);
+    }
+
+    @Override
+    public long getGridLastModified(ResourceLocation gridDefinitionId) {
+        return this.gridModificationTimes.getOrDefault(gridDefinitionId, 0L);
+    }
+
+    private void setLastModified(ResourceLocation gridDefinitionId, long lastModified) {
+        this.gridModificationTimes.put(gridDefinitionId, lastModified);
     }
 
     @Override

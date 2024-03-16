@@ -127,6 +127,14 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public boolean unlockNode(ResourceLocation gridDefinitionId, Vector2ic nodePos);
     
     /**
+     * Gets the system time at which the player last modified the unlock states of the given grid.
+     * 
+     * @param gridDefinitionId the grid definition to be queried
+     * @return the system time at which the given grid was last modified
+     */
+    public long getGridLastModified(ResourceLocation gridDefinitionId);
+    
+    /**
      * Sync the given player's linguistics data to the their client.
      * 
      * @param player the player whose client should receive the data

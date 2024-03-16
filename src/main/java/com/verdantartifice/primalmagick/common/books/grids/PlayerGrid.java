@@ -29,15 +29,17 @@ public class PlayerGrid {
     protected final Player player;
     protected final GridDefinition definition;
     protected final Set<Vector2ic> unlocked = new HashSet<>();
+    protected long lastModified = 0L;
     
     public PlayerGrid(Player player, GridDefinition definition) {
         this.player = player;
         this.definition = definition;
     }
     
-    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2ic> unlocked) {
+    public PlayerGrid(Player player, GridDefinition definition, Set<Vector2ic> unlocked, long lastModified) {
         this(player, definition);
         this.unlocked.addAll(unlocked);
+        this.lastModified = lastModified;
     }
     
     public Player getPlayer() {
@@ -55,6 +57,10 @@ public class PlayerGrid {
      */
     public Set<Vector2ic> getUnlocked() {
         return Collections.unmodifiableSet(this.unlocked);
+    }
+    
+    public long getLastModified() {
+        return this.lastModified;
     }
     
     public boolean unlock(int x, int y) {
@@ -82,6 +88,7 @@ public class PlayerGrid {
             MutableBoolean retVal = new MutableBoolean(false);
             PrimalMagickCapabilities.getLinguistics(this.player).ifPresent(linguistics -> {
                 if (linguistics.unlockNode(this.definition.getKey(), node)) {
+                    this.lastModified = linguistics.getGridLastModified(this.definition.getKey());
                     LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
                     IReward reward = this.definition.nodes.get(node).getReward();
                     if (reward != null && this.player instanceof ServerPlayer serverPlayer) {

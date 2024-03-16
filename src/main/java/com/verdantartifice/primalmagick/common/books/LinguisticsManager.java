@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.commons.lang3.mutable.MutableLong;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.joml.Vector2ic;
 
@@ -196,9 +197,19 @@ public class LinguisticsManager {
         return retVal.getValue();
     }
     
+    protected static long getGridLastModified(@Nullable Player player, @Nullable ResourceLocation gridKey) {
+        MutableLong retVal = new MutableLong(0L);
+        if (player != null && gridKey != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.getGridLastModified(gridKey));
+            });
+        }
+        return retVal.getValue();
+    }
+    
     @Nullable
     public static PlayerGrid getPlayerGrid(@Nonnull Player player, @Nonnull ResourceLocation gridKey) {
         GridDefinition gridDef = getGridDefinition(gridKey);
-        return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, gridKey));
+        return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, gridKey), getGridLastModified(player, gridKey));
     }
 }
