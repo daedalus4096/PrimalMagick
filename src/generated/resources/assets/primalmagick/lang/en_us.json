@@ -2639,6 +2639,7 @@
   "tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count": "Gain %2$d %1$s vocabulary",
   "tooltip.primalmagick.scribe_table.button.transcribe": "Transcribe",
   "tooltip.primalmagick.scribe_table.grid.cost": "Cost: %1$d %2$s vocabulary",
+  "tooltip.primalmagick.scribe_table.grid.no_path": "Cannot reach!",
   "tooltip.primalmagick.scribe_table.grid.reward": "Unlocks: %1$s",
   "tooltip.primalmagick.scribe_table.grid.reward.unlocked": "Unlocked: %1$s",
   "tooltip.primalmagick.scribe_table.mode.gain_comprehension": "Gain Comprehension",

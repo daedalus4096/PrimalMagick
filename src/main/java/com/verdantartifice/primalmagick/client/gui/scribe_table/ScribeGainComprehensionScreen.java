@@ -24,8 +24,10 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * GUI screen for the gain comprehension mode of the scribe table block.
@@ -121,6 +123,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/grid_node_button"), PrimalMagick.resource("scribe_table/grid_node_button_disabled"), PrimalMagick.resource("scribe_table/grid_node_button_highlighted"), PrimalMagick.resource("scribe_table/grid_node_button_disabled_highlighted"));
         protected static final ResourceLocation PLACEHOLDER = PrimalMagick.resource("scribe_table/grid_node_placeholder");
         
+        protected final Player player;
         protected final int xIndex;
         protected final int yIndex;
         protected final GridDefinition gridDef;
@@ -131,6 +134,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 // Unlock node via screen's player grid
                 screen.grid.unlock(xIndex, yIndex);
             });
+            this.player = screen.minecraft.player;
             this.gridDef = screen.grid.getDefinition();
             this.xIndex = xIndex;
             this.yIndex = yIndex;
@@ -151,7 +155,15 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     List<Component> lines = new ArrayList<>();
                     lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
                     lines.add(CommonComponents.EMPTY);
-                    lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName()).withStyle(ChatFormatting.RED));
+                    if (this.reachable) {
+                        MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
+                        if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
+                            costText = costText.withStyle(ChatFormatting.RED);
+                        }
+                        lines.add(costText);
+                    } else {
+                        lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
+                    }
                     this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
                 } else {
                     this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText)));
