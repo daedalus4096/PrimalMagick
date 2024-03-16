@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalLong;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +42,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
+    protected OptionalLong refreshTime = OptionalLong.empty();
 
     public ScribeGainComprehensionScreen(ScribeGainComprehensionMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -82,8 +84,12 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
         // Update the local player grid if the current language has changed
-        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey())) {
+        boolean timeUp = this.refreshTime.isPresent() && System.currentTimeMillis() >= this.refreshTime.getAsLong();
+        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey()) || timeUp) {
             this.refreshGrid();
+            if (timeUp) {
+                this.refreshTime = OptionalLong.empty();
+            }
         }
 
         if (lang.isComplex()) {
@@ -119,6 +125,10 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.addRenderableWidget(this.vocabularyWidget);
     }
     
+    protected void startRefreshTimer(long delayMillis) {
+        this.refreshTime = OptionalLong.of(System.currentTimeMillis() + delayMillis);
+    }
+    
     protected static class NodeButton extends ImageButton {
         protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/grid_node_button"), PrimalMagick.resource("scribe_table/grid_node_button_disabled"), PrimalMagick.resource("scribe_table/grid_node_button_highlighted"), PrimalMagick.resource("scribe_table/grid_node_button_disabled_highlighted"));
         protected static final ResourceLocation PLACEHOLDER = PrimalMagick.resource("scribe_table/grid_node_placeholder");
@@ -133,6 +143,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 screen.grid.unlock(xIndex, yIndex);
+                screen.startRefreshTimer(250L);
             });
             this.player = screen.minecraft.player;
             this.gridDef = screen.grid.getDefinition();

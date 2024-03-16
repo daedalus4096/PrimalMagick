@@ -60,7 +60,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
         this.refreshBookData();
     }
     
-    protected void refreshBookData() {
+    public void refreshBookData() {
         ItemStack bookStack = this.studySlot.getItem();
         BookLanguage lang = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguage(bookStack) : BookLanguagesPM.DEFAULT.get();
         this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());

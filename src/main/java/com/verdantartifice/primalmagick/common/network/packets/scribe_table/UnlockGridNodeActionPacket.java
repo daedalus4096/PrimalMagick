@@ -6,6 +6,7 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -52,6 +53,9 @@ public class UnlockGridNodeActionPacket implements IMessageToServer {
         ServerPlayer player = ctx.getSender();
         if (!LinguisticsManager.getPlayerGrid(player, message.gridDefinitionKey).unlock(message.nodePos)) {
             LOGGER.warn("Failed to unlock server side node ({}, {}) for linguistics grid {}", message.nodePos.x(), message.nodePos.y(), message.gridDefinitionKey);
+        } else if (player.containerMenu instanceof ScribeGainComprehensionMenu menu) {
+            // If the unlock was successful, have the menu re-sync its data to the client to update vocabulary count
+            menu.refreshBookData();
         }
     }
 }
