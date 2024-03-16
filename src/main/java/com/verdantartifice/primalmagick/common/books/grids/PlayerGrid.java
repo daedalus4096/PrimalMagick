@@ -9,10 +9,12 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
@@ -64,6 +66,11 @@ public class PlayerGrid {
             return false;
         }
         
+        int cost = this.definition.nodes.get(node).vocabularyCost;
+        if (LinguisticsManager.getVocabulary(player, this.definition.language) < cost) {
+            return false;
+        }
+        
         Level level = this.player.level();
         if (level.isClientSide) {
             // Send packet to server and presume success on the remote
@@ -75,6 +82,11 @@ public class PlayerGrid {
             MutableBoolean retVal = new MutableBoolean(false);
             PrimalMagickCapabilities.getLinguistics(this.player).ifPresent(linguistics -> {
                 if (linguistics.unlockNode(this.definition.getKey(), node)) {
+                    LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
+                    IReward reward = this.definition.nodes.get(node).getReward();
+                    if (reward != null && this.player instanceof ServerPlayer serverPlayer) {
+                        reward.grant(serverPlayer);
+                    }
                     LinguisticsManager.scheduleSync(this.player);
                     this.unlocked.add(node);
                     retVal.setTrue();
