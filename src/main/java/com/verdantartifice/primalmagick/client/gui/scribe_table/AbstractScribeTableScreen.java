@@ -46,7 +46,6 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-        this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
         this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
     }
 
@@ -54,6 +53,7 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
     protected void renderBg(GuiGraphics pGuiGraphics, float pPartialTick, int pMouseX, int pMouseY) {
         // Render background texture
         pGuiGraphics.blit(this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
     }
 
     @Override

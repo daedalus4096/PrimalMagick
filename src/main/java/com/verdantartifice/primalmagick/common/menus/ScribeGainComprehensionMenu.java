@@ -45,13 +45,13 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     @Override
     protected void createModeSlots() {
         // Slot 0: Original book
-        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8, 
+        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 18, 
                 new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex())));
     }
 
     @Override
     protected Vector2i getInventorySlotsOffset() {
-        return new Vector2i(27, 56);
+        return new Vector2i(0, 56);
     }
 
     @Override

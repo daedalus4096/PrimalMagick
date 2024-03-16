@@ -50,8 +50,9 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
     public ScribeGainComprehensionScreen(ScribeGainComprehensionMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
-        this.imageWidth = 230;
+        this.imageWidth = 176;
         this.imageHeight = 222;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
@@ -67,13 +68,14 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     @Override
     protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
         // Don't render labels in this mode
+        super.renderLabels(pGuiGraphics, pMouseX, pMouseY);
     }
 
     @Override
     protected void init() {
         super.init();
         BookLanguage lang = this.menu.getBookLanguage();
-        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 207, this.topPos + 7));
+        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 151, this.topPos + 17));
         this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
     }
 
@@ -97,15 +99,15 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         if (lang.isComplex()) {
             // Draw the parchment background for the comprehension grid
             pGuiGraphics.pose().pushPose();
-            pGuiGraphics.pose().translate(this.leftPos + 34, this.topPos + 7, 0);
+            pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17, 0);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
-            pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 324, 256);
+            pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 228, 216);
             pGuiGraphics.pose().popPose();
             
             // Draw a node button for each node in the grid definition
             if (this.grid != null) {
                 for (Vector2ic nodePos : this.grid.getDefinition().getNodes().keySet()) {
-                    int x = this.leftPos + 67 + (12 * nodePos.x());
+                    int x = this.leftPos + 40 + (12 * nodePos.x());
                     int y = this.topPos + 23 + (12 * nodePos.y());
                     NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, this.grid.getUnlocked().contains(nodePos) || this.grid.isUnlockable(nodePos));
                     button.active = !this.grid.getUnlocked().contains(nodePos);
@@ -116,7 +118,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Render missing writing materials text
             Component text = Component.translatable("label.primalmagick.scribe_table.missing_book");
             int width = this.minecraft.font.width(text.getString());
-            pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 34 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+            pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         }
     }
     
