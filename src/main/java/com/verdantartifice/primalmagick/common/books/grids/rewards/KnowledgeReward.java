@@ -25,7 +25,7 @@ public class KnowledgeReward extends AbstractReward {
     private KnowledgeType knowledgeType;
     private int levels;
     
-    static {
+    public static void init() {
         AbstractReward.register(TYPE, KnowledgeReward::fromNBT, SERIALIZER);
     }
     

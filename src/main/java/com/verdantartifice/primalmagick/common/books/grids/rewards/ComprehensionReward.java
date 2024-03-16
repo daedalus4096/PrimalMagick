@@ -27,7 +27,7 @@ public class ComprehensionReward extends AbstractReward {
     private BookLanguage language;
     private int points;
     
-    static {
+    public static void init() {
         AbstractReward.register(TYPE, ComprehensionReward::fromNBT, SERIALIZER);
     }
     

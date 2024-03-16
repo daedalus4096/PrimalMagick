@@ -25,7 +25,7 @@ public class AttunementReward extends AbstractReward {
     private Source source;
     private int points;
     
-    static {
+    public static void init() {
         AbstractReward.register(TYPE, AttunementReward::fromNBT, SERIALIZER);
     }
     
