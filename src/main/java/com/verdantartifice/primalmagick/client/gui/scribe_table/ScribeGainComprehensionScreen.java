@@ -100,8 +100,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Draw a node button for each node in the grid definition
             if (this.grid != null) {
                 for (Vector2ic nodePos : this.grid.getDefinition().getNodes().keySet()) {
-                    int x = this.leftPos + 235 + (24 * nodePos.x());
-                    int y = this.topPos + 54 + (24 * nodePos.y());
+                    int x = this.leftPos + 67 + (12 * nodePos.x());
+                    int y = this.topPos + 23 + (12 * nodePos.y());
                     NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, this.grid.getUnlocked().contains(nodePos) || this.grid.isUnlockable(nodePos));
                     button.active = !this.grid.getUnlocked().contains(nodePos);
                     this.addRenderableWidget(button);
@@ -149,11 +149,6 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         @Override
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-            // Correct calculation to account for scaling
-            int xPos = this.getX() / 2;
-            int yPos = this.getY() / 2;
-            this.isHovered = pMouseX >= xPos && pMouseY >= yPos && pMouseX < xPos + this.width && pMouseY < yPos + this.height;
-
             // Configure tooltip
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
                 Component rewardText = node.getReward() == null ? Component.literal("NULL REWARD") : node.getReward().getDescription();
@@ -180,30 +175,25 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
             // Scale down to 50% size for rendering
             pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().translate(this.getX(), this.getY(), 0);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
-            pGuiGraphics.blitSprite(resourcelocation, this.getX(), this.getY(), this.width * 2, this.height * 2);
+            pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
+            pGuiGraphics.pose().popPose();
+
+            pGuiGraphics.pose().pushPose();
+            pGuiGraphics.pose().translate(this.getX() + 2, this.getY() + 2, 5);
+            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
                 ResourceLocation iconLoc = node.getReward() == null ? new ResourceLocation("textures/item/barrier.png") : node.getReward().getIconLocation();
-                pGuiGraphics.blit(iconLoc, this.getX() + 4, this.getY() + 4, 5, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.blit(iconLoc, 0, 0, 0, 0, 0, 16, 16, 16, 16);
             });
             pGuiGraphics.pose().popPose();
         }
 
         @Override
         protected boolean clicked(double pMouseX, double pMouseY) {
-            // Correct calculation to account for scaling
-            double xPos = this.getX() / 2;
-            double yPos = this.getY() / 2;
-            return this.active && this.visible && this.reachable && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
-        }
-
-        @Override
-        public boolean isMouseOver(double pMouseX, double pMouseY) {
-            // Correct calculation to account for scaling
-            double xPos = this.getX() / 2;
-            double yPos = this.getY() / 2;
-            return this.active && this.visible && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
+            return this.reachable && super.clicked(pMouseX, pMouseY);
         }
     }
 }
