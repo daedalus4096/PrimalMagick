@@ -51,7 +51,21 @@ public class GridDefinitionProvider implements DataProvider {
         GridDefinitionBuilder.grid("trade").language(BookLanguagesPM.TRADE.get()).startPos(0, 0)
                 .node(GridNodeDefinitionBuilder.node(0, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(1, 0).cost(2).reward(AttunementRewardBuilder.reward(Source.EARTH).points(2).build()).build())
+                .node(GridNodeDefinitionBuilder.node(2, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(3, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(4, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(5, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(6, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(7, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(0, 1).cost(3).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.TRADE.get()).points(1).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 2).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 3).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 4).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 5).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 6).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(0, 7).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(3).build()).build())
+                .node(GridNodeDefinitionBuilder.node(1, 1).cost(4).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(5).build()).build())
+                .node(GridNodeDefinitionBuilder.node(7, 7).cost(4).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(5).build()).build())
                 .build(consumer);
     }
     

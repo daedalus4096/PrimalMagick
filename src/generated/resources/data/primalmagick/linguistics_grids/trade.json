@@ -23,6 +23,66 @@
       "y": 0
     },
     {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 2,
+      "y": 0
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 3,
+      "y": 0
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 4,
+      "y": 0
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 5,
+      "y": 0
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 6,
+      "y": 0
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 7,
+      "y": 0
+    },
+    {
       "cost": 3,
       "reward": {
         "type": "comprehension",
@@ -31,6 +91,86 @@
       },
       "x": 0,
       "y": 1
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 6
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 3
+      },
+      "x": 0,
+      "y": 7
+    },
+    {
+      "cost": 4,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 5
+      },
+      "x": 1,
+      "y": 1
+    },
+    {
+      "cost": 4,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 5
+      },
+      "x": 7,
+      "y": 7
     }
   ],
   "start_x": 0,

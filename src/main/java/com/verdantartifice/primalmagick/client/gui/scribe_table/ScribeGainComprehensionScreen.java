@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -33,6 +35,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<ScribeGainComprehensionMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/scribe_gain_comprehension.png");
     protected static final ResourceLocation PARCHMENT_SPRITE = PrimalMagick.resource("scribe_table/parchment");
+    protected static final Logger LOGGER = LogManager.getLogger();
     
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
@@ -76,14 +79,17 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.vocabularyWidget.setLanguage(lang);
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
+        // Update the local player grid if the current language has changed
         boolean gridChanged = false;
+        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey())) {
+            this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+            gridChanged = true;
+        }
+        if (gridChanged) {
+            this.clearWidgets();
+        }
+
         if (lang.isComplex()) {
-            // Update the local player grid if the current language has changed
-            if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey())) {
-                this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
-                gridChanged = true;
-            }
-            
             // Draw the parchment background for the comprehension grid
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(this.leftPos + 34, this.topPos + 7, 0);
@@ -92,14 +98,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.pose().popPose();
             
             // Draw a node button for each node in the grid definition
-            if (gridChanged) {
-                this.clearWidgets();
-            }
             if (this.grid != null) {
                 for (Vector2ic nodePos : this.grid.getDefinition().getNodes().keySet()) {
-                    int x = this.leftPos + 148 + (12 * nodePos.x());
-                    int y = this.topPos + 87 + (12 * nodePos.y());
-                    NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, this.grid.isUnlockable(nodePos));
+                    int x = this.leftPos + 235 + (24 * nodePos.x());
+                    int y = this.topPos + 54 + (24 * nodePos.y());
+                    NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, this.grid.getUnlocked().contains(nodePos) || this.grid.isUnlockable(nodePos));
                     button.active = !this.grid.getUnlocked().contains(nodePos);
                     this.addRenderableWidget(button);
                 }
@@ -113,7 +116,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
     
     protected static class NodeButton extends ImageButton {
-        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/grid_node_button"), PrimalMagick.resource("scribe_table/grid_node_button_disabled"), PrimalMagick.resource("scribe_table/grid_node_highlighted"), PrimalMagick.resource("scribe_table/grid_node_button_disabled_highlighted"));
+        protected static final WidgetSprites BUTTON_SPRITES = new WidgetSprites(PrimalMagick.resource("scribe_table/grid_node_button"), PrimalMagick.resource("scribe_table/grid_node_button_disabled"), PrimalMagick.resource("scribe_table/grid_node_button_highlighted"), PrimalMagick.resource("scribe_table/grid_node_button_disabled_highlighted"));
         protected static final ResourceLocation PLACEHOLDER = PrimalMagick.resource("scribe_table/grid_node_placeholder");
         
         protected final int xIndex;
@@ -134,6 +137,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         @Override
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+            // Correct calculation to account for scaling
+            int xPos = this.getX() / 2;
+            int yPos = this.getY() / 2;
+            this.isHovered = pMouseX >= xPos && pMouseY >= yPos && pMouseX < xPos + this.width && pMouseY < yPos + this.height;
+
             // Configure tooltip
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
                 Component rewardText = node.getReward() == null ? Component.literal("NULL REWARD") : node.getReward().getDescription();
@@ -141,7 +149,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     List<Component> lines = new ArrayList<>();
                     lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
                     lines.add(CommonComponents.EMPTY);
-                    lines.add(Component.translatable("tooltip.primalmagick.scribe_table.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName()).withStyle(ChatFormatting.RED));
+                    lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName()).withStyle(ChatFormatting.RED));
                     this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
                 } else {
                     this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText)));
@@ -156,6 +164,22 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, this.getX(), this.getY(), this.width * 2, this.height * 2);
             pGuiGraphics.pose().popPose();
+        }
+
+        @Override
+        protected boolean clicked(double pMouseX, double pMouseY) {
+            // Correct calculation to account for scaling
+            double xPos = this.getX() / 2;
+            double yPos = this.getY() / 2;
+            return this.active && this.visible && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
+        }
+
+        @Override
+        public boolean isMouseOver(double pMouseX, double pMouseY) {
+            // Correct calculation to account for scaling
+            double xPos = this.getX() / 2;
+            double yPos = this.getY() / 2;
+            return this.active && this.visible && pMouseX >= xPos && pMouseY >= yPos && pMouseX < (xPos + this.width) && pMouseY < (yPos + this.height);
         }
     }
 }
