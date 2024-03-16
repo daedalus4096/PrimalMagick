@@ -18,16 +18,19 @@ import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.GridNodeDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
+import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 
@@ -140,7 +143,9 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos, boolean reachable) {
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
+                ClientLevel level = screen.minecraft.level;
                 screen.grid.unlock(xIndex, yIndex);
+                level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
             });
             this.player = screen.minecraft.player;
             this.gridDef = screen.grid.getDefinition();
