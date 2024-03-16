@@ -39,7 +39,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
-    
+
     public ScribeGainComprehensionScreen(ScribeGainComprehensionMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
         this.imageWidth = 230;
@@ -80,13 +80,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
         // Update the local player grid if the current language has changed
-        boolean gridChanged = false;
         if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey())) {
-            this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
-            gridChanged = true;
-        }
-        if (gridChanged) {
-            this.clearWidgets();
+            this.refreshGrid();
         }
 
         if (lang.isComplex()) {
@@ -113,6 +108,13 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             int width = this.minecraft.font.width(text.getString());
             pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 34 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
         }
+    }
+    
+    protected void refreshGrid() {
+        BookLanguage lang = this.menu.getBookLanguage();
+        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+        this.clearWidgets();
+        this.addRenderableWidget(this.vocabularyWidget);
     }
     
     protected static class NodeButton extends ImageButton {
