@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
+import com.verdantartifice.primalmagick.common.books.grids.GridNodeDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 
@@ -192,7 +194,13 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         @Override
         protected boolean clicked(double pMouseX, double pMouseY) {
-            return this.reachable && super.clicked(pMouseX, pMouseY);
+            boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
+            if (retVal) {
+                Optional<GridNodeDefinition> nodeOpt = this.gridDef.getNode(this.xIndex, this.yIndex);
+                return nodeOpt.isPresent() && LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) >= nodeOpt.get().getVocabularyCost();
+            } else {
+                return false;
+            }
         }
     }
 }
