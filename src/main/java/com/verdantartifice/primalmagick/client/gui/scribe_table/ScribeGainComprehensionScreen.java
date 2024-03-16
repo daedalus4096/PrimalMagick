@@ -156,13 +156,12 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     List<Component> lines = new ArrayList<>();
                     lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
                     lines.add(CommonComponents.EMPTY);
-                    if (this.reachable) {
-                        MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
-                        if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
-                            costText = costText.withStyle(ChatFormatting.RED);
-                        }
-                        lines.add(costText);
-                    } else {
+                    MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
+                    if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
+                        costText = costText.withStyle(ChatFormatting.RED);
+                    }
+                    lines.add(costText);
+                    if (!this.reachable) {
                         lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
                     }
                     this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
