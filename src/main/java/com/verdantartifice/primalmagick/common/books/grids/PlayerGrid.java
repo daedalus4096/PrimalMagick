@@ -73,7 +73,7 @@ public class PlayerGrid {
         }
         
         int cost = this.definition.nodes.get(node).vocabularyCost;
-        if (LinguisticsManager.getVocabulary(player, this.definition.language) < cost) {
+        if (!this.player.getAbilities().instabuild && LinguisticsManager.getVocabulary(this.player, this.definition.language) < cost) {
             return false;
         }
         
@@ -89,7 +89,9 @@ public class PlayerGrid {
             PrimalMagickCapabilities.getLinguistics(this.player).ifPresent(linguistics -> {
                 if (linguistics.unlockNode(this.definition.getKey(), node)) {
                     this.lastModified = linguistics.getGridLastModified(this.definition.getKey());
-                    LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
+                    if (!this.player.getAbilities().instabuild) {
+                        LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
+                    }
                     IReward reward = this.definition.nodes.get(node).getReward();
                     if (reward != null && this.player instanceof ServerPlayer serverPlayer) {
                         reward.grant(serverPlayer);

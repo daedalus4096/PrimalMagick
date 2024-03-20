@@ -164,13 +164,16 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 if (this.isActive()) {
                     List<Component> lines = new ArrayList<>();
                     lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
-                    lines.add(CommonComponents.EMPTY);
-                    MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
-                    if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
-                        costText = costText.withStyle(ChatFormatting.RED);
+                    if (!this.player.getAbilities().instabuild) {
+                        lines.add(CommonComponents.EMPTY);
+                        MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
+                        if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
+                            costText = costText.withStyle(ChatFormatting.RED);
+                        }
+                        lines.add(costText);
                     }
-                    lines.add(costText);
                     if (!this.reachable) {
+                        lines.add(CommonComponents.EMPTY);
                         lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
                     }
                     this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
@@ -204,7 +207,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
             if (retVal) {
                 Optional<GridNodeDefinition> nodeOpt = this.gridDef.getNode(this.xIndex, this.yIndex);
-                return nodeOpt.isPresent() && LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) >= nodeOpt.get().getVocabularyCost();
+                return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) >= nodeOpt.get().getVocabularyCost());
             } else {
                 return false;
             }
