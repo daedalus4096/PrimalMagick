@@ -93,7 +93,7 @@ public class PlayerGrid {
                         LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
                     }
                     IReward reward = this.definition.nodes.get(node).getReward();
-                    if (reward != null && this.player instanceof ServerPlayer serverPlayer) {
+                    if (this.player instanceof ServerPlayer serverPlayer) {
                         reward.grant(serverPlayer);
                     }
                     LinguisticsManager.scheduleSync(this.player);

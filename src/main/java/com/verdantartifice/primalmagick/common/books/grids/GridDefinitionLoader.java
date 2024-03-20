@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AttunementReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.KnowledgeReward;
 
 import net.minecraft.resources.ResourceLocation;
@@ -49,6 +50,7 @@ public class GridDefinitionLoader extends SimpleJsonResourceReloadListener {
             INSTANCE = new GridDefinitionLoader();
             
             // Initialize reward serialization mappings while we're at it, as the classloader requires it to happen somewhere
+            EmptyReward.init();
             AttunementReward.init();
             ComprehensionReward.init();
             KnowledgeReward.init();

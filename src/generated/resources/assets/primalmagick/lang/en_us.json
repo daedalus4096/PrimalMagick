@@ -1362,6 +1362,7 @@
   "label.primalmagick.research_table.unlock": "Unlocked by: %1$s",
   "label.primalmagick.scribe_table.grid.reward.attunement": "%2$s permanent %1$s attunement",
   "label.primalmagick.scribe_table.grid.reward.comprehension": "%2$s comprehension of %1$s",
+  "label.primalmagick.scribe_table.grid.reward.empty": "nothing",
   "label.primalmagick.scribe_table.grid.reward.knowledge": "%2$dx %1$s",
   "label.primalmagick.scribe_table.missing_book": "Missing translatable book!",
   "label.primalmagick.toast.completed": "Research Complete!",

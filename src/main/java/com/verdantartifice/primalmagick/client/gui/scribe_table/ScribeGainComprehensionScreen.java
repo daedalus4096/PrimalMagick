@@ -160,7 +160,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
-                Component rewardText = node.getReward() == null ? Component.literal("NULL REWARD") : node.getReward().getDescription();
+                Component rewardText = node.getReward().getDescription();
                 if (this.isActive()) {
                     List<Component> lines = new ArrayList<>();
                     lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
@@ -196,8 +196,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.pose().translate(this.getX() + 2, this.getY() + 2, 5);
             pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
-                ResourceLocation iconLoc = node.getReward() == null ? new ResourceLocation("textures/item/barrier.png") : node.getReward().getIconLocation();
-                pGuiGraphics.blit(iconLoc, 0, 0, 0, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.blit(node.getReward().getIconLocation(), 0, 0, 0, 0, 0, 16, 16, 16, 16);
             });
             pGuiGraphics.pose().popPose();
         }

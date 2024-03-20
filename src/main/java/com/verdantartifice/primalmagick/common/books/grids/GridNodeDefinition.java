@@ -1,9 +1,11 @@
 package com.verdantartifice.primalmagick.common.books.grids;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.AbstractReward;
+import com.verdantartifice.primalmagick.common.books.grids.rewards.EmptyReward;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 
 import net.minecraft.nbt.CompoundTag;
@@ -45,8 +47,9 @@ public class GridNodeDefinition implements INBTSerializable<CompoundTag> {
         return this.vocabularyCost;
     }
     
+    @Nonnull
     public IReward getReward() {
-        return this.reward;
+        return this.reward == null ? EmptyReward.INSTANCE : this.reward;
     }
 
     @Override
