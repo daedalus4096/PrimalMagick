@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
+import java.util.Optional;
+
 import com.google.common.base.Verify;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -26,6 +28,7 @@ public class ComprehensionReward extends AbstractReward {
     
     private BookLanguage language;
     private int points;
+    private Optional<Component> pointsText = Optional.empty();
     
     public static void init() {
         AbstractReward.register(TYPE, ComprehensionReward::fromNBT, SERIALIZER);
@@ -36,13 +39,18 @@ public class ComprehensionReward extends AbstractReward {
     protected ComprehensionReward(BookLanguage language, int points) {
         Verify.verifyNotNull(language, "Invalid language for comprehension reward");
         this.language = language;
-        this.points = points;
+        this.setPoints(points);
     }
     
     public static ComprehensionReward fromNBT(CompoundTag tag) {
         ComprehensionReward retVal = new ComprehensionReward();
         retVal.deserializeNBT(tag);
         return retVal;
+    }
+    
+    protected void setPoints(int points) {
+        this.points = points;
+        this.pointsText = Optional.of(Component.literal(Integer.toString(this.points)));
     }
     
     @Override
@@ -60,6 +68,11 @@ public class ComprehensionReward extends AbstractReward {
     @Override
     public ResourceLocation getIconLocation() {
         return ICON_LOC;
+    }
+
+    @Override
+    public Optional<Component> getAmountText() {
+        return this.pointsText;
     }
 
     @Override
@@ -86,7 +99,7 @@ public class ComprehensionReward extends AbstractReward {
         super.deserializeNBT(nbt);
         this.language = BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(nbt.getString("Language")));
         Verify.verifyNotNull(this.language, "Invalid language for comprehension reward");
-        this.points = nbt.getInt("Points");
+        this.setPoints(nbt.getInt("Points"));
     }
 
     public static class Serializer implements IRewardSerializer<ComprehensionReward> {

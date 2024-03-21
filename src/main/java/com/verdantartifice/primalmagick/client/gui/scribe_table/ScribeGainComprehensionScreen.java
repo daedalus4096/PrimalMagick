@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -188,20 +189,22 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 this.setTooltip(null);
             });
 
-            // Scale down to 50% size for rendering
+            // Render node button background
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(this.getX(), this.getY(), 0);
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
+            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
             ResourceLocation resourcelocation = this.reachable ? this.sprites.get(this.isActive(), this.isHoveredOrFocused()) : PLACEHOLDER;
             pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
             pGuiGraphics.pose().popPose();
 
+            // Render node contents, if they exist
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
+                // Render the reward icon
                 pGuiGraphics.pose().pushPose();
                 int dx = this.width / 2;
                 int dy = this.height / 2;
                 pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F), 5);
-                pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
+                pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
                 if (this.unlockable) {
                     // If the node can currently be unlocked, pulse its scale up and down for extra visibility
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
@@ -209,6 +212,17 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 }
                 pGuiGraphics.blit(node.getReward().getIconLocation(), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
                 pGuiGraphics.pose().popPose();
+                
+                // Render the node amount string, if applicable
+                node.getReward().getAmountText().ifPresent(text -> {
+                    pGuiGraphics.pose().pushPose();
+                    Minecraft mc = Minecraft.getInstance();
+                    int width = mc.font.width(text.getString());
+                    pGuiGraphics.pose().translate(this.getX() + 11 - width / 2, this.getY() + 7, 10);
+                    pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);  // Scale down to 50% size for rendering
+                    pGuiGraphics.drawString(mc.font, text, 0, 0, Color.WHITE.getRGB());
+                    pGuiGraphics.pose().popPose();
+                });
             });
         }
 

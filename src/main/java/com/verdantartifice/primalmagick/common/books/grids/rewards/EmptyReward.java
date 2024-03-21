@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
+import java.util.Optional;
+
 import com.google.gson.JsonObject;
 
 import net.minecraft.nbt.CompoundTag;
@@ -44,6 +46,11 @@ public class EmptyReward extends AbstractReward {
     @Override
     public ResourceLocation getIconLocation() {
         return ICON_LOCATION;
+    }
+
+    @Override
+    public Optional<Component> getAmountText() {
+        return Optional.empty();
     }
 
     @Override

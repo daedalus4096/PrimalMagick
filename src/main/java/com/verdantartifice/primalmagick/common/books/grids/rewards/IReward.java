@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
+import java.util.Optional;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -15,6 +17,7 @@ public interface IReward extends INBTSerializable<CompoundTag> {
     void grant(ServerPlayer player);
     Component getDescription();
     ResourceLocation getIconLocation();
+    Optional<Component> getAmountText();
     String getRewardType();
     <T extends IReward> IRewardSerializer<T> getSerializer();
 }

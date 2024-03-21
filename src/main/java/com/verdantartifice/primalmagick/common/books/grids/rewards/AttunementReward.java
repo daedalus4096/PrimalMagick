@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
+import java.util.Optional;
+
 import com.google.common.base.Verify;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
@@ -24,7 +26,8 @@ public class AttunementReward extends AbstractReward {
     
     private Source source;
     private int points;
-    
+    private Optional<Component> pointsText = Optional.empty();
+
     public static void init() {
         AbstractReward.register(TYPE, AttunementReward::fromNBT, SERIALIZER);
     }
@@ -34,7 +37,7 @@ public class AttunementReward extends AbstractReward {
     protected AttunementReward(Source source, int points) {
         Verify.verifyNotNull(source, "Invalid source for attunement reward");
         this.source = source;
-        this.points = points;
+        this.setPoints(points);
     }
     
     public static AttunementReward fromNBT(CompoundTag tag) {
@@ -43,6 +46,11 @@ public class AttunementReward extends AbstractReward {
         return retVal;
     }
 
+    protected void setPoints(int points) {
+        this.points = points;
+        this.pointsText = points > 1 ? Optional.of(Component.literal(Integer.toString(points))) : Optional.empty();
+    }
+    
     @Override
     public void grant(ServerPlayer player) {
         AttunementManager.incrementAttunement(player, this.source, AttunementType.PERMANENT, this.points);
@@ -58,6 +66,11 @@ public class AttunementReward extends AbstractReward {
     @Override
     public ResourceLocation getIconLocation() {
         return this.source.getImage();
+    }
+
+    @Override
+    public Optional<Component> getAmountText() {
+        return this.pointsText;
     }
 
     @Override
@@ -84,7 +97,7 @@ public class AttunementReward extends AbstractReward {
         super.deserializeNBT(nbt);
         this.source = Source.getSource(nbt.getString("Source"));
         Verify.verifyNotNull(this.source, "Invalid source for attunement reward");
-        this.points = nbt.getInt("Points");
+        this.setPoints(nbt.getInt("Points"));
     }
 
     public static class Serializer implements IRewardSerializer<AttunementReward> {

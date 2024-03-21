@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.books.grids.rewards;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Verify;
@@ -24,6 +26,7 @@ public class KnowledgeReward extends AbstractReward {
 
     private KnowledgeType knowledgeType;
     private int levels;
+    private Optional<Component> levelsText;
     
     public static void init() {
         AbstractReward.register(TYPE, KnowledgeReward::fromNBT, SERIALIZER);
@@ -34,13 +37,18 @@ public class KnowledgeReward extends AbstractReward {
     protected KnowledgeReward(@Nonnull KnowledgeType type, int levels) {
         Verify.verifyNotNull(type, "Invalid knowledge type for knowledge reward");
         this.knowledgeType = type;
-        this.levels = levels;
+        this.setLevels(levels);
     }
     
     public static KnowledgeReward fromNBT(CompoundTag tag) {
         KnowledgeReward retVal = new KnowledgeReward();
         retVal.deserializeNBT(tag);
         return retVal;
+    }
+    
+    protected void setLevels(int levels) {
+        this.levels = levels;
+        this.levelsText = levels > 1 ? Optional.of(Component.literal(Integer.toString(levels))) : Optional.empty();
     }
     
     @Override
@@ -58,6 +66,11 @@ public class KnowledgeReward extends AbstractReward {
     @Override
     public ResourceLocation getIconLocation() {
         return this.knowledgeType.getIconLocation();
+    }
+
+    @Override
+    public Optional<Component> getAmountText() {
+        return this.levelsText;
     }
 
     @Override
@@ -84,7 +97,7 @@ public class KnowledgeReward extends AbstractReward {
         super.deserializeNBT(nbt);
         this.knowledgeType = KnowledgeType.fromName(nbt.getString("KnowledgeType"));
         Verify.verifyNotNull(this.knowledgeType, "Invalid knowledge type for knowledge reward");
-        this.levels = nbt.getInt("Levels");
+        this.setLevels(nbt.getInt("Levels"));
     }
 
     public static class Serializer implements IRewardSerializer<KnowledgeReward> {
