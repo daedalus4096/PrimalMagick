@@ -31,6 +31,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 
@@ -109,7 +110,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 for (Vector2ic nodePos : this.grid.getDefinition().getNodes().keySet()) {
                     int x = this.leftPos + 40 + (12 * nodePos.x());
                     int y = this.topPos + 23 + (12 * nodePos.y());
-                    NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, this.grid.getUnlocked().contains(nodePos) || this.grid.isUnlockable(nodePos));
+                    boolean unlockable = this.grid.isUnlockable(nodePos);
+                    NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, unlockable || this.grid.getUnlocked().contains(nodePos), unlockable);
                     button.active = !this.grid.getUnlocked().contains(nodePos);
                     this.addRenderableWidget(button);
                 }
@@ -141,8 +143,9 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected final int yIndex;
         protected final GridDefinition gridDef;
         protected final boolean reachable;
+        protected final boolean unlockable;
         
-        public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos, boolean reachable) {
+        public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos, boolean reachable, boolean unlockable) {
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 ClientLevel level = screen.minecraft.level;
@@ -154,6 +157,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             this.xIndex = xIndex;
             this.yIndex = yIndex;
             this.reachable = reachable;
+            this.unlockable = unlockable;
         }
 
         @Override
@@ -192,13 +196,20 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.blitSprite(resourcelocation, 0, 0, this.width * 2, this.height * 2);
             pGuiGraphics.pose().popPose();
 
-            pGuiGraphics.pose().pushPose();
-            pGuiGraphics.pose().translate(this.getX() + 2, this.getY() + 2, 5);
-            pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
             this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
-                pGuiGraphics.blit(node.getReward().getIconLocation(), 0, 0, 0, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.pose().pushPose();
+                int dx = this.width / 2;
+                int dy = this.height / 2;
+                pGuiGraphics.pose().translate(this.getX() + 2 + (dx * 0.75F), this.getY() + 2 + (dy * 0.75F), 5);
+                pGuiGraphics.pose().scale(0.5F, 0.5F, 1F);
+                if (this.unlockable) {
+                    // If the node can currently be unlocked, pulse its scale up and down for extra visibility
+                    float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
+                    pGuiGraphics.pose().scale(scale, scale, 1F);
+                }
+                pGuiGraphics.blit(node.getReward().getIconLocation(), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.pose().popPose();
             });
-            pGuiGraphics.pose().popPose();
         }
 
         @Override
