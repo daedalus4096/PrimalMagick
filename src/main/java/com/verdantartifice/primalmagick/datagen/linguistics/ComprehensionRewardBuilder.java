@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
+import java.util.OptionalInt;
+
 import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
+
+import net.minecraft.resources.ResourceLocation;
 
 public class ComprehensionRewardBuilder {
     protected final BookLanguage language;
@@ -52,6 +56,11 @@ public class ComprehensionRewardBuilder {
             json.addProperty("type", ComprehensionReward.TYPE);
             json.addProperty("language", this.language.languageId().toString());
             json.addProperty("points", this.points);
+        }
+
+        @Override
+        public OptionalInt getComprehensionPoints(ResourceLocation bookLanguageId) {
+            return this.language.languageId().equals(bookLanguageId) ? OptionalInt.of(this.points) : OptionalInt.empty();
         }
     }
 }

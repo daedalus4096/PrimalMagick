@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.datagen.linguistics;
 
-import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.google.gson.JsonObject;
 
 public interface IFinishedGridNode {
-    Vector2i getPosition();
+    Vector2ic getPosition();
+    
+    IFinishedGridNodeReward getReward();
     
     void serialize(JsonObject json);
 

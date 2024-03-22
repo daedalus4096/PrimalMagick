@@ -9,7 +9,10 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
+import org.joml.Vector2ic;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -20,9 +23,11 @@ import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class GridDefinitionBuilder {
+    protected static final Logger LOGGER = LogManager.getLogger();
+    
     protected final ResourceLocation key;
     protected ResourceLocation bookLanguage;
-    protected Vector2i startPos;
+    protected Vector2ic startPos;
     protected final List<IFinishedGridNode> nodes = new ArrayList<>();
     
     protected GridDefinitionBuilder(@Nonnull ResourceLocation key) {
@@ -53,7 +58,7 @@ public class GridDefinitionBuilder {
         return this;
     }
     
-    public GridDefinitionBuilder startPos(Vector2i pos) {
+    public GridDefinitionBuilder startPos(Vector2ic pos) {
         this.startPos = pos;
         return this;
     }
@@ -84,9 +89,9 @@ public class GridDefinitionBuilder {
             throw new IllegalStateException("Out of bounds start position Y-coordinate for linguistics grid " + id.toString() + "; must be between " + GridDefinition.MIN_POS + " and " + GridDefinition.MAX_POS);
         }
         
-        Set<Vector2i> nodePositions = new HashSet<>();
+        Set<Vector2ic> nodePositions = new HashSet<>();
         this.nodes.forEach(node -> {
-            Vector2i pos = node.getPosition();
+            Vector2ic pos = node.getPosition();
             if (!nodePositions.add(pos)) {
                 throw new IllegalStateException("Duplicate node position (" + pos.x() + "," + pos.y() + ") for linguistics grid " + id.toString());
             }
@@ -94,6 +99,9 @@ public class GridDefinitionBuilder {
         if (!nodePositions.contains(this.startPos)) {
             throw new IllegalStateException("Start position not among defined nodes for linguistics grid " + id.toString());
         }
+        
+        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage)).mapToInt(o -> o.orElse(0)).sum();
+        LOGGER.info("Grid {} contains {} total comprehension for language {}", this.key, total, this.bookLanguage);
     }
     
     public void build(Consumer<IFinishedGrid> consumer) {
@@ -112,10 +120,10 @@ public class GridDefinitionBuilder {
     public static class Result implements IFinishedGrid {
         protected final ResourceLocation key;
         protected final ResourceLocation bookLanguage;
-        protected final Vector2i startPos;
+        protected final Vector2ic startPos;
         protected final List<IFinishedGridNode> nodes;
         
-        public Result(ResourceLocation key, ResourceLocation bookLanguage, Vector2i startPos, List<IFinishedGridNode> nodes) {
+        public Result(ResourceLocation key, ResourceLocation bookLanguage, Vector2ic startPos, List<IFinishedGridNode> nodes) {
             this.key = key;
             this.bookLanguage = bookLanguage;
             this.startPos = startPos;

@@ -71,6 +71,11 @@ public class GridNodeDefinitionBuilder {
         }
 
         @Override
+        public IFinishedGridNodeReward getReward() {
+            return this.reward;
+        }
+
+        @Override
         public void serialize(JsonObject json) {
             json.addProperty("x", this.xPos);
             json.addProperty("y", this.yPos);
