@@ -30,6 +30,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public final int[] costs = new int[3];
     private final DataSlot nameSeed = DataSlot.standalone();
     private final DataSlot languageClue = DataSlot.standalone();
+    private final DataSlot vocabularyCount = DataSlot.standalone();
 
     protected Slot studySlot;
     
@@ -44,13 +45,14 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         this.addDataSlot(DataSlot.shared(this.costs, 2));
         this.addDataSlot(this.nameSeed).set(this.player.getEnchantmentSeed());
         this.addDataSlot(this.languageClue);
+        this.addDataSlot(this.vocabularyCount);
         this.refreshBookData();
     }
     
     @Override
     protected void createModeSlots() {
         // Slot 0: Original book
-        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 26, 47, 
+        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 47, 
                 new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex())));
     }
 
@@ -73,11 +75,13 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                 this.costs[index] = (index >= studyCount) ? index + 1 + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
             }
             this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());
+            this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
         } else {
             for (int index = 0; index < 3; index++) {
                 this.costs[index] = 0;
             }
             this.languageClue.set(BookLanguagesPM.DEFAULT.getId().hashCode());
+            this.vocabularyCount.set(0);
         }
     }
     
@@ -139,6 +143,10 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             }
         }
         return BookLanguagesPM.DEFAULT.get();
+    }
+
+    public int getVocabularyCount() {
+        return this.vocabularyCount.get();
     }
 
     @Override

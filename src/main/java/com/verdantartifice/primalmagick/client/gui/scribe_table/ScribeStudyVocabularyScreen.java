@@ -7,6 +7,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
@@ -56,6 +57,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     public float open;
     public float oOpen;
     private ItemStack last = ItemStack.EMPTY;
+    protected VocabularyWidget vocabularyWidget;
 
     public ScribeStudyVocabularyScreen(ScribeStudyVocabularyMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -74,6 +76,8 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     @Override
     protected void init() {
         super.init();
+        BookLanguage lang = this.menu.getBookLanguage();
+        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 35, this.topPos + 47));
         this.bookModel = new BookModel(this.minecraft.getEntityModels().bakeLayer(ModelLayers.BOOK));
     }
 
@@ -104,6 +108,11 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
         EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
         BookLanguage activeLanguage = this.menu.getBookLanguage();
+        
+        // Update the vocabulary widget based on the current language in the menu
+        this.vocabularyWidget.visible = activeLanguage.isComplex();
+        this.vocabularyWidget.setLanguage(activeLanguage);
+        this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
         int slotLeft = this.leftPos + 60;
         int slotTextStart = slotLeft + 20;
