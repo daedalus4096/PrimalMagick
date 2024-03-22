@@ -82,11 +82,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
             for (int x = GridDefinition.MIN_POS; x <= GridDefinition.MAX_POS; x++) {
                 Vector2ic nodePos = new Vector2i(x, y);
-                boolean unlockable = this.grid.isUnlockable(nodePos);
-                boolean isUnlocked = this.grid.getUnlocked().contains(nodePos);
-                NodeButton button = new NodeButton(this, x, y, this.leftPos + 40 + (12 * x), this.topPos + 23 + (12 * y), unlockable || isUnlocked, unlockable);
-                button.active = !isUnlocked;
-                button.visible = this.grid.getDefinition().getNodes().keySet().contains(nodePos);
+                NodeButton button = new NodeButton(this, x, y, this.leftPos + 40 + (12 * x), this.topPos + 23 + (12 * y));
+                button.visible = false;
                 this.nodeButtons.put(nodePos, button);
                 this.addRenderableWidget(button);
             }
@@ -105,7 +102,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         
         // Update the local player grid if the current language has changed
         boolean timeUp = (System.currentTimeMillis() > this.nextCheckTime);
-        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getKey()) || timeUp) {
+        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getLanguage().languageId()) || timeUp) {
             this.refreshGrid();
             this.nextCheckTime = System.currentTimeMillis() + 250L;
         }
@@ -127,6 +124,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                         // If the button's position is part of the grid definition, update the button to reflect the node
                         boolean unlockable = this.grid.isUnlockable(nodePos);
                         boolean isUnlocked = this.grid.getUnlocked().contains(nodePos);
+                        button.setGridDefinition(this.grid.getDefinition());
                         button.setReachable(unlockable || isUnlocked);
                         button.setUnlockable(unlockable);
                         button.active = !isUnlocked;
@@ -154,7 +152,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     protected void refreshGrid() {
         BookLanguage lang = this.menu.getBookLanguage();
         PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
-        if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified()) {
+        if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified() || !this.grid.getDefinition().getLanguage().equals(newGrid.getDefinition().getLanguage())) {
             this.grid = newGrid;
         }
     }
@@ -166,11 +164,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected final Player player;
         protected final int xIndex;
         protected final int yIndex;
-        protected final GridDefinition gridDef;
+        protected Optional<GridDefinition> gridDef;
         protected boolean reachable;
         protected boolean unlockable;
         
-        public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos, boolean reachable, boolean unlockable) {
+        public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos) {
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 ClientLevel level = screen.minecraft.level;
@@ -178,11 +176,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                 level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
             });
             this.player = screen.minecraft.player;
-            this.gridDef = screen.grid.getDefinition();
+            this.gridDef = screen.grid == null ? Optional.empty() : Optional.ofNullable(screen.grid.getDefinition());
             this.xIndex = xIndex;
             this.yIndex = yIndex;
-            this.reachable = reachable;
-            this.unlockable = unlockable;
+            this.reachable = false;
+            this.unlockable = false;
         }
         
         public void setReachable(boolean reachable) {
@@ -192,31 +190,39 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         public void setUnlockable(boolean unlockable) {
             this.unlockable = unlockable;
         }
+        
+        public void setGridDefinition(GridDefinition gridDef) {
+            this.gridDef = Optional.ofNullable(gridDef);
+        }
 
         @Override
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
-            this.gridDef.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
-                Component rewardText = node.getReward().getDescription();
-                if (this.isActive()) {
-                    List<Component> lines = new ArrayList<>();
-                    lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
-                    if (!this.player.getAbilities().instabuild) {
-                        lines.add(CommonComponents.EMPTY);
-                        MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), this.gridDef.getLanguage().getName());
-                        if (LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) < node.getVocabularyCost()) {
-                            costText = costText.withStyle(ChatFormatting.RED);
+            this.gridDef.ifPresentOrElse(def -> {
+                def.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
+                    Component rewardText = node.getReward().getDescription();
+                    if (this.isActive()) {
+                        List<Component> lines = new ArrayList<>();
+                        lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
+                        if (!this.player.getAbilities().instabuild) {
+                            lines.add(CommonComponents.EMPTY);
+                            MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), def.getLanguage().getName());
+                            if (LinguisticsManager.getVocabulary(this.player, def.getLanguage()) < node.getVocabularyCost()) {
+                                costText = costText.withStyle(ChatFormatting.RED);
+                            }
+                            lines.add(costText);
                         }
-                        lines.add(costText);
+                        if (!this.reachable) {
+                            lines.add(CommonComponents.EMPTY);
+                            lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
+                        }
+                        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
+                    } else {
+                        this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText)));
                     }
-                    if (!this.reachable) {
-                        lines.add(CommonComponents.EMPTY);
-                        lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
-                    }
-                    this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
-                } else {
-                    this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText)));
-                }
+                }, () -> {
+                    this.setTooltip(null);
+                });
             }, () -> {
                 this.setTooltip(null);
             });
@@ -230,7 +236,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.pose().popPose();
 
             // Render node contents, if they exist
-            this.gridDef.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
+            this.gridDef.flatMap(d -> d.getNode(this.xIndex, this.yIndex)).ifPresent(node -> {
                 // Render the reward icon
                 pGuiGraphics.pose().pushPose();
                 int dx = this.width / 2;
@@ -261,9 +267,9 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         @Override
         protected boolean clicked(double pMouseX, double pMouseY) {
             boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
-            if (retVal) {
-                Optional<GridNodeDefinition> nodeOpt = this.gridDef.getNode(this.xIndex, this.yIndex);
-                return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, this.gridDef.getLanguage()) >= nodeOpt.get().getVocabularyCost());
+            if (retVal && this.gridDef.isPresent()) {
+                Optional<GridNodeDefinition> nodeOpt = this.gridDef.get().getNode(this.xIndex, this.yIndex);
+                return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, this.gridDef.get().getLanguage()) >= nodeOpt.get().getVocabularyCost());
             } else {
                 return false;
             }
