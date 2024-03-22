@@ -2,11 +2,14 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -46,6 +49,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     protected static final ResourceLocation PARCHMENT_SPRITE = PrimalMagick.resource("scribe_table/parchment");
     protected static final Logger LOGGER = LogManager.getLogger();
     
+    protected final Map<Vector2ic, NodeButton> nodeButtons = new HashMap<>();
     protected VocabularyWidget vocabularyWidget;
     protected PlayerGrid grid;
     protected long nextCheckTime = 0L;
@@ -68,17 +72,25 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
 
     @Override
-    protected void renderLabels(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY) {
-        // Don't render labels in this mode
-        super.renderLabels(pGuiGraphics, pMouseX, pMouseY);
-    }
-
-    @Override
     protected void init() {
         super.init();
         BookLanguage lang = this.menu.getBookLanguage();
         this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 151, this.topPos + 17));
         this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+        
+        // Initialize the node buttons for the grid
+        for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
+            for (int x = GridDefinition.MIN_POS; x <= GridDefinition.MAX_POS; x++) {
+                Vector2ic nodePos = new Vector2i(x, y);
+                boolean unlockable = this.grid.isUnlockable(nodePos);
+                boolean isUnlocked = this.grid.getUnlocked().contains(nodePos);
+                NodeButton button = new NodeButton(this, x, y, this.leftPos + 40 + (12 * x), this.topPos + 23 + (12 * y), unlockable || isUnlocked, unlockable);
+                button.active = !isUnlocked;
+                button.visible = this.grid.getDefinition().getNodes().keySet().contains(nodePos);
+                this.nodeButtons.put(nodePos, button);
+                this.addRenderableWidget(button);
+            }
+        }
     }
 
     @Override
@@ -106,22 +118,36 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             pGuiGraphics.blitSprite(PARCHMENT_SPRITE, 0, 0, 228, 216);
             pGuiGraphics.pose().popPose();
             
-            // Draw a node button for each node in the grid definition
+            // Update the node buttons for each node in the grid definition
             if (this.grid != null) {
-                for (Vector2ic nodePos : this.grid.getDefinition().getNodes().keySet()) {
-                    int x = this.leftPos + 40 + (12 * nodePos.x());
-                    int y = this.topPos + 23 + (12 * nodePos.y());
-                    boolean unlockable = this.grid.isUnlockable(nodePos);
-                    NodeButton button = new NodeButton(this, nodePos.x(), nodePos.y(), x, y, unlockable || this.grid.getUnlocked().contains(nodePos), unlockable);
-                    button.active = !this.grid.getUnlocked().contains(nodePos);
-                    this.addRenderableWidget(button);
-                }
+                this.nodeButtons.entrySet().forEach(entry -> {
+                    Vector2ic nodePos = entry.getKey();
+                    NodeButton button = entry.getValue();
+                    if (this.grid.getDefinition().getNodes().keySet().contains(nodePos)) {
+                        // If the button's position is part of the grid definition, update the button to reflect the node
+                        boolean unlockable = this.grid.isUnlockable(nodePos);
+                        boolean isUnlocked = this.grid.getUnlocked().contains(nodePos);
+                        button.setReachable(unlockable || isUnlocked);
+                        button.setUnlockable(unlockable);
+                        button.active = !isUnlocked;
+                        button.visible = true;
+                    } else {
+                        // Otherwise, make the button invisible
+                        button.visible = false;
+                    }
+                });
+            } else {
+                // If no grid is currently active, hide all node buttons
+                this.nodeButtons.entrySet().stream().map(e -> e.getValue()).forEach(b -> b.visible = false);
             }
         } else {
             // Render missing writing materials text
             Component text = Component.translatable("label.primalmagick.scribe_table.missing_book");
             int width = this.minecraft.font.width(text.getString());
             pGuiGraphics.drawString(this.minecraft.font, text, this.leftPos + 7 + ((162 - width) / 2), this.topPos + 7 + ((128 - this.minecraft.font.lineHeight) / 2), Color.BLACK.getRGB(), false);
+
+            // If no grid is currently active, hide all node buttons
+            this.nodeButtons.entrySet().stream().map(e -> e.getValue()).forEach(b -> b.visible = false);
         }
     }
     
@@ -130,8 +156,6 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
         if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified()) {
             this.grid = newGrid;
-            this.clearWidgets();
-            this.addRenderableWidget(this.vocabularyWidget);
         }
     }
     
@@ -143,8 +167,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected final int xIndex;
         protected final int yIndex;
         protected final GridDefinition gridDef;
-        protected final boolean reachable;
-        protected final boolean unlockable;
+        protected boolean reachable;
+        protected boolean unlockable;
         
         public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos, boolean reachable, boolean unlockable) {
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
@@ -158,6 +182,14 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             this.xIndex = xIndex;
             this.yIndex = yIndex;
             this.reachable = reachable;
+            this.unlockable = unlockable;
+        }
+        
+        public void setReachable(boolean reachable) {
+            this.reachable = reachable;
+        }
+        
+        public void setUnlockable(boolean unlockable) {
             this.unlockable = unlockable;
         }
 
