@@ -26,7 +26,7 @@ public class GridDefinitionBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final ResourceLocation key;
-    protected ResourceLocation bookLanguage;
+    protected BookLanguage bookLanguage;
     protected Vector2ic startPos;
     protected final List<IFinishedGridNode> nodes = new ArrayList<>();
     
@@ -46,15 +46,8 @@ public class GridDefinitionBuilder {
         return grid(PrimalMagick.resource(keyPath));
     }
     
-    public GridDefinitionBuilder language(@Nullable ResourceLocation lang) {
-        this.bookLanguage = lang;
-        return this;
-    }
-    
     public GridDefinitionBuilder language(@Nullable BookLanguage lang) {
-        if (lang != null) {
-            this.bookLanguage = lang.languageId();
-        }
+        this.bookLanguage = lang;
         return this;
     }
     
@@ -100,8 +93,11 @@ public class GridDefinitionBuilder {
             throw new IllegalStateException("Start position not among defined nodes for linguistics grid " + id.toString());
         }
         
-        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage)).mapToInt(o -> o.orElse(0)).sum();
-        LOGGER.info("Grid {} contains {} total comprehension for language {}", this.key, total, this.bookLanguage);
+        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.languageId())).mapToInt(o -> o.orElse(0)).sum();
+        int expected = this.bookLanguage.complexity();
+        if (total != expected) {
+            throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
+        }
     }
     
     public void build(Consumer<IFinishedGrid> consumer) {
@@ -114,7 +110,7 @@ public class GridDefinitionBuilder {
     
     public void build(Consumer<IFinishedGrid> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new Result(this.key, this.bookLanguage, this.startPos, this.nodes));
+        consumer.accept(new Result(this.key, this.bookLanguage.languageId(), this.startPos, this.nodes));
     }
     
     public static class Result implements IFinishedGrid {
