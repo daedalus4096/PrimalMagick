@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncLinguist
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,6 +40,9 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     
     // Map of language IDs to vocabulary scores
     private final Map<ResourceLocation, Integer> vocabulary = new ConcurrentHashMap<>();
+    
+    // Map of language IDs to sets of book definition IDs, marking what books the player has opened in what languages
+    private final Map<ResourceLocation, Set<ResourceLocation>> booksRead = new ConcurrentHashMap<>();
     
     // Table of book definition IDs to language IDs to study counts
     private final Table<ResourceLocation, ResourceLocation, Integer> studyCounts = HashBasedTable.create();
@@ -81,6 +85,24 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             }
         }
         rootTag.put("Vocabulary", vocabularyList);
+        
+        // Serialize books read
+        ListTag booksReadLanguageList = new ListTag();
+        for (Map.Entry<ResourceLocation, Set<ResourceLocation>> entry : this.booksRead.entrySet()) {
+            if (entry != null) {
+                CompoundTag langTag = new CompoundTag();
+                langTag.putString("Language", entry.getKey().toString());
+                ListTag bookList = new ListTag();
+                for (ResourceLocation bookId : entry.getValue()) {
+                    if (bookId != null) {
+                        bookList.add(StringTag.valueOf(bookId.toString()));
+                    }
+                }
+                langTag.put("Books", bookList);
+                booksReadLanguageList.add(langTag);
+            }
+        }
+        rootTag.put("BooksRead", booksReadLanguageList);
         
         // Serialize recorded study counts
         ListTag studyCountList = new ListTag();
@@ -156,6 +178,18 @@ public class PlayerLinguistics implements IPlayerLinguistics {
             this.setVocabulary(new ResourceLocation(tag.getString("Language")), tag.getInt("Value"));
         }
         
+        // Deserialize books read values
+        ListTag booksReadList = nbt.getList("BooksRead", Tag.TAG_COMPOUND);
+        for (int langIndex = 0; langIndex < booksReadList.size(); langIndex++) {
+            CompoundTag langTag = booksReadList.getCompound(langIndex);
+            ResourceLocation langId = new ResourceLocation(langTag.getString("Language"));
+            ListTag booksList = langTag.getList("Books", Tag.TAG_STRING);
+            for (int bookIndex = 0; bookIndex < booksList.size(); bookIndex++) {
+                ResourceLocation bookId = new ResourceLocation(booksList.getString(bookIndex));
+                this.markRead(bookId, langId);
+            }
+        }
+        
         // Deserialize study count values
         ListTag studyCountList = nbt.getList("StudyCounts", Tag.TAG_COMPOUND);
         for (int index = 0; index < studyCountList.size(); index++) {
@@ -190,6 +224,7 @@ public class PlayerLinguistics implements IPlayerLinguistics {
     public void clear() {
         this.comprehension.clear();
         this.vocabulary.clear();
+        this.booksRead.clear();
         this.studyCounts.clear();
         this.unlocks.clear();
         this.scribeTableMode = ScribeTableMode.STUDY_VOCABULARY;
@@ -198,7 +233,12 @@ public class PlayerLinguistics implements IPlayerLinguistics {
 
     @Override
     public boolean isLanguageKnown(ResourceLocation languageId) {
-        return this.comprehension.containsKey(languageId);
+        return this.booksRead.getOrDefault(languageId, Collections.emptySet()).size() > 0;
+    }
+
+    @Override
+    public boolean markRead(ResourceLocation bookDefinitionId, ResourceLocation languageId) {
+        return this.booksRead.computeIfAbsent(languageId, key -> new HashSet<>()).add(bookDefinitionId);
     }
 
     @Override

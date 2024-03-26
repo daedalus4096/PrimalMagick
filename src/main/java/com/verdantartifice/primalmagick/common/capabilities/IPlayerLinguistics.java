@@ -36,6 +36,15 @@ public interface IPlayerLinguistics extends INBTSerializable<CompoundTag> {
     public boolean isLanguageKnown(ResourceLocation languageId);
     
     /**
+     * Marks a given book in a given language as having been read by the player.
+     * 
+     * @param bookDefinitionId the book definition to be updated
+     * @param languageId the language to be updated
+     * @return true if this combination of book and language is new to the player, false otherwise
+     */
+    public boolean markRead(ResourceLocation bookDefinitionId, ResourceLocation languageId);
+    
+    /**
      * Get the player's comprehension score for the given language.
      * 
      * @param languageId the language to be queried

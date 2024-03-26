@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.mutable.MutableLong;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -47,6 +48,33 @@ public class LinguisticsManager {
     public static void scheduleSync(@Nullable Player player) {
         if (player != null) {
             SYNC_SET.add(player.getUUID());
+        }
+    }
+    
+    public static boolean isLanguageKnown(@Nullable Player player, @Nullable BookLanguage language) {
+        // All players know the default language automatically
+        if (BookLanguagesPM.DEFAULT.get().equals(language)) {
+            return true;
+        }
+        
+        MutableBoolean retVal = new MutableBoolean(false);
+        if (player != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                retVal.setValue(linguistics.isLanguageKnown(language.languageId()));
+            });
+        }
+        return retVal.booleanValue();
+    }
+    
+    public static void markRead(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+        if (player != null && book != null && language != null) {
+            PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
+                boolean isNew = linguistics.markRead(book.bookId(), language.languageId());
+                if (isNew) {
+                    // TODO Modify statistics?
+                }
+                scheduleSync(player);
+            });
         }
     }
     

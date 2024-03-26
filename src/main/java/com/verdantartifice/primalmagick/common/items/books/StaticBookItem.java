@@ -229,6 +229,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
+            LinguisticsManager.markRead(pPlayer, getBookDefinition(stack), getBookLanguage(stack));
             PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
         }
         return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
