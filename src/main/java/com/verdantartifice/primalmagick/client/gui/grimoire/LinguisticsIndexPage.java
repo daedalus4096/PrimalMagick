@@ -1,8 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.LinguisticsButton;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
@@ -43,7 +50,14 @@ public class LinguisticsIndexPage extends AbstractPage {
 
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
-        // TODO Auto-generated method stub
-
+        // Add a button to the screen for each discovered language
+        Minecraft mc = Minecraft.getInstance();
+        List<BookLanguage> known = BookLanguagesPM.LANGUAGES.get().getValues().stream().filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang)).sorted((a, b) -> {
+            return a.getName().getString().compareTo(b.getName().getString());
+        }).toList();
+        for (BookLanguage lang : known) {
+            screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.getName(), screen, lang));
+            y += 12;
+        }
     }
 }
