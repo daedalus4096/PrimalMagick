@@ -1722,6 +1722,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("other_header").name("Other Topics").build();
         this.grimoire("stats_header").name("Statistics").build();
         this.grimoire("attunement_header").name("Attunements").build();
+        this.grimoire("linguistics_header").name("Linguistics").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
         this.grimoire("recipe_index_header").name("Recipes").build();
         this.grimoire("tips_header").name("Tips").build();
