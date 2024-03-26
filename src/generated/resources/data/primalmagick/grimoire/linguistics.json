@@ -3,7 +3,7 @@
   "discipline": "BASICS",
   "icon": {
     "isItem": true,
-    "location": "primalmagick:static_book"
+    "location": "minecraft:writable_book"
   },
   "key": "LINGUISTICS",
   "name": "research.primalmagick.linguistics.title",
