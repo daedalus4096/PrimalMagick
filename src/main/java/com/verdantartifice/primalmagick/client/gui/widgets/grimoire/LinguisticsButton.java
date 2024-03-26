@@ -17,7 +17,7 @@ public class LinguisticsButton extends AbstractTopicButton {
     protected final BookLanguage language;
     
     public LinguisticsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, BookLanguage language) {
-        super(widthIn, heightIn, 123, 12, text, screen, null, new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(language.getGlyphSprite().withPrefix("textures/gui/sprites/").withSuffix(".png"), false), new Handler());
         this.language = language;
     }
     
