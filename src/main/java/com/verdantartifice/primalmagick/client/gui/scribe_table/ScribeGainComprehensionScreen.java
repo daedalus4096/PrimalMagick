@@ -200,7 +200,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Configure tooltip
             this.gridDef.ifPresentOrElse(def -> {
                 def.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
-                    Component rewardText = node.getReward().getDescription();
+                    Component rewardText = node.getReward().getDescription(this.player);
                     if (this.isActive()) {
                         List<Component> lines = new ArrayList<>();
                         lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
@@ -248,7 +248,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                     float scale = 1F + (0.1F * Mth.sin((this.player.tickCount + pPartialTick) / 3F));
                     pGuiGraphics.pose().scale(scale, scale, 1F);
                 }
-                pGuiGraphics.blit(node.getReward().getIconLocation(), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
+                pGuiGraphics.blit(node.getReward().getIconLocation(this.player), (int)(-dx * 1.5D), (int)(-dy * 1.5D), 0, 0, 0, 16, 16, 16, 16);
                 pGuiGraphics.pose().popPose();
                 
                 // Render the node amount string, if applicable

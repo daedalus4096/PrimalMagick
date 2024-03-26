@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 
 /**
@@ -15,8 +16,8 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public interface IReward extends INBTSerializable<CompoundTag> {
     void grant(ServerPlayer player);
-    Component getDescription();
-    ResourceLocation getIconLocation();
+    Component getDescription(Player player);
+    ResourceLocation getIconLocation(Player player);
     Optional<Component> getAmountText();
     String getRewardType();
     <T extends IReward> IRewardSerializer<T> getSerializer();

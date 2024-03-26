@@ -15,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Linguistics grid reward that grants comprehension of a language.
@@ -59,14 +60,14 @@ public class ComprehensionReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         Component amountText = Component.translatable("label.primalmagick.comprehension_gain." + Mth.clamp(this.points, 0, 5));
         Component langText = this.language.getName();
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.comprehension", langText, amountText);
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
+    public ResourceLocation getIconLocation(Player player) {
         return ICON_LOC;
     }
 

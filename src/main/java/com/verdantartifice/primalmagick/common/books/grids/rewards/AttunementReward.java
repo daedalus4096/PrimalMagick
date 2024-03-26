@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Linguistics grid reward that grants permanent attunement to a source.
@@ -57,15 +58,15 @@ public class AttunementReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         Component amountText = Component.translatable("label.primalmagick.attunement_gain." + Mth.clamp(this.points, 0, 5));
-        Component sourceText = this.source.getNameText();
+        Component sourceText = this.source.isDiscovered(player) ? this.source.getNameText() : Component.translatable(Source.getUnknownTranslationKey());
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.attunement", sourceText, amountText);
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
-        return this.source.getImage();
+    public ResourceLocation getIconLocation(Player player) {
+        return this.source.isDiscovered(player) ? this.source.getImage() : Source.UNKNOWN_IMAGE;
     }
 
     @Override

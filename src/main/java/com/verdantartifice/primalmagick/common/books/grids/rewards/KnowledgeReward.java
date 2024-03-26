@@ -14,6 +14,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Linguistics grid reward that grants research knowledge (i.e. theories or observations).
@@ -57,14 +58,14 @@ public class KnowledgeReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         Component amountText = Component.literal(Integer.toString(this.levels));
         Component typeText = Component.translatable(this.knowledgeType.getNameTranslationKey());
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.knowledge", typeText, amountText);
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
+    public ResourceLocation getIconLocation(Player player) {
         return this.knowledgeType.getIconLocation();
     }
 

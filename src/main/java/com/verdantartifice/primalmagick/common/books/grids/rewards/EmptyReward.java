@@ -9,6 +9,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * Linguistics grid reward placeholder that grants nothing.
@@ -39,12 +40,12 @@ public class EmptyReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription() {
+    public Component getDescription(Player player) {
         return DESCRIPTION;
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
+    public ResourceLocation getIconLocation(Player player) {
         return ICON_LOCATION;
     }
 
