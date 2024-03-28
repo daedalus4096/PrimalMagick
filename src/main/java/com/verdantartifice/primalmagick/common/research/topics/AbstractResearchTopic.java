@@ -63,6 +63,7 @@ public abstract class AbstractResearchTopic implements INBTSerializable<Compound
         RESEARCH_ENTRY("research_entry"),
         SOURCE("source"),
         ENCHANTMENT("enchantment"),
+        LANGUAGE("language"),
         OTHER("other");
         
         private final String name;

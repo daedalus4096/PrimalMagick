@@ -65,5 +65,6 @@ public class InitStats {
         StatTriggers.register(StatsPM.MANA_SIPHONED, 1000, SimpleResearchKey.find("t_mana_siphoned_expert"));
         StatTriggers.register(StatsPM.MANA_SPENT_TOTAL, 20, SimpleResearchKey.find("t_mana_spent_total_basics"));
         StatTriggers.register(StatsPM.SHEARS_USED, 50, SimpleResearchKey.find("b_shears_used_expert"));
+        StatTriggers.register(StatsPM.ANCIENT_BOOKS_READ, 1, SimpleResearchKey.find("m_ancient_books_read_basics"));
     }
 }

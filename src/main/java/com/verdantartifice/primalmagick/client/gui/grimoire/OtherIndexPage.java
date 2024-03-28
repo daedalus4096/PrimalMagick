@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.AttunementIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.DisciplineButton;
+import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.LinguisticsIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RuneEnchantmentIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.StatisticsButton;
@@ -50,6 +51,13 @@ public class OtherIndexPage extends AbstractPage {
         if (ResearchManager.isResearchComplete(mc.player, ResearchNames.ATTUNEMENTS.get().simpleKey())) {
             text = Component.translatable("grimoire.primalmagick.attunement_header");
             Button button = screen.addWidgetToScreen(new AttunementIndexButton(x + 12 + (side * 140), y, text, screen));
+            y += button.getHeight();
+        }
+        
+        // Add linguistics button
+        if (ResearchManager.isResearchComplete(mc.player, ResearchNames.LINGUISTICS.get().simpleKey())) {
+            text = Component.translatable("grimoire.primalmagick.linguistics_header");
+            Button button = screen.addWidgetToScreen(new LinguisticsIndexButton(x + 12 + (side * 140), y, text, screen));
             y += button.getHeight();
         }
         

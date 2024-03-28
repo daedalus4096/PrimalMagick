@@ -1,0 +1,368 @@
+{
+  "key": "primalmagick:earth",
+  "language": "primalmagick:earth",
+  "nodes": [
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 5
+      },
+      "x": 3,
+      "y": 1
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "attunement",
+        "points": 1,
+        "source": "earth"
+      },
+      "x": 4,
+      "y": 1
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 5
+      },
+      "x": 1,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 4,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 3
+      },
+      "x": 5,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 4
+      },
+      "x": 6,
+      "y": 2
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "attunement",
+        "points": 1,
+        "source": "earth"
+      },
+      "x": 0,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 2
+      },
+      "x": 1,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "attunement",
+        "points": 1,
+        "source": "earth"
+      },
+      "x": 2,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 4
+      },
+      "x": 5,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 5
+      },
+      "x": 7,
+      "y": 3
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 3
+      },
+      "x": 0,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 3
+      },
+      "x": 2,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 4
+      },
+      "x": 4,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 5,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 3
+      },
+      "x": 6,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 4
+      },
+      "x": 7,
+      "y": 4
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 1
+      },
+      "x": 0,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 2
+      },
+      "x": 1,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 2,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 5
+      },
+      "x": 3,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 4,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 2
+      },
+      "x": 5,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 7,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 1
+      },
+      "x": 0,
+      "y": 6
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "attunement",
+        "points": 1,
+        "source": "earth"
+      },
+      "x": 1,
+      "y": 6
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 1
+      },
+      "x": 5,
+      "y": 6
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 2
+      },
+      "x": 7,
+      "y": 6
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 0,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 1
+      },
+      "x": 1,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 1
+      },
+      "x": 2,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 1
+      },
+      "x": 3,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 1
+      },
+      "x": 4,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "comprehension",
+        "language": "primalmagick:earth",
+        "points": 1
+      },
+      "x": 5,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "knowledge",
+        "knowledge_type": "observation",
+        "levels": 1
+      },
+      "x": 6,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
+        "type": "attunement",
+        "points": 1,
+        "source": "earth"
+      },
+      "x": 7,
+      "y": 7
+    }
+  ],
+  "start_x": 3,
+  "start_y": 7
+}

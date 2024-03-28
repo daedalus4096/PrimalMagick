@@ -1,0 +1,30 @@
+{
+  "addenda": [],
+  "discipline": "BASICS",
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:writable_book"
+  },
+  "key": "LINGUISTICS",
+  "name": "research.primalmagick.linguistics.title",
+  "parents": [
+    "FIRST_STEPS"
+  ],
+  "stages": [
+    {
+      "required_knowledge": [
+        "OBSERVATION;1"
+      ],
+      "required_research": [
+        "m_ancient_books_read_basics"
+      ],
+      "text": "research.primalmagick.linguistics.text.stage.1"
+    },
+    {
+      "recipes": [
+        "primalmagick:scribe_table"
+      ],
+      "text": "research.primalmagick.linguistics.text.stage.2"
+    }
+  ]
+}

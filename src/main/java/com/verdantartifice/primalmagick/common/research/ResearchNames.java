@@ -61,6 +61,7 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> FIRST_STEPS = register("first_steps", () -> new ResearchName("FIRST_STEPS"));
     public static final RegistryObject<ResearchName> THEORYCRAFTING = register("theorycrafting", () -> new ResearchName("THEORYCRAFTING"));
     public static final RegistryObject<ResearchName> ATTUNEMENTS = register("attunements", () -> new ResearchName("ATTUNEMENTS"));
+    public static final RegistryObject<ResearchName> LINGUISTICS = register("linguistics", () -> new ResearchName("LINGUISTICS"));
     public static final RegistryObject<ResearchName> UNLOCK_MANAWEAVING = register("unlock_manaweaving", () -> new ResearchName("UNLOCK_MANAWEAVING"));
     public static final RegistryObject<ResearchName> UNLOCK_ALCHEMY = register("unlock_alchemy", () -> new ResearchName("UNLOCK_ALCHEMY"));
     public static final RegistryObject<ResearchName> UNLOCK_SORCERY = register("unlock_sorcery", () -> new ResearchName("UNLOCK_SORCERY"));
@@ -409,4 +410,5 @@ public class ResearchNames {
     public static final RegistryObject<ResearchName> INTERNAL_SOTU_SCAN_HALLOWED_ORB = register("sotu_scan_hallowed_orb", () -> new ResearchName("b_sotu_scan_hallowed_orb"));
     public static final RegistryObject<ResearchName> INTERNAL_WAND_TRANSFORM_HINT = register("wand_transform_hint", () -> new ResearchName("m_wand_transform_hint"));
     public static final RegistryObject<ResearchName> INTERNAL_SIPHON_PROMPT = register("siphon_prompt", () -> new ResearchName("m_siphon_prompt"));
+    public static final RegistryObject<ResearchName> INTERNAL_ANCIENT_BOOKS_READ_BASICS = register("ancient_books_read_basics", () -> new ResearchName("m_ancient_books_read_basics"));
 }

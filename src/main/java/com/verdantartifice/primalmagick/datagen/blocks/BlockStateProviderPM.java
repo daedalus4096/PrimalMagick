@@ -277,7 +277,8 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleExistingBlockWithItem(BlocksPM.MANA_NEXUS.get());
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY.get());
         this.simpleExistingBlockWithItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get());
-        
+        this.horizontalExistingBlockWithRightHandAdjustmentsAndItem(BlocksPM.SCRIBE_TABLE.get());
+
         // Generate misc blocks
         this.emptyBlock(BlocksPM.CONSECRATION_FIELD.get()); // Do not generate an item
         this.emptyBlock(BlocksPM.GLOW_FIELD.get());         // Do not generate an item

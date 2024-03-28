@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.datagen.blocks.WandComponentBlockStatePr
 import com.verdantartifice.primalmagick.datagen.books.StyleGuideProvider;
 import com.verdantartifice.primalmagick.datagen.items.ItemModelProviderPM;
 import com.verdantartifice.primalmagick.datagen.lang.LanguageProviderEnUs;
+import com.verdantartifice.primalmagick.datagen.linguistics.GridDefinitionProvider;
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
@@ -69,6 +70,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
+        generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new BookDefinitionTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
     }

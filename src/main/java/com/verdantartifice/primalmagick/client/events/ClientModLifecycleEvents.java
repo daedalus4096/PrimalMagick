@@ -23,6 +23,9 @@ import com.verdantartifice.primalmagick.client.gui.WandAssemblyTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandChargerScreen;
 import com.verdantartifice.primalmagick.client.gui.WandGlamourTableScreen;
 import com.verdantartifice.primalmagick.client.gui.WandInscriptionTableScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeGainComprehensionScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeStudyVocabularyScreen;
+import com.verdantartifice.primalmagick.client.gui.scribe_table.ScribeTranscribeWorksScreen;
 import com.verdantartifice.primalmagick.client.recipe_book.ArcaneSearchRegistry;
 import com.verdantartifice.primalmagick.client.renderers.tile.AutoChargerTER;
 import com.verdantartifice.primalmagick.client.renderers.tile.ManaFontTER;
@@ -98,6 +101,9 @@ public class ClientModLifecycleEvents {
         MenuScreens.register(MenuTypesPM.RUNIC_GRINDSTONE.get(), RunicGrindstoneScreen::new);
         MenuScreens.register(MenuTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceScreen::new);
         MenuScreens.register(MenuTypesPM.MANA_BATTERY.get(), ManaBatteryScreen::new);
+        MenuScreens.register(MenuTypesPM.SCRIBE_STUDY_VOCABULARY.get(), ScribeStudyVocabularyScreen::new);
+        MenuScreens.register(MenuTypesPM.SCRIBE_GAIN_COMPREHENSION.get(), ScribeGainComprehensionScreen::new);
+        MenuScreens.register(MenuTypesPM.SCRIBE_TRANSCRIBE_WORKS.get(), ScribeTranscribeWorksScreen::new);
     }
     
     private static void registerTERs() {

@@ -606,6 +606,12 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("ENDERWARD")))
             .manaCost(SourceList.EMPTY.add(Source.VOID, 50))
             .build(consumer);
+        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(ItemsPM.SCRIBE_TABLE.get())
+            .addIngredient(ItemsPM.WOOD_TABLE.get())
+            .addIngredient(Items.BOOKSHELF)
+            .addIngredient(Items.WRITABLE_BOOK)
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("LINGUISTICS")))
+            .build(consumer);
         
         SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))

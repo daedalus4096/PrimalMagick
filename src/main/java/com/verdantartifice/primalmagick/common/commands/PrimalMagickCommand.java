@@ -27,6 +27,7 @@ import com.verdantartifice.primalmagick.common.affinities.IAffinity;
 import com.verdantartifice.primalmagick.common.affinities.ItemAffinity;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
@@ -43,7 +44,6 @@ import com.verdantartifice.primalmagick.common.commands.arguments.AttunementValu
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeAmountArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.KnowledgeTypeInput;
-import com.verdantartifice.primalmagick.common.commands.arguments.LanguageComprehensionArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.ResearchArgument;
 import com.verdantartifice.primalmagick.common.commands.arguments.ResearchInput;
 import com.verdantartifice.primalmagick.common.commands.arguments.SourceArgument;
@@ -240,7 +240,7 @@ public class PrimalMagickCommand {
                             // /pm books <targets> give <bookId> [<languageId>]
                             .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb)).executes(context -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), OptionalInt.empty()))
                                 // /pm books <targets> give <bookId> [<languageId>] [<comprehension>]
-                                .then(Commands.argument("comprehension", LanguageComprehensionArgument.value()).executes((context) -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), OptionalInt.of(IntegerArgumentType.getInteger(context, "comprehension")))))
+                                .then(Commands.argument("comprehension", IntegerArgumentType.integer(0)).executes((context) -> giveBook(context.getSource(), EntityArgument.getPlayers(context, "targets"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), OptionalInt.of(IntegerArgumentType.getInteger(context, "comprehension")))))
                             )
                         )
                     )
@@ -258,7 +258,35 @@ public class PrimalMagickCommand {
                         .then(Commands.literal("set")
                             .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb))
                                 // /pm linguistics <target> comprehension set <languageId> <value>
-                                .then(Commands.argument("value", LanguageComprehensionArgument.value()).executes((context) -> { return setLanguageComprehension(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "languageId"), IntegerArgumentType.getInteger(context, "value")); }))
+                                .then(Commands.argument("value", IntegerArgumentType.integer(0)).executes((context) -> { return setLanguageComprehension(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "languageId"), IntegerArgumentType.getInteger(context, "value")); }))
+                            )
+                        )
+                    )
+                    .then(Commands.literal("vocabulary")
+                        .then(Commands.literal("get")
+                            // /pm linguistics <target> vocabulary get <languageId>
+                            .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb)).executes(context -> getLanguageVocabulary(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "languageId"))))
+                        )
+                        .then(Commands.literal("set")
+                            .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb))
+                                // /pm linguistics <target> vocabulary set <languageId> <value>
+                                .then(Commands.argument("value", IntegerArgumentType.integer(0)).executes((context) -> { return setLanguageVocabulary(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "languageId"), IntegerArgumentType.getInteger(context, "value")); }))
+                            )
+                        )
+                    )
+                    .then(Commands.literal("study_count")
+                        .then(Commands.literal("get")
+                            .then(Commands.argument("bookId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BooksPM.BOOKS.get().getKeys().stream(), sb))
+                                // /pm linguistics <target> study_count get <bookId> <languageId>
+                                .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb)).executes(context -> getBookStudyCount(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"))))
+                            )
+                        )
+                        .then(Commands.literal("set")
+                            .then(Commands.argument("bookId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BooksPM.BOOKS.get().getKeys().stream(), sb))
+                                .then(Commands.argument("languageId", ResourceLocationArgument.id()).suggests((ctx, sb) -> SharedSuggestionProvider.suggestResource(BookLanguagesPM.LANGUAGES.get().getKeys().stream(), sb))
+                                    // /pm linguistics <target> study_count set <bookId> <languageId> <value>
+                                    .then(Commands.argument("value", IntegerArgumentType.integer(0)).executes((context) -> { return setBookStudyCount(context.getSource(), EntityArgument.getPlayer(context, "target"), ResourceLocationArgument.getId(context, "bookId"), ResourceLocationArgument.getId(context, "languageId"), IntegerArgumentType.getInteger(context, "value")); }))
+                                )
                             )
                         )
                     )
@@ -969,6 +997,69 @@ public class PrimalMagickCommand {
                 source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.comprehension.set.success", target.getName(), bookLanguageId, newValue), true);
                 if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                     target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.comprehension.set.target", source.getTextName(), bookLanguageId, newValue));
+                }
+            }
+        }
+        return 0;
+    }
+
+    private static int getLanguageVocabulary(CommandSourceStack source, ServerPlayer target, ResourceLocation bookLanguageId) {
+        if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
+        } else {
+            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.get", target.getName(), bookLanguageId, LinguisticsManager.getVocabulary(target, lang)), true);
+        }
+        return 0;
+    }
+
+    private static int setLanguageVocabulary(CommandSourceStack source, ServerPlayer target, ResourceLocation bookLanguageId, int value) {
+        if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
+        } else {
+            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
+            LinguisticsManager.setVocabulary(target, lang, value);
+            int newValue = LinguisticsManager.getVocabulary(target, lang);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.vocabulary.set.success", target.getName(), bookLanguageId, newValue), true);
+            if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.vocabulary.set.target", source.getTextName(), bookLanguageId, newValue));
+            }
+        }
+        return 0;
+    }
+
+    private static int getBookStudyCount(CommandSourceStack source, ServerPlayer target, ResourceLocation bookId, ResourceLocation bookLanguageId) {
+        if (!BooksPM.BOOKS.get().containsKey(bookId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.noexist", bookId.toString()));
+        } else if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
+        } else {
+            BookDefinition def = BooksPM.BOOKS.get().getValue(bookId);
+            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
+            source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookId, bookLanguageId, LinguisticsManager.getTimesStudied(target, def, lang)), true);
+        }
+        return 0;
+    }
+
+    private static int setBookStudyCount(CommandSourceStack source, ServerPlayer target, ResourceLocation bookId, ResourceLocation bookLanguageId, int value) {
+        if (!BooksPM.BOOKS.get().containsKey(bookId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.noexist", bookId.toString()));
+        } else if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
+            source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
+        } else {
+            BookDefinition def = BooksPM.BOOKS.get().getValue(bookId);
+            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
+            LinguisticsManager.setTimesStudied(target, def, lang, value);
+            int newValue = LinguisticsManager.getTimesStudied(target, def, lang);
+            if (value > IPlayerLinguistics.MAX_STUDY_COUNT) {
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success.capped", target.getName(), bookId, bookLanguageId, newValue, value), true);
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target.capped", source.getTextName(), bookId, bookLanguageId, newValue, value));
+                }
+            } else {
+                source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.set.success", target.getName(), bookId, bookLanguageId, newValue), true);
+                if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
+                    target.sendSystemMessage(Component.translatable("commands.primalmagick.linguistics.study_count.set.target", source.getTextName(), bookId, bookLanguageId, newValue));
                 }
             }
         }

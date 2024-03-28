@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileE
 import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.ResearchTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
+import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.SunlampTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.devices.WindGeneratorTileEntity;
 import com.verdantartifice.primalmagick.common.tiles.mana.AncientManaFontTileEntity;
@@ -81,4 +82,5 @@ public class TileEntityTypesPM {
     public static final RegistryObject<BlockEntityType<EssenceCaskTileEntity>> ESSENCE_CASK = TILE_ENTITIES.register("essence_cask", () -> BlockEntityType.Builder.of(EssenceCaskTileEntity::new, BlocksPM.ESSENCE_CASK_ENCHANTED.get(), BlocksPM.ESSENCE_CASK_FORBIDDEN.get(), BlocksPM.ESSENCE_CASK_HEAVENLY.get()).build(null));
     public static final RegistryObject<BlockEntityType<InfernalFurnaceTileEntity>> INFERNAL_FURNACE = TILE_ENTITIES.register("infernal_furnace", () -> BlockEntityType.Builder.of(InfernalFurnaceTileEntity::new, BlocksPM.INFERNAL_FURNACE.get()).build(null));
     public static final RegistryObject<BlockEntityType<ManaBatteryTileEntity>> MANA_BATTERY = TILE_ENTITIES.register("mana_battery", () -> BlockEntityType.Builder.of(ManaBatteryTileEntity::new, BlocksPM.MANA_NEXUS.get(), BlocksPM.MANA_SINGULARITY.get(), BlocksPM.MANA_SINGULARITY_CREATIVE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ScribeTableTileEntity>> SCRIBE_TABLE = TILE_ENTITIES.register("scribe_table", () -> BlockEntityType.Builder.of(ScribeTableTileEntity::new, BlocksPM.SCRIBE_TABLE.get()).build(null));
 }

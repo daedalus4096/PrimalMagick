@@ -18,6 +18,7 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SyncWardPack
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToClientPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.TileToServerPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
+import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateResearchPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
@@ -48,6 +49,10 @@ import com.verdantartifice.primalmagick.common.network.packets.recipe_book.Chang
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.PlaceGhostArcaneRecipePacket;
 import com.verdantartifice.primalmagick.common.network.packets.recipe_book.SeenArcaneRecipePacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.ChangeScribeTableModePacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.TranscribeActionPacket;
+import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentPropertyPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellComponentTypeIndexPacket;
 import com.verdantartifice.primalmagick.common.network.packets.spellcrafting.SetSpellNamePacket;
@@ -132,6 +137,11 @@ public class PacketHandler {
             .messageBuilder(OpenEnchantedBookScreenPacket.class, OpenEnchantedBookScreenPacket.direction()).encoder(OpenEnchantedBookScreenPacket::encode).decoder(OpenEnchantedBookScreenPacket::decode).consumerMainThread(OpenEnchantedBookScreenPacket::onMessage).add()
             .messageBuilder(SyncLinguisticsPacket.class, SyncLinguisticsPacket.direction()).encoder(SyncLinguisticsPacket::encode).decoder(SyncLinguisticsPacket::decode).consumerMainThread(SyncLinguisticsPacket::onMessage).add()
             .messageBuilder(ContainerSetVarintDataPacket.class, ContainerSetVarintDataPacket.direction()).encoder(ContainerSetVarintDataPacket::encode).decoder(ContainerSetVarintDataPacket::decode).consumerMainThread(ContainerSetVarintDataPacket::onMessage).add()
+            .messageBuilder(ChangeScribeTableModePacket.class, ChangeScribeTableModePacket.direction()).encoder(ChangeScribeTableModePacket::encode).decoder(ChangeScribeTableModePacket::decode).consumerMainThread(ChangeScribeTableModePacket::onMessage).add()
+            .messageBuilder(TranscribeActionPacket.class, TranscribeActionPacket.direction()).encoder(TranscribeActionPacket::encode).decoder(TranscribeActionPacket::decode).consumerMainThread(TranscribeActionPacket::onMessage).add()
+            .messageBuilder(StudyVocabularyActionPacket.class, StudyVocabularyActionPacket.direction()).encoder(StudyVocabularyActionPacket::encode).decoder(StudyVocabularyActionPacket::decode).consumerMainThread(StudyVocabularyActionPacket::onMessage).add()
+            .messageBuilder(UpdateLinguisticsGridsPacket.class, UpdateLinguisticsGridsPacket.direction()).encoder(UpdateLinguisticsGridsPacket::encode).decoder(UpdateLinguisticsGridsPacket::decode).consumerMainThread(UpdateLinguisticsGridsPacket::onMessage).add()
+            .messageBuilder(UnlockGridNodeActionPacket.class, UnlockGridNodeActionPacket.direction()).encoder(UnlockGridNodeActionPacket::encode).decoder(UnlockGridNodeActionPacket::decode).consumerMainThread(UnlockGridNodeActionPacket::onMessage).add()
             ;
     }
     

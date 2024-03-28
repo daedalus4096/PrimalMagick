@@ -24,6 +24,9 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplinePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.IPageElement;
+import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsDescriptionPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsIndexPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsScorePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageString;
@@ -40,6 +43,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.tips.TipManager;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
@@ -57,6 +61,7 @@ import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchT
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
@@ -187,6 +192,8 @@ public class GrimoireScreen extends Screen {
             this.parseAttunementPage(sourceTopic.getData());
         } else if (topic instanceof EnchantmentResearchTopic enchTopic) {
             this.parseRuneEnchantmentPage(enchTopic.getData());
+        } else if (topic instanceof LanguageResearchTopic langTopic) {
+            this.parseLinguisticsPage(langTopic.getData());
         } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
@@ -201,6 +208,8 @@ public class GrimoireScreen extends Screen {
                 this.parseRecipeIndexPages();
             } else if (TipsPage.TOPIC.getData().equals(data)) {
                 this.parseTipsPages();
+            } else if (LinguisticsIndexPage.TOPIC.getData().equals(data)) {
+                this.parseLinguisticsIndexPages();
             } else {
                 LOGGER.warn("Unexpected OtherResearchTopic data {}", data);
             }
@@ -671,6 +680,89 @@ public class GrimoireScreen extends Screen {
         }
         
         // Add the final page to the collection, if it's not empty
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+    }
+    
+    protected void parseLinguisticsIndexPages() {
+        this.currentStageIndex = 0;
+        this.pages.add(new LinguisticsIndexPage(true));
+    }
+    
+    protected void parseLinguisticsPage(BookLanguage language) {
+        this.currentStageIndex = 0;
+
+        // Add the first page with just the comprehension and vocabulary trackers
+        this.pages.add(new LinguisticsScorePage(language));
+        
+        // Add subsequent pages with language description
+        String rawText = language.getDescription().getString();
+        
+        // Process text
+        int lineHeight = this.font.lineHeight;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
+        
+        // Starting with the second page, so we have more space available
+        int heightRemaining = 165;
+        
+        // Break parsed text into pages
+        LinguisticsDescriptionPage tempPage = new LinguisticsDescriptionPage(language);
+        List<PageImage> tempImages = new ArrayList<>();
+        for (String line : parsedText) {
+            if (line.contains("~I")) {
+                if (!images.isEmpty()) {
+                    tempImages.add(images.remove(0));
+                }
+                line = "";
+            }
+            if (line.contains("~L")) {
+                tempImages.add(IMAGE_LINE);
+                line = "";
+            }
+            if (line.contains("~P")) {
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+                heightRemaining = 165;
+                line = "";
+            }
+            if (!line.isEmpty()) {
+                line = line.trim();
+                tempPage.addElement(new PageString(line));
+                heightRemaining -= lineHeight;
+                if (line.endsWith("~B")) {
+                    heightRemaining -= (int)(lineHeight * 0.66D);
+                }
+            }
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Deal with any remaining images
+        tempPage = new LinguisticsDescriptionPage(language);
+        heightRemaining = 165;
+        while (!tempImages.isEmpty()) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+            } else {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+        }
         if (!tempPage.getElements().isEmpty()) {
             this.pages.add(tempPage);
         }

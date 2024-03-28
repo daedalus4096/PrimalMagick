@@ -349,6 +349,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK).name("Chipped Budding Quartz Block").build();
         this.block(BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK).name("Flawed Budding Quartz Block").build();
         this.block(BlocksPM.ENDERWARD).name("Enderward").build();
+        this.block(BlocksPM.SCRIBE_TABLE).name("Scribe's Table").build();
         
         // Generate item localizations
         this.item(ItemsPM.GRIMOIRE).name("Grimoire").build();
@@ -966,9 +967,22 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("written_language").sub("comprehension").output("Comprehension: %1$s%%").end().build();
         this.tooltip("written_language").sub("translated").sub("full").output("Fully translated").end().build();
         this.tooltip("written_language").sub("translated").sub("partial").output("Partially translated").end().build();
+        this.tooltip("written_language").sub("times_studied").output("Times studied: %1$d").end().build();
         this.tooltip("written_language").sub("obfuscated_word").output("Your eyes seem to slide off this word, no matter how hard you try to focus.").end().build();
         this.tooltip("codex").sub("full").output("Use to gain complete understanding of the %1$s language").end().build();
         this.tooltip("codex").sub("partial").output("Use to increase your understanding of the %1$s language").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("study_vocabulary").output("Study Vocabulary").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("gain_comprehension").output("Gain Comprehension").end().build();
+        this.tooltip("scribe_table").sub("mode").sub("transcribe_works").output("Transcribe Works").end().build();
+        this.tooltip("scribe_table").sub("button").sub("transcribe").output("Transcribe").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("already_studied").output("Already studied").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("study_count").output("Gain %2$d %1$s vocabulary").end().build();
+        this.tooltip("scribe_table").sub("button").sub("study_vocabulary").sub("level_cost").output("Cost: %1$s").end().build();
+        this.tooltip("scribe_table").sub("widget").sub("language").output("%2$d %1$s vocabulary").end().build();
+        this.tooltip("scribe_table").sub("grid").sub("reward").output("Unlocks: %1$s").end().build();
+        this.tooltip("scribe_table").sub("grid").sub("reward").sub("unlocked").output("Unlocked: %1$s").end().build();
+        this.tooltip("scribe_table").sub("grid").sub("cost").output("Cost: %1$d %2$s vocabulary").end().build();
+        this.tooltip("scribe_table").sub("grid").sub("no_path").output("Cannot reach!").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
@@ -1013,6 +1027,17 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.label("loot_table").sub("trade").sub("desc").output("Random basic village goods").end().build();
         this.label("loot_table").sub("prosperous_trade").sub("desc").output("Random prosperous village goods").end().build();
         this.label("loot_table").sub("rich_trade").sub("desc").output("Random rich village goods").end().build();
+        this.label("scribe_table").sub("missing_book").output("Missing translatable book!").end().build();
+        this.label("scribe_table").sub("grid").sub("reward").sub("attunement").output("%2$s permanent %1$s attunement").end().build();
+        this.label("scribe_table").sub("grid").sub("reward").sub("comprehension").output("%2$s comprehension of %1$s").end().build();
+        this.label("scribe_table").sub("grid").sub("reward").sub("empty").output("nothing").end().build();
+        this.label("scribe_table").sub("grid").sub("reward").sub("knowledge").output("%2$dx %1$s").end().build();
+        this.label("comprehension_gain").sub("0").output("None").end().build();
+        this.label("comprehension_gain").sub("1").output("Limited").end().build();
+        this.label("comprehension_gain").sub("2").output("Minor").end().build();
+        this.label("comprehension_gain").sub("3").output("Moderate").end().build();
+        this.label("comprehension_gain").sub("4").output("Major").end().build();
+        this.label("comprehension_gain").sub("5").output("Profound").end().build();
 
         // Generate entity type localizations
         this.entity(EntityTypesPM.TREEFOLK).name("Treefolk").build();
@@ -1495,6 +1520,14 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("linguistics").sub("comprehension").sub("set").sub("target").output("%1$s has set your %2$s language comprehension to %3$d").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("success").sub("capped").output("Set %2$s language comprehension for %1$s to %3$d (capped from %4$d)").end().build();
         this.command("linguistics").sub("comprehension").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s language comprehension to %3$d (capped from %4$d)").end().build();
+        this.command("linguistics").sub("vocabulary").sub("get").output("%1$s has %3$d vocabulary for language %2$s").end().build();
+        this.command("linguistics").sub("vocabulary").sub("set").sub("success").output("Set %2$s language vocabulary for %1$s to %3$d").end().build();
+        this.command("linguistics").sub("vocabulary").sub("set").sub("target").output("%1$s has set your %2$s language vocabulary to %3$d").end().build();
+        this.command("linguistics").sub("study_count").sub("get").output("%1$s has studied %2$s %3$s a total of %4$d times").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("success").output("Set %2$s %3$s book study count for %1$s to %4$d").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("target").output("%1$s has set your %2$s %3$s book study count to %4$d").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("success").sub("capped").output("Set %2$s %3$s book study count for %1$s to %4$d (capped from %5$d)").end().build();
+        this.command("linguistics").sub("study_count").sub("set").sub("target").sub("capped").output("%1$s has set your %2$s %3$s book study count to %4$d (capped from %5$d)").end().build();
         this.command("affinities").sub("explain").sub("from_recipe").output("Affinities for item %1$s are derived from recipe %2$s").end().build();
         this.command("affinities").sub("explain").sub("from_data").output("Affinities for item %1$s are explicitly set").end().build();
         this.command("affinities").sub("explain").sub("not_found").output("Affinity data not found for item %1$s").end().build();
@@ -1598,17 +1631,17 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
         
         // Generate written language localizations
-        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
-        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
-        this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
-        this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").build();
-        this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").build();
-        this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").build();
-        this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
-        this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").build();
-        this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").build();
-        this.language(BookLanguagesPM.FORBIDDEN).name("Ancient Cultist Cant").build();
-        this.language(BookLanguagesPM.HALLOWED).name("Ancient High Speech").build();
+        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
+        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").description("A mysterious language from beyond the stars. Known to be involved in the unusual magic of enchanting, but incomprehensible to the human mind.").build();
+        this.language(BookLanguagesPM.ILLAGER).name("Illager").description("A brutal language spoken by the Illagers. They're rumored to hunt down and kill any outsiders who learn it, so maybe it's best to let this one be.").build();
+        this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").description("A language associated with the ancient culture of the plains. Most commonly found in libraries there, but sometimes also in those of the mountains and deserts. Resembles a visual landslide.").build();
+        this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").description("A language associated with the ancient culture that spanned the wet and cold places of the Overworld. Most commonly found in libraries there, but sometimes also in the mountains and forests. Very bubbly to look at.").build();
+        this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").description("A language associated with the ancient culture of the mountains. Most commonly found in libraries there, but sometimes also in those of the plains, wetlands, and snowfields. A delicate script full of flowing lines.").build();
+        this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").description("A language associated with the ancient culture of the deserts. Most commonly found in libraries there, but sometimes also in those of the plains and forests. A distinctive script of curves and circles.").build();
+        this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").description("A language associated with the ancient culture of the forests. Most commonly found in libraries there, but sometimes also in those of the deserts, wetlands, and snowfields. It reminds the reader, appropriately enough, of the phases of the moon.").build();
+        this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").description("A language commonly found in libraries all across the Overworld. It was likely used as a common script for commerce between cultures. Incorporates elements from many cultures.").build();
+        this.language(BookLanguagesPM.FORBIDDEN).name("Ancient Cultist Cant").description("A curious script uncommonly found in libraries across the Overworld. It feels more like a code than a real language. Might be found in more exotic locales as well.").build();
+        this.language(BookLanguagesPM.HALLOWED).name("Ancient High Speech").description("A language found in libraries all across the Overworld, albeit rarely. The books it's in are always of the highest quality. Reminds the reader of musical notation.").build();
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
@@ -1689,6 +1722,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("other_header").name("Other Topics").build();
         this.grimoire("stats_header").name("Statistics").build();
         this.grimoire("attunement_header").name("Attunements").build();
+        this.grimoire("linguistics_header").name("Linguistics").build();
         this.grimoire("rune_enchantment_header").name("Rune Enchantments").build();
         this.grimoire("recipe_index_header").name("Recipes").build();
         this.grimoire("tips_header").name("Tips").build();
@@ -1728,6 +1762,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("attunement_meter").sub("tooltip").sub("permanent").output("Permanent: %1$d").end().build();
         this.grimoire("attunement_meter").sub("tooltip").sub("induced").output("Induced: %1$d").end().build();
         this.grimoire("attunement_meter").sub("tooltip").sub("temporary").output("Temporary: %1$d").end().build();
+        this.grimoire("linguistics_data").sub("vocabulary_score_header").output("Vocabulary:").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score_header").output("Comprehension:").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score").output("%1$d / %2$d (%3$s)").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score").sub("unreadable").output("n/a").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("0").output("Novice").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("1").output("Intermediate").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("2").output("Advanced").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("3").output("Superior").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("4").output("Fluent").end().build();
         
         // Generate JEI GUI localizations
         this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();
@@ -1815,6 +1858,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SKY).name("Sky shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
+        this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
@@ -1944,6 +1988,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("t_sotu_research_sanguine_crucible").name("Learn to create alchemical life").hint("Complete the Alchemy research entry for the Sanguine Crucible").build();
         this.researchRequirement("t_sotu_research_cleansing_rite").name("Learn to summon your inner demons").hint("Complete the Ritual Magick research entry for the Cleansing Rite").build();
         this.researchRequirement("b_sotu_scan_hallowed_orb").name("Study the remains of your inner demons, but gently").hint("Scan the Hallowed Orb dropped by your Inner Demon using the Arcanometer").build();
+        this.researchRequirement("m_ancient_books_read_basics").name("Read an ancient book").build();
 
         // Generate research entry localizations
         this.researchEntry("FIRST_STEPS").name("First Steps")
@@ -1966,6 +2011,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .stages()
                 .add("In my studies of the Grimoire, I've seen the concept of 'attunement' mentioned.  I should find out more about what this means.")
                 .add("Fascinating.  From what I can tell, the study and use of magick brings a person more into alignment with that source of magick, body and mind.  This results in the development of incredible new abilities on the part of the attuned mage.<BR>Learning a new spell or recipe in my Grimoire will sometimes permanently increase my attunement to the relevant source; I'll be sure to note in the grimoire when this happens.  In addition, channeling mana, whether by crafting a recipe or casting a spell, will temporarily increase my attunement to that source.  The effect can be significant, but it will slowly decay over time.<BR>I've cast a simple spell on my Grimoire to track my current attunement levels.  Should I ever wish to check them, or to remind myself what attunement to a particular source will gain me, I need only check the Attunements section under Other Topics in the main index.")
+                .end()
+            .build();
+        this.researchEntry("LINGUISTICS").name("Linguistics")
+            .stages()
+                .add("The ancient shrines are fascinating, but I'd love to learn more about the ancients who built them.  Who were they?  What were they like?  What other wisdom did they have to share?<BR>Of course, a civilization that existed so long ago probably didn't use the same language that I do now.  If I'm lucky enough to find any lost texts of theirs, I should expect them to be in their native tongue, maybe even more than one of them.<BR>I wonder if I could learn those languages with enough study?  Think of the knowledge I could unlock!  I should make some effort in that direction, I think.")
+                .add("I was right!  They did leave writings behind, and they're just as incomprehensible as I suspected.  But never fear, I have faith I can learn more.  To that end, I've fashioned myself a Scribe's Table, a place from which I can study these ancient languages.<BR>The Scribe's Table has three modes in which it can be used.  First, I can use it to study the vocabulary of a language.  To do so, I just need an ancient book and the knowledge imparted by my experiences.  Studying a book will cost me a bit of that experience, but will earn me some new vocabulary.  Any given book can only be studied up to three times in each language I discover it, and each study session will require more experience than the last.<BR>The second mode of the Scribe's Table will let me gain comprehension of a language, allowing me to read it plainly.  Parts of it, anyway.  To do so, I need a book of that language and any vocabulary that I've already learned for it.  The table magically represents the structure of the language as a grid; by unlocking the nodes of that grid using earned vocabulary, I will gain rewards such as comprehension, research observations, or more.<BR>Finally, the third mode of the Scribe's Table lets me transcribe a work.  Basically, it lets me make a copy of any ancient book I've found, incorporating all of my comprehension into it so that other people can benefit from it.  To do so, I need an ancient book that I wish to transcribe and a Book and Quill in which to write.  I don't need to do this if I'm going to be the only one reading (it's always best in the original, after all), but if I want to share with my less well-read friends, this might help.<BR>Finally, I've added a Linguistics section to my Grimoire to help keep track of what languages I've encountered and how my studies are progressing for each of them.  I can find it on the main index page.")
                 .end()
             .build();
         this.researchEntry("UNLOCK_MANAWEAVING").name("Introduction to Manaweaving")
