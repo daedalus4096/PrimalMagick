@@ -30,4 +30,9 @@ public class WrittenLanguageLanguageBuilder extends AbstractLanguageBuilder<Book
     protected ResourceLocation getBaseRegistryKey(BookLanguage base) {
         return Objects.requireNonNull(BookLanguagesPM.LANGUAGES.get().getKey(base));
     }
+    
+    public WrittenLanguageLanguageBuilder description(String value) {
+        this.add(this.getKey("description"), value);
+        return this;
+    }
 }

@@ -1631,17 +1631,17 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tip("rune_hints").name("Looking for hints as to valid rune combinations? Try feeding enchanted items to a Runic Grindstone!").build();
         
         // Generate written language localizations
-        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").build();
-        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").build();
-        this.language(BookLanguagesPM.ILLAGER).name("Illager").build();
-        this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").build();
-        this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").build();
-        this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").build();
-        this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").build();
-        this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").build();
-        this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").build();
-        this.language(BookLanguagesPM.FORBIDDEN).name("Ancient Cultist Cant").build();
-        this.language(BookLanguagesPM.HALLOWED).name("Ancient High Speech").build();
+        this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
+        this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").description("A mysterious language from beyond the stars. Known to be involved in the unusual magic of enchanting, but incomprehensible to the human mind.").build();
+        this.language(BookLanguagesPM.ILLAGER).name("Illager").description("A brutal language spoken by the Illagers. They're rumored to hunt down and kill any outsiders who learn it, so maybe it's best to let this one be.").build();
+        this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").description("A language associated with the ancient culture of the plains. Most commonly found in libraries there, but sometimes also in those of the mountains and deserts. Resembles a visual landslide.").build();
+        this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").description("A language associated with the ancient culture that spanned the wet and cold places of the Overworld. Most commonly found in libraries there, but sometimes also in the mountains and forests. Very bubbly to look at.").build();
+        this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").description("A language associated with the ancient culture of the mountains. Most commonly found in libraries there, but sometimes also in those of the plains, wetlands, and snowfields. A delicate script full of flowing lines.").build();
+        this.language(BookLanguagesPM.SUN).name("Ancient Sunskrit").description("A language associated with the ancient culture of the deserts. Most commonly found in libraries there, but sometimes also in those of the plains and forests. A distinctive script of curves and circles.").build();
+        this.language(BookLanguagesPM.MOON).name("Ancient Lunarese").description("A language associated with the ancient culture of the forests. Most commonly found in libraries there, but sometimes also in those of the deserts, wetlands, and snowfields. It reminds the reader, appropriately enough, of the phases of the moon.").build();
+        this.language(BookLanguagesPM.TRADE).name("Ancient Trade Jargon").description("A language commonly found in libraries all across the Overworld. It was likely used as a common script for commerce between cultures. Incorporates elements from many cultures.").build();
+        this.language(BookLanguagesPM.FORBIDDEN).name("Ancient Cultist Cant").description("A curious script uncommonly found in libraries across the Overworld. It feels more like a code than a real language. Might be found in more exotic locales as well.").build();
+        this.language(BookLanguagesPM.HALLOWED).name("Ancient High Speech").description("A language found in libraries all across the Overworld, albeit rarely. The books it's in are always of the highest quality. Reminds the reader of musical notation.").build();
 
         // Generate written book localizations
         this.book(BooksPM.TEST_BOOK).name("Test Book").author("Steve")
