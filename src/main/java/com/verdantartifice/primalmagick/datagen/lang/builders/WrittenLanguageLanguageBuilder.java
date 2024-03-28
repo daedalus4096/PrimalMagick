@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class WrittenLanguageLanguageBuilder extends AbstractLanguageBuilder<BookLanguage, WrittenLanguageLanguageBuilder> {
     public WrittenLanguageLanguageBuilder(BookLanguage lang, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(lang, lang::getDescriptionId, untracker, adder);
+        super(lang, lang::getNameId, untracker, adder);
     }
 
     @Override

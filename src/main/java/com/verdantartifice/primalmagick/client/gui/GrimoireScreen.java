@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.AttunementPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplinePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.IPageElement;
+import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsDescriptionPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsScorePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.OtherIndexPage;
@@ -695,7 +696,76 @@ public class GrimoireScreen extends Screen {
         // Add the first page with just the comprehension and vocabulary trackers
         this.pages.add(new LinguisticsScorePage(language));
         
-        // TODO Add subsequent pages with language description
+        // Add subsequent pages with language description
+        String rawText = language.getDescription().getString();
+        
+        // Process text
+        int lineHeight = this.font.lineHeight;
+        Tuple<List<String>, List<PageImage>> parsedData = this.parseText(rawText);
+        List<String> parsedText = parsedData.getA();
+        List<PageImage> images = parsedData.getB();
+        
+        // Starting with the second page, so we have more space available
+        int heightRemaining = 165;
+        
+        // Break parsed text into pages
+        LinguisticsDescriptionPage tempPage = new LinguisticsDescriptionPage(language);
+        List<PageImage> tempImages = new ArrayList<>();
+        for (String line : parsedText) {
+            if (line.contains("~I")) {
+                if (!images.isEmpty()) {
+                    tempImages.add(images.remove(0));
+                }
+                line = "";
+            }
+            if (line.contains("~L")) {
+                tempImages.add(IMAGE_LINE);
+                line = "";
+            }
+            if (line.contains("~P")) {
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+                heightRemaining = 165;
+                line = "";
+            }
+            if (!line.isEmpty()) {
+                line = line.trim();
+                tempPage.addElement(new PageString(line));
+                heightRemaining -= lineHeight;
+                if (line.endsWith("~B")) {
+                    heightRemaining -= (int)(lineHeight * 0.66D);
+                }
+            }
+            while (!tempImages.isEmpty() && (heightRemaining >= (tempImages.get(0).adjustedHeight + 2))) {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+            if ((heightRemaining < lineHeight) && !tempPage.getElements().isEmpty()) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
+        
+        // Deal with any remaining images
+        tempPage = new LinguisticsDescriptionPage(language);
+        heightRemaining = 165;
+        while (!tempImages.isEmpty()) {
+            if (heightRemaining < (tempImages.get(0).adjustedHeight + 2)) {
+                heightRemaining = 165;
+                this.pages.add(tempPage);
+                tempPage = new LinguisticsDescriptionPage(language);
+            } else {
+                heightRemaining -= (tempImages.get(0).adjustedHeight + 2);
+                tempPage.addElement(tempImages.remove(0));
+            }
+        }
+        if (!tempPage.getElements().isEmpty()) {
+            this.pages.add(tempPage);
+        }
     }
     
     protected void parseAttunementIndexPages() {
