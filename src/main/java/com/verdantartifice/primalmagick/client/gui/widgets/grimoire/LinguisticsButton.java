@@ -1,9 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import org.apache.logging.log4j.LogManager;
-
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
@@ -30,8 +29,7 @@ public class LinguisticsButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof LinguisticsButton gab) {
                 // Set the new grimoire topic and open a new screen for it
-//                gab.getScreen().gotoTopic(new SourceResearchTopic(gab.getSource(), 0));
-                LogManager.getLogger().debug("Opening grimoire to topic for language {}", gab.getLanguage().languageId().toString());
+                gab.getScreen().gotoTopic(new LanguageResearchTopic(gab.getLanguage(), 0));
             }
         }
     }

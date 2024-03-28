@@ -1762,6 +1762,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("attunement_meter").sub("tooltip").sub("permanent").output("Permanent: %1$d").end().build();
         this.grimoire("attunement_meter").sub("tooltip").sub("induced").output("Induced: %1$d").end().build();
         this.grimoire("attunement_meter").sub("tooltip").sub("temporary").output("Temporary: %1$d").end().build();
+        this.grimoire("linguistics_data").sub("vocabulary_score_header").output("Vocabulary:").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score_header").output("Comprehension:").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score").output("%1$d / %2$d (%3$s)").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_score").sub("unreadable").output("n/a").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("0").output("Novice").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("1").output("Intermediate").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("2").output("Advanced").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("3").output("Superior").end().build();
+        this.grimoire("linguistics_data").sub("comprehension_rating").sub("4").output("Fluent").end().build();
         
         // Generate JEI GUI localizations
         this.jei("ritual").sub("offerings").sub("header").output("Offerings").end().build();

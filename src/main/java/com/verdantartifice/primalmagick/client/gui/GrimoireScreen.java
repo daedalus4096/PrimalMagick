@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplineIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.DisciplinePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.IPageElement;
 import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsIndexPage;
+import com.verdantartifice.primalmagick.client.gui.grimoire.LinguisticsScorePage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.OtherIndexPage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageImage;
 import com.verdantartifice.primalmagick.client.gui.grimoire.PageString;
@@ -41,6 +42,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.BackButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexButton;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.tips.TipManager;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
@@ -58,6 +60,7 @@ import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchT
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EntryResearchTopic;
+import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.SourceResearchTopic;
@@ -188,6 +191,8 @@ public class GrimoireScreen extends Screen {
             this.parseAttunementPage(sourceTopic.getData());
         } else if (topic instanceof EnchantmentResearchTopic enchTopic) {
             this.parseRuneEnchantmentPage(enchTopic.getData());
+        } else if (topic instanceof LanguageResearchTopic langTopic) {
+            this.parseLinguisticsPage(langTopic.getData());
         } else if (topic instanceof OtherResearchTopic otherTopic) {
             String data = otherTopic.getData();
             if (this.isIndexKey(data)) {
@@ -682,6 +687,15 @@ public class GrimoireScreen extends Screen {
     protected void parseLinguisticsIndexPages() {
         this.currentStageIndex = 0;
         this.pages.add(new LinguisticsIndexPage(true));
+    }
+    
+    protected void parseLinguisticsPage(BookLanguage language) {
+        this.currentStageIndex = 0;
+
+        // Add the first page with just the comprehension and vocabulary trackers
+        this.pages.add(new LinguisticsScorePage(language));
+        
+        // TODO Add subsequent pages with language description
     }
     
     protected void parseAttunementIndexPages() {

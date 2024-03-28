@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -62,6 +64,9 @@ public class ResearchTopicFactory {
             ResourceLocation loc = ResourceLocation.tryParse(data);
             Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(loc);
             return ench == null ? MainIndexResearchTopic.INSTANCE : new EnchantmentResearchTopic(ench, page);
+        case LANGUAGE:
+            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(ResourceLocation.tryParse(data));
+            return lang == null ? MainIndexResearchTopic.INSTANCE : new LanguageResearchTopic(lang, page);
         case OTHER:
             return new OtherResearchTopic(data, page);
         default:
