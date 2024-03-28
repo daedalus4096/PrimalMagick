@@ -87,7 +87,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("LINGUISTICS", discipline).icon(Items.WRITABLE_BOOK).parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())    // TODO Add another requirement, for reading texts or finding libraries
+            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredResearch("m_ancient_books_read_basics").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SCRIBE_TABLE.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("UNLOCK_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("FIRST_STEPS")

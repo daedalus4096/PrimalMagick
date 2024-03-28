@@ -1858,6 +1858,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SKY).name("Sky shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
+        this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
@@ -1987,6 +1988,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("t_sotu_research_sanguine_crucible").name("Learn to create alchemical life").hint("Complete the Alchemy research entry for the Sanguine Crucible").build();
         this.researchRequirement("t_sotu_research_cleansing_rite").name("Learn to summon your inner demons").hint("Complete the Ritual Magick research entry for the Cleansing Rite").build();
         this.researchRequirement("b_sotu_scan_hallowed_orb").name("Study the remains of your inner demons, but gently").hint("Scan the Hallowed Orb dropped by your Inner Demon using the Arcanometer").build();
+        this.researchRequirement("m_ancient_books_read_basics").name("Read an ancient book").build();
 
         // Generate research entry localizations
         this.researchEntry("FIRST_STEPS").name("First Steps")
