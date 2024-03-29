@@ -1,0 +1,8 @@
+{
+  "type": "primalmagick:library",
+  "biomes": "#primalmagick:has_structure/sea_library",
+  "library_type": "sea",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin"
+}

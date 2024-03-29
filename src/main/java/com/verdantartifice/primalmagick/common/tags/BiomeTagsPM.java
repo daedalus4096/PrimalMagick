@@ -19,6 +19,12 @@ public class BiomeTagsPM {
     public static final TagKey<Biome> HAS_SUN_SHRINE = tag("has_structure/sun_shrine");
     public static final TagKey<Biome> HAS_MOON_SHRINE = tag("has_structure/moon_shrine");
     
+    public static final TagKey<Biome> HAS_EARTH_LIBRARY = tag("has_structure/earth_library");
+    public static final TagKey<Biome> HAS_SEA_LIBRARY = tag("has_structure/sea_library");
+    public static final TagKey<Biome> HAS_SKY_LIBRARY = tag("has_structure/sky_library");
+    public static final TagKey<Biome> HAS_SUN_LIBRARY = tag("has_structure/sun_library");
+    public static final TagKey<Biome> HAS_MOON_LIBRARY = tag("has_structure/moon_library");
+    
     public static final TagKey<Biome> HAS_MARBLE = tag("has_feature/ore_marble_raw");
     public static final TagKey<Biome> HAS_ROCK_SALT = tag("has_feature/ore_rock_salt");
     public static final TagKey<Biome> HAS_QUARTZ = tag("has_feature/ore_quartz");

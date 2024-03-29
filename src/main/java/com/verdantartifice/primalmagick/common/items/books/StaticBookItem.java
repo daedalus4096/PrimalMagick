@@ -63,6 +63,10 @@ public class StaticBookItem extends Item {
         TYPE_MAP.put(type, this);
     }
     
+    public static ItemStack make(BookType type, Optional<BookDefinition> bookDefOpt, Optional<BookLanguage> bookLangOpt) {
+        return make(type, bookDefOpt, bookLangOpt, Optional.empty(), OptionalInt.empty(), OptionalInt.empty());
+    }
+    
     public static ItemStack make(BookType type, Optional<BookDefinition> bookDefOpt, Optional<BookLanguage> bookLangOpt, Optional<String> authorOpt, OptionalInt generationOpt, OptionalInt translationOpt) {
         ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
         bookDefOpt.ifPresent(bookDef -> setBookDefinition(retVal, bookDef));

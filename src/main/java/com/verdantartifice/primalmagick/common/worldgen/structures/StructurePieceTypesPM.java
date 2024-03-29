@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryPiece;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -21,4 +22,5 @@ public class StructurePieceTypesPM {
     }
     
     public static final RegistryObject<StructurePieceType> SHRINE = STRUCTURE_PIECES.register("shrine", () -> ShrinePiece::new);
+    public static final RegistryObject<StructurePieceType> LIBRARY = STRUCTURE_PIECES.register("library", () -> LibraryPiece::new);
 }
