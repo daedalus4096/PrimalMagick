@@ -29,10 +29,10 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     @SuppressWarnings("deprecation")
     @Override
     protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
-        // TODO Auto-generated method stub
+        // TODO Stub
         CompoundTag testBookTag = new CompoundTag();
-        testBookTag.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.TEST_BOOK.getId().toString());
-        testBookTag.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.DEFAULT.getId().toString());
+        testBookTag.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.SOURCE_PRIMER.getId().toString());
+        testBookTag.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.TRADE.getId().toString());
         
         this.registerLootTable(writer, LootTablesPM.LIBRARY_TEST, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6.0F))
                 .add(EmptyLootItem.emptyItem().setWeight(2))
