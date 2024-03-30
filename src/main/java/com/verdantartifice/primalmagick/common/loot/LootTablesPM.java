@@ -27,6 +27,8 @@ public class LootTablesPM {
     public static final ResourceLocation THEORYCRAFTING_PROSPEROUS_TRADE = register("gameplay/theorycrafting/prosperous_trade");
     public static final ResourceLocation THEORYCRAFTING_RICH_TRADE = register("gameplay/theorycrafting/rich_trade");
     
+    public static final ResourceLocation LIBRARY_TEST = register("gameplay/library/test");
+    
     private static ResourceLocation register(String id) {
         return register(PrimalMagick.resource(id));
     }

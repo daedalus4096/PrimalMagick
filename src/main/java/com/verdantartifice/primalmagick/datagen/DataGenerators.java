@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.datagen.linguistics.GridDefinitionProvid
 import com.verdantartifice.primalmagick.datagen.loot_modifiers.LootModifierProvider;
 import com.verdantartifice.primalmagick.datagen.loot_tables.BlockLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.EntityLootTables;
+import com.verdantartifice.primalmagick.datagen.loot_tables.LibraryLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TheorycraftingRewardLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TreefolkBarteringLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
@@ -58,7 +59,11 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), (DataProvider.Factory<LootTableProvider>)(output -> new LootTableProvider(output, Collections.emptySet(), List.of(
-                BlockLootTables.getSubProviderEntry(), EntityLootTables.getSubProviderEntry(), TreefolkBarteringLootTables.getSubProviderEntry(), TheorycraftingRewardLootTables.getSubProviderEntry()))));
+                BlockLootTables.getSubProviderEntry(), 
+                EntityLootTables.getSubProviderEntry(), 
+                TreefolkBarteringLootTables.getSubProviderEntry(), 
+                TheorycraftingRewardLootTables.getSubProviderEntry(), 
+                LibraryLootTables.getSubProviderEntry()))));
         BlockTagsProviderPM blockTagsProvider = new BlockTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), blockTagsProvider);
         generator.addProvider(event.includeServer(), new ItemTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), blockTagsProvider.contentsGetter(), event.getExistingFileHelper()));
