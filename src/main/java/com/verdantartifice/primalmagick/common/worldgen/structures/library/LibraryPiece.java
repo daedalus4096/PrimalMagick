@@ -1,13 +1,9 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
-import java.util.Optional;
-
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
-import com.verdantartifice.primalmagick.common.books.BookType;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
-import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
+import com.verdantartifice.primalmagick.common.tiles.base.IRandomizableContents;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
 import net.minecraft.core.BlockPos;
@@ -19,8 +15,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LecternBlock;
-import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -79,11 +73,10 @@ public class LibraryPiece extends TemplateStructurePiece {
         } else if ("shelf_high".equals(pName)) {
             // TODO Populate bookshelf below
             pLevel.setBlock(pPos, BlocksPM.MARBLE_BRICKS.get().defaultBlockState(), Block.UPDATE_ALL);
-        } else if ("lectern".equals(pName)) {
+        } else if ("welcome".equals(pName)) {
             // Populate lectern above
-            if (pLevel.getBlockEntity(pPos.above()) instanceof LecternBlockEntity lectern) {
-                lectern.setBook(StaticBookItem.make(BookType.BOOK, Optional.of(BooksPM.TEST_BOOK.get()), Optional.of(BookLanguagesPM.DEFAULT.get())));  // FIXME Use welcome book
-                pLevel.setBlock(pPos.above(), lectern.getBlockState().setValue(LecternBlock.POWERED, false).setValue(LecternBlock.HAS_BOOK, true), Block.UPDATE_ALL);
+            if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
+                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("hidden".equals(pName)) {
