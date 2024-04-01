@@ -157,6 +157,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_CHISELED = registerSupplier("marble_chiseled", () -> new BlockItem(BlocksPM.MARBLE_CHISELED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_RUNED = registerSupplier("marble_runed", () -> new BlockItem(BlocksPM.MARBLE_RUNED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_TILES = registerSupplier("marble_tiles", () -> new BlockItem(BlocksPM.MARBLE_TILES.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MARBLE_BOOKSHELF = registerSupplier("marble_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_BOOKSHELF.get(), new Item.Properties()));
 
     // Register enchanted marble block items
     public static final RegistryObject<BlockItem> MARBLE_ENCHANTED = registerSupplier("marble_enchanted", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED.get(), new Item.Properties()));

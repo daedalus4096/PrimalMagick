@@ -135,6 +135,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerBasicTable(BlocksPM.MARBLE_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_WALL.get());
         this.registerBasicTable(BlocksPM.MARBLE_TILES.get());
+        this.registerBasicTable(BlocksPM.MARBLE_BOOKSHELF.get());
     }
     
     private void registerEnchantedMarbleLootTables() {
