@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBl
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.IncenseBrazierBlock;
@@ -91,6 +92,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_RAW.get());
         
         // Generate enchanted marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
@@ -857,5 +859,63 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void directionalCrossBlockWithItem(Block block, ResourceLocation itemTexture) {
         this.directionalBlock(block, this.getCrossModel(block));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
+    }
+
+    private void carvedBookshelfBlockWithItem(CarvedBookshelfBlock block, Block sideTextureBlock) {
+        DirectionProperty facingProp = CarvedBookshelfBlock.FACING;
+        ModelFile baseModel = this.getCarvedBookshelfBaseModel(block, sideTextureBlock);
+        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+
+        // Create the multipart block state for the block as it will appear in the world
+        this.getMultipartBuilder(block)
+            .part().modelFile(baseModel).rotationY(180).uvLock(true).addModel().condition(facingProp, Direction.SOUTH).end()
+            .part().modelFile(baseModel).rotationY(90).uvLock(true).addModel().condition(facingProp, Direction.EAST).end()
+            .part().modelFile(baseModel).rotationY(270).uvLock(true).addModel().condition(facingProp, Direction.WEST).end()
+            .part().modelFile(baseModel).rotationY(0).uvLock(true).addModel().condition(facingProp, Direction.NORTH).end();
+        
+        // Create the item model as it will appear in the inventory
+        ModelFile invModel = this.getCarvedBookshelfInventoryModel(this.name(block) + "_inventory", this.blockTexture(block).withSuffix("_empty"), sideTexture, sideTexture);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(invModel);
+    }
+    
+    private ModelFile getCarvedBookshelfBaseModel(CarvedBookshelfBlock block, Block sideTextureBlock) {
+        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+        return this.getCarvedBookshelfBaseModel(this.name(block), sideTexture, sideTexture);
+    }
+    
+    private ModelFile getCarvedBookshelfBaseModel(String name, ResourceLocation topTexture, ResourceLocation sideTexture) {
+        return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
+                .texture("top", topTexture)
+                .texture("side", sideTexture)
+                .texture("particle", "#top")
+                .renderType(SOLID)
+                .element()
+                    .from(0, 0, 0)
+                    .to(16, 16, 16)
+                    .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.EAST).end()
+                    .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.SOUTH).end()
+                    .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.WEST).end()
+                    .face(Direction.UP).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.UP).end()
+                    .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.DOWN).end()
+                .end();
+    }
+    
+    private ModelFile getCarvedBookshelfInventoryModel(String name, ResourceLocation frontTexture, ResourceLocation topTexture, ResourceLocation sideTexture) {
+        return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
+                .texture("top", topTexture)
+                .texture("side", sideTexture)
+                .texture("front", frontTexture)
+                .texture("particle", "#top")
+                .renderType(SOLID)
+                .element()
+                    .from(0, 0, 0)
+                    .to(16, 16, 16)
+                    .face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").end()
+                    .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.UP).uvs(0, 0, 16, 16).texture("#top").end()
+                    .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#top").end()
+                .end();
     }
 }
