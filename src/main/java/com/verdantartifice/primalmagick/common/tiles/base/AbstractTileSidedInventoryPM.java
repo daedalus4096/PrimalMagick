@@ -303,6 +303,10 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implem
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
     }
+    
+    public ItemStack removeItem(int invIndex, int slotIndex, int amount) {
+        return this.itemHandlers.get(invIndex).extractItem(slotIndex, amount, false);
+    }
 
     @Override
     public void setLootTable(ResourceLocation lootTable, long lootTableSeed) {

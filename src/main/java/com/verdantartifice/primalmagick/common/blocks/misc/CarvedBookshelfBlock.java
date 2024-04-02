@@ -1,12 +1,22 @@
 package com.verdantartifice.primalmagick.common.blocks.misc;
 
 import java.util.List;
+import java.util.Optional;
+
+import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -21,7 +31,10 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * Definition of a bookshelf which can have books placed upon it.  Like a chiseled book shelf, but
@@ -78,14 +91,103 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        // TODO Auto-generated method stub
-        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+        if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
+            Optional<Vec2> coordsOpt = getRelativeHitCoordinatesForBlockFace(pHit, pState.getValue(FACING));
+            if (coordsOpt.isPresent()) {
+                int slot = getHitSlot(coordsOpt.get());
+                if (pState.getValue(SLOT_OCCUPIED_PROPERTIES.get(slot))) {
+                    // If a book is in the slot, remove it from the shelf
+                    removeBook(pLevel, pPos, pPlayer, tile, slot);
+                    return InteractionResult.sidedSuccess(pLevel.isClientSide);
+                } else {
+                    ItemStack handStack = pPlayer.getItemInHand(pHand);
+                    if (handStack.is(ItemTags.BOOKSHELF_BOOKS)) {
+                        // If the slot is empty and the player is holding a book, add it to the shelf
+                        addBook(pLevel, pPos, pPlayer, tile, handStack, slot);
+                        return InteractionResult.sidedSuccess(pLevel.isClientSide);
+                    } else {
+                        return InteractionResult.CONSUME;
+                    }
+                }
+            } else {
+                return InteractionResult.PASS;
+            }
+        } else {
+            return InteractionResult.PASS;
+        }
+    }
+
+    private static void addBook(Level pLevel, BlockPos pPos, Player pPlayer, CarvedBookshelfTileEntity tile, ItemStack bookStack, int slot) {
+        if (!pLevel.isClientSide) {
+            // Set the book stack into the tile entity's slot
+            pPlayer.awardStat(Stats.ITEM_USED.get(bookStack.getItem()));
+            SoundEvent soundEvent = bookStack.is(Items.ENCHANTED_BOOK) ? SoundEvents.CHISELED_BOOKSHELF_INSERT_ENCHANTED : SoundEvents.CHISELED_BOOKSHELF_INSERT;
+            tile.addBook(slot, bookStack.split(1));
+            pLevel.playSound(null, pPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
+        }
+    }
+
+    private static void removeBook(Level pLevel, BlockPos pPos, Player pPlayer, CarvedBookshelfTileEntity tile, int slot) {
+        if (!pLevel.isClientSide) {
+            ItemStack oldStack = tile.removeBook(slot);
+            SoundEvent soundEvent = oldStack.is(Items.ENCHANTED_BOOK) ? SoundEvents.CHISELED_BOOKSHELF_PICKUP_ENCHANTED : SoundEvents.CHISELED_BOOKSHELF_PICKUP;
+            pLevel.playSound(null, pPos, soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!pPlayer.getInventory().add(oldStack)) {
+                pPlayer.drop(oldStack, false);
+            }
+            pLevel.gameEvent(pPlayer, GameEvent.BLOCK_CHANGE, pPos);
+        }
+    }
+
+    private static Optional<Vec2> getRelativeHitCoordinatesForBlockFace(BlockHitResult hitResult, Direction face) {
+        Direction hitDirection = hitResult.getDirection();
+        if (face != hitDirection) {
+            return Optional.empty();
+        } else {
+            BlockPos pos = hitResult.getBlockPos().relative(hitDirection);
+            Vec3 relVec = hitResult.getLocation().subtract(pos.getX(), pos.getY(), pos.getZ());
+            return switch (hitDirection) {
+                case NORTH -> Optional.of(new Vec2((float)(1D - relVec.x()), (float)relVec.y()));
+                case SOUTH -> Optional.of(new Vec2((float)relVec.x(), (float)relVec.y()));
+                case WEST -> Optional.of(new Vec2((float)relVec.z(), (float)relVec.y()));
+                case EAST -> Optional.of(new Vec2((float)(1D - relVec.z()), (float)relVec.y()));
+                default -> Optional.empty();
+            };
+        }
+    }
+
+    private static int getHitSlot(Vec2 hitPos) {
+        int i = hitPos.y >= 0.5F ? 0 : 1;
+        int j = getSection(hitPos.x);
+        return j + i * 3;
+    }
+    
+    private static int getSection(float x) {
+        if (x < 0.375F) {
+            return 0;
+        } else if (x < 0.6875F) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pMovedByPiston) {
+        // Drop the tile entity's inventory into the world when the block is replaced
+        if (pState.getBlock() != pNewState.getBlock()) {
+            if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
+                tile.dropContents(pLevel, pPos);
+                pLevel.updateNeighbourForOutputSignal(pPos, this);
+            }
+            super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
+        }
     }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        // TODO Auto-generated method stub
-        return null;
+        return new CarvedBookshelfTileEntity(pPos, pState);
     }
 
     @Override
