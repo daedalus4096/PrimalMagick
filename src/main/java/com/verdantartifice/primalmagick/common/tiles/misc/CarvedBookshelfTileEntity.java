@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.tiles.misc;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.capabilities.ItemStackHandlerPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -10,9 +12,12 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInven
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -25,9 +30,15 @@ import net.minecraftforge.items.ItemStackHandler;
 public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     protected static final int INPUT_INV_INDEX = 0;
     protected static final int BOOK_CAPACITY = 6;
-    
+
+    private int lastInteractedSlot = -1;
+
     public CarvedBookshelfTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CARVED_BOOKSHELF.get(), pos, state);
+    }
+    
+    public int getLastInteractedSlot() {
+        return this.lastInteractedSlot;
     }
 
     @Override
@@ -80,6 +91,18 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     @Override
+    public void load(CompoundTag pTag) {
+        super.load(pTag);
+        this.lastInteractedSlot = pTag.getInt("LastInteractedSlot");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag pTag) {
+        super.saveAdditional(pTag);
+        pTag.putInt("LastInteractedSlot", this.lastInteractedSlot);
+    }
+
+    @Override
     public void onLoad() {
         this.unpackLootTable(null);
         super.onLoad();
@@ -91,8 +114,22 @@ public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     }
 
     protected void updateState(int slot) {
-        // TODO Auto-generated method stub
-        LOGGER.debug("Updating block state for slot {} of carved bookshelf at {}", slot, this.getBlockPos());
+        if (slot >= 0 && slot < BOOK_CAPACITY) {
+            // Update the last interacted slot for redstone signal purposes
+            this.lastInteractedSlot = slot;
+            
+            // Update all slot block states based on current item occupancy
+            BlockState state = this.getBlockState();
+            for (int index = 0; index < CarvedBookshelfBlock.SLOT_OCCUPIED_PROPERTIES.size(); index++) {
+                state = state.setValue(CarvedBookshelfBlock.SLOT_OCCUPIED_PROPERTIES.get(index), !this.getItem(INPUT_INV_INDEX, index).isEmpty());
+            }
+            Objects.requireNonNull(this.level).setBlock(this.worldPosition, state, Block.UPDATE_ALL);
+            
+            // Fire a game event that the block has changed
+            this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.worldPosition, GameEvent.Context.of(state));
+        } else {
+            LOGGER.error("Expected slot 0-{}, got {}", BOOK_CAPACITY - 1, slot);
+        }
     }
     
     public void addBook(int slot, ItemStack bookStack) {
