@@ -107,6 +107,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_CHISELED).name("Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_RUNED).name("Runed Marble").build();
         this.block(BlocksPM.MARBLE_TILES).name("Marble Tiles").build();
+        this.block(BlocksPM.MARBLE_BOOKSHELF).name("Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_ENCHANTED).name("Enchanted Marble").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_SLAB).name("Enchanted Marble Slab").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_STAIRS).name("Enchanted Marble Stairs").build();

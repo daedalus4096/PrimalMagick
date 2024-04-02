@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -49,6 +50,7 @@ import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -58,6 +60,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -864,14 +867,31 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void carvedBookshelfBlockWithItem(CarvedBookshelfBlock block, Block sideTextureBlock) {
         DirectionProperty facingProp = CarvedBookshelfBlock.FACING;
         ModelFile baseModel = this.getCarvedBookshelfBaseModel(block, sideTextureBlock);
+        String baseName = this.name(block);
         ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+        ResourceLocation emptyTexture = this.blockTexture(block).withSuffix("_empty");
+        ResourceLocation occupiedTexture = this.blockTexture(block).withSuffix("_occupied");
+        Map<BooleanProperty, String> slotNameMap = ImmutableMap.<BooleanProperty, String>builder()
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_0_OCCUPIED, "top_left")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_1_OCCUPIED, "top_mid")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_2_OCCUPIED, "top_right")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_3_OCCUPIED, "bottom_left")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_4_OCCUPIED, "bottom_mid")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_5_OCCUPIED, "bottom_right")
+                .build();
 
         // Create the multipart block state for the block as it will appear in the world
-        this.getMultipartBuilder(block)
-            .part().modelFile(baseModel).rotationY(180).uvLock(true).addModel().condition(facingProp, Direction.SOUTH).end()
-            .part().modelFile(baseModel).rotationY(90).uvLock(true).addModel().condition(facingProp, Direction.EAST).end()
-            .part().modelFile(baseModel).rotationY(270).uvLock(true).addModel().condition(facingProp, Direction.WEST).end()
-            .part().modelFile(baseModel).rotationY(0).uvLock(true).addModel().condition(facingProp, Direction.NORTH).end();
+        MultiPartBlockStateBuilder builder = this.getMultipartBuilder(block);
+        Direction.Plane.HORIZONTAL.stream().forEach(dir -> {
+            int rotY = (int)(dir.toYRot() + 180) % 360;
+            builder.part().modelFile(baseModel).rotationY(rotY).uvLock(true).addModel().condition(facingProp, dir).end();
+            slotNameMap.keySet().forEach(slotProperty -> {
+                builder.part().modelFile(this.getCarvedBookshelfSlotModel(baseName, slotNameMap.get(slotProperty), false, emptyTexture)).rotationY(rotY).addModel()
+                    .nestedGroup().condition(facingProp, dir).end().nestedGroup().condition(slotProperty, false).end().end();
+                builder.part().modelFile(this.getCarvedBookshelfSlotModel(baseName, slotNameMap.get(slotProperty), true, occupiedTexture)).rotationY(rotY).addModel()
+                    .nestedGroup().condition(facingProp, dir).end().nestedGroup().condition(slotProperty, true).end().end();
+            });
+        });
         
         // Create the item model as it will appear in the inventory
         ModelFile invModel = this.getCarvedBookshelfInventoryModel(this.name(block) + "_inventory", this.blockTexture(block).withSuffix("_empty"), sideTexture, sideTexture);
@@ -898,6 +918,12 @@ public class BlockStateProviderPM extends BlockStateProvider {
                     .face(Direction.UP).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.UP).end()
                     .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.DOWN).end()
                 .end();
+    }
+    
+    private ModelFile getCarvedBookshelfSlotModel(String baseName, String slotName, boolean occupied, ResourceLocation slotTexture) {
+        String name = baseName + "_" + (occupied ? "occupied" : "empty") + "_slot_" + slotName;
+        ResourceLocation parent = new ResourceLocation(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
+        return this.models().withExistingParent(name, parent).texture("texture", slotTexture);
     }
     
     private ModelFile getCarvedBookshelfInventoryModel(String name, ResourceLocation frontTexture, ResourceLocation topTexture, ResourceLocation sideTexture) {
