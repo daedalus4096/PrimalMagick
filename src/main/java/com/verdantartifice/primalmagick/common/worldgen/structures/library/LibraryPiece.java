@@ -15,6 +15,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -68,20 +69,27 @@ public class LibraryPiece extends TemplateStructurePiece {
     protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
         // Process data markers, populating bookshelves and replacing blocks as appropriate
         if ("shelf_low".equals(pName)) {
-            // TODO Populate bookshelf above
+            // Populate bookshelf above
+            if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
+                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+            }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("shelf_high".equals(pName)) {
-            // TODO Populate bookshelf below
+            // Populate bookshelf below
+            if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
+                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+            }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_BRICKS.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("welcome".equals(pName)) {
             // Populate lectern above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());
+                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("hidden".equals(pName)) {
-            if (pRandom.nextDouble() < 0.25D) {
-                // TODO Populate chest below
+            if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.above()) instanceof RandomizableContainerBlockEntity container) {
+                // Populate chest below
+                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
             } else {
                 pLevel.setBlock(pPos, BlocksPM.MARBLE_TILES.get().defaultBlockState(), Block.UPDATE_ALL);
                 pLevel.setBlock(pPos.below(), BlocksPM.MARBLE_TILES.get().defaultBlockState(), Block.UPDATE_ALL);
