@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import org.joml.Vector2i;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
@@ -26,6 +27,8 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
+    public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
+
     private final DataSlot languageClue = DataSlot.standalone();
     private final DataSlot vocabularyCount = DataSlot.standalone();
 
@@ -46,7 +49,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 18, 
-                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex())));
+                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex()).background(BOOK_SLOT_TEXTURE)));
     }
 
     @Override

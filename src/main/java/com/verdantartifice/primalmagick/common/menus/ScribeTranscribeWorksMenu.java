@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
@@ -8,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ResultContainer;
@@ -21,6 +23,8 @@ import net.minecraft.world.item.Items;
  * @author Daedalus4096
  */
 public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
+    public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
+
     protected final ResultContainer resultInv = new ResultContainer();
     protected Slot originalSlot;
     protected Slot blankSlot;
@@ -40,7 +44,7 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
 
         // Slot 1: Original book
         this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35, 
-                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex())));
+                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex()).background(BOOK_SLOT_TEXTURE)));
         
         // Slot 2: Blank book and quill
         this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 35,
