@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.tags.BookDefinitionTagsPM;
 
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -30,6 +31,10 @@ public class BookLanguagesPM {
     
     protected static RegistryObject<BookLanguage> register(String name, Supplier<BookLanguage> langSupplier) {
         return DEFERRED_LANGUAGES.register(name, langSupplier);
+    }
+    
+    public static TagKey<BookLanguage> createTagKey(String name) {
+        return DEFERRED_LANGUAGES.createTagKey(name);
     }
     
     // Register book languages

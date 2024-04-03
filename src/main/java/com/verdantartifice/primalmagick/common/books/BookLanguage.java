@@ -26,6 +26,10 @@ public record BookLanguage(ResourceLocation languageId, Style style, int complex
         return this.complexity() >= 0;
     }
     
+    public boolean is(TagKey<BookLanguage> tagKey) {
+        return BookLanguagesPM.LANGUAGES.get().tags().getTag(tagKey).contains(this);
+    }
+    
     public String getNameId() {
         return MEMOIZED_NAME_ID.apply(this);
     }
