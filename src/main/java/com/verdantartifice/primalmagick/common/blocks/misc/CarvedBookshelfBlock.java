@@ -159,7 +159,7 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
     private static int getHitSlot(Vec2 hitPos) {
         int i = hitPos.y >= 0.5F ? 0 : 1;
         int j = getSection(hitPos.x);
-        return j + i * 3;
+        return j + (i * BOOKS_PER_ROW);
     }
     
     private static int getSection(float x) {
@@ -197,8 +197,13 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
 
     @Override
     public int getAnalogOutputSignal(BlockState pState, Level pLevel, BlockPos pPos) {
-        // TODO Auto-generated method stub
-        return super.getAnalogOutputSignal(pState, pLevel, pPos);
+        if (pLevel.isClientSide) {
+            return 0;
+        } else if (pLevel.getBlockEntity(pPos) instanceof CarvedBookshelfTileEntity tile) {
+            return tile.getLastInteractedSlot() + 1;
+        } else {
+            return 0;
+        }
     }
 
 }

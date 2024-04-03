@@ -29,7 +29,7 @@ import net.minecraftforge.items.ItemStackHandler;
  */
 public class CarvedBookshelfTileEntity extends AbstractTileSidedInventoryPM {
     protected static final int INPUT_INV_INDEX = 0;
-    protected static final int BOOK_CAPACITY = 6;
+    protected static final int BOOK_CAPACITY = CarvedBookshelfBlock.MAX_BOOKS;
 
     private int lastInteractedSlot = -1;
 
