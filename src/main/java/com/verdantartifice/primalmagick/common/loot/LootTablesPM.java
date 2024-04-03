@@ -27,7 +27,6 @@ public class LootTablesPM {
     public static final ResourceLocation THEORYCRAFTING_PROSPEROUS_TRADE = register("gameplay/theorycrafting/prosperous_trade");
     public static final ResourceLocation THEORYCRAFTING_RICH_TRADE = register("gameplay/theorycrafting/rich_trade");
     
-    public static final ResourceLocation LIBRARY_TEST = register("gameplay/library/test");
     public static final ResourceLocation LIBRARY_EARTH = register("gameplay/library/earth");
     public static final ResourceLocation LIBRARY_SEA = register("gameplay/library/sea");
     public static final ResourceLocation LIBRARY_SKY = register("gameplay/library/sky");

@@ -71,25 +71,25 @@ public class LibraryPiece extends TemplateStructurePiece {
         if ("shelf_low".equals(pName)) {
             // Populate bookshelf above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+                container.setLootTable(this.type.getLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("shelf_high".equals(pName)) {
             // Populate bookshelf below
             if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
-                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+                container.setLootTable(this.type.getLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_BRICKS.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("welcome".equals(pName)) {
             // Populate lectern above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+                container.setLootTable(LootTablesPM.LIBRARY_WELCOME, pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("hidden".equals(pName)) {
-            if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.above()) instanceof RandomizableContainerBlockEntity container) {
+            if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.below()) instanceof RandomizableContainerBlockEntity container) {
                 // Populate chest below
-                container.setLootTable(LootTablesPM.LIBRARY_TEST, pRandom.nextLong());  // FIXME Use real loot table
+                container.setLootTable(LootTablesPM.LIBRARY_HIDDEN, pRandom.nextLong());
             } else {
                 pLevel.setBlock(pPos, BlocksPM.MARBLE_TILES.get().defaultBlockState(), Block.UPDATE_ALL);
                 pLevel.setBlock(pPos.below(), BlocksPM.MARBLE_TILES.get().defaultBlockState(), Block.UPDATE_ALL);

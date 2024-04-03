@@ -7,9 +7,11 @@ import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -57,19 +59,21 @@ public class LibraryStructure extends Structure {
     }
 
     public static enum Type implements StringRepresentable {
-        EARTH("earth"),
-        SEA("sea"),
-        SKY("sky"),
-        SUN("sun"),
-        MOON("moon");
+        EARTH("earth", LootTablesPM.LIBRARY_EARTH),
+        SEA("sea", LootTablesPM.LIBRARY_SEA),
+        SKY("sky", LootTablesPM.LIBRARY_SKY),
+        SUN("sun", LootTablesPM.LIBRARY_SUN),
+        MOON("moon", LootTablesPM.LIBRARY_MOON);
         
         private final String name;
+        private final ResourceLocation lootTable;
 
         public static final Codec<LibraryStructure.Type> CODEC = StringRepresentable.fromEnum(LibraryStructure.Type::values);
         private static final Map<String, LibraryStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(LibraryStructure.Type::getSerializedName, t -> t));
 
-        private Type(String name) {
+        private Type(String name, ResourceLocation lootTable) {
             this.name = name;
+            this.lootTable = lootTable;
         }
         
         public static LibraryStructure.Type byName(String name) {
@@ -78,6 +82,10 @@ public class LibraryStructure extends Structure {
         
         public String getSerializedName() {
             return this.name;
+        }
+        
+        public ResourceLocation getLootTable() {
+            return this.lootTable;
         }
     }
 }
