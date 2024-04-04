@@ -54,7 +54,7 @@ public class LinguisticsScorePage extends AbstractPage {
         guiGraphics.drawString(mc.font, compHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
         Component scoreText;
-        if (this.language.complexity() > 0) {
+        if (this.language.complexity() > 0 && !this.language.autoTranslate()) {
             int currentComp = LinguisticsManager.getComprehension(mc.player, this.language);
             int compRating = Mth.clamp((int)(((double)currentComp / (double)this.language.complexity()) * 4D), 0, 4);
             Component ratingText = Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_rating." + compRating);
@@ -72,7 +72,7 @@ public class LinguisticsScorePage extends AbstractPage {
         Component vocabHeader = Component.translatable("grimoire.primalmagick.linguistics_data.vocabulary_score_header").withStyle(ChatFormatting.UNDERLINE);
         guiGraphics.drawString(mc.font, vocabHeader, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
         y += mc.font.lineHeight;
-        Component vocabText = this.language.complexity() > 0 ?
+        Component vocabText = (this.language.complexity() > 0 && !this.language.autoTranslate()) ?
                 Component.literal(Integer.toString(LinguisticsManager.getVocabulary(mc.player, this.language))) :
                 Component.translatable("grimoire.primalmagick.linguistics_data.comprehension_score.unreadable");
         guiGraphics.drawString(mc.font, vocabText, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
