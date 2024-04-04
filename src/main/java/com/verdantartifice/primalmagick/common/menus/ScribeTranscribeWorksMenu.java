@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
@@ -44,7 +45,7 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
 
         // Slot 1: Original book
         this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35, 
-                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex()).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).is(BookLanguageTagsPM.ANCIENT)).background(BOOK_SLOT_TEXTURE)));
         
         // Slot 2: Blank book and quill
         this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 35,

@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
@@ -56,7 +57,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 47, 
-                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex()).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).is(BookLanguageTagsPM.ANCIENT)).background(BOOK_SLOT_TEXTURE)));
     }
 
     @Override

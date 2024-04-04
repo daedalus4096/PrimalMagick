@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.StudyVocabularyActionPacket;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
@@ -110,7 +111,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         BookLanguage activeLanguage = this.menu.getBookLanguage();
         
         // Update the vocabulary widget based on the current language in the menu
-        this.vocabularyWidget.visible = activeLanguage.isComplex();
+        this.vocabularyWidget.visible = activeLanguage.is(BookLanguageTagsPM.ANCIENT);
         this.vocabularyWidget.setLanguage(activeLanguage);
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
