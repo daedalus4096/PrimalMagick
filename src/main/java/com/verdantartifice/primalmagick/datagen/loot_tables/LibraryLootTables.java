@@ -165,10 +165,9 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     
     @SuppressWarnings("deprecation")
     protected static LootPoolEntryContainer.Builder<?> welcomeBook() {
-        // FIXME Use proper book and language for welcome book
         CompoundTag tag = Util.make(new CompoundTag(), t -> {
-            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.SOURCE_PRIMER.getId().toString());
-            t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.FORBIDDEN.getId().toString());
+            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.getId().toString());
+            t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.BABELTONGUE.getId().toString());
         });
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(1).apply(SetNbtFunction.setTag(tag));
     }

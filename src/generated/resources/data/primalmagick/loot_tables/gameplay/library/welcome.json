@@ -9,7 +9,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:source_primer\",BookLanguageId:\"primalmagick:forbidden\"}"
+              "tag": "{BookId:\"primalmagick:welcome\",BookLanguageId:\"primalmagick:babeltongue\"}"
             }
           ],
           "name": "primalmagick:static_book"

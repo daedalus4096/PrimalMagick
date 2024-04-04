@@ -14,12 +14,12 @@ import net.minecraft.tags.TagKey;
  * 
  * @author Daedalus4096
  */
-public record BookLanguage(ResourceLocation languageId, Style style, int complexity, TagKey<BookDefinition> booksTag) {
+public record BookLanguage(ResourceLocation languageId, Style style, int complexity, boolean autoTranslate, TagKey<BookDefinition> booksTag) {
     private static final Function<BookLanguage, String> MEMOIZED_NAME_ID = Util.memoize(BookLanguage::getNameIdInner);
     private static final Function<BookLanguage, String> MEMOIZED_DESCRIPTION_ID = Util.memoize(BookLanguage::getDescriptionIdInner);
     
     public boolean isComplex() {
-        return this.complexity() > 0;
+        return this.complexity() > 0 && !this.autoTranslate();
     }
     
     public boolean isTranslatable() {

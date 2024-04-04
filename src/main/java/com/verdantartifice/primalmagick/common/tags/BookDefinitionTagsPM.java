@@ -15,6 +15,7 @@ public class BookDefinitionTagsPM {
     public static final TagKey<BookDefinition> DEFAULT_BOOKS = create("in_language/default");
     public static final TagKey<BookDefinition> GALACTIC_BOOKS = create("in_language/galactic");
     public static final TagKey<BookDefinition> ILLAGER_BOOKS = create("in_language/illager");
+    public static final TagKey<BookDefinition> BABELTONGUE_BOOKS = create("in_language/babeltongue");
     public static final TagKey<BookDefinition> EARTH_BOOKS = create("in_language/earth");
     public static final TagKey<BookDefinition> SEA_BOOKS = create("in_language/sea");
     public static final TagKey<BookDefinition> SKY_BOOKS = create("in_language/sky");
