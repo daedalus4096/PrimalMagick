@@ -49,6 +49,7 @@ public class StaticBookViewScreen extends Screen {
     protected static final int LINE_HEIGHT = ClientBookHelper.LINE_HEIGHT;
     protected static final int IMAGE_WIDTH = 192;
     protected static final int IMAGE_HEIGHT = 192;
+    protected static final int AUTO_TRANSLATE_DELAY_TICKS = 20;
 
     protected final boolean playTurnSound;
     protected final ResourceKey<?> requestedBookKey;
@@ -57,6 +58,9 @@ public class StaticBookViewScreen extends Screen {
     protected final BookType bookType;
     protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
     protected BookView bookView;
+    protected boolean isAutoTranslating = false;
+    protected int complexity;
+    protected int ticksOpen = 0;
     private PageButton forwardButton;
     private PageButton backButton;
     private int currentPage;
@@ -103,9 +107,17 @@ public class StaticBookViewScreen extends Screen {
         }
         int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
         this.bookView = new BookView(this.requestedBookKey, lang.languageId(), Math.max(comp, this.requestedTranslatedComprehension));
+        this.complexity = lang.complexity();
+        this.isAutoTranslating = lang.autoTranslate();
 
         this.createMenuControls();
         this.createPageControlButtons();
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        this.ticksOpen++;
     }
 
     protected void createMenuControls() {
@@ -185,7 +197,8 @@ public class StaticBookViewScreen extends Screen {
         guiGraphics.drawString(this.font, this.pageMsg, xPos - pageMsgWidth + IMAGE_WIDTH - 44, PAGE_INDICATOR_TEXT_Y_OFFSET + 2, 0, false);
 
         // Draw the text lines for the current page
-        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(this.bookView, this.cachedPage, this.font);
+        BookView currentView = this.isAutoTranslating ? this.bookView.withComprehension(Mth.clamp(this.ticksOpen - AUTO_TRANSLATE_DELAY_TICKS, 0, this.complexity)) : this.bookView;
+        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(currentView, this.cachedPage, this.font);
         for (int index = 0; index < page.size(); index++) {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);

@@ -9,5 +9,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public record BookView(ResourceKey<?> bookKey, ResourceLocation languageId, int comprehension) {
-
+    public BookView withComprehension(int newComprehension) {
+        return new BookView(this.bookKey, this.languageId, newComprehension);
+    }
 }
