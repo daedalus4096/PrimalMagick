@@ -418,8 +418,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MANA_NEXUS = registerSupplier("mana_nexus", () -> new BlockItem(BlocksPM.MANA_NEXUS.get(), new Item.Properties().rarity(Rarity.RARE)));
     public static final RegistryObject<BlockItem> MANA_SINGULARITY = registerSupplier("mana_singularity", () -> new BlockItem(BlocksPM.MANA_SINGULARITY.get(), new Item.Properties().rarity(Rarity.EPIC)));
     public static final RegistryObject<BlockItem> MANA_SINGULARITY_CREATIVE = registerSupplier("mana_singularity_creative", () -> new BlockItem(BlocksPM.MANA_SINGULARITY_CREATIVE.get(), new Item.Properties().rarity(Rarity.EPIC)));
-    // TODO Add scribe table to mod creative tab once the book project is ready to deploy
-    public static final RegistryObject<BurnableBlockItem> SCRIBE_TABLE = registerWithoutTab("scribe_table", () -> new BurnableBlockItem(BlocksPM.SCRIBE_TABLE.get(), 300, new Item.Properties()));
+    public static final RegistryObject<BurnableBlockItem> SCRIBE_TABLE = registerSupplier("scribe_table", () -> new BurnableBlockItem(BlocksPM.SCRIBE_TABLE.get(), 300, new Item.Properties()));
 
     // Register miscellaneous block items
     public static final RegistryObject<ItemNameBlockItem> REFINED_SALT = registerSupplier("refined_salt", () -> new ItemNameBlockItem(BlocksPM.SALT_TRAIL.get(), new Item.Properties()));
