@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.tiles.rituals;
 
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
 /**
@@ -29,7 +31,7 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     public static final int INPUT_INV_INDEX = 0;
     
     protected BlockPos altarPos = null;
-    
+
     public OfferingPedestalTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.OFFERING_PEDESTAL.get(), pos, state);
     }
@@ -114,5 +116,16 @@ public class OfferingPedestalTileEntity extends AbstractTileSidedInventoryPM {
     protected void loadLegacyItems(NonNullList<ItemStack> legacyItems) {
         // Slot 0 was the input item stack
         this.setItem(INPUT_INV_INDEX, 0, legacyItems.get(0));
+    }
+
+    @Override
+    public void onLoad() {
+        this.unpackLootTable(null);
+        super.onLoad();
+    }
+
+    @Override
+    public Optional<IItemHandlerModifiable> getTargetRandomizedInventory() {
+        return Optional.ofNullable(this.itemHandlers.get(INPUT_INV_INDEX));
     }
 }

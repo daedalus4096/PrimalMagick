@@ -107,6 +107,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_CHISELED).name("Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_RUNED).name("Runed Marble").build();
         this.block(BlocksPM.MARBLE_TILES).name("Marble Tiles").build();
+        this.block(BlocksPM.MARBLE_BOOKSHELF).name("Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_ENCHANTED).name("Enchanted Marble").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_SLAB).name("Enchanted Marble Slab").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_STAIRS).name("Enchanted Marble Stairs").build();
@@ -1634,6 +1635,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.language(BookLanguagesPM.DEFAULT).name("Modern Minecraftian").description("The language of the modern Overworld. It's spoken by all Villagers, but it's unclear whether Illagers understand it.").build();
         this.language(BookLanguagesPM.GALACTIC).name("Standard Galactic").description("A mysterious language from beyond the stars. Known to be involved in the unusual magic of enchanting, but incomprehensible to the human mind.").build();
         this.language(BookLanguagesPM.ILLAGER).name("Illager").description("A brutal language spoken by the Illagers. They're rumored to hunt down and kill any outsiders who learn it, so maybe it's best to let this one be.").build();
+        this.language(BookLanguagesPM.BABELTONGUE).name("Babeltongue").description("A magickal language of the ancients that projects its meaning into the reader's mind. Why they didn't write all of their books in this script is a mystery.").build();
         this.language(BookLanguagesPM.EARTH).name("Ancient Terralinear").description("A language associated with the ancient culture of the plains. Most commonly found in libraries there, but sometimes also in those of the mountains and deserts. Resembles a visual landslide.").build();
         this.language(BookLanguagesPM.SEA).name("Ancient Hydroglyphic").description("A language associated with the ancient culture that spanned the wet and cold places of the Overworld. Most commonly found in libraries there, but sometimes also in the mountains and forests. Very bubbly to look at.").build();
         this.language(BookLanguagesPM.SKY).name("Ancient Aeroform").description("A language associated with the ancient culture of the mountains. Most commonly found in libraries there, but sometimes also in those of the plains, wetlands, and snowfields. A delicate script full of flowing lines.").build();
@@ -1651,6 +1653,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.book(BooksPM.DREAM_JOURNAL).name("Dream Journal").author("Unknown")
             .text("I dreamed of the shrine last night. The same strange energy still permeated the air, but this time I knew the word for it.\n\nMagick.\n\nAs if the word unlocked something in my mind, I knew what to do. In the dream, I dug beneath the base of the shrine and found stone laced with a curious dust. Sensing more magick within it, I took a handful of the dust and rubbed it onto an ordinary stick.\n\nSo imbued, the stick became something more. In the dream, I took it and waved it at a bookcase. The dream ended before I could see what resulted, but I feel like it would have been something wondrous.\n\nI feel like this could be a key to something amazing, if I just have the courage to take that first step.")
+            .build();
+        this.book(BooksPM.WELCOME).name("Welcome").author("The Librarian")
+            .text("Welcome, traveller, to this place of learning.\n\nDo not be alarmed, for this book is enchanted to project its meaning into your mind, across the gulf of language.\n\nUpon these shelves you will find the knowledge of our civilization, proofed against the ravages of time for the sake of our descendants.\n\nStudy them closely, and you may learn more about our people, our triumphs, and ultimately our fall.")
             .build();
         this.book(BooksPM.SOURCE_PRIMER).name("Source Primer").author("Unknown")
             .foreword("This book is printed very simply, as if intended for young children.")

@@ -24,7 +24,8 @@
         "primalmagick:marble_pillar",
         "primalmagick:marble_chiseled",
         "primalmagick:marble_tiles",
-        "primalmagick:marble_runed"
+        "primalmagick:marble_runed",
+        "primalmagick:marble_bookshelf"
       ],
       "text": "research.primalmagick.raw_marble.text.stage.1"
     }

@@ -20,6 +20,7 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
  */
 public class StructureSetsPM {
     public static final ResourceKey<StructureSet> SHRINES = registryKey("shrine");  // Not a typo
+    public static final ResourceKey<StructureSet> LIBRARIES = registryKey("library");
     
     private static ResourceKey<StructureSet> registryKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE_SET, PrimalMagick.resource(name));
@@ -34,5 +35,12 @@ public class StructureSetsPM {
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SUN_SHRINE)), 
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_SHRINE))),
                 new RandomSpreadStructurePlacement(20, 10, RandomSpreadType.LINEAR, 11893192)));
+        context.register(StructureSetsPM.LIBRARIES, new StructureSet(
+                List.of(StructureSet.entry(structureGetter.getOrThrow(StructuresPM.EARTH_LIBRARY)), 
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SEA_LIBRARY)), 
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SKY_LIBRARY)), 
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SUN_LIBRARY)), 
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_LIBRARY))),
+                new RandomSpreadStructurePlacement(30, 15, RandomSpreadType.LINEAR, 11893193)));
     }
 }

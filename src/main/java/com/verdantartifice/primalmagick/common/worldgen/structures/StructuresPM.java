@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
+import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -29,6 +30,12 @@ public class StructuresPM {
     public static final ResourceKey<Structure> SUN_SHRINE = registryKey("sun_shrine");
     public static final ResourceKey<Structure> MOON_SHRINE = registryKey("moon_shrine");
     
+    public static final ResourceKey<Structure> EARTH_LIBRARY = registryKey("earth_library");
+    public static final ResourceKey<Structure> SEA_LIBRARY = registryKey("sea_library");
+    public static final ResourceKey<Structure> SKY_LIBRARY = registryKey("sky_library");
+    public static final ResourceKey<Structure> SUN_LIBRARY = registryKey("sun_library");
+    public static final ResourceKey<Structure> MOON_LIBRARY = registryKey("moon_library");
+    
     private static ResourceKey<Structure> registryKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, PrimalMagick.resource(name));
     }
@@ -41,16 +48,27 @@ public class StructuresPM {
         return structure(pBiomes, Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN);
     }
     
-    private static void register(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ShrineStructure.Type shrineType) {
+    private static void registerShrine(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ShrineStructure.Type shrineType) {
         context.register(structureKey, new ShrineStructure(structure(biomes), shrineType));
+    }
+    
+    private static void registerLibrary(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, LibraryStructure.Type libraryType) {
+        context.register(structureKey, new LibraryStructure(structure(biomes), libraryType));
     }
     
     public static void bootstrap(BootstapContext<Structure> context) {
         HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
-        register(context, StructuresPM.EARTH_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_SHRINE), ShrineStructure.Type.EARTH);
-        register(context, StructuresPM.SEA_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_SHRINE), ShrineStructure.Type.SEA);
-        register(context, StructuresPM.SKY_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_SHRINE), ShrineStructure.Type.SKY);
-        register(context, StructuresPM.SUN_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_SHRINE), ShrineStructure.Type.SUN);
-        register(context, StructuresPM.MOON_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_SHRINE), ShrineStructure.Type.MOON);
+        
+        registerShrine(context, StructuresPM.EARTH_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_SHRINE), ShrineStructure.Type.EARTH);
+        registerShrine(context, StructuresPM.SEA_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_SHRINE), ShrineStructure.Type.SEA);
+        registerShrine(context, StructuresPM.SKY_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_SHRINE), ShrineStructure.Type.SKY);
+        registerShrine(context, StructuresPM.SUN_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_SHRINE), ShrineStructure.Type.SUN);
+        registerShrine(context, StructuresPM.MOON_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_SHRINE), ShrineStructure.Type.MOON);
+        
+        registerLibrary(context, StructuresPM.EARTH_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_LIBRARY), LibraryStructure.Type.EARTH);
+        registerLibrary(context, StructuresPM.SEA_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_LIBRARY), LibraryStructure.Type.SEA);
+        registerLibrary(context, StructuresPM.SKY_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_LIBRARY), LibraryStructure.Type.SKY);
+        registerLibrary(context, StructuresPM.SUN_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_LIBRARY), LibraryStructure.Type.SUN);
+        registerLibrary(context, StructuresPM.MOON_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_LIBRARY), LibraryStructure.Type.MOON);
     }
 }

@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -71,8 +72,8 @@ public class LinguisticsManager {
     public static void markRead(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                if (linguistics.markRead(book.bookId(), language.languageId())) {
-                    // If the book/language combination is new, increment the unique books statistic
+                if (linguistics.markRead(book.bookId(), language.languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
+                    // If the book/language combination is new and the language is ancient, increment the unique books statistic
                     StatsManager.incrementValue(player, StatsPM.ANCIENT_BOOKS_READ);
                 }
                 scheduleSync(player);

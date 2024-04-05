@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.tiles.base;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 
@@ -11,24 +12,34 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.Containers;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -38,13 +49,16 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
+public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM implements IRandomizableContents {
     protected final NonNullList<NonNullList<ItemStack>> inventories;
     protected final NonNullList<NonNullList<ItemStack>> syncedInventories;
     protected final NonNullList<ItemStackHandler> itemHandlers;
     protected final NonNullList<LazyOptional<IItemHandler>> itemHandlerOpts;
     protected final NonNullList<List<ContainerListener>> listeners;
     
+    protected ResourceLocation lootTable;
+    protected long lootTableSeed;
+
     public AbstractTileSidedInventoryPM(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         
@@ -211,22 +225,24 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
         for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
             this.inventories.get(invIndex).clear();
         }
-        if (pTag.contains("TileSidedInventoriesPM")) {
-            ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
-            for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
-                CompoundTag invTag = listTag.getCompound(invIndex);
-                ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
+        if (!this.tryLoadLootTable(pTag)) {
+            if (pTag.contains("TileSidedInventoriesPM")) {
+                ListTag listTag = pTag.getList("TileSidedInventoriesPM", Tag.TAG_COMPOUND);
+                for (int invIndex = 0; invIndex < this.getInventoryCount() && invIndex < listTag.size(); invIndex++) {
+                    CompoundTag invTag = listTag.getCompound(invIndex);
+                    ContainerHelper.loadAllItems(invTag, this.inventories.get(invIndex));
+                }
+            } else if (pTag.contains("Items")) {
+                // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
+                // TODO Remove in next major revision
+                int legacySize = 0;
+                for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+                    legacySize += this.getInventorySize(invIndex);
+                }
+                NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
+                ContainerHelper.loadAllItems(pTag, legacyItems);
+                this.loadLegacyItems(legacyItems);
             }
-        } else if (pTag.contains("Items")) {
-            // Compatibility layer for tiles that used to be AbstractTileInventoryPM instances pre-4.0.8
-            // TODO Remove in next major revision
-            int legacySize = 0;
-            for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-                legacySize += this.getInventorySize(invIndex);
-            }
-            NonNullList<ItemStack> legacyItems = NonNullList.withSize(legacySize, ItemStack.EMPTY);
-            ContainerHelper.loadAllItems(pTag, legacyItems);
-            this.loadLegacyItems(legacyItems);
         }
     }
     
@@ -244,10 +260,12 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         ListTag listTag = new ListTag();
-        for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
-            CompoundTag invTag = new CompoundTag();
-            ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
-            listTag.add(invIndex, invTag);
+        if (!this.trySaveLootTable(pTag)) {
+            for (int invIndex = 0; invIndex < this.getInventoryCount(); invIndex++) {
+                CompoundTag invTag = new CompoundTag();
+                ContainerHelper.saveAllItems(invTag, this.inventories.get(invIndex));
+                listTag.add(invIndex, invTag);
+            }
         }
         pTag.put("TileSidedInventoriesPM", listTag);
     }
@@ -284,5 +302,69 @@ public abstract class AbstractTileSidedInventoryPM extends AbstractTilePM {
     
     public void setItem(int invIndex, int slotIndex, ItemStack stack) {
         this.itemHandlers.get(invIndex).setStackInSlot(slotIndex, stack);
+    }
+    
+    public ItemStack removeItem(int invIndex, int slotIndex, int amount) {
+        return this.itemHandlers.get(invIndex).extractItem(slotIndex, amount, false);
+    }
+
+    @Override
+    public void setLootTable(ResourceLocation lootTable, long lootTableSeed) {
+        this.lootTable = lootTable;
+        this.lootTableSeed = lootTableSeed;
+    }
+
+    @Override
+    public void unpackLootTable(Player player) {
+        if (this.lootTable != null && this.level.getServer() != null) {
+            LootTable loot = this.level.getServer().getLootData().getLootTable(this.lootTable);
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.GENERATE_LOOT.trigger(serverPlayer, this.lootTable);
+            }
+            this.lootTable = null;
+            LootParams.Builder paramsBuilder = new LootParams.Builder((ServerLevel)this.level).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(this.worldPosition));
+            if (player != null) {
+                paramsBuilder.withLuck(player.getLuck()).withParameter(LootContextParams.THIS_ENTITY, player);
+            }
+            this.getTargetRandomizedInventory().ifPresentOrElse(inv -> {
+                loot.fill(new RecipeWrapper(inv), paramsBuilder.create(LootContextParamSets.CHEST), this.lootTableSeed);
+            }, () -> {
+                LOGGER.error("Attempting to unpack loot table into undefined destination!");
+            });
+        }
+    }
+
+    /**
+     * Optionally returns the item handler capability into which randomized contents should be placed
+     * when this block entity's loot table is unpacked.
+     * 
+     * @return an optional item handler capability
+     */
+    protected Optional<IItemHandlerModifiable> getTargetRandomizedInventory() {
+        // Return an empty optional by default, so that block entities that don't need loot table support
+        // don't have to override this method.
+        return Optional.empty();
+    }
+
+    protected boolean tryLoadLootTable(CompoundTag pTag) {
+        if (pTag.contains("LootTable", Tag.TAG_STRING)) {
+            this.lootTable = new ResourceLocation(pTag.getString("LootTable"));
+            this.lootTableSeed = pTag.getLong("LootTableSeed");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    protected boolean trySaveLootTable(CompoundTag pTag) {
+        if (this.lootTable == null) {
+            return false;
+        } else {
+            pTag.putString("LootTable", this.lootTable.toString());
+            if (this.lootTableSeed != 0L) {
+                pTag.putLong("LootTableSeed", this.lootTableSeed);
+            }
+            return true;
+        }
     }
 }

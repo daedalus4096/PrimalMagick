@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Table;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -17,6 +18,7 @@ import com.verdantartifice.primalmagick.common.blocks.devices.SanguineCrucibleBl
 import com.verdantartifice.primalmagick.common.blocks.devices.SunlampBlock;
 import com.verdantartifice.primalmagick.common.blocks.golems.AbstractEnchantedGolemControllerBlock;
 import com.verdantartifice.primalmagick.common.blocks.mana.AbstractManaFontBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.PillarBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.BloodletterBlock;
 import com.verdantartifice.primalmagick.common.blocks.rituals.IncenseBrazierBlock;
@@ -48,6 +50,7 @@ import net.minecraft.world.level.block.StemBlock;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.Half;
@@ -57,6 +60,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -91,6 +95,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_RAW.get()));
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_TILES.get());
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_BOOKSHELF.get(), BlocksPM.MARBLE_RAW.get());
         
         // Generate enchanted marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED.get());
@@ -857,5 +862,86 @@ public class BlockStateProviderPM extends BlockStateProvider {
     private void directionalCrossBlockWithItem(Block block, ResourceLocation itemTexture) {
         this.directionalBlock(block, this.getCrossModel(block));
         this.itemModels().getBuilder(this.key(block).toString()).parent(new ModelFile.UncheckedModelFile("item/generated")).texture("layer0", itemTexture);
+    }
+
+    private void carvedBookshelfBlockWithItem(CarvedBookshelfBlock block, Block sideTextureBlock) {
+        DirectionProperty facingProp = CarvedBookshelfBlock.FACING;
+        ModelFile baseModel = this.getCarvedBookshelfBaseModel(block, sideTextureBlock);
+        String baseName = this.name(block);
+        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+        ResourceLocation emptyTexture = this.blockTexture(block).withSuffix("_empty");
+        ResourceLocation occupiedTexture = this.blockTexture(block).withSuffix("_occupied");
+        Map<BooleanProperty, String> slotNameMap = ImmutableMap.<BooleanProperty, String>builder()
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_0_OCCUPIED, "top_left")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_1_OCCUPIED, "top_mid")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_2_OCCUPIED, "top_right")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_3_OCCUPIED, "bottom_left")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_4_OCCUPIED, "bottom_mid")
+                .put(BlockStateProperties.CHISELED_BOOKSHELF_SLOT_5_OCCUPIED, "bottom_right")
+                .build();
+
+        // Create the multipart block state for the block as it will appear in the world
+        MultiPartBlockStateBuilder builder = this.getMultipartBuilder(block);
+        Direction.Plane.HORIZONTAL.stream().forEach(dir -> {
+            int rotY = (int)(dir.toYRot() + 180) % 360;
+            builder.part().modelFile(baseModel).rotationY(rotY).uvLock(true).addModel().condition(facingProp, dir).end();
+            slotNameMap.keySet().forEach(slotProperty -> {
+                builder.part().modelFile(this.getCarvedBookshelfSlotModel(baseName, slotNameMap.get(slotProperty), false, emptyTexture)).rotationY(rotY).addModel()
+                    .nestedGroup().condition(facingProp, dir).end().nestedGroup().condition(slotProperty, false).end().end();
+                builder.part().modelFile(this.getCarvedBookshelfSlotModel(baseName, slotNameMap.get(slotProperty), true, occupiedTexture)).rotationY(rotY).addModel()
+                    .nestedGroup().condition(facingProp, dir).end().nestedGroup().condition(slotProperty, true).end().end();
+            });
+        });
+        
+        // Create the item model as it will appear in the inventory
+        ModelFile invModel = this.getCarvedBookshelfInventoryModel(this.name(block) + "_inventory", this.blockTexture(block).withSuffix("_empty"), sideTexture, sideTexture);
+        this.itemModels().getBuilder(this.key(block).toString()).parent(invModel);
+    }
+    
+    private ModelFile getCarvedBookshelfBaseModel(CarvedBookshelfBlock block, Block sideTextureBlock) {
+        ResourceLocation sideTexture = this.blockTexture(sideTextureBlock);
+        return this.getCarvedBookshelfBaseModel(this.name(block), sideTexture, sideTexture);
+    }
+    
+    private ModelFile getCarvedBookshelfBaseModel(String name, ResourceLocation topTexture, ResourceLocation sideTexture) {
+        return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
+                .texture("top", topTexture)
+                .texture("side", sideTexture)
+                .texture("particle", "#top")
+                .renderType(SOLID)
+                .element()
+                    .from(0, 0, 0)
+                    .to(16, 16, 16)
+                    .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.EAST).end()
+                    .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.SOUTH).end()
+                    .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#side").cullface(Direction.WEST).end()
+                    .face(Direction.UP).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.UP).end()
+                    .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#top").cullface(Direction.DOWN).end()
+                .end();
+    }
+    
+    private ModelFile getCarvedBookshelfSlotModel(String baseName, String slotName, boolean occupied, ResourceLocation slotTexture) {
+        String name = baseName + "_" + (occupied ? "occupied" : "empty") + "_slot_" + slotName;
+        ResourceLocation parent = new ResourceLocation(ModelProvider.BLOCK_FOLDER + "/template_chiseled_bookshelf_slot_" + slotName);
+        return this.models().withExistingParent(name, parent).texture("texture", slotTexture);
+    }
+    
+    private ModelFile getCarvedBookshelfInventoryModel(String name, ResourceLocation frontTexture, ResourceLocation topTexture, ResourceLocation sideTexture) {
+        return this.models().withExistingParent(name, ModelProvider.BLOCK_FOLDER + "/block")
+                .texture("top", topTexture)
+                .texture("side", sideTexture)
+                .texture("front", frontTexture)
+                .texture("particle", "#top")
+                .renderType(SOLID)
+                .element()
+                    .from(0, 0, 0)
+                    .to(16, 16, 16)
+                    .face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").end()
+                    .face(Direction.EAST).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.WEST).uvs(0, 0, 16, 16).texture("#side").end()
+                    .face(Direction.UP).uvs(0, 0, 16, 16).texture("#top").end()
+                    .face(Direction.DOWN).uvs(0, 0, 16, 16).texture("#top").end()
+                .end();
     }
 }

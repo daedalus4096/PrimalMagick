@@ -763,6 +763,14 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_BRICKS.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_TILES.get())
             .unlockedBy("has_marble_bricks", has(BlocksPM.MARBLE_BRICKS.get()))
             .save(consumer, PrimalMagick.resource("marble_tiles_from_marble_bricks_stonecutting"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_BOOKSHELF.get())
+            .pattern("MMM")
+            .pattern("SSS")
+            .pattern("MMM")
+            .define('M', BlocksPM.MARBLE_RAW.get())
+            .define('S', BlocksPM.MARBLE_SLAB.get())
+            .unlockedBy("has_marble_raw", has(BlocksPM.MARBLE_RAW.get()))
+            .save(consumer);
     }
 
     protected void registerEnchantedMarbleRecipes(RecipeOutput consumer) {

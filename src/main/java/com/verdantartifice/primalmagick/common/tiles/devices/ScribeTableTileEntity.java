@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.menus.ScribeTranscribeWorksMenu;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -97,7 +98,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
             @Override
             public boolean isItemValid(int slot, ItemStack stack) {
                 if (slot == 0) {
-                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).isComplex();
+                    return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).is(BookLanguageTagsPM.ANCIENT);
                 } else if (slot == 1) {
                     return stack.is(Items.WRITABLE_BOOK);
                 } else {
@@ -130,7 +131,7 @@ public class ScribeTableTileEntity extends AbstractTileSidedInventoryPM implemen
             if (sourceStack.is(ItemTagsPM.STATIC_BOOKS) && blankStack.is(Items.WRITABLE_BOOK)) {
                 BookLanguage sourceLanguage = StaticBookItem.getBookLanguage(sourceStack);
                 int sourceGeneration = StaticBookItem.getGeneration(sourceStack);
-                if (sourceLanguage.isComplex() && sourceGeneration < StaticBookItem.MAX_GENERATION) {
+                if (sourceLanguage.is(BookLanguageTagsPM.ANCIENT) && sourceGeneration < StaticBookItem.MAX_GENERATION) {
                     PrimalMagickCapabilities.getLinguistics(serverPlayer).ifPresent(linguistics -> {
                         // Construct the translated result book if all prerequisites are met
                         ItemStack resultStack = sourceStack.copyWithCount(1);

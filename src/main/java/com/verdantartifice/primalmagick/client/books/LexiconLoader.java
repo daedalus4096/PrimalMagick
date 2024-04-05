@@ -77,7 +77,7 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
         LOGGER.info("Updating lexicons with tagged data");
         BookLanguagesPM.LANGUAGES.get().getValues().stream().forEach(lang -> {
             Lexicon lexicon = new Lexicon();
-            BooksPM.BOOKS.get().tags().getTag(lang.booksTag()).forEach(bookDef -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookDef)));
+            BooksPM.BOOKS.get().forEach(bookDef -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookDef)));
             LexiconManager.setLexicon(lang.languageId(), lexicon);
         });
     }

@@ -42,6 +42,7 @@ import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemCluster
 import com.verdantartifice.primalmagick.common.blocks.minerals.BuddingGemSourceBlock;
 import com.verdantartifice.primalmagick.common.blocks.minerals.GemBudType;
 import com.verdantartifice.primalmagick.common.blocks.minerals.QuartzOreBlock;
+import com.verdantartifice.primalmagick.common.blocks.misc.CarvedBookshelfBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.ConsecrationFieldBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.EnderwardBlock;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
@@ -133,6 +134,7 @@ public class BlocksPM {
     public static final RegistryObject<Block> MARBLE_CHISELED = BLOCKS.register("marble_chiseled", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_RUNED = BLOCKS.register("marble_runed", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_TILES = BLOCKS.register("marble_tiles", () -> new Block(Block.Properties.copy(MARBLE_RAW.get())));
+    public static final RegistryObject<CarvedBookshelfBlock> MARBLE_BOOKSHELF = BLOCKS.register("marble_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.copy(MARBLE_RAW.get())));
     
     // Register enchanted marble blocks
     public static final RegistryObject<Block> MARBLE_ENCHANTED = BLOCKS.register("marble_enchanted", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));

@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.books.grids.GridNodeDefinition;
 import com.verdantartifice.primalmagick.common.books.grids.PlayerGrid;
 import com.verdantartifice.primalmagick.common.menus.ScribeGainComprehensionMenu;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -96,7 +97,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
 
         // Update the vocabulary widget based on the current language in the menu
         BookLanguage lang = this.menu.getBookLanguage();
-        this.vocabularyWidget.visible = lang.isComplex();
+        this.vocabularyWidget.visible = lang.is(BookLanguageTagsPM.ANCIENT);
         this.vocabularyWidget.setLanguage(lang);
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
