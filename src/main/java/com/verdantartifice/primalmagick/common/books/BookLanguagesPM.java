@@ -4,7 +4,6 @@ import java.util.function.Supplier;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.tags.BookDefinitionTagsPM;
 
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -38,16 +37,16 @@ public class BookLanguagesPM {
     }
     
     // Register book languages
-    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), Style.EMPTY.withFont(new ResourceLocation("default")), 0, false, BookDefinitionTagsPM.DEFAULT_BOOKS));
-    public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), Style.EMPTY.withFont(new ResourceLocation("alt")), -1, false, BookDefinitionTagsPM.GALACTIC_BOOKS));
-    public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), Style.EMPTY.withFont(new ResourceLocation("illageralt")), -1, false, BookDefinitionTagsPM.ILLAGER_BOOKS));
-    public static final RegistryObject<BookLanguage> BABELTONGUE = register("babeltongue", () -> new BookLanguage(PrimalMagick.resource("babeltongue"), Style.EMPTY.withObfuscated(true), 60, true, BookDefinitionTagsPM.BABELTONGUE_BOOKS));
-    public static final RegistryObject<BookLanguage> EARTH = register("earth", () -> new BookLanguage(PrimalMagick.resource("earth"), Style.EMPTY.withFont(PrimalMagick.resource("earth")), 60, false, BookDefinitionTagsPM.EARTH_BOOKS));
-    public static final RegistryObject<BookLanguage> SEA = register("sea", () -> new BookLanguage(PrimalMagick.resource("sea"), Style.EMPTY.withFont(PrimalMagick.resource("sea")), 60, false, BookDefinitionTagsPM.SEA_BOOKS));
-    public static final RegistryObject<BookLanguage> SKY = register("sky", () -> new BookLanguage(PrimalMagick.resource("sky"), Style.EMPTY.withFont(PrimalMagick.resource("sky")), 60, false, BookDefinitionTagsPM.SKY_BOOKS));
-    public static final RegistryObject<BookLanguage> SUN = register("sun", () -> new BookLanguage(PrimalMagick.resource("sun"), Style.EMPTY.withFont(PrimalMagick.resource("sun")), 60, false, BookDefinitionTagsPM.SUN_BOOKS));
-    public static final RegistryObject<BookLanguage> MOON = register("moon", () -> new BookLanguage(PrimalMagick.resource("moon"), Style.EMPTY.withFont(PrimalMagick.resource("moon")), 60, false, BookDefinitionTagsPM.MOON_BOOKS));
-    public static final RegistryObject<BookLanguage> TRADE = register("trade", () -> new BookLanguage(PrimalMagick.resource("trade"), Style.EMPTY.withFont(PrimalMagick.resource("trade")), 60, false, BookDefinitionTagsPM.TRADE_BOOKS));
-    public static final RegistryObject<BookLanguage> FORBIDDEN = register("forbidden", () -> new BookLanguage(PrimalMagick.resource("forbidden"), Style.EMPTY.withFont(PrimalMagick.resource("forbidden")), 60, false, BookDefinitionTagsPM.FORBIDDEN_BOOKS));
-    public static final RegistryObject<BookLanguage> HALLOWED = register("hallowed", () -> new BookLanguage(PrimalMagick.resource("hallowed"), Style.EMPTY.withFont(PrimalMagick.resource("hallowed")), 60, false, BookDefinitionTagsPM.HALLOWED_BOOKS));
+    public static final RegistryObject<BookLanguage> DEFAULT = register("default", () -> new BookLanguage(PrimalMagick.resource("default"), Style.EMPTY.withFont(new ResourceLocation("default")), 0, false));
+    public static final RegistryObject<BookLanguage> GALACTIC = register("galactic", () -> new BookLanguage(PrimalMagick.resource("galactic"), Style.EMPTY.withFont(new ResourceLocation("alt")), -1, false));
+    public static final RegistryObject<BookLanguage> ILLAGER = register("illager", () -> new BookLanguage(PrimalMagick.resource("illager"), Style.EMPTY.withFont(new ResourceLocation("illageralt")), -1, false));
+    public static final RegistryObject<BookLanguage> BABELTONGUE = register("babeltongue", () -> new BookLanguage(PrimalMagick.resource("babeltongue"), Style.EMPTY.withObfuscated(true), 60, true));
+    public static final RegistryObject<BookLanguage> EARTH = register("earth", () -> new BookLanguage(PrimalMagick.resource("earth"), Style.EMPTY.withFont(PrimalMagick.resource("earth")), 60, false));
+    public static final RegistryObject<BookLanguage> SEA = register("sea", () -> new BookLanguage(PrimalMagick.resource("sea"), Style.EMPTY.withFont(PrimalMagick.resource("sea")), 60, false));
+    public static final RegistryObject<BookLanguage> SKY = register("sky", () -> new BookLanguage(PrimalMagick.resource("sky"), Style.EMPTY.withFont(PrimalMagick.resource("sky")), 60, false));
+    public static final RegistryObject<BookLanguage> SUN = register("sun", () -> new BookLanguage(PrimalMagick.resource("sun"), Style.EMPTY.withFont(PrimalMagick.resource("sun")), 60, false));
+    public static final RegistryObject<BookLanguage> MOON = register("moon", () -> new BookLanguage(PrimalMagick.resource("moon"), Style.EMPTY.withFont(PrimalMagick.resource("moon")), 60, false));
+    public static final RegistryObject<BookLanguage> TRADE = register("trade", () -> new BookLanguage(PrimalMagick.resource("trade"), Style.EMPTY.withFont(PrimalMagick.resource("trade")), 60, false));
+    public static final RegistryObject<BookLanguage> FORBIDDEN = register("forbidden", () -> new BookLanguage(PrimalMagick.resource("forbidden"), Style.EMPTY.withFont(PrimalMagick.resource("forbidden")), 60, false));
+    public static final RegistryObject<BookLanguage> HALLOWED = register("hallowed", () -> new BookLanguage(PrimalMagick.resource("hallowed"), Style.EMPTY.withFont(PrimalMagick.resource("hallowed")), 60, false));
 }
