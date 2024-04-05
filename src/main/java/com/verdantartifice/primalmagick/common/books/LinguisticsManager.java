@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -69,10 +70,10 @@ public class LinguisticsManager {
         return retVal.booleanValue();
     }
     
-    public static void markRead(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static void markRead(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable BookLanguage language) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                if (linguistics.markRead(book.bookId(), language.languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
+                if (linguistics.markRead(book.get().bookId(), language.languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
                     // If the book/language combination is new and the language is ancient, increment the unique books statistic
                     StatsManager.incrementValue(player, StatsPM.ANCIENT_BOOKS_READ);
                 }
@@ -145,33 +146,33 @@ public class LinguisticsManager {
         }
     }
     
-    public static int getTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static int getTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable BookLanguage language) {
         MutableInt retVal = new MutableInt(0);
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.getTimesStudied(book.bookId(), language.languageId()));
+                retVal.setValue(linguistics.getTimesStudied(book.get().bookId(), language.languageId()));
             });
         }
         return retVal.intValue();
     }
     
-    public static void setTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int studyCount) {
+    public static void setTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable BookLanguage language, int studyCount) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, studyCount));
+                linguistics.setTimesStudied(book.get().bookId(), language.languageId(), Math.max(0, studyCount));
                 scheduleSync(player);
             });
         }
     }
     
-    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable BookLanguage language) {
         incrementTimesStudied(player, book, language, 1);
     }
     
-    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int delta) {
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable BookLanguage language, int delta) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, linguistics.getTimesStudied(book.bookId(), language.languageId()) + delta));
+                linguistics.setTimesStudied(book.get().bookId(), language.languageId(), Math.max(0, linguistics.getTimesStudied(book.get().bookId(), language.languageId()) + delta));
                 scheduleSync(player);
             });
         }

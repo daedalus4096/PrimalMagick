@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import net.minecraft.Util;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -131,15 +132,15 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         // Register catalog component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.SOURCE_PRIMER.get(), 1))
+                .add(book(BooksPM.SOURCE_PRIMER, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.DREAM_JOURNAL.get(), 1))
+                .add(book(BooksPM.DREAM_JOURNAL, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.TEST_BOOK.get(), 1))
+                .add(book(BooksPM.TEST_BOOK, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with enchanted books
@@ -154,8 +155,8 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> book(BookDefinition bookDef, int weight) {
-        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.BOOKS.get().getKey(bookDef).toString()));
+    protected static LootPoolEntryContainer.Builder<?> book(ResourceKey<BookDefinition> bookDefKey, int weight) {
+        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, bookDefKey.location().toString()));
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
@@ -166,7 +167,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     @SuppressWarnings("deprecation")
     protected static LootPoolEntryContainer.Builder<?> welcomeBook() {
         CompoundTag tag = Util.make(new CompoundTag(), t -> {
-            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.getId().toString());
+            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.location().toString());
             t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.BABELTONGUE.getId().toString());
         });
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(1).apply(SetNbtFunction.setTag(tag));

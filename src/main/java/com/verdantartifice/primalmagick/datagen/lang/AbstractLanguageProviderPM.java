@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
@@ -246,12 +247,8 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         return this.createBuilder(() -> new LabelLanguageBuilder(token, this::untrack, this::add));
     }
     
-    public WrittenBookLanguageBuilder book(Supplier<? extends BookDefinition> book) {
-        return this.book(book.get());
-    }
-    
-    public WrittenBookLanguageBuilder book(BookDefinition book) {
-        return this.createBuilder(() -> new WrittenBookLanguageBuilder(book, this::untrack, this::add));
+    public WrittenBookLanguageBuilder book(ResourceKey<BookDefinition> bookKey) {
+        return this.createBuilder(() -> new WrittenBookLanguageBuilder(BooksPM.BOOKS.get().getValue(bookKey.location()), this::untrack, this::add));
     }
     
     public WrittenLanguageLanguageBuilder language(Supplier<? extends BookLanguage> lang) {

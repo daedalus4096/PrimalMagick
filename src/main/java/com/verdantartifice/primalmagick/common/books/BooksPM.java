@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,6 +28,10 @@ public class BooksPM {
         DEFERRED_BOOKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
+    public static ResourceKey<BookDefinition> create(String name) {
+        return ResourceKey.create(RegistryKeysPM.BOOKS, PrimalMagick.resource(name));
+    }
+    
     protected static RegistryObject<BookDefinition> register(String name, Supplier<BookDefinition> bookSupplier) {
         return DEFERRED_BOOKS.register(name, bookSupplier);
     }
@@ -35,8 +41,15 @@ public class BooksPM {
     }
     
     // Register static books
-    public static final RegistryObject<BookDefinition> TEST_BOOK = register("test", () -> new BookDefinition(PrimalMagick.resource("test")));
-    public static final RegistryObject<BookDefinition> DREAM_JOURNAL = register("dream_journal", () -> new BookDefinition(PrimalMagick.resource("dream_journal")));
-    public static final RegistryObject<BookDefinition> WELCOME = register("welcome", () -> new BookDefinition(PrimalMagick.resource("welcome")));
-    public static final RegistryObject<BookDefinition> SOURCE_PRIMER = register("source_primer", () -> new BookDefinition(PrimalMagick.resource("source_primer")));
+    public static final ResourceKey<BookDefinition> TEST_BOOK = create("test");
+    public static final ResourceKey<BookDefinition> DREAM_JOURNAL = create("dream_journal");
+    public static final ResourceKey<BookDefinition> WELCOME = create("welcome");
+    public static final ResourceKey<BookDefinition> SOURCE_PRIMER = create("source_primer");
+    
+    public static void bootstrap(BootstapContext<BookDefinition> context) {
+        context.register(BooksPM.TEST_BOOK, new BookDefinition(PrimalMagick.resource("test")));
+        context.register(BooksPM.DREAM_JOURNAL, new BookDefinition(PrimalMagick.resource("dream_journal")));
+        context.register(BooksPM.WELCOME, new BookDefinition(PrimalMagick.resource("welcome")));
+        context.register(BooksPM.SOURCE_PRIMER, new BookDefinition(PrimalMagick.resource("source_primer")));
+    }
 }

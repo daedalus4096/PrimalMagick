@@ -227,7 +227,7 @@ public class ClientBookHelper {
     private static double getBookComprehensionInner(BookView view) {
         final BookDefinition bookDef = BooksPM.BOOKS.get().containsKey(view.bookKey().location()) ?
                 BooksPM.BOOKS.get().getValue(view.bookKey().location()) :
-                BooksPM.TEST_BOOK.get();
+                BooksPM.BOOKS.get().getValue(BooksPM.TEST_BOOK.location());
         final BookLanguage bookLang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
                 BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
                 BookLanguagesPM.DEFAULT.get();

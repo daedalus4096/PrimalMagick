@@ -30,7 +30,7 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
     
     public OpenStaticBookScreenPacket(ItemStack bookStack, BookType bookType) {
         Preconditions.checkArgument(bookStack.is(ItemTagsPM.STATIC_BOOKS), "Packet item stack must be a static book or tablet");
-        this.bookKey = BooksPM.BOOKS.get().getResourceKey(StaticBookItem.getBookDefinition(bookStack)).orElseThrow();
+        this.bookKey = StaticBookItem.getBookId(bookStack).orElseThrow();
         this.languageId = BookLanguagesPM.LANGUAGES.get().getKey(StaticBookItem.getBookLanguage(bookStack));
         this.translatedComprehension = StaticBookItem.getTranslatedComprehension(bookStack).orElse(0);
         this.bookType = bookType;

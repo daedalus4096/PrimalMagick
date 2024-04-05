@@ -53,6 +53,7 @@ import com.verdantartifice.primalmagick.common.crafting.IArcaneRecipeBookItem;
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
@@ -72,8 +73,10 @@ import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemInput;
 import net.minecraft.commands.synchronization.SuggestionProviders;
+import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -930,7 +933,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
         } else {
             ItemStack bookStack = new ItemStack(ItemsPM.STATIC_BOOK.get());
-            StaticBookItem.setBookDefinition(bookStack, BooksPM.BOOKS.get().getValue(bookId));
+            StaticBookItem.setBookDefinition(bookStack, ResourceKey.create(RegistryKeysPM.BOOKS, bookId));
             StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId));
             StaticBookItem.setGeneration(bookStack, 0);
             StaticBookItem.setTranslatedComprehension(bookStack, comprehension);
@@ -1034,7 +1037,7 @@ public class PrimalMagickCommand {
         } else if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
             source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
         } else {
-            BookDefinition def = BooksPM.BOOKS.get().getValue(bookId);
+            Holder<BookDefinition> def = Holder.direct(BooksPM.BOOKS.get().getValue(bookId));
             BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.linguistics.study_count.get", target.getName(), bookId, bookLanguageId, LinguisticsManager.getTimesStudied(target, def, lang)), true);
         }
@@ -1047,7 +1050,7 @@ public class PrimalMagickCommand {
         } else if (!BookLanguagesPM.LANGUAGES.get().containsKey(bookLanguageId)) {
             source.sendFailure(Component.translatable("commands.primalmagick.books.nolanguage", bookLanguageId.toString()));
         } else {
-            BookDefinition def = BooksPM.BOOKS.get().getValue(bookId);
+            Holder<BookDefinition> def = Holder.direct(BooksPM.BOOKS.get().getValue(bookId));
             BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(bookLanguageId);
             LinguisticsManager.setTimesStudied(target, def, lang, value);
             int newValue = LinguisticsManager.getTimesStudied(target, def, lang);

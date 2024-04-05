@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -19,6 +20,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.capabilities.IManaStorage;
@@ -581,9 +583,7 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey());
         
         // Construct the dream journal item
-        ItemStack journal = new ItemStack(ItemsPM.STATIC_BOOK.get());
-        StaticBookItem.setBookDefinition(journal, BooksPM.DREAM_JOURNAL.get());
-        StaticBookItem.setAuthorOverride(journal, player.getName().getString());
+        ItemStack journal = StaticBookItem.make(BookType.BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.empty(), Optional.of(player.getName().getString()), OptionalInt.empty(), OptionalInt.empty());
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {

@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -70,7 +71,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         ItemStack bookStack = this.studySlot.getItem();
         if (bookStack.is(ItemTagsPM.STATIC_BOOKS)) {
             BookLanguage lang = StaticBookItem.getBookLanguage(bookStack);
-            int studyCount = LinguisticsManager.getTimesStudied(this.player, StaticBookItem.getBookDefinition(bookStack), lang);
+            int studyCount = StaticBookItem.getBookDefinition(bookStack).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
             for (int index = 0; index < 3; index++) {
                 // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
                 // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (e.g. 1, 2, and 3 respectively).
@@ -105,7 +106,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
             // Perform vocabulary study for the given slot
             this.getContainerLevelAccess().execute((level, blockPos) -> {
                 ItemStack bookStack = this.studySlot.getItem();
-                BookDefinition bookDef = StaticBookItem.getBookDefinition(bookStack);
+                Holder<BookDefinition> bookDef = StaticBookItem.getBookDefinition(bookStack).orElse(null);
                 BookLanguage bookLanguage = StaticBookItem.getBookLanguage(bookStack);
                 
                 int studyDelta = 0;
