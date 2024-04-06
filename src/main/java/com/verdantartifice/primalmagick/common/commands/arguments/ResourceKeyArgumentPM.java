@@ -14,6 +14,7 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.commands.CommandBuildContext;
@@ -39,6 +40,9 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static final DynamicCommandExceptionType ERROR_INVALID_BOOK = new DynamicCommandExceptionType((err) -> {
         return Component.translatable("command.primalmagick.books.noexist", err);
     });
+    private static final DynamicCommandExceptionType ERROR_INVALID_LANGUAGE = new DynamicCommandExceptionType((err) -> {
+        return Component.translatable("command.primalmagick.books.nolanguage", err);
+    });
 
     protected final ResourceKey<? extends Registry<T>> registryKey;
 
@@ -56,6 +60,10 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     
     public static Holder.Reference<BookDefinition> getBook(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
         return resolveKey(pContext, pArgument, RegistryKeysPM.BOOKS, ERROR_INVALID_BOOK);
+    }
+    
+    public static Holder.Reference<BookLanguage> getLanguage(CommandContext<CommandSourceStack> pContext, String pArgument) throws CommandSyntaxException {
+        return resolveKey(pContext, pArgument, RegistryKeysPM.BOOK_LANGUAGES, ERROR_INVALID_LANGUAGE);
     }
 
     private static <T> Holder.Reference<T> resolveKey(CommandContext<CommandSourceStack> pContext, String pArgument, ResourceKey<Registry<T>> pRegistryKey, DynamicCommandExceptionType pException) throws CommandSyntaxException {

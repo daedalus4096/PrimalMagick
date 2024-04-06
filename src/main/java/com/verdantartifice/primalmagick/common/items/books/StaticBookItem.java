@@ -70,14 +70,15 @@ public class StaticBookItem extends Item {
         TYPE_MAP.put(type, this);
     }
     
-    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<BookLanguage> bookLangOpt) {
-        return make(type, bookDefKeyOpt, bookLangOpt, Optional.empty(), OptionalInt.empty(), OptionalInt.empty());
+    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt) {
+        return make(type, bookDefKeyOpt, bookLangKeyOpt, Optional.empty(), OptionalInt.empty(), OptionalInt.empty());
     }
     
-    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<BookLanguage> bookLangOpt, Optional<String> authorOpt, OptionalInt generationOpt, OptionalInt translationOpt) {
+    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt, Optional<String> authorOpt, 
+            OptionalInt generationOpt, OptionalInt translationOpt) {
         ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
         bookDefKeyOpt.ifPresent(bookDefKey -> setBookDefinition(retVal, bookDefKey));
-        bookLangOpt.ifPresent(bookLang -> setBookLanguage(retVal, bookLang));
+        bookLangKeyOpt.ifPresent(bookLangKey -> setBookLanguage(retVal, bookLangKey));
         authorOpt.ifPresent(authorOverride -> setAuthorOverride(retVal, authorOverride));
         generationOpt.ifPresent(generation -> setGeneration(retVal, generation));
         setTranslatedComprehension(retVal, translationOpt);
@@ -113,12 +114,13 @@ public class StaticBookItem extends Item {
         return stack;
     }
     
-    protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {
+    protected static Optional<ResourceKey<BookLanguage>> getBookLanguageId(ItemStack stack) {
         CompoundTag rootTag = stack.getTag();
         if (rootTag != null) {
             String str = rootTag.getString(TAG_BOOK_LANGUAGE_ID);
             if (!StringUtil.isNullOrEmpty(str)) {
-                return Optional.ofNullable(ResourceLocation.tryParse(str));
+                ResourceLocation loc = ResourceLocation.tryParse(str);
+                return loc == null ? Optional.empty() : Optional.ofNullable(ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, loc));
             }
         }
         return Optional.empty();
@@ -128,12 +130,12 @@ public class StaticBookItem extends Item {
         return getBookLanguageId(stack).isPresent();
     }
     
-    public static BookLanguage getBookLanguage(ItemStack stack) {
-        return getBookLanguageId(stack).map(BookLanguagesPM.LANGUAGES.get()::getValue).orElse(BookLanguagesPM.DEFAULT.get());
+    public static Optional<Holder<BookLanguage>> getBookLanguage(ItemStack stack, RegistryAccess registryAccess) {
+        return getBookLanguageId(stack).flatMap(k -> registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(k));
     }
     
-    public static ItemStack setBookLanguage(ItemStack stack, BookLanguage lang) {
-        stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.languageId().toString());
+    public static ItemStack setBookLanguage(ItemStack stack, ResourceKey<BookLanguage> lang) {
+        stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.location().toString());
         return stack;
     }
 
@@ -191,9 +193,16 @@ public class StaticBookItem extends Item {
     private static BookView makeBookView(ItemStack pStack) {
         Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
         ResourceKey<BookDefinition> bookKey = getBookId(pStack).orElse(BooksPM.TEST_BOOK);
-        BookLanguage language = getBookLanguage(pStack);
-        int comprehension = Math.max(player == null ? 0 : LinguisticsManager.getComprehension(player, language), getTranslatedComprehension(pStack).orElse(0));
-        return new BookView(bookKey, language.languageId(), comprehension);
+        ResourceKey<BookLanguage> langKey = getBookLanguageId(pStack).orElse(BookLanguagesPM.DEFAULT);
+        int playerComprehension = 0;
+        if (player != null) {
+            Optional<Holder<BookLanguage>> langHolderOpt = getBookLanguage(pStack, player.level().registryAccess());
+            if (langHolderOpt.isPresent()) {
+                playerComprehension = LinguisticsManager.getComprehension(player, langHolderOpt.get());
+            }
+        }
+        int comprehension = Math.max(playerComprehension, getTranslatedComprehension(pStack).orElse(0));
+        return new BookView(bookKey, langKey.location(), comprehension);
     }
 
     @Override
@@ -208,33 +217,34 @@ public class StaticBookItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        BookLanguage lang = getBookLanguage(pStack);
         if (pLevel.isClientSide && hasAuthor(pStack)) {
             Component authorText = BookHelper.getAuthorText(makeBookView(pStack), getAuthor(pStack));
             pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
-        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", lang.getName()).withStyle(ChatFormatting.GRAY));
-        pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
-        if (pLevel.isClientSide && hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
-            Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
-            Optional<Holder<BookDefinition>> defHolderOpt = getBookDefinition(pStack, pLevel.registryAccess());
-            OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
-            int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, lang));
-            double percentage = BookHelper.getBookComprehension(new BookView(getBookId(pStack).orElseThrow(), lang.languageId(), comprehension));
-            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
-            if (translatedComprehension.isPresent()) {
-                if (translatedComprehension.getAsInt() >= lang.complexity()) {
-                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
-                } else if (translatedComprehension.getAsInt() > 0) {
-                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
+        getBookLanguage(pStack, pLevel.registryAccess()).ifPresent(langHolder -> {
+            pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.header", langHolder.get().getName()).withStyle(ChatFormatting.GRAY));
+            pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
+            if (pLevel.isClientSide && hasBookDefinition(pStack) && hasBookLanguage(pStack) && langHolder.get().isComplex()) {
+                Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
+                Optional<Holder<BookDefinition>> defHolderOpt = getBookDefinition(pStack, pLevel.registryAccess());
+                OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
+                int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
+                double percentage = BookHelper.getBookComprehension(new BookView(getBookId(pStack).orElseThrow(), langHolder.get().languageId(), comprehension));
+                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
+                if (translatedComprehension.isPresent()) {
+                    if (translatedComprehension.getAsInt() >= langHolder.get().complexity()) {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.full").withStyle(ChatFormatting.DARK_AQUA));
+                    } else if (translatedComprehension.getAsInt() > 0) {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.translated.partial").withStyle(ChatFormatting.DARK_AQUA));
+                    }
+                }
+                
+                int timesStudied = defHolderOpt.isPresent() ? LinguisticsManager.getTimesStudied(player, defHolderOpt.get(), langHolder) : 0;
+                if (timesStudied > 0) {
+                    pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
                 }
             }
-            
-            int timesStudied = defHolderOpt.isPresent() ? LinguisticsManager.getTimesStudied(player, defHolderOpt.get(), lang) : 0;
-            if (timesStudied > 0) {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.times_studied", timesStudied).withStyle(ChatFormatting.DARK_AQUA));
-            }
-        }
+        });
     }
 
     @Override
@@ -242,8 +252,12 @@ public class StaticBookItem extends Item {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
             getBookDefinition(stack, pLevel.registryAccess()).ifPresentOrElse(bookDefHolder -> {
-                LinguisticsManager.markRead(pPlayer, bookDefHolder, getBookLanguage(stack));
-                PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
+                getBookLanguage(stack, pLevel.registryAccess()).ifPresentOrElse(langHolder -> {
+                    LinguisticsManager.markRead(pPlayer, bookDefHolder, langHolder);
+                    PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
+                }, () -> {
+                    LOGGER.error("No book language found when opening static book stack {}", stack.toString());
+                });
             }, () -> {
                 LOGGER.error("No book definition found when opening static book stack {}", stack.toString());
             });

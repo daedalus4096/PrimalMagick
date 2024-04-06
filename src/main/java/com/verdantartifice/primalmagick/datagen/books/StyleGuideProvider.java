@@ -51,9 +51,9 @@ public class StyleGuideProvider implements DataProvider {
     }
     
     protected void registerStyleGuides(BiConsumer<ResourceLocation, StyleGuide> consumer) {
-        StyleGuide.builder(BookLanguagesPM.DEFAULT.get()).save(consumer);   // No styling for default language
-        StyleGuide.builder(BookLanguagesPM.GALACTIC.get()).save(consumer);  // No styling for galactic language
-        StyleGuide.builder(BookLanguagesPM.ILLAGER.get())
+        StyleGuide.builder(BookLanguagesPM.DEFAULT).save(consumer);     // No styling for default language
+        StyleGuide.builder(BookLanguagesPM.GALACTIC).save(consumer);    // No styling for galactic language
+        StyleGuide.builder(BookLanguagesPM.ILLAGER)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -67,7 +67,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.EARTH.get())
+        StyleGuide.builder(BookLanguagesPM.EARTH)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -81,7 +81,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.SEA.get())
+        StyleGuide.builder(BookLanguagesPM.SEA)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -95,7 +95,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.SKY.get())
+        StyleGuide.builder(BookLanguagesPM.SKY)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -109,7 +109,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.SUN.get())
+        StyleGuide.builder(BookLanguagesPM.SUN)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -123,7 +123,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.MOON.get())
+        StyleGuide.builder(BookLanguagesPM.MOON)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -137,7 +137,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.TRADE.get())
+        StyleGuide.builder(BookLanguagesPM.TRADE)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -151,7 +151,7 @@ public class StyleGuideProvider implements DataProvider {
                     .hoverText("tooltip.primalmagick.written_language.obfuscated_word").end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor())).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.FORBIDDEN.get())
+        StyleGuide.builder(BookLanguagesPM.FORBIDDEN)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
@@ -162,7 +162,7 @@ public class StyleGuideProvider implements DataProvider {
                 .entry(Source.VOID.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.VOID.getColor())).end()
                 .entry(Source.HALLOWED.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.HALLOWED.getColor()).withStrikethrough(true)).end()
                 .save(consumer);
-        StyleGuide.builder(BookLanguagesPM.HALLOWED.get())
+        StyleGuide.builder(BookLanguagesPM.HALLOWED)
                 .entry(Source.EARTH.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.EARTH.getColor())).end()
                 .entry(Source.SEA.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SEA.getColor())).end()
                 .entry(Source.SKY.getNameTranslationKey()).setStyle(Style.EMPTY.withColor(Source.SKY.getColor())).end()
