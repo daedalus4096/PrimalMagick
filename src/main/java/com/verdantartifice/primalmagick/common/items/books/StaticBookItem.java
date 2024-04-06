@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -103,13 +104,12 @@ public class StaticBookItem extends Item {
         return getBookId(stack).isPresent();
     }
     
-    public static Optional<Holder<BookDefinition>> getBookDefinition(ItemStack stack) {
-        return getBookId(stack).<Holder<BookDefinition>>flatMap(BooksPM.BOOKS.get()::getDelegate);
+    public static Optional<Holder<BookDefinition>> getBookDefinition(ItemStack stack, RegistryAccess registryAccess) {
+        return getBookId(stack).flatMap(k -> registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolder(k));
     }
     
     public static ItemStack setBookDefinition(ItemStack stack, ResourceKey<BookDefinition> defKey) {
-        BookDefinition def = BooksPM.BOOKS.get().getValue(defKey.location());
-        stack.getOrCreateTag().putString(TAG_BOOK_ID, def.bookId().toString());
+        stack.getOrCreateTag().putString(TAG_BOOK_ID, defKey.location().toString());
         return stack;
     }
     
@@ -217,7 +217,7 @@ public class StaticBookItem extends Item {
         pTooltipComponents.add(Component.translatable("book.generation." + getGeneration(pStack)).withStyle(ChatFormatting.GRAY));
         if (pLevel.isClientSide && hasBookDefinition(pStack) && hasBookLanguage(pStack) && lang.isComplex()) {
             Player player = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentPlayer() : null;
-            Optional<Holder<BookDefinition>> defHolderOpt = getBookDefinition(pStack);
+            Optional<Holder<BookDefinition>> defHolderOpt = getBookDefinition(pStack, pLevel.registryAccess());
             OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
             int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, lang));
             double percentage = BookHelper.getBookComprehension(new BookView(getBookId(pStack).orElseThrow(), lang.languageId(), comprehension));
@@ -241,7 +241,7 @@ public class StaticBookItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack stack = pPlayer.getItemInHand(pUsedHand);
         if (!pLevel.isClientSide && pPlayer instanceof ServerPlayer serverPlayer) {
-            getBookDefinition(stack).ifPresentOrElse(bookDefHolder -> {
+            getBookDefinition(stack, pLevel.registryAccess()).ifPresentOrElse(bookDefHolder -> {
                 LinguisticsManager.markRead(pPlayer, bookDefHolder, getBookLanguage(stack));
                 PacketHandler.sendToPlayer(new OpenStaticBookScreenPacket(stack, this.bookType), serverPlayer);
             }, () -> {
