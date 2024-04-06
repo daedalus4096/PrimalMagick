@@ -38,4 +38,7 @@ public class ArgumentTypesPM {
             () -> ArgumentTypeInfos.registerByClass(AttunementTypeArgument.class, SingletonArgumentInfo.contextFree(AttunementTypeArgument::attunementType)));
     public static final RegistryObject<SingletonArgumentInfo<AttunementValueArgument>> ATTUNEMENT_VALUE = COMMAND_ARGUMENT_TYPES.register("attunement_value", 
             () -> ArgumentTypeInfos.registerByClass(AttunementValueArgument.class, SingletonArgumentInfo.contextFree(AttunementValueArgument::value)));
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public static final RegistryObject<ResourceKeyArgumentPM.Info> RESOURCE_KEY = COMMAND_ARGUMENT_TYPES.register("resource_key", 
+            () -> ArgumentTypeInfos.registerByClass(ResourceKeyArgumentPM.class, new ResourceKeyArgumentPM.Info()));
 }

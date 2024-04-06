@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+import com.google.gson.JsonObject;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -15,10 +16,13 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -92,5 +96,43 @@ public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
         return EXAMPLES;
     }
     
-    
+    public static class Info<T> implements ArgumentTypeInfo<ResourceKeyArgumentPM<T>, ResourceKeyArgumentPM.Info<T>.Template> {
+        @Override
+        public void serializeToNetwork(Info<T>.Template pTemplate, FriendlyByteBuf pBuffer) {
+            pBuffer.writeResourceKey(pTemplate.registryKey);
+        }
+
+        @Override
+        public ResourceKeyArgumentPM.Info<T>.Template deserializeFromNetwork(FriendlyByteBuf pBuffer) {
+            return new ResourceKeyArgumentPM.Info<T>.Template(pBuffer.readRegistryKey());
+        }
+
+        @Override
+        public void serializeToJson(Info<T>.Template pTemplate, JsonObject pJson) {
+            pJson.addProperty("registry", pTemplate.registryKey.location().toString());
+        }
+
+        @Override
+        public Info<T>.Template unpack(ResourceKeyArgumentPM<T> pArgument) {
+            return new ResourceKeyArgumentPM.Info<T>.Template(pArgument.registryKey);
+        }
+        
+        public final class Template implements ArgumentTypeInfo.Template<ResourceKeyArgumentPM<T>> {
+            final ResourceKey<? extends Registry<T>> registryKey;
+
+            Template(ResourceKey<? extends Registry<T>> pRegistryKey) {
+                this.registryKey = pRegistryKey;
+            }
+
+            @Override
+            public ResourceKeyArgumentPM<T> instantiate(CommandBuildContext pContext) {
+                return new ResourceKeyArgumentPM<>(this.registryKey);
+            }
+
+            @Override
+            public ArgumentTypeInfo<ResourceKeyArgumentPM<T>, ?> type() {
+                return Info.this;
+            }
+        }
+    }
 }
