@@ -250,11 +250,7 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         return this.createBuilder(() -> new WrittenBookLanguageBuilder(bookKey, this::untrack, this::add));
     }
     
-    public WrittenLanguageLanguageBuilder language(Supplier<? extends BookLanguage> lang) {
-        return this.language(lang.get());
-    }
-    
-    public WrittenLanguageLanguageBuilder language(BookLanguage lang) {
+    public WrittenLanguageLanguageBuilder language(ResourceKey<BookLanguage> lang) {
         return this.createBuilder(() -> new WrittenLanguageLanguageBuilder(lang, this::untrack, this::add));
     }
     

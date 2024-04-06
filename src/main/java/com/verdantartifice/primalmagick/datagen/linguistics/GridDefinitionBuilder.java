@@ -20,13 +20,14 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 public class GridDefinitionBuilder {
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final ResourceLocation key;
-    protected BookLanguage bookLanguage;
+    protected ResourceKey<BookLanguage> bookLanguage;
     protected Vector2ic startPos;
     protected final List<IFinishedGridNode> nodes = new ArrayList<>();
     
@@ -46,7 +47,7 @@ public class GridDefinitionBuilder {
         return grid(PrimalMagick.resource(keyPath));
     }
     
-    public GridDefinitionBuilder language(@Nullable BookLanguage lang) {
+    public GridDefinitionBuilder language(@Nullable ResourceKey<BookLanguage> lang) {
         this.bookLanguage = lang;
         return this;
     }
@@ -93,11 +94,12 @@ public class GridDefinitionBuilder {
             throw new IllegalStateException("Start position not among defined nodes for linguistics grid " + id.toString());
         }
         
-        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.languageId())).mapToInt(o -> o.orElse(0)).sum();
-        int expected = this.bookLanguage.complexity();
-        if (total != expected) {
-            throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
-        }
+        // TODO Re-implement complexity validation
+//        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.languageId())).mapToInt(o -> o.orElse(0)).sum();
+//        int expected = this.bookLanguage.complexity();
+//        if (total != expected) {
+//            throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
+//        }
     }
     
     public void build(Consumer<IFinishedGrid> consumer) {
@@ -110,7 +112,7 @@ public class GridDefinitionBuilder {
     
     public void build(Consumer<IFinishedGrid> consumer, ResourceLocation id) {
         this.validate(id);
-        consumer.accept(new Result(this.key, this.bookLanguage.languageId(), this.startPos, this.nodes));
+        consumer.accept(new Result(this.key, this.bookLanguage.location(), this.startPos, this.nodes));
     }
     
     public static class Result implements IFinishedGrid {
