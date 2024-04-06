@@ -96,7 +96,7 @@ public class ClientUtils {
      * 
      * @param bookId the ID of the static book whose resources to load
      */
-    public static void openStaticBookScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType) {
+    public static void openStaticBookScreen(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType) {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new StaticBookViewScreen(bookKey, languageId, translatedComprehension, bookType));
     }

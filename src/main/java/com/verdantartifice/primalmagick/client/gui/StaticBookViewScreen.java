@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
@@ -12,12 +13,12 @@ import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
-import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,7 +29,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
@@ -52,7 +52,7 @@ public class StaticBookViewScreen extends Screen {
 
     protected final boolean playTurnSound;
     protected final ResourceKey<?> requestedBookKey;
-    protected final ResourceLocation requestedLanguageId;
+    protected final ResourceKey<?> requestedLanguageId;
     protected final int requestedTranslatedComprehension;
     protected final BookType bookType;
     protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
@@ -67,14 +67,14 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(BooksPM.TEST_BOOK, BookLanguagesPM.DEFAULT.getId(), 0, BookType.BOOK, false);
+        this(BooksPM.TEST_BOOK, BookLanguagesPM.DEFAULT, 0, BookType.BOOK, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType) {
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType) {
         this(bookKey, languageId, translatedComprehension, bookType, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.playTurnSound = playTurnSound;
         this.requestedBookKey = bookKey;
@@ -100,14 +100,20 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     protected void init() {
-        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(this.requestedLanguageId);
-        if (lang == null) {
-            lang = BookLanguagesPM.DEFAULT.get();
-        }
-        int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
-        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), Math.max(comp, this.requestedTranslatedComprehension));
-        this.complexity = lang.complexity();
-        this.isAutoTranslating = lang.autoTranslate();
+        // Set default values in case there's an error getting the language
+        this.complexity = 0;
+        this.isAutoTranslating = false;
+        
+        // Fetch the language for this book view and set data accordingly
+        MutableInt comp = new MutableInt(0);
+        this.requestedLanguageId.cast(RegistryKeysPM.BOOK_LANGUAGES).ifPresent(langKey -> {
+            this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey).ifPresent(lang -> {
+                comp.setValue(LinguisticsManager.getComprehension(this.minecraft.player, lang));
+                this.complexity = lang.get().complexity();
+                this.isAutoTranslating = lang.get().autoTranslate();
+            });
+        });
+        this.bookView = new BookView(this.requestedBookKey, this.requestedLanguageId, Math.max(comp.getValue(), this.requestedTranslatedComprehension));
 
         this.createMenuControls();
         this.createPageControlButtons();

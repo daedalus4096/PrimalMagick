@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -53,7 +54,7 @@ public class KnowledgeReward extends AbstractReward {
     }
     
     @Override
-    public void grant(ServerPlayer player) {
+    public void grant(ServerPlayer player, RegistryAccess registryAccess) {
         ResearchManager.addKnowledge(player, this.knowledgeType, this.levels * this.knowledgeType.getProgression());
     }
 
