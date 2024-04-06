@@ -21,7 +21,6 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -66,7 +65,7 @@ public class ClientBookHelper {
             .build();
 
     private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(ClientBookHelper::getTextLinesInner);
-    private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
+    private static Function<ResourceKey<BookDefinition>, List<String>> memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
     private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
 
     public static void invalidate() {
@@ -194,13 +193,12 @@ public class ClientBookHelper {
         return Mth.ceil((float)getTextLines(view, font).size() / (float)MAX_LINES_PER_PAGE);
     }
     
-    public static List<String> getUnencodedWords(BookDefinition bookDef) {
-        return memoizedUnencodedWords.apply(bookDef);
+    public static List<String> getUnencodedWords(ResourceKey<BookDefinition> bookKey) {
+        return memoizedUnencodedWords.apply(bookKey);
     }
     
-    private static List<String> getUnencodedWordsInner(BookDefinition bookDef) {
+    private static List<String> getUnencodedWordsInner(ResourceKey<BookDefinition> bookKey) {
         List<String> words = new ArrayList<>();
-        ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId());
         gatherUnencodedWords(getTextTranslationKey(bookKey), words::add);
         gatherUnencodedWords(BookHelper.getTitleTranslationKey(bookKey), words::add);
         gatherUnencodedWords(getAuthorTranslationKey(bookKey), words::add);
@@ -225,9 +223,6 @@ public class ClientBookHelper {
     }
     
     private static double getBookComprehensionInner(BookView view) {
-        final BookDefinition bookDef = BooksPM.BOOKS.get().containsKey(view.bookKey().location()) ?
-                BooksPM.BOOKS.get().getValue(view.bookKey().location()) :
-                BooksPM.BOOKS.get().getValue(BooksPM.TEST_BOOK.location());
         final BookLanguage bookLang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
                 BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
                 BookLanguagesPM.DEFAULT.get();
@@ -239,7 +234,7 @@ public class ClientBookHelper {
             // Zero-complexity languages are always fully understood
             return 1;
         } else {
-            List<String> bookWords = getUnencodedWords(bookDef);
+            List<String> bookWords = getUnencodedWords(view.bookKey().cast(RegistryKeysPM.BOOKS).orElseThrow());
             final Lexicon langLex = LexiconManager.getLexicon(bookLang.languageId()).orElseThrow();
             int totalCount = bookWords.size();
             int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.complexity())).count();

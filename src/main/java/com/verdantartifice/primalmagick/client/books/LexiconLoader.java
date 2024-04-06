@@ -10,10 +10,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -73,11 +74,11 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
         LOGGER.info("Loaded {} lexicons", LexiconManager.getAllLexicons().size());
     }
 
-    public void updateWithTagData() {
+    public void updateWithTagData(RegistryAccess registryAccess) {
         LOGGER.info("Updating lexicons with tagged data");
         BookLanguagesPM.LANGUAGES.get().getValues().stream().forEach(lang -> {
             Lexicon lexicon = new Lexicon();
-            BooksPM.BOOKS.get().forEach(bookDef -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookDef)));
+            registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).registryKeySet().forEach(bookKey -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookKey)));
             LexiconManager.setLexicon(lang.languageId(), lexicon);
         });
     }

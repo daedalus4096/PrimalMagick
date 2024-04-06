@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -55,7 +55,7 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
     }
     
     public static OpenStaticBookScreenPacket decode(FriendlyByteBuf buf) {
-        return new OpenStaticBookScreenPacket(buf.readResourceKey(BooksPM.BOOKS.get().getRegistryKey()), buf.readResourceLocation(), buf.readVarInt(), buf.readEnum(BookType.class));
+        return new OpenStaticBookScreenPacket(buf.readResourceKey(RegistryKeysPM.BOOKS), buf.readResourceLocation(), buf.readVarInt(), buf.readEnum(BookType.class));
     }
     
     public static void onMessage(OpenStaticBookScreenPacket message, CustomPayloadEvent.Context ctx) {
