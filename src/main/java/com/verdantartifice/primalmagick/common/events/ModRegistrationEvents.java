@@ -40,6 +40,6 @@ public class ModRegistrationEvents {
     
     @SubscribeEvent
     public static void onNewDatapackRegistry(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(RegistryKeysPM.BOOKS, BookDefinition.CODEC); // FIXME Specify network codec?
+        event.dataPackRegistry(RegistryKeysPM.BOOKS, BookDefinition.DIRECT_CODEC, BookDefinition.NETWORK_CODEC);
     }
 }
