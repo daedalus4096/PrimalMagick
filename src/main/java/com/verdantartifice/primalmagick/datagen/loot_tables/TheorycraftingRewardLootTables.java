@@ -30,6 +30,10 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
  * @author Daedalus4096
  */
 public class TheorycraftingRewardLootTables extends AbstractGameplayLootTableSubProvider {
+    public TheorycraftingRewardLootTables() {
+        super(LootTablesPM::theorycrafting);
+    }
+    
     @Override
     protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
         this.registerLootTable(writer, LootTablesPM.THEORYCRAFTING_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()

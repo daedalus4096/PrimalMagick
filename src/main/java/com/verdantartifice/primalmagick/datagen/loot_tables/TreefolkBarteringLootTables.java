@@ -24,6 +24,10 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
  * @author Daedalus4096
  */
 public class TreefolkBarteringLootTables extends AbstractGameplayLootTableSubProvider {
+    public TreefolkBarteringLootTables() {
+        super(LootTablesPM::treefolkBartering);
+    }
+    
     @Override
     protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
         this.registerLootTable(writer, LootTablesPM.TREEFOLK_BARTERING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))

@@ -5,11 +5,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +24,11 @@ public abstract class AbstractGameplayLootTableSubProvider implements LootTableS
 
     protected final Map<ResourceLocation, LootTable.Builder> lootTables = new HashMap<>();
     protected final Set<ResourceLocation> registeredLootTableTypes = new HashSet<>();
+    protected final Supplier<Set<ResourceLocation>> expectedTableSupplier;
+    
+    protected AbstractGameplayLootTableSubProvider(Supplier<Set<ResourceLocation>> expectedTableSupplier) {
+        this.expectedTableSupplier = expectedTableSupplier;
+    }
 
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> writer) {
@@ -34,7 +38,7 @@ public abstract class AbstractGameplayLootTableSubProvider implements LootTableS
 
     private void checkExpectations() {
         // Collect all the resource locations for the blocks defined in this mod
-        Set<ResourceLocation> types = new HashSet<>(LootTablesPM.all());
+        Set<ResourceLocation> types = new HashSet<>(this.expectedTableSupplier.get());
         
         // Warn for each mod entity that didn't have a loot table registered
         types.removeAll(this.registeredLootTableTypes);

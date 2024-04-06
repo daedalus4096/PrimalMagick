@@ -36,6 +36,10 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
  * @author Daedalus4096
  */
 public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
+    public LibraryLootTables() {
+        super(LootTablesPM::library);
+    }
+    
     @Override
     protected void addTables(BiConsumer<ResourceLocation, Builder> writer) {
         // Register top level loot tables
