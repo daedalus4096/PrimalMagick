@@ -38,10 +38,10 @@ import net.minecraft.resources.ResourceLocation;
 public class ResourceKeyArgumentPM<T> implements ArgumentType<ResourceKey<T>> {
     private static final Collection<String> EXAMPLES = Arrays.asList("foo", "foo:bar", "012");
     private static final DynamicCommandExceptionType ERROR_INVALID_BOOK = new DynamicCommandExceptionType((err) -> {
-        return Component.translatable("command.primalmagick.books.noexist", err);
+        return Component.translatable("commands.primalmagick.books.noexist", err);
     });
     private static final DynamicCommandExceptionType ERROR_INVALID_LANGUAGE = new DynamicCommandExceptionType((err) -> {
-        return Component.translatable("command.primalmagick.books.nolanguage", err);
+        return Component.translatable("commands.primalmagick.books.nolanguage", err);
     });
 
     protected final ResourceKey<? extends Registry<T>> registryKey;
