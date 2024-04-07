@@ -69,8 +69,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     public void refreshBookData() {
         ItemStack bookStack = this.studySlot.getItem();
         ResourceKey<BookLanguage> langKey = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguageId(bookStack).orElse(BookLanguagesPM.DEFAULT) : BookLanguagesPM.DEFAULT;
-        Holder.Reference<BookLanguage> lang = this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey)
-                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+        Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(langKey, this.level.registryAccess(), BookLanguagesPM.DEFAULT);
         this.languageClue.set(langKey.location().hashCode());
         this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
     }
@@ -78,7 +77,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
         return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
-                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+                .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
     
     public int getVocabularyCount() {

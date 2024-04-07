@@ -698,8 +698,7 @@ public class GrimoireScreen extends Screen {
         this.currentStageIndex = 0;
         
         // Fetch the language itself
-        Holder.Reference<BookLanguage> language = this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(languageKey)
-                .orElse(this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+        Holder.Reference<BookLanguage> language = BookLanguagesPM.getLanguageOrDefault(languageKey, this.minecraft.level.registryAccess(), BookLanguagesPM.DEFAULT);
 
         // Add the first page with just the comprehension and vocabulary trackers
         this.pages.add(new LinguisticsScorePage(language));

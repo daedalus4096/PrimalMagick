@@ -25,7 +25,7 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return an optional reference holder for this view's book definition
      */
     public Optional<Holder.Reference<BookDefinition>> getBookDefinition(RegistryAccess registryAccess) {
-        return this.bookKey().cast(RegistryKeysPM.BOOKS).flatMap(key -> registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolder(key));
+        return this.bookKey().cast(RegistryKeysPM.BOOKS).flatMap(key -> BooksPM.getBookDefinition(key, registryAccess));
     }
     
     /**
@@ -37,9 +37,7 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return a reference holder for this view's book definition, or the given default
      */
     public Holder.Reference<BookDefinition> getBookDefinitionOrDefault(RegistryAccess registryAccess, ResourceKey<BookDefinition> defaultBook) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOKS)
-                .getHolder(this.bookKey().cast(RegistryKeysPM.BOOKS).orElse(defaultBook))
-                .orElse(registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolderOrThrow(defaultBook));
+        return BooksPM.getBookDefinitionOrDefault(this.languageId().cast(RegistryKeysPM.BOOKS).orElse(defaultBook), registryAccess, defaultBook);
     }
     
     /**
@@ -49,7 +47,7 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return a reference holder for this view's book definition
      */
     public Holder.Reference<BookDefinition> getBookDefinitionOrThrow(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).getHolderOrThrow(this.bookKey().cast(RegistryKeysPM.BOOKS).orElseThrow());
+        return BooksPM.getBookDefinitionOrThrow(this.bookKey().cast(RegistryKeysPM.BOOKS).orElseThrow(), registryAccess);
     }
     
     /**
@@ -59,7 +57,7 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return an optional reference holder for this view's book language
      */
     public Optional<Holder.Reference<BookLanguage>> getLanguage(RegistryAccess registryAccess) {
-        return this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).flatMap(key -> registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(key));
+        return this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).flatMap(key -> BookLanguagesPM.getLanguage(key, registryAccess));
     }
     
     /**
@@ -71,9 +69,7 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return a reference holder for this view's book language, or the given default
      */
     public Holder.Reference<BookLanguage> getLanguageOrDefault(RegistryAccess registryAccess, ResourceKey<BookLanguage> defaultLang) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES)
-                .getHolder(this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).orElse(defaultLang))
-                .orElse(registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(defaultLang));
+        return BookLanguagesPM.getLanguageOrDefault(this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).orElse(defaultLang), registryAccess, defaultLang);
     }
     
     /**
@@ -83,6 +79,6 @@ public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int co
      * @return a reference holder for this view's book language
      */
     public Holder.Reference<BookLanguage> getLanguageOrThrow(RegistryAccess registryAccess) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).orElseThrow());
+        return BookLanguagesPM.getLanguageOrThrow(this.languageId().cast(RegistryKeysPM.BOOK_LANGUAGES).orElseThrow(), registryAccess);
     }
 }

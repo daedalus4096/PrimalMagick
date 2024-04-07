@@ -213,8 +213,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                         lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
                         if (!this.player.getAbilities().instabuild) {
                             lines.add(CommonComponents.EMPTY);
-                            Holder.Reference<BookLanguage> lang = this.registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(def.getLanguage())
-                                    .orElse(this.registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+                            Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(def.getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);
                             MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), lang.get().getName());
                             if (LinguisticsManager.getVocabulary(this.player, lang) < node.getVocabularyCost()) {
                                 costText = costText.withStyle(ChatFormatting.RED);
@@ -278,8 +277,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
             if (retVal && this.gridDef.isPresent()) {
                 Optional<GridNodeDefinition> nodeOpt = this.gridDef.get().getNode(this.xIndex, this.yIndex);
-                Holder.Reference<BookLanguage> lang = this.registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.gridDef.get().getLanguage())
-                        .orElse(this.registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+                Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(this.gridDef.get().getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);
                 return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, lang) >= nodeOpt.get().getVocabularyCost());
             } else {
                 return false;

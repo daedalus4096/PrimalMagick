@@ -59,7 +59,7 @@ public class ComprehensionReward extends AbstractReward {
     
     @Override
     public void grant(ServerPlayer player, RegistryAccess registryAccess) {
-        registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.language).ifPresent(langHolder -> {
+        BookLanguagesPM.getLanguage(this.language, registryAccess).ifPresent(langHolder -> {
             LinguisticsManager.incrementComprehension(player, langHolder, this.points);
         });
     }
@@ -67,8 +67,7 @@ public class ComprehensionReward extends AbstractReward {
     @Override
     public Component getDescription(Player player, RegistryAccess registryAccess) {
         Component amountText = Component.translatable("label.primalmagick.comprehension_gain." + Mth.clamp(this.points, 0, 5));
-        Component langText = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.language)
-                .orElse(registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT)).get().getName();
+        Component langText = BookLanguagesPM.getLanguageOrDefault(this.language, registryAccess, BookLanguagesPM.DEFAULT).get().getName();
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.comprehension", langText, amountText);
     }
 

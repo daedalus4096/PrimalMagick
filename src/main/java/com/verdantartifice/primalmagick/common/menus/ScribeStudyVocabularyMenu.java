@@ -155,7 +155,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
         return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
-                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+                .orElse(BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, this.level.registryAccess()));
     }
 
     public int getVocabularyCount() {

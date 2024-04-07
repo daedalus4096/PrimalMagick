@@ -1,8 +1,13 @@
 package com.verdantartifice.primalmagick.common.books;
 
+import java.util.Optional;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
@@ -45,5 +50,38 @@ public class BookLanguagesPM {
         context.register(BookLanguagesPM.TRADE, new BookLanguage(PrimalMagick.resource("trade"), Style.EMPTY.withFont(PrimalMagick.resource("trade")), 60, false));
         context.register(BookLanguagesPM.FORBIDDEN, new BookLanguage(PrimalMagick.resource("forbidden"), Style.EMPTY.withFont(PrimalMagick.resource("forbidden")), 60, false));
         context.register(BookLanguagesPM.HALLOWED, new BookLanguage(PrimalMagick.resource("hallowed"), Style.EMPTY.withFont(PrimalMagick.resource("hallowed")), 60, false));
+    }
+    
+    /**
+     * Optionally gets a reference holder for the given book language, should that language be found.
+     * 
+     * @param registryAccess a registry accessor
+     * @return an optional reference holder for this view's book language
+     */
+    public static Optional<Holder.Reference<BookLanguage>> getLanguage(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey);
+    }
+    
+    /**
+     * Gets a reference holder for the given book language, or the given default if the given language cannot be found.
+     * Throws if the given default also cannot be found.
+     * 
+     * @param registryAccess a registry accessor
+     * @param defaultLang the default language to use if the given is not found
+     * @return a reference holder for the given book language, or the given default
+     */
+    public static Holder.Reference<BookLanguage> getLanguageOrDefault(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess, ResourceKey<BookLanguage> defaultLang) {
+        Registry<BookLanguage> registry = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES);
+        return registry.getHolder(langKey).orElse(registry.getHolderOrThrow(defaultLang));
+    }
+    
+    /**
+     * Gets a reference holder for the given book language, or throws if the given language cannot be found.
+     * 
+     * @param registryAccess a registry accessor
+     * @return a reference holder for this view's book language
+     */
+    public static Holder.Reference<BookLanguage> getLanguageOrThrow(ResourceKey<BookLanguage> langKey, RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(langKey);
     }
 }

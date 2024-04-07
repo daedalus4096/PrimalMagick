@@ -926,7 +926,7 @@ public class PrimalMagickCommand {
     }
     
     private static Holder.Reference<BookLanguage> defaultLanguage(CommandSourceStack source) {
-        return source.getServer().registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT);
+        return BookLanguagesPM.getLanguageOrThrow(BookLanguagesPM.DEFAULT, source.getServer().registryAccess());
     }
 
     private static int giveBook(CommandSourceStack source, Collection<ServerPlayer> targets, Holder.Reference<BookDefinition> bookDef, Holder.Reference<BookLanguage> bookLanguage, OptionalInt comprehension) {
