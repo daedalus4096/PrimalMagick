@@ -17,7 +17,7 @@ import net.minecraftforge.common.util.INBTSerializable;
  */
 public interface IReward extends INBTSerializable<CompoundTag> {
     void grant(ServerPlayer player, RegistryAccess registryAccess);
-    Component getDescription(Player player);
+    Component getDescription(Player player, RegistryAccess registryAccess);
     ResourceLocation getIconLocation(Player player);
     Optional<Component> getAmountText();
     String getRewardType();

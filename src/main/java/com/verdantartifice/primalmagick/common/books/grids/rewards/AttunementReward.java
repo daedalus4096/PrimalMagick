@@ -59,7 +59,7 @@ public class AttunementReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription(Player player) {
+    public Component getDescription(Player player, RegistryAccess registryAccess) {
         Component amountText = Component.translatable("label.primalmagick.attunement_gain." + Mth.clamp(this.points, 0, 5));
         Component sourceText = this.source.isDiscovered(player) ? this.source.getNameText() : Component.translatable(Source.getUnknownTranslationKey());
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.attunement", sourceText, amountText);

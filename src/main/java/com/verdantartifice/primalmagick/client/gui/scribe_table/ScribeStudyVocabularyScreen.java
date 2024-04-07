@@ -21,6 +21,7 @@ import net.minecraft.client.gui.screens.inventory.EnchantmentNames;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -77,7 +78,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     @Override
     protected void init() {
         super.init();
-        BookLanguage lang = this.menu.getBookLanguage();
+        Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
         this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 35, this.topPos + 47));
         this.bookModel = new BookModel(this.minecraft.getEntityModels().bakeLayer(ModelLayers.BOOK));
     }
@@ -108,7 +109,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
         this.renderBook(pGuiGraphics, this.leftPos, this.topPos, pPartialTick);
         EnchantmentNames.getInstance().initSeed((long)this.menu.getNameSeed());
-        BookLanguage activeLanguage = this.menu.getBookLanguage();
+        Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
         
         // Update the vocabulary widget based on the current language in the menu
         this.vocabularyWidget.visible = activeLanguage.is(BookLanguageTagsPM.ANCIENT);
@@ -145,7 +146,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 }
             } else {
                 String rawText = StringDecomposer.getPlainText(EnchantmentNames.getInstance().getRandomName(this.font, textWidth));
-                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.style()), textWidth, Style.EMPTY);
+                FormattedText formattedText = this.font.getSplitter().headByWidth(Component.literal(rawText).withStyle(activeLanguage.get().style()), textWidth, Style.EMPTY);
                 if (!this.minecraft.player.getAbilities().instabuild && this.minecraft.player.experienceLevel < cost) {
                     pGuiGraphics.blitSprite(SLOT_DISABLED_SPRITE, slotLeft, slotTop, 108, 19);
                     pGuiGraphics.blitSprite(DISABLED_LEVEL_SPRITES[slotIndex], slotLeft + 1, slotTop + 1, 16, 16);
@@ -180,11 +181,11 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                 }
 
                 if (studyDelta > 0) {
-                    BookLanguage activeLanguage = this.menu.getBookLanguage();
+                    Holder.Reference<BookLanguage> activeLanguage = this.menu.getBookLanguage();
                     List<Component> tooltips = new ArrayList<>();
                     
                     // Add the vocabulary gain tooltip line to the output
-                    tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count", activeLanguage.getName(), studyDelta).withStyle(ChatFormatting.WHITE));
+                    tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count", activeLanguage.get().getName(), studyDelta).withStyle(ChatFormatting.WHITE));
                     
                     // Only process experience level costs if not in creative mode
                     if (!this.minecraft.player.getAbilities().instabuild) {

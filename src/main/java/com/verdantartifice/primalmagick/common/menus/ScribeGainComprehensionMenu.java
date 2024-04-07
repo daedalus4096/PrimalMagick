@@ -8,12 +8,14 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,7 +52,7 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 18, 
-                new FilteredSlot.Properties().filter(stack -> stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack).is(BookLanguageTagsPM.ANCIENT)).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
     }
 
     @Override
@@ -66,19 +68,17 @@ public class ScribeGainComprehensionMenu extends AbstractScribeTableMenu {
     
     public void refreshBookData() {
         ItemStack bookStack = this.studySlot.getItem();
-        BookLanguage lang = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguage(bookStack) : BookLanguagesPM.DEFAULT.get();
-        this.languageClue.set(BookLanguagesPM.LANGUAGES.get().getKey(lang).hashCode());
+        ResourceKey<BookLanguage> langKey = bookStack.is(ItemTagsPM.STATIC_BOOKS) ? StaticBookItem.getBookLanguageId(bookStack).orElse(BookLanguagesPM.DEFAULT) : BookLanguagesPM.DEFAULT;
+        Holder.Reference<BookLanguage> lang = this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey)
+                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
+        this.languageClue.set(langKey.location().hashCode());
         this.vocabularyCount.set(LinguisticsManager.getVocabulary(this.player, lang));
     }
     
-    public BookLanguage getBookLanguage() {
+    public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
-        for (ResourceLocation key : BookLanguagesPM.LANGUAGES.get().getKeys()) {
-            if (key.hashCode() == hashCode) {
-                return BookLanguagesPM.LANGUAGES.get().getValue(key);
-            }
-        }
-        return BookLanguagesPM.DEFAULT.get();
+        return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
+                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
     }
     
     public int getVocabularyCount() {

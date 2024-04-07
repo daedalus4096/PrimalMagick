@@ -41,7 +41,7 @@ public class EmptyReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription(Player player) {
+    public Component getDescription(Player player, RegistryAccess registryAccess) {
         return DESCRIPTION;
     }
 

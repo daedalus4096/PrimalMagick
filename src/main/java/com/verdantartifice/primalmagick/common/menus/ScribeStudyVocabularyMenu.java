@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
@@ -61,13 +60,9 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 47, 
-                new FilteredSlot.Properties().filter(this::isValidStack).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
     }
     
-    protected boolean isValidStack(ItemStack stack) {
-        return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack, this.level.registryAccess()).map(h -> h.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
-    }
-
     @Override
     public void containerChanged(Container pContainer) {
         super.containerChanged(pContainer);
@@ -157,10 +152,10 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
         return this.nameSeed.get();
     }
     
-    public BookLanguage getBookLanguage() {
+    public Holder.Reference<BookLanguage> getBookLanguage() {
         int hashCode = this.languageClue.get();
         return this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(h -> h.key().location().hashCode() == hashCode).findFirst()
-                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT)).get();
+                .orElse(this.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
     }
 
     public int getVocabularyCount() {

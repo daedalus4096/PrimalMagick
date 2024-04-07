@@ -10,7 +10,6 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -66,9 +65,10 @@ public class ComprehensionReward extends AbstractReward {
     }
 
     @Override
-    public Component getDescription(Player player) {
+    public Component getDescription(Player player, RegistryAccess registryAccess) {
         Component amountText = Component.translatable("label.primalmagick.comprehension_gain." + Mth.clamp(this.points, 0, 5));
-        Component langText = this.language.getName();
+        Component langText = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.language)
+                .orElse(registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT)).get().getName();
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.comprehension", langText, amountText);
     }
 

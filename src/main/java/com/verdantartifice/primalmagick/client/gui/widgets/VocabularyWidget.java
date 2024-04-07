@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -24,20 +25,20 @@ import net.minecraft.world.item.ItemStack;
 public class VocabularyWidget extends AbstractWidget {
     private static final ResourceLocation BORDER_SPRITE = PrimalMagick.resource("scribe_table/glyph_border");
 
-    protected BookLanguage language;
+    protected Holder<BookLanguage> language;
     protected int amount;
     
-    public VocabularyWidget(BookLanguage language, int amount, int xIn, int yIn) {
+    public VocabularyWidget(Holder<BookLanguage> language, int amount, int xIn, int yIn) {
         super(xIn, yIn, 16, 16, Component.empty());
         this.language = language;
         this.amount = amount;
     }
     
-    public BookLanguage getLanguage() {
+    public Holder<BookLanguage> getLanguage() {
         return this.language;
     }
     
-    public void setLanguage(BookLanguage language) {
+    public void setLanguage(Holder<BookLanguage> language) {
         this.language = language;
     }
     
@@ -64,7 +65,7 @@ public class VocabularyWidget extends AbstractWidget {
         // Render language glyph
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(4, 4, 2.0F);
-        pGuiGraphics.blitSprite(this.getLanguage().getGlyphSprite(), 0, 0, 8, 8);
+        pGuiGraphics.blitSprite(this.getLanguage().get().getGlyphSprite(), 0, 0, 8, 8);
         pGuiGraphics.pose().popPose();
 
         // Render the amount string
@@ -80,7 +81,7 @@ public class VocabularyWidget extends AbstractWidget {
 
         // Draw the tooltip if applicable
         if (this.isHoveredOrFocused()) {
-            pGuiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().getName(), this.getAmount())), 
+            pGuiGraphics.renderComponentTooltip(mc.font, Collections.singletonList(Component.translatable("tooltip.primalmagick.scribe_table.widget.language", this.getLanguage().get().getName(), this.getAmount())), 
                     pMouseX, pMouseY, ItemStack.EMPTY);
         }
     }

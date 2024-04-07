@@ -4,7 +4,10 @@ import javax.annotation.Nonnull;
 
 import org.joml.Vector2i;
 
+import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
+import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -14,6 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
@@ -48,6 +52,10 @@ public abstract class AbstractScribeTableMenu extends AbstractTileSidedInventory
     }
     
     protected abstract void createModeSlots();
+
+    protected boolean isAncientBookStack(ItemStack stack) {
+        return stack.is(ItemTagsPM.STATIC_BOOKS) && StaticBookItem.getBookLanguage(stack, this.level.registryAccess()).map(h -> h.is(BookLanguageTagsPM.ANCIENT)).orElse(false);
+    }
     
     protected Vector2i getInventorySlotsOffset() {
         return new Vector2i(0, 0);
