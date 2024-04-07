@@ -2,18 +2,23 @@ package com.verdantartifice.primalmagick.common.books.grids;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.joml.Vector2i;
 import org.joml.Vector2ic;
 
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.IReward;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.scribe_table.UnlockGridNodeActionPacket;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -63,17 +68,23 @@ public class PlayerGrid {
         return this.lastModified;
     }
     
-    public boolean unlock(int x, int y) {
-        return this.unlock(new Vector2i(x, y));
+    public boolean unlock(int x, int y, RegistryAccess registryAccess) {
+        return this.unlock(new Vector2i(x, y), registryAccess);
     }
     
-    public boolean unlock(Vector2ic node) {
+    public boolean unlock(Vector2ic node, RegistryAccess registryAccess) {
         if (!this.isUnlockable(node)) {
             return false;
         }
         
+        // If the language cannot be found, fail the unlock
+        Optional<Holder.Reference<BookLanguage>> langHolderOpt = registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(this.definition.language);
+        if (langHolderOpt.isEmpty()) {
+            return false;
+        }
+        
         int cost = this.definition.nodes.get(node).vocabularyCost;
-        if (!this.player.getAbilities().instabuild && LinguisticsManager.getVocabulary(this.player, this.definition.language) < cost) {
+        if (!this.player.getAbilities().instabuild && LinguisticsManager.getVocabulary(this.player, langHolderOpt.get()) < cost) {
             return false;
         }
         
@@ -90,11 +101,11 @@ public class PlayerGrid {
                 if (linguistics.unlockNode(this.definition.getKey(), node)) {
                     this.lastModified = linguistics.getGridLastModified(this.definition.getKey());
                     if (!this.player.getAbilities().instabuild) {
-                        LinguisticsManager.incrementVocabulary(player, this.definition.language, -cost);
+                        LinguisticsManager.incrementVocabulary(player, langHolderOpt.get(), -cost);
                     }
                     IReward reward = this.definition.nodes.get(node).getReward();
                     if (this.player instanceof ServerPlayer serverPlayer) {
-                        reward.grant(serverPlayer);
+                        reward.grant(serverPlayer, registryAccess);
                     }
                     LinguisticsManager.scheduleSync(this.player);
                     this.unlocked.add(node);

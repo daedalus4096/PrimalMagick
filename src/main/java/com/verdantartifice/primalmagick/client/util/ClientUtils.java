@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.StaticBookViewScreen;
 import com.verdantartifice.primalmagick.client.gui.recipe_book.ArcaneRecipeUpdateListener;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookType;
 
 import net.minecraft.client.Minecraft;
@@ -96,7 +97,7 @@ public class ClientUtils {
      * 
      * @param bookId the ID of the static book whose resources to load
      */
-    public static void openStaticBookScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType) {
+    public static void openStaticBookScreen(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType) {
         Minecraft mc = Minecraft.getInstance();
         mc.setScreen(new StaticBookViewScreen(bookKey, languageId, translatedComprehension, bookType));
     }

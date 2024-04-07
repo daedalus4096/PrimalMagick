@@ -18,6 +18,6 @@ public class ClientResourceEvents {
     @SubscribeEvent
     public static void onTagsUpdated(TagsUpdatedEvent event) {
         // Update client lexicons with tag-delineated book data
-        LexiconLoader.getInstance().updateWithTagData();
+        LexiconLoader.getInstance().updateWithTagData(event.getRegistryAccess());
     }
 }

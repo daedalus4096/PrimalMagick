@@ -2,8 +2,6 @@ package com.verdantartifice.primalmagick.common.init;
 
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.commands.arguments.ArgumentTypesPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
@@ -47,8 +45,6 @@ public class InitRegistries {
         ArgumentTypesPM.init();
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
-        BooksPM.init();
-        BookLanguagesPM.init();
         ResearchNames.init();
     }
 }

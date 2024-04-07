@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -35,12 +36,12 @@ public class EmptyReward extends AbstractReward {
     }
 
     @Override
-    public void grant(ServerPlayer player) {
+    public void grant(ServerPlayer player, RegistryAccess registryAccess) {
         // Nothing to do
     }
 
     @Override
-    public Component getDescription(Player player) {
+    public Component getDescription(Player player, RegistryAccess registryAccess) {
         return DESCRIPTION;
     }
 

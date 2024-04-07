@@ -51,7 +51,7 @@ public class UnlockGridNodeActionPacket implements IMessageToServer {
     
     public static void onMessage(UnlockGridNodeActionPacket message, CustomPayloadEvent.Context ctx) {
         ServerPlayer player = ctx.getSender();
-        if (!LinguisticsManager.getPlayerGrid(player, message.gridDefinitionKey).unlock(message.nodePos)) {
+        if (!LinguisticsManager.getPlayerGrid(player, message.gridDefinitionKey).unlock(message.nodePos, player.level().registryAccess())) {
             LOGGER.warn("Failed to unlock server side node ({}, {}) for linguistics grid {}", message.nodePos.x(), message.nodePos.y(), message.gridDefinitionKey);
         } else if (player.containerMenu instanceof ScribeGainComprehensionMenu menu) {
             // If the unlock was successful, have the menu re-sync its data to the client to update vocabulary count

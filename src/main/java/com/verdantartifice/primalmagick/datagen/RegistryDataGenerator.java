@@ -6,12 +6,16 @@ import java.util.concurrent.CompletableFuture;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureSetsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
+import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
 
 import net.minecraft.core.HolderLookup;
@@ -34,7 +38,9 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, BiomeModifiersPM::bootstrap)
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
-            .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap);
+            .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
+            .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
+            .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap);
     
     // Use addProviders() instead
     private RegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
@@ -45,6 +51,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging custom registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {

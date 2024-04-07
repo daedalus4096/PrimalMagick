@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.function.TriFunction;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,15 +22,17 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
-import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.util.FunctionUtils;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
@@ -65,12 +68,12 @@ public class ClientBookHelper {
                     new WidgetSprites(PrimalMagick.resource("books/tablet/page_backward"), new ResourceLocation("books/tablet/page_backward_highlighted"))))
             .build();
 
-    private static BiFunction<BookView, Font, List<FormattedCharSequence>> memoizedTextLines = Util.memoize(ClientBookHelper::getTextLinesInner);
-    private static Function<BookDefinition, List<String>> memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
-    private static Function<BookView, Double> memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
+    private static TriFunction<BookView, RegistryAccess, Font, List<FormattedCharSequence>> memoizedTextLines = FunctionUtils.memoize(ClientBookHelper::getTextLinesInner);
+    private static Function<ResourceKey<BookDefinition>, List<String>> memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
+    private static BiFunction<BookView, RegistryAccess, Double> memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
 
     public static void invalidate() {
-        memoizedTextLines = Util.memoize(ClientBookHelper::getTextLinesInner);
+        memoizedTextLines = FunctionUtils.memoize(ClientBookHelper::getTextLinesInner);
         memoizedUnencodedWords = Util.memoize(ClientBookHelper::getUnencodedWordsInner);
         memoizedBookComprehension = Util.memoize(ClientBookHelper::getBookComprehensionInner);
     }
@@ -122,21 +125,19 @@ public class ClientBookHelper {
         return "tooltip.primalmagick.question_marks";
     }
     
-    public static List<FormattedCharSequence> getTextLines(BookView view, Font font) {
-        return memoizedTextLines.apply(view, font);
+    public static List<FormattedCharSequence> getTextLines(BookView view, RegistryAccess registryAccess, Font font) {
+        return memoizedTextLines.apply(view, registryAccess, font);
     }
     
-    private static List<FormattedCharSequence> getTextLinesInner(BookView view, Font font) {
+    private static List<FormattedCharSequence> getTextLinesInner(BookView view, RegistryAccess registryAccess, Font font) {
         LOGGER.debug("Calculating text lines for book {}, lang {}, comprehension {}", view.bookKey(), view.languageId(), view.comprehension());
         List<FormattedCharSequence> retVal = new ArrayList<>();
         String textTranslationKey = getTextTranslationKey(view.bookKey());
         
-        final BookLanguage lang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
-                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
-                BookLanguagesPM.DEFAULT.get();
-        final Lexicon langLex = LexiconManager.getLexicon(lang.languageId()).orElseThrow();
+        final Holder.Reference<BookLanguage> lang = view.getLanguageOrDefault(registryAccess, BookLanguagesPM.DEFAULT);
+        final Lexicon langLex = LexiconManager.getLexicon(lang.key().location()).orElseThrow();
         final Lexicon loremLex = LexiconManager.getLexicon(LexiconManager.LOREM_IPSUM).orElseThrow();
-        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.languageId());
+        final Optional<StyleGuide> langStyleGuideOpt = StyleGuideManager.getStyleGuide(lang.key().location());
 
         // Add the un-encoded foreword
         if (view.bookKey().isFor(RegistryKeysPM.BOOKS)) {
@@ -153,7 +154,7 @@ public class ClientBookHelper {
             if (BookHelper.SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 words.add(Component.literal(word).withStyle(BookHelper.BASE_TEXT_STYLE));
-            } else if (lang.isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.complexity())) {
+            } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
                 // If the word has been translated, then add it directly
                 langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
                     words.add(Component.literal(word).withStyle(styleGuide.getStyle(word, BookHelper.BASE_TEXT_STYLE)));
@@ -163,9 +164,9 @@ public class ClientBookHelper {
             } else {
                 // If the word has not been translated, then add an encoded replacement word
                 langStyleGuideOpt.ifPresentOrElse(styleGuide -> {
-                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(styleGuide.getStyle(word, lang.style())));
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(styleGuide.getStyle(word, lang.get().style())));
                 }, () -> {
-                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.style()));
+                    words.add(Component.literal(loremLex.getReplacementWord(word)).withStyle(lang.get().style()));
                 });
             }
         });
@@ -183,24 +184,23 @@ public class ClientBookHelper {
         return retVal;
     }
     
-    public static List<FormattedCharSequence> getTextPage(BookView view, int page, Font font) {
-        List<FormattedCharSequence> lines = getTextLines(view, font);
+    public static List<FormattedCharSequence> getTextPage(BookView view, int page, RegistryAccess registryAccess, Font font) {
+        List<FormattedCharSequence> lines = getTextLines(view, registryAccess, font);
         int lowLine = Mth.clamp(page * MAX_LINES_PER_PAGE, 0, lines.size());
         int highLine = Mth.clamp((page + 1) * MAX_LINES_PER_PAGE, 0, lines.size());
         return ImmutableList.copyOf(lines.subList(lowLine, highLine));
     }
     
-    public static int getNumPages(BookView view, Font font) {
-        return Mth.ceil((float)getTextLines(view, font).size() / (float)MAX_LINES_PER_PAGE);
+    public static int getNumPages(BookView view, RegistryAccess registryAccess, Font font) {
+        return Mth.ceil((float)getTextLines(view, registryAccess, font).size() / (float)MAX_LINES_PER_PAGE);
     }
     
-    public static List<String> getUnencodedWords(BookDefinition bookDef) {
-        return memoizedUnencodedWords.apply(bookDef);
+    public static List<String> getUnencodedWords(ResourceKey<BookDefinition> bookKey) {
+        return memoizedUnencodedWords.apply(bookKey);
     }
     
-    private static List<String> getUnencodedWordsInner(BookDefinition bookDef) {
+    private static List<String> getUnencodedWordsInner(ResourceKey<BookDefinition> bookKey) {
         List<String> words = new ArrayList<>();
-        ResourceKey<BookDefinition> bookKey = ResourceKey.create(RegistryKeysPM.BOOKS, bookDef.bookId());
         gatherUnencodedWords(getTextTranslationKey(bookKey), words::add);
         gatherUnencodedWords(BookHelper.getTitleTranslationKey(bookKey), words::add);
         gatherUnencodedWords(getAuthorTranslationKey(bookKey), words::add);
@@ -220,29 +220,24 @@ public class ClientBookHelper {
      * @param view the book view whose contents are to be tested
      * @return the percentage of the book that the player understands
      */
-    public static double getBookComprehension(BookView view) {
-        return memoizedBookComprehension.apply(view);
+    public static double getBookComprehension(BookView view, RegistryAccess registryAccess) {
+        return memoizedBookComprehension.apply(view, registryAccess);
     }
     
-    private static double getBookComprehensionInner(BookView view) {
-        final BookDefinition bookDef = BooksPM.BOOKS.get().containsKey(view.bookKey().location()) ?
-                BooksPM.BOOKS.get().getValue(view.bookKey().location()) :
-                BooksPM.TEST_BOOK.get();
-        final BookLanguage bookLang = BookLanguagesPM.LANGUAGES.get().containsKey(view.languageId()) ?
-                BookLanguagesPM.LANGUAGES.get().getValue(view.languageId()) :
-                BookLanguagesPM.DEFAULT.get();
+    private static double getBookComprehensionInner(BookView view, RegistryAccess registryAccess) {
+        final Holder.Reference<BookLanguage> bookLang = view.getLanguageOrDefault(registryAccess, BookLanguagesPM.DEFAULT);
 
-        if (!bookLang.isTranslatable()) {
+        if (!bookLang.get().isTranslatable()) {
             // Non-translatable languages are never understood
             return 0;
-        } else if (bookLang.complexity() == 0) {
+        } else if (bookLang.get().complexity() == 0) {
             // Zero-complexity languages are always fully understood
             return 1;
         } else {
-            List<String> bookWords = getUnencodedWords(bookDef);
-            final Lexicon langLex = LexiconManager.getLexicon(bookLang.languageId()).orElseThrow();
+            List<String> bookWords = getUnencodedWords(view.bookKey().cast(RegistryKeysPM.BOOKS).orElseThrow());
+            final Lexicon langLex = LexiconManager.getLexicon(bookLang.key().location()).orElseThrow();
             int totalCount = bookWords.size();
-            int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.complexity())).count();
+            int translatedCount = (int)bookWords.stream().filter(word -> langLex.isWordTranslated(word, view.comprehension(), bookLang.get().complexity())).count();
             return Mth.clamp((double)translatedCount / (double)totalCount, 0, 1);
         }
     }

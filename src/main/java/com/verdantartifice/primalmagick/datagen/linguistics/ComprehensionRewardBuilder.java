@@ -8,18 +8,19 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.grids.rewards.ComprehensionReward;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 public class ComprehensionRewardBuilder {
-    protected final BookLanguage language;
+    protected final ResourceKey<BookLanguage> language;
     protected int points;
     
-    protected ComprehensionRewardBuilder(@Nonnull BookLanguage language, int points) {
+    protected ComprehensionRewardBuilder(@Nonnull ResourceKey<BookLanguage> language, int points) {
         this.language = language;
         this.points = points;
     }
     
-    public static ComprehensionRewardBuilder reward(@Nonnull BookLanguage language) {
+    public static ComprehensionRewardBuilder reward(@Nonnull ResourceKey<BookLanguage> language) {
         return new ComprehensionRewardBuilder(language, 1);
     }
     
@@ -43,10 +44,10 @@ public class ComprehensionRewardBuilder {
     }
     
     public static class Result implements IFinishedGridNodeReward {
-        protected final BookLanguage language;
+        protected final ResourceKey<BookLanguage> language;
         protected final int points;
         
-        public Result(@Nonnull BookLanguage language, int points) {
+        public Result(@Nonnull ResourceKey<BookLanguage> language, int points) {
             this.language = language;
             this.points = points;
         }
@@ -54,13 +55,13 @@ public class ComprehensionRewardBuilder {
         @Override
         public void serialize(JsonObject json) {
             json.addProperty("type", ComprehensionReward.TYPE);
-            json.addProperty("language", this.language.languageId().toString());
+            json.addProperty("language", this.language.location().toString());
             json.addProperty("points", this.points);
         }
 
         @Override
         public OptionalInt getComprehensionPoints(ResourceLocation bookLanguageId) {
-            return this.language.languageId().equals(bookLanguageId) ? OptionalInt.of(this.points) : OptionalInt.empty();
+            return this.language.location().equals(bookLanguageId) ? OptionalInt.of(this.points) : OptionalInt.empty();
         }
     }
 }

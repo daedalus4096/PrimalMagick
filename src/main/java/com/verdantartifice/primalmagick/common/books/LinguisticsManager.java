@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.BookLanguageTagsPM;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -54,25 +55,27 @@ public class LinguisticsManager {
         }
     }
     
-    public static boolean isLanguageKnown(@Nullable Player player, @Nullable BookLanguage language) {
+    public static boolean isLanguageKnown(@Nullable Player player, @Nullable Holder<BookLanguage> language) {
         // All players know the default language automatically
-        if (BookLanguagesPM.DEFAULT.get().equals(language)) {
+        if (language == null) {
+            return false;
+        } else if (language.is(BookLanguagesPM.DEFAULT)) {
             return true;
         }
         
         MutableBoolean retVal = new MutableBoolean(false);
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.isLanguageKnown(language.languageId()));
+                retVal.setValue(linguistics.isLanguageKnown(language.get().languageId()));
             });
         }
         return retVal.booleanValue();
     }
     
-    public static void markRead(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static void markRead(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                if (linguistics.markRead(book.bookId(), language.languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
+                if (linguistics.markRead(book.get().bookId(), language.get().languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
                     // If the book/language combination is new and the language is ancient, increment the unique books statistic
                     StatsManager.incrementValue(player, StatsPM.ANCIENT_BOOKS_READ);
                 }
@@ -81,97 +84,97 @@ public class LinguisticsManager {
         }
     }
     
-    public static int getComprehension(@Nullable Player player, @Nullable BookLanguage language) {
+    public static int getComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language) {
         MutableInt retVal = new MutableInt(0);
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.getComprehension(language.languageId()));
+                retVal.setValue(linguistics.getComprehension(language.get().languageId()));
             });
         }
         return retVal.intValue();
     }
     
-    public static void setComprehension(@Nullable Player player, @Nullable BookLanguage language, int comprehension) {
+    public static void setComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language, int comprehension) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setComprehension(language.languageId(), Mth.clamp(comprehension, 0, language.complexity()));
+                linguistics.setComprehension(language.get().languageId(), Mth.clamp(comprehension, 0, language.get().complexity()));
                 scheduleSync(player);
             });
         }
     }
     
-    public static void incrementComprehension(@Nullable Player player, @Nullable BookLanguage language) {
+    public static void incrementComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language) {
         incrementComprehension(player, language, 1);
     }
     
-    public static void incrementComprehension(@Nullable Player player, @Nullable BookLanguage language, int delta) {
+    public static void incrementComprehension(@Nullable Player player, @Nullable Holder<BookLanguage> language, int delta) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setComprehension(language.languageId(), Mth.clamp(linguistics.getComprehension(language.languageId()) + delta, 0, language.complexity()));
+                linguistics.setComprehension(language.get().languageId(), Mth.clamp(linguistics.getComprehension(language.get().languageId()) + delta, 0, language.get().complexity()));
                 scheduleSync(player);
             });
         }
     }
     
-    public static int getVocabulary(@Nullable Player player, @Nullable BookLanguage language) {
+    public static int getVocabulary(@Nullable Player player, @Nullable Holder<BookLanguage> language) {
         MutableInt retVal = new MutableInt(0);
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.getVocabulary(language.languageId()));
+                retVal.setValue(linguistics.getVocabulary(language.get().languageId()));
             });
         }
         return retVal.intValue();
     }
     
-    public static void setVocabulary(@Nullable Player player, @Nullable BookLanguage language, int vocabulary) {
+    public static void setVocabulary(@Nullable Player player, @Nullable Holder<BookLanguage> language, int vocabulary) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setVocabulary(language.languageId(), Math.max(0, vocabulary));
+                linguistics.setVocabulary(language.get().languageId(), Math.max(0, vocabulary));
                 scheduleSync(player);
             });
         }
     }
     
-    public static void incrementVocabulary(@Nullable Player player, @Nullable BookLanguage language) {
+    public static void incrementVocabulary(@Nullable Player player, @Nullable Holder<BookLanguage> language) {
         incrementVocabulary(player, language, 1);
     }
     
-    public static void incrementVocabulary(@Nullable Player player, @Nullable BookLanguage language, int delta) {
+    public static void incrementVocabulary(@Nullable Player player, @Nullable Holder<BookLanguage> language, int delta) {
         if (player != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setVocabulary(language.languageId(), Math.max(0, linguistics.getVocabulary(language.languageId()) + delta));
+                linguistics.setVocabulary(language.get().languageId(), Math.max(0, linguistics.getVocabulary(language.get().languageId()) + delta));
                 scheduleSync(player);
             });
         }
     }
     
-    public static int getTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static int getTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language) {
         MutableInt retVal = new MutableInt(0);
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                retVal.setValue(linguistics.getTimesStudied(book.bookId(), language.languageId()));
+                retVal.setValue(linguistics.getTimesStudied(book.get().bookId(), language.get().languageId()));
             });
         }
         return retVal.intValue();
     }
     
-    public static void setTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int studyCount) {
+    public static void setTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language, int studyCount) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, studyCount));
+                linguistics.setTimesStudied(book.get().bookId(), language.get().languageId(), Math.max(0, studyCount));
                 scheduleSync(player);
             });
         }
     }
     
-    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language) {
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language) {
         incrementTimesStudied(player, book, language, 1);
     }
     
-    public static void incrementTimesStudied(@Nullable Player player, @Nullable BookDefinition book, @Nullable BookLanguage language, int delta) {
+    public static void incrementTimesStudied(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language, int delta) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                linguistics.setTimesStudied(book.bookId(), language.languageId(), Math.max(0, linguistics.getTimesStudied(book.bookId(), language.languageId()) + delta));
+                linguistics.setTimesStudied(book.get().bookId(), language.get().languageId(), Math.max(0, linguistics.getTimesStudied(book.get().bookId(), language.get().languageId()) + delta));
                 scheduleSync(player);
             });
         }

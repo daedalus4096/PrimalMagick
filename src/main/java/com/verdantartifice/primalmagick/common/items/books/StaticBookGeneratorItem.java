@@ -39,8 +39,8 @@ public class StaticBookGeneratorItem extends Item {
             ItemStack bookStack = new ItemStack(this.itemSupplier.get());
             
             // TODO Choose a random book and random language from a random culture
-            StaticBookItem.setBookDefinition(bookStack, BooksPM.DREAM_JOURNAL.get());
-            StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.ILLAGER.get());
+            StaticBookItem.setBookDefinition(bookStack, BooksPM.DREAM_JOURNAL);
+            StaticBookItem.setBookLanguage(bookStack, BookLanguagesPM.ILLAGER);
             
             serverPlayer.level().playSound((Player)null, serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((serverPlayer.getRandom().nextFloat() - serverPlayer.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             serverPlayer.getItemInHand(pUsedHand).shrink(1);

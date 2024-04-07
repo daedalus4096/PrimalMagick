@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.CodexType;
@@ -16,8 +17,12 @@ import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.StringUtil;
@@ -30,6 +35,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * Definition of an item that grants linguistics comprehension when used by a player.
@@ -48,61 +54,78 @@ public class LinguisticsGainItem extends Item {
         TYPE_MAP.put(type, this);
     }
     
-    public static ItemStack make(CodexType type, Optional<BookLanguage> bookLangOpt) {
+    public static ItemStack make(CodexType type, ResourceKey<BookLanguage> bookLang) {
         ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
-        bookLangOpt.ifPresent(bookLang -> setBookLanguage(retVal, bookLang));
+        setBookLanguage(retVal, bookLang);
         return retVal;
     }
 
-    protected static Optional<ResourceLocation> getBookLanguageId(ItemStack stack) {
+    public static Optional<ResourceKey<BookLanguage>> getBookLanguageId(ItemStack stack) {
         CompoundTag rootTag = stack.getTag();
         if (rootTag != null) {
             String str = rootTag.getString(TAG_BOOK_LANGUAGE_ID);
             if (!StringUtil.isNullOrEmpty(str)) {
-                return Optional.ofNullable(ResourceLocation.tryParse(str));
+                ResourceLocation loc = ResourceLocation.tryParse(str);
+                return loc == null ? Optional.empty() : Optional.ofNullable(ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, loc));
             }
         }
         return Optional.empty();
     }
     
-    public static BookLanguage getBookLanguage(ItemStack stack) {
-        return getBookLanguageId(stack).map(BookLanguagesPM.LANGUAGES.get()::getValue).orElse(BookLanguagesPM.DEFAULT.get());
+    public static Optional<Holder.Reference<BookLanguage>> getBookLanguage(ItemStack stack, RegistryAccess registryAccess) {
+        return getBookLanguageId(stack).flatMap(k -> registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(k));
     }
     
-    public static ItemStack setBookLanguage(ItemStack stack, BookLanguage lang) {
-        stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.languageId().toString());
+    public static ItemStack setBookLanguage(ItemStack stack, ResourceKey<BookLanguage> lang) {
+        stack.getOrCreateTag().putString(TAG_BOOK_LANGUAGE_ID, lang.location().toString());
         return stack;
     }
 
     @Override
     public ItemStack getDefaultInstance() {
         ItemStack retVal = super.getDefaultInstance();
-        setBookLanguage(retVal, BookLanguagesPM.DEFAULT.get());
+        setBookLanguage(retVal, BookLanguagesPM.DEFAULT);
         return retVal;
     }
 
     @Override
     public Component getName(ItemStack pStack) {
-        return Component.translatable(this.getDescriptionId(), getBookLanguage(pStack).getName());
+        Component nameComponent = CommonComponents.EMPTY;
+        Level level = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentLevel() : null;
+        if (level != null) {
+            Optional<Holder.Reference<BookLanguage>> langHolderOpt = getBookLanguage(pStack, level.registryAccess());
+            if (langHolderOpt.isPresent()) {
+                nameComponent = langHolderOpt.get().get().getName();
+            }
+        }
+        return Component.translatable(this.getDescriptionId(), nameComponent);
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        BookLanguage lang = getBookLanguage(pStack);
-        if (lang.isComplex()) {
-            if (this.amount >= lang.complexity()) {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.codex.full", lang.getName()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            } else {
-                pTooltipComponents.add(Component.translatable("tooltip.primalmagick.codex.partial", lang.getName()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-            }
+        Level level = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentLevel() : null;
+        if (level != null) {
+            getBookLanguage(pStack, level.registryAccess()).ifPresent(lang -> {
+                if (lang.get().isComplex()) {
+                    if (this.amount >= lang.get().complexity()) {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.codex.full", lang.get().getName()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                    } else {
+                        pTooltipComponents.add(Component.translatable("tooltip.primalmagick.codex.partial", lang.get().getName()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                    }
+                }
+            });
         }
     }
 
     @Override
     public boolean isFoil(ItemStack pStack) {
-        BookLanguage lang = getBookLanguage(pStack);
-        return super.isFoil(pStack) || (lang.isComplex() && this.amount >= lang.complexity());
+        Level level = FMLEnvironment.dist.isClient() ? ClientUtils.getCurrentLevel() : null;
+        if (level != null) {
+            Optional<Holder.Reference<BookLanguage>> lang = getBookLanguage(pStack, level.registryAccess());
+            return super.isFoil(pStack) || (lang.get().get().isComplex() && this.amount >= lang.get().get().complexity());
+        }
+        return super.isFoil(pStack);
     }
     
     @Override
@@ -111,16 +134,17 @@ public class LinguisticsGainItem extends Item {
             if (pPlayer instanceof ServerPlayer serverPlayer) {
                 PacketHandler.sendToPlayer(new PlayClientSoundPacket(SoundsPM.WRITING.get(), 1.0F, 1.0F + (float)pPlayer.getRandom().nextGaussian() * 0.05F), serverPlayer);
             }
-            BookLanguage lang = getBookLanguage(pPlayer.getItemInHand(pUsedHand));
-            if (LinguisticsManager.getComprehension(pPlayer, lang) >= lang.complexity()) {
-                pPlayer.displayClientMessage(Component.translatable("event.primalmagick.linguistics_item.fluent").withStyle(ChatFormatting.RED), true);
-            } else {
-                LinguisticsManager.incrementComprehension(pPlayer, lang, this.amount);
-                pPlayer.displayClientMessage(Component.translatable("event.primalmagick.linguistics_item.success").withStyle(ChatFormatting.GREEN), true);
-                if (!pPlayer.getAbilities().instabuild) {
-                    pPlayer.getItemInHand(pUsedHand).shrink(1);
+            getBookLanguage(pPlayer.getItemInHand(pUsedHand), pLevel.registryAccess()).ifPresent(lang -> {
+                if (LinguisticsManager.getComprehension(pPlayer, lang) >= lang.get().complexity()) {
+                    pPlayer.displayClientMessage(Component.translatable("event.primalmagick.linguistics_item.fluent").withStyle(ChatFormatting.RED), true);
+                } else {
+                    LinguisticsManager.incrementComprehension(pPlayer, lang, this.amount);
+                    pPlayer.displayClientMessage(Component.translatable("event.primalmagick.linguistics_item.success").withStyle(ChatFormatting.GREEN), true);
+                    if (!pPlayer.getAbilities().instabuild) {
+                        pPlayer.getItemInHand(pUsedHand).shrink(1);
+                    }
                 }
-            }
+            });
         }
         return super.use(pLevel, pPlayer, pUsedHand);
     }
@@ -129,7 +153,7 @@ public class LinguisticsGainItem extends Item {
         Item item = itemSupplier.get().asItem();
         params.holders().lookup(RegistryKeysPM.BOOK_LANGUAGES).ifPresent(registryLookup -> {
             registryLookup.filterElements(BookLanguage::isComplex).listElements().map(langRef -> {
-                return setBookLanguage(new ItemStack(item), langRef.value());
+                return setBookLanguage(new ItemStack(item), langRef.key() );
             }).forEach(stack -> {
                 output.accept(stack);
             });

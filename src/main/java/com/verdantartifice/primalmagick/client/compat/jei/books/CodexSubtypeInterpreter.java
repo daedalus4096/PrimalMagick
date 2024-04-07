@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.compat.jei.books;
 
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.items.books.LinguisticsGainItem;
 
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
@@ -16,6 +17,6 @@ public class CodexSubtypeInterpreter implements IIngredientSubtypeInterpreter<It
         if (!ingredient.hasTag() || !(ingredient.getItem() instanceof LinguisticsGainItem codexItem)) {
             return IIngredientSubtypeInterpreter.NONE;
         }
-        return LinguisticsGainItem.getBookLanguage(ingredient).languageId().toString();
+        return LinguisticsGainItem.getBookLanguageId(ingredient).orElse(BookLanguagesPM.DEFAULT).location().toString();
     }
 }

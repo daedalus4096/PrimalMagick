@@ -3,8 +3,9 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -13,12 +14,12 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class LanguageResearchTopic extends AbstractResearchTopic {
-    public LanguageResearchTopic(BookLanguage language, int page) {
-        super(AbstractResearchTopic.Type.LANGUAGE, language.languageId().toString(), page);
+    public LanguageResearchTopic(ResourceKey<BookLanguage> language, int page) {
+        super(AbstractResearchTopic.Type.LANGUAGE, language.location().toString(), page);
     }
     
     @Nullable
-    public BookLanguage getData() {
-        return BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(this.data));
+    public ResourceKey<BookLanguage> getData() {
+        return ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(this.data));
     }
 }

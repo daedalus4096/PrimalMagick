@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.tags;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.tags.TagKey;
 
@@ -15,6 +16,6 @@ public class BookLanguageTagsPM {
     public static final TagKey<BookLanguage> ANCIENT = create("ancient");
 
     private static TagKey<BookLanguage> create(String name) {
-        return BookLanguagesPM.createTagKey(name);
+        return TagKey.create(RegistryKeysPM.BOOK_LANGUAGES, PrimalMagick.resource(name));
     }
 }

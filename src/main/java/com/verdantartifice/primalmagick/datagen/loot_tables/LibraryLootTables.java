@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import net.minecraft.Util;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -92,58 +93,58 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
 
         // Register culture component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_EARTH, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.EARTH.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.EARTH.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.EARTH.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.EARTH, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.EARTH, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.EARTH, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SEA, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SEA.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SEA.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SEA.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SEA, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SEA, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SEA, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SKY, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SKY.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SKY.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SKY.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SKY, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SKY, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SKY, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_SUN, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SUN.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SUN.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SUN.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.SUN, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SUN, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SUN, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_MOON, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.MOON.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.MOON.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.MOON.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.MOON, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.MOON, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.MOON, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_TRADE, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.TRADE.get(), 12))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.TRADE.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.TRADE.get(), 2))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.TRADE, 12))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.TRADE, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.TRADE, 2))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.FORBIDDEN.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.FORBIDDEN.get(), 10))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.FORBIDDEN.get(), 4))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.FORBIDDEN, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.FORBIDDEN, 10))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.FORBIDDEN, 4))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_HALLOWED, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.HALLOWED.get(), 4))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.HALLOWED.get(), 6))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.HALLOWED.get(), 10))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.HALLOWED, 4))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.HALLOWED, 6))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.HALLOWED, 10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
         // Register catalog component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.SOURCE_PRIMER.get(), 1))
+                .add(book(BooksPM.SOURCE_PRIMER, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.DREAM_JOURNAL.get(), 1))
+                .add(book(BooksPM.DREAM_JOURNAL, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with real books
-                .add(book(BooksPM.TEST_BOOK.get(), 1))
+                .add(book(BooksPM.TEST_BOOK, 1))
                 ));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with enchanted books
@@ -152,14 +153,14 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> catalog(ResourceLocation lootTable, BookLanguage language, int weight) {
-        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.LANGUAGES.get().getKey(language).toString()));
+    protected static LootPoolEntryContainer.Builder<?> catalog(ResourceLocation lootTable, ResourceKey<BookLanguage> languageKey, int weight) {
+        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, languageKey.location().toString()));
         return LootTableReference.lootTableReference(lootTable).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> book(BookDefinition bookDef, int weight) {
-        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.BOOKS.get().getKey(bookDef).toString()));
+    protected static LootPoolEntryContainer.Builder<?> book(ResourceKey<BookDefinition> bookDefKey, int weight) {
+        CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, bookDefKey.location().toString()));
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
@@ -170,8 +171,8 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     @SuppressWarnings("deprecation")
     protected static LootPoolEntryContainer.Builder<?> welcomeBook() {
         CompoundTag tag = Util.make(new CompoundTag(), t -> {
-            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.getId().toString());
-            t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.BABELTONGUE.getId().toString());
+            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.location().toString());
+            t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.BABELTONGUE.location().toString());
         });
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(1).apply(SetNbtFunction.setTag(tag));
     }

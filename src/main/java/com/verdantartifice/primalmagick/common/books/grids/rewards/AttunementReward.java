@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -53,12 +54,12 @@ public class AttunementReward extends AbstractReward {
     }
     
     @Override
-    public void grant(ServerPlayer player) {
+    public void grant(ServerPlayer player, RegistryAccess registryAccess) {
         AttunementManager.incrementAttunement(player, this.source, AttunementType.PERMANENT, this.points);
     }
 
     @Override
-    public Component getDescription(Player player) {
+    public Component getDescription(Player player, RegistryAccess registryAccess) {
         Component amountText = Component.translatable("label.primalmagick.attunement_gain." + Mth.clamp(this.points, 0, 5));
         Component sourceText = this.source.isDiscovered(player) ? this.source.getNameText() : Component.translatable(Source.getUnknownTranslationKey());
         return Component.translatable("label.primalmagick.scribe_table.grid.reward.attunement", sourceText, amountText);

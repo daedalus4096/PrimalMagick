@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.StringUtil;
@@ -36,8 +37,8 @@ public class StyleGuide {
         this.entries = ImmutableList.copyOf(entries);
     }
     
-    public static StyleGuide.Builder builder(BookLanguage language) {
-        return new StyleGuide.Builder(language.languageId());
+    public static StyleGuide.Builder builder(ResourceKey<BookLanguage> language) {
+        return new StyleGuide.Builder(language.location());
     }
     
     protected List<Entry> getEntries() {

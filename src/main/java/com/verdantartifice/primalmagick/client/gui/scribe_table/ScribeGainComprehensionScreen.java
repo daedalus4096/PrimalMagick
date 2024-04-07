@@ -15,6 +15,7 @@ import org.joml.Vector2ic;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
@@ -31,6 +32,8 @@ import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -75,9 +78,9 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     @Override
     protected void init() {
         super.init();
-        BookLanguage lang = this.menu.getBookLanguage();
+        Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
         this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 151, this.topPos + 17));
-        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+        this.grid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
         
         // Initialize the node buttons for the grid
         for (int y = GridDefinition.MIN_POS; y <= GridDefinition.MAX_POS; y++) {
@@ -96,19 +99,19 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         super.renderBg(pGuiGraphics, pPartialTick, pMouseX, pMouseY);
 
         // Update the vocabulary widget based on the current language in the menu
-        BookLanguage lang = this.menu.getBookLanguage();
+        Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
         this.vocabularyWidget.visible = lang.is(BookLanguageTagsPM.ANCIENT);
         this.vocabularyWidget.setLanguage(lang);
         this.vocabularyWidget.setAmount(this.menu.getVocabularyCount());
         
         // Update the local player grid if the current language has changed
         boolean timeUp = (System.currentTimeMillis() > this.nextCheckTime);
-        if (this.grid == null || !lang.languageId().equals(this.grid.getDefinition().getLanguage().languageId()) || timeUp) {
+        if (this.grid == null || !lang.key().equals(this.grid.getDefinition().getLanguage()) || timeUp) {
             this.refreshGrid();
             this.nextCheckTime = System.currentTimeMillis() + 250L;
         }
 
-        if (lang.isComplex()) {
+        if (lang.get().isComplex()) {
             // Draw the parchment background for the comprehension grid
             pGuiGraphics.pose().pushPose();
             pGuiGraphics.pose().translate(this.leftPos + 31, this.topPos + 17, 0);
@@ -151,8 +154,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
     }
     
     protected void refreshGrid() {
-        BookLanguage lang = this.menu.getBookLanguage();
-        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.languageId());
+        Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
+        PlayerGrid newGrid = LinguisticsManager.getPlayerGrid(this.minecraft.player, lang.key().location());
         if (this.grid == null || newGrid == null || newGrid.getLastModified() > this.grid.getLastModified() || !this.grid.getDefinition().getLanguage().equals(newGrid.getDefinition().getLanguage())) {
             this.grid = newGrid;
         }
@@ -163,6 +166,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected static final ResourceLocation PLACEHOLDER = PrimalMagick.resource("scribe_table/grid_node_placeholder");
         
         protected final Player player;
+        protected final RegistryAccess registryAccess;
         protected final int xIndex;
         protected final int yIndex;
         protected Optional<GridDefinition> gridDef;
@@ -173,10 +177,11 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 ClientLevel level = screen.minecraft.level;
-                screen.grid.unlock(xIndex, yIndex);
+                screen.grid.unlock(xIndex, yIndex, level.registryAccess());
                 level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
             });
             this.player = screen.minecraft.player;
+            this.registryAccess = screen.minecraft.level.registryAccess();
             this.gridDef = screen.grid == null ? Optional.empty() : Optional.ofNullable(screen.grid.getDefinition());
             this.xIndex = xIndex;
             this.yIndex = yIndex;
@@ -201,14 +206,15 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             // Configure tooltip
             this.gridDef.ifPresentOrElse(def -> {
                 def.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
-                    Component rewardText = node.getReward().getDescription(this.player);
+                    Component rewardText = node.getReward().getDescription(this.player, this.registryAccess);
                     if (this.isActive()) {
                         List<Component> lines = new ArrayList<>();
                         lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward", rewardText));
                         if (!this.player.getAbilities().instabuild) {
                             lines.add(CommonComponents.EMPTY);
-                            MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), def.getLanguage().getName());
-                            if (LinguisticsManager.getVocabulary(this.player, def.getLanguage()) < node.getVocabularyCost()) {
+                            Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(def.getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);
+                            MutableComponent costText = Component.translatable("tooltip.primalmagick.scribe_table.grid.cost", node.getVocabularyCost(), lang.get().getName());
+                            if (LinguisticsManager.getVocabulary(this.player, lang) < node.getVocabularyCost()) {
                                 costText = costText.withStyle(ChatFormatting.RED);
                             }
                             lines.add(costText);
@@ -270,7 +276,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             boolean retVal = this.reachable && super.clicked(pMouseX, pMouseY);
             if (retVal && this.gridDef.isPresent()) {
                 Optional<GridNodeDefinition> nodeOpt = this.gridDef.get().getNode(this.xIndex, this.yIndex);
-                return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, this.gridDef.get().getLanguage()) >= nodeOpt.get().getVocabularyCost());
+                Holder.Reference<BookLanguage> lang = BookLanguagesPM.getLanguageOrDefault(this.gridDef.get().getLanguage(), this.registryAccess, BookLanguagesPM.DEFAULT);
+                return nodeOpt.isPresent() && (this.player.getAbilities().instabuild || LinguisticsManager.getVocabulary(this.player, lang) >= nodeOpt.get().getVocabularyCost());
             } else {
                 return false;
             }

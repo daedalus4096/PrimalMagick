@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
@@ -29,7 +30,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 
@@ -53,7 +53,7 @@ public class StaticBookViewScreen extends Screen {
 
     protected final boolean playTurnSound;
     protected final ResourceKey<?> requestedBookKey;
-    protected final ResourceLocation requestedLanguageId;
+    protected final ResourceKey<BookLanguage> requestedLanguageId;
     protected final int requestedTranslatedComprehension;
     protected final BookType bookType;
     protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
@@ -68,14 +68,14 @@ public class StaticBookViewScreen extends Screen {
     private Component pageMsg = CommonComponents.EMPTY;
 
     public StaticBookViewScreen() {
-        this(ResourceKey.create(RegistryKeysPM.BOOKS, BooksPM.TEST_BOOK.getId()), BookLanguagesPM.DEFAULT.getId(), 0, BookType.BOOK, false);
+        this(BooksPM.TEST_BOOK, BookLanguagesPM.DEFAULT, 0, BookType.BOOK, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType) {
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType) {
         this(bookKey, languageId, translatedComprehension, bookType, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceLocation languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.playTurnSound = playTurnSound;
         this.requestedBookKey = bookKey;
@@ -101,14 +101,20 @@ public class StaticBookViewScreen extends Screen {
 
     @Override
     protected void init() {
-        BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(this.requestedLanguageId);
-        if (lang == null) {
-            lang = BookLanguagesPM.DEFAULT.get();
-        }
-        int comp = LinguisticsManager.getComprehension(this.minecraft.player, lang);
-        this.bookView = new BookView(this.requestedBookKey, lang.languageId(), Math.max(comp, this.requestedTranslatedComprehension));
-        this.complexity = lang.complexity();
-        this.isAutoTranslating = lang.autoTranslate();
+        // Set default values in case there's an error getting the language
+        this.complexity = 0;
+        this.isAutoTranslating = false;
+        
+        // Fetch the language for this book view and set data accordingly
+        MutableInt comp = new MutableInt(0);
+        this.requestedLanguageId.cast(RegistryKeysPM.BOOK_LANGUAGES).ifPresent(langKey -> {
+            this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(langKey).ifPresent(lang -> {
+                comp.setValue(LinguisticsManager.getComprehension(this.minecraft.player, lang));
+                this.complexity = lang.get().complexity();
+                this.isAutoTranslating = lang.get().autoTranslate();
+            });
+        });
+        this.bookView = new BookView(this.requestedBookKey, this.requestedLanguageId, Math.max(comp.getValue(), this.requestedTranslatedComprehension));
 
         this.createMenuControls();
         this.createPageControlButtons();
@@ -136,7 +142,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     private int getNumPages() {
-        return ClientBookHelper.getNumPages(this.bookView, this.font);
+        return ClientBookHelper.getNumPages(this.bookView, this.minecraft.level.registryAccess(), this.font);
     }
     
     protected void pageBack() {
@@ -198,7 +204,7 @@ public class StaticBookViewScreen extends Screen {
 
         // Draw the text lines for the current page
         BookView currentView = this.isAutoTranslating ? this.bookView.withComprehension(Mth.clamp(this.ticksOpen - AUTO_TRANSLATE_DELAY_TICKS, 0, this.complexity)) : this.bookView;
-        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(currentView, this.cachedPage, this.font);
+        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(currentView, this.cachedPage, this.minecraft.level.registryAccess(), this.font);
         for (int index = 0; index < page.size(); index++) {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
