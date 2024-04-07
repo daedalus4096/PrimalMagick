@@ -44,11 +44,13 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.MainIndexBut
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.PageButton;
 import com.verdantartifice.primalmagick.client.tips.TipManager;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
@@ -79,9 +81,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
@@ -690,14 +694,18 @@ public class GrimoireScreen extends Screen {
         this.pages.add(new LinguisticsIndexPage(true));
     }
     
-    protected void parseLinguisticsPage(BookLanguage language) {
+    protected void parseLinguisticsPage(ResourceKey<BookLanguage> languageKey) {
         this.currentStageIndex = 0;
+        
+        // Fetch the language itself
+        Holder.Reference<BookLanguage> language = this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolder(languageKey)
+                .orElse(this.minecraft.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getHolderOrThrow(BookLanguagesPM.DEFAULT));
 
         // Add the first page with just the comprehension and vocabulary trackers
         this.pages.add(new LinguisticsScorePage(language));
         
         // Add subsequent pages with language description
-        String rawText = language.getDescription().getString();
+        String rawText = language.get().getDescription().getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;

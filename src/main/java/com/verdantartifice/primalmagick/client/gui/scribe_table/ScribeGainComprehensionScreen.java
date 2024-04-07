@@ -173,7 +173,7 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
                 // Unlock node via screen's player grid
                 ClientLevel level = screen.minecraft.level;
-                screen.grid.unlock(xIndex, yIndex);
+                screen.grid.unlock(xIndex, yIndex, level.registryAccess());
                 level.playSound(screen.minecraft.player, screen.menu.getTilePos(), SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
             });
             this.player = screen.minecraft.player;

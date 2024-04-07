@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
@@ -19,10 +20,10 @@ import net.minecraft.network.chat.Component;
  * @author Daedalus4096
  */
 public class LinguisticsDescriptionPage extends AbstractPage {
-    protected final BookLanguage lang;
+    protected final Holder<BookLanguage> lang;
     protected final List<IPageElement> contents = new ArrayList<>();
     
-    public LinguisticsDescriptionPage(BookLanguage lang) {
+    public LinguisticsDescriptionPage(Holder<BookLanguage> lang) {
         this.lang = lang;
     }
     

@@ -208,7 +208,7 @@ public class StaticBookItem extends Item {
     @Override
     public Component getName(ItemStack pStack) {
         if (FMLEnvironment.dist.isClient() && getBookId(pStack).isPresent()) {
-            return BookHelper.getTitleText(makeBookView(pStack));
+            return BookHelper.getTitleText(makeBookView(pStack), ClientUtils.getCurrentLevel().registryAccess());
         } else {
             return super.getName(pStack);
         }
@@ -218,7 +218,7 @@ public class StaticBookItem extends Item {
     public void appendHoverText(ItemStack pStack, Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         if (pLevel.isClientSide && hasAuthor(pStack)) {
-            Component authorText = BookHelper.getAuthorText(makeBookView(pStack), getAuthor(pStack));
+            Component authorText = BookHelper.getAuthorText(makeBookView(pStack), getAuthor(pStack), pLevel.registryAccess());
             pTooltipComponents.add(Component.translatable("book.byAuthor", authorText).withStyle(ChatFormatting.GRAY));
         }
         getBookLanguage(pStack, pLevel.registryAccess()).ifPresent(langHolder -> {
@@ -229,7 +229,7 @@ public class StaticBookItem extends Item {
                 Optional<Holder.Reference<BookDefinition>> defHolderOpt = getBookDefinition(pStack, pLevel.registryAccess());
                 OptionalInt translatedComprehension = getTranslatedComprehension(pStack);
                 int comprehension = Math.max(translatedComprehension.orElse(0), LinguisticsManager.getComprehension(player, langHolder));
-                double percentage = BookHelper.getBookComprehension(new BookView(getBookId(pStack).orElseThrow(), langHolder.key(), comprehension));
+                double percentage = BookHelper.getBookComprehension(new BookView(getBookId(pStack).orElseThrow(), langHolder.key(), comprehension), pLevel.registryAccess());
                 pTooltipComponents.add(Component.translatable("tooltip.primalmagick.written_language.comprehension", COMPREHENSION_FORMATTER.format(100 * percentage)).withStyle(ChatFormatting.GRAY));
                 if (translatedComprehension.isPresent()) {
                     if (translatedComprehension.getAsInt() >= langHolder.get().complexity()) {
