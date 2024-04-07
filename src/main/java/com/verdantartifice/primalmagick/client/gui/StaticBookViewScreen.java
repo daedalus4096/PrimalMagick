@@ -141,7 +141,7 @@ public class StaticBookViewScreen extends Screen {
     }
 
     private int getNumPages() {
-        return ClientBookHelper.getNumPages(this.bookView, this.font);
+        return ClientBookHelper.getNumPages(this.bookView, this.minecraft.level.registryAccess(), this.font);
     }
     
     protected void pageBack() {
@@ -203,7 +203,7 @@ public class StaticBookViewScreen extends Screen {
 
         // Draw the text lines for the current page
         BookView currentView = this.isAutoTranslating ? this.bookView.withComprehension(Mth.clamp(this.ticksOpen - AUTO_TRANSLATE_DELAY_TICKS, 0, this.complexity)) : this.bookView;
-        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(currentView, this.cachedPage, this.font);
+        List<FormattedCharSequence> page = ClientBookHelper.getTextPage(currentView, this.cachedPage, this.minecraft.level.registryAccess(), this.font);
         for (int index = 0; index < page.size(); index++) {
             int finalX = xPos + PAGE_TEXT_X_OFFSET;
             int finalY = yPos + PAGE_TEXT_Y_OFFSET + (index * LINE_HEIGHT);
