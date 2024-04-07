@@ -15,6 +15,7 @@ import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeatu
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureSetsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
+import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
 
 import net.minecraft.core.HolderLookup;
@@ -50,6 +51,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging custom registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {
