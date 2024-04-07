@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.Lexicon;
 import com.verdantartifice.primalmagick.common.books.LexiconManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -76,10 +75,10 @@ public class LexiconLoader extends SimpleJsonResourceReloadListener {
 
     public void updateWithTagData(RegistryAccess registryAccess) {
         LOGGER.info("Updating lexicons with tagged data");
-        BookLanguagesPM.LANGUAGES.get().getValues().stream().forEach(lang -> {
+        registryAccess.registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).keySet().forEach(langId -> {
             Lexicon lexicon = new Lexicon();
             registryAccess.registryOrThrow(RegistryKeysPM.BOOKS).registryKeySet().forEach(bookKey -> lexicon.addWords(ClientBookHelper.getUnencodedWords(bookKey)));
-            LexiconManager.setLexicon(lang.languageId(), lexicon);
+            LexiconManager.setLexicon(langId, lexicon);
         });
     }
 }

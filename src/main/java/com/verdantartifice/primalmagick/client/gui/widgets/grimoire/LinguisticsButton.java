@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.research.topics.LanguageResearchTopic;
 
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -13,14 +14,14 @@ import net.minecraft.network.chat.Component;
  * @author Daedalus4096
  */
 public class LinguisticsButton extends AbstractTopicButton {
-    protected final BookLanguage language;
+    protected final Holder.Reference<BookLanguage> language;
     
-    public LinguisticsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, BookLanguage language) {
-        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(language.getGlyphSprite().withPrefix("textures/gui/sprites/").withSuffix(".png"), false), new Handler());
+    public LinguisticsButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Holder.Reference<BookLanguage> language) {
+        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(language.get().getGlyphSprite().withPrefix("textures/gui/sprites/").withSuffix(".png"), false), new Handler());
         this.language = language;
     }
     
-    public BookLanguage getLanguage() {
+    public Holder.Reference<BookLanguage> getLanguage() {
         return this.language;
     }
     
@@ -29,7 +30,7 @@ public class LinguisticsButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof LinguisticsButton gab) {
                 // Set the new grimoire topic and open a new screen for it
-                gab.getScreen().gotoTopic(new LanguageResearchTopic(gab.getLanguage(), 0));
+                gab.getScreen().gotoTopic(new LanguageResearchTopic(gab.getLanguage().key(), 0));
             }
         }
     }

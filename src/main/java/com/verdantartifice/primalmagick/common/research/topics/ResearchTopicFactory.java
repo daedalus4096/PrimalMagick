@@ -3,8 +3,7 @@ package com.verdantartifice.primalmagick.common.research.topics;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
@@ -14,6 +13,7 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -65,8 +65,8 @@ public class ResearchTopicFactory {
             Enchantment ench = ForgeRegistries.ENCHANTMENTS.getValue(loc);
             return ench == null ? MainIndexResearchTopic.INSTANCE : new EnchantmentResearchTopic(ench, page);
         case LANGUAGE:
-            BookLanguage lang = BookLanguagesPM.LANGUAGES.get().getValue(ResourceLocation.tryParse(data));
-            return lang == null ? MainIndexResearchTopic.INSTANCE : new LanguageResearchTopic(lang, page);
+            ResourceLocation langLoc = ResourceLocation.tryParse(data);
+            return langLoc == null ? MainIndexResearchTopic.INSTANCE : new LanguageResearchTopic(ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, langLoc), page);
         case OTHER:
             return new OtherResearchTopic(data, page);
         default:

@@ -5,12 +5,13 @@ import java.util.List;
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.LinguisticsButton;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 
 /**
@@ -52,11 +53,11 @@ public class LinguisticsIndexPage extends AbstractPage {
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         // Add a button to the screen for each discovered language
         Minecraft mc = Minecraft.getInstance();
-        List<BookLanguage> known = BookLanguagesPM.LANGUAGES.get().getValues().stream().filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang)).sorted((a, b) -> {
-            return a.getName().getString().compareTo(b.getName().getString());
+        List<Holder.Reference<BookLanguage>> known = mc.level.registryAccess().registryOrThrow(RegistryKeysPM.BOOK_LANGUAGES).holders().filter(lang -> LinguisticsManager.isLanguageKnown(mc.player, lang)).sorted((a, b) -> {
+            return a.get().getName().getString().compareTo(b.get().getName().getString());
         }).toList();
-        for (BookLanguage lang : known) {
-            screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.getName(), screen, lang));
+        for (Holder.Reference<BookLanguage> lang : known) {
+            screen.addWidgetToScreen(new LinguisticsButton(x + 12 + (side * 140), y, lang.get().getName(), screen, lang));
             y += 12;
         }
     }

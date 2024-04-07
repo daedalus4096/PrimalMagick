@@ -17,12 +17,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
-import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -39,13 +40,13 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     public static final int MAX_POS = 7;
     
     protected ResourceLocation key;
-    protected BookLanguage language;
+    protected ResourceKey<BookLanguage> language;
     protected Vector2ic startPos;
     protected final Map<Vector2ic, GridNodeDefinition> nodes = new HashMap<>();
     
     private GridDefinition() {}
     
-    protected GridDefinition(ResourceLocation key, BookLanguage language, Vector2ic startPos, Map<Vector2ic, GridNodeDefinition> nodes) {
+    protected GridDefinition(ResourceLocation key, ResourceKey<BookLanguage> language, Vector2ic startPos, Map<Vector2ic, GridNodeDefinition> nodes) {
         this.key = key;
         this.language = language;
         this.startPos = startPos;
@@ -67,7 +68,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         return this.key;
     }
     
-    public BookLanguage getLanguage() {
+    public ResourceKey<BookLanguage> getLanguage() {
         return this.language;
     }
     
@@ -99,7 +100,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     public CompoundTag serializeNBT() {
         CompoundTag retVal = new CompoundTag();
         retVal.putString("Key", this.key.toString());
-        retVal.putString("Language", this.language.languageId().toString());
+        retVal.putString("Language", this.language.location().toString());
         retVal.putInt("StartX", this.startPos.x());
         retVal.putInt("StartY", this.startPos.y());
         
@@ -119,7 +120,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
     @Override
     public void deserializeNBT(CompoundTag nbt) {
         this.key = new ResourceLocation(nbt.getString("Key"));
-        this.language = BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(nbt.getString("Language")));
+        this.language = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(nbt.getString("Language")));
         this.startPos = new Vector2i(nbt.getInt("StartX"), nbt.getInt("StartY"));
         
         this.nodes.clear();
@@ -134,7 +135,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         @Override
         public GridDefinition read(ResourceLocation gridId, JsonObject json) {
             ResourceLocation key = new ResourceLocation(json.getAsJsonPrimitive("key").getAsString());
-            BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
+            ResourceKey<BookLanguage> langKey = ResourceKey.create(RegistryKeysPM.BOOK_LANGUAGES, new ResourceLocation(json.getAsJsonPrimitive("language").getAsString()));
             Vector2i startPos = new Vector2i(json.getAsJsonPrimitive("start_x").getAsInt(), json.getAsJsonPrimitive("start_y").getAsInt());
             
             // Because JSON doesn't do maps with anything but string keys, the X and Y coordinates of the node are packed into
@@ -158,13 +159,13 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
                 }
             }
             
-            return new GridDefinition(key, language, startPos, nodes);
+            return new GridDefinition(key, langKey, startPos, nodes);
         }
 
         @Override
         public GridDefinition fromNetwork(FriendlyByteBuf buf) {
             ResourceLocation key = buf.readResourceLocation();
-            BookLanguage language = BookLanguagesPM.LANGUAGES.get().getValue(buf.readResourceLocation());
+            ResourceKey<BookLanguage> language = buf.readResourceKey(RegistryKeysPM.BOOK_LANGUAGES);
             Vector2i startPos = new Vector2i(buf.readVarInt(), buf.readVarInt());
             
             Map<Vector2ic, GridNodeDefinition> nodes = new HashMap<>();
@@ -179,7 +180,7 @@ public class GridDefinition implements INBTSerializable<CompoundTag> {
         @Override
         public void toNetwork(FriendlyByteBuf buf, GridDefinition gridDef) {
             buf.writeResourceLocation(gridDef.key);
-            buf.writeResourceLocation(gridDef.language.languageId());
+            buf.writeResourceKey(gridDef.language);
             buf.writeVarInt(gridDef.startPos.x());
             buf.writeVarInt(gridDef.startPos.y());
             buf.writeVarInt(gridDef.nodes.size());
