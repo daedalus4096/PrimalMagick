@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceKey;
  * 
  * @author Daedalus4096
  */
-public record BookView(ResourceKey<?> bookKey, ResourceKey<?> languageId, int comprehension) {
+public record BookView(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int comprehension) {
     public BookView withComprehension(int newComprehension) {
         return new BookView(this.bookKey, this.languageId, newComprehension);
     }

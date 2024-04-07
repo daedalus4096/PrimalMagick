@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.network.packets.misc;
 
 import com.google.common.base.Preconditions;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToClient;
@@ -22,7 +23,7 @@ import net.minecraftforge.network.NetworkDirection;
  */
 public class OpenStaticBookScreenPacket implements IMessageToClient {
     protected final ResourceKey<?> bookKey;
-    protected final ResourceKey<?> languageId;
+    protected final ResourceKey<BookLanguage> languageId;
     protected final int translatedComprehension;
     protected final BookType bookType;
     
@@ -34,7 +35,7 @@ public class OpenStaticBookScreenPacket implements IMessageToClient {
         this.bookType = bookType;
     }
     
-    private OpenStaticBookScreenPacket(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType) {
+    private OpenStaticBookScreenPacket(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType) {
         this.bookKey = bookKey;
         this.languageId = languageId;
         this.translatedComprehension = translatedComprehension;

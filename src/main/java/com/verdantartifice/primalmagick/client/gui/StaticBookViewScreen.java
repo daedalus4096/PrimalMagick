@@ -13,6 +13,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.verdantartifice.primalmagick.client.books.ClientBookHelper;
 import com.verdantartifice.primalmagick.client.gui.widgets.StaticBookPageButton;
+import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BookView;
@@ -52,7 +53,7 @@ public class StaticBookViewScreen extends Screen {
 
     protected final boolean playTurnSound;
     protected final ResourceKey<?> requestedBookKey;
-    protected final ResourceKey<?> requestedLanguageId;
+    protected final ResourceKey<BookLanguage> requestedLanguageId;
     protected final int requestedTranslatedComprehension;
     protected final BookType bookType;
     protected final Map<Vector2i, FormattedCharSequence> renderedLines = new HashMap<>();
@@ -70,11 +71,11 @@ public class StaticBookViewScreen extends Screen {
         this(BooksPM.TEST_BOOK, BookLanguagesPM.DEFAULT, 0, BookType.BOOK, false);
     }
     
-    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType) {
+    public StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType) {
         this(bookKey, languageId, translatedComprehension, bookType, true);
     }
     
-    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<?> languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
+    private StaticBookViewScreen(ResourceKey<?> bookKey, ResourceKey<BookLanguage> languageId, int translatedComprehension, BookType bookType, boolean playTurnSound) {
         super(GameNarrator.NO_TITLE);
         this.playTurnSound = playTurnSound;
         this.requestedBookKey = bookKey;
