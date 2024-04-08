@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import org.joml.Vector2i;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
@@ -38,15 +40,20 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
     @Override
     protected void createModeSlots() {
         // Slot 0: Result
-        this.addSlot(new GenericResultSlot(this.player, this.getTileInventory(Direction.DOWN), 0, 124, 35));
+        this.addSlot(new GenericResultSlot(this.player, this.getTileInventory(Direction.DOWN), 0, 124, 63));
 
         // Slot 1: Original book
-        this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35, 
+        this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 63, 
                 new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
         
         // Slot 2: Blank book and quill
-        this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 35,
+        this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 63,
                 new FilteredSlot.Properties().item(Items.WRITABLE_BOOK)));
+    }
+
+    @Override
+    protected Vector2i getInventorySlotsOffset() {
+        return new Vector2i(0, 56);
     }
 
     @Override

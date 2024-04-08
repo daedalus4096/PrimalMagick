@@ -23,6 +23,9 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
     
     public ScribeTranscribeWorksScreen(ScribeTranscribeWorksMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
+        this.imageWidth = 176;
+        this.imageHeight = 222;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class ScribeTranscribeWorksScreen extends AbstractScribeTableScreen<Scrib
         protected static final Component TRANSCRIBE_BUTTON_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.button.transcribe");
 
         public TranscribeButton(ScribeTranscribeWorksMenu menu, int leftPos, int topPos) {
-            super(leftPos + 91, topPos + 34, 20, 18, BUTTON_SPRITES, button -> {
+            super(leftPos + 91, topPos + 62, 20, 18, BUTTON_SPRITES, button -> {
                 PacketHandler.sendToServer(new TranscribeActionPacket(menu.containerId));
             });
             this.setTooltip(Tooltip.create(TRANSCRIBE_BUTTON_TOOLTIP));

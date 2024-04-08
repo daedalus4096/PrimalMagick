@@ -63,6 +63,9 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
 
     public ScribeStudyVocabularyScreen(ScribeStudyVocabularyMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
+        this.imageWidth = 176;
+        this.imageHeight = 222;
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
@@ -79,7 +82,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     protected void init() {
         super.init();
         Holder.Reference<BookLanguage> lang = this.menu.getBookLanguage();
-        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 35, this.topPos + 47));
+        this.vocabularyWidget = this.addRenderableWidget(new VocabularyWidget(lang, this.menu.getVocabularyCount(), this.leftPos + 35, this.topPos + 75));
         this.bookModel = new BookModel(this.minecraft.getEntityModels().bakeLayer(ModelLayers.BOOK));
     }
 
@@ -93,7 +96,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
     public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
         int slotLeft = this.leftPos + 60;
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
-            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            int slotTop = this.topPos + 42 + (19 * slotIndex);
             double dx = pMouseX - (double)slotLeft;
             double dy = pMouseY - (double)slotTop;
             if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19 && this.menu.checkStudyClick(this.minecraft.player, slotIndex)) {
@@ -122,7 +125,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         
         // First, determine which, if any, slot is being hovered over
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
-            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            int slotTop = this.topPos + 42 + (19 * slotIndex);
             int dx = pMouseX - slotLeft;
             int dy = pMouseY - slotTop;
             if (dx >= 0 && dy >= 0 && dx < 108 && dy < 19) {
@@ -133,7 +136,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
 
         // Then render the slots: background, sprites, and text
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
-            int slotTop = this.topPos + 14 + (19 * slotIndex);
+            int slotTop = this.topPos + 42 + (19 * slotIndex);
             int cost = this.menu.costs[slotIndex];
             int textColor = 6839882;
             int textWidth = 86;
@@ -171,7 +174,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
         for (int slotIndex = 0; slotIndex < 3; slotIndex++) {
             int cost = this.menu.costs[slotIndex];
-            if (this.isHovering(60, 14 + 19 * slotIndex, 108, 17, (double)pMouseX, (double)pMouseY) && cost > 0) {
+            if (this.isHovering(60, 42 + 19 * slotIndex, 108, 17, (double)pMouseX, (double)pMouseY) && cost > 0) {
                 // Determine how many vocabulary levels are awarded by the slot, if any
                 int studyDelta = 0;
                 for (int costIndex = 0; costIndex <= slotIndex && costIndex < this.menu.costs.length; costIndex++) {
@@ -213,7 +216,7 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
         float f1 = Mth.lerp(pPartialTick, this.oFlip, this.flip);
         Lighting.setupForEntityInInventory();
         pGuiGraphics.pose().pushPose();
-        pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 31.0F, 100.0F);
+        pGuiGraphics.pose().translate((float)pX + 33.0F, (float)pY + 59.0F, 100.0F);
         float f2 = 40.0F;
         pGuiGraphics.pose().scale(-f2, f2, f2);
         pGuiGraphics.pose().mulPose(Axis.XP.rotationDegrees(25.0F));

@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.Optional;
 
+import org.joml.Vector2i;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -59,10 +61,15 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     @Override
     protected void createModeSlots() {
         // Slot 0: Original book
-        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 47, 
+        this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 75, 
                 new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
     }
     
+    @Override
+    protected Vector2i getInventorySlotsOffset() {
+        return new Vector2i(0, 56);
+    }
+
     @Override
     public void containerChanged(Container pContainer) {
         super.containerChanged(pContainer);
@@ -78,7 +85,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                     int studyCount = StaticBookItem.getBookDefinition(bookStack, level.registryAccess()).map(h -> LinguisticsManager.getTimesStudied(this.player, h, lang)).orElse(0);
                     for (int index = 0; index < 3; index++) {
                         // Set the cost of each slot, including the cost of any previous unstudied slots.  Studied slots are given a cost
-                        // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (e.g. 1, 2, and 3 respectively).
+                        // of -1 as a marker.  In isolation, each slot's cost is equal to its index plus one (i.e. 1, 2, and 3 respectively).
                         // Thus, the final costs in the case where none have been studied would be 1, 3, and 6 respectively.  If, rather, the
                         // first slot had been studied, the costs would instead be -1, 2, and 5 respectively.
                         this.costs[index] = (index >= studyCount) ? index + 1 + (index > 0 ? Math.max(this.costs[index - 1], 0) : 0) : -1;
