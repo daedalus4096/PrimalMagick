@@ -151,8 +151,27 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         
         // Generate treasure catalog loot table
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
-                // TODO Populate table with enchanted books
-                .add(enchantedBook(EnchantmentsPM.VERDANT.get(), 1))
+                .add(enchantedBook(EnchantmentsPM.LIFESTEAL.get()))
+                .add(enchantedBook(EnchantmentsPM.ENDERLOCK.get()))
+                .add(enchantedBook(EnchantmentsPM.JUDGMENT.get()))
+                .add(enchantedBook(EnchantmentsPM.ENDERPORT.get()))
+                .add(enchantedBook(EnchantmentsPM.REGROWTH.get()))
+                .add(enchantedBook(EnchantmentsPM.AEGIS.get()))
+                .add(enchantedBook(EnchantmentsPM.MANA_EFFICIENCY.get()))
+                .add(enchantedBook(EnchantmentsPM.SPELL_POWER.get()))
+                .add(enchantedBook(EnchantmentsPM.TREASURE.get()))
+                .add(enchantedBook(EnchantmentsPM.BLUDGEONING.get()))
+                .add(enchantedBook(EnchantmentsPM.REVERBERATION.get()))
+                .add(enchantedBook(EnchantmentsPM.BOUNTY.get()))
+                .add(enchantedBook(EnchantmentsPM.DISINTEGRATION.get()))
+                .add(enchantedBook(EnchantmentsPM.VERDANT.get()))
+                .add(enchantedBook(EnchantmentsPM.LUCKY_STRIKE.get()))
+                .add(enchantedBook(EnchantmentsPM.RENDING.get()))
+                .add(enchantedBook(EnchantmentsPM.SOULPIERCING.get()))
+                .add(enchantedBook(EnchantmentsPM.ESSENCE_THIEF.get()))
+                .add(enchantedBook(EnchantmentsPM.BULWARK.get()))
+                .add(enchantedBook(EnchantmentsPM.MAGICK_PROTECTION.get()))
+                .add(enchantedBook(EnchantmentsPM.GUILLOTINE.get()))
                 ));
     }
     
@@ -168,8 +187,8 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
-    protected static LootPoolEntryContainer.Builder<?> enchantedBook(Enchantment ench, int weight) {
-        return LootItem.lootTableItem(Items.BOOK).setWeight(weight).apply(new EnchantRandomlyFunction.Builder().withEnchantment(ench));
+    protected static LootPoolEntryContainer.Builder<?> enchantedBook(Enchantment ench) {
+        return LootItem.lootTableItem(Items.BOOK).setWeight(ench.getRarity().getWeight()).apply(new EnchantRandomlyFunction.Builder().withEnchantment(ench));
     }
     
     @SuppressWarnings("deprecation")
