@@ -34,7 +34,8 @@
         "primalmagick:marble_hallowed_runed",
         "primalmagick:marble_hallowed_slab",
         "primalmagick:marble_hallowed_stairs",
-        "primalmagick:marble_hallowed_wall"
+        "primalmagick:marble_hallowed_wall",
+        "primalmagick:marble_hallowed_bookshelf"
       ],
       "text": "research.primalmagick.supreme_manaweaving.text.stage.2"
     }

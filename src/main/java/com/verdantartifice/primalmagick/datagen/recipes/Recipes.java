@@ -880,6 +880,14 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_ENCHANTED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_ENCHANTED_WALL.get())
             .unlockedBy("has_marble_enchanted", has(BlocksPM.MARBLE_ENCHANTED.get()))
             .save(consumer, PrimalMagick.resource("marble_enchanted_wall_from_marble_enchanted_stonecutting"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get())
+            .patternLine("MMM")
+            .patternLine("SSS")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_ENCHANTED.get())
+            .key('S', BlocksPM.MARBLE_ENCHANTED_SLAB.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("EXPERT_MANAWEAVING")))
+            .build(consumer);
     }
     
     protected void registerSmokedMarbleRecipes(RecipeOutput consumer) {
@@ -993,6 +1001,14 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_SMOKED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_SMOKED_WALL.get())
             .unlockedBy("has_marble_smoked", has(BlocksPM.MARBLE_SMOKED.get()))
             .save(consumer, PrimalMagick.resource("marble_smoked_wall_from_marble_smoked_stonecutting"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get())
+            .patternLine("MMM")
+            .patternLine("SSS")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_SMOKED.get())
+            .key('S', BlocksPM.MARBLE_SMOKED_SLAB.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("MASTER_MANAWEAVING")))
+            .build(consumer);
     }
     
     protected void registerHallowedMarbleRecipes(RecipeOutput consumer) {
@@ -1106,6 +1122,14 @@ public class Recipes extends RecipeProvider {
         SingleItemRecipeBuilder.stonecutting(Ingredient.of(BlocksPM.MARBLE_HALLOWED.get()), RecipeCategory.BUILDING_BLOCKS, BlocksPM.MARBLE_HALLOWED_WALL.get())
             .unlockedBy("has_marble_hallowed", has(BlocksPM.MARBLE_HALLOWED.get()))
             .save(consumer, PrimalMagick.resource("marble_hallowed_wall_from_marble_hallowed_stonecutting"));
+        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get())
+            .patternLine("MMM")
+            .patternLine("SSS")
+            .patternLine("MMM")
+            .key('M', BlocksPM.MARBLE_HALLOWED.get())
+            .key('S', BlocksPM.MARBLE_HALLOWED_SLAB.get())
+            .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_MANAWEAVING")))
+            .build(consumer);
     }
 
     protected void registerSunwoodRecipes(RecipeOutput consumer) {

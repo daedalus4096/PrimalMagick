@@ -1,0 +1,21 @@
+{
+  "type": "primalmagick:arcane_crafting_shaped",
+  "key": {
+    "M": {
+      "item": "primalmagick:marble_enchanted"
+    },
+    "S": {
+      "item": "primalmagick:marble_enchanted_slab"
+    }
+  },
+  "pattern": [
+    "MMM",
+    "SSS",
+    "MMM"
+  ],
+  "research": "EXPERT_MANAWEAVING",
+  "result": {
+    "Count": 1,
+    "id": "primalmagick:marble_enchanted_bookshelf"
+  }
+}

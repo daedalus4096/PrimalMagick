@@ -30,7 +30,8 @@
         "primalmagick:marble_enchanted_runed",
         "primalmagick:marble_enchanted_slab",
         "primalmagick:marble_enchanted_stairs",
-        "primalmagick:marble_enchanted_wall"
+        "primalmagick:marble_enchanted_wall",
+        "primalmagick:marble_enchanted_bookshelf"
       ],
       "text": "research.primalmagick.expert_manaweaving.text.stage.2"
     }

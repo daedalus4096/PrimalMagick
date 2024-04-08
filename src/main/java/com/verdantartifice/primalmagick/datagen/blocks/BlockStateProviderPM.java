@@ -109,6 +109,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get());
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_ENCHANTED.get()));
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), BlocksPM.MARBLE_ENCHANTED.get());
         
         // Generate smoked marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED.get());
@@ -122,6 +123,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_SMOKED_PILLAR.get());
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_SMOKED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_SMOKED.get()));
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), BlocksPM.MARBLE_SMOKED.get());
         
         // Generate hallowed marble blocks
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED.get());
@@ -135,6 +137,7 @@ public class BlockStateProviderPM extends BlockStateProvider {
         this.pillarBlockWithItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get());
         this.simpleCubeBlockWithItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get());
         this.cubeColumnBlockWithItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), this.blockTexture(BlocksPM.MARBLE_HALLOWED.get()));
+        this.carvedBookshelfBlockWithItem(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), BlocksPM.MARBLE_HALLOWED.get());
         
         // Generate sunwood blocks
         this.phasingLogBlockWithItem(BlocksPM.SUNWOOD_LOG.get());

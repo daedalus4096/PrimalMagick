@@ -119,6 +119,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_ENCHANTED_PILLAR).name("Enchanted Marble Pillar").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_CHISELED).name("Enchanted Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_RUNED).name("Enchanted Runed Marble").build();
+        this.block(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF).name("Enchanted Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_SMOKED).name("Smoked Marble").build();
         this.block(BlocksPM.MARBLE_SMOKED_SLAB).name("Smoked Marble Slab").build();
         this.block(BlocksPM.MARBLE_SMOKED_STAIRS).name("Smoked Marble Stairs").build();
@@ -130,6 +131,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_SMOKED_PILLAR).name("Smoked Marble Pillar").build();
         this.block(BlocksPM.MARBLE_SMOKED_CHISELED).name("Smoked Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_SMOKED_RUNED).name("Smoked Runed Marble").build();
+        this.block(BlocksPM.MARBLE_SMOKED_BOOKSHELF).name("Smoked Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_HALLOWED).name("Hallowed Marble").build();
         this.block(BlocksPM.MARBLE_HALLOWED_SLAB).name("Hallowed Marble Slab").build();
         this.block(BlocksPM.MARBLE_HALLOWED_STAIRS).name("Hallowed Marble Stairs").build();
@@ -141,6 +143,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_HALLOWED_PILLAR).name("Hallowed Marble Pillar").build();
         this.block(BlocksPM.MARBLE_HALLOWED_CHISELED).name("Hallowed Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_HALLOWED_RUNED).name("Hallowed Runed Marble").build();
+        this.block(BlocksPM.MARBLE_HALLOWED_BOOKSHELF).name("Hallowed Marble Bookshelf").build();
         this.block(BlocksPM.SUNWOOD_LOG).name("Sunwood Log").build();
         this.block(BlocksPM.STRIPPED_SUNWOOD_LOG).name("Stripped Sunwood Log").build();
         this.block(BlocksPM.SUNWOOD_WOOD).name("Sunwood Wood").build();

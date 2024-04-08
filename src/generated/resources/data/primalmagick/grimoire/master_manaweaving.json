@@ -31,7 +31,8 @@
         "primalmagick:marble_smoked_runed",
         "primalmagick:marble_smoked_slab",
         "primalmagick:marble_smoked_stairs",
-        "primalmagick:marble_smoked_wall"
+        "primalmagick:marble_smoked_wall",
+        "primalmagick:marble_smoked_bookshelf"
       ],
       "text": "research.primalmagick.master_manaweaving.text.stage.2"
     }
