@@ -2,9 +2,11 @@ package com.verdantartifice.primalmagick.client.gui.scribe_table;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.AbstractScribeTableMenu;
+import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -54,6 +56,18 @@ public abstract class AbstractScribeTableScreen<T extends AbstractScribeTableMen
         // Render background texture
         pGuiGraphics.blit(this.getBgTexture(), this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         this.tabButtons.forEach(tab -> tab.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick));
+    }
+
+    @Override
+    protected void renderTooltip(GuiGraphics pGuiGraphics, int pX, int pY) {
+        super.renderTooltip(pGuiGraphics, pX, pY);
+        
+        // Render filtered slot tooltips if appropriate
+        Optional<Component> tooltipOpt = Optional.empty();
+        if (this.hoveredSlot instanceof IHasTooltip tooltipSlot && tooltipSlot.shouldShowTooltip()) {
+            tooltipOpt = Optional.ofNullable(tooltipSlot.getTooltip());
+        }
+        tooltipOpt.ifPresent(tooltip -> pGuiGraphics.renderTooltip(this.font, tooltip, pX, pY));
     }
 
     @Override

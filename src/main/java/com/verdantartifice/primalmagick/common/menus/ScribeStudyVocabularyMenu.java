@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
@@ -35,6 +36,7 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
+    protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
 
     public final int[] costs = new int[3];
     private final DataSlot nameSeed = DataSlot.standalone();
@@ -62,7 +64,7 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
     protected void createModeSlots() {
         // Slot 0: Original book
         this.studySlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 15, 75, 
-                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
     }
     
     @Override

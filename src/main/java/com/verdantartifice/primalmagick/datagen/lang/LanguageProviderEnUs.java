@@ -984,6 +984,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("grid").sub("reward").sub("unlocked").output("Unlocked: %1$s").end().build();
         this.tooltip("scribe_table").sub("grid").sub("cost").output("Cost: %1$d %2$s vocabulary").end().build();
         this.tooltip("scribe_table").sub("grid").sub("no_path").output("Cannot reach!").end().build();
+        this.tooltip("scribe_table").sub("slot").sub("ancient_book").output("Add an ancient book").end().build();
+        this.tooltip("scribe_table").sub("slot").sub("writable_book").output("Add a Book and Quill").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

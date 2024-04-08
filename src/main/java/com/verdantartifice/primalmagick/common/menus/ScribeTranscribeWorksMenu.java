@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEnti
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -25,6 +26,8 @@ import net.minecraft.world.item.Items;
 public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
     public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
     public static final ResourceLocation WRITABLE_BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_writable_book_slot");
+    protected static final Component ANCIENT_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.ancient_book");
+    protected static final Component WRITABLE_BOOK_TOOLTIP = Component.translatable("tooltip.primalmagick.scribe_table.slot.writable_book");
 
     protected final ResultContainer resultInv = new ResultContainer();
     protected Slot originalSlot;
@@ -45,11 +48,11 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
 
         // Slot 1: Original book
         this.originalSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 63, 
-                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().filter(this::isAncientBookStack).background(BOOK_SLOT_TEXTURE).tooltip(ANCIENT_BOOK_TOOLTIP)));
         
         // Slot 2: Blank book and quill
         this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 63,
-                new FilteredSlot.Properties().item(Items.WRITABLE_BOOK).background(WRITABLE_BOOK_SLOT_TEXTURE)));
+                new FilteredSlot.Properties().item(Items.WRITABLE_BOOK).background(WRITABLE_BOOK_SLOT_TEXTURE).tooltip(WRITABLE_BOOK_TOOLTIP)));
     }
 
     @Override

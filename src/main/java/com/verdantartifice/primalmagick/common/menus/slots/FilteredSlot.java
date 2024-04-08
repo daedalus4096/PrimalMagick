@@ -6,6 +6,7 @@ import java.util.OptionalInt;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -20,13 +21,15 @@ import net.minecraftforge.items.SlotItemHandler;
  * 
  * @author Daedalus4096
  */
-public class FilteredSlot extends SlotItemHandler {
+public class FilteredSlot extends SlotItemHandler implements IHasTooltip {
     private final Optional<Predicate<ItemStack>> filter;
+    private final Optional<Component> tooltip;
     private final OptionalInt maxStackSize;
 
     public FilteredSlot(IItemHandler pItemHandler, int pSlot, int pX, int pY, FilteredSlot.Properties properties) {
         super(pItemHandler, pSlot, pX, pY);
         this.filter = properties.filter;
+        this.tooltip = properties.tooltip;
         this.maxStackSize = properties.maxStackSize;
         properties.background.ifPresent(bg -> this.setBackground(InventoryMenu.BLOCK_ATLAS, bg));
     }
@@ -41,9 +44,20 @@ public class FilteredSlot extends SlotItemHandler {
         return this.maxStackSize.orElseGet(super::getMaxStackSize);
     }
 
+    @Override
+    public boolean shouldShowTooltip() {
+        return this.tooltip.isPresent() && !this.hasItem();
+    }
+
+    @Override
+    public Component getTooltip() {
+        return this.tooltip.orElse(null);
+    }
+
     public static class Properties {
         private Optional<Predicate<ItemStack>> filter = Optional.empty();
         private Optional<ResourceLocation> background = Optional.empty();
+        private Optional<Component> tooltip = Optional.empty();
         private OptionalInt maxStackSize = OptionalInt.empty();
         
         /**
@@ -120,6 +134,17 @@ public class FilteredSlot extends SlotItemHandler {
          */
         public FilteredSlot.Properties background(ResourceLocation loc) {
             this.background = Optional.ofNullable(loc);
+            return this;
+        }
+        
+        /**
+         * Specify a tooltip to show when the slot is hovered over while empty
+         * 
+         * @param tooltip the tooltip text to be displayed
+         * @return the modified properties object
+         */
+        public FilteredSlot.Properties tooltip(Component tooltip) {
+            this.tooltip = Optional.ofNullable(tooltip);
             return this;
         }
         
