@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.common.worldgen.structures;
 import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
 
@@ -52,8 +54,8 @@ public class StructuresPM {
         context.register(structureKey, new ShrineStructure(structure(biomes), shrineType));
     }
     
-    private static void registerLibrary(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, LibraryStructure.Type libraryType) {
-        context.register(structureKey, new LibraryStructure(structure(biomes), libraryType));
+    private static void registerLibrary(BootstapContext<Structure> context, ResourceKey<Structure> structureKey, HolderSet<Biome> biomes, ResourceKey<Culture> cultureKey) {
+        context.register(structureKey, new LibraryStructure(structure(biomes), cultureKey));
     }
     
     public static void bootstrap(BootstapContext<Structure> context) {
@@ -65,10 +67,10 @@ public class StructuresPM {
         registerShrine(context, StructuresPM.SUN_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_SHRINE), ShrineStructure.Type.SUN);
         registerShrine(context, StructuresPM.MOON_SHRINE, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_SHRINE), ShrineStructure.Type.MOON);
         
-        registerLibrary(context, StructuresPM.EARTH_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_LIBRARY), LibraryStructure.Type.EARTH);
-        registerLibrary(context, StructuresPM.SEA_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_LIBRARY), LibraryStructure.Type.SEA);
-        registerLibrary(context, StructuresPM.SKY_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_LIBRARY), LibraryStructure.Type.SKY);
-        registerLibrary(context, StructuresPM.SUN_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_LIBRARY), LibraryStructure.Type.SUN);
-        registerLibrary(context, StructuresPM.MOON_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_LIBRARY), LibraryStructure.Type.MOON);
+        registerLibrary(context, StructuresPM.EARTH_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_EARTH_LIBRARY), CulturesPM.EARTH);
+        registerLibrary(context, StructuresPM.SEA_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SEA_LIBRARY), CulturesPM.SEA);
+        registerLibrary(context, StructuresPM.SKY_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_LIBRARY), CulturesPM.SKY);
+        registerLibrary(context, StructuresPM.SUN_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_LIBRARY), CulturesPM.SUN);
+        registerLibrary(context, StructuresPM.MOON_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_LIBRARY), CulturesPM.MOON);
     }
 }
