@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
 import com.verdantartifice.primalmagick.common.armortrim.TrimPatternsPM;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
+import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
@@ -40,7 +41,8 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
-            .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap);
+            .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
+            .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);
     
     // Use addProviders() instead
     private RegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {

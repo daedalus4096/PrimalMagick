@@ -12,7 +12,7 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 
 /**
- * Deferred registry for mod books.
+ * Datapack registry for mod books.
  * 
  * @author Daedalus4096
  */

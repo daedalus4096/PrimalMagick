@@ -2,12 +2,16 @@ package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
+import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IRandomizableContents;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -34,25 +38,25 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 public class LibraryPiece extends TemplateStructurePiece {
     protected static final ResourceLocation TEMPLATE = PrimalMagick.resource("library/default");
     
-    protected final LibraryStructure.Type type;
+    protected final ResourceKey<Culture> cultureKey;
 
-    public LibraryPiece(StructureTemplateManager templateManager, LibraryStructure.Type type, BlockPos pos) {
+    public LibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(StructurePieceTypesPM.LIBRARY.get(), 0, templateManager, TEMPLATE, TEMPLATE.toString(), makePlaceSettings(), pos);
-        this.type = type;
+        this.cultureKey = cultureKey;
     }
 
     public LibraryPiece(StructureTemplateManager templateManager, CompoundTag nbt) {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, templateManager, (dummy) -> {
             return makePlaceSettings();
         });
-        this.type = LibraryStructure.Type.byName(nbt.getString("Culture"));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
     }
     
     public LibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
         super(StructurePieceTypesPM.LIBRARY.get(), nbt, context.structureTemplateManager(), (dummy) -> {
             return makePlaceSettings();
         });
-        this.type = LibraryStructure.Type.byName(nbt.getString("Culture"));
+        this.cultureKey = ResourceKey.create(RegistryKeysPM.CULTURES, new ResourceLocation(nbt.getString("Culture")));
     }
     
     protected static StructurePlaceSettings makePlaceSettings() {
@@ -62,22 +66,23 @@ public class LibraryPiece extends TemplateStructurePiece {
     @Override
     protected void addAdditionalSaveData(StructurePieceSerializationContext pContext, CompoundTag pTag) {
         super.addAdditionalSaveData(pContext, pTag);
-        pTag.putString("Culture", this.type.getSerializedName());
+        pTag.putString("Culture", this.cultureKey.location().toString());
     }
 
     @Override
     protected void handleDataMarker(String pName, BlockPos pPos, ServerLevelAccessor pLevel, RandomSource pRandom, BoundingBox pBox) {
         // Process data markers, populating bookshelves and replacing blocks as appropriate
+        Holder.Reference<Culture> culture = pLevel.registryAccess().registryOrThrow(RegistryKeysPM.CULTURES).getHolderOrThrow(this.cultureKey);
         if ("shelf_low".equals(pName)) {
             // Populate bookshelf above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(this.type.getLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.get().lootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_RAW.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("shelf_high".equals(pName)) {
             // Populate bookshelf below
             if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
-                container.setLootTable(this.type.getLootTable(), pRandom.nextLong());
+                container.setLootTable(culture.get().lootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, BlocksPM.MARBLE_BRICKS.get().defaultBlockState(), Block.UPDATE_ALL);
         } else if ("welcome".equals(pName)) {

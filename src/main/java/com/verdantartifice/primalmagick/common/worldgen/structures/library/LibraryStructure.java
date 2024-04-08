@@ -1,18 +1,15 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
-import java.util.Arrays;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
+import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -28,14 +25,14 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilde
 public class LibraryStructure extends Structure {
     public static final Codec<LibraryStructure> CODEC = RecordCodecBuilder.<LibraryStructure>mapCodec(instance -> 
             instance.group(LibraryStructure.settingsCodec(instance),
-                    LibraryStructure.Type.CODEC.fieldOf("library_type").forGetter(library -> library.libraryType)
+                    ResourceKey.codec(RegistryKeysPM.CULTURES).fieldOf("culture_key").forGetter(library -> library.cultureKey)
             ).apply(instance, LibraryStructure::new)).codec();
 
-    private final LibraryStructure.Type libraryType;
+    private final ResourceKey<Culture> cultureKey;
     
-    public LibraryStructure(Structure.StructureSettings config, LibraryStructure.Type libraryType) {
+    public LibraryStructure(Structure.StructureSettings config, ResourceKey<Culture> cultureKey) {
         super(config);
-        this.libraryType = libraryType;
+        this.cultureKey = cultureKey;
     }
 
     @Override
@@ -55,37 +52,6 @@ public class LibraryStructure extends Structure {
         int z = context.chunkPos().getMiddleBlockZ();
         int surfaceY = context.chunkGenerator().getFirstOccupiedHeight(x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
         BlockPos pos = new BlockPos(x, surfaceY, z);
-        builder.addPiece(new LibraryPiece(context.structureTemplateManager(), this.libraryType, pos));
-    }
-
-    public static enum Type implements StringRepresentable {
-        EARTH("earth", LootTablesPM.LIBRARY_EARTH),
-        SEA("sea", LootTablesPM.LIBRARY_SEA),
-        SKY("sky", LootTablesPM.LIBRARY_SKY),
-        SUN("sun", LootTablesPM.LIBRARY_SUN),
-        MOON("moon", LootTablesPM.LIBRARY_MOON);
-        
-        private final String name;
-        private final ResourceLocation lootTable;
-
-        public static final Codec<LibraryStructure.Type> CODEC = StringRepresentable.fromEnum(LibraryStructure.Type::values);
-        private static final Map<String, LibraryStructure.Type> BY_NAME = Arrays.stream(values()).collect(Collectors.toMap(LibraryStructure.Type::getSerializedName, t -> t));
-
-        private Type(String name, ResourceLocation lootTable) {
-            this.name = name;
-            this.lootTable = lootTable;
-        }
-        
-        public static LibraryStructure.Type byName(String name) {
-            return BY_NAME.get(name);
-        }
-        
-        public String getSerializedName() {
-            return this.name;
-        }
-        
-        public ResourceLocation getLootTable() {
-            return this.lootTable;
-        }
+        builder.addPiece(new LibraryPiece(context.structureTemplateManager(), this.cultureKey, pos));
     }
 }

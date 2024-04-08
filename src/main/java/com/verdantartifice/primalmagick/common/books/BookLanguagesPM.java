@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * Deferred registry for languages in which mod books can be written/encoded.
+ * Datapack registry for languages in which mod books can be written/encoded.
  * 
  * @author Daedalus4096
  */
