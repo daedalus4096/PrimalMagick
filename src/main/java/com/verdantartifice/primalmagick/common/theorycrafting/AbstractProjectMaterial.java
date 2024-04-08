@@ -62,7 +62,7 @@ public abstract class AbstractProjectMaterial implements INBTSerializable<Compou
      * Determine if this material's requirements are satisfied by the given player.
      * 
      * @param player the player doing the research project
-     * @param surroundings TODO
+     * @param surroundings the set of blocks near the research table
      * @return true if the requirement is satisfied, false otherwise
      */
     public abstract boolean isSatisfied(Player player, Set<Block> surroundings);

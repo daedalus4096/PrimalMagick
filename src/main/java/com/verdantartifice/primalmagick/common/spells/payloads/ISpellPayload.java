@@ -38,7 +38,7 @@ public interface ISpellPayload extends INBTSerializable<CompoundTag> {
      * @param world the world in which the payload should be executed
      * @param caster the player that originally casted the spell
      * @param spellSource the wand or scroll containing the spell package
-     * @param projectileEntity TODO
+     * @param projectileEntity the entity carrying this spell payload, if it's a projectile
      */
     public void execute(@Nullable HitResult target, @Nullable Vec3 burstPoint, @Nonnull SpellPackage spell, @Nonnull Level world, @Nonnull LivingEntity caster, @Nullable ItemStack spellSource, @Nullable Entity projectileEntity);
     
