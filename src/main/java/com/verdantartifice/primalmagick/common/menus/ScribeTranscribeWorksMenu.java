@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
  */
 public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
     public static final ResourceLocation BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_book_slot");
+    public static final ResourceLocation WRITABLE_BOOK_SLOT_TEXTURE = PrimalMagick.resource("item/empty_writable_book_slot");
 
     protected final ResultContainer resultInv = new ResultContainer();
     protected Slot originalSlot;
@@ -48,7 +49,7 @@ public class ScribeTranscribeWorksMenu extends AbstractScribeTableMenu {
         
         // Slot 2: Blank book and quill
         this.blankSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 66, 63,
-                new FilteredSlot.Properties().item(Items.WRITABLE_BOOK)));
+                new FilteredSlot.Properties().item(Items.WRITABLE_BOOK).background(WRITABLE_BOOK_SLOT_TEXTURE)));
     }
 
     @Override
