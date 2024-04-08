@@ -233,7 +233,8 @@ public class PlayerLinguistics implements IPlayerLinguistics {
 
     @Override
     public boolean isLanguageKnown(ResourceLocation languageId) {
-        return this.booksRead.getOrDefault(languageId, Collections.emptySet()).size() > 0;
+        return (this.booksRead.getOrDefault(languageId, Collections.emptySet()).size() > 0) ||
+                (this.getVocabulary(languageId) > 0) || (this.getComprehension(languageId) > 0);
     }
 
     @Override
