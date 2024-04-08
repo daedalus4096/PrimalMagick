@@ -285,11 +285,21 @@
     {
       "cost": 1,
       "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 5,
+      "y": 5
+    },
+    {
+      "cost": 1,
+      "reward": {
         "type": "comprehension",
         "language": "primalmagick:forbidden",
         "points": 5
       },
-      "x": 5,
+      "x": 6,
       "y": 5
     },
     {
@@ -335,11 +345,21 @@
     {
       "cost": 1,
       "reward": {
+        "type": "knowledge",
+        "knowledge_type": "theory",
+        "levels": 1
+      },
+      "x": 5,
+      "y": 7
+    },
+    {
+      "cost": 1,
+      "reward": {
         "type": "comprehension",
         "language": "primalmagick:forbidden",
         "points": 5
       },
-      "x": 5,
+      "x": 6,
       "y": 7
     }
   ],
