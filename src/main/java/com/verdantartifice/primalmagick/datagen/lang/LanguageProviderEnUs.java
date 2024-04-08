@@ -1662,6 +1662,23 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .text("The Earth abides.\nThe Sea flows.\nThe Sky drifts.\nThe Sun shines.\nThe Moon changes.\nThe Blood pumps.\nThe Infernal rages.\nThe Void hungers.\nThe Hallowed sings.")
             .build();
         
+        // FIXME Remove once library testing is complete
+        for (int index = 1; index <= 50; index++) {
+            String rarity;
+            if (index <= 5) {
+                rarity = "rare";
+            } else if (index <= 20) {
+                rarity = "uncommon";
+            } else {
+                rarity = "common";
+            }
+            this.book(BooksPM.create("loremipsum" + index)).name("Lorem Ipsum " + index).author("Dev")
+                .foreword("Test book %1$d: %2$s".formatted(index, rarity))
+                .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+                .afterword("Do not be alarmed, this is only a test")
+                .build();
+        }
+        
         // Generate spell vehicle localizations
         this.add("spells.primalmagick.vehicle.header", "Spell Type");
         this.spellVehicle(EmptySpellVehicle.TYPE).name("None").defaultName("").build();

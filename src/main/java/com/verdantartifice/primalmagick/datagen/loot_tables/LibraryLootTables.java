@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
 import java.util.function.BiConsumer;
+import java.util.stream.IntStream;
 
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -134,18 +135,21 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
         // Register catalog component loot tables
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(LootPool.lootPool()
-                // TODO Populate table with real books
-                .add(book(BooksPM.SOURCE_PRIMER, 1))
-                ));
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(LootPool.lootPool()
-                // TODO Populate table with real books
-                .add(book(BooksPM.DREAM_JOURNAL, 1))
-                ));
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(LootPool.lootPool()
-                // TODO Populate table with real books
-                .add(book(BooksPM.TEST_BOOK, 1))
-                ));
+        LootPool.Builder commonPool = LootPool.lootPool().add(book(BooksPM.SOURCE_PRIMER, 1));
+        IntStream.rangeClosed(21, 50).forEach(index -> commonPool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
+        
+        // Generate uncommon catalog loot table
+        LootPool.Builder uncommonPool = LootPool.lootPool().add(book(BooksPM.DREAM_JOURNAL, 1));
+        IntStream.rangeClosed(6, 20).forEach(index -> uncommonPool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
+        
+        // Generate rare catalog loot table
+        LootPool.Builder rarePool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, 1));
+        IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
+        
+        // Generate treasure catalog loot table
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 // TODO Populate table with enchanted books
                 .add(enchantedBook(EnchantmentsPM.VERDANT.get(), 1))

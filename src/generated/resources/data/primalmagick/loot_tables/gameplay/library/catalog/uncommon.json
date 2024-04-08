@@ -13,6 +13,156 @@
             }
           ],
           "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum6\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum7\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum8\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum9\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum10\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum11\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum12\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum13\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum14\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum15\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum16\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum17\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum18\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum19\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BookId:\"primalmagick:loremipsum20\"}"
+            }
+          ],
+          "name": "primalmagick:static_book"
         }
       ],
       "rolls": 1.0
