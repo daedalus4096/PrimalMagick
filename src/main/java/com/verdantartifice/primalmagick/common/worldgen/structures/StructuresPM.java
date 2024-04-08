@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.tags.BiomeTagsPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
+import com.verdantartifice.primalmagick.common.worldgen.structures.library.NetherLibraryStructure;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -16,6 +17,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
@@ -37,6 +40,7 @@ public class StructuresPM {
     public static final ResourceKey<Structure> SKY_LIBRARY = registryKey("sky_library");
     public static final ResourceKey<Structure> SUN_LIBRARY = registryKey("sun_library");
     public static final ResourceKey<Structure> MOON_LIBRARY = registryKey("moon_library");
+    public static final ResourceKey<Structure> FORBIDDEN_LIBRARY = registryKey("forbidden_library");
     
     private static ResourceKey<Structure> registryKey(String name) {
         return ResourceKey.create(Registries.STRUCTURE, PrimalMagick.resource(name));
@@ -72,5 +76,10 @@ public class StructuresPM {
         registerLibrary(context, StructuresPM.SKY_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SKY_LIBRARY), CulturesPM.SKY);
         registerLibrary(context, StructuresPM.SUN_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_SUN_LIBRARY), CulturesPM.SUN);
         registerLibrary(context, StructuresPM.MOON_LIBRARY, biomeGetter.getOrThrow(BiomeTagsPM.HAS_MOON_LIBRARY), CulturesPM.MOON);
+        
+        context.register(StructuresPM.FORBIDDEN_LIBRARY, new NetherLibraryStructure(
+                new Structure.StructureSettings(biomeGetter.getOrThrow(BiomeTagsPM.HAS_FORBIDDEN_LIBRARY), Map.of(), GenerationStep.Decoration.UNDERGROUND_DECORATION, TerrainAdjustment.BEARD_THIN), 
+                CulturesPM.EARTH, 
+                UniformHeight.of(VerticalAnchor.absolute(32), VerticalAnchor.belowTop(10))));
     }
 }

@@ -44,6 +44,7 @@ public class BiomeTagsProviderPM extends IntrinsicHolderTagsProvider<Biome> {
         this.tag(BiomeTagsPM.HAS_SKY_LIBRARY).addTag(BiomeTagsPM.HAS_SKY_SHRINE);
         this.tag(BiomeTagsPM.HAS_SUN_LIBRARY).addTag(BiomeTagsPM.HAS_SUN_SHRINE);
         this.tag(BiomeTagsPM.HAS_MOON_LIBRARY).addTag(BiomeTagsPM.HAS_MOON_SHRINE);
+        this.tag(BiomeTagsPM.HAS_FORBIDDEN_LIBRARY).addTag(BiomeTags.IS_NETHER);
         
         this.tag(BiomeTagsPM.HAS_MARBLE).addTag(BiomeTags.IS_OVERWORLD);
         this.tag(BiomeTagsPM.HAS_ROCK_SALT).addTag(BiomeTags.IS_OVERWORLD);

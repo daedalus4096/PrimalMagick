@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.worldgen.structures;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.worldgen.structures.library.LibraryStructure;
+import com.verdantartifice.primalmagick.common.worldgen.structures.library.NetherLibraryStructure;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -23,4 +24,5 @@ public class StructureFeaturesPM {
     
     public static final RegistryObject<StructureType<ShrineStructure>> SHRINE = STRUCTURES.register("shrine", () -> () -> ShrineStructure.CODEC);
     public static final RegistryObject<StructureType<LibraryStructure>> LIBRARY = STRUCTURES.register("library", () -> () -> LibraryStructure.CODEC);
+    public static final RegistryObject<StructureType<NetherLibraryStructure>> NETHER_LIBRARY = STRUCTURES.register("nether_library", () -> () -> NetherLibraryStructure.CODEC);
 }
