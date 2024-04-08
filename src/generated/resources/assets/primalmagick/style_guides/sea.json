@@ -55,8 +55,10 @@
       "translationKey": "source.primalmagick.void"
     },
     {
+      "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
-        "color": "#EEEBD9"
+        "color": "#EEEBD9",
+        "obfuscated": true
       },
       "translationKey": "source.primalmagick.hallowed"
     }
