@@ -890,6 +890,8 @@ public class ItemsPM {
     
     // Register book items
     public static final RegistryObject<StaticBookItem> STATIC_BOOK = registerWithoutTab("static_book", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<StaticBookItem> STATIC_BOOK_UNCOMMON = registerWithoutTab("static_book_uncommon", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
+    public static final RegistryObject<StaticBookItem> STATIC_BOOK_RARE = registerWithoutTab("static_book_rare", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
     // TODO Re-add book items to creative tab once the book project is ready to deploy
     public static final RegistryObject<LinguisticsGainItem> CODEX = registerWithoutTab("codex", () -> new LinguisticsGainItem(CodexType.DEFAULT, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));

@@ -12,7 +12,7 @@
               "tag": "{BookId:\"primalmagick:test\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         },
         {
           "type": "minecraft:item",
@@ -22,7 +22,7 @@
               "tag": "{BookId:\"primalmagick:loremipsum1\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         },
         {
           "type": "minecraft:item",
@@ -32,7 +32,7 @@
               "tag": "{BookId:\"primalmagick:loremipsum2\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         },
         {
           "type": "minecraft:item",
@@ -42,7 +42,7 @@
               "tag": "{BookId:\"primalmagick:loremipsum3\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         },
         {
           "type": "minecraft:item",
@@ -52,7 +52,7 @@
               "tag": "{BookId:\"primalmagick:loremipsum4\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         },
         {
           "type": "minecraft:item",
@@ -62,7 +62,7 @@
               "tag": "{BookId:\"primalmagick:loremipsum5\"}"
             }
           ],
-          "name": "primalmagick:static_book"
+          "name": "primalmagick:static_book_rare"
         }
       ],
       "rolls": 1.0

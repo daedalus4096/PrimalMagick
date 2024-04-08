@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.loot_tables;
 
 import java.util.function.BiConsumer;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -135,18 +137,18 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CATALOG_TREASURE).setWeight(1))));
 
         // Register catalog component loot tables
-        LootPool.Builder commonPool = LootPool.lootPool().add(book(BooksPM.SOURCE_PRIMER, 1));
-        IntStream.rangeClosed(21, 50).forEach(index -> commonPool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        LootPool.Builder commonPool = LootPool.lootPool().add(book(BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1));
+        IntStream.rangeClosed(21, 50).forEach(index -> commonPool.add(book(BooksPM.create("loremipsum" + index), Rarity.COMMON, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         
         // Generate uncommon catalog loot table
-        LootPool.Builder uncommonPool = LootPool.lootPool().add(book(BooksPM.DREAM_JOURNAL, 1));
-        IntStream.rangeClosed(6, 20).forEach(index -> uncommonPool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        LootPool.Builder uncommonPool = LootPool.lootPool().add(book(BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1));
+        IntStream.rangeClosed(6, 20).forEach(index -> uncommonPool.add(book(BooksPM.create("loremipsum" + index), Rarity.UNCOMMON, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
         
         // Generate rare catalog loot table
-        LootPool.Builder rarePool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, 1));
-        IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), 1)));  // FIXME Remove once library testing is complete
+        LootPool.Builder rarePool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, Rarity.RARE, 1));
+        IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), Rarity.RARE, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
         // Generate treasure catalog loot table
@@ -182,9 +184,14 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> book(ResourceKey<BookDefinition> bookDefKey, int weight) {
+    protected static LootPoolEntryContainer.Builder<?> book(ResourceKey<BookDefinition> bookDefKey, Rarity rarity, int weight) {
+        Supplier<StaticBookItem> itemSupplier = switch (rarity) {
+            case UNCOMMON -> ItemsPM.STATIC_BOOK_UNCOMMON;
+            case RARE -> ItemsPM.STATIC_BOOK_RARE;
+            default -> ItemsPM.STATIC_BOOK;
+        };
         CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, bookDefKey.location().toString()));
-        return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
+        return LootItem.lootTableItem(itemSupplier.get()).setWeight(weight).apply(SetNbtFunction.setTag(tag));
     }
     
     protected static LootPoolEntryContainer.Builder<?> enchantedBook(Enchantment ench) {
