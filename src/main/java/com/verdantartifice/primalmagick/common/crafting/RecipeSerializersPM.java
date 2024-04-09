@@ -35,4 +35,5 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WandGlamourRecipe>> WAND_GLAMOUR_SPECIAL = RECIPE_SERIALIZERS.register("wand_glamour_special", () -> new SimpleCraftingRecipeSerializer<>(WandGlamourRecipe::new));
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WardingModuleApplicationRecipe>> WARDING_MODULE_APPLICATION = RECIPE_SERIALIZERS.register("warding_module_application", () -> new SimpleCraftingRecipeSerializer<>(WardingModuleApplicationRecipe::new));
     public static final RegistryObject<SimpleCraftingRecipeSerializer<StaticBookCloningRecipe>> STATIC_BOOK_CLONING = RECIPE_SERIALIZERS.register("static_book_cloning", () -> new SimpleCraftingRecipeSerializer<>(StaticBookCloningRecipe::new));
+    public static final RegistryObject<SimpleCraftingRecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = RECIPE_SERIALIZERS.register("writable_book_crafting", () -> new SimpleCraftingRecipeSerializer<>(WritableBookCraftingRecipe::new));
 }
