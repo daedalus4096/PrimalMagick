@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -31,7 +31,7 @@ public class StaticBookCloningRecipe extends CustomRecipe {
         for (int index = 0; index < pContainer.getContainerSize(); index++) {
             ItemStack slotStack = pContainer.getItem(index);
             if (!slotStack.isEmpty()) {
-                if (slotStack.is(ItemsPM.STATIC_BOOK.get())) {
+                if (slotStack.is(ItemTagsPM.STATIC_BOOKS)) {
                     if (!bookStack.isEmpty()) {
                         return false;
                     }
@@ -55,7 +55,7 @@ public class StaticBookCloningRecipe extends CustomRecipe {
         for (int index = 0; index < pContainer.getContainerSize(); index++) {
             ItemStack slotStack = pContainer.getItem(index);
             if (!slotStack.isEmpty()) {
-                if (slotStack.is(ItemsPM.STATIC_BOOK.get())) {
+                if (slotStack.is(ItemTagsPM.STATIC_BOOKS)) {
                     if (!originalStack.isEmpty()) {
                         return ItemStack.EMPTY;
                     }
