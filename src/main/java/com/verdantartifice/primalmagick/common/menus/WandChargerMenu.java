@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -22,6 +23,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerTileEntity> {
+    protected static final Component ESSENCE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.essence");
+    protected static final Component WAND_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.wand");
+
     protected final ContainerData chargerData;
     protected final Slot essenceSlot;
     protected final Slot wandSlot;
@@ -36,11 +40,11 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         this.chargerData = chargerData;
         
         // Slot 0: essence input
-        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)));
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 
-                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())));
+                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent()).tooltip(WAND_SLOT_TOOLTIP)));
         
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {

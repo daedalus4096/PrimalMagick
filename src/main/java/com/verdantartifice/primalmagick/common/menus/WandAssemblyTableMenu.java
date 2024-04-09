@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +39,9 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     public static final ResourceLocation CAP_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_cap_slot");
     public static final ResourceLocation CORE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_core_slot");
     public static final ResourceLocation GEM_SLOT_TEXTURE = PrimalMagick.resource("item/empty_wand_gem_slot");
+    protected static final Component CORE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.core");
+    protected static final Component CAP_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.cap");
+    protected static final Component GEM_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_assembly_table.slot.gem");
     protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_assembly");
     
     protected final ContainerLevelAccess worldPosCallable;
@@ -64,11 +68,11 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
         
         // Slot 1: Wand core
         this.coreSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 0, 48, 35,
-                new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).typeOf(WandCoreItem.class, StaffCoreItem.class)));
+                new FilteredSlot.Properties().background(CORE_SLOT_TEXTURE).tooltip(CORE_SLOT_TOOLTIP).typeOf(WandCoreItem.class, StaffCoreItem.class)));
         
         // Slot 2: Wand gem
         this.gemSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 48, 17,
-                new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).typeOf(WandGemItem.class)));
+                new FilteredSlot.Properties().background(GEM_SLOT_TEXTURE).tooltip(GEM_SLOT_TOOLTIP).typeOf(WandGemItem.class)));
         
         // Slots 3-4: Wand caps
         this.capSlot = this.addSlot(makeCapSlot(componentInvWrapper, 2, 30, 53));
@@ -89,7 +93,7 @@ public class WandAssemblyTableMenu extends AbstractContainerMenu {
     
     protected static Slot makeCapSlot(IItemHandler inventoryIn, int index, int xPosition, int yPosition) {
         return new FilteredSlot(inventoryIn, index, xPosition, yPosition, 
-                new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).typeOf(WandCapItem.class));
+                new FilteredSlot.Properties().background(CAP_SLOT_TEXTURE).tooltip(CAP_SLOT_TOOLTIP).typeOf(WandCapItem.class));
     }
 
     @Override

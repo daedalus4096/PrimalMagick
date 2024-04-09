@@ -930,7 +930,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("analyze_button").sub("1").output("Analyze item affinities").end().build();
         this.tooltip("analyze_button").sub("2").output("Item will be destroyed").end().build();
         this.tooltip("spell_scroll").name("Right-click to cast; will consume scroll").build();
-        this.tooltip("dream_vision_talisman.exp").name("Experience: %1$d / %2$d").build();
+        this.tooltip("dream_vision_talisman").sub("exp").output("Experience: %1$d / %2$d").end().build();
         this.tooltip("active").name("Active").build();
         this.tooltip("inactive").name("Inactive").build();
         this.tooltip("research_item").name("Use to gain arcane research").build();
@@ -1002,6 +1002,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("runecarving_table").sub("slot").sub("base").output("Add a rune base, such as a Stone Slab").end().build();
         this.tooltip("runecarving_table").sub("slot").sub("etching").output("Add a rune etching, such as Lapis Lazuli").end().build();
         this.tooltip("spellcrafting_altar").sub("slot").sub("scroll").output("Add a Blank Spell Scroll").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("core").output("Add a wand or staff core").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
+        this.tooltip("wand_charger").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("wand_charger").sub("slot").sub("wand").output("Add a chargeable item").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("core").output("Add a wand or staff core").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
+        this.tooltip("wand_inscription_table").sub("slot").sub("scroll").output("Add a filled spell scroll").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
