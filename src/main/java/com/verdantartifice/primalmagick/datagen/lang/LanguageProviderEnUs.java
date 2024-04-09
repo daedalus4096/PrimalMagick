@@ -119,6 +119,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_ENCHANTED_PILLAR).name("Enchanted Marble Pillar").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_CHISELED).name("Enchanted Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_ENCHANTED_RUNED).name("Enchanted Runed Marble").build();
+        this.block(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF).name("Enchanted Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_SMOKED).name("Smoked Marble").build();
         this.block(BlocksPM.MARBLE_SMOKED_SLAB).name("Smoked Marble Slab").build();
         this.block(BlocksPM.MARBLE_SMOKED_STAIRS).name("Smoked Marble Stairs").build();
@@ -130,6 +131,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_SMOKED_PILLAR).name("Smoked Marble Pillar").build();
         this.block(BlocksPM.MARBLE_SMOKED_CHISELED).name("Smoked Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_SMOKED_RUNED).name("Smoked Runed Marble").build();
+        this.block(BlocksPM.MARBLE_SMOKED_BOOKSHELF).name("Smoked Marble Bookshelf").build();
         this.block(BlocksPM.MARBLE_HALLOWED).name("Hallowed Marble").build();
         this.block(BlocksPM.MARBLE_HALLOWED_SLAB).name("Hallowed Marble Slab").build();
         this.block(BlocksPM.MARBLE_HALLOWED_STAIRS).name("Hallowed Marble Stairs").build();
@@ -141,6 +143,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.block(BlocksPM.MARBLE_HALLOWED_PILLAR).name("Hallowed Marble Pillar").build();
         this.block(BlocksPM.MARBLE_HALLOWED_CHISELED).name("Hallowed Chiseled Marble").build();
         this.block(BlocksPM.MARBLE_HALLOWED_RUNED).name("Hallowed Runed Marble").build();
+        this.block(BlocksPM.MARBLE_HALLOWED_BOOKSHELF).name("Hallowed Marble Bookshelf").build();
         this.block(BlocksPM.SUNWOOD_LOG).name("Sunwood Log").build();
         this.block(BlocksPM.STRIPPED_SUNWOOD_LOG).name("Stripped Sunwood Log").build();
         this.block(BlocksPM.SUNWOOD_WOOD).name("Sunwood Wood").build();
@@ -1658,6 +1661,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         this.book(BooksPM.WELCOME).name("Welcome").author("The Librarian")
             .text("Welcome, traveller, to this place of learning.\n\nDo not be alarmed, for this book is enchanted to project its meaning into your mind, across the gulf of language.\n\nUpon these shelves you will find the knowledge of our civilization, proofed against the ravages of time for the sake of our descendants.\n\nStudy them closely, and you may learn more about our people, our triumphs, and ultimately our fall.")
+            .build();
+        this.book(BooksPM.WARNING).name("Be Warned").author("The Archivist")
+            .text("Congratulations, traveller, on reaching this last bastion of freedom.\n\nBe warned: the knowledge on these shelves was won with blood, and the archmagi will pursue you to their dying breaths for possessing it.  Such is their tyranny.\n\nCommit these works to your mind and you may learn more about our people, our oppression, and ultimately our pyrrhic victory")
             .build();
         this.book(BooksPM.SOURCE_PRIMER).name("Source Primer").author("Unknown")
             .foreword("This book is printed very simply, as if intended for young children.")

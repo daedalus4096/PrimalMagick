@@ -21,6 +21,7 @@ public class BooksPM {
     public static final ResourceKey<BookDefinition> TEST_BOOK = create("test");
     public static final ResourceKey<BookDefinition> DREAM_JOURNAL = create("dream_journal");
     public static final ResourceKey<BookDefinition> WELCOME = create("welcome");
+    public static final ResourceKey<BookDefinition> WARNING = create("warning");
     public static final ResourceKey<BookDefinition> SOURCE_PRIMER = create("source_primer");
     
     public static ResourceKey<BookDefinition> create(String name) {
@@ -31,6 +32,7 @@ public class BooksPM {
         context.register(BooksPM.TEST_BOOK, new BookDefinition(PrimalMagick.resource("test")));
         context.register(BooksPM.DREAM_JOURNAL, new BookDefinition(PrimalMagick.resource("dream_journal")));
         context.register(BooksPM.WELCOME, new BookDefinition(PrimalMagick.resource("welcome")));
+        context.register(BooksPM.WARNING, new BookDefinition(PrimalMagick.resource("warning")));
         context.register(BooksPM.SOURCE_PRIMER, new BookDefinition(PrimalMagick.resource("source_primer")));
         
         // FIXME Remove once library testing is complete

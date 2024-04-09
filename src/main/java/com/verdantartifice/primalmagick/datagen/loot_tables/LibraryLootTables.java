@@ -87,8 +87,15 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
                 .add(EmptyLootItem.emptyItem().setWeight(20))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
+                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
+                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
+                .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))
+                .add(EmptyLootItem.emptyItem().setWeight(10))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_WELCOME, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
-                .add(welcomeBook())));
+                .add(autoTranslatingBook(BooksPM.WELCOME))));
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_WARNING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
+                .add(autoTranslatingBook(BooksPM.WARNING))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_HIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(UniformGenerator.between(5F, 10F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
@@ -199,9 +206,9 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
     }
     
     @SuppressWarnings("deprecation")
-    protected static LootPoolEntryContainer.Builder<?> welcomeBook() {
+    protected static LootPoolEntryContainer.Builder<?> autoTranslatingBook(ResourceKey<BookDefinition> bookKey) {
         CompoundTag tag = Util.make(new CompoundTag(), t -> {
-            t.putString(StaticBookItem.TAG_BOOK_ID, BooksPM.WELCOME.location().toString());
+            t.putString(StaticBookItem.TAG_BOOK_ID, bookKey.location().toString());
             t.putString(StaticBookItem.TAG_BOOK_LANGUAGE_ID, BookLanguagesPM.BABELTONGUE.location().toString());
         });
         return LootItem.lootTableItem(ItemsPM.STATIC_BOOK.get()).setWeight(1).apply(SetNbtFunction.setTag(tag));

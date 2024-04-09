@@ -1,0 +1,17 @@
+{
+  "type": "primalmagick:nether_library",
+  "biomes": "#primalmagick:has_structure/forbidden_library",
+  "culture_key": "primalmagick:forbidden",
+  "height": {
+    "type": "minecraft:uniform",
+    "max_inclusive": {
+      "below_top": 10
+    },
+    "min_inclusive": {
+      "absolute": 32
+    }
+  },
+  "spawn_overrides": {},
+  "step": "underground_decoration",
+  "terrain_adaptation": "beard_thin"
+}

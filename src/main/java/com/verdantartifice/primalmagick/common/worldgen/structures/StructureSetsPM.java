@@ -40,7 +40,8 @@ public class StructureSetsPM {
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SEA_LIBRARY)), 
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SKY_LIBRARY)), 
                         StructureSet.entry(structureGetter.getOrThrow(StructuresPM.SUN_LIBRARY)), 
-                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_LIBRARY))),
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.MOON_LIBRARY)),
+                        StructureSet.entry(structureGetter.getOrThrow(StructuresPM.FORBIDDEN_LIBRARY))),
                 new RandomSpreadStructurePlacement(30, 15, RandomSpreadType.LINEAR, 11893193)));
     }
 }

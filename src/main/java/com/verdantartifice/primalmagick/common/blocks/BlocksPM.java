@@ -148,7 +148,8 @@ public class BlocksPM {
     public static final RegistryObject<PillarBlock> MARBLE_ENCHANTED_PILLAR = BLOCKS.register("marble_enchanted_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<Block> MARBLE_ENCHANTED_CHISELED = BLOCKS.register("marble_enchanted_chiseled", () -> new Block(Block.Properties.copy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<Block> MARBLE_ENCHANTED_RUNED = BLOCKS.register("marble_enchanted_runed", () -> new Block(Block.Properties.copy(MARBLE_ENCHANTED.get())));
-    
+    public static final RegistryObject<CarvedBookshelfBlock> MARBLE_ENCHANTED_BOOKSHELF = BLOCKS.register("marble_enchanted_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.copy(MARBLE_ENCHANTED.get())));
+
     // Register smoked marble blocks
     public static final RegistryObject<Block> MARBLE_SMOKED = BLOCKS.register("marble_smoked", () -> new Block(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_SMOKED_SLAB = BLOCKS.register("marble_smoked_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
@@ -161,7 +162,8 @@ public class BlocksPM {
     public static final RegistryObject<PillarBlock> MARBLE_SMOKED_PILLAR = BLOCKS.register("marble_smoked_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
     public static final RegistryObject<Block> MARBLE_SMOKED_CHISELED = BLOCKS.register("marble_smoked_chiseled", () -> new Block(Block.Properties.copy(MARBLE_SMOKED.get())));
     public static final RegistryObject<Block> MARBLE_SMOKED_RUNED = BLOCKS.register("marble_smoked_runed", () -> new Block(Block.Properties.copy(MARBLE_SMOKED.get())));
-    
+    public static final RegistryObject<CarvedBookshelfBlock> MARBLE_SMOKED_BOOKSHELF = BLOCKS.register("marble_smoked_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.copy(MARBLE_SMOKED.get())));
+
     // Register hallowed marble blocks
     public static final RegistryObject<Block> MARBLE_HALLOWED = BLOCKS.register("marble_hallowed", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_SLAB  = BLOCKS.register("marble_hallowed_slab", () -> new SlabBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
@@ -174,7 +176,8 @@ public class BlocksPM {
     public static final RegistryObject<PillarBlock> MARBLE_HALLOWED_PILLAR = BLOCKS.register("marble_hallowed_pillar", () -> new PillarBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<Block> MARBLE_HALLOWED_CHISELED = BLOCKS.register("marble_hallowed_chiseled", () -> new Block(Block.Properties.copy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<Block> MARBLE_HALLOWED_RUNED = BLOCKS.register("marble_hallowed_runed", () -> new Block(Block.Properties.copy(MARBLE_HALLOWED.get())));
-    
+    public static final RegistryObject<CarvedBookshelfBlock> MARBLE_HALLOWED_BOOKSHELF = BLOCKS.register("marble_hallowed_bookshelf", () -> new CarvedBookshelfBlock(Block.Properties.copy(MARBLE_HALLOWED.get())));
+
     // Register sunwood blocks
     public static final RegistryObject<SunwoodLogBlock> STRIPPED_SUNWOOD_LOG = BLOCKS.register("stripped_sunwood_log", () -> new SunwoodLogBlock(null));
     public static final RegistryObject<SunwoodLogBlock> SUNWOOD_LOG = BLOCKS.register("sunwood_log", () -> new SunwoodLogBlock(STRIPPED_SUNWOOD_LOG.get()));

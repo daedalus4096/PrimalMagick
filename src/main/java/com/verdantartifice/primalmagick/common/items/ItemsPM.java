@@ -171,6 +171,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_ENCHANTED_PILLAR = registerSupplier("marble_enchanted_pillar", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_PILLAR.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_ENCHANTED_CHISELED = registerSupplier("marble_enchanted_chiseled", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_CHISELED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_ENCHANTED_RUNED = registerSupplier("marble_enchanted_runed", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_RUNED.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MARBLE_ENCHANTED_BOOKSHELF = registerSupplier("marble_enchanted_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get(), new Item.Properties()));
 
     // Register smoked marble block items
     public static final RegistryObject<BlockItem> MARBLE_SMOKED = registerSupplier("marble_smoked", () -> new BlockItem(BlocksPM.MARBLE_SMOKED.get(), new Item.Properties()));
@@ -184,7 +185,8 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_PILLAR = registerSupplier("marble_smoked_pillar", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_PILLAR.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_CHISELED = registerSupplier("marble_smoked_chiseled", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_CHISELED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_SMOKED_RUNED = registerSupplier("marble_smoked_runed", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_RUNED.get(), new Item.Properties()));
-    
+    public static final RegistryObject<BlockItem> MARBLE_SMOKED_BOOKSHELF = registerSupplier("marble_smoked_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get(), new Item.Properties()));
+
     // Register hallowed marble block items
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED = registerSupplier("marble_hallowed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED_SLAB = registerSupplier("marble_hallowed_slab", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_SLAB.get(), new Item.Properties()));
@@ -197,6 +199,7 @@ public class ItemsPM {
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED_PILLAR = registerSupplier("marble_hallowed_pillar", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_PILLAR.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED_CHISELED = registerSupplier("marble_hallowed_chiseled", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_CHISELED.get(), new Item.Properties()));
     public static final RegistryObject<BlockItem> MARBLE_HALLOWED_RUNED = registerSupplier("marble_hallowed_runed", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_RUNED.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> MARBLE_HALLOWED_BOOKSHELF = registerSupplier("marble_hallowed_bookshelf", () -> new BlockItem(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get(), new Item.Properties()));
 
     // Register sunwood block items
     public static final RegistryObject<BlockItem> SUNWOOD_LOG = registerSupplier("sunwood_log", () -> new BlockItem(BlocksPM.SUNWOOD_LOG.get(), new Item.Properties()));

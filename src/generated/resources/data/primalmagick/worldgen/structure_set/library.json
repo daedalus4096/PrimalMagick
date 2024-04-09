@@ -25,6 +25,10 @@
     {
       "structure": "primalmagick:moon_library",
       "weight": 1
+    },
+    {
+      "structure": "primalmagick:forbidden_library",
+      "weight": 1
     }
   ]
 }

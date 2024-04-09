@@ -24,6 +24,7 @@ public class BiomeTagsPM {
     public static final TagKey<Biome> HAS_SKY_LIBRARY = tag("has_structure/sky_library");
     public static final TagKey<Biome> HAS_SUN_LIBRARY = tag("has_structure/sun_library");
     public static final TagKey<Biome> HAS_MOON_LIBRARY = tag("has_structure/moon_library");
+    public static final TagKey<Biome> HAS_FORBIDDEN_LIBRARY = tag("has_structure/forbidden_library");
     
     public static final TagKey<Biome> HAS_MARBLE = tag("has_feature/ore_marble_raw");
     public static final TagKey<Biome> HAS_ROCK_SALT = tag("has_feature/ore_rock_salt");

@@ -150,6 +150,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MARBLE_ENCHANTED_SLAB.get());
         this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_ENCHANTED_BOOKSHELF.get());
     }
     
     private void registerSmokedMarbleLootTables() {
@@ -164,6 +165,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MARBLE_SMOKED_SLAB.get());
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_SMOKED_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_SMOKED_BOOKSHELF.get());
     }
     
     private void registerHallowedMarbleLootTables() {
@@ -178,6 +180,7 @@ public class BlockLootTables extends AbstractBlockLootTableProvider {
         this.registerSlabTable(BlocksPM.MARBLE_HALLOWED_SLAB.get());
         this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_STAIRS.get());
         this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_WALL.get());
+        this.registerBasicTable(BlocksPM.MARBLE_HALLOWED_BOOKSHELF.get());
     }
     
     private void registerSunwoodLootTables() {

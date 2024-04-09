@@ -4,6 +4,7 @@
     "primalmagick:sea_library",
     "primalmagick:sky_library",
     "primalmagick:sun_library",
-    "primalmagick:moon_library"
+    "primalmagick:moon_library",
+    "primalmagick:forbidden_library"
   ]
 }

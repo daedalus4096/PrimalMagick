@@ -1,0 +1,6 @@
+{
+  "hiddenLootTable": "minecraft:empty",
+  "languageId": "primalmagick:forbidden",
+  "shelfLootTable": "primalmagick:gameplay/library/forbidden",
+  "welcomeLootTable": "primalmagick:gameplay/library/warning"
+}
