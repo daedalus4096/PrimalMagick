@@ -3,12 +3,11 @@ package com.verdantartifice.primalmagick.client.gui;
 import com.verdantartifice.primalmagick.common.menus.RunicGrindstoneMenu;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class RunicGrindstoneScreen extends AbstractContainerScreen<RunicGrindstoneMenu> {
+public class RunicGrindstoneScreen extends AbstractContainerScreenPM<RunicGrindstoneMenu> {
     private static final ResourceLocation GRINDSTONE_LOCATION = new ResourceLocation("textures/gui/container/grindstone.png");
 
     public RunicGrindstoneScreen(RunicGrindstoneMenu pMenu, Inventory pPlayerInventory, Component pTitle) {

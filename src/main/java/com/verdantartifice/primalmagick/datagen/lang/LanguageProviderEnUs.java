@@ -938,6 +938,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("research_table").sub("material").sub("has_bonus").output("This material will grant bonus research progress").end().build();
         this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("single").output("You will gain %1$s theory on success").end().build();
         this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("multiple").output("You will gain %1$s theories on success").end().build();
+        this.tooltip("research_table").sub("slot").sub("pencil").output("Add a writing implement").end().build();
+        this.tooltip("research_table").sub("slot").sub("paper").output("Add Paper").end().build();
         this.tooltip("attunement_shackles").sub("shackled").output("Shackled").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("additions_slot_description").output("Add source rune").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
@@ -995,6 +997,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
         this.tooltip("honey_extractor").sub("slot").sub("honeycomb").output("Add a Honeycomb").end().build();
         this.tooltip("infernal_furnace").sub("slot").sub("ignyx").output("Add supercharge fuel").end().build();
+        this.tooltip("mana_battery").sub("slot").sub("input").output("Add magickal essence or a wand").end().build();
+        this.tooltip("mana_battery").sub("slot").sub("charge").output("Add a chargeable item").end().build();
+        this.tooltip("runecarving_table").sub("slot").sub("base").output("Add a rune base, such as a Stone Slab").end().build();
+        this.tooltip("runecarving_table").sub("slot").sub("etching").output("Add a rune etching, such as Lapis Lazuli").end().build();
+        this.tooltip("spellcrafting_altar").sub("slot").sub("scroll").output("Add a Blank Spell Scroll").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

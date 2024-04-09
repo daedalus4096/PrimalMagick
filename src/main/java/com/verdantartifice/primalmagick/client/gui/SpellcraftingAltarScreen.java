@@ -28,7 +28,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.Vec3i;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,7 +38,7 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class SpellcraftingAltarScreen extends AbstractContainerScreen<SpellcraftingAltarMenu> {
+public class SpellcraftingAltarScreen extends AbstractContainerScreenPM<SpellcraftingAltarMenu> {
     private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/spellcrafting_altar.png");
     
     private final Map<Vec3i, Component> texts = new HashMap<>();

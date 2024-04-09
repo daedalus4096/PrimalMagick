@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -43,6 +44,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<RunecarvingTableTileEntity> implements ContainerListener {
     public static final ResourceLocation BASE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_slab_slot");
     public static final ResourceLocation ETCHING_SLOT_TEXTURE = PrimalMagick.resource("item/empty_lapis_slot");
+    protected static final Component BASE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.base");
+    protected static final Component ETCHING_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runecarving_table.slot.etching");
 
     protected final DataSlot selectedRecipe = DataSlot.standalone();
     protected final Player player;
@@ -77,11 +80,11 @@ public class RunecarvingTableMenu extends AbstractTileSidedInventoryMenu<Runecar
         
         // Slot 0: input slabs
         this.inputSlabSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 20, 21,
-                new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_BASES)));
+                new FilteredSlot.Properties().background(BASE_SLOT_TEXTURE).tooltip(BASE_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_BASES)));
         
         // Slot 1: input lapis
         this.inputLapisSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 20, 46,
-                new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tag(ItemTagsPM.RUNE_ETCHINGS)));
+                new FilteredSlot.Properties().background(ETCHING_SLOT_TEXTURE).tooltip(ETCHING_SLOT_TOOLTIP).tag(ItemTagsPM.RUNE_ETCHINGS)));
         
         // Slot 2: runecarving output
         this.outputSlot = this.addSlot(new GenericResultSlot(this.player, InventoryUtils.wrapInventory(this.outputInventory, null), 0, 143, 33) {
