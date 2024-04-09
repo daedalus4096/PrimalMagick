@@ -64,6 +64,9 @@ public class BookHelper {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else if (lang.get().autoTranslate()) {
+                // If the language is auto-translating, then add the title text directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
                 // If the word has been translated, then add it directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
@@ -89,6 +92,9 @@ public class BookHelper {
         Stream.of(WORD_BOUNDARY.split(StringDecomposer.getPlainText(unencodedText))).forEach(word -> {
             if (SEPARATOR_ONLY.matcher(word).matches()) {
                 // If the word is just a separator (e.g. whitespace, punctuation) then add it directly
+                retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
+            } else if (lang.get().autoTranslate()) {
+                // If the language is auto-translating, then add the author text directly
                 retVal.append(Component.literal(word).withStyle(BASE_TEXT_STYLE));
             } else if (lang.get().isTranslatable() && langLex.isWordTranslated(word, view.comprehension(), lang.get().complexity())) {
                 // If the word has been translated, then add it directly
