@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTi
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -22,6 +23,8 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<EssenceTransmuterTileEntity> {
+    protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.essence_transmuter.slot.essence");
+    
     protected final ContainerData transmuterData;
     protected final Slot inputSlot;
     protected final Slot wandSlot;
@@ -36,7 +39,7 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {

@@ -989,6 +989,12 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("grid").sub("no_path").output("Cannot reach!").end().build();
         this.tooltip("scribe_table").sub("slot").sub("ancient_book").output("Add an ancient book").end().build();
         this.tooltip("scribe_table").sub("slot").sub("writable_book").output("Add a Book and Quill").end().build();
+        this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
+        this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
+        this.tooltip("honey_extractor").sub("slot").sub("honeycomb").output("Add a Honeycomb").end().build();
+        this.tooltip("infernal_furnace").sub("slot").sub("ignyx").output("Add supercharge fuel").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

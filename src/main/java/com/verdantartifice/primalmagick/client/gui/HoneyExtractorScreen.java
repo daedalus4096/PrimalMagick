@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class HoneyExtractorScreen extends AbstractContainerScreen<HoneyExtractorMenu> {
+public class HoneyExtractorScreen extends AbstractContainerScreenPM<HoneyExtractorMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/honey_extractor.png");
     
     protected ManaGaugeWidget manaGauge;

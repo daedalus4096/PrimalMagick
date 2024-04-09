@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +15,7 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class EssenceTransmuterScreen extends AbstractContainerScreen<EssenceTransmuterMenu> {
+public class EssenceTransmuterScreen extends AbstractContainerScreenPM<EssenceTransmuterMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/essence_transmuter.png");
     
     protected ManaGaugeWidget manaGauge;
