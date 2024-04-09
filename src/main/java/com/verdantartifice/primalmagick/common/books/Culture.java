@@ -11,10 +11,12 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public record Culture(ResourceLocation cultureId, ResourceLocation lootTable) {
+public record Culture(ResourceLocation cultureId, ResourceLocation shelfLootTable, ResourceLocation welcomeLootTable, ResourceLocation hiddenLootTable) {
     public static final Codec<Culture> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("languageId").forGetter(Culture::cultureId),
-            ResourceLocation.CODEC.fieldOf("lootTable").forGetter(Culture::lootTable)
+            ResourceLocation.CODEC.fieldOf("shelfLootTable").forGetter(Culture::shelfLootTable),
+            ResourceLocation.CODEC.fieldOf("welcomeLootTable").forGetter(Culture::welcomeLootTable),
+            ResourceLocation.CODEC.fieldOf("hiddenLootTable").forGetter(Culture::hiddenLootTable)
         ).apply(instance, Culture::new));
     public static final Codec<Culture> NETWORK_CODEC = DIRECT_CODEC;    // TODO Modify if some culture data is not necessary on the client
 }

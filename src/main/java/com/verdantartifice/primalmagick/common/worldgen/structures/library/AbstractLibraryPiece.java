@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.worldgen.structures.library;
 
 import com.verdantartifice.primalmagick.common.books.Culture;
-import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IRandomizableContents;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
@@ -73,25 +72,25 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
         if ("shelf_low".equals(pName)) {
             // Populate bookshelf above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.get().lootTable(), pRandom.nextLong());
+                container.setLootTable(culture.get().shelfLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
         } else if ("shelf_high".equals(pName)) {
             // Populate bookshelf below
             if (pLevel.getBlockEntity(pPos.below()) instanceof IRandomizableContents container) {
-                container.setLootTable(culture.get().lootTable(), pRandom.nextLong());
+                container.setLootTable(culture.get().shelfLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getBrickBlockState(), Block.UPDATE_ALL);
         } else if ("welcome".equals(pName)) {
             // Populate lectern above
             if (pLevel.getBlockEntity(pPos.above()) instanceof IRandomizableContents container) {
-                container.setLootTable(LootTablesPM.LIBRARY_WELCOME, pRandom.nextLong());
+                container.setLootTable(culture.get().welcomeLootTable(), pRandom.nextLong());
             }
             pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
         } else if ("hidden".equals(pName)) {
             if (pRandom.nextDouble() < 0.25D && pLevel.getBlockEntity(pPos.below()) instanceof RandomizableContainerBlockEntity container) {
                 // Populate chest below
-                container.setLootTable(LootTablesPM.LIBRARY_HIDDEN, pRandom.nextLong());
+                container.setLootTable(culture.get().hiddenLootTable(), pRandom.nextLong());
             } else {
                 pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
                 pLevel.setBlock(pPos.below(), this.getFillerBlockState(), Block.UPDATE_ALL);

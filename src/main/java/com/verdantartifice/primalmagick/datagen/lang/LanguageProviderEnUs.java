@@ -1662,6 +1662,9 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.book(BooksPM.WELCOME).name("Welcome").author("The Librarian")
             .text("Welcome, traveller, to this place of learning.\n\nDo not be alarmed, for this book is enchanted to project its meaning into your mind, across the gulf of language.\n\nUpon these shelves you will find the knowledge of our civilization, proofed against the ravages of time for the sake of our descendants.\n\nStudy them closely, and you may learn more about our people, our triumphs, and ultimately our fall.")
             .build();
+        this.book(BooksPM.WARNING).name("Be Warned").author("The Archivist")
+            .text("Congratulations, traveller, on reaching this last bastion of freedom.\n\nBe warned: the knowledge on these shelves was won with blood, and the archmagi will pursue you to their dying breaths for possessing it.  Such is their tyranny.\n\nCommit these works to your mind and you may learn more about our people, our oppression, and ultimately our pyrrhic victory")
+            .build();
         this.book(BooksPM.SOURCE_PRIMER).name("Source Primer").author("Unknown")
             .foreword("This book is printed very simply, as if intended for young children.")
             .text("The Earth abides.\nThe Sea flows.\nThe Sky drifts.\nThe Sun shines.\nThe Moon changes.\nThe Blood pumps.\nThe Infernal rages.\nThe Void hungers.\nThe Hallowed sings.")

@@ -35,7 +35,9 @@ public class LootTablesPM {
     public static final ResourceLocation LIBRARY_SKY = registerLibrary("gameplay/library/sky");
     public static final ResourceLocation LIBRARY_SUN = registerLibrary("gameplay/library/sun");
     public static final ResourceLocation LIBRARY_MOON = registerLibrary("gameplay/library/moon");
+    public static final ResourceLocation LIBRARY_FORBIDDEN = registerLibrary("gameplay/library/forbidden");
     public static final ResourceLocation LIBRARY_WELCOME = registerLibrary("gameplay/library/welcome");
+    public static final ResourceLocation LIBRARY_WARNING = registerLibrary("gameplay/library/warning");
     public static final ResourceLocation LIBRARY_HIDDEN = registerLibrary("gameplay/library/hidden");
     
     public static final ResourceLocation LIBRARY_CULTURE_EARTH = registerLibrary("gameplay/library/culture/earth");

@@ -1,4 +1,6 @@
 {
+  "hiddenLootTable": "primalmagick:gameplay/library/hidden",
   "languageId": "primalmagick:sea",
-  "lootTable": "primalmagick:gameplay/library/sea"
+  "shelfLootTable": "primalmagick:gameplay/library/sea",
+  "welcomeLootTable": "primalmagick:gameplay/library/welcome"
 }

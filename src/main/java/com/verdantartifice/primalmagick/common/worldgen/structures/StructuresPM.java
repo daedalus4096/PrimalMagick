@@ -79,7 +79,7 @@ public class StructuresPM {
         
         context.register(StructuresPM.FORBIDDEN_LIBRARY, new NetherLibraryStructure(
                 new Structure.StructureSettings(biomeGetter.getOrThrow(BiomeTagsPM.HAS_FORBIDDEN_LIBRARY), Map.of(), GenerationStep.Decoration.UNDERGROUND_DECORATION, TerrainAdjustment.BEARD_THIN), 
-                CulturesPM.EARTH, 
+                CulturesPM.FORBIDDEN, 
                 UniformHeight.of(VerticalAnchor.absolute(32), VerticalAnchor.belowTop(10))));
     }
 }
