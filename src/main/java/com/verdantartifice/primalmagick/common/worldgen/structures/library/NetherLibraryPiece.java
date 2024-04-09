@@ -13,33 +13,33 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 
 /**
- * Definition of a piece of an ancient library structure in the default style.
+ * Definition of a piece of an ancient library structure in the nether style.
  * 
  * @author Daedalus4096
  * @see {@link net.minecraft.world.level.levelgen.structure.DesertPyramidPiece}
  */
-public class LibraryPiece extends AbstractLibraryPiece {
-    protected static final ResourceLocation TEMPLATE = PrimalMagick.resource("library/default");
+public class NetherLibraryPiece extends AbstractLibraryPiece {
+    protected static final ResourceLocation TEMPLATE = PrimalMagick.resource("library/nether");
     
-    public LibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
+    public NetherLibraryPiece(StructureTemplateManager templateManager, ResourceKey<Culture> cultureKey, BlockPos pos) {
         super(templateManager, TEMPLATE, cultureKey, pos);
     }
 
-    public LibraryPiece(StructureTemplateManager templateManager, CompoundTag nbt) {
+    public NetherLibraryPiece(StructureTemplateManager templateManager, CompoundTag nbt) {
         super(templateManager, nbt);
     }
     
-    public LibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
+    public NetherLibraryPiece(StructurePieceSerializationContext context, CompoundTag nbt) {
         super(context, nbt);
     }
 
     @Override
     protected BlockState getFillerBlockState() {
-        return BlocksPM.MARBLE_RAW.get().defaultBlockState();
+        return BlocksPM.MARBLE_SMOKED.get().defaultBlockState();
     }
 
     @Override
     protected BlockState getBrickBlockState() {
-        return BlocksPM.MARBLE_BRICKS.get().defaultBlockState();
+        return BlocksPM.MARBLE_SMOKED_BRICKS.get().defaultBlockState();
     }
 }

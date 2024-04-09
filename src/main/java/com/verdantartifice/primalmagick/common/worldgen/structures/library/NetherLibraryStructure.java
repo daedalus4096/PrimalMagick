@@ -69,7 +69,7 @@ public class NetherLibraryStructure extends Structure {
         } else {
             BlockPos pos = new BlockPos(x, y, z);
             return Optional.of(new Structure.GenerationStub(pos, builder -> {
-                builder.addPiece(new LibraryPiece(pContext.structureTemplateManager(), this.cultureKey, pos));
+                builder.addPiece(new NetherLibraryPiece(pContext.structureTemplateManager(), this.cultureKey, pos));
             }));
         }
     }
