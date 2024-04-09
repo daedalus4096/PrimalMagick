@@ -1011,6 +1011,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("wand_glamour_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
         this.tooltip("wand_glamour_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
         this.tooltip("wand_inscription_table").sub("slot").sub("scroll").output("Add a filled spell scroll").end().build();
+        this.tooltip("wand_gui").sub("slot").sub("wand").output("Add a magickal wand").end().build();
+        this.tooltip("wand_gui").sub("slot").sub("staff").output("Add a magickal wand or staff").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();
