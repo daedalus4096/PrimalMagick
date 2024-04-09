@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.InfernalFurnaceTile
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,6 +36,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
  */
 public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<InfernalFurnaceTileEntity> implements IArcaneRecipeBookMenu<Container> {
     public static final ResourceLocation IGNYX_SLOT_TEXTURE = PrimalMagick.resource("item/empty_ignyx_slot");
+    protected static final Component IGNYX_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.infernal_furnace.slot.ignyx");
 
     protected final ContainerData furnaceData;
     protected final Slot inputSlot;
@@ -58,7 +60,7 @@ public class InfernalFurnaceMenu extends AbstractTileSidedInventoryMenu<Infernal
         
         // Slot 2: ignyx input
         this.ignyxSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 44, 53, 
-                new FilteredSlot.Properties().background(IGNYX_SLOT_TEXTURE).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
+                new FilteredSlot.Properties().background(IGNYX_SLOT_TEXTURE).tooltip(IGNYX_SLOT_TOOLTIP).tag(ItemTagsPM.INFERNAL_SUPERCHARGE_FUEL)));
         
         // Slot 3: wand input
         this.wandSlot = this.addSlot(new WandSlot(this.getTileInventory(Direction.NORTH), 1, 8, 62, false));

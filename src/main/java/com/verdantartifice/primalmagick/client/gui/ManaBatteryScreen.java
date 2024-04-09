@@ -11,7 +11,6 @@ import com.verdantartifice.primalmagick.common.sources.Source;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -21,7 +20,7 @@ import net.minecraft.world.entity.player.Inventory;
  * 
  * @author Daedalus4096
  */
-public class ManaBatteryScreen extends AbstractContainerScreen<ManaBatteryMenu> {
+public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/mana_battery.png");
     protected static final int AVAILABLE_GAUGE_WIDTH = 116;
     protected static final int GAUGE_START_X = 57;

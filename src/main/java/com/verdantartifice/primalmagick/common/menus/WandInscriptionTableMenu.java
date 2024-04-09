@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,6 +34,7 @@ import net.minecraftforge.items.IItemHandler;
  * @author Daedalus4096
  */
 public class WandInscriptionTableMenu extends AbstractContainerMenu {
+    protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_inscription_table.slot.scroll");
     protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("wand_inscription");
 
     protected final ContainerLevelAccess worldPosCallable;
@@ -60,7 +62,7 @@ public class WandInscriptionTableMenu extends AbstractContainerMenu {
         this.wandSlot = this.addSlot(new WandSlot(componentInvWrapper, 0, 30, 35, true));
         
         // Slot 2: Input scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlot.Properties().typeOf(SpellScrollItem.class)));
+        this.scrollSlot = this.addSlot(new FilteredSlot(componentInvWrapper, 1, 66, 35, new FilteredSlot.Properties().typeOf(SpellScrollItem.class).tooltip(SCROLL_SLOT_TOOLTIP)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

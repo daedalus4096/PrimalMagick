@@ -38,6 +38,8 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTableTileEntity> implements ContainerListener {
     public static final ResourceLocation PAPER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_paper_slot");
     public static final ResourceLocation PENCIL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_pencil_slot");
+    protected static final Component PAPER_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.paper");
+    protected static final Component PENCIL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.research_table.slot.pencil");
     
     protected final Player player;
     protected final Slot paperSlot;
@@ -54,11 +56,11 @@ public class ResearchTableMenu extends AbstractTileSidedInventoryMenu<ResearchTa
         
         // Slot 0: Pencil
         this.pencilSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 8,
-                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).typeOf(IWritingImplement.class)));
+                new FilteredSlot.Properties().background(PENCIL_SLOT_TEXTURE).tooltip(PENCIL_SLOT_TOOLTIP).typeOf(IWritingImplement.class)));
         
         // Slot 1: Paper
         this.paperSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 206, 8,
-                new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).item(Items.PAPER)));
+                new FilteredSlot.Properties().background(PAPER_SLOT_TEXTURE).tooltip(PAPER_SLOT_TOOLTIP).item(Items.PAPER)));
         
         // Slots 2-28: Player backpack
         for (int i = 0; i < 3; i++) {

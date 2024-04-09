@@ -53,6 +53,7 @@ import net.minecraft.world.level.Level;
  */
 public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarTileEntity> {
     protected static final ResourceLocation RECIPE_LOC = PrimalMagick.resource("spellcrafting");
+    protected static final Component SCROLL_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.spellcrafting_altar.slot.scroll");
 
     protected final CraftingContainer scrollInv = new TransientCraftingContainer(this, 1, 1);
     protected final WandInventory wandInv = new WandInventory(this);
@@ -87,7 +88,8 @@ public class SpellcraftingAltarMenu extends AbstractTileMenu<SpellcraftingAltarT
         this.wandSlot = this.addSlot(new WandSlot(InventoryUtils.wrapInventory(this.wandInv, null), 0, 8, 8, false));
 
         // Slot 2: Blank scroll
-        this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get())));
+        this.scrollSlot = this.addSlot(new FilteredSlot(InventoryUtils.wrapInventory(this.scrollInv, null), 0, 160, 8, 
+                new FilteredSlot.Properties().item(ItemsPM.SPELL_SCROLL_BLANK.get()).tooltip(SCROLL_SLOT_TOOLTIP)));
         
         // Slots 3-29: Player backpack
         for (int i = 0; i < 3; i++) {

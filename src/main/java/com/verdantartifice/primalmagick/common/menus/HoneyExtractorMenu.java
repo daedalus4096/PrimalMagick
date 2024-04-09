@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileE
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +27,8 @@ import net.minecraft.world.item.Items;
 public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtractorTileEntity> {
     public static final ResourceLocation BOTTLE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_bottle_slot");
     public static final ResourceLocation HONEYCOMB_SLOT_TEXTURE = PrimalMagick.resource("item/empty_honeycomb_slot");
+    protected static final Component BOTTLE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.honey_extractor.slot.bottle");
+    protected static final Component HONEYCOMB_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.honey_extractor.slot.honeycomb");
 
     protected final ContainerData extractorData;
     protected final Slot honeycombSlot;
@@ -43,11 +46,11 @@ public class HoneyExtractorMenu extends AbstractTileSidedInventoryMenu<HoneyExtr
         
         // Slot 0: honeycomb input
         this.honeycombSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 30, 35,
-                new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).item(Items.HONEYCOMB)));
+                new FilteredSlot.Properties().background(HONEYCOMB_SLOT_TEXTURE).tooltip(HONEYCOMB_SLOT_TOOLTIP).item(Items.HONEYCOMB)));
         
         // Slot 1: bottle input
         this.bottleSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 1, 52, 35, 
-                new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).item(Items.GLASS_BOTTLE)));
+                new FilteredSlot.Properties().background(BOTTLE_SLOT_TEXTURE).tooltip(BOTTLE_SLOT_TOOLTIP).item(Items.GLASS_BOTTLE)));
         
         // Slot 2: honey output
         this.addSlot(new GenericResultSlot(playerInv.player, this.getTileInventory(Direction.DOWN), 0, 108, 35));

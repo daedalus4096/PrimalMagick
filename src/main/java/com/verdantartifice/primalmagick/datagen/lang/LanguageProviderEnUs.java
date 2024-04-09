@@ -930,7 +930,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("analyze_button").sub("1").output("Analyze item affinities").end().build();
         this.tooltip("analyze_button").sub("2").output("Item will be destroyed").end().build();
         this.tooltip("spell_scroll").name("Right-click to cast; will consume scroll").build();
-        this.tooltip("dream_vision_talisman.exp").name("Experience: %1$d / %2$d").build();
+        this.tooltip("dream_vision_talisman").sub("exp").output("Experience: %1$d / %2$d").end().build();
         this.tooltip("active").name("Active").build();
         this.tooltip("inactive").name("Inactive").build();
         this.tooltip("research_item").name("Use to gain arcane research").build();
@@ -938,6 +938,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("research_table").sub("material").sub("has_bonus").output("This material will grant bonus research progress").end().build();
         this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("single").output("You will gain %1$s theory on success").end().build();
         this.tooltip("research_table").sub("theory_gain_preview").sub("positive").sub("multiple").output("You will gain %1$s theories on success").end().build();
+        this.tooltip("research_table").sub("slot").sub("pencil").output("Add a writing implement").end().build();
+        this.tooltip("research_table").sub("slot").sub("paper").output("Add Paper").end().build();
         this.tooltip("attunement_shackles").sub("shackled").output("Shackled").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("additions_slot_description").output("Add source rune").end().build();
         this.tooltip("smithing_template").sub("runic_armor_trim").sub("applies_to").output("Robes").end().build();
@@ -989,6 +991,28 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("grid").sub("no_path").output("Cannot reach!").end().build();
         this.tooltip("scribe_table").sub("slot").sub("ancient_book").output("Add an ancient book").end().build();
         this.tooltip("scribe_table").sub("slot").sub("writable_book").output("Add a Book and Quill").end().build();
+        this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
+        this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
+        this.tooltip("honey_extractor").sub("slot").sub("honeycomb").output("Add a Honeycomb").end().build();
+        this.tooltip("infernal_furnace").sub("slot").sub("ignyx").output("Add supercharge fuel").end().build();
+        this.tooltip("mana_battery").sub("slot").sub("input").output("Add magickal essence or a wand").end().build();
+        this.tooltip("mana_battery").sub("slot").sub("charge").output("Add a chargeable item").end().build();
+        this.tooltip("runecarving_table").sub("slot").sub("base").output("Add a rune base, such as a Stone Slab").end().build();
+        this.tooltip("runecarving_table").sub("slot").sub("etching").output("Add a rune etching, such as Lapis Lazuli").end().build();
+        this.tooltip("spellcrafting_altar").sub("slot").sub("scroll").output("Add a Blank Spell Scroll").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("core").output("Add a wand or staff core").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
+        this.tooltip("wand_assembly_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
+        this.tooltip("wand_charger").sub("slot").sub("essence").output("Add magickal essence").end().build();
+        this.tooltip("wand_charger").sub("slot").sub("wand").output("Add a chargeable item").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("core").output("Add a wand or staff core").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
+        this.tooltip("wand_glamour_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
+        this.tooltip("wand_inscription_table").sub("slot").sub("scroll").output("Add a filled spell scroll").end().build();
+        this.tooltip("wand_gui").sub("slot").sub("wand").output("Add a magickal wand").end().build();
+        this.tooltip("wand_gui").sub("slot").sub("staff").output("Add a magickal wand or staff").end().build();
         
         // Generate miscellaneous GUI label localizations
         this.label("crafting").sub("mana").output("%1$d %2$s mana").end().build();

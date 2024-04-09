@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.tiles.crafting.RunescribingAltarT
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,6 +41,7 @@ import net.minecraft.world.level.Level;
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
     public static final ResourceLocation RUNE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_rune_slot");
+    public static final Component RUNE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.rune");
 
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
         @Override
@@ -94,7 +96,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
     
     protected static Slot makeRuneSlot(Container inventoryIn, int index, int xPosition, int yPosition) {
         return new FilteredSlot(InventoryUtils.wrapInventory(inventoryIn, null), index, xPosition, yPosition,
-                new FilteredSlot.Properties().background(RUNE_SLOT_TEXTURE).typeOf(RuneItem.class));
+                new FilteredSlot.Properties().background(RUNE_SLOT_TEXTURE).tooltip(RUNE_SLOT_TOOLTIP).typeOf(RuneItem.class));
     }
     
     @Override

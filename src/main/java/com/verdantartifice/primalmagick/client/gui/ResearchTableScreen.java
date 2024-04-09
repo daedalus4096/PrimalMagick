@@ -30,7 +30,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -44,7 +43,7 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ResearchTableScreen extends AbstractContainerScreen<ResearchTableMenu> {
+public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTableMenu> {
     private static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/research_table.png");
     private static final ResourceLocation OVERLAY = PrimalMagick.resource("textures/gui/research_table_overlay.png");
     private static final DecimalFormat FORMATTER = new DecimalFormat("###.#");

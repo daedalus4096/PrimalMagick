@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +23,7 @@ import net.minecraft.world.item.crafting.RecipeHolder;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingTableScreen extends AbstractContainerScreen<RunecarvingTableMenu> {
+public class RunecarvingTableScreen extends AbstractContainerScreenPM<RunecarvingTableMenu> {
     protected static final ResourceLocation TEXTURE = PrimalMagick.resource("textures/gui/runecarving_table.png");
     
     protected float sliderProgress;

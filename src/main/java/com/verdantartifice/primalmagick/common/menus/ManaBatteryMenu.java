@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +27,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryTileEntity> {
+    protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.input");
+    protected static final Component CHARGE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.mana_battery.slot.charge");
+
     protected final ContainerData data;
     protected final Slot inputSlot;
     protected final Slot chargeSlot;
@@ -42,11 +46,11 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
         this.data = data;
         
         // Slot 0: input slot
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 8, 34, new FilteredSlot.Properties().typeOf(EssenceItem.class, IWand.class).tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: charge slot
         this.chargeSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 206, 34, 
-                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())));
+                new FilteredSlot.Properties().filter(stack -> (stack.getItem() instanceof IWand) || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent()).tooltip(CHARGE_SLOT_TOOLTIP)));
 
         // Slots 2-28: player backpack
         for (int i = 0; i < 3; i++) {
