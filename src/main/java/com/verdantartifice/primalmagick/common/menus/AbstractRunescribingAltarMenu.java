@@ -33,6 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 /**
  * Base server data container for the runescribing altar GUIs.
@@ -41,6 +42,7 @@ import net.minecraft.world.level.Level;
  */
 public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<RunescribingAltarTileEntity> {
     public static final ResourceLocation RUNE_SLOT_TEXTURE = PrimalMagick.resource("item/empty_rune_slot");
+    public static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.input");
     public static final Component RUNE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.runescribing_altar.slot.rune");
 
     protected final CraftingContainer altarInv = new TransientCraftingContainer(this, 4, 3) {
@@ -63,7 +65,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
         this.addSlot(new RunescribingResultSlot(this.player, this.altarInv, this.resultInv, 0, 138, 35));
         
         // Slot 1: runescribing input
-        this.addSlot(new Slot(this.altarInv, 0, 19, 35));
+        this.addSlot(new FilteredSlot(new InvWrapper(this.altarInv), 0, 19, 35, new FilteredSlot.Properties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slots 2-(R+1), where R = rune capacity: runes
         this.runeSlot = this.addRuneSlots();

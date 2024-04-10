@@ -3,17 +3,18 @@ package com.verdantartifice.primalmagick.common.menus;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorFuelSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.CalcinatorResultSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.tiles.crafting.AbstractCalcinatorTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Server data container for the calcinator GUI.
@@ -21,6 +22,8 @@ import net.minecraftforge.items.SlotItemHandler;
  * @author Daedalus4096
  */
 public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalcinatorTileEntity> {
+    protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.calcinator.slot.input");
+
     protected final ContainerData calcinatorData;
     
     public CalcinatorMenu(int id, Inventory playerInv, BlockPos tilePos) {
@@ -33,7 +36,7 @@ public class CalcinatorMenu extends AbstractTileSidedInventoryMenu<AbstractCalci
         this.calcinatorData = calcinatorData;
         
         // Slot 0: calcinator input
-        this.addSlot(new SlotItemHandler(this.getTileInventory(Direction.UP), 0, 34, 17));
+        this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 34, 17, new FilteredSlot.Properties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: calcinator fuel
         this.addSlot(new CalcinatorFuelSlot(this, this.getTileInventory(Direction.NORTH), 0, 34, 53));
