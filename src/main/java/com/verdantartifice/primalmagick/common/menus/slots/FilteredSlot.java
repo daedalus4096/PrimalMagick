@@ -1,10 +1,14 @@
 package com.verdantartifice.primalmagick.common.menus.slots;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,17 +25,24 @@ import net.minecraftforge.items.SlotItemHandler;
  * 
  * @author Daedalus4096
  */
-public class FilteredSlot extends SlotItemHandler implements IHasTooltip {
+public class FilteredSlot extends SlotItemHandler implements IHasTooltip, IHasCyclingBackgrounds {
+    private static final int BACKGROUND_CHANGE_TICK_RATE = 30;
+
+    private final List<Pair<Predicate<FilteredSlot>, ResourceLocation>> backgrounds;
     private final Optional<Predicate<ItemStack>> filter;
     private final Optional<Component> tooltip;
     private final OptionalInt maxStackSize;
+    private int ticks = 0;
 
     public FilteredSlot(IItemHandler pItemHandler, int pSlot, int pX, int pY, FilteredSlot.Properties properties) {
         super(pItemHandler, pSlot, pX, pY);
         this.filter = properties.filter;
         this.tooltip = properties.tooltip;
         this.maxStackSize = properties.maxStackSize;
-        properties.background.ifPresent(bg -> this.setBackground(InventoryMenu.BLOCK_ATLAS, bg));
+        this.backgrounds = properties.backgrounds;
+        
+        // Set the default background to the first active one, if any
+        this.getActiveBackgrounds().stream().findFirst().ifPresent(loc -> this.setBackground(InventoryMenu.BLOCK_ATLAS, loc));
     }
 
     @Override
@@ -54,9 +65,22 @@ public class FilteredSlot extends SlotItemHandler implements IHasTooltip {
         return this.tooltip.orElse(null);
     }
 
+    @Override
+    public void tickBackgrounds() {
+        List<ResourceLocation> active = this.getActiveBackgrounds();
+        if (!active.isEmpty()) {
+            int backgroundIndex = (this.ticks++ / BACKGROUND_CHANGE_TICK_RATE) % active.size();
+            this.setBackground(InventoryMenu.BLOCK_ATLAS, active.get(backgroundIndex));
+        }
+    }
+    
+    protected List<ResourceLocation> getActiveBackgrounds() {
+        return this.backgrounds.stream().filter(p -> p.getFirst().test(this)).map(Pair::getSecond).toList();
+    }
+
     public static class Properties {
+        private final List<Pair<Predicate<FilteredSlot>, ResourceLocation>> backgrounds = new ArrayList<>();
         private Optional<Predicate<ItemStack>> filter = Optional.empty();
-        private Optional<ResourceLocation> background = Optional.empty();
         private Optional<Component> tooltip = Optional.empty();
         private OptionalInt maxStackSize = OptionalInt.empty();
         
@@ -133,7 +157,11 @@ public class FilteredSlot extends SlotItemHandler implements IHasTooltip {
          * @return the modified properties object
          */
         public FilteredSlot.Properties background(ResourceLocation loc) {
-            this.background = Optional.ofNullable(loc);
+            return this.background(loc, $ -> true);
+        }
+        
+        public FilteredSlot.Properties background(ResourceLocation loc, Predicate<FilteredSlot> predicate) {
+            this.backgrounds.add(Pair.of(predicate, loc));
             return this;
         }
         

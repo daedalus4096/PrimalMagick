@@ -1,15 +1,18 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.GenericResultSlot;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceTransmuterTileEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -23,6 +26,10 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<EssenceTransmuterTileEntity> {
+    public static final ResourceLocation DUST_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_dust_slot");
+    public static final ResourceLocation SHARD_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_shard_slot");
+    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_crystal_slot");
+    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
     protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.essence_transmuter.slot.essence");
     
     protected final ContainerData transmuterData;
@@ -39,7 +46,11 @@ public class EssenceTransmuterMenu extends AbstractTileSidedInventoryMenu<Essenc
         this.transmuterData = transmuterData;
         
         // Slot 0: essence input
-        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)));
+        this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 44, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
+                .background(DUST_SLOT_TEXTURE)
+                .background(SHARD_SLOT_TEXTURE, $ -> ResearchNames.SHARD_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
+                .background(CRYSTAL_SLOT_TEXTURE, $ -> ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
+                .background(CLUSTER_SLOT_TEXTURE, $ -> ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))));
         
         // Slots 1-9: transmuter output
         for (int i = 0; i < 9; i++) {
