@@ -1,3 +1,9 @@
+v5.0.0-beta
+-----------
+* Added linguistics, a way to study the languages of the ancients for fun and profit
+* Added ancient libraries, places to find ancient books to study
+* Added backgrounds and tooltips to most mod device slots
+
 v4.1.1
 ------
 * Full release for Minecraft 1.20.2
