@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.menus;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
+import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -10,6 +12,7 @@ import com.verdantartifice.primalmagick.common.wands.IWand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -23,6 +26,10 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerTileEntity> {
+    public static final ResourceLocation DUST_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_dust_slot");
+    public static final ResourceLocation SHARD_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_shard_slot");
+    public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_crystal_slot");
+    public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
     protected static final Component ESSENCE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.essence");
     protected static final Component WAND_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.wand");
 
@@ -40,7 +47,11 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         this.chargerData = chargerData;
         
         // Slot 0: essence input
-        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)));
+        this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
+                .background(DUST_SLOT_TEXTURE)
+                .background(SHARD_SLOT_TEXTURE, $ -> ResearchNames.SHARD_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
+                .background(CRYSTAL_SLOT_TEXTURE, $ -> ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
+                .background(CLUSTER_SLOT_TEXTURE, $ -> ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))));
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 

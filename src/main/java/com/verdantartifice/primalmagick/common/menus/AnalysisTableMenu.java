@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.AnalysisResultSlot;
+import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 
@@ -20,6 +21,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 /**
  * Server data container for the analysis table GUI.
@@ -27,6 +29,7 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class AnalysisTableMenu extends AbstractContainerMenu {
+    protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.analysis_table.slot.input");
     protected static final Logger LOGGER = LogManager.getLogger();
     
     protected final Container analysisInventory = new SimpleContainer(2) {
@@ -47,7 +50,7 @@ public class AnalysisTableMenu extends AbstractContainerMenu {
         this.player = inv.player;
         
         // Slot 0: Item to analyze
-        this.addSlot(new Slot(this.analysisInventory, 0, 56, 35));
+        this.addSlot(new FilteredSlot(new InvWrapper(this.analysisInventory), 0, 56, 35, new FilteredSlot.Properties().tooltip(INPUT_SLOT_TOOLTIP)));
         
         // Slot 1: Last analyzed item
         this.addSlot(new AnalysisResultSlot(this.analysisInventory, 1, 103, 35));

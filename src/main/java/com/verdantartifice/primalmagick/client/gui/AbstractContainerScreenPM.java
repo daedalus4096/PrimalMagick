@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.gui;
 
 import java.util.Optional;
 
+import com.verdantartifice.primalmagick.common.menus.slots.IHasCyclingBackgrounds;
 import com.verdantartifice.primalmagick.common.menus.slots.IHasTooltip;
 
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,6 +20,16 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 public abstract class AbstractContainerScreenPM<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
     public AbstractContainerScreenPM(T pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
+    }
+
+    @Override
+    protected void containerTick() {
+        super.containerTick();
+        this.menu.slots.stream().forEach(slot -> {
+            if (slot instanceof IHasCyclingBackgrounds bgSlot) {
+                bgSlot.tickBackgrounds();
+            }
+        });
     }
 
     @Override

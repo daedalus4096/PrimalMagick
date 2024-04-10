@@ -991,7 +991,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("scribe_table").sub("grid").sub("no_path").output("Cannot reach!").end().build();
         this.tooltip("scribe_table").sub("slot").sub("ancient_book").output("Add an ancient book").end().build();
         this.tooltip("scribe_table").sub("slot").sub("writable_book").output("Add a Book and Quill").end().build();
+        this.tooltip("runescribing_altar").sub("slot").sub("input").output("Add an enchantable item").end().build();
         this.tooltip("runescribing_altar").sub("slot").sub("rune").output("Add a rune").end().build();
+        this.tooltip("analysis_table").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
+        this.tooltip("calcinator").sub("slot").sub("input").output("Add an item with magickal affinities").end().build();
         this.tooltip("essence_cask").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("essence_transmuter").sub("slot").sub("essence").output("Add magickal essence").end().build();
         this.tooltip("honey_extractor").sub("slot").sub("bottle").output("Add an empty glass bottle").end().build();
@@ -1011,6 +1014,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.tooltip("wand_glamour_table").sub("slot").sub("cap").output("Add a wand cap").end().build();
         this.tooltip("wand_glamour_table").sub("slot").sub("gem").output("Add a wand gem").end().build();
         this.tooltip("wand_inscription_table").sub("slot").sub("scroll").output("Add a filled spell scroll").end().build();
+        this.tooltip("calcinator_gui").sub("slot").sub("fuel").output("Add furnace fuel").end().build();
         this.tooltip("wand_gui").sub("slot").sub("wand").output("Add a magickal wand").end().build();
         this.tooltip("wand_gui").sub("slot").sub("staff").output("Add a magickal wand or staff").end().build();
         
