@@ -894,8 +894,8 @@ public class ItemsPM {
     public static final RegistryObject<StaticBookItem> STATIC_BOOK_UNCOMMON = registerWithoutTab("static_book_uncommon", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_BOOK_RARE = registerWithoutTab("static_book_rare", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
-    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerWithoutTab("lore_tablet_fragment", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerWithoutTab("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
+    public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
     
     // Register debug items
     public static final RegistryObject<TickStickItem> TICK_STICK = registerWithoutTab("tick_stick", () -> new TickStickItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
