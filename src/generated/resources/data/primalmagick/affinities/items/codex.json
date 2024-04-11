@@ -1,8 +1,0 @@
-{
-  "type": "item",
-  "add": {
-    "hallowed": 5
-  },
-  "base": "minecraft:written_book",
-  "target": "primalmagick:codex"
-}

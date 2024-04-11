@@ -901,8 +901,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
         this.item(ItemsPM.STATIC_BOOK).name("Any Book").build();
         this.item(ItemsPM.STATIC_TABLET).name("Any Tablet").build();
-        this.item(ItemsPM.CODEX).name("Codex: %1$s").build();
-        this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
         this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();

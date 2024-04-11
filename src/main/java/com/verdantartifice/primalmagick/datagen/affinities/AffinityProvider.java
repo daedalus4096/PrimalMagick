@@ -853,8 +853,6 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(ItemsPM.SHEEP_TOME.get()).set(auraUnit.multiply(5).add(Source.MOON, 15).add(Source.HALLOWED, 20)).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_BOOK.get()).base(Items.WRITTEN_BOOK).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.STATIC_TABLET.get()).set(Source.EARTH, 20).build(consumer);
-        ItemAffinityBuilder.itemAffinity(ItemsPM.CODEX.get()).base(Items.WRITTEN_BOOK).add(Source.HALLOWED, 5).build(consumer);
-        ItemAffinityBuilder.emptyAffinity(ItemsPM.CODEX_CREATIVE.get()).build(consumer);    // Creative only
         ItemAffinityBuilder.itemAffinity(ItemsPM.LORE_TABLET_FRAGMENT.get()).set(Source.EARTH, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(ItemsPM.LORE_TABLET_DIRTY.get()).base(ItemsPM.STATIC_TABLET.get()).build(consumer);
         ItemAffinityBuilder.emptyAffinity(ItemsPM.DRAINED_BASIC_EARTH_PIXIE.get()).build(consumer);
