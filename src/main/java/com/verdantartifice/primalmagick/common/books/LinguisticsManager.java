@@ -246,4 +246,21 @@ public class LinguisticsManager {
         GridDefinition gridDef = getGridDefinition(gridKey);
         return gridDef == null ? null : new PlayerGrid(player, gridDef, getUnlockedGridNodes(player, gridKey), getGridLastModified(player, gridKey));
     }
+    
+    /**
+     * Calculates the total amount of vocabulary that the given player needs to unlock all remaining locked linguistics grid nodes
+     * for the given language.
+     * 
+     * @param player the player to be queried
+     * @param language the language of grid(s) to be queried
+     * @return the total amount of vocabulary still needed
+     */
+    public static int getTotalRemainingVocabularyRequired(@Nonnull Player player, @Nonnull Holder<BookLanguage> language) {
+        return GRID_DEFINITIONS.entrySet().stream()
+                .filter(e -> language.is(e.getValue().getLanguage()))
+                .map(e -> getPlayerGrid(player, e.getKey()))
+                .flatMap(pg -> pg.getLockedNodes())
+                .mapToInt(n -> n.getVocabularyCost())
+                .sum();
+    }
 }

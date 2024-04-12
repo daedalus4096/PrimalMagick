@@ -9,6 +9,7 @@ import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.VocabularyWidget;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
 import com.verdantartifice.primalmagick.common.books.ScribeTableMode;
 import com.verdantartifice.primalmagick.common.menus.ScribeStudyVocabularyMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
@@ -201,6 +202,14 @@ public class ScribeStudyVocabularyScreen extends AbstractScribeTableScreen<Scrib
                             MutableComponent costLine = cost == 1 ? Component.translatable("container.enchant.level.one") : Component.translatable("container.enchant.level.many", cost);
                             tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.level_cost", costLine).withStyle(ChatFormatting.GRAY));
                         }
+                    }
+                    
+                    // Show a warning if the player is trying to study vocabulary they don't need
+                    int totalNeeded = LinguisticsManager.getTotalRemainingVocabularyRequired(this.minecraft.player, activeLanguage);
+                    int currentVocab = LinguisticsManager.getVocabulary(this.minecraft.player, activeLanguage);
+                    if (currentVocab + studyDelta > totalNeeded) {
+                        tooltips.add(CommonComponents.EMPTY);
+                        tooltips.add(Component.translatable("tooltip.primalmagick.scribe_table.button.study_vocabulary.no_more_needed").withStyle(ChatFormatting.RED));
                     }
                     
                     // Render the output tooltip lines

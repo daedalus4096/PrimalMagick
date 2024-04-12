@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.joml.Vector2i;
@@ -62,6 +63,12 @@ public class PlayerGrid {
      */
     public Set<Vector2ic> getUnlocked() {
         return Collections.unmodifiableSet(this.unlocked);
+    }
+    
+    public Stream<GridNodeDefinition> getLockedNodes() {
+        return this.definition.getNodes().entrySet().stream()
+                .filter(e -> !this.unlocked.contains(e.getKey()))
+                .map(e -> e.getValue());
     }
     
     public long getLastModified() {
