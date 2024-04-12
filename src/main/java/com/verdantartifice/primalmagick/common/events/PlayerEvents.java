@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
+import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BookType;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.LinguisticsManager;
@@ -583,7 +584,8 @@ public class PlayerEvents {
         ResearchManager.completeResearch(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey());
         
         // Construct the dream journal item
-        ItemStack journal = StaticBookItem.make(BookType.BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.empty(), Optional.of(player.getName().getString()), OptionalInt.empty(), OptionalInt.empty());
+        ItemStack journal = StaticBookItem.make(BookType.BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.of(BookLanguagesPM.DEFAULT), Optional.of(player.getName().getString()), 
+                OptionalInt.empty(), OptionalInt.empty());
         
         // Give the dream journal to the player and announce it
         if (!player.addItem(journal)) {
