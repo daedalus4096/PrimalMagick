@@ -901,8 +901,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.item(ItemsPM.SUPREME_WARDING_MODULE).name("Supreme Warding Module").build();
         this.item(ItemsPM.STATIC_BOOK).name("Any Book").build();
         this.item(ItemsPM.STATIC_TABLET).name("Any Tablet").build();
-        this.item(ItemsPM.CODEX).name("Codex: %1$s").build();
-        this.item(ItemsPM.CODEX_CREATIVE).name("Creative Codex: %1$s").build();
         this.item(ItemsPM.LORE_TABLET_FRAGMENT).name("Ancient Tablet Fragment").build();
         this.item(ItemsPM.LORE_TABLET_DIRTY).name("Dirt-Caked Ancient Tablet").tooltip("Use to clean off the dirt and reveal the writing beneath").build();
         this.item(ItemsPM.HYDROMELON_SEEDS).name("Hydromelon Seeds").build();
@@ -1699,9 +1697,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         
         // FIXME Remove once library testing is complete
-        for (int index = 1; index <= 50; index++) {
+        for (int index = 0; index <= 50; index++) {
             String rarity;
-            if (index <= 5) {
+            if (index == 0) {
+                rarity = "epic";
+            } else if (index <= 5) {
                 rarity = "rare";
             } else if (index <= 20) {
                 rarity = "uncommon";
@@ -1917,6 +1917,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
         this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
+        this.stat(StatsPM.VOCABULARY_STUDIED).name("Ancient vocabulary studied").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();

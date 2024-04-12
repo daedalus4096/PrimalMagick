@@ -1,0 +1,14 @@
+{
+  "type": "primalmagick:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/desert_pyramid"
+    }
+  ],
+  "item": "primalmagick:lore_tablet_fragment",
+  "rolls": {
+    "max_inclusive": 6,
+    "min_inclusive": 2
+  }
+}

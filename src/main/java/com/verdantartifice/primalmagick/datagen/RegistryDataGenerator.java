@@ -50,12 +50,14 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         super(output, provider, BUILDER, Set.of(PrimalMagick.MODID));
     }
     
-    public static void addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
-        generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
+    @SuppressWarnings("deprecation")
+    public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
+        RegistryDataGenerator registryDataGenerator = generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        return registryDataGenerator.getRegistryProvider();
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {

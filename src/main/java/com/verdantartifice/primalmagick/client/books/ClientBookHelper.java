@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookHelper;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
@@ -29,7 +28,6 @@ import com.verdantartifice.primalmagick.common.util.FunctionUtils;
 
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -39,7 +37,6 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
@@ -63,9 +60,7 @@ public class ClientBookHelper {
     
     private static final Map<BookType, BookSprites> SPRITES = ImmutableMap.<BookType, BookSprites>builder()
             .put(BookType.BOOK, BookSprites.VANILLA)
-            .put(BookType.TABLET, new BookSprites(PrimalMagick.resource("textures/gui/tablet.png"), 
-                    new WidgetSprites(PrimalMagick.resource("books/tablet/page_forward"), new ResourceLocation("books/tablet/page_forward_highlighted")), 
-                    new WidgetSprites(PrimalMagick.resource("books/tablet/page_backward"), new ResourceLocation("books/tablet/page_backward_highlighted"))))
+            .put(BookType.TABLET, BookSprites.TABLET)
             .build();
 
     private static TriFunction<BookView, RegistryAccess, Font, List<FormattedCharSequence>> memoizedTextLines = FunctionUtils.memoize(ClientBookHelper::getTextLinesInner);

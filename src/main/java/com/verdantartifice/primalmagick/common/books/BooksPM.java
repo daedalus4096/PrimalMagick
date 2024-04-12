@@ -36,7 +36,7 @@ public class BooksPM {
         context.register(BooksPM.SOURCE_PRIMER, new BookDefinition(PrimalMagick.resource("source_primer")));
         
         // FIXME Remove once library testing is complete
-        for (int index = 1; index <= 50; index++) {
+        for (int index = 0; index <= 50; index++) {
             ResourceKey<BookDefinition> tempKey = create("loremipsum" + index);
             context.register(tempKey, new BookDefinition(PrimalMagick.resource("loremipsum" + index)));
         }

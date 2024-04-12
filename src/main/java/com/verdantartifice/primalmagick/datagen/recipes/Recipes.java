@@ -86,7 +86,6 @@ public class Recipes extends RecipeProvider {
         this.registerEssenceCaskRecipes(consumer);
         this.registerAttunementShacklesRecipes(consumer);
         this.registerWardingModuleRecipes(consumer);
-        this.registerCodexRecipes(consumer);
         this.registerStonemeldingRecipes(consumer);
         this.registerCryotreatmentRecipes(consumer);
         this.registerCropRecipes(consumer);
@@ -6594,10 +6593,6 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("SUPREME_WARDING_MODULE")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 400))
             .build(consumer);
-    }
-    
-    protected void registerCodexRecipes(RecipeOutput consumer) {
-        // TODO Re-add codex ritual recipes once the book project is ready to deploy
     }
     
     protected void registerStonemeldingRecipes(RecipeOutput consumer) {

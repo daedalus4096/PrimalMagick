@@ -4,11 +4,11 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
-import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
@@ -33,6 +33,7 @@ import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Data provider for all of the mod's ancient library loot tables.
@@ -100,7 +101,16 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))));
-
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_ARCHAEOLOGY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.EARTH, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SEA, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SKY, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SUN, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.MOON, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.TRADE, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.FORBIDDEN, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.HALLOWED, 1))));
+        
         // Register culture component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_EARTH, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(catalog(LootTablesPM.LIBRARY_CATALOG_COMMON, BookLanguagesPM.EARTH, 12))
@@ -158,30 +168,17 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), Rarity.RARE, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
+        // Generate epic catalog loot table for archaeology tablets
+        LootPool.Builder epicPool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, Rarity.EPIC, 1));
+        IntStream.rangeClosed(0, 0).forEach(index -> epicPool.add(book(BooksPM.create("loremipsum" + index), Rarity.EPIC, 100)));  // FIXME Remove once library testing is complete
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
+
         // Generate treasure catalog loot table
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(enchantedBook(EnchantmentsPM.LIFESTEAL.get()))
-                .add(enchantedBook(EnchantmentsPM.ENDERLOCK.get()))
-                .add(enchantedBook(EnchantmentsPM.JUDGMENT.get()))
-                .add(enchantedBook(EnchantmentsPM.ENDERPORT.get()))
-                .add(enchantedBook(EnchantmentsPM.REGROWTH.get()))
-                .add(enchantedBook(EnchantmentsPM.AEGIS.get()))
-                .add(enchantedBook(EnchantmentsPM.MANA_EFFICIENCY.get()))
-                .add(enchantedBook(EnchantmentsPM.SPELL_POWER.get()))
-                .add(enchantedBook(EnchantmentsPM.TREASURE.get()))
-                .add(enchantedBook(EnchantmentsPM.BLUDGEONING.get()))
-                .add(enchantedBook(EnchantmentsPM.REVERBERATION.get()))
-                .add(enchantedBook(EnchantmentsPM.BOUNTY.get()))
-                .add(enchantedBook(EnchantmentsPM.DISINTEGRATION.get()))
-                .add(enchantedBook(EnchantmentsPM.VERDANT.get()))
-                .add(enchantedBook(EnchantmentsPM.LUCKY_STRIKE.get()))
-                .add(enchantedBook(EnchantmentsPM.RENDING.get()))
-                .add(enchantedBook(EnchantmentsPM.SOULPIERCING.get()))
-                .add(enchantedBook(EnchantmentsPM.ESSENCE_THIEF.get()))
-                .add(enchantedBook(EnchantmentsPM.BULWARK.get()))
-                .add(enchantedBook(EnchantmentsPM.MAGICK_PROTECTION.get()))
-                .add(enchantedBook(EnchantmentsPM.GUILLOTINE.get()))
-                ));
+        LootPool.Builder enchPool = LootPool.lootPool();
+        ForgeRegistries.ENCHANTMENTS.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(e -> e.getValue()).forEach(ench -> {
+            enchPool.add(enchantedBook(ench));
+        });
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(enchPool));
     }
     
     @SuppressWarnings("deprecation")
@@ -195,6 +192,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         Supplier<StaticBookItem> itemSupplier = switch (rarity) {
             case UNCOMMON -> ItemsPM.STATIC_BOOK_UNCOMMON;
             case RARE -> ItemsPM.STATIC_BOOK_RARE;
+            case EPIC -> ItemsPM.STATIC_TABLET;
             default -> ItemsPM.STATIC_BOOK;
         };
         CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, bookDefKey.location().toString()));

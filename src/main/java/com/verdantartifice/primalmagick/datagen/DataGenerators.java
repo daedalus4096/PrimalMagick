@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.datagen;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.datagen.affinities.AffinityProvider;
@@ -30,6 +31,7 @@ import com.verdantartifice.primalmagick.datagen.tags.RecipeSerializerTagsProvide
 import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectProvider;
 import com.verdantartifice.primalmagick.datagen.tips.TipDefinitionProvider;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -74,7 +76,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ProjectProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput()));
-        RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
+        CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
     }
 }

@@ -19,7 +19,10 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.grids.GridDefinition;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
@@ -30,21 +33,23 @@ public class GridDefinitionBuilder {
     protected ResourceKey<BookLanguage> bookLanguage;
     protected Vector2ic startPos;
     protected final List<IFinishedGridNode> nodes = new ArrayList<>();
+    protected final HolderLookup.Provider lookupProvider;
     
-    protected GridDefinitionBuilder(@Nonnull ResourceLocation key) {
+    protected GridDefinitionBuilder(@Nonnull ResourceLocation key, HolderLookup.Provider lookupProvider) {
         this.key = key;
+        this.lookupProvider = lookupProvider;
     }
 
-    public static GridDefinitionBuilder grid(@Nonnull ResourceLocation key) {
-        return new GridDefinitionBuilder(key);
+    public static GridDefinitionBuilder grid(@Nonnull ResourceLocation key, HolderLookup.Provider lookupProvider) {
+        return new GridDefinitionBuilder(key, lookupProvider);
     }
     
-    public static GridDefinitionBuilder grid(@Nonnull String keyNamespace, @Nonnull String keyPath) {
-        return grid(new ResourceLocation(keyNamespace, keyPath));
+    public static GridDefinitionBuilder grid(@Nonnull String keyNamespace, @Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
+        return grid(new ResourceLocation(keyNamespace, keyPath), lookupProvider);
     }
     
-    public static GridDefinitionBuilder grid(@Nonnull String keyPath) {
-        return grid(PrimalMagick.resource(keyPath));
+    public static GridDefinitionBuilder grid(@Nonnull String keyPath, HolderLookup.Provider lookupProvider) {
+        return grid(PrimalMagick.resource(keyPath), lookupProvider);
     }
     
     public GridDefinitionBuilder language(@Nullable ResourceKey<BookLanguage> lang) {
@@ -94,12 +99,13 @@ public class GridDefinitionBuilder {
             throw new IllegalStateException("Start position not among defined nodes for linguistics grid " + id.toString());
         }
         
-        // TODO Re-implement complexity validation
-//        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.languageId())).mapToInt(o -> o.orElse(0)).sum();
-//        int expected = this.bookLanguage.complexity();
-//        if (total != expected) {
-//            throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
-//        }
+        // Validate that the sum of all the nodes' defined comprehension values equals the expected comprehension of the language
+        Holder.Reference<BookLanguage> langHolder = this.lookupProvider.lookupOrThrow(RegistryKeysPM.BOOK_LANGUAGES).getOrThrow(this.bookLanguage);
+        int total = this.nodes.stream().map(IFinishedGridNode::getReward).map(r -> r.getComprehensionPoints(this.bookLanguage.location())).mapToInt(o -> o.orElse(0)).sum();
+        int expected = langHolder.get().complexity();
+        if (total != expected) {
+            throw new IllegalStateException("Comprehension mismatch for linguistics grid " + id.toString() + "; expected " + expected + ", got " + total);
+        }
     }
     
     public void build(Consumer<IFinishedGrid> consumer) {
