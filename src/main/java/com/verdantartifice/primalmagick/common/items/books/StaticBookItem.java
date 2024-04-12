@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.function.Supplier;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,13 +71,13 @@ public class StaticBookItem extends Item {
         TYPE_MAP.put(type, this);
     }
     
-    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt) {
-        return make(type, bookDefKeyOpt, bookLangKeyOpt, Optional.empty(), OptionalInt.empty(), OptionalInt.empty());
+    public static ItemStack make(Supplier<StaticBookItem> itemSupplier, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt) {
+        return make(itemSupplier, bookDefKeyOpt, bookLangKeyOpt, Optional.empty(), OptionalInt.empty(), OptionalInt.empty());
     }
     
-    public static ItemStack make(BookType type, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt, Optional<String> authorOpt, 
+    public static ItemStack make(Supplier<StaticBookItem> itemSupplier, Optional<ResourceKey<BookDefinition>> bookDefKeyOpt, Optional<ResourceKey<BookLanguage>> bookLangKeyOpt, Optional<String> authorOpt, 
             OptionalInt generationOpt, OptionalInt translationOpt) {
-        ItemStack retVal = new ItemStack(TYPE_MAP.get(type));
+        ItemStack retVal = new ItemStack(itemSupplier.get());
         bookDefKeyOpt.ifPresent(bookDefKey -> setBookDefinition(retVal, bookDefKey));
         bookLangKeyOpt.ifPresent(bookLangKey -> setBookLanguage(retVal, bookLangKey));
         authorOpt.ifPresent(authorOverride -> setAuthorOverride(retVal, authorOverride));
