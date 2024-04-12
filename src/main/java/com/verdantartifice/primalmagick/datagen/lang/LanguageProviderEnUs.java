@@ -1917,6 +1917,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.SHRINE_FOUND_SUN).name("Sun shrines found").build();
         this.stat(StatsPM.SHRINE_FOUND_MOON).name("Moon shrines found").build();
         this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
+        this.stat(StatsPM.VOCABULARY_STUDIED).name("Ancient vocabulary studied").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").build();
         this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();

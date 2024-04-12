@@ -2589,6 +2589,7 @@
   "stat.primalmagick.spells_crafted_max_cost": "Cost of most expensive spell crafted",
   "stat.primalmagick.theories_formed": "Theories formed",
   "stat.primalmagick.treants_named": "Treefolk driven to self-immolation",
+  "stat.primalmagick.vocabulary_studied": "Ancient vocabulary studied",
   "tip.primalmagick.ambrosia_cap": "Ambrosia has a cap on how much induced attunement it can grant you. More powerful types of Ambrosia have higher caps.",
   "tip.primalmagick.analysis": "To learn which magickal affinities a block or item possesses, you must analyze it at an Analysis Table.",
   "tip.primalmagick.better_analysis": "You'll need to improve your available analysis tools before you can analyze living creatures. Try studying your Magitech.",

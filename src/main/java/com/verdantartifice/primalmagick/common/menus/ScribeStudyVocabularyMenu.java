@@ -13,6 +13,8 @@ import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
+import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
@@ -147,7 +149,8 @@ public class ScribeStudyVocabularyMenu extends AbstractScribeTableMenu {
                     // Mark the book as having been studied
                     LinguisticsManager.incrementTimesStudied(player, bookDef, bookLanguage, studyDelta);
                     
-                    // TODO Award statistics for study
+                    // Award statistics for study
+                    StatsManager.incrementValue(player, StatsPM.VOCABULARY_STUDIED, studyDelta);
                     
                     this.nameSeed.set(player.getEnchantmentSeed());
                     level.playSound(null, blockPos, SoundsPM.WRITING.get(), SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
