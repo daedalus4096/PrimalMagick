@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -22,32 +23,36 @@ import net.minecraft.resources.ResourceLocation;
 public class GridDefinitionProvider implements DataProvider {
     private static final Logger LOGGER = LogManager.getLogger();
     protected final PackOutput packOutput;
+    protected final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
     
-    public GridDefinitionProvider(PackOutput packOutput) {
+    public GridDefinitionProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProviderFuture) {
         this.packOutput = packOutput;
+        this.lookupProviderFuture = lookupProviderFuture;
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput pOutput) {
-        ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
-        Map<ResourceLocation, IFinishedGrid> map = new HashMap<>();
-        this.registerGrids(gridDef -> {
-            if (map.put(gridDef.getId(), gridDef) != null) {
-                LOGGER.debug("Duplicate linguistics grid definition in data generation: {}", gridDef.getId().toString());
-            }
+        return this.lookupProviderFuture.thenCompose(p -> {
+            ImmutableList.Builder<CompletableFuture<?>> futuresBuilder = new ImmutableList.Builder<>();
+            Map<ResourceLocation, IFinishedGrid> map = new HashMap<>();
+            this.registerGrids(p, gridDef -> {
+                if (map.put(gridDef.getId(), gridDef) != null) {
+                    LOGGER.debug("Duplicate linguistics grid definition in data generation: {}", gridDef.getId().toString());
+                }
+            });
+            map.entrySet().forEach(entry -> {
+                futuresBuilder.add(DataProvider.saveStable(pOutput, entry.getValue().getGridJson(), this.getPath(this.packOutput, entry.getKey())));
+            });
+            return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
         });
-        map.entrySet().forEach(entry -> {
-            futuresBuilder.add(DataProvider.saveStable(pOutput, entry.getValue().getGridJson(), this.getPath(this.packOutput, entry.getKey())));
-        });
-        return CompletableFuture.allOf(futuresBuilder.build().toArray(CompletableFuture[]::new));
     }
 
     private Path getPath(PackOutput output, ResourceLocation entryLoc) {
         return output.getOutputFolder(PackOutput.Target.DATA_PACK).resolve(entryLoc.getNamespace()).resolve("linguistics_grids").resolve(entryLoc.getPath() + ".json");
     }
     
-    protected void registerGrids(Consumer<IFinishedGrid> consumer) {
-        GridDefinitionBuilder.grid("earth").language(BookLanguagesPM.EARTH).startPos(3, 7)
+    protected void registerGrids(HolderLookup.Provider lookupProvider, Consumer<IFinishedGrid> consumer) {
+        GridDefinitionBuilder.grid("earth", lookupProvider).language(BookLanguagesPM.EARTH).startPos(3, 7)
                 .node(GridNodeDefinitionBuilder.node(3, 1).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.EARTH).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(4, 1).cost(1).reward(AttunementRewardBuilder.reward(Source.EARTH).points(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(1, 2).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.EARTH).points(5).build()).build())
@@ -85,7 +90,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(6, 7).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(7, 7).cost(1).reward(AttunementRewardBuilder.reward(Source.EARTH).points(1).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("sea").language(BookLanguagesPM.SEA).startPos(0, 7)
+        GridDefinitionBuilder.grid("sea", lookupProvider).language(BookLanguagesPM.SEA).startPos(0, 7)
                 .node(GridNodeDefinitionBuilder.node(4, 1).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(5, 1).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SEA).points(4).build()).build())
                 .node(GridNodeDefinitionBuilder.node(6, 1).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SEA).points(1).build()).build())
@@ -123,7 +128,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(6, 7).cost(1).reward(AttunementRewardBuilder.reward(Source.SEA).points(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(7, 7).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("sky").language(BookLanguagesPM.SKY).startPos(3, 3)
+        GridDefinitionBuilder.grid("sky", lookupProvider).language(BookLanguagesPM.SKY).startPos(3, 3)
                 .node(GridNodeDefinitionBuilder.node(1, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SKY).points(4).build()).build())
                 .node(GridNodeDefinitionBuilder.node(2, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SKY).points(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(6, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SKY).points(5).build()).build())
@@ -161,7 +166,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(5, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SKY).points(4).build()).build())
                 .node(GridNodeDefinitionBuilder.node(6, 7).cost(1).reward(AttunementRewardBuilder.reward(Source.SKY).points(1).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("sun").language(BookLanguagesPM.SUN).startPos(3, 3)
+        GridDefinitionBuilder.grid("sun", lookupProvider).language(BookLanguagesPM.SUN).startPos(3, 3)
                 .node(GridNodeDefinitionBuilder.node(3, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SUN).points(4).build()).build())
                 .node(GridNodeDefinitionBuilder.node(6, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SUN).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(0, 1).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SUN).points(5).build()).build())
@@ -199,7 +204,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(1, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SUN).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(4, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.SUN).points(4).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("moon").language(BookLanguagesPM.MOON).startPos(0, 3)
+        GridDefinitionBuilder.grid("moon", lookupProvider).language(BookLanguagesPM.MOON).startPos(0, 3)
                 .node(GridNodeDefinitionBuilder.node(2, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.MOON).points(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(3, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.MOON).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(4, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
@@ -237,7 +242,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(4, 7).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(5, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.MOON).points(4).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("trade").language(BookLanguagesPM.TRADE).startPos(4, 3)
+        GridDefinitionBuilder.grid("trade", lookupProvider).language(BookLanguagesPM.TRADE).startPos(4, 3)
                 .node(GridNodeDefinitionBuilder.node(1, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.TRADE).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(2, 0).cost(1).reward(AttunementRewardBuilder.reward(Source.SUN).points(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(3, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
@@ -275,7 +280,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(4, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.TRADE).points(3).build()).build())
                 .node(GridNodeDefinitionBuilder.node(5, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.TRADE).points(4).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("forbidden").language(BookLanguagesPM.FORBIDDEN).startPos(1, 0)
+        GridDefinitionBuilder.grid("forbidden", lookupProvider).language(BookLanguagesPM.FORBIDDEN).startPos(1, 0)
                 .node(GridNodeDefinitionBuilder.node(1, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.FORBIDDEN).points(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(2, 0).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.OBSERVATION).levels(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(5, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.FORBIDDEN).points(3).build()).build())
@@ -313,7 +318,7 @@ public class GridDefinitionProvider implements DataProvider {
                 .node(GridNodeDefinitionBuilder.node(5, 7).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
                 .node(GridNodeDefinitionBuilder.node(6, 7).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.FORBIDDEN).points(5).build()).build())
                 .build(consumer);
-        GridDefinitionBuilder.grid("hallowed").language(BookLanguagesPM.HALLOWED).startPos(3, 1)
+        GridDefinitionBuilder.grid("hallowed", lookupProvider).language(BookLanguagesPM.HALLOWED).startPos(3, 1)
                 .node(GridNodeDefinitionBuilder.node(0, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.HALLOWED).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(7, 0).cost(1).reward(ComprehensionRewardBuilder.reward(BookLanguagesPM.HALLOWED).points(5).build()).build())
                 .node(GridNodeDefinitionBuilder.node(0, 1).cost(1).reward(KnowledgeRewardBuilder.reward(KnowledgeType.THEORY).levels(1).build()).build())
