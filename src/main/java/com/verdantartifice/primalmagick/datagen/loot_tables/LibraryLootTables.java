@@ -55,7 +55,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
-                .add(EmptyLootItem.emptyItem().setWeight(20))));
+                .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SEA, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SEA).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(20))
@@ -63,7 +63,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
-                .add(EmptyLootItem.emptyItem().setWeight(20))));
+                .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SKY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SKY).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_EARTH).setWeight(20))
@@ -71,7 +71,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
-                .add(EmptyLootItem.emptyItem().setWeight(20))));
+                .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_SUN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(20))
@@ -79,7 +79,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
-                .add(EmptyLootItem.emptyItem().setWeight(20))));
+                .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_MOON, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_MOON).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_SUN).setWeight(20))
@@ -87,12 +87,12 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(20))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(10))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(5))
-                .add(EmptyLootItem.emptyItem().setWeight(20))));
+                .add(EmptyLootItem.emptyItem().setWeight(40))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_FORBIDDEN, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(6F))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_TRADE).setWeight(5))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))
-                .add(EmptyLootItem.emptyItem().setWeight(10))));
+                .add(EmptyLootItem.emptyItem().setWeight(20))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_WELCOME, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
                 .add(autoTranslatingBook(BooksPM.WELCOME))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_WARNING, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
