@@ -1697,9 +1697,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
             .build();
         
         // FIXME Remove once library testing is complete
-        for (int index = 1; index <= 50; index++) {
+        for (int index = 0; index <= 50; index++) {
             String rarity;
-            if (index <= 5) {
+            if (index == 0) {
+                rarity = "epic";
+            } else if (index <= 5) {
                 rarity = "rare";
             } else if (index <= 20) {
                 rarity = "uncommon";

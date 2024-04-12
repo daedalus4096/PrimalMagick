@@ -53,6 +53,7 @@ public class LootTablesPM {
     public static final ResourceLocation LIBRARY_CATALOG_COMMON = registerLibrary("gameplay/library/catalog/common");
     public static final ResourceLocation LIBRARY_CATALOG_UNCOMMON = registerLibrary("gameplay/library/catalog/uncommon");
     public static final ResourceLocation LIBRARY_CATALOG_RARE = registerLibrary("gameplay/library/catalog/rare");
+    public static final ResourceLocation LIBRARY_CATALOG_EPIC = registerLibrary("gameplay/library/catalog/epic");
     public static final ResourceLocation LIBRARY_CATALOG_TREASURE = registerLibrary("gameplay/library/catalog/treasure");
 
     private static ResourceLocation registerTreefolk(String id) {

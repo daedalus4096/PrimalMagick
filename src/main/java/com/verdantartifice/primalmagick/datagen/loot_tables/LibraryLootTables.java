@@ -101,22 +101,14 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_FORBIDDEN).setWeight(40))
                 .add(LootTableReference.lootTableReference(LootTablesPM.LIBRARY_CULTURE_HALLOWED).setWeight(20))));
         this.registerLootTable(writer, LootTablesPM.LIBRARY_ARCHAEOLOGY, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1F))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.EARTH, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SEA, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SKY, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.SUN, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.MOON, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.TRADE, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.FORBIDDEN, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_RARE, BookLanguagesPM.HALLOWED, 2))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.EARTH, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SEA, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SKY, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.SUN, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.MOON, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.TRADE, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.FORBIDDEN, 1))
-                .add(catalog(LootTablesPM.LIBRARY_CATALOG_UNCOMMON, BookLanguagesPM.HALLOWED, 1))));
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.EARTH, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SEA, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SKY, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.SUN, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.MOON, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.TRADE, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.FORBIDDEN, 1))
+                .add(catalog(LootTablesPM.LIBRARY_CATALOG_EPIC, BookLanguagesPM.HALLOWED, 1))));
         
         // Register culture component loot tables
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CULTURE_EARTH, LootTable.lootTable().withPool(LootPool.lootPool()
@@ -175,6 +167,11 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), Rarity.RARE, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
+        // Generate epic catalog loot table for archaeology tablets
+        LootPool.Builder epicPool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, Rarity.EPIC, 1));
+        IntStream.rangeClosed(0, 0).forEach(index -> epicPool.add(book(BooksPM.create("loremipsum" + index), Rarity.EPIC, 100)));  // FIXME Remove once library testing is complete
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
+
         // Generate treasure catalog loot table
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
                 .add(enchantedBook(EnchantmentsPM.LIFESTEAL.get()))
@@ -211,6 +208,7 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         Supplier<StaticBookItem> itemSupplier = switch (rarity) {
             case UNCOMMON -> ItemsPM.STATIC_BOOK_UNCOMMON;
             case RARE -> ItemsPM.STATIC_BOOK_RARE;
+            case EPIC -> ItemsPM.STATIC_TABLET;
             default -> ItemsPM.STATIC_BOOK;
         };
         CompoundTag tag = Util.make(new CompoundTag(), t -> t.putString(StaticBookItem.TAG_BOOK_ID, bookDefKey.location().toString()));
