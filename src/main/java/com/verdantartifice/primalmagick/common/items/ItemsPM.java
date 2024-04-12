@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.items.armor.ArmorMaterialPM;
 import com.verdantartifice.primalmagick.common.items.armor.RobeArmorItem;
 import com.verdantartifice.primalmagick.common.items.armor.WardingModuleItem;
-import com.verdantartifice.primalmagick.common.items.books.StaticBookGeneratorItem;
+import com.verdantartifice.primalmagick.common.items.books.LootGeneratorItem;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.AlchemicalBombItem;
 import com.verdantartifice.primalmagick.common.items.concoctions.BombCasingItem;
@@ -74,6 +74,7 @@ import com.verdantartifice.primalmagick.common.items.wands.StaffCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCapItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandCoreItem;
 import com.verdantartifice.primalmagick.common.items.wands.WandGemItem;
+import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
@@ -895,7 +896,7 @@ public class ItemsPM {
     public static final RegistryObject<StaticBookItem> STATIC_BOOK_RARE = registerWithoutTab("static_book_rare", () -> new StaticBookItem(BookType.BOOK, new Item.Properties().stacksTo(16)));  // Deliberately not setting rarity here
     public static final RegistryObject<StaticBookItem> STATIC_TABLET = registerWithoutTab("static_tablet", () -> new StaticBookItem(BookType.TABLET, new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> LORE_TABLET_FRAGMENT = registerSupplier("lore_tablet_fragment", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<StaticBookGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new StaticBookGeneratorItem(() -> ItemsPM.STATIC_TABLET.get(), new Item.Properties()));
+    public static final RegistryObject<LootGeneratorItem> LORE_TABLET_DIRTY = registerSupplier("lore_tablet_dirty", () -> new LootGeneratorItem(LootTablesPM.LIBRARY_ARCHAEOLOGY, new Item.Properties()));
     
     // Register debug items
     public static final RegistryObject<TickStickItem> TICK_STICK = registerWithoutTab("tick_stick", () -> new TickStickItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
