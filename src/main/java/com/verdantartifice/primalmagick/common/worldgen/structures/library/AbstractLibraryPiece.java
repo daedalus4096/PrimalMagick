@@ -95,6 +95,9 @@ public abstract class AbstractLibraryPiece extends TemplateStructurePiece {
                 pLevel.setBlock(pPos, this.getFillerBlockState(), Block.UPDATE_ALL);
                 pLevel.setBlock(pPos.below(), this.getFillerBlockState(), Block.UPDATE_ALL);
             }
+        } else if ("accent".equals(pName)) {
+            // Populate accent blocks
+            pLevel.setBlock(pPos, culture.get().accentBlockState(), Block.UPDATE_ALL);
         }
     }
 }

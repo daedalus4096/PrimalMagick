@@ -1,4 +1,7 @@
 {
+  "accentBlockState": {
+    "Name": "minecraft:redstone_block"
+  },
   "hiddenLootTable": "minecraft:empty",
   "languageId": "primalmagick:forbidden",
   "shelfLootTable": "primalmagick:gameplay/library/forbidden",
