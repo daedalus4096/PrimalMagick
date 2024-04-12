@@ -26,5 +26,6 @@ public class BookLanguageTagsProviderPM extends TagsProvider<BookLanguage> {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         this.tag(BookLanguageTagsPM.ANCIENT).add(BookLanguagesPM.EARTH, BookLanguagesPM.SEA, BookLanguagesPM.SKY, BookLanguagesPM.SUN, BookLanguagesPM.MOON, BookLanguagesPM.TRADE, BookLanguagesPM.FORBIDDEN, BookLanguagesPM.HALLOWED);
+        this.tag(BookLanguageTagsPM.LINGUISTICS_UNLOCK).addTag(BookLanguageTagsPM.ANCIENT).add(BookLanguagesPM.BABELTONGUE);
     }
 }

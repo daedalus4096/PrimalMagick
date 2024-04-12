@@ -75,8 +75,8 @@ public class LinguisticsManager {
     public static void markRead(@Nullable Player player, @Nullable Holder<BookDefinition> book, @Nullable Holder<BookLanguage> language) {
         if (player != null && book != null && language != null) {
             PrimalMagickCapabilities.getLinguistics(player).ifPresent(linguistics -> {
-                if (linguistics.markRead(book.get().bookId(), language.get().languageId()) && language.is(BookLanguageTagsPM.ANCIENT)) {
-                    // If the book/language combination is new and the language is ancient, increment the unique books statistic
+                if (linguistics.markRead(book.get().bookId(), language.get().languageId()) && language.is(BookLanguageTagsPM.LINGUISTICS_UNLOCK)) {
+                    // If the book/language combination is new and the language should unlock the linguistics research entry, increment the unique books statistic
                     StatsManager.incrementValue(player, StatsPM.ANCIENT_BOOKS_READ);
                 }
                 scheduleSync(player);

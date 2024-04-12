@@ -14,6 +14,7 @@ import net.minecraft.tags.TagKey;
  */
 public class BookLanguageTagsPM {
     public static final TagKey<BookLanguage> ANCIENT = create("ancient");
+    public static final TagKey<BookLanguage> LINGUISTICS_UNLOCK = create("linguistics_unlock");
 
     private static TagKey<BookLanguage> create(String name) {
         return TagKey.create(RegistryKeysPM.BOOK_LANGUAGES, PrimalMagick.resource(name));
