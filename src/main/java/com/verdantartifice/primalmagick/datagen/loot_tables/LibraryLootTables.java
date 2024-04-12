@@ -4,11 +4,11 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.books.BooksPM;
-import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.books.StaticBookItem;
 import com.verdantartifice.primalmagick.common.loot.LootTablesPM;
@@ -33,6 +33,7 @@ import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Data provider for all of the mod's ancient library loot tables.
@@ -173,28 +174,11 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
 
         // Generate treasure catalog loot table
-        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool()
-                .add(enchantedBook(EnchantmentsPM.LIFESTEAL.get()))
-                .add(enchantedBook(EnchantmentsPM.ENDERLOCK.get()))
-                .add(enchantedBook(EnchantmentsPM.JUDGMENT.get()))
-                .add(enchantedBook(EnchantmentsPM.ENDERPORT.get()))
-                .add(enchantedBook(EnchantmentsPM.REGROWTH.get()))
-                .add(enchantedBook(EnchantmentsPM.AEGIS.get()))
-                .add(enchantedBook(EnchantmentsPM.MANA_EFFICIENCY.get()))
-                .add(enchantedBook(EnchantmentsPM.SPELL_POWER.get()))
-                .add(enchantedBook(EnchantmentsPM.TREASURE.get()))
-                .add(enchantedBook(EnchantmentsPM.BLUDGEONING.get()))
-                .add(enchantedBook(EnchantmentsPM.REVERBERATION.get()))
-                .add(enchantedBook(EnchantmentsPM.BOUNTY.get()))
-                .add(enchantedBook(EnchantmentsPM.DISINTEGRATION.get()))
-                .add(enchantedBook(EnchantmentsPM.VERDANT.get()))
-                .add(enchantedBook(EnchantmentsPM.LUCKY_STRIKE.get()))
-                .add(enchantedBook(EnchantmentsPM.RENDING.get()))
-                .add(enchantedBook(EnchantmentsPM.SOULPIERCING.get()))
-                .add(enchantedBook(EnchantmentsPM.ESSENCE_THIEF.get()))
-                .add(enchantedBook(EnchantmentsPM.BULWARK.get()))
-                .add(enchantedBook(EnchantmentsPM.MAGICK_PROTECTION.get()))
-                .add(enchantedBook(EnchantmentsPM.GUILLOTINE.get()))));
+        LootPool.Builder enchPool = LootPool.lootPool();
+        ForgeRegistries.ENCHANTMENTS.getEntries().stream().filter(e -> e.getKey().location().getNamespace().equals(PrimalMagick.MODID)).map(e -> e.getValue()).forEach(ench -> {
+            enchPool.add(enchantedBook(ench));
+        });
+        this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_TREASURE, LootTable.lootTable().withPool(enchPool));
     }
     
     @SuppressWarnings("deprecation")
