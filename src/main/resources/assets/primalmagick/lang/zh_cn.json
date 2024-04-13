@@ -2671,6 +2671,7 @@
   "tooltip.primalmagick.sanguine_core.2": "每秒产生的灵魂数: %1$d",
   "tooltip.primalmagick.scribe_table.button.study_vocabulary.already_studied": "Already studied",
   "tooltip.primalmagick.scribe_table.button.study_vocabulary.level_cost": "Cost: %1$s",
+  "tooltip.primalmagick.scribe_table.button.study_vocabulary.no_more_needed": "Study not needed",
   "tooltip.primalmagick.scribe_table.button.study_vocabulary.study_count": "Gain %2$d %1$s vocabulary",
   "tooltip.primalmagick.scribe_table.button.transcribe": "Transcribe",
   "tooltip.primalmagick.scribe_table.grid.cost": "Cost: %1$d %2$s vocabulary",
