@@ -50,10 +50,10 @@ public class Recipes extends RecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
         // TODO Remove after testing
-        ArcaneShapelessTagRecipeBuilder.arcaneShapelessTagRecipe(ItemTagsPM.TEST_RECIPE_OUTPUT, 2)
+        ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsPM.TEST_RECIPE_OUTPUT, 2)
             .addIngredient(ItemTagsPM.SUNWOOD_LOGS)
             .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .research(CompoundResearchKey.from(SimpleResearchKey.find("FIRST_STEPS")))
+            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
             .build(consumer, PrimalMagick.resource("test_tag_recipe"));
         
         this.registerMarbleRecipes(consumer);

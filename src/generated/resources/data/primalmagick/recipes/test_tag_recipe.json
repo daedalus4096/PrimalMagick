@@ -1,5 +1,6 @@
 {
-  "type": "primalmagick:arcane_crafting_shapeless_tag",
+  "type": "primalmagick:crafting_shapeless_tag",
+  "category": "misc",
   "ingredients": [
     {
       "tag": "primalmagick:sunwood_logs"
@@ -9,6 +10,5 @@
     }
   ],
   "recipeOutputAmount": 2,
-  "recipeOutputTag": "primalmagick:test_recipe_output",
-  "research": "FIRST_STEPS"
+  "recipeOutputTag": "primalmagick:test_recipe_output"
 }
