@@ -207,8 +207,8 @@ public class ArcaneShapelessTagRecipeBuilder {
             }
             json.add("ingredients", ingredientsJson);
             
-            json.addProperty("result_tag", this.resultTag.location().toString());
-            json.addProperty("result_amount", this.resultAmount);
+            json.addProperty("recipeOutputTag", this.resultTag.location().toString());
+            json.addProperty("recipeOutputAmount", this.resultAmount);
         }
 
         @Override
