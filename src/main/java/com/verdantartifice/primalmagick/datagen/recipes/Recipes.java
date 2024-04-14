@@ -39,6 +39,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
+import net.minecraftforge.common.crafting.conditions.TrueCondition;
 
 /**
  * Data provider for all of the mod's recipes.
@@ -53,21 +54,14 @@ public class Recipes extends RecipeProvider {
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
         // TODO Remove after testing
-//        ConditionalRecipe.builder()
-//            .condition(new NotCondition(new TagEmptyCondition(ItemTagsPM.TEST_RECIPE_OUTPUT)))
-//            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsPM.TEST_RECIPE_OUTPUT, 2)
-//                    .addIngredient(ItemTagsPM.SUNWOOD_LOGS)
-//                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-//                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-//                    .build(output, PrimalMagick.resource("test_tag_recipe_inner")))
-//            .save(consumer, PrimalMagick.resource("test_tag_recipe"));
         ConditionalRecipe.builder()
-            .condition(new NotCondition(new TagEmptyCondition(ItemTagsPM.TEST_RECIPE_OUTPUT)))
-            .recipe(output -> ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.HEXIUM_INGOT.get(), 3)
-                    .requires(ItemTagsPM.MOONWOOD_LOGS)
-                    .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
+            .mainCondition(new NotCondition(new TagEmptyCondition(ItemTagsPM.TEST_RECIPE_OUTPUT)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsPM.TEST_RECIPE_OUTPUT, 2)
+                    .addIngredient(ItemTagsPM.SUNWOOD_LOGS)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .save(output, PrimalMagick.resource("test_conditional_recipe_inner")))
+                    .build(output, PrimalMagick.resource("test_conditional_recipe_inner")))
             .save(consumer, PrimalMagick.resource("test_conditional_recipe"));
         
         this.registerMarbleRecipes(consumer);

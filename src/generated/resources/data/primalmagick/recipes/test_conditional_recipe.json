@@ -9,27 +9,22 @@
   },
   "recipes": [
     {
-      "type": "minecraft:crafting_shapeless",
+      "type": "primalmagick:crafting_shapeless_tag",
       "category": "misc",
       "forge:condition": {
-        "type": "forge:not",
-        "value": {
-          "type": "forge:tag_empty",
-          "tag": "primalmagick:test_recipe_output"
-        }
+        "type": "forge:true",
+        "value": {}
       },
       "ingredients": [
         {
-          "tag": "primalmagick:moonwood_logs"
+          "tag": "primalmagick:sunwood_logs"
         },
         {
           "item": "primalmagick:earthshatter_hammer"
         }
       ],
-      "result": {
-        "count": 3,
-        "item": "primalmagick:hexium_ingot"
-      }
+      "recipeOutputAmount": 2,
+      "recipeOutputTag": "primalmagick:test_recipe_output"
     }
   ]
 }

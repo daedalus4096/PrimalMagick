@@ -23,11 +23,8 @@
         }
       },
       "forge:condition": {
-        "type": "forge:not",
-        "value": {
-          "type": "forge:tag_empty",
-          "tag": "primalmagick:test_recipe_output"
-        }
+        "type": "forge:true",
+        "value": {}
       },
       "requirements": [
         [
