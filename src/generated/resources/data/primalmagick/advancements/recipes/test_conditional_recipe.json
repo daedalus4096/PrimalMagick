@@ -1,0 +1,46 @@
+{
+  "advancements": [
+    {
+      "parent": "minecraft:recipes/root",
+      "criteria": {
+        "has_hammer": {
+          "conditions": {
+            "items": [
+              {
+                "items": [
+                  "primalmagick:earthshatter_hammer"
+                ]
+              }
+            ]
+          },
+          "trigger": "minecraft:inventory_changed"
+        },
+        "has_the_recipe": {
+          "conditions": {
+            "recipe": "primalmagick:test_conditional_recipe_inner"
+          },
+          "trigger": "minecraft:recipe_unlocked"
+        }
+      },
+      "forge:condition": {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "primalmagick:test_recipe_output"
+        }
+      },
+      "requirements": [
+        [
+          "has_the_recipe",
+          "has_hammer"
+        ]
+      ],
+      "rewards": {
+        "recipes": [
+          "primalmagick:test_conditional_recipe_inner"
+        ]
+      },
+      "sends_telemetry_event": false
+    }
+  ]
+}

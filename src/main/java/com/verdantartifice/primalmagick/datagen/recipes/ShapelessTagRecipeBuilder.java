@@ -37,7 +37,7 @@ public class ShapelessTagRecipeBuilder {
     protected final TagKey<Item> resultTag;
     protected final int resultAmount;
     protected final List<Ingredient> ingredients = new ArrayList<>();
-    private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
+    protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     protected String group;
 
     protected ShapelessTagRecipeBuilder(RecipeCategory category, TagKey<Item> resultTag, int resultAmount) {
