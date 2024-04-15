@@ -81,6 +81,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -1014,7 +1015,8 @@ public class GrimoireScreen extends Screen {
     
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe, mc.level.registryAccess()) == null) {
+        RegistryAccess registryAccess = mc.level.registryAccess();
+        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
             return false;
         }
         if (recipe.value() instanceof IHasRequiredResearch hrr) {

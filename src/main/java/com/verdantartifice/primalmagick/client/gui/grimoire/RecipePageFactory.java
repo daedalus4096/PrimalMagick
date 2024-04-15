@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
@@ -22,7 +21,7 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @author Daedalus4096
  */
 public class RecipePageFactory {
-    @Nullable
+    @Nonnull
     public static AbstractRecipePage createPage(@Nonnull RecipeHolder<?> recipeHolder, RegistryAccess registryAccess) {
         Recipe<?> recipe = recipeHolder.value();
         if (recipe instanceof SmeltingRecipe sr) {
