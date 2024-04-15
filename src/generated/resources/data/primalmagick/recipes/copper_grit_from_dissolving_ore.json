@@ -1,16 +1,42 @@
 {
-  "type": "primalmagick:dissolution",
-  "group": "copper_grit_dissolution",
-  "ingredient": {
-    "tag": "forge:ores/copper"
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:dusts/copper"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:ores/copper"
+        }
+      }
+    ]
   },
-  "mana": {
-    "sources": {
-      "earth": 1
+  "recipes": [
+    {
+      "type": "primalmagick:dissolution_tag",
+      "forge:condition": {
+        "type": "forge:true",
+        "value": {}
+      },
+      "group": "copper_grit_dissolution",
+      "ingredient": {
+        "tag": "forge:ores/copper"
+      },
+      "mana": {
+        "sources": {
+          "earth": 1
+        }
+      },
+      "recipeOutputAmount": 3,
+      "recipeOutputTag": "forge:dusts/copper"
     }
-  },
-  "result": {
-    "Count": 3,
-    "id": "primalmagick:copper_grit"
-  }
+  ]
 }
