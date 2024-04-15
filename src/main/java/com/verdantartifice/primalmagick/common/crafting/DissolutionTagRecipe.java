@@ -50,7 +50,7 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return NonNullList.of(this.ingredient);
+        return NonNullList.of(Ingredient.EMPTY, this.ingredient);
     }
 
     @Override

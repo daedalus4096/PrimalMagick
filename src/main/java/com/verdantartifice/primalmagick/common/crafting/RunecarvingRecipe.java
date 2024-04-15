@@ -49,7 +49,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return NonNullList.of(this.ingredient1, this.ingredient2);
+        return NonNullList.of(Ingredient.EMPTY, this.ingredient1, this.ingredient2);
     }
 
     @Override
