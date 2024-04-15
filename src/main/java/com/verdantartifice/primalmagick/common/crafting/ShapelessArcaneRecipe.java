@@ -22,7 +22,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
-public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapelessRecipePM<CraftingContainer>, IArcaneRecipe {
+public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapelessArcaneRecipePM {
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;

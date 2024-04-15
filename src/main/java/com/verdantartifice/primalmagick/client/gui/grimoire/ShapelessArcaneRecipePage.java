@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
-import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IShapelessArcaneRecipePM;
 
 import net.minecraft.core.RegistryAccess;
 
@@ -11,8 +11,8 @@ import net.minecraft.core.RegistryAccess;
  * 
  * @author Daedalus4096
  */
-public class ShapelessArcaneRecipePage extends AbstractShapelessRecipePage<ShapelessArcaneRecipe> {
-    public ShapelessArcaneRecipePage(ShapelessArcaneRecipe recipe, RegistryAccess registryAccess) {
+public class ShapelessArcaneRecipePage extends AbstractShapelessRecipePage<IShapelessArcaneRecipePM> {
+    public ShapelessArcaneRecipePage(IShapelessArcaneRecipePM recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
     

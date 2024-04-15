@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 
 /**
  * Grimoire page showing a shapeless vanilla recipe.
  * 
  * @author Daedalus4096
  */
-public class ShapelessRecipePage extends AbstractShapelessRecipePage<ShapelessRecipe> {
-    public ShapelessRecipePage(ShapelessRecipe recipe, RegistryAccess registryAccess) {
+public class ShapelessRecipePage extends AbstractShapelessRecipePage<Recipe<?>> {
+    public ShapelessRecipePage(Recipe<?> recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
 

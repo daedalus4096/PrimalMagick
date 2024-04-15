@@ -11,7 +11,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWid
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
-import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -30,9 +30,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 public class RitualRecipePage extends AbstractRecipePage {
     protected static final int ITEMS_PER_ROW = 7;
     
-    protected RitualRecipe recipe;
+    protected IRitualRecipe recipe;
     
-    public RitualRecipePage(RitualRecipe recipe, RegistryAccess registryAccess) {
+    public RitualRecipePage(IRitualRecipe recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }

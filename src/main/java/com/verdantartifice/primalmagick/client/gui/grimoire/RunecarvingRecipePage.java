@@ -6,7 +6,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
-import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
@@ -19,9 +19,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class RunecarvingRecipePage extends AbstractRecipePage {
-    protected RunecarvingRecipe recipe;
+    protected IRunecarvingRecipe recipe;
     
-    public RunecarvingRecipePage(RunecarvingRecipe recipe, RegistryAccess registryAccess) {
+    public RunecarvingRecipePage(IRunecarvingRecipe recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }

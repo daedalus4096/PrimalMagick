@@ -30,7 +30,7 @@ import net.minecraftforge.common.ForgeHooks;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
-public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapedRecipePM<CraftingContainer>, IArcaneRecipe {
+public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapedArcaneRecipePM {
     public static final int MAX_WIDTH = 3;
     public static final int MAX_HEIGHT = 3;
 

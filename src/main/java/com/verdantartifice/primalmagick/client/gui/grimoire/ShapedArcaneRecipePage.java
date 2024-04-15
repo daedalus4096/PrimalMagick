@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
-import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IShapedArcaneRecipePM;
 
 import net.minecraft.core.RegistryAccess;
 
@@ -11,8 +11,8 @@ import net.minecraft.core.RegistryAccess;
  * 
  * @author Daedalus4096
  */
-public class ShapedArcaneRecipePage extends AbstractShapedRecipePage<ShapedArcaneRecipe> {
-    public ShapedArcaneRecipePage(ShapedArcaneRecipe recipe, RegistryAccess registryAccess) {
+public class ShapedArcaneRecipePage extends AbstractShapedRecipePage<IShapedArcaneRecipePM> {
+    public ShapedArcaneRecipePage(IShapedArcaneRecipePM recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
     

@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
-import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 
 import net.minecraft.core.RegistryAccess;
 
@@ -11,8 +11,8 @@ import net.minecraft.core.RegistryAccess;
  * 
  * @author Daedalus4096
  */
-public class ConcoctingRecipePage extends AbstractShapelessRecipePage<ConcoctingRecipe> {
-    public ConcoctingRecipePage(ConcoctingRecipe recipe, RegistryAccess registryAccess) {
+public class ConcoctingRecipePage extends AbstractShapelessRecipePage<IConcoctingRecipe> {
+    public ConcoctingRecipePage(IConcoctingRecipe recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
     
