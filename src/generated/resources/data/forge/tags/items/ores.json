@@ -4,6 +4,18 @@
     {
       "id": "#forge:ores/tin",
       "required": false
+    },
+    {
+      "id": "#forge:ores/lead",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/silver",
+      "required": false
+    },
+    {
+      "id": "#forge:ores/uranium",
+      "required": false
     }
   ]
 }

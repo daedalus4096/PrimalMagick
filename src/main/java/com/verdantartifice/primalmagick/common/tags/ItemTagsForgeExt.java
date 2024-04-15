@@ -16,6 +16,9 @@ public class ItemTagsForgeExt {
     public static final TagKey<Item> DUSTS_GOLD = tag("dusts/gold");
     public static final TagKey<Item> DUSTS_COPPER = tag("dusts/copper");
     public static final TagKey<Item> DUSTS_TIN = tag("dusts/tin");
+    public static final TagKey<Item> DUSTS_LEAD = tag("dusts/lead");
+    public static final TagKey<Item> DUSTS_SILVER = tag("dusts/silver");
+    public static final TagKey<Item> DUSTS_URANIUM = tag("dusts/uranium");
     public static final TagKey<Item> MILK = tag("milk");
     public static final TagKey<Item> NUGGETS_COPPER = tag("nuggets/copper");
     public static final TagKey<Item> NUGGETS_QUARTZ = tag("nuggets/quartz");
@@ -25,7 +28,13 @@ public class ItemTagsForgeExt {
     public static final TagKey<Item> NUGGETS_URANIUM = tag("nuggets/uranium");
     public static final TagKey<Item> ORES_ROCK_SALT = tag("ores/rock_salt");
     public static final TagKey<Item> ORES_TIN = tag("ores/tin");
+    public static final TagKey<Item> ORES_LEAD = tag("ores/lead");
+    public static final TagKey<Item> ORES_SILVER = tag("ores/silver");
+    public static final TagKey<Item> ORES_URANIUM = tag("ores/uranium");
     public static final TagKey<Item> RAW_MATERIALS_TIN = tag("raw_materials/tin");
+    public static final TagKey<Item> RAW_MATERIALS_LEAD = tag("raw_materials/lead");
+    public static final TagKey<Item> RAW_MATERIALS_SILVER = tag("raw_materials/silver");
+    public static final TagKey<Item> RAW_MATERIALS_URANIUM = tag("raw_materials/uranium");
 
     private static TagKey<Item> tag(String name) {
         return ItemTags.create(new ResourceLocation("forge", name));

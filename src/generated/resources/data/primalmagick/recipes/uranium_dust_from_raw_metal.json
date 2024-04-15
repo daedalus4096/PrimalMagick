@@ -1,0 +1,43 @@
+{
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:dusts/uranium"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:raw_materials/uranium"
+        }
+      }
+    ]
+  },
+  "recipes": [
+    {
+      "type": "primalmagick:crafting_shapeless_tag",
+      "category": "misc",
+      "forge:condition": {
+        "type": "forge:true",
+        "value": {}
+      },
+      "group": "earthshatter_hammer_grit",
+      "ingredients": [
+        {
+          "item": "primalmagick:earthshatter_hammer"
+        },
+        {
+          "tag": "forge:raw_materials/uranium"
+        }
+      ],
+      "recipeOutputAmount": 2,
+      "recipeOutputTag": "forge:dusts/uranium"
+    }
+  ]
+}
