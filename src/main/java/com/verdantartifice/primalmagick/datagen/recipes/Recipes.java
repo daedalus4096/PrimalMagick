@@ -6409,11 +6409,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("DISSOLUTION_CHAMBER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .build(consumer);
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
-            .ingredient(Tags.Items.ORES_IRON)
-            .setGroup("iron_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("iron_grit_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.ORES_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_IRON, 3)
+                    .ingredient(Tags.Items.ORES_IRON)
+                    .setGroup("iron_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("iron_grit_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("iron_grit_from_dissolving_ore"));
         DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
             .ingredient(Tags.Items.RAW_MATERIALS_IRON)
             .setGroup("iron_grit_dissolution")

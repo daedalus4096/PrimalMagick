@@ -1,16 +1,42 @@
 {
-  "type": "primalmagick:dissolution",
-  "group": "iron_grit_dissolution",
-  "ingredient": {
-    "tag": "forge:ores/iron"
+  "type": "forge:conditional",
+  "forge:condition": {
+    "type": "forge:and",
+    "values": [
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:dusts/iron"
+        }
+      },
+      {
+        "type": "forge:not",
+        "value": {
+          "type": "forge:tag_empty",
+          "tag": "forge:ores/iron"
+        }
+      }
+    ]
   },
-  "mana": {
-    "sources": {
-      "earth": 1
+  "recipes": [
+    {
+      "type": "primalmagick:dissolution_tag",
+      "forge:condition": {
+        "type": "forge:true",
+        "value": {}
+      },
+      "group": "iron_grit_dissolution",
+      "ingredient": {
+        "tag": "forge:ores/iron"
+      },
+      "mana": {
+        "sources": {
+          "earth": 1
+        }
+      },
+      "recipeOutputAmount": 3,
+      "recipeOutputTag": "forge:dusts/iron"
     }
-  },
-  "result": {
-    "Count": 3,
-    "id": "primalmagick:iron_grit"
-  }
+  ]
 }

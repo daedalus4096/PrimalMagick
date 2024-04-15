@@ -35,12 +35,12 @@ public class DissolutionTagRecipeBuilder {
         this.recipeOutputAmount = resultAmount;
     }
     
-    public static DissolutionTagRecipeBuilder dissolutionRecipe(TagKey<Item> resultTag, int resultAmount) {
+    public static DissolutionTagRecipeBuilder dissolutionTagRecipe(TagKey<Item> resultTag, int resultAmount) {
         return new DissolutionTagRecipeBuilder(resultTag, resultAmount);
     }
     
     public static DissolutionTagRecipeBuilder dissolutionRecipe(TagKey<Item> resultTag) {
-        return dissolutionRecipe(resultTag, 1);
+        return dissolutionTagRecipe(resultTag, 1);
     }
     
     public DissolutionTagRecipeBuilder ingredient(Ingredient ingredient) {
