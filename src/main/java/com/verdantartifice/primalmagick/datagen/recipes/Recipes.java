@@ -1925,6 +1925,27 @@ public class Recipes extends RecipeProvider {
                     .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
                     .build(output, PrimalMagick.resource("copper_grit_from_raw_metal")))
             .save(consumer, PrimalMagick.resource("copper_grit_from_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.ORES_TIN)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("tin_dust_from_ore")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("tin_dust_from_raw_metal")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_raw_metal"));
+        
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.SURFACE_STONE)

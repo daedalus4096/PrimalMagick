@@ -1,5 +1,9 @@
 {
   "values": [
-    "#forge:ores/rock_salt"
+    "#forge:ores/rock_salt",
+    {
+      "id": "#forge:ores/tin",
+      "required": false
+    }
   ]
 }
