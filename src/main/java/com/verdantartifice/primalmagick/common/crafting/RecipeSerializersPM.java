@@ -38,4 +38,5 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = RECIPE_SERIALIZERS.register("writable_book_crafting", () -> new SimpleCraftingRecipeSerializer<>(WritableBookCraftingRecipe::new));
     public static final RegistryObject<RecipeSerializer<ShapelessTagRecipe>> CRAFTING_SHAPELESS_TAG = RECIPE_SERIALIZERS.register("crafting_shapeless_tag", ShapelessTagRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<ShapelessArcaneTagRecipe>> ARCANE_CRAFTING_SHAPELESS_TAG = RECIPE_SERIALIZERS.register("arcane_crafting_shapeless_tag", ShapelessArcaneTagRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<DissolutionTagRecipe>> DISSOLUTION_TAG = RECIPE_SERIALIZERS.register("dissolution_tag", DissolutionTagRecipe.Serializer::new);
 }
