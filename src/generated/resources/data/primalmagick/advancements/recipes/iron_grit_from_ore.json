@@ -17,7 +17,7 @@
         },
         "has_the_recipe": {
           "conditions": {
-            "recipe": "primalmagick:test_conditional_recipe_inner"
+            "recipe": "primalmagick:iron_grit_from_ore"
           },
           "trigger": "minecraft:recipe_unlocked"
         }
@@ -34,7 +34,7 @@
       ],
       "rewards": {
         "recipes": [
-          "primalmagick:test_conditional_recipe_inner"
+          "primalmagick:iron_grit_from_ore"
         ]
       },
       "sends_telemetry_event": false

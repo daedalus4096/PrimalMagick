@@ -13,9 +13,6 @@ import net.minecraft.world.item.Item;
  * @author Daedalus4096
  */
 public class ItemTagsPM {
-    // TODO Remove after testing
-    public static final TagKey<Item> TEST_RECIPE_OUTPUT = tag("test_recipe_output");
-    
     public static final TagKey<Item> ANALYSIS_TABLE_FORBIDDEN = tag("analysis_table_forbidden");
     public static final TagKey<Item> COLORED_SHULKER_BOXES = tag("colored_shulker_boxes");
     public static final TagKey<Item> CONCRETE = tag("concrete");

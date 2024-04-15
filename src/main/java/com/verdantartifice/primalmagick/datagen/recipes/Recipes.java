@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
@@ -29,6 +31,7 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -37,6 +40,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.conditions.AndCondition;
+import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.NotCondition;
 import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
 import net.minecraftforge.common.crafting.conditions.TrueCondition;
@@ -50,20 +55,14 @@ public class Recipes extends RecipeProvider {
     public Recipes(PackOutput packOutput) {
         super(packOutput);
     }
+    
+    private static ICondition tagsNotEmpty(List<TagKey<Item>> tags) {
+        List<ICondition> subConditions = tags.stream().<ICondition>map(t -> new NotCondition(new TagEmptyCondition(t))).toList();
+        return new AndCondition(subConditions);
+    }
 
     @Override
     protected void buildRecipes(RecipeOutput consumer) {
-        // TODO Remove after testing
-        ConditionalRecipe.builder()
-            .mainCondition(new NotCondition(new TagEmptyCondition(ItemTagsPM.TEST_RECIPE_OUTPUT)))
-            .condition(TrueCondition.INSTANCE)
-            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsPM.TEST_RECIPE_OUTPUT, 2)
-                    .addIngredient(ItemTagsPM.SUNWOOD_LOGS)
-                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
-                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
-                    .build(output, PrimalMagick.resource("test_conditional_recipe_inner")))
-            .save(consumer, PrimalMagick.resource("test_conditional_recipe"));
-        
         this.registerMarbleRecipes(consumer);
         this.registerEnchantedMarbleRecipes(consumer);
         this.registerSmokedMarbleRecipes(consumer);
@@ -1866,11 +1865,15 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("EARTHSHATTER_HAMMER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20))
             .build(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IRON_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.ORES_IRON)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.ORES_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_IRON, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.ORES_IRON)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("iron_grit_from_ore")))
             .save(consumer, PrimalMagick.resource("iron_grit_from_ore"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IRON_GRIT.get(), 2)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
