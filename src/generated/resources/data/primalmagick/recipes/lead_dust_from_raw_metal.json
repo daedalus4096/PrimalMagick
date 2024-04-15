@@ -36,8 +36,8 @@
           "tag": "forge:raw_materials/lead"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/lead"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/lead"
     }
   ]
 }

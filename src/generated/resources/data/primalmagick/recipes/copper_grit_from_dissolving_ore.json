@@ -35,8 +35,8 @@
           "earth": 1
         }
       },
-      "recipeOutputAmount": 3,
-      "recipeOutputTag": "forge:dusts/copper"
+      "outputAmount": 3,
+      "outputTag": "forge:dusts/copper"
     }
   ]
 }

@@ -36,8 +36,8 @@
           "tag": "forge:raw_materials/uranium"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/uranium"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/uranium"
     }
   ]
 }

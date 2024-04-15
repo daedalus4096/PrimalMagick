@@ -96,8 +96,8 @@ public class DissolutionTagRecipeBuilder {
 
             json.add("ingredient", this.ingredient.toJson(true));
             
-            json.addProperty("recipeOutputTag", this.resultTag.location().toString());
-            json.addProperty("recipeOutputAmount", this.resultAmount);
+            json.addProperty("outputTag", this.resultTag.location().toString());
+            json.addProperty("outputAmount", this.resultAmount);
         }
 
         @Override

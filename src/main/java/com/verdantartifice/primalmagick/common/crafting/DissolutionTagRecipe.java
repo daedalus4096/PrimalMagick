@@ -68,8 +68,8 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
-                    TagKey.codec(Registries.ITEM).fieldOf("recipeOutputTag").forGetter(dr -> dr.outputTag),
-                    Codec.INT.fieldOf("recipeOutputAmount").forGetter(dr -> dr.outputAmount),
+                    TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(dr -> dr.outputTag),
+                    Codec.INT.fieldOf("outputAmount").forGetter(dr -> dr.outputAmount),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionTagRecipe::new);
         });

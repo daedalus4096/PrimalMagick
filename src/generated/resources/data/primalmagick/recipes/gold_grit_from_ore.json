@@ -36,8 +36,8 @@
           "tag": "forge:ores/gold"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/gold"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/gold"
     }
   ]
 }

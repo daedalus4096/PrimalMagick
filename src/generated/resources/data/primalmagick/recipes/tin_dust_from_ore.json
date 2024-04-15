@@ -36,8 +36,8 @@
           "tag": "forge:ores/tin"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/tin"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/tin"
     }
   ]
 }

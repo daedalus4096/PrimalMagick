@@ -36,8 +36,8 @@
           "tag": "forge:raw_materials/iron"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/iron"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/iron"
     }
   ]
 }

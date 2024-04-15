@@ -35,8 +35,8 @@
           "earth": 1
         }
       },
-      "recipeOutputAmount": 3,
-      "recipeOutputTag": "forge:dusts/iron"
+      "outputAmount": 3,
+      "outputTag": "forge:dusts/iron"
     }
   ]
 }

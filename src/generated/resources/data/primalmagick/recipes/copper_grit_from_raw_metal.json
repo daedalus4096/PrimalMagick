@@ -36,8 +36,8 @@
           "tag": "forge:raw_materials/copper"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/copper"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/copper"
     }
   ]
 }

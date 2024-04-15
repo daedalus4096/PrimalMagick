@@ -36,8 +36,8 @@
           "tag": "forge:ores/silver"
         }
       ],
-      "recipeOutputAmount": 2,
-      "recipeOutputTag": "forge:dusts/silver"
+      "outputAmount": 2,
+      "outputTag": "forge:dusts/silver"
     }
   ]
 }
