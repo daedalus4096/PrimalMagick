@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
@@ -11,89 +9,43 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.entity.player.StackedContents;
-import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.RecipeMatcher;
 
 /**
  * Definition for a ritual recipe.
  * 
  * @author Daedalus4096
  */
-public class RitualRecipe implements IRitualRecipe {
+public class RitualRecipe extends AbstractStackCraftingRecipe<Container> implements IShapelessRecipePM<Container>, IRitualRecipe {
     public static final int MIN_INSTABILITY = 0;
     public static final int MAX_INSTABILITY = 10;
     
-    protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     protected final int instability;
-    protected final ItemStack recipeOutput;
     protected final NonNullList<Ingredient> recipeItems;
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
     public RitualRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
-        this.group = group;
+        super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
         this.instability = instability;
-        this.recipeOutput = output;
         this.recipeItems = items;
         this.recipeProps = props;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
     }
 
     @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
-        // Ritual recipe matching only considers the ingredients, not the props
-        StackedContents helper = new StackedContents();
-        List<ItemStack> inputs = new ArrayList<>();
-        int count = 0;
-        
-        for (int index = 0; index < inv.getContainerSize(); index++) {
-            ItemStack stack = inv.getItem(index);
-            if (!stack.isEmpty()) {
-                count++;
-                if (this.isSimple) {
-                    helper.accountStack(stack, 1);
-                } else {
-                    inputs.add(stack);
-                }
-            }
-        }
-        
-        return (count == this.recipeItems.size()) && (this.isSimple ? helper.canCraft(this, null) : RecipeMatcher.findMatches(inputs, this.recipeItems) != null);
-    }
-
-    @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
-        return this.recipeOutput.copy();
-    }
-
-    @Override
     public boolean canCraftInDimensions(int width, int height) {
         // Ritual recipes aren't space-limited
         return true;
-    }
-
-    @Override
-    public CraftingBookCategory category() {
-        // Ritual recipes don't use the recipe book, so an accurate crafting book category isn't needed
-        return CraftingBookCategory.MISC;
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return this.recipeOutput;
     }
 
     @Override
@@ -126,6 +78,11 @@ public class RitualRecipe implements IRitualRecipe {
         return this.instability;
     }
     
+    @Override
+    public boolean isSimple() {
+        return this.isSimple;
+    }
+
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
         protected static final Codec<RitualRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
@@ -133,7 +90,7 @@ public class RitualRecipe implements IRitualRecipe {
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
-                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.recipeOutput),
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {
@@ -196,7 +153,7 @@ public class RitualRecipe implements IRitualRecipe {
             for (BlockIngredient prop : recipe.recipeProps) {
                 prop.write(buffer);
             }
-            buffer.writeItem(recipe.recipeOutput);
+            buffer.writeItem(recipe.output);
         }
     }
 }

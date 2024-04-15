@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -24,7 +23,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
  * Definition for a shaped arcane recipe.  Like a vanilla shaped recipe, but has research and optional mana requirements.
@@ -32,26 +30,23 @@ import net.minecraftforge.common.crafting.IShapedRecipe;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapedRecipe}
  */
-public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<CraftingContainer> {
+public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapedRecipePM<CraftingContainer>, IArcaneRecipe {
     public static final int MAX_WIDTH = 3;
     public static final int MAX_HEIGHT = 3;
 
     protected final int recipeWidth;
     protected final int recipeHeight;
     protected final NonNullList<Ingredient> recipeItems;
-    protected final ItemStack recipeOutput;
-    protected final String group;
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     
     public ShapedArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int width, int height, NonNullList<Ingredient> items, ItemStack output) {
-        this.group = group;
+        super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
         this.recipeWidth = width;
         this.recipeHeight = height;
         this.recipeItems = items;
-        this.recipeOutput = output;
     }
 
     @Override
@@ -94,21 +89,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
-        return this.recipeOutput.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return width >= this.recipeWidth && height >= this.recipeHeight;
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return this.recipeOutput;
-    }
-    
-    @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
     }
@@ -136,11 +116,6 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
     @Override
     public int getRecipeHeight() {
         return this.recipeHeight;
-    }
-
-    @Override
-    public String getGroup() {
-        return this.group;
     }
 
     protected static String[] shrink(List<String> toShrink) {
@@ -276,7 +251,7 @@ public class ShapedArcaneRecipe implements IArcaneRecipe, IShapedRecipe<Crafting
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);
             }
-            buffer.writeItem(recipe.recipeOutput);
+            buffer.writeItem(recipe.output);
         }
         
         protected static record RawShapedArcaneRecipe(String group, Map<String, Ingredient> key, List<String> pattern, ItemStack result, CompoundResearchKey research, SourceList manaCosts) {
