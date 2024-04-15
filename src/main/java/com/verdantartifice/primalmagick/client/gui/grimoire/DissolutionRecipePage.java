@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.IngredientWi
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ItemStackWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ManaCostSummaryWidget;
 import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.RecipeTypeWidget;
-import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.RegistryAccess;
@@ -20,9 +20,9 @@ import net.minecraft.world.item.ItemStack;
  * @author Daedalus4096
  */
 public class DissolutionRecipePage extends AbstractRecipePage {
-    protected DissolutionRecipe recipe;
+    protected IDissolutionRecipe recipe;
     
-    public DissolutionRecipePage(DissolutionRecipe recipe, RegistryAccess registryAccess) {
+    public DissolutionRecipePage(IDissolutionRecipe recipe, RegistryAccess registryAccess) {
         super(registryAccess);
         this.recipe = recipe;
     }

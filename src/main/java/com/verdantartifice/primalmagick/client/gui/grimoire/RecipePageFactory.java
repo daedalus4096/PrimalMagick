@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
-import com.verdantartifice.primalmagick.common.crafting.DissolutionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.IDissolutionRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
@@ -42,7 +42,7 @@ public class RecipePageFactory {
             return new ConcoctingRecipePage(cr, registryAccess);
         } else if (recipe instanceof SmeltingRecipe sr) {
             return new SmeltingRecipePage(sr, registryAccess);
-        } else if (recipe instanceof DissolutionRecipe dr) {
+        } else if (recipe instanceof IDissolutionRecipe dr) {
             return new DissolutionRecipePage(dr, registryAccess);
         } else {
             return null;

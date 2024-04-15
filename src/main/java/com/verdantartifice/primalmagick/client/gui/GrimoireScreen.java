@@ -617,14 +617,12 @@ public class GrimoireScreen extends Screen {
         }
         for (ResourceLocation recipeLoc : locList) {
             Optional<RecipeHolder<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
-            if (opt.isPresent()) {
-                AbstractRecipePage page = RecipePageFactory.createPage(opt.get(), this.minecraft.level.registryAccess());
+            opt.ifPresent(recipe -> {
+                AbstractRecipePage page = RecipePageFactory.createPage(recipe, this.minecraft.level.registryAccess());
                 if (page != null) {
                     this.pages.add(page);
                 }
-            } else {
-                LOGGER.warn("Unable to find recipe definition for {}", recipeLoc.toString());
-            }
+            });
         }
     }
     
