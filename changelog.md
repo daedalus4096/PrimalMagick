@@ -3,6 +3,9 @@ v5.0.0-beta
 * Added linguistics, a way to study the languages of the ancients for fun and profit
 * Added ancient libraries, places to find ancient books to study
 * Added backgrounds and tooltips to most mod device slots
+* Added Earthshatter Hammer and Dissolution Chamber recipes for common modded ores
+* Added ability for datapacks to specify recipes that output a tag instead of an item
+* Fixed a page navigation bug in the Grimoire
 
 v4.1.1
 ------
