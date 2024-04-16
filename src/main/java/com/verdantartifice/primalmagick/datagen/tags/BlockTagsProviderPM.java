@@ -103,7 +103,7 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
         // Add entries to Forge extension tags
         this.tag(BlockTagsForgeExt.ORES_ROCK_SALT).add(BlocksPM.ROCK_SALT_ORE.get());
         this.tag(BlockTagsForgeExt.BUDDING).add(BlocksPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.FLAWED_BUDDING_AMETHYST_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.FLAWED_BUDDING_DIAMOND_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.FLAWED_BUDDING_EMERALD_BLOCK.get(), BlocksPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.CHIPPED_BUDDING_QUARTZ_BLOCK.get(), BlocksPM.FLAWED_BUDDING_QUARTZ_BLOCK.get());
-        this.tag(BlockTagsForgeExt.MINEABLE_WITH_SHEARS).addTag(BlockTags.LEAVES).addTag(BlockTags.WOOL).add(Blocks.COBWEB, Blocks.GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.HANGING_ROOTS, Blocks.VINE, Blocks.TRIPWIRE);
+        this.tag(BlockTagsForgeExt.MINEABLE_WITH_SHEARS).addTag(BlockTags.LEAVES).addTag(BlockTags.WOOL).add(Blocks.COBWEB, Blocks.SHORT_GRASS, Blocks.FERN, Blocks.DEAD_BUSH, Blocks.HANGING_ROOTS, Blocks.VINE, Blocks.TRIPWIRE);
         
         // Create custom tags
         this.tag(BlockTagsPM.BOUNTY_CROPS).addTag(BlockTags.CROPS).add(Blocks.NETHER_WART);
@@ -125,7 +125,7 @@ public class BlockTagsProviderPM extends BlockTagsProvider {
         this.tag(BlockTagsPM.STORAGE_BLOCKS_HEXIUM).add(BlocksPM.HEXIUM_BLOCK.get());
         this.tag(BlockTagsPM.STORAGE_BLOCKS_PRIMALITE).add(BlocksPM.PRIMALITE_BLOCK.get());
         this.tag(BlockTagsPM.SUNWOOD_LOGS).add(BlocksPM.SUNWOOD_LOG.get(), BlocksPM.STRIPPED_SUNWOOD_LOG.get(), BlocksPM.SUNWOOD_WOOD.get(), BlocksPM.STRIPPED_SUNWOOD_WOOD.get());
-        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.GRASS, Blocks.FERN);
+        this.tag(BlockTagsPM.TREEFOLK_FERTILIZE_EXEMPT).add(Blocks.GRASS_BLOCK, Blocks.ROOTED_DIRT, Blocks.SHORT_GRASS, Blocks.FERN);
         
         this.tag(BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
         this.tag(BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS).addTag(BlockTags.DIRT).add(Blocks.FARMLAND);
