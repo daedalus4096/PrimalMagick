@@ -19,7 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 public record BookLanguage(ResourceLocation languageId, Style style, int complexity, boolean autoTranslate) {
     public static final Codec<BookLanguage> DIRECT_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("languageId").forGetter(BookLanguage::languageId),
-            Style.FORMATTING_CODEC.fieldOf("style").forGetter(BookLanguage::style),
+            Style.Serializer.CODEC.fieldOf("style").forGetter(BookLanguage::style),
             Codec.INT.fieldOf("complexity").forGetter(BookLanguage::complexity),
             Codec.BOOL.fieldOf("autoTranslate").forGetter(BookLanguage::autoTranslate)
         ).apply(instance, BookLanguage::new));
