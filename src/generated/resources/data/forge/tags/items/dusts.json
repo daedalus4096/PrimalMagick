@@ -2,6 +2,22 @@
   "values": [
     "#forge:dusts/iron",
     "#forge:dusts/gold",
-    "#forge:dusts/copper"
+    "#forge:dusts/copper",
+    {
+      "id": "#forge:dusts/tin",
+      "required": false
+    },
+    {
+      "id": "#forge:dusts/lead",
+      "required": false
+    },
+    {
+      "id": "#forge:dusts/silver",
+      "required": false
+    },
+    {
+      "id": "#forge:dusts/uranium",
+      "required": false
+    }
   ]
 }

@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "#forge:raw_materials/tin",
+      "required": false
+    },
+    {
+      "id": "#forge:raw_materials/lead",
+      "required": false
+    },
+    {
+      "id": "#forge:raw_materials/silver",
+      "required": false
+    },
+    {
+      "id": "#forge:raw_materials/uranium",
+      "required": false
+    }
+  ]
+}

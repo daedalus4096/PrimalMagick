@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
@@ -11,16 +9,12 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.RecipeMatcher;
 
 /**
  * Definition for a shapeless arcane recipe.  Like a vanilla shapeless recipe, but has research and optional mana requirements.
@@ -28,59 +22,20 @@ import net.minecraftforge.common.util.RecipeMatcher;
  * @author Daedalus4096
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
-public class ShapelessArcaneRecipe implements IArcaneRecipe {
-    protected final String group;
+public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapelessArcaneRecipePM {
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
-    protected final ItemStack recipeOutput;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
     public ShapelessArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
-        this.group = group;
+        super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
-        this.recipeOutput = output;
         this.recipeItems = items;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
     }
 
-    @Override
-    public boolean matches(CraftingContainer inv, Level worldIn) {
-        StackedContents helper = new StackedContents();
-        List<ItemStack> inputs = new ArrayList<>();
-        int count = 0;
-        
-        for (int index = 0; index < inv.getContainerSize(); index++) {
-            ItemStack stack = inv.getItem(index);
-            if (!stack.isEmpty()) {
-                count++;
-                if (this.isSimple) {
-                    helper.accountStack(stack, 1);
-                } else {
-                    inputs.add(stack);
-                }
-            }
-        }
-        
-        return (count == this.recipeItems.size()) && (this.isSimple ? helper.canCraft(this, null) : RecipeMatcher.findMatches(inputs, this.recipeItems) != null);
-    }
-
-    @Override
-    public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
-        return this.recipeOutput.copy();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return (width * height) >= this.recipeItems.size();
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return this.recipeOutput;
-    }
-    
     @Override
     public NonNullList<Ingredient> getIngredients() {
         return this.recipeItems;
@@ -102,8 +57,8 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
     }
 
     @Override
-    public String getGroup() {
-        return this.group;
+    public boolean isSimple() {
+        return this.isSimple;
     }
 
     public static class Serializer implements RecipeSerializer<ShapelessArcaneRecipe> {
@@ -112,7 +67,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
-                    ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.recipeOutput),
+                    ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
                         if (ingArray.length == 0) {
@@ -157,7 +112,7 @@ public class ShapelessArcaneRecipe implements IArcaneRecipe {
             for (Ingredient ingredient : recipe.recipeItems) {
                 ingredient.toNetwork(buffer);
             }
-            buffer.writeItem(recipe.recipeOutput);
+            buffer.writeItem(recipe.output);
         }
     }
 }

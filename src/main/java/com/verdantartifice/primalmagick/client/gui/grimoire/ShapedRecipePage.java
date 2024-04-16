@@ -1,15 +1,15 @@
 package com.verdantartifice.primalmagick.client.gui.grimoire;
 
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 
 /**
  * Grimoire page showing a shaped vanilla recipe.
  * 
  * @author Daedalus4096
  */
-public class ShapedRecipePage extends AbstractShapedRecipePage<ShapedRecipe> {
-    public ShapedRecipePage(ShapedRecipe recipe, RegistryAccess registryAccess) {
+public class ShapedRecipePage extends AbstractShapedRecipePage<IShapedRecipe<?>> {
+    public ShapedRecipePage(IShapedRecipe<?> recipe, RegistryAccess registryAccess) {
         super(recipe, registryAccess);
     }
 

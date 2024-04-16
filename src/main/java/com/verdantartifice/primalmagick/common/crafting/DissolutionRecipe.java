@@ -20,16 +20,13 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class DissolutionRecipe implements IDissolutionRecipe {
-    protected final String group;
+public class DissolutionRecipe extends AbstractStackCraftingRecipe<Container> implements IDissolutionRecipe {
     protected final Ingredient ingredient;
-    protected final ItemStack result;
     protected final SourceList manaCosts;
     
     public DissolutionRecipe(String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
-        this.group = group;
+        super(group, result);
         this.ingredient = ingredient;
-        this.result = result;
         this.manaCosts = manaCosts;
     }
 
@@ -40,7 +37,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
 
     @Override
     public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
-        return this.result.copy();
+        return this.getResultItem(registryAccess).copy();
     }
 
     @Override
@@ -50,14 +47,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.ingredient);
-        return nonnulllist;
-    }
-
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return this.result;
+        return NonNullList.of(Ingredient.EMPTY, this.ingredient);
     }
 
     @Override
@@ -70,17 +60,12 @@ public class DissolutionRecipe implements IDissolutionRecipe {
         return this.manaCosts;
     }
 
-    @Override
-    public String getGroup() {
-        return this.group;
-    }
-
     public static class Serializer implements RecipeSerializer<DissolutionRecipe> {
         protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
-                    ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.result),
+                    ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.output),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionRecipe::new);
         });
@@ -104,7 +89,7 @@ public class DissolutionRecipe implements IDissolutionRecipe {
             buffer.writeUtf(recipe.group);
             SourceList.toNetwork(buffer, recipe.manaCosts);
             recipe.ingredient.toNetwork(buffer);
-            buffer.writeItem(recipe.result);
+            buffer.writeItem(recipe.output);
         }
     }
 }

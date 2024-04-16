@@ -81,6 +81,7 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -617,14 +618,12 @@ public class GrimoireScreen extends Screen {
         }
         for (ResourceLocation recipeLoc : locList) {
             Optional<RecipeHolder<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
-            if (opt.isPresent()) {
-                AbstractRecipePage page = RecipePageFactory.createPage(opt.get(), this.minecraft.level.registryAccess());
+            opt.ifPresent(recipe -> {
+                AbstractRecipePage page = RecipePageFactory.createPage(recipe, this.minecraft.level.registryAccess());
                 if (page != null) {
                     this.pages.add(page);
                 }
-            } else {
-                LOGGER.warn("Unable to find recipe definition for {}", recipeLoc.toString());
-            }
+            });
         }
     }
     
@@ -1016,7 +1015,8 @@ public class GrimoireScreen extends Screen {
     
     protected static boolean isValidRecipeIndexEntry(RecipeHolder<?> recipe) {
         Minecraft mc = Minecraft.getInstance();
-        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || RecipePageFactory.createPage(recipe, mc.level.registryAccess()) == null) {
+        RegistryAccess registryAccess = mc.level.registryAccess();
+        if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
             return false;
         }
         if (recipe.value() instanceof IHasRequiredResearch hrr) {

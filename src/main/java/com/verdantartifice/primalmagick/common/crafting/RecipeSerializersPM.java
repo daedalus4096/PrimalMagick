@@ -36,4 +36,7 @@ public class RecipeSerializersPM {
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WardingModuleApplicationRecipe>> WARDING_MODULE_APPLICATION = RECIPE_SERIALIZERS.register("warding_module_application", () -> new SimpleCraftingRecipeSerializer<>(WardingModuleApplicationRecipe::new));
     public static final RegistryObject<SimpleCraftingRecipeSerializer<StaticBookCloningRecipe>> STATIC_BOOK_CLONING = RECIPE_SERIALIZERS.register("static_book_cloning", () -> new SimpleCraftingRecipeSerializer<>(StaticBookCloningRecipe::new));
     public static final RegistryObject<SimpleCraftingRecipeSerializer<WritableBookCraftingRecipe>> WRITABLE_BOOK_CRAFTING = RECIPE_SERIALIZERS.register("writable_book_crafting", () -> new SimpleCraftingRecipeSerializer<>(WritableBookCraftingRecipe::new));
+    public static final RegistryObject<RecipeSerializer<ShapelessTagRecipe>> CRAFTING_SHAPELESS_TAG = RECIPE_SERIALIZERS.register("crafting_shapeless_tag", ShapelessTagRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<ShapelessArcaneTagRecipe>> ARCANE_CRAFTING_SHAPELESS_TAG = RECIPE_SERIALIZERS.register("arcane_crafting_shapeless_tag", ShapelessArcaneTagRecipe.Serializer::new);
+    public static final RegistryObject<RecipeSerializer<DissolutionTagRecipe>> DISSOLUTION_TAG = RECIPE_SERIALIZERS.register("dissolution_tag", DissolutionTagRecipe.Serializer::new);
 }

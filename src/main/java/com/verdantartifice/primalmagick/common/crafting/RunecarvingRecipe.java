@@ -20,19 +20,16 @@ import net.minecraft.world.level.Level;
  * 
  * @author Daedalus4096
  */
-public class RunecarvingRecipe implements IRunecarvingRecipe {
-    protected final String group;
+public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> implements IRunecarvingRecipe {
     protected final CompoundResearchKey research;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
-    protected final ItemStack result;
     
     public RunecarvingRecipe(String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
-        this.group = group;
+        super(group, result);
         this.research = research;
         this.ingredient1 = ingredient1;
         this.ingredient2 = ingredient2;
-        this.result = result;
     }
 
     @Override
@@ -42,30 +39,17 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
 
     @Override
     public ItemStack assemble(Container inv, RegistryAccess registryAccess) {
-        return this.result.copy();
+        return this.getResultItem(registryAccess).copy();
     }
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return true;
+        return (width * height) >= 2;
     }
 
-    @Override
-    public ItemStack getResultItem(RegistryAccess registryAccess) {
-        return this.result;
-    }
-    
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.ingredient1);
-        nonnulllist.add(this.ingredient2);
-        return nonnulllist;
-    }
-
-    @Override
-    public String getGroup() {
-        return this.group;
+        return NonNullList.of(Ingredient.EMPTY, this.ingredient1, this.ingredient2);
     }
 
     @Override
@@ -85,7 +69,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
                     CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.result)
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output)
                 ).apply(instance, RunecarvingRecipe::new);
         });
         
@@ -110,7 +94,7 @@ public class RunecarvingRecipe implements IRunecarvingRecipe {
             buffer.writeUtf(recipe.research.toString());
             recipe.ingredient1.toNetwork(buffer);
             recipe.ingredient2.toNetwork(buffer);
-            buffer.writeItem(recipe.result);
+            buffer.writeItem(recipe.output);
         }
     }
 }

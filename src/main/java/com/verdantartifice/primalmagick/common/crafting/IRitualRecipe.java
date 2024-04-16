@@ -3,8 +3,9 @@ package com.verdantartifice.primalmagick.common.crafting;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 
 /**
@@ -14,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType;
  * 
  * @author Daedalus4096
  */
-public interface IRitualRecipe extends CraftingRecipe, IHasManaCost, IHasRequiredResearch {
+public interface IRitualRecipe extends Recipe<Container>, IHasManaCost, IHasRequiredResearch {
     /**
      * Get the list of props for the recipe.
      * 

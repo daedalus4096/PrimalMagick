@@ -62,14 +62,15 @@ public class ItemTagsProviderPM extends ItemTagsProvider {
         this.tag(Tags.Items.ARMORS_CHESTPLATES).addTag(ItemTagsPM.ROBES_CHESTPLATES).add(ItemsPM.PRIMALITE_CHEST.get(), ItemsPM.HEXIUM_CHEST.get(), ItemsPM.HALLOWSTEEL_CHEST.get());
         this.tag(Tags.Items.ARMORS_LEGGINGS).addTag(ItemTagsPM.ROBES_LEGGINGS).add(ItemsPM.PRIMALITE_LEGS.get(), ItemsPM.HEXIUM_LEGS.get(), ItemsPM.HALLOWSTEEL_LEGS.get());
         this.tag(Tags.Items.ARMORS_BOOTS).addTag(ItemTagsPM.ROBES_BOOTS).add(ItemsPM.PRIMALITE_FEET.get(), ItemsPM.HEXIUM_FEET.get(), ItemsPM.HALLOWSTEEL_FEET.get());
-        this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER);
+        this.tag(Tags.Items.DUSTS).addTag(ItemTagsForgeExt.DUSTS_IRON).addTag(ItemTagsForgeExt.DUSTS_GOLD).addTag(ItemTagsForgeExt.DUSTS_COPPER).addOptionalTag(ItemTagsForgeExt.DUSTS_TIN).addOptionalTag(ItemTagsForgeExt.DUSTS_LEAD).addOptionalTag(ItemTagsForgeExt.DUSTS_SILVER).addOptionalTag(ItemTagsForgeExt.DUSTS_URANIUM);
         this.tag(Tags.Items.INGOTS).addTag(ItemTagsPM.INGOTS_PRIMALITE).addTag(ItemTagsPM.INGOTS_HEXIUM).addTag(ItemTagsPM.INGOTS_HALLOWSTEEL);
         this.tag(Tags.Items.NUGGETS).addTag(ItemTagsPM.NUGGETS_PRIMALITE).addTag(ItemTagsPM.NUGGETS_HEXIUM).addTag(ItemTagsPM.NUGGETS_HALLOWSTEEL).addTag(ItemTagsForgeExt.NUGGETS_QUARTZ);
         this.tag(Tags.Items.ORE_RATES_DENSE).add(ItemsPM.ROCK_SALT_ORE.get());
         this.tag(Tags.Items.ORE_RATES_SINGULAR).add(ItemsPM.QUARTZ_ORE.get());
-        this.tag(Tags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT);
+        this.tag(Tags.Items.ORES).addTag(ItemTagsForgeExt.ORES_ROCK_SALT).addOptionalTag(ItemTagsForgeExt.ORES_TIN).addOptionalTag(ItemTagsForgeExt.ORES_LEAD).addOptionalTag(ItemTagsForgeExt.ORES_SILVER).addOptionalTag(ItemTagsForgeExt.ORES_URANIUM);
         this.tag(Tags.Items.ORES_QUARTZ).add(ItemsPM.QUARTZ_ORE.get());
         this.tag(Tags.Items.ORES_IN_GROUND_STONE).add(ItemsPM.QUARTZ_ORE.get(), ItemsPM.ROCK_SALT_ORE.get());
+        this.tag(Tags.Items.RAW_MATERIALS).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_TIN).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_LEAD).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_SILVER).addOptionalTag(ItemTagsForgeExt.RAW_MATERIALS_URANIUM);
         this.tag(Tags.Items.STORAGE_BLOCKS).add(ItemsPM.IGNYX_BLOCK.get()).addTag(ItemTagsPM.STORAGE_BLOCKS_PRIMALITE).addTag(ItemTagsPM.STORAGE_BLOCKS_HEXIUM).addTag(ItemTagsPM.STORAGE_BLOCKS_HALLOWSTEEL);
         this.tag(Tags.Items.TOOLS_BOWS).add(ItemsPM.PRIMALITE_BOW.get(), ItemsPM.HEXIUM_BOW.get(), ItemsPM.HALLOWSTEEL_BOW.get(), ItemsPM.FORBIDDEN_BOW.get());
         this.tag(Tags.Items.TOOLS_FISHING_RODS).add(ItemsPM.PRIMALITE_FISHING_ROD.get(), ItemsPM.HEXIUM_FISHING_ROD.get(), ItemsPM.HALLOWSTEEL_FISHING_ROD.get(), ItemsPM.PRIMAL_FISHING_ROD.get());

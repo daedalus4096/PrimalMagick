@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.List;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
@@ -29,6 +31,7 @@ import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -36,6 +39,12 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.crafting.ConditionalRecipe;
+import net.minecraftforge.common.crafting.conditions.AndCondition;
+import net.minecraftforge.common.crafting.conditions.ICondition;
+import net.minecraftforge.common.crafting.conditions.NotCondition;
+import net.minecraftforge.common.crafting.conditions.TagEmptyCondition;
+import net.minecraftforge.common.crafting.conditions.TrueCondition;
 
 /**
  * Data provider for all of the mod's recipes.
@@ -45,6 +54,11 @@ import net.minecraftforge.common.Tags;
 public class Recipes extends RecipeProvider {
     public Recipes(PackOutput packOutput) {
         super(packOutput);
+    }
+    
+    private static ICondition tagsNotEmpty(List<TagKey<Item>> tags) {
+        List<ICondition> subConditions = tags.stream().<ICondition>map(t -> new NotCondition(new TagEmptyCondition(t))).toList();
+        return new AndCondition(subConditions);
     }
 
     @Override
@@ -1851,42 +1865,147 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("EARTHSHATTER_HAMMER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 20))
             .build(consumer);
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IRON_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.ORES_IRON)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.ORES_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_IRON, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.ORES_IRON)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("iron_grit_from_ore")))
             .save(consumer, PrimalMagick.resource("iron_grit_from_ore"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.IRON_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.RAW_MATERIALS_IRON)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.RAW_MATERIALS_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_IRON, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.RAW_MATERIALS_IRON)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("iron_grit_from_raw_metal")))
             .save(consumer, PrimalMagick.resource("iron_grit_from_raw_metal"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.GOLD_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.ORES_GOLD)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.ORES_GOLD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_GOLD, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.ORES_GOLD)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("gold_grit_from_ore")))
             .save(consumer, PrimalMagick.resource("gold_grit_from_ore"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.GOLD_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.RAW_MATERIALS_GOLD)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.RAW_MATERIALS_GOLD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_GOLD, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.RAW_MATERIALS_GOLD)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("gold_grit_from_raw_metal")))
             .save(consumer, PrimalMagick.resource("gold_grit_from_raw_metal"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.COPPER_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.ORES_COPPER)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.ORES_COPPER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_COPPER, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.ORES_COPPER)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("copper_grit_from_ore")))
             .save(consumer, PrimalMagick.resource("copper_grit_from_ore"));
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemsPM.COPPER_GRIT.get(), 2)
-            .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
-            .requires(Tags.Items.RAW_MATERIALS_COPPER)
-            .group("earthshatter_hammer_grit")
-            .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.RAW_MATERIALS_COPPER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_COPPER, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(Tags.Items.RAW_MATERIALS_COPPER)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("copper_grit_from_raw_metal")))
             .save(consumer, PrimalMagick.resource("copper_grit_from_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.ORES_TIN)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("tin_dust_from_ore")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_TIN, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("tin_dust_from_raw_metal")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_LEAD, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.ORES_LEAD)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("lead_dust_from_ore")))
+            .save(consumer, PrimalMagick.resource("lead_dust_from_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_LEAD, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("lead_dust_from_raw_metal")))
+            .save(consumer, PrimalMagick.resource("lead_dust_from_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_SILVER, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.ORES_SILVER)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("silver_dust_from_ore")))
+            .save(consumer, PrimalMagick.resource("silver_dust_from_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_SILVER, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("silver_dust_from_raw_metal")))
+            .save(consumer, PrimalMagick.resource("silver_dust_from_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_URANIUM, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.ORES_URANIUM)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("uranium_dust_from_ore")))
+            .save(consumer, PrimalMagick.resource("uranium_dust_from_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> ShapelessTagRecipeBuilder.shapelessTagRecipe(RecipeCategory.MISC, ItemTagsForgeExt.DUSTS_URANIUM, 2)
+                    .addIngredient(ItemsPM.EARTHSHATTER_HAMMER.get())
+                    .addIngredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
+                    .setGroup("earthshatter_hammer_grit")
+                    .unlockedBy("has_hammer", has(ItemsPM.EARTHSHATTER_HAMMER.get()))
+                    .build(output, PrimalMagick.resource("uranium_dust_from_raw_metal")))
+            .save(consumer, PrimalMagick.resource("uranium_dust_from_raw_metal"));
+        
         ShapelessRecipeBuilder.shapeless(RecipeCategory.BUILDING_BLOCKS, Items.COBBLESTONE)
             .requires(ItemsPM.EARTHSHATTER_HAMMER.get())
             .requires(ItemTagsPM.SURFACE_STONE)
@@ -6290,36 +6409,133 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("DISSOLUTION_CHAMBER")))
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 100))
             .build(consumer);
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
-            .ingredient(Tags.Items.ORES_IRON)
-            .setGroup("iron_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("iron_grit_from_dissolving_ore"));
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.IRON_GRIT.get(), 3)
-            .ingredient(Tags.Items.RAW_MATERIALS_IRON)
-            .setGroup("iron_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("iron_grit_from_dissolving_raw_metal"));
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.GOLD_GRIT.get(), 3)
-            .ingredient(Tags.Items.ORES_GOLD)
-            .setGroup("gold_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("gold_grit_from_dissolving_ore"));
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.GOLD_GRIT.get(), 3)
-            .ingredient(Tags.Items.RAW_MATERIALS_GOLD)
-            .setGroup("gold_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("gold_grit_from_dissolving_raw_metal"));
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
-            .ingredient(Tags.Items.ORES_COPPER)
-            .setGroup("copper_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("copper_grit_from_dissolving_ore"));
-        DissolutionRecipeBuilder.dissolutionRecipe(ItemsPM.COPPER_GRIT.get(), 3)
-            .ingredient(Tags.Items.RAW_MATERIALS_COPPER)
-            .setGroup("copper_grit_dissolution")
-            .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
-            .build(consumer, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.ORES_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_IRON, 3)
+                    .ingredient(Tags.Items.ORES_IRON)
+                    .setGroup("iron_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("iron_grit_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("iron_grit_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_IRON, Tags.Items.RAW_MATERIALS_IRON)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_IRON, 3)
+                    .ingredient(Tags.Items.RAW_MATERIALS_IRON)
+                    .setGroup("iron_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("iron_grit_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("iron_grit_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.ORES_GOLD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_GOLD, 3)
+                    .ingredient(Tags.Items.ORES_GOLD)
+                    .setGroup("gold_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("gold_grit_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("gold_grit_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_GOLD, Tags.Items.RAW_MATERIALS_GOLD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_GOLD, 3)
+                    .ingredient(Tags.Items.RAW_MATERIALS_GOLD)
+                    .setGroup("gold_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("gold_grit_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("gold_grit_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.ORES_COPPER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_COPPER, 3)
+                    .ingredient(Tags.Items.ORES_COPPER)
+                    .setGroup("copper_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("copper_grit_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("copper_grit_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_COPPER, Tags.Items.RAW_MATERIALS_COPPER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_COPPER, 3)
+                    .ingredient(Tags.Items.RAW_MATERIALS_COPPER)
+                    .setGroup("copper_grit_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("copper_grit_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.ORES_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_TIN, 3)
+                    .ingredient(ItemTagsForgeExt.ORES_TIN)
+                    .setGroup("tin_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("tin_dust_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_TIN, ItemTagsForgeExt.RAW_MATERIALS_TIN)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_TIN, 3)
+                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_TIN)
+                    .setGroup("tin_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("tin_dust_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("tin_dust_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.ORES_LEAD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_LEAD, 3)
+                    .ingredient(ItemTagsForgeExt.ORES_LEAD)
+                    .setGroup("lead_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("lead_dust_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("lead_dust_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_LEAD, ItemTagsForgeExt.RAW_MATERIALS_LEAD)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_LEAD, 3)
+                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_LEAD)
+                    .setGroup("lead_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("lead_dust_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("lead_dust_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.ORES_SILVER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_SILVER, 3)
+                    .ingredient(ItemTagsForgeExt.ORES_SILVER)
+                    .setGroup("silver_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("silver_dust_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("silver_dust_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_SILVER, ItemTagsForgeExt.RAW_MATERIALS_SILVER)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_SILVER, 3)
+                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_SILVER)
+                    .setGroup("silver_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("silver_dust_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("silver_dust_from_dissolving_raw_metal"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.ORES_URANIUM)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_URANIUM, 3)
+                    .ingredient(ItemTagsForgeExt.ORES_URANIUM)
+                    .setGroup("uranium_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("uranium_dust_from_dissolving_ore")))
+            .save(consumer, PrimalMagick.resource("uranium_dust_from_dissolving_ore"));
+        ConditionalRecipe.builder()
+            .mainCondition(tagsNotEmpty(List.of(ItemTagsForgeExt.DUSTS_URANIUM, ItemTagsForgeExt.RAW_MATERIALS_URANIUM)))
+            .condition(TrueCondition.INSTANCE)
+            .recipe(output -> DissolutionTagRecipeBuilder.dissolutionTagRecipe(ItemTagsForgeExt.DUSTS_URANIUM, 3)
+                    .ingredient(ItemTagsForgeExt.RAW_MATERIALS_URANIUM)
+                    .setGroup("uranium_dust_dissolution")
+                    .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
+                    .build(output, PrimalMagick.resource("uranium_dust_from_dissolving_raw_metal")))
+            .save(consumer, PrimalMagick.resource("uranium_dust_from_dissolving_raw_metal"));
+        
         DissolutionRecipeBuilder.dissolutionRecipe(Items.COBBLESTONE, 2)
             .ingredient(ItemTagsPM.SURFACE_STONE)
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 1))
