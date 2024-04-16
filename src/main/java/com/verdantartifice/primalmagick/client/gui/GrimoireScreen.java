@@ -176,9 +176,9 @@ public class GrimoireScreen extends Screen {
         Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagickCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
         this.generateIndexMap();
+        this.setCurrentPage(this.knowledge.getLastResearchTopic().getPage());
         this.initPages();
         this.initButtons();
-        this.setCurrentPage(this.knowledge.getLastResearchTopic().getPage());
         PacketHandler.sendToServer(new SetResearchTopicHistoryPacket(this.knowledge.getLastResearchTopic(), this.getHistoryView()));
     }
     

@@ -57,6 +57,11 @@ public abstract class AbstractResearchTopic implements INBTSerializable<Compound
         this.page = nbt.getInt("Page");
     }
 
+    @Override
+    public String toString() {
+        return "AbstractResearchTopic [type=" + type + ", data=" + data + ", page=" + page + "]";
+    }
+
     public static enum Type implements StringRepresentable {
         MAIN_INDEX("main_index"),
         RESEARCH_DISCIPLINE("research_discipline"),
