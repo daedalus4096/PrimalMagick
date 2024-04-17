@@ -125,11 +125,11 @@ public class BlocksPM {
     // Register raw marble blocks
     public static final RegistryObject<Block> MARBLE_RAW = BLOCKS.register("marble_raw", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_SLAB = BLOCKS.register("marble_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
-    public static final RegistryObject<StairBlock> MARBLE_STAIRS = BLOCKS.register("marble_stairs", () -> new StairBlock(MARBLE_RAW.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_RAW.get())));
+    public static final RegistryObject<StairBlock> MARBLE_STAIRS = BLOCKS.register("marble_stairs", () -> new StairBlock(MARBLE_RAW.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_RAW.get())));
     public static final RegistryObject<WallBlock> MARBLE_WALL = BLOCKS.register("marble_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_BRICKS = BLOCKS.register("marble_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
     public static final RegistryObject<SlabBlock> MARBLE_BRICK_SLAB = BLOCKS.register("marble_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
-    public static final RegistryObject<StairBlock> MARBLE_BRICK_STAIRS = BLOCKS.register("marble_brick_stairs", () -> new StairBlock(MARBLE_BRICKS.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_BRICK_STAIRS = BLOCKS.register("marble_brick_stairs", () -> new StairBlock(MARBLE_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final RegistryObject<WallBlock> MARBLE_BRICK_WALL = BLOCKS.register("marble_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_BRICKS.get())));
     public static final RegistryObject<PillarBlock> MARBLE_PILLAR = BLOCKS.register("marble_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
     public static final RegistryObject<Block> MARBLE_CHISELED = BLOCKS.register("marble_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_RAW.get())));
@@ -140,11 +140,11 @@ public class BlocksPM {
     // Register enchanted marble blocks
     public static final RegistryObject<Block> MARBLE_ENCHANTED = BLOCKS.register("marble_enchanted", () -> new Block(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_SLAB = BLOCKS.register("marble_enchanted_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
-    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_STAIRS = BLOCKS.register("marble_enchanted_stairs", () -> new StairBlock(MARBLE_ENCHANTED.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_STAIRS = BLOCKS.register("marble_enchanted_stairs", () -> new StairBlock(MARBLE_ENCHANTED.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_WALL = BLOCKS.register("marble_enchanted_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<Block> MARBLE_ENCHANTED_BRICKS = BLOCKS.register("marble_enchanted_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<SlabBlock> MARBLE_ENCHANTED_BRICK_SLAB = BLOCKS.register("marble_enchanted_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_ENCHANTED_BRICKS.get())));
-    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_BRICK_STAIRS = BLOCKS.register("marble_enchanted_brick_stairs", () -> new StairBlock(MARBLE_ENCHANTED_BRICKS.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_ENCHANTED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_ENCHANTED_BRICK_STAIRS = BLOCKS.register("marble_enchanted_brick_stairs", () -> new StairBlock(MARBLE_ENCHANTED_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_ENCHANTED_BRICKS.get())));
     public static final RegistryObject<WallBlock> MARBLE_ENCHANTED_BRICK_WALL = BLOCKS.register("marble_enchanted_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_ENCHANTED_BRICKS.get())));
     public static final RegistryObject<PillarBlock> MARBLE_ENCHANTED_PILLAR = BLOCKS.register("marble_enchanted_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
     public static final RegistryObject<Block> MARBLE_ENCHANTED_CHISELED = BLOCKS.register("marble_enchanted_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_ENCHANTED.get())));
@@ -154,11 +154,11 @@ public class BlocksPM {
     // Register smoked marble blocks
     public static final RegistryObject<Block> MARBLE_SMOKED = BLOCKS.register("marble_smoked", () -> new Block(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_SMOKED_SLAB = BLOCKS.register("marble_smoked_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
-    public static final RegistryObject<StairBlock> MARBLE_SMOKED_STAIRS = BLOCKS.register("marble_smoked_stairs", () -> new StairBlock(MARBLE_SMOKED.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_SMOKED_STAIRS = BLOCKS.register("marble_smoked_stairs", () -> new StairBlock(MARBLE_SMOKED.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
     public static final RegistryObject<WallBlock> MARBLE_SMOKED_WALL = BLOCKS.register("marble_smoked_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
     public static final RegistryObject<Block> MARBLE_SMOKED_BRICKS = BLOCKS.register("marble_smoked_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
     public static final RegistryObject<SlabBlock> MARBLE_SMOKED_BRICK_SLAB = BLOCKS.register("marble_smoked_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_SMOKED_BRICKS.get())));
-    public static final RegistryObject<StairBlock> MARBLE_SMOKED_BRICK_STAIRS = BLOCKS.register("marble_smoked_brick_stairs", () -> new StairBlock(MARBLE_SMOKED_BRICKS.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_SMOKED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_SMOKED_BRICK_STAIRS = BLOCKS.register("marble_smoked_brick_stairs", () -> new StairBlock(MARBLE_SMOKED_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_SMOKED_BRICKS.get())));
     public static final RegistryObject<WallBlock> MARBLE_SMOKED_BRICK_WALL = BLOCKS.register("marble_smoked_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_SMOKED_BRICKS.get())));
     public static final RegistryObject<PillarBlock> MARBLE_SMOKED_PILLAR = BLOCKS.register("marble_smoked_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
     public static final RegistryObject<Block> MARBLE_SMOKED_CHISELED = BLOCKS.register("marble_smoked_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_SMOKED.get())));
@@ -168,11 +168,11 @@ public class BlocksPM {
     // Register hallowed marble blocks
     public static final RegistryObject<Block> MARBLE_HALLOWED = BLOCKS.register("marble_hallowed", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_SLAB  = BLOCKS.register("marble_hallowed_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
-    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_STAIRS = BLOCKS.register("marble_hallowed_stairs", () -> new StairBlock(MARBLE_HALLOWED.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
+    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_STAIRS = BLOCKS.register("marble_hallowed_stairs", () -> new StairBlock(MARBLE_HALLOWED.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<WallBlock> MARBLE_HALLOWED_WALL = BLOCKS.register("marble_hallowed_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<Block> MARBLE_HALLOWED_BRICKS = BLOCKS.register("marble_hallowed_bricks", () -> new Block(Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<SlabBlock> MARBLE_HALLOWED_BRICK_SLAB = BLOCKS.register("marble_hallowed_brick_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(MARBLE_HALLOWED_BRICKS.get())));
-    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_BRICK_STAIRS = BLOCKS.register("marble_hallowed_brick_stairs", () -> new StairBlock(MARBLE_HALLOWED_BRICKS.get()::defaultBlockState, Block.Properties.ofFullCopy(MARBLE_HALLOWED_BRICKS.get())));
+    public static final RegistryObject<StairBlock> MARBLE_HALLOWED_BRICK_STAIRS = BLOCKS.register("marble_hallowed_brick_stairs", () -> new StairBlock(MARBLE_HALLOWED_BRICKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MARBLE_HALLOWED_BRICKS.get())));
     public static final RegistryObject<WallBlock> MARBLE_HALLOWED_BRICK_WALL = BLOCKS.register("marble_hallowed_brick_wall", () -> new WallBlock(Block.Properties.ofFullCopy(MARBLE_HALLOWED_BRICKS.get())));
     public static final RegistryObject<PillarBlock> MARBLE_HALLOWED_PILLAR = BLOCKS.register("marble_hallowed_pillar", () -> new PillarBlock(Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
     public static final RegistryObject<Block> MARBLE_HALLOWED_CHISELED = BLOCKS.register("marble_hallowed_chiseled", () -> new Block(Block.Properties.ofFullCopy(MARBLE_HALLOWED.get())));
@@ -188,7 +188,7 @@ public class BlocksPM {
     public static final RegistryObject<SaplingBlockPM> SUNWOOD_SAPLING = BLOCKS.register("sunwood_sapling", () -> new SaplingBlockPM(new SunwoodTree(), BlockTagsPM.MAY_PLACE_SUNWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<SunwoodPlanksBlock> SUNWOOD_PLANKS = BLOCKS.register("sunwood_planks", SunwoodPlanksBlock::new);
     public static final RegistryObject<SunwoodSlabBlock> SUNWOOD_SLAB = BLOCKS.register("sunwood_slab", () -> new SunwoodSlabBlock(Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
-    public static final RegistryObject<SunwoodStairsBlock> SUNWOOD_STAIRS = BLOCKS.register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get()::defaultBlockState, Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
+    public static final RegistryObject<SunwoodStairsBlock> SUNWOOD_STAIRS = BLOCKS.register("sunwood_stairs", () -> new SunwoodStairsBlock(SUNWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(SUNWOOD_PLANKS.get())));
     public static final RegistryObject<SunwoodPillarBlock> SUNWOOD_PILLAR = BLOCKS.register("sunwood_pillar", SunwoodPillarBlock::new);
     
     // Register moonwood blocks
@@ -200,7 +200,7 @@ public class BlocksPM {
     public static final RegistryObject<SaplingBlockPM> MOONWOOD_SAPLING = BLOCKS.register("moonwood_sapling", () -> new SaplingBlockPM(new MoonwoodTree(), BlockTagsPM.MAY_PLACE_MOONWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<MoonwoodPlanksBlock> MOONWOOD_PLANKS = BLOCKS.register("moonwood_planks", MoonwoodPlanksBlock::new);
     public static final RegistryObject<MoonwoodSlabBlock> MOONWOOD_SLAB = BLOCKS.register("moonwood_slab", () -> new MoonwoodSlabBlock(Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
-    public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get()::defaultBlockState, Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
+    public static final RegistryObject<MoonwoodStairsBlock> MOONWOOD_STAIRS = BLOCKS.register("moonwood_stairs", () -> new MoonwoodStairsBlock(MOONWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(MOONWOOD_PLANKS.get())));
     public static final RegistryObject<MoonwoodPillarBlock> MOONWOOD_PILLAR = BLOCKS.register("moonwood_pillar", MoonwoodPillarBlock::new);
     
     // Register hallowood blocks
@@ -212,7 +212,7 @@ public class BlocksPM {
     public static final RegistryObject<SaplingBlockPM> HALLOWOOD_SAPLING = BLOCKS.register("hallowood_sapling", () -> new SaplingBlockPM(new HallowoodTree(), BlockTagsPM.MAY_PLACE_HALLOWOOD_SAPLINGS, Block.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).isRedstoneConductor((state, getter, pos) -> false).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)));
     public static final RegistryObject<Block> HALLOWOOD_PLANKS = BLOCKS.register("hallowood_planks", () -> new Block(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
     public static final RegistryObject<SlabBlock> HALLOWOOD_SLAB = BLOCKS.register("hallowood_slab", () -> new SlabBlock(Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
-    public static final RegistryObject<StairBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairBlock(HALLOWOOD_PLANKS.get()::defaultBlockState, Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
+    public static final RegistryObject<StairBlock> HALLOWOOD_STAIRS = BLOCKS.register("hallowood_stairs", () -> new StairBlock(HALLOWOOD_PLANKS.get().defaultBlockState(), Block.Properties.ofFullCopy(HALLOWOOD_PLANKS.get())));
     public static final RegistryObject<PillarBlock> HALLOWOOD_PILLAR = BLOCKS.register("hallowood_pillar", () -> new PillarBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.0F).sound(SoundType.WOOD)));
     
     // Register crop blocks
