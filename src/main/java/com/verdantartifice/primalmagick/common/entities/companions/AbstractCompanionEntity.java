@@ -22,7 +22,7 @@ import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.scores.Team;
+import net.minecraft.world.scores.PlayerTeam;
 
 /**
  * Base class for an entity that follows a player as a friendly companion, similar to a tamed creature.
@@ -119,7 +119,7 @@ public abstract class AbstractCompanionEntity extends PathfinderMob {
     }
     
     @Override
-    public Team getTeam() {
+    public PlayerTeam getTeam() {
         if (this.hasCompanionOwner()) {
             Player owner = this.getCompanionOwner();
             if (owner != null) {
