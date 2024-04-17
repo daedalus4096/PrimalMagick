@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.misc;
 
+import com.mojang.serialization.Codec;
+
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -14,6 +16,8 @@ public enum DeviceTier implements StringRepresentable {
     FORBIDDEN("forbidden"),
     HEAVENLY("heavenly"),
     CREATIVE("creative");
+    
+    public static final Codec<DeviceTier> CODEC = StringRepresentable.fromEnum(DeviceTier::values);
     
     private final String name;
     
