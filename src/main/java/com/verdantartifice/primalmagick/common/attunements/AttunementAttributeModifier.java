@@ -28,7 +28,7 @@ public class AttunementAttributeModifier {
         this.source = source;
         this.threshold = threshold;
         this.attribute = attribute;
-        this.modifier = new AttributeModifier(UUID.fromString(uuidStr), this::getModifierName, modValue, modOperation);
+        this.modifier = new AttributeModifier(UUID.fromString(uuidStr), this.getModifierName(), modValue, modOperation);
     }
     
     @Nonnull
