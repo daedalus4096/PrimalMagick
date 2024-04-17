@@ -30,7 +30,7 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     protected final CompoundResearchKey research;
     protected final SourceList manaCosts;
     
-    public ShapedArcaneRecipe(String group, ShapedRecipePattern pattern, ItemStack output, CompoundResearchKey research, SourceList manaCosts) {
+    public ShapedArcaneRecipe(String group, ItemStack output, ShapedRecipePattern pattern, CompoundResearchKey research, SourceList manaCosts) {
         super(group, output);
         this.pattern = pattern;
         this.research = research;
@@ -85,8 +85,8 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
         public static final Codec<ShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
-                ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
                 ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
+                ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
                 CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
                 SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
         ).apply(instance, ShapedArcaneRecipe::new));
@@ -103,7 +103,7 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
             CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf());
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             ItemStack stack = buffer.readItem();
-            return new ShapedArcaneRecipe(group, pattern, stack, research, manaCosts);
+            return new ShapedArcaneRecipe(group, stack, pattern, research, manaCosts);
         }
 
         @Override

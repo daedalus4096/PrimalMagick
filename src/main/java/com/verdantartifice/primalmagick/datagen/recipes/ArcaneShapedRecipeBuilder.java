@@ -166,7 +166,7 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         ShapedRecipePattern pattern = this.validate(id);
-        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), pattern, this.result, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
     
