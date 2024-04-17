@@ -1,21 +1,15 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import javax.json.stream.JsonGenerationException;
+import java.util.Objects;
 
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.DissolutionTagRecipe;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -80,35 +74,7 @@ public class DissolutionTagRecipeBuilder {
     
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new DissolutionTagRecipeBuilder.Result(id, this.recipeOutputTag, this.recipeOutputAmount, this.ingredient, this.group, this.manaCosts));
-    }
-    
-    public static record Result(ResourceLocation id, TagKey<Item> resultTag, int resultAmount, Ingredient ingredient, String group, SourceList manaCosts) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            
-            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
-            }
-
-            json.add("ingredient", this.ingredient.toJson(true));
-            
-            json.addProperty("outputTag", this.resultTag.location().toString());
-            json.addProperty("outputAmount", this.resultAmount);
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.DISSOLUTION_TAG.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Dissolution recipes don't use the vanilla advancement unlock system, so return null
-            return null;
-        }
+        DissolutionTagRecipe recipe = new DissolutionTagRecipe(Objects.requireNonNullElse(this.group, ""), this.recipeOutputTag, this.recipeOutputAmount, this.ingredient, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        output.accept(id, recipe, null);
     }
 }
