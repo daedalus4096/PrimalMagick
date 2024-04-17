@@ -31,7 +31,7 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
-    public ShapelessArcaneTagRecipe(String group, CompoundResearchKey research, SourceList manaCosts, TagKey<Item> outputTag, int outputAmount, NonNullList<Ingredient> items) {
+    public ShapelessArcaneTagRecipe(String group, TagKey<Item> outputTag, int outputAmount, NonNullList<Ingredient> items, CompoundResearchKey research, SourceList manaCosts) {
         super(group, outputTag, outputAmount);
         this.research = research;
         this.manaCosts = manaCosts;
@@ -68,8 +68,6 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
         protected static final Codec<ShapelessArcaneTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(sar -> sar.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(sar -> sar.outputAmount),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
@@ -81,7 +79,9 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
                         } else {
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
-                    }, DataResult::success).forGetter(sar -> sar.recipeItems)
+                    }, DataResult::success).forGetter(sar -> sar.recipeItems),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
                 ).apply(instance, ShapelessArcaneTagRecipe::new);
         });
         
@@ -106,7 +106,7 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
             TagKey<Item> resultTag = TagKey.create(Registries.ITEM, pBuffer.readResourceLocation());
             int resultAmount = pBuffer.readVarInt();
             
-            return new ShapelessArcaneTagRecipe(group, research, manaCosts, resultTag, resultAmount, ingredients);
+            return new ShapelessArcaneTagRecipe(group, resultTag, resultAmount, ingredients, research, manaCosts);
         }
 
         @Override

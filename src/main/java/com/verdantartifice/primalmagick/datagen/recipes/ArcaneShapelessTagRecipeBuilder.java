@@ -1,27 +1,18 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import javax.json.stream.JsonGenerationException;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -33,7 +24,7 @@ import net.minecraft.world.level.ItemLike;
 public class ArcaneShapelessTagRecipeBuilder {
     protected final TagKey<Item> resultTag;
     protected final int resultAmount;
-    protected final List<Ingredient> ingredients = new ArrayList<>();
+    protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected String group;
     protected CompoundResearchKey research;
     protected SourceList manaCosts;
@@ -170,7 +161,8 @@ public class ArcaneShapelessTagRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new ArcaneShapelessTagRecipeBuilder.Result(id, this.resultTag, this.resultAmount, this.group == null ? "" : this.group, this.ingredients, this.research, this.manaCosts));
+        ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        output.accept(id, recipe, null);
     }
 
     /**
@@ -184,42 +176,6 @@ public class ArcaneShapelessTagRecipeBuilder {
         }
         if (this.research == null) {
             throw new IllegalStateException("No research is defined for arcane shapeless tag recipe " + id + "!");
-        }
-    }
-    
-    public static record Result(ResourceLocation id, TagKey<Item> resultTag, int resultAmount, String group, List<Ingredient> ingredients, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            if (this.research != null) {
-                json.addProperty("research", this.research.toString());
-            }
-            
-            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
-            }
-            
-            JsonArray ingredientsJson = new JsonArray();
-            for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson(true));
-            }
-            json.add("ingredients", ingredientsJson);
-            
-            json.addProperty("outputTag", this.resultTag.location().toString());
-            json.addProperty("outputAmount", this.resultAmount);
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPELESS_TAG.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Arcane recipes don't use the vanilla advancement unlock system, so return null
-            return null;
         }
     }
 }
