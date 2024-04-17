@@ -80,6 +80,7 @@ import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodSlabBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodStairsBlock;
 import com.verdantartifice.primalmagick.common.blocks.trees.SunwoodTree;
 import com.verdantartifice.primalmagick.common.blocks.trees.TreefolkSproutBlock;
+import com.verdantartifice.primalmagick.common.items.ItemReferencesPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -216,8 +217,8 @@ public class BlocksPM {
     
     // Register crop blocks
     public static final RegistryObject<HydromelonBlock> HYDROMELON = BLOCKS.register("hydromelon", () -> new HydromelonBlock(Block.Properties.of().mapColor(MapColor.COLOR_BLUE).strength(1.0F).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
-    public static final RegistryObject<AttachedStemBlock> ATTACHED_HYDROMELON_STEM = BLOCKS.register("attached_hydromelon_stem", () -> new AttachedStemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
-    public static final RegistryObject<StemBlock> HYRDOMELON_STEM = BLOCKS.register("hydromelon_stem", () -> new StemBlock(HYDROMELON.get(), ItemsPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<AttachedStemBlock> ATTACHED_HYDROMELON_STEM = BLOCKS.register("attached_hydromelon_stem", () -> new AttachedStemBlock(BlockReferencesPM.HYDROMELON_STEM, BlockReferencesPM.HYDROMELON, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<StemBlock> HYRDOMELON_STEM = BLOCKS.register("hydromelon_stem", () -> new StemBlock(BlockReferencesPM.HYDROMELON, BlockReferencesPM.ATTACHED_HYDROMELON_STEM, ItemReferencesPM.HYDROMELON_SEEDS, Block.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.HARD_CROP).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<BloodRoseBlock> BLOOD_ROSE = BLOCKS.register("blood_rose", () -> new BloodRoseBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).ignitedByLava().pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<EmberflowerBlock> EMBERFLOWER = BLOCKS.register("emberflower", () -> new EmberflowerBlock(Block.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY).lightLevel(state -> 10)));
 
