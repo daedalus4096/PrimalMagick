@@ -28,7 +28,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
-    public ShapelessArcaneRecipe(String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
+    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, CompoundResearchKey research, SourceList manaCosts) {
         super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
@@ -65,8 +65,6 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
         protected static final Codec<ShapelessArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
@@ -77,7 +75,9 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
                         } else {
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
-                    }, DataResult::success).forGetter(sar -> sar.recipeItems)
+                    }, DataResult::success).forGetter(sar -> sar.recipeItems),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
                 ).apply(instance, ShapelessArcaneRecipe::new);
         });
         
@@ -88,8 +88,8 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
 
         @Override
         public ShapelessArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
+            String group = buffer.readUtf();
+            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf());
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
@@ -100,7 +100,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
             }
             
             ItemStack result = buffer.readItem();
-            return new ShapelessArcaneRecipe(group, research, manaCosts, result, ingredients);
+            return new ShapelessArcaneRecipe(group, result, ingredients, research, manaCosts);
         }
 
         @Override
