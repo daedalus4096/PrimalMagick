@@ -86,7 +86,7 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
         public static final Codec<ShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
                 ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
-                ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(r -> r.output),
+                ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
                 CompoundResearchKey.CODEC.fieldOf("research").forGetter(rsar -> rsar.research),
                 SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
         ).apply(instance, ShapedArcaneRecipe::new));
