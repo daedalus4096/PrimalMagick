@@ -5,7 +5,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SaplingBlock;
-import net.minecraft.world.level.block.grower.AbstractTreeGrower;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class SaplingBlockPM extends SaplingBlock {
     protected final TagKey<Block> mayPlaceOn;
     
-    public SaplingBlockPM(AbstractTreeGrower tree, TagKey<Block> mayPlaceOn, Block.Properties properties) {
+    public SaplingBlockPM(TreeGrower tree, TagKey<Block> mayPlaceOn, Block.Properties properties) {
         super(tree, properties);
         this.mayPlaceOn = mayPlaceOn;
     }
