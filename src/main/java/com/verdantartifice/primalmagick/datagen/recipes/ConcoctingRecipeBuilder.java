@@ -1,25 +1,18 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import javax.json.stream.JsonGenerationException;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.ConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +23,6 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -51,7 +43,7 @@ public class ConcoctingRecipeBuilder {
     });
     
     protected final ItemStack result;
-    protected final List<Ingredient> ingredients = new ArrayList<>();
+    protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected String group;
     protected boolean useDefaultGroup = false;
     protected CompoundResearchKey research;
@@ -136,7 +128,8 @@ public class ConcoctingRecipeBuilder {
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
         String groupStr = this.useDefaultGroup ? ForgeRegistries.POTIONS.getKey(PotionUtils.getPotion(this.result)).getPath() : this.group;
-        output.accept(new ConcoctingRecipeBuilder.Result(id, this.result, this.ingredients, groupStr, this.research, this.manaCosts));
+        ConcoctingRecipe recipe = new ConcoctingRecipe(Objects.requireNonNullElse(groupStr, ""), this.result, this.ingredients, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        output.accept(id, recipe, null);
     }
     
     public void build(RecipeOutput output) {
@@ -146,40 +139,5 @@ public class ConcoctingRecipeBuilder {
             throw new IllegalStateException("Output is not a concoction for concocting recipe with output " + this.result.getHoverName().getString());
         }
         this.build(output, PrimalMagick.resource(ForgeRegistries.POTIONS.getKey(potion).getPath() + "_" + type.getSerializedName()));
-    }
-    
-    public static record Result(ResourceLocation id, ItemStack result, List<Ingredient> ingredients, String group, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            if (this.research != null) {
-                json.addProperty("research", this.research.toString());
-            }
-            
-            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
-            }
-            
-            JsonArray ingredientsJson = new JsonArray();
-            for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson(true));
-            }
-            json.add("ingredients", ingredientsJson);
-            
-            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.CONCOCTING.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Concocting recipes don't use the vanilla advancement unlock system, so return null
-            return null;
-        }
     }
 }
