@@ -24,7 +24,7 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<Container> im
     protected final Ingredient ingredient;
     protected final SourceList manaCosts;
     
-    public DissolutionRecipe(String group, Ingredient ingredient, ItemStack result, SourceList manaCosts) {
+    public DissolutionRecipe(String group, ItemStack result, Ingredient ingredient, SourceList manaCosts) {
         super(group, result);
         this.ingredient = ingredient;
         this.manaCosts = manaCosts;
@@ -64,8 +64,8 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<Container> im
         protected static final Codec<DissolutionRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     ItemStack.CODEC.fieldOf("result").forGetter(dr -> dr.output),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionRecipe::new);
         });
@@ -81,7 +81,7 @@ public class DissolutionRecipe extends AbstractStackCraftingRecipe<Container> im
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             Ingredient ing = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new DissolutionRecipe(group, ing, result, manaCosts);
+            return new DissolutionRecipe(group, result, ing, manaCosts);
         }
 
         @Override
