@@ -37,21 +37,16 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     protected boolean dealtDamage;
     public int returningTicks;
     
-    public AbstractTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn);
+    public AbstractTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn, ItemStack thrownStackIn) {
+        super(type, worldIn, thrownStackIn);
     }
     
     public AbstractTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
-        super(type, thrower, worldIn);
-        this.thrownStack = thrownStackIn.copy();
+        super(type, thrower, worldIn, thrownStackIn);
         this.entityData.set(LOYALTY_LEVEL, (byte)EnchantmentHelper.getLoyalty(this.thrownStack));
         this.entityData.set(HAS_GLINT, this.thrownStack.hasFoil());
     }
     
-    public AbstractTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn, double x, double y, double z) {
-        super(type, x, y, z, worldIn);
-    }
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();

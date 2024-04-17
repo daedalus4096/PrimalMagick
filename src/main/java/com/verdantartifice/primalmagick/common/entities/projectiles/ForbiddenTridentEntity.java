@@ -14,20 +14,16 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class ForbiddenTridentEntity extends AbstractTridentEntity {
+    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
+    
     public ForbiddenTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn);
-        this.thrownStack = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
+        super(type, worldIn, DEFAULT_THROWN_STACK);
     }
     
     public ForbiddenTridentEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
         super(EntityTypesPM.FORBIDDEN_TRIDENT.get(), worldIn, thrower, thrownStackIn);
     }
     
-    public ForbiddenTridentEntity(Level worldIn, double x, double y, double z) {
-        super(EntityTypesPM.FORBIDDEN_TRIDENT.get(), worldIn, x, y, z);
-        this.thrownStack = new ItemStack(ItemsPM.FORBIDDEN_TRIDENT.get());
-    }
-
     @Override
     public double getBaseDamage() {
         return 11.0D;

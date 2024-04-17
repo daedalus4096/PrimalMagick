@@ -14,20 +14,16 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class HexiumTridentEntity extends AbstractTridentEntity {
+    private static final ItemStack DEFAULT_THROWN_STACK = new ItemStack(ItemsPM.HEXIUM_TRIDENT.get());
+    
     public HexiumTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn) {
-        super(type, worldIn);
-        this.thrownStack = new ItemStack(ItemsPM.HEXIUM_TRIDENT.get());
+        super(type, worldIn, DEFAULT_THROWN_STACK);
     }
     
     public HexiumTridentEntity(Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
         super(EntityTypesPM.HEXIUM_TRIDENT.get(), worldIn, thrower, thrownStackIn);
     }
     
-    public HexiumTridentEntity(Level worldIn, double x, double y, double z) {
-        super(EntityTypesPM.HEXIUM_TRIDENT.get(), worldIn, x, y, z);
-        this.thrownStack = new ItemStack(ItemsPM.HEXIUM_TRIDENT.get());
-    }
-
     @Override
     public double getBaseDamage() {
         return 11.0D;
