@@ -1,21 +1,17 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.ShapelessTagRecipe;
 
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -23,7 +19,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 
 /**
@@ -36,7 +31,7 @@ public class ShapelessTagRecipeBuilder {
     protected final RecipeCategory category;
     protected final TagKey<Item> resultTag;
     protected final int resultAmount;
-    protected final List<Ingredient> ingredients = new ArrayList<>();
+    protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
     protected String group;
 
@@ -145,8 +140,8 @@ public class ShapelessTagRecipeBuilder {
         Advancement.Builder advancementBuilder = output.advancement().addCriterion("has_the_recipe", 
                 RecipeUnlockedTrigger.unlocked(id)).rewards(AdvancementRewards.Builder.recipe(id)).requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancementBuilder::addCriterion);
-        output.accept(new ShapelessTagRecipeBuilder.Result(id, this.resultTag, this.resultAmount, this.group == null ? "" : this.group, determineBookCategory(this.category), this.ingredients, 
-                advancementBuilder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/"))));
+        ShapelessTagRecipe recipe = new ShapelessTagRecipe(Objects.requireNonNullElse(this.group, ""), determineBookCategory(this.category), this.resultTag, this.resultAmount, this.ingredients);
+        output.accept(id, recipe, advancementBuilder.build(id.withPrefix("recipes/" + this.category.getFolderName() + "/")));
     }
 
     /**
@@ -166,35 +161,6 @@ public class ShapelessTagRecipeBuilder {
         }
         if (this.criteria.isEmpty()) {
             throw new IllegalStateException("No way of obtaining recipe " + id);
-        }
-    }
-    
-    public static record Result(ResourceLocation id, TagKey<Item> resultTag, int resultAmount, String group, CraftingBookCategory category, List<Ingredient> ingredients, AdvancementHolder advancement) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            json.addProperty("category", this.category.getSerializedName());
-            
-            JsonArray ingredientsJson = new JsonArray();
-            for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson(true));
-            }
-            json.add("ingredients", ingredientsJson);
-            
-            json.addProperty("outputTag", this.resultTag.location().toString());
-            json.addProperty("outputAmount", this.resultAmount);
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.CRAFTING_SHAPELESS_TAG.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            return this.advancement;
         }
     }
 }
