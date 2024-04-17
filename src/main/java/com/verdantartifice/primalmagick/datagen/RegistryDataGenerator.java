@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPM;
 
+import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
@@ -50,7 +51,6 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         super(output, provider, BUILDER, Set.of(PrimalMagick.MODID));
     }
     
-    @SuppressWarnings("deprecation")
     public static CompletableFuture<HolderLookup.Provider> addProviders(boolean isServer, DataGenerator generator, PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
         RegistryDataGenerator registryDataGenerator = generator.addProvider(isServer, new RegistryDataGenerator(output, provider));
         // TODO Move to DataGenerators once Forge allows tagging datapack registries
@@ -61,6 +61,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     }
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {
-        return builder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original);
+        Cloner.Factory clonerFactory = new Cloner.Factory();
+        return builder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original, clonerFactory).full();
     }
 }
