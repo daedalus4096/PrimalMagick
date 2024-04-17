@@ -7,7 +7,15 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionType;
 import com.verdantartifice.primalmagick.common.concoctions.ConcoctionUtils;
 import com.verdantartifice.primalmagick.common.concoctions.FuseType;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.FlyingCarpetDyeRecipe;
+import com.verdantartifice.primalmagick.common.crafting.SpellcraftingRecipe;
+import com.verdantartifice.primalmagick.common.crafting.StaticBookCloningRecipe;
+import com.verdantartifice.primalmagick.common.crafting.TieredShieldDecorationRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WandAssemblyRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WandGlamourRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WandInscriptionRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WardingModuleApplicationRecipe;
+import com.verdantartifice.primalmagick.common.crafting.WritableBookCraftingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
@@ -37,7 +45,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.ConditionalRecipe;
 import net.minecraftforge.common.crafting.conditions.AndCondition;
@@ -626,7 +633,7 @@ public class Recipes extends RecipeProvider {
             .research(CompoundResearchKey.from(SimpleResearchKey.find("LINGUISTICS")))
             .build(consumer);
         
-        SimpleCookingRecipeBuilder.generic(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200, RecipeSerializer.SMELTING_RECIPE)
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ItemsPM.HEARTWOOD.get()), RecipeCategory.MISC, Items.CHARCOAL, 0.15F, 200)
             .unlockedBy("has_heartwood", has(ItemsPM.HEARTWOOD.get()))
             .save(consumer, PrimalMagick.resource("charcoal_from_smelting_heartwood"));
         
@@ -644,24 +651,15 @@ public class Recipes extends RecipeProvider {
             .manaCost(SourceList.EMPTY.add(Source.EARTH, 40).add(Source.SEA, 40).add(Source.SKY, 40).add(Source.SUN, 40).add(Source.MOON, 40))
             .build(consumer);
 
-        SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_ASSEMBLY_SPECIAL.get())
-            .save(consumer, PrimalMagick.MODID + ":wand_assembly");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_INSCRIPTION_SPECIAL.get())
-            .save(consumer, PrimalMagick.MODID + ":wand_inscription");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.SPELLCRAFTING_SPECIAL.get())
-            .save(consumer, PrimalMagick.MODID + ":spellcrafting");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.FLYING_CARPET_DYE.get())
-            .save(consumer, PrimalMagick.MODID + ":flying_carpet_dye");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.TIERED_SHIELD_DECORATION.get())
-            .save(consumer, PrimalMagick.MODID + ":tiered_shield_decoration");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.WAND_GLAMOUR_SPECIAL.get())
-            .save(consumer, PrimalMagick.MODID + ":wand_glamour");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.WARDING_MODULE_APPLICATION.get())
-            .save(consumer, PrimalMagick.MODID + ":warding_module_application");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.STATIC_BOOK_CLONING.get())
-            .save(consumer, PrimalMagick.MODID + ":static_book_cloning");
-        SpecialRecipeBuilder.special(RecipeSerializersPM.WRITABLE_BOOK_CRAFTING.get())
-            .save(consumer, PrimalMagick.resource("writable_book_crafting"));
+        SpecialRecipeBuilder.special(WandAssemblyRecipe::new).save(consumer, PrimalMagick.resource("wand_assembly"));
+        SpecialRecipeBuilder.special(WandInscriptionRecipe::new).save(consumer, PrimalMagick.resource("wand_inscription"));
+        SpecialRecipeBuilder.special(SpellcraftingRecipe::new).save(consumer, PrimalMagick.resource("spellcrafting"));
+        SpecialRecipeBuilder.special(FlyingCarpetDyeRecipe::new).save(consumer, PrimalMagick.resource("flying_carpet_dye"));
+        SpecialRecipeBuilder.special(TieredShieldDecorationRecipe::new).save(consumer, PrimalMagick.resource("tiered_shield_decoration"));
+        SpecialRecipeBuilder.special(WandGlamourRecipe::new).save(consumer, PrimalMagick.resource("wand_glamour"));
+        SpecialRecipeBuilder.special(WardingModuleApplicationRecipe::new).save(consumer, PrimalMagick.resource("warding_module_application"));
+        SpecialRecipeBuilder.special(StaticBookCloningRecipe::new).save(consumer, PrimalMagick.resource("static_book_cloning"));
+        SpecialRecipeBuilder.special(WritableBookCraftingRecipe::new).save(consumer, PrimalMagick.resource("writable_book_crafting"));
     }
 
     protected void registerMarbleRecipes(RecipeOutput consumer) {
