@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -30,14 +31,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -50,6 +48,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock {
+    public static final MapCodec<SoulAnvilBlock> CODEC = simpleCodec(SoulAnvilBlock::new);
+    
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty DIRTY = BooleanProperty.create("dirty");
     
@@ -61,8 +61,8 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
         map.put(Direction.EAST, VoxelShapeUtils.rotate(BASE_SHAPE, Direction.Axis.Y, Rotation.COUNTERCLOCKWISE_90));
     });
     
-    public SoulAnvilBlock() {
-        super(Block.Properties.of().mapColor(MapColor.COLOR_RED).pushReaction(PushReaction.BLOCK).strength(5.0F, 1200.0F).sound(SoundType.ANVIL));
+    public SoulAnvilBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(DIRTY, Boolean.FALSE));
     }
     
@@ -173,5 +173,10 @@ public class SoulAnvilBlock extends BaseEntityBlock implements IRitualPropBlock 
 
     public float getUsageStabilityBonus() {
         return 15.0F;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

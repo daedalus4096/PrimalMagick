@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.devices.ScribeTableTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -17,13 +18,10 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -36,10 +34,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class ScribeTableBlock extends BaseEntityBlock {
+    public static final MapCodec<ScribeTableBlock> CODEC = simpleCodec(ScribeTableBlock::new);
+    
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public ScribeTableBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion());
+    public ScribeTableBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
@@ -105,5 +105,10 @@ public class ScribeTableBlock extends BaseEntityBlock {
             }
             super.onRemove(pState, pLevel, pPos, pNewState, pMovedByPiston);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }
