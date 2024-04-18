@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
@@ -16,11 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -32,12 +31,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDevice {
+    public static final MapCodec<RunescribingAltarBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
+            propertiesCodec()
+    ).apply(instance, RunescribingAltarBlock::new));
+    
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/runescribing_altar_basic"));
     
     protected final DeviceTier tier;
 
-    public RunescribingAltarBlock(DeviceTier tier) {
-        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE));
+    public RunescribingAltarBlock(DeviceTier tier, Block.Properties properties) {
+        super(properties);
         this.tier = tier;
     }
     
@@ -71,5 +75,10 @@ public class RunescribingAltarBlock extends BaseEntityBlock implements ITieredDe
             }
         }
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }
