@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -8,6 +9,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
@@ -17,6 +20,12 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class VoidTurbineBlock extends AbstractWindGeneratorBlock {
+    public static final MapCodec<VoidTurbineBlock> CODEC = simpleCodec(VoidTurbineBlock::new);
+    
+    public VoidTurbineBlock(Block.Properties properties) {
+        super(properties);
+    }
+    
     @Override
     public Direction getWindDirection(BlockState state) {
         return state.getValue(FACING).getOpposite();
@@ -54,5 +63,10 @@ public class VoidTurbineBlock extends AbstractWindGeneratorBlock {
         }
         
         return startPoint.add(new Vec3(facing.step()).scale(lineOfSightPower));
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }
