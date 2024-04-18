@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.devices;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -20,7 +22,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,8 +30,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -40,13 +39,18 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
+    public static final MapCodec<EssenceCaskBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
+            propertiesCodec()
+    ).apply(instance, EssenceCaskBlock::new));
+    
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
 
     protected final DeviceTier tier;
 
-    public EssenceCaskBlock(DeviceTier tier) {
-        super(Block.Properties.of().mapColor(MapColor.COLOR_BROWN).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.5F).sound(SoundType.WOOD));
+    public EssenceCaskBlock(DeviceTier tier, Block.Properties properties) {
+        super(properties);
         this.tier = tier;
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(OPEN, Boolean.valueOf(false)));
     }
@@ -124,5 +128,10 @@ public class EssenceCaskBlock extends BaseEntityBlock implements ITieredDevice {
         if (tile instanceof EssenceCaskTileEntity caskTile) {
             caskTile.recheckOpen();
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

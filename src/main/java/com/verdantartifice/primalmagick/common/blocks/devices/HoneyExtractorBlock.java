@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.HoneyExtractorTileEntity;
@@ -25,15 +26,12 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -42,10 +40,12 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class HoneyExtractorBlock extends BaseEntityBlock {
+    public static final MapCodec<HoneyExtractorBlock> CODEC = simpleCodec(HoneyExtractorBlock::new);
+    
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public HoneyExtractorBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion());
+    public HoneyExtractorBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
     
@@ -122,5 +122,10 @@ public class HoneyExtractorBlock extends BaseEntityBlock {
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
         ManaContainerHelper.setManaOnPlace(worldIn, pos, stack);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }
