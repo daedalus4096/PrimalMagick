@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.crafting;
 
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.ConcocterTileEntity;
@@ -34,7 +35,6 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -43,13 +43,13 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class ConcocterBlock extends BaseEntityBlock {
+    public static final MapCodec<ConcocterBlock> CODEC = simpleCodec(ConcocterBlock::new);
+    
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty HAS_BOTTLE = BlockStateProperties.HAS_BOTTLE_0;
 
-    public ConcocterBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(0.5F).lightLevel(state -> {
-            return 1;
-        }).noOcclusion());
+    public ConcocterBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(HAS_BOTTLE, false));
     }
 
@@ -140,5 +140,10 @@ public class ConcocterBlock extends BaseEntityBlock {
         double d1 = (double)pos.getY() + 0.7D + (double)rand.nextFloat() * 0.3D;
         double d2 = (double)pos.getZ() + 0.4D + (double)rand.nextFloat() * 0.2D;
         worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

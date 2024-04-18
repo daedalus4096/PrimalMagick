@@ -382,12 +382,12 @@ public class BlocksPM {
     public static final RegistryObject<HexiumGolemControllerBlock> HEXIUM_GOLEM_CONTROLLER = BLOCKS.register("hexium_golem_controller", () -> new HexiumGolemControllerBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(7.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<HallowsteelGolemControllerBlock> HALLOWSTEEL_GOLEM_CONTROLLER = BLOCKS.register("hallowsteel_golem_controller", () -> new HallowsteelGolemControllerBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(9.0F, 6.0F).sound(SoundType.METAL)));
     public static final RegistryObject<SanguineCrucibleBlock> SANGUINE_CRUCIBLE = BLOCKS.register("sanguine_crucible", SanguineCrucibleBlock::new);
-    public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", ConcocterBlock::new);
-    public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", CelestialHarpBlock::new);
-    public static final RegistryObject<EntropySinkBlock> ENTROPY_SINK = BLOCKS.register("entropy_sink", EntropySinkBlock::new);
+    public static final RegistryObject<ConcocterBlock> CONCOCTER = BLOCKS.register("concocter", () -> new ConcocterBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(0.5F).lightLevel(state -> 1).noOcclusion()));
+    public static final RegistryObject<CelestialHarpBlock> CELESTIAL_HARP = BLOCKS.register("celestial_harp", () -> new CelestialHarpBlock(Block.Properties.of().mapColor(MapColor.GOLD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD)));
+    public static final RegistryObject<EntropySinkBlock> ENTROPY_SINK = BLOCKS.register("entropy_sink", () -> new EntropySinkBlock(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.5F).lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<AutoChargerBlock> AUTO_CHARGER = BLOCKS.register("auto_charger", () -> new AutoChargerBlock(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<EssenceTransmuterBlock> ESSENCE_TRANSMUTER = BLOCKS.register("essence_transmuter", EssenceTransmuterBlock::new);
-    public static final RegistryObject<DissolutionChamberBlock> DISSOLUTION_CHAMBER = BLOCKS.register("dissolution_chamber", DissolutionChamberBlock::new);
+    public static final RegistryObject<DissolutionChamberBlock> DISSOLUTION_CHAMBER = BLOCKS.register("dissolution_chamber", () -> new DissolutionChamberBlock(Block.Properties.of().mapColor(MapColor.DIAMOND).strength(5.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
     public static final RegistryObject<ZephyrEngineBlock> ZEPHYR_ENGINE = BLOCKS.register("zephyr_engine", ZephyrEngineBlock::new);
     public static final RegistryObject<VoidTurbineBlock> VOID_TURBINE = BLOCKS.register("void_turbine", VoidTurbineBlock::new);
     public static final RegistryObject<EssenceCaskBlock> ESSENCE_CASK_ENCHANTED = BLOCKS.register("essence_cask_enchanted", () -> new EssenceCaskBlock(DeviceTier.ENCHANTED));
