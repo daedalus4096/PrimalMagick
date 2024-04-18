@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.rituals;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.rituals.ISaltPowered;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.rituals.RitualAltarTileEntity;
@@ -17,13 +18,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -34,8 +32,10 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
-    public RitualAltarBlock() {
-        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion());
+    public static final MapCodec<RitualAltarBlock> CODEC = simpleCodec(RitualAltarBlock::new);
+    
+    public RitualAltarBlock(Block.Properties properties) {
+        super(properties);
     }
     
     @Override
@@ -108,5 +108,10 @@ public class RitualAltarBlock extends BaseEntityBlock implements ISaltPowered {
             }
         }
         return super.use(state, worldIn, pos, player, handIn, hit);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

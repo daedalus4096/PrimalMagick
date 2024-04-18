@@ -361,14 +361,14 @@ public class BlocksPM {
     public static final RegistryObject<WandInscriptionTableBlock> WAND_INSCRIPTION_TABLE = BLOCKS.register("wand_inscription_table", WandInscriptionTableBlock::new);
     public static final RegistryObject<SpellcraftingAltarBlock> SPELLCRAFTING_ALTAR = BLOCKS.register("spellcrafting_altar", SpellcraftingAltarBlock::new);
     public static final RegistryObject<WandChargerBlock> WAND_CHARGER = BLOCKS.register("wand_charger", WandChargerBlock::new);
-    public static final RegistryObject<ResearchTableBlock> RESEARCH_TABLE = BLOCKS.register("research_table", ResearchTableBlock::new);
+    public static final RegistryObject<ResearchTableBlock> RESEARCH_TABLE = BLOCKS.register("research_table", () -> new ResearchTableBlock(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion()));
     public static final RegistryObject<SunlampBlock> SUNLAMP = BLOCKS.register("sunlamp", () -> new SunlampBlock(() -> BlocksPM.GLOW_FIELD.get()));
     public static final RegistryObject<SunlampBlock> SPIRIT_LANTERN = BLOCKS.register("spirit_lantern", () -> new SunlampBlock(() -> BlocksPM.SOUL_GLOW_FIELD.get()));
-    public static final RegistryObject<RitualAltarBlock> RITUAL_ALTAR = BLOCKS.register("ritual_altar", RitualAltarBlock::new);
+    public static final RegistryObject<RitualAltarBlock> RITUAL_ALTAR = BLOCKS.register("ritual_altar", () -> new RitualAltarBlock(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<OfferingPedestalBlock> OFFERING_PEDESTAL = BLOCKS.register("offering_pedestal", () -> new OfferingPedestalBlock(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion()));
     public static final RegistryObject<IncenseBrazierBlock> INCENSE_BRAZIER = BLOCKS.register("incense_brazier", () -> new IncenseBrazierBlock(Block.Properties.of().mapColor(MapColor.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0)));
     public static final RegistryObject<RitualLecternBlock> RITUAL_LECTERN = BLOCKS.register("ritual_lectern", RitualLecternBlock::new);
-    public static final RegistryObject<RitualBellBlock> RITUAL_BELL = BLOCKS.register("ritual_bell", RitualBellBlock::new);
+    public static final RegistryObject<RitualBellBlock> RITUAL_BELL = BLOCKS.register("ritual_bell", () -> new RitualBellBlock(Block.Properties.of().mapColor(MapColor.COLOR_CYAN).pushReaction(PushReaction.DESTROY).strength(3.0F, 6.0F).sound(SoundType.ANVIL)));
     public static final RegistryObject<BloodletterBlock> BLOODLETTER = BLOCKS.register("bloodletter", () -> new BloodletterBlock(Block.Properties.of().mapColor(MapColor.PODZOL).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE)));
     public static final RegistryObject<SoulAnvilBlock> SOUL_ANVIL = BLOCKS.register("soul_anvil", SoulAnvilBlock::new);
     public static final RegistryObject<RunescribingAltarBlock> RUNESCRIBING_ALTAR_BASIC = BLOCKS.register("runescribing_altar_basic", () -> new RunescribingAltarBlock(DeviceTier.BASIC));
