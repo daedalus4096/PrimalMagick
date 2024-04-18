@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import java.awt.Color;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualStabilizer;
@@ -22,11 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -38,10 +36,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPowered, IRitualStabilizer {
+    public static final MapCodec<OfferingPedestalBlock> CODEC = simpleCodec(OfferingPedestalBlock::new);
+    
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/offering_pedestal"));
     
-    public OfferingPedestalBlock() {
-        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(1.5F, 6.0F).sound(SoundType.STONE).noOcclusion());
+    public OfferingPedestalBlock(Block.Properties properties) {
+        super(properties);
     }
     
     @Override
@@ -144,5 +144,10 @@ public class OfferingPedestalBlock extends BaseEntityBlock implements ISaltPower
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

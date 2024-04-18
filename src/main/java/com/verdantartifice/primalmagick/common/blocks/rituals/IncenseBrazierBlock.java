@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.rituals;
 
 import java.awt.Color;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
@@ -23,13 +24,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -41,13 +40,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropBlock {
+    public static final MapCodec<IncenseBrazierBlock> CODEC = simpleCodec(IncenseBrazierBlock::new);
+    
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/incense_brazier"));
 
-    public IncenseBrazierBlock() {
-        super(Block.Properties.of().mapColor(MapColor.METAL).strength(1.5F, 6.0F).sound(SoundType.METAL).lightLevel((state) -> { 
-            return state.getValue(BlockStateProperties.LIT) ? 7 : 0; 
-        }));
+    public IncenseBrazierBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(LIT, Boolean.FALSE));
     }
     
@@ -155,4 +154,8 @@ public class IncenseBrazierBlock extends BaseEntityBlock implements IRitualPropB
         return 5.0F;
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 }
