@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -12,6 +14,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -23,10 +27,15 @@ import net.minecraft.world.level.block.state.BlockState;
  * @author Daedalus4096
  */
 public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredDevice {
+    public static final MapCodec<CalcinatorBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
+            propertiesCodec()
+    ).apply(instance, CalcinatorBlock::new));
+    
     protected final DeviceTier tier;
     
-    public CalcinatorBlock(DeviceTier tier) {
-        super();
+    public CalcinatorBlock(DeviceTier tier, Block.Properties properties) {
+        super(properties);
         this.tier = tier;
     }
 
@@ -66,5 +75,10 @@ public class CalcinatorBlock extends AbstractCalcinatorBlock implements ITieredD
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
             worldIn.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

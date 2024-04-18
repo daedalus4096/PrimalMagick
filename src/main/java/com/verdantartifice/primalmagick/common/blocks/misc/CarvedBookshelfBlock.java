@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.blocks.misc;
 import java.util.List;
 import java.util.Optional;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.misc.CarvedBookshelfTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -44,6 +45,8 @@ import net.minecraft.world.phys.Vec3;
  * @author Daedalus4096
  */
 public class CarvedBookshelfBlock extends BaseEntityBlock {
+    public static final MapCodec<CarvedBookshelfBlock> CODEC = simpleCodec(CarvedBookshelfBlock::new);
+    
     public static final int MAX_BOOKS = 6;
     public static final int BOOKS_PER_ROW = 3;
     public static final List<BooleanProperty> SLOT_OCCUPIED_PROPERTIES = List.of(
@@ -206,4 +209,8 @@ public class CarvedBookshelfBlock extends BaseEntityBlock {
         }
     }
 
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
 }
