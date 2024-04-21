@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:primalite_ingots_from_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

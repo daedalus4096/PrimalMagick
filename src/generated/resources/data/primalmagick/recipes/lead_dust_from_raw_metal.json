@@ -23,10 +23,6 @@
     {
       "type": "primalmagick:crafting_shapeless_tag",
       "category": "misc",
-      "forge:condition": {
-        "type": "forge:true",
-        "value": {}
-      },
       "group": "earthshatter_hammer_grit",
       "ingredients": [
         {

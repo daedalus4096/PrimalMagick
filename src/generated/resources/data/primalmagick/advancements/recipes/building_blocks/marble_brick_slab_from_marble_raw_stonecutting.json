@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_brick_slab_from_marble_raw_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

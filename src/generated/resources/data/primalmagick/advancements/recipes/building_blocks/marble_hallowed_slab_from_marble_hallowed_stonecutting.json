@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_hallowed_slab_from_marble_hallowed_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

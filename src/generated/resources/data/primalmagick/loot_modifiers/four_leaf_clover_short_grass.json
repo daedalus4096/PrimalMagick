@@ -2,7 +2,7 @@
   "type": "primalmagick:four_leaf_clover",
   "conditions": [
     {
-      "block": "minecraft:grass",
+      "block": "minecraft:short_grass",
       "condition": "minecraft:block_state_property"
     },
     {

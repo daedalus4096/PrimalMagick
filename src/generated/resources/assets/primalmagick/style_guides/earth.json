@@ -34,6 +34,12 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#8A0303",
+        "hoverEvent": {
+          "action": "show_text",
+          "contents": {
+            "translate": "tooltip.primalmagick.written_language.obfuscated_word"
+          }
+        },
         "obfuscated": true
       },
       "translationKey": "source.primalmagick.blood"
@@ -42,6 +48,12 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#ED2F1B",
+        "hoverEvent": {
+          "action": "show_text",
+          "contents": {
+            "translate": "tooltip.primalmagick.written_language.obfuscated_word"
+          }
+        },
         "obfuscated": true
       },
       "translationKey": "source.primalmagick.infernal"
@@ -50,6 +62,12 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#551A8B",
+        "hoverEvent": {
+          "action": "show_text",
+          "contents": {
+            "translate": "tooltip.primalmagick.written_language.obfuscated_word"
+          }
+        },
         "obfuscated": true
       },
       "translationKey": "source.primalmagick.void"
@@ -58,6 +76,12 @@
       "hoverTranslationKey": "tooltip.primalmagick.written_language.obfuscated_word",
       "style": {
         "color": "#EEEBD9",
+        "hoverEvent": {
+          "action": "show_text",
+          "contents": {
+            "translate": "tooltip.primalmagick.written_language.obfuscated_word"
+          }
+        },
         "obfuscated": true
       },
       "translationKey": "source.primalmagick.hallowed"

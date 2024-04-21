@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_smoked_brick_stairs_from_marble_smoked_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

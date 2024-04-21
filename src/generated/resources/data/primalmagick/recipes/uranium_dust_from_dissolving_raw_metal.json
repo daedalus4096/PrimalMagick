@@ -22,10 +22,6 @@
   "recipes": [
     {
       "type": "primalmagick:dissolution_tag",
-      "forge:condition": {
-        "type": "forge:true",
-        "value": {}
-      },
       "group": "uranium_dust_dissolution",
       "ingredient": {
         "tag": "forge:raw_materials/uranium"

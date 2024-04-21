@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:moonwood_pillar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:hallowood_sapling"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

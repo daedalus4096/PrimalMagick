@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hexium_nugget"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

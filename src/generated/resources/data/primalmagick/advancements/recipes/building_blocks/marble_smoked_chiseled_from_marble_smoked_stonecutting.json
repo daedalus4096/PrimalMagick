@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_smoked_chiseled_from_marble_smoked_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

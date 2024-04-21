@@ -36,8 +36,7 @@
         "recipes": [
           "primalmagick:uranium_dust_from_ore"
         ]
-      },
-      "sends_telemetry_event": false
+      }
     }
   ]
 }

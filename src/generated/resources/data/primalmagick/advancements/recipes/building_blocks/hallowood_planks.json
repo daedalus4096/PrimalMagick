@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hallowood_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

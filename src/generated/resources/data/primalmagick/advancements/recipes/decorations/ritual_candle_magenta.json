@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:ritual_candle_magenta"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

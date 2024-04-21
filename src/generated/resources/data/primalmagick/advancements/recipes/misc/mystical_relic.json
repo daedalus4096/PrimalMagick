@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:mystical_relic"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

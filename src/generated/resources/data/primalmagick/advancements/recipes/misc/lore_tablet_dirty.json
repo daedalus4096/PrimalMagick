@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:lore_tablet_dirty"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

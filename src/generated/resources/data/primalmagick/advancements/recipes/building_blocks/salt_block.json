@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:salt_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

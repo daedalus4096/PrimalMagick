@@ -43,6 +43,5 @@
     "recipes": [
       "primalmagick:salted_cooked_rabbit"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

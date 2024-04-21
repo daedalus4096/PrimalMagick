@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:ignyx_from_storage_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

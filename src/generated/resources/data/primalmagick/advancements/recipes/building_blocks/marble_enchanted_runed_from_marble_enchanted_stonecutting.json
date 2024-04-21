@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_enchanted_runed_from_marble_enchanted_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

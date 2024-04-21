@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_pillar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

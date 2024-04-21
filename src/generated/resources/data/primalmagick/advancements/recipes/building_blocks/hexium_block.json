@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hexium_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_hallowed_brick_stairs_from_marble_hallowed_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hallowsteel_ingot_from_nuggets"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

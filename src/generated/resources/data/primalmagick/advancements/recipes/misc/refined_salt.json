@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:refined_salt"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }
