@@ -28,6 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.RegistryDataLoader;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -62,6 +63,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
     
     private static HolderLookup.Provider append(HolderLookup.Provider original, RegistrySetBuilder builder) {
         Cloner.Factory clonerFactory = new Cloner.Factory();
+        RegistryDataLoader.getWorldGenAndDimensionStream().forEach(registryData -> registryData.runWithArguments(clonerFactory::addCodec));
         return builder.buildPatch(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY), original, clonerFactory).full();
     }
 }
