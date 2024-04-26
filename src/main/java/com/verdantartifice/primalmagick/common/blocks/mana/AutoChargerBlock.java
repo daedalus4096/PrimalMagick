@@ -58,7 +58,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 ItemStack stack = player.getItemInHand(handIn);
-                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand wand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
+                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
