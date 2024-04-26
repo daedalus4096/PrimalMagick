@@ -43,6 +43,7 @@ public abstract class AbstractTridentEntity extends AbstractArrow {
     
     public AbstractTridentEntity(EntityType<? extends AbstractTridentEntity> type, Level worldIn, LivingEntity thrower, ItemStack thrownStackIn) {
         super(type, thrower, worldIn, thrownStackIn);
+        this.thrownStack = thrownStackIn.copy();
         this.entityData.set(LOYALTY_LEVEL, (byte)EnchantmentHelper.getLoyalty(this.thrownStack));
         this.entityData.set(HAS_GLINT, this.thrownStack.hasFoil());
     }

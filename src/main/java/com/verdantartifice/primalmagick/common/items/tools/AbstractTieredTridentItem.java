@@ -67,8 +67,7 @@ public abstract class AbstractTieredTridentItem extends TridentItem {
 
     @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        if (entityLiving instanceof Player) {
-            Player player = (Player)entityLiving;
+        if (entityLiving instanceof Player player) {
             int duration = this.getUseDuration(stack) - timeLeft;
             if (duration >= 10) {
                 int riptide = EnchantmentHelper.getRiptide(stack);
