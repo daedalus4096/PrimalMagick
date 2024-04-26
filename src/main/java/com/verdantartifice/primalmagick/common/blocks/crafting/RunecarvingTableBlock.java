@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.tiles.crafting.RunecarvingTableTileEntity;
 
 import net.minecraft.core.BlockPos;
@@ -16,13 +17,10 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -33,10 +31,12 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class RunecarvingTableBlock extends BaseEntityBlock {
+    public static final MapCodec<RunecarvingTableBlock> CODEC = simpleCodec(RunecarvingTableBlock::new);
+    
     protected static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public RunecarvingTableBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD).noOcclusion());
+    public RunecarvingTableBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
     
@@ -96,5 +96,10 @@ public class RunecarvingTableBlock extends BaseEntityBlock {
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

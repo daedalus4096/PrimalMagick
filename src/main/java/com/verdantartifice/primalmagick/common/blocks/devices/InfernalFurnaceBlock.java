@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
@@ -29,7 +30,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -38,8 +38,6 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -49,13 +47,13 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class InfernalFurnaceBlock extends BaseEntityBlock {
+    public static final MapCodec<InfernalFurnaceBlock> CODEC = simpleCodec(InfernalFurnaceBlock::new);
+    
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
-    public InfernalFurnaceBlock() {
-        super(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.5F).lightLevel((state) -> { 
-            return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
-        }).sound(SoundType.STONE));
+    public InfernalFurnaceBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
     }
 
@@ -156,5 +154,10 @@ public class InfernalFurnaceBlock extends BaseEntityBlock {
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         return createTickerHelper(pBlockEntityType, TileEntityTypesPM.INFERNAL_FURNACE.get(), InfernalFurnaceTileEntity::tick);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

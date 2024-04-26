@@ -40,7 +40,7 @@ public class GuillotineModifier extends LootModifier {
     
     @Override
     protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity victim && generatedLoot.stream().allMatch(stack -> !stack.is(this.item))) {
+        if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof LivingEntity && generatedLoot.stream().allMatch(stack -> !stack.is(this.item))) {
             int enchantLevel = getEnchantLevel(context);
             if (enchantLevel > 0 && context.getRandom().nextFloat() < (this.chance * enchantLevel)) {
                 generatedLoot.add(new ItemStack(this.item));

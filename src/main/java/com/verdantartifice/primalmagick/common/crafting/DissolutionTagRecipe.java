@@ -27,7 +27,7 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
     protected final Ingredient ingredient;
     protected final SourceList manaCosts;
     
-    public DissolutionTagRecipe(String group, Ingredient ingredient, TagKey<Item> recipeOutputTag, int recipeOutputAmount, SourceList manaCosts) {
+    public DissolutionTagRecipe(String group, TagKey<Item> recipeOutputTag, int recipeOutputAmount, Ingredient ingredient, SourceList manaCosts) {
         super(group, recipeOutputTag, recipeOutputAmount);
         this.ingredient = ingredient;
         this.manaCosts = manaCosts;
@@ -67,9 +67,9 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
         protected static final Codec<DissolutionTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(dr -> dr.group),
-                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(dr -> dr.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(dr -> dr.outputAmount),
+                    Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(dr -> dr.ingredient),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(dr -> dr.manaCosts)
                 ).apply(instance, DissolutionTagRecipe::new);
         });
@@ -86,7 +86,7 @@ public class DissolutionTagRecipe extends AbstractTagCraftingRecipe<Container> i
             Ingredient ing = Ingredient.fromNetwork(buffer);
             TagKey<Item> resultTag = TagKey.create(Registries.ITEM, buffer.readResourceLocation());
             int resultAmount = buffer.readVarInt();
-            return new DissolutionTagRecipe(group, ing, resultTag, resultAmount, manaCosts);
+            return new DissolutionTagRecipe(group, resultTag, resultAmount, ing, manaCosts);
         }
 
         @Override

@@ -225,8 +225,9 @@ public abstract class AbstractPixieEntity extends AbstractCompanionEntity implem
 
     @Override
     protected InteractionResult mobInteract(Player playerIn, InteractionHand hand) {
+    	Level level = this.level();
         InteractionResult actionResult = super.mobInteract(playerIn, hand);
-        if (!actionResult.consumesAction() && !this.level().isClientSide && this.isCompanionOwner(playerIn)) {
+        if (!actionResult.consumesAction() && !level.isClientSide && this.isCompanionOwner(playerIn)) {
             ItemStack held = playerIn.getItemInHand(hand);
             ItemStack stack = new ItemStack(this.getSpawnItem());
             if (ItemStack.isSameItem(held, stack)) {

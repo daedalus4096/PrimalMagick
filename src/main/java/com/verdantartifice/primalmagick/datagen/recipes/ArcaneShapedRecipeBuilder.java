@@ -1,33 +1,23 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
-import javax.json.stream.JsonGenerationException;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -39,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class ArcaneShapedRecipeBuilder {
     protected final ItemStack result;
-    protected final List<String> pattern = new ArrayList<>();
+    protected final List<String> patternRows = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected String group;
     protected CompoundResearchKey research;
@@ -117,10 +107,10 @@ public class ArcaneShapedRecipeBuilder {
      * @return the modified builder
      */
     public ArcaneShapedRecipeBuilder patternLine(String pattern) {
-        if (!this.pattern.isEmpty() && pattern.length() != this.pattern.get(0).length()) {
+        if (!this.patternRows.isEmpty() && pattern.length() != this.patternRows.get(0).length()) {
             throw new IllegalArgumentException("Pattern must be the same width on every line!");
         } else {
-            this.pattern.add(pattern);
+            this.patternRows.add(pattern);
             return this;
         }
     }
@@ -175,8 +165,9 @@ public class ArcaneShapedRecipeBuilder {
      * @param id the ID of the finished recipe
      */
     public void build(RecipeOutput output, ResourceLocation id) {
-        this.validate(id);
-        output.accept(new ArcaneShapedRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.pattern, this.key, this.research, this.manaCosts));
+        ShapedRecipePattern pattern = this.validate(id);
+        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        output.accept(id, recipe, null);
     }
     
     /**
@@ -210,71 +201,12 @@ public class ArcaneShapedRecipeBuilder {
      * 
      * @param id the ID of the recipe
      */
-    protected void validate(ResourceLocation id) {
-        if (this.pattern.isEmpty()) {
-            throw new IllegalStateException("No pattern is defined for arcane shaped recipe " + id + "!");
-        }
+    protected ShapedRecipePattern validate(ResourceLocation id) {
         if (this.research == null) {
             throw new IllegalStateException("No research is defined for arcane shaped recipe " + id + "!");
-        }
-        
-        Set<Character> set = new HashSet<>(this.key.keySet());
-        set.remove(' ');
-        for (String patternStr : this.pattern) {
-            for (int index = 0; index < patternStr.length(); index++) {
-                char c = patternStr.charAt(index);
-                if (!this.key.containsKey(c) && c != ' ') {
-                    throw new IllegalStateException("Pattern in recipe " + id + " uses undefined symbol '" + c + "'");
-                }
-                set.remove(c);
-            }
-        }
-        
-        if (!set.isEmpty()) {
-            throw new IllegalStateException("Ingredients are defined but not used in pattern for recipe " + id);
-        } else if (this.pattern.size() == 1 && this.pattern.get(0).length() == 1) {
+        } else if (this.patternRows.size() == 1 && this.patternRows.get(0).length() == 1) {
             throw new IllegalStateException("Arcane shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
         }
-    }
-    
-    public static record Result(ResourceLocation id, ItemStack result, String group, List<String> pattern, Map<Character, Ingredient> key, CompoundResearchKey research, SourceList manaCosts) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            if (this.research != null) {
-                json.addProperty("research", this.research.toString());
-            }
-            
-            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
-            }
-            
-            JsonArray patternJson = new JsonArray();
-            for (String str : this.pattern) {
-                patternJson.add(str);
-            }
-            json.add("pattern", patternJson);
-            
-            JsonObject keyJson = new JsonObject();
-            for (Entry<Character, Ingredient> entry : this.key.entrySet()) {
-                keyJson.add(String.valueOf(entry.getKey()), entry.getValue().toJson(true));
-            }
-            json.add("key", keyJson);
-            
-            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.ARCANE_CRAFTING_SHAPED.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Arcane recipes don't use the vanilla advancement unlock system, so return null
-            return null;
-        }
+        return ShapedRecipePattern.of(this.key, this.patternRows);
     }
 }

@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -27,8 +26,6 @@ import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -43,8 +40,8 @@ public abstract class AbstractWindGeneratorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     
-    public AbstractWindGeneratorBlock() {
-        super(Block.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.5F, 6.0F).sound(SoundType.WOOD));
+    public AbstractWindGeneratorBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP).setValue(POWERED, false));
     }
 

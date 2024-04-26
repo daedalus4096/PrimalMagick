@@ -13,6 +13,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 /**
@@ -33,9 +34,8 @@ public class ManaArrowItem extends ArrowItem {
 
     @Override
     public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-        ManaArrowEntity arrow = new ManaArrowEntity(level, shooter);
-        arrow.setSource(this.source);
-        return arrow;
+        Item pickupItem = SOURCE_MAPPING.containsKey(this.source) ? SOURCE_MAPPING.get(this.source) : Items.ARROW;
+        return new ManaArrowEntity(level, shooter, this.source, new ItemStack(pickupItem));
     }
     
     public int getColor(int tintIndex) {

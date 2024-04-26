@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_enchanted_brick_stairs_from_marble_enchanted_bricks_stonecutting"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

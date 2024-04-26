@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.mana;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.AutoChargerTileEntity;
@@ -16,13 +17,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -32,8 +30,10 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class AutoChargerBlock extends BaseEntityBlock {
-    public AutoChargerBlock() {
-        super(Block.Properties.of().mapColor(MapColor.QUARTZ).instrument(NoteBlockInstrument.BASEDRUM).strength(3.0F, 12.0F).sound(SoundType.STONE).noOcclusion());
+    public static final MapCodec<AutoChargerBlock> CODEC = simpleCodec(AutoChargerBlock::new);
+    
+    public AutoChargerBlock(Block.Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class AutoChargerBlock extends BaseEntityBlock {
             BlockEntity tile = level.getBlockEntity(pos);
             if (tile instanceof AutoChargerTileEntity charger) {
                 ItemStack stack = player.getItemInHand(handIn);
-                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand wand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
+                if (charger.getItem().isEmpty() && (stack.getItem() instanceof IWand || stack.getCapability(PrimalMagickCapabilities.MANA_STORAGE).isPresent())) {
                     // If a wand is in hand and the charger is empty, deposit the wand
                     charger.setItem(stack);
                     player.setItemInHand(handIn, ItemStack.EMPTY);
@@ -91,5 +91,10 @@ public class AutoChargerBlock extends BaseEntityBlock {
             }
             super.onRemove(state, worldIn, pos, newState, isMoving);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

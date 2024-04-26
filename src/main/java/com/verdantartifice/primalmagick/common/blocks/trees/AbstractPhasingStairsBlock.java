@@ -1,7 +1,5 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
-import java.util.function.Supplier;
-
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
 
 import net.minecraft.core.BlockPos;
@@ -24,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 public abstract class AbstractPhasingStairsBlock extends StairBlock {
     public static final EnumProperty<TimePhase> PHASE = EnumProperty.create("phase", TimePhase.class);
 
-    public AbstractPhasingStairsBlock(Supplier<BlockState> state, Block.Properties properties) {
+    public AbstractPhasingStairsBlock(BlockState state, Block.Properties properties) {
         super(state, properties);
         this.registerDefaultState(this.defaultBlockState().setValue(PHASE, TimePhase.FULL));
     }
@@ -50,6 +48,7 @@ public abstract class AbstractPhasingStairsBlock extends StairBlock {
         return super.getStateForPlacement(context).setValue(PHASE, phase);
     }
     
+    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         // Periodically check to see if the block's phase needs to be updated

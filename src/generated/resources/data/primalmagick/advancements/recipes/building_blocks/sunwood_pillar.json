@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:sunwood_pillar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

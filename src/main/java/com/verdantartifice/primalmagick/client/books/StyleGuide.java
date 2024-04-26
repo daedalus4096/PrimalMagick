@@ -101,7 +101,7 @@ public class StyleGuide {
     public static class Entry {
         public static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 Codec.STRING.fieldOf("translationKey").forGetter(Entry::getTranslationKey), 
-                Style.FORMATTING_CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(Entry::getStyle),
+                Style.Serializer.CODEC.optionalFieldOf("style", Style.EMPTY).forGetter(Entry::getStyle),
                 Codec.STRING.optionalFieldOf("hoverTranslationKey", "").forGetter(Entry::getHoverTranslationKey)
             ).apply(instance, Entry::new));
         private final Supplier<Style> cachedStyle = Suppliers.memoize(this::getStyleInner);

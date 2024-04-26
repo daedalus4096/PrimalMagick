@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:blaze_powder_from_emberflower"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

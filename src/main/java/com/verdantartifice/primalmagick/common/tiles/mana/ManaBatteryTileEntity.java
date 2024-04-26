@@ -157,7 +157,7 @@ public class ManaBatteryTileEntity extends AbstractTileSidedInventoryPM implemen
             for (BlockPos fontPos : entity.fontLocations) {
                 if (entity.fontSiphonTime % 5 == 0 && 
                         level.getBlockEntity(fontPos) instanceof AbstractManaFontTileEntity fontEntity && 
-                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock fontBlock) {
+                        level.getBlockState(fontPos).getBlock() instanceof AbstractManaFontBlock) {
                     fontEntity.doSiphon(entity.manaStorage, level, null, chargerCenter, entity.getBatteryTransferCap());
                 }
             }

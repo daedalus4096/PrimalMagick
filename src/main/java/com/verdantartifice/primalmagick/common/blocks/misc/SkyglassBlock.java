@@ -4,8 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
  * 
  * @author Daedalus4096
  */
-public class SkyglassBlock extends AbstractGlassBlock {
+public class SkyglassBlock extends TransparentBlock {
     public static final BooleanProperty UP = BooleanProperty.create("up");
     public static final BooleanProperty DOWN = BooleanProperty.create("down");
     public static final BooleanProperty NORTH = BooleanProperty.create("north");

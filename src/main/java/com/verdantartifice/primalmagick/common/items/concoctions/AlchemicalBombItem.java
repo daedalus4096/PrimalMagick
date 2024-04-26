@@ -94,7 +94,7 @@ public class AlchemicalBombItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        PotionUtils.addPotionTooltip(stack, tooltip, 1.0F);
+        PotionUtils.addPotionTooltip(stack, tooltip, 1.0F, worldIn == null ? 20.0F : worldIn.tickRateManager().tickrate());
         tooltip.add(Component.translatable("concoctions.primalmagick.charges_remaining", ConcoctionUtils.getCurrentDoses(stack)).withStyle(MobEffectCategory.BENEFICIAL.getTooltipFormatting()));
         FuseType fuse = ConcoctionUtils.getFuseType(stack);
         if (fuse == null) {

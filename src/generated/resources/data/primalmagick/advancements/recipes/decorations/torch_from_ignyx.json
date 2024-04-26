@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:torch_from_ignyx"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

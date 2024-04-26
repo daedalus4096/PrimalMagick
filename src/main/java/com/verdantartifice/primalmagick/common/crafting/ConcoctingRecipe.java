@@ -28,7 +28,7 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
 
-    public ConcoctingRecipe(String group, CompoundResearchKey research, SourceList manaCosts, ItemStack output, NonNullList<Ingredient> items) {
+    public ConcoctingRecipe(String group, ItemStack output, NonNullList<Ingredient> items, CompoundResearchKey research, SourceList manaCosts) {
         super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
@@ -65,8 +65,6 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
         protected static final Codec<ConcoctingRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts),
                     ItemStack.CODEC.fieldOf("result").forGetter(sar -> sar.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
@@ -77,7 +75,9 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
                         } else {
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
-                    }, DataResult::success).forGetter(sar -> sar.recipeItems)
+                    }, DataResult::success).forGetter(sar -> sar.recipeItems),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
                 ).apply(instance, ConcoctingRecipe::new);
         });
         
@@ -100,7 +100,7 @@ public class ConcoctingRecipe extends AbstractStackCraftingRecipe<Container> imp
             }
             
             ItemStack result = buffer.readItem();
-            return new ConcoctingRecipe(group, research, manaCosts, result, ingredients);
+            return new ConcoctingRecipe(group, result, ingredients, research, manaCosts);
         }
 
         @Override

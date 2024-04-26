@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:hallowood_slab"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

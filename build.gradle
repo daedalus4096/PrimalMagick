@@ -2,7 +2,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'com.palantir.git-version' version '0.12.3'
 }
@@ -75,12 +75,6 @@ minecraft {
             // You can set various levels here.
             // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
         }
 
         client {
@@ -147,7 +141,12 @@ dependencies {
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+    
+    // FIXME 2024/04/25 - When the following line is active, as of MC1.20.4, attempting to run the client or data generator
+    // will result in a ResolutionException, saying that the jei._1._20._4.common.api and jei modules each export a package,
+    // one of many, to either forge or primalmagick.  This error only occurs when starting the run from Eclipse, and *not*
+    // when doing so from the command-line interface.  Uncomment this line when this bug no longer occurs.  Check in MC1.21.
+    //runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
@@ -217,4 +216,21 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
+
+eclipse {
+    // Run everytime eclipse builds the code
+    //autoBuildTasks genEclipseRuns
+    // Run when importing the project
+    synchronizationTasks 'genEclipseRuns'
+}
+
+// Merge the resources and classes into the same directory. 
+// This is done because java expects modules to be in a single directory.
+// And if we have it in multiple we have to do performance intensive hacks like having the UnionFileSystem
+// This will eventually be migrated to ForgeGradle so modders don't need to manually do it. But that is later.
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
 }

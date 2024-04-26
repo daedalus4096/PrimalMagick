@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:marble_bookshelf"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

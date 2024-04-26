@@ -89,7 +89,7 @@ public class ShearSpellPayload extends AbstractSpellPayload {
                     world.setBlock(pos, state.setValue(TripWireBlock.DISARMED, Boolean.TRUE), Block.UPDATE_INVISIBLE);
                     world.gameEvent(player, GameEvent.SHEAR, pos);
                     if (world.setBlock(pos, fluid.createLegacyBlock(), world.isClientSide ? Block.UPDATE_ALL_IMMEDIATE : Block.UPDATE_ALL)) {
-                        state.getBlock().destroy(world, pos, state);
+                    	tripwire.destroy(world, pos, state);
                     }
                 }
                 if (state.getBlock() instanceof BeehiveBlock beehive && state.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {

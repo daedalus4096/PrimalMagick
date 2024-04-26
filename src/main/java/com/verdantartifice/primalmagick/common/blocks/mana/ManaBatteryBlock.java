@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.blocks.mana;
 
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.ManaContainerHelper;
@@ -37,6 +39,11 @@ import net.minecraft.world.phys.BlockHitResult;
  * @author Daedalus4096
  */
 public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
+    public static final MapCodec<ManaBatteryBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            DeviceTier.CODEC.fieldOf("tier").forGetter(b -> b.tier),
+            propertiesCodec()
+    ).apply(instance, ManaBatteryBlock::new));
+    
     protected final DeviceTier tier;
     
     public ManaBatteryBlock(DeviceTier tier, Block.Properties properties) {
@@ -100,5 +107,10 @@ public class ManaBatteryBlock extends BaseEntityBlock implements ITieredDevice {
     @Override
     public DeviceTier getDeviceTier() {
         return this.tier;
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

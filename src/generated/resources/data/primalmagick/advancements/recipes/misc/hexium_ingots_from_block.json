@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hexium_ingots_from_block"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

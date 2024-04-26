@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:ritual_candle_black"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

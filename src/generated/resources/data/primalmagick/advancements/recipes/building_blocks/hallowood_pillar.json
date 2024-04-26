@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:hallowood_pillar"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

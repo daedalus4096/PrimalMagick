@@ -1,23 +1,14 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-import javax.json.stream.JsonGenerationException;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
 import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +16,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.crafting.ingredients.PartialNBTIngredient;
@@ -38,8 +28,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class RitualRecipeBuilder {
     protected final ItemStack result;
-    protected final List<Ingredient> ingredients = new ArrayList<>();
-    protected final List<BlockIngredient> props = new ArrayList<>();
+    protected final NonNullList<Ingredient> ingredients = NonNullList.create();
+    protected final NonNullList<BlockIngredient> props = NonNullList.create();
     protected String group;
     protected CompoundResearchKey research;
     protected SourceList manaCosts;
@@ -285,7 +275,8 @@ public class RitualRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new RitualRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredients, this.props, this.research, this.manaCosts, this.instability));
+        RitualRecipe recipe = new RitualRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredients, this.props, this.research, this.manaCosts, this.instability);
+        output.accept(id, recipe, null);
     }
     
     /**
@@ -328,59 +319,6 @@ public class RitualRecipeBuilder {
         }
         if (this.instability < RitualRecipe.MIN_INSTABILITY || this.instability > RitualRecipe.MAX_INSTABILITY) {
             throw new IllegalStateException("Instability out of bounds for ritual recipe " + id + "!");
-        }
-    }
-    
-    public static record Result(ResourceLocation id, ItemStack result, String group, List<Ingredient> ingredients, List<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            // Serialize the recipe group, if present
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            
-            // Serialize the recipe research requirement, if present
-            if (this.research != null) {
-                json.addProperty("research", this.research.toString());
-            }
-            
-            // Serialize the recipe mana costs, if present
-            if (this.manaCosts != null && !this.manaCosts.isEmpty()) {
-                json.add("mana", Util.getOrThrow(SourceList.CODEC.encodeStart(JsonOps.INSTANCE, this.manaCosts), JsonGenerationException::new));
-            }
-            
-            // Serialize the instability rating
-            json.addProperty("instability", this.instability);
-            
-            // Serialize the recipe ingredient list
-            JsonArray ingredientsJson = new JsonArray();
-            for (Ingredient ingredient : this.ingredients) {
-                ingredientsJson.add(ingredient.toJson(true));
-            }
-            json.add("ingredients", ingredientsJson);
-            
-            // Serialize the recipe prop list, if present
-            if (this.props != null && !this.props.isEmpty()) {
-                JsonArray propsJson = new JsonArray();
-                for (BlockIngredient prop : this.props) {
-                    propsJson.add(prop.toJson(true));
-                }
-                json.add("props", propsJson);
-            }
-            
-            // Serialize the recipe result
-            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.RITUAL.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Ritual recipes don't use the vanilla advancement unlock system, so return null
-            return null;
         }
     }
 }

@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:charcoal_from_smelting_heartwood"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

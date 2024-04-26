@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.common.entities.EntityTypesPM;
 import com.verdantartifice.primalmagick.common.entities.treefolk.TreefolkEntity;
 
@@ -26,10 +27,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class TreefolkSproutBlock extends BushBlock implements BonemealableBlock {
+    public static final MapCodec<TreefolkSproutBlock> CODEC = simpleCodec(TreefolkSproutBlock::new);
+    
     public static final IntegerProperty STAGE = BlockStateProperties.STAGE;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 12.0D, 14.0D);
     
-    public TreefolkSproutBlock(Properties properties) {
+    public TreefolkSproutBlock(Block.Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(STAGE, Integer.valueOf(0)));
     }
@@ -77,5 +80,10 @@ public class TreefolkSproutBlock extends BushBlock implements BonemealableBlock 
     @Override
     public void performBonemeal(ServerLevel pLevel, RandomSource pRandom, BlockPos pPos, BlockState pState) {
         this.advanceTree(pLevel, pPos, pState, pRandom);
+    }
+
+    @Override
+    protected MapCodec<? extends BushBlock> codec() {
+        return CODEC;
     }
 }

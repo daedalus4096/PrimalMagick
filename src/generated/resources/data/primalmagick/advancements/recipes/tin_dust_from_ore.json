@@ -36,8 +36,7 @@
         "recipes": [
           "primalmagick:tin_dust_from_ore"
         ]
-      },
-      "sends_telemetry_event": false
+      }
     }
   ]
 }

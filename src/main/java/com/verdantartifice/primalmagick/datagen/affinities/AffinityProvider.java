@@ -187,12 +187,12 @@ public class AffinityProvider implements DataProvider {
         ItemAffinityBuilder.itemAffinity(Items.WET_SPONGE).base(Items.SPONGE).add(Source.SEA, 10).remove(Source.VOID, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SANDSTONE).base(Items.STONE).add(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.COBWEB).set(Source.BLOOD, 2).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.GRASS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.FERN).base(Items.GRASS).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SHORT_GRASS).set(Source.EARTH, 2).set(Source.SUN, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.FERN).base(Items.SHORT_GRASS).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.AZALEA).set(Source.EARTH, 5).set(Source.SUN, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.FLOWERING_AZALEA).base(Items.AZALEA).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.DEAD_BUSH).base(Items.GRASS).build(consumer);
-        ItemAffinityBuilder.itemAffinity(Items.SEAGRASS).base(Items.GRASS).add(Source.SEA, 2).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.DEAD_BUSH).base(Items.SHORT_GRASS).build(consumer);
+        ItemAffinityBuilder.itemAffinity(Items.SEAGRASS).base(Items.SHORT_GRASS).add(Source.SEA, 2).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.SEA_PICKLE).set(Source.EARTH, 5).set(Source.SEA, 20).set(Source.SUN, 10).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.WHITE_WOOL).set(Source.BLOOD, 5).build(consumer);
         ItemAffinityBuilder.itemAffinity(Items.ORANGE_WOOL).base(Items.WHITE_WOOL).build(consumer);

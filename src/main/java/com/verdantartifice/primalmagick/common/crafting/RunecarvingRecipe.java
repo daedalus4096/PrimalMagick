@@ -25,7 +25,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
     
-    public RunecarvingRecipe(String group, CompoundResearchKey research, Ingredient ingredient1, Ingredient ingredient2, ItemStack result) {
+    public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) {
         super(group, result);
         this.research = research;
         this.ingredient1 = ingredient1;
@@ -66,10 +66,10 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
         protected static final Codec<RunecarvingRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
+                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output)
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research)
                 ).apply(instance, RunecarvingRecipe::new);
         });
         
@@ -85,7 +85,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(group, research, ing1, ing2, result);
+            return new RunecarvingRecipe(group, result, ing1, ing2, research);
         }
 
         @Override

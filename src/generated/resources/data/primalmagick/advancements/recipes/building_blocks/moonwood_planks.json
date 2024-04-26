@@ -28,6 +28,5 @@
     "recipes": [
       "primalmagick:moonwood_planks"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -1,24 +1,17 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.Objects;
 import java.util.Optional;
 
-import javax.json.stream.JsonGenerationException;
-
-import com.google.gson.JsonObject;
-import com.mojang.serialization.JsonOps;
-import com.verdantartifice.primalmagick.common.crafting.RecipeSerializersPM;
+import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 
-import net.minecraft.Util;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -161,7 +154,8 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        output.accept(new RunecarvingRecipeBuilder.Result(id, this.result, this.group == null ? "" : this.group, this.ingredient1, this.ingredient2, this.research));
+        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.research);
+        output.accept(id, recipe, null);
     }
     
     /**
@@ -202,39 +196,6 @@ public class RunecarvingRecipeBuilder {
         }
         if (this.research == null) {
             throw new IllegalStateException("No research is defined for runecarving recipe " + id + "!");
-        }
-    }
-    
-    public static record Result(ResourceLocation id, ItemStack result, String group, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) implements FinishedRecipe {
-        @Override
-        public void serializeRecipeData(JsonObject json) {
-            // Serialize the recipe group, if present
-            if (this.group != null && !this.group.isEmpty()) {
-                json.addProperty("group", this.group);
-            }
-            
-            // Serialize the recipe research requirement, if present
-            if (this.research != null) {
-                json.addProperty("research", this.research.toString());
-            }
-            
-            // Serialize the recipe ingredients
-            json.add("ingredient1", this.ingredient1.toJson(true));
-            json.add("ingredient2", this.ingredient2.toJson(true));
-            
-            // Serialize the recipe result
-            json.add("result", Util.getOrThrow(ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, this.result), JsonGenerationException::new));
-        }
-
-        @Override
-        public RecipeSerializer<?> type() {
-            return RecipeSerializersPM.RUNECARVING.get();
-        }
-
-        @Override
-        public AdvancementHolder advancement() {
-            // Runecarving recipes don't use the vanilla advancement unlock system, so return null
-            return null;
         }
     }
 }

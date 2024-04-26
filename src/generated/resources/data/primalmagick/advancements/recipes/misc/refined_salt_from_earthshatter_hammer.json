@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:refined_salt_from_earthshatter_hammer"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -18,15 +18,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -39,10 +36,8 @@ public abstract class AbstractCalcinatorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     
-    public AbstractCalcinatorBlock() {
-        super(Block.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.5F).lightLevel((state) -> { 
-            return state.getValue(BlockStateProperties.LIT) ? 13 : 0; 
-        }).sound(SoundType.STONE));
+    public AbstractCalcinatorBlock(Block.Properties properties) {
+        super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.valueOf(false)));
     }
     

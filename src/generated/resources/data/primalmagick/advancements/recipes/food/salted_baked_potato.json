@@ -43,6 +43,5 @@
     "recipes": [
       "primalmagick:salted_baked_potato"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

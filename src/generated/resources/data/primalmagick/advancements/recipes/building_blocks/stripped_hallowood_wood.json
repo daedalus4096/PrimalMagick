@@ -43,6 +43,5 @@
     "recipes": [
       "primalmagick:stripped_hallowood_wood"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

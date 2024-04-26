@@ -19,6 +19,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
  * @author Daedalus4096
  */
 public class SunlampTileEntity extends AbstractTilePM {
+    private static final int LIGHT_THRESHOLD = 11;
+    
     protected int ticksExisted = 0;
     
     public SunlampTileEntity(BlockPos pos, BlockState state) {
@@ -44,15 +46,16 @@ public class SunlampTileEntity extends AbstractTilePM {
             }
 
             // If location is ordinary air and dark enough and in line-of-sight, spawn a glow field there
-            Block block = state.getBlock();
-            if (block instanceof SunlampBlock) {
-                Block glowBlock = ((SunlampBlock)block).getGlowField();
-                if ( level.isEmptyBlock(bp) &&
-                     level.getBlockState(bp) != glowBlock.defaultBlockState() &&
-                     level.getBrightness(LightLayer.BLOCK, bp) < 11 &&
-                     RayTraceUtils.hasLineOfSight(level, pos, bp) ) {
-                    level.setBlock(bp, glowBlock.defaultBlockState(), Block.UPDATE_ALL);
-                }
+            final BlockPos finalPos = new BlockPos(bp);
+            if (state.getBlock() instanceof SunlampBlock lampBlock) {
+                lampBlock.getGlowField(level.registryAccess()).ifPresent(glow -> {
+                    if ( level.isEmptyBlock(finalPos) &&
+                         !level.getBlockState(finalPos).is(glow) &&
+                         level.getBrightness(LightLayer.BLOCK, finalPos) < LIGHT_THRESHOLD &&
+                         RayTraceUtils.hasLineOfSight(level, pos, finalPos) ) {
+                        level.setBlock(finalPos, glow.defaultBlockState(), Block.UPDATE_ALL);
+                    }
+                });
             }
         }
     }

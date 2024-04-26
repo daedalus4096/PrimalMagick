@@ -85,7 +85,7 @@ public class StaticBookCloningRecipe extends CustomRecipe {
             ItemStack inputStack = pContainer.getItem(index);
             if (inputStack.hasCraftingRemainingItem()) {
                 retVal.set(index, inputStack.getCraftingRemainingItem());
-            } else if (inputStack.getItem() instanceof StaticBookItem bookItem) {
+            } else if (inputStack.getItem() instanceof StaticBookItem) {
                 retVal.set(index, inputStack.copyWithCount(1));
                 break;
             }

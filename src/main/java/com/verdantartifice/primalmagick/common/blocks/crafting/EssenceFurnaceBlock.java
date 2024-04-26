@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.blocks.crafting;
 
+import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.crafting.EssenceFurnaceTileEntity;
@@ -12,6 +13,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -27,7 +29,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
+    public static final MapCodec<EssenceFurnaceBlock> CODEC = simpleCodec(EssenceFurnaceBlock::new);
+    
     protected static final VoxelShape SHAPE = Block.box(1D, 0D, 1D, 15D, 12D, 15D);
+    
+    public EssenceFurnaceBlock(Block.Properties properties) {
+        super(properties);
+    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
@@ -70,5 +78,10 @@ public class EssenceFurnaceBlock extends AbstractCalcinatorBlock {
             double d9 = rand.nextDouble() * 0.2D - 0.1D;
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d8, d1 + 1.0D, d2 + d9, 0.0D, 0.0D, 0.0D);
         }
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }

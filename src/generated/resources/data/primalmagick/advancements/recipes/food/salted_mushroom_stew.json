@@ -43,6 +43,5 @@
     "recipes": [
       "primalmagick:salted_mushroom_stew"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

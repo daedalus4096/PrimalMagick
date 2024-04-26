@@ -30,6 +30,5 @@
     "recipes": [
       "primalmagick:soul_gem"
     ]
-  },
-  "sends_telemetry_event": false
+  }
 }

@@ -30,17 +30,15 @@ import net.minecraft.world.level.Level;
  */
 public class ManaArrowEntity extends AbstractArrow {
     protected static final EntityDataAccessor<String> SOURCE_TAG = SynchedEntityData.defineId(ManaArrowEntity.class, EntityDataSerializers.STRING);
+    private static final ItemStack DEFAULT_ARROW_STACK = new ItemStack(Items.ARROW);
 
     public ManaArrowEntity(EntityType<? extends ManaArrowEntity> type, Level level) {
-        super(type, level);
+        super(type, level, DEFAULT_ARROW_STACK);
     }
     
-    public ManaArrowEntity(Level level, double x, double y, double z) {
-        super(EntityTypesPM.MANA_ARROW.get(), x, y, z, level);
-    }
-    
-    public ManaArrowEntity(Level level, LivingEntity shooter) {
-        super(EntityTypesPM.MANA_ARROW.get(), shooter, level);
+    public ManaArrowEntity(Level level, LivingEntity shooter, Source source, ItemStack pickupItem) {
+        super(EntityTypesPM.MANA_ARROW.get(), shooter, level, pickupItem);
+        this.setSource(source);
     }
     
     @Override

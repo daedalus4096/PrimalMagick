@@ -32,7 +32,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     protected final NonNullList<BlockIngredient> recipeProps;
     protected final boolean isSimple;
 
-    public RitualRecipe(String group, CompoundResearchKey research, SourceList manaCosts, int instability, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props) {
+    public RitualRecipe(String group, ItemStack output, NonNullList<Ingredient> items, NonNullList<BlockIngredient> props, CompoundResearchKey research, SourceList manaCosts, int instability) {
         super(group, output);
         this.research = research;
         this.manaCosts = manaCosts;
@@ -87,9 +87,6 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
         protected static final Codec<RitualRecipe> CODEC = RecordCodecBuilder.create(instance -> {
             return instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
-                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
-                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
                         Ingredient[] ingArray = ingredients.stream().filter(Predicate.not(Ingredient::isEmpty)).toArray(Ingredient[]::new);
@@ -106,7 +103,10 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                         } else {
                             return DataResult.success(NonNullList.of(BlockIngredient.EMPTY, ingArray));
                         }
-                    }, DataResult::success).forGetter(rr -> rr.recipeProps)
+                    }, DataResult::success).forGetter(rr -> rr.recipeProps),
+                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
+                    ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability)
                 ).apply(instance, RitualRecipe::new);
         });
         
@@ -136,7 +136,7 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
             }
             
             ItemStack result = buffer.readItem();
-            return new RitualRecipe(group, research, manaCosts, instability, result, ingredients, props);
+            return new RitualRecipe(group, result, ingredients, props, research, manaCosts, instability);
         }
 
         @Override

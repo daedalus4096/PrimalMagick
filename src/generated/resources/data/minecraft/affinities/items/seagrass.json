@@ -3,6 +3,6 @@
   "add": {
     "sea": 2
   },
-  "base": "minecraft:grass",
+  "base": "minecraft:short_grass",
   "target": "minecraft:seagrass"
 }

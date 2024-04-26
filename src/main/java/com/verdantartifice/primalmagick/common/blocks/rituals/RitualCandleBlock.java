@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
 import com.verdantartifice.primalmagick.common.rituals.IRitualPropBlock;
@@ -44,6 +46,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
  * @author Daedalus4096
  */
 public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlock {
+    public static final MapCodec<RitualCandleBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            DyeColor.CODEC.fieldOf("color").forGetter(b -> b.color),
+            propertiesCodec()
+    ).apply(instance, RitualCandleBlock::new));
+    
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = VoxelShapeUtils.fromModel(PrimalMagick.resource("block/ritual_candle"));
     
@@ -168,5 +175,10 @@ public class RitualCandleBlock extends BaseEntityBlock implements IRitualPropBlo
     
     public static Collection<RitualCandleBlock> getAllCandles() {
         return Collections.unmodifiableList(REGISTRY);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 }
