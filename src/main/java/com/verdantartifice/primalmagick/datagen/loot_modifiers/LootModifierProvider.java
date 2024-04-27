@@ -15,7 +15,6 @@ import com.verdantartifice.primalmagick.common.loot.modifiers.EssenceThiefModifi
 import com.verdantartifice.primalmagick.common.loot.modifiers.FourLeafCloverModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.GuillotineModifier;
 import com.verdantartifice.primalmagick.common.loot.modifiers.RelicFragmentsModifier;
-import com.verdantartifice.primalmagick.common.loot.modifiers.ReplaceItemModifier;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsPM;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
@@ -28,7 +27,6 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -242,6 +240,9 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                         LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS, EntityPredicate.Builder.entity().of(EntityTypeTagsPM.GUILLOTINE_PLAYER_HEAD)).build(),
                         LootItemKilledByPlayerCondition.killedByPlayer().build()
                 }, Items.PLAYER_HEAD, 0.1F));
+
+        // FIXME Re-add for 1.21 release
+/*
         this.add("lore_fragment_desert_well_archaeology", new ReplaceItemModifier(
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY).build(),
@@ -288,5 +289,6 @@ public class LootModifierProvider extends GlobalLootModifierProvider {
                 new LootItemCondition[] {
                         LootTableIdCondition.builder(BuiltInLootTables.JUNGLE_TEMPLE).build()
                 }, ItemsPM.LORE_TABLET_FRAGMENT.get(), UniformInt.of(2, 6)));
+*/
     }
 }
