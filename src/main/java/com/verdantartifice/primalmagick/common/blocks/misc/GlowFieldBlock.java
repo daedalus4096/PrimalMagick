@@ -41,7 +41,7 @@ public class GlowFieldBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     
     public GlowFieldBlock() {
-        super(Block.Properties.of().replaceable().strength(-1, 3600000).lightLevel((state) -> { return state.getValue(LIGHT); }).noLootTable().noOcclusion().randomTicks());
+        super(Block.Properties.of().air().replaceable().strength(-1, 3600000).lightLevel((state) -> { return state.getValue(LIGHT); }).noLootTable().noOcclusion().randomTicks());
         this.registerDefaultState(this.stateDefinition.any().setValue(LIGHT, Integer.valueOf(15)).setValue(FADING, Boolean.FALSE).setValue(SPARKLING, Boolean.FALSE).setValue(WATERLOGGED, Boolean.FALSE));
     }
     

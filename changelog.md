@@ -6,6 +6,7 @@ v5.0.0-beta
 * Added Earthshatter Hammer and Dissolution Chamber recipes for common modded ores
 * Added ability for datapacks to specify recipes that output a tag instead of an item
 * Fixed a page navigation bug in the Grimoire
+* Glow fields from sunlamps should no longer interfere with things like tree growing
 
 v4.1.1
 ------
