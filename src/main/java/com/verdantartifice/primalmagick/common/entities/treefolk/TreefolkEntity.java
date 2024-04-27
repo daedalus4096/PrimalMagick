@@ -238,7 +238,7 @@ public class TreefolkEntity extends AgeableMob implements RangedAttackMob {
 
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
-    	Level level = this.level();
+        Level level = this.level();
         boolean flag = super.hurt(pSource, pAmount);
         if (level.isClientSide) {
             return false;
