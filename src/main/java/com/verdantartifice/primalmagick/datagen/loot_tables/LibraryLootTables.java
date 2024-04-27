@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.datagen.loot_tables;
 
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
