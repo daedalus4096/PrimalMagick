@@ -13,56 +13,6 @@
             }
           ],
           "name": "primalmagick:static_book_rare"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:loremipsum1\"}"
-            }
-          ],
-          "name": "primalmagick:static_book_rare"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:loremipsum2\"}"
-            }
-          ],
-          "name": "primalmagick:static_book_rare"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:loremipsum3\"}"
-            }
-          ],
-          "name": "primalmagick:static_book_rare"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:loremipsum4\"}"
-            }
-          ],
-          "name": "primalmagick:static_book_rare"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_nbt",
-              "tag": "{BookId:\"primalmagick:loremipsum5\"}"
-            }
-          ],
-          "name": "primalmagick:static_book_rare"
         }
       ],
       "rolls": 1.0

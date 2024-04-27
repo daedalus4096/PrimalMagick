@@ -155,22 +155,18 @@ public class LibraryLootTables extends AbstractGameplayLootTableSubProvider {
 
         // Register catalog component loot tables
         LootPool.Builder commonPool = LootPool.lootPool().add(book(BooksPM.SOURCE_PRIMER, Rarity.COMMON, 1));
-        IntStream.rangeClosed(21, 50).forEach(index -> commonPool.add(book(BooksPM.create("loremipsum" + index), Rarity.COMMON, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_COMMON, LootTable.lootTable().withPool(commonPool));
         
         // Generate uncommon catalog loot table
         LootPool.Builder uncommonPool = LootPool.lootPool().add(book(BooksPM.DREAM_JOURNAL, Rarity.UNCOMMON, 1));
-        IntStream.rangeClosed(6, 20).forEach(index -> uncommonPool.add(book(BooksPM.create("loremipsum" + index), Rarity.UNCOMMON, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_UNCOMMON, LootTable.lootTable().withPool(uncommonPool));
         
         // Generate rare catalog loot table
         LootPool.Builder rarePool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, Rarity.RARE, 1));
-        IntStream.rangeClosed(1, 5).forEach(index -> rarePool.add(book(BooksPM.create("loremipsum" + index), Rarity.RARE, 1)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_RARE, LootTable.lootTable().withPool(rarePool));
         
         // Generate epic catalog loot table for archaeology tablets
         LootPool.Builder epicPool = LootPool.lootPool().add(book(BooksPM.TEST_BOOK, Rarity.EPIC, 1));
-        IntStream.rangeClosed(0, 0).forEach(index -> epicPool.add(book(BooksPM.create("loremipsum" + index), Rarity.EPIC, 100)));  // FIXME Remove once library testing is complete
         this.registerLootTable(writer, LootTablesPM.LIBRARY_CATALOG_EPIC, LootTable.lootTable().withPool(epicPool));
 
         // Generate treasure catalog loot table
