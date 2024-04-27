@@ -3,6 +3,9 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.topics.OtherResearchTopic;
@@ -27,8 +30,12 @@ import net.minecraft.world.item.crafting.Ingredient;
  * @author Daedalus4096
  */
 public class IngredientWidget extends Button {
-    protected Ingredient ingredient;
-    protected GrimoireScreen screen;
+    protected static final Logger LOGGER = LogManager.getLogger();
+
+    protected final Ingredient ingredient;
+    protected final GrimoireScreen screen;
+    protected ItemStack lastStack = ItemStack.EMPTY;
+    protected ItemStack currentStack = ItemStack.EMPTY;
 
     public IngredientWidget(@Nullable Ingredient ingredient, int x, int y, GrimoireScreen screen) {
         super(Button.builder(Component.empty(), new Handler()).bounds(x, y, 16, 16));
@@ -42,16 +49,17 @@ public class IngredientWidget extends Button {
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        ItemStack toDisplay = this.getDisplayStack();
-        if (!toDisplay.isEmpty()) {
-            GuiUtils.renderItemStack(guiGraphics, toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
-            
-            // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
-            this.setFocused(false);
-            
-            Minecraft mc = Minecraft.getInstance();
-            this.setTooltip(Tooltip.create(CommonComponents.joinLines(toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+        this.lastStack = this.currentStack;
+        this.currentStack = this.getDisplayStack();
+        if (!this.currentStack.isEmpty()) {
+            GuiUtils.renderItemStack(guiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
+
+            // Update the widget's tooltip if necessary
+            this.updateTooltip();
         }
+        
+        // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
+        this.setFocused(false);
     }
 
     @Override
@@ -63,6 +71,13 @@ public class IngredientWidget extends Button {
     @Override
     public void playDownSound(SoundManager handler) {
         handler.play(SimpleSoundInstance.forUI(SoundsPM.PAGE.get(), 1.0F, 1.0F));
+    }
+    
+    protected void updateTooltip() {
+        if (!ItemStack.isSameItemSameTags(this.currentStack, this.lastStack)) {
+            Minecraft mc = Minecraft.getInstance();
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+        }
     }
     
     @Nonnull

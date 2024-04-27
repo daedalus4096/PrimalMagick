@@ -3,6 +3,8 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 
@@ -23,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Display widget for showing all the possible itemstacks for a given tag.  Used
- * on the requirements and recipe pages.
+ * on the requirements pages.
  * 
  * @author Daedalus4096
  */
@@ -32,8 +34,9 @@ public class ItemTagWidget extends AbstractWidget {
 
     protected final ResourceLocation tag;
     protected final boolean isComplete;
-    protected ItemStack toDisplay = ItemStack.EMPTY;
-    
+    protected ItemStack lastStack = ItemStack.EMPTY;
+    protected ItemStack currentStack = ItemStack.EMPTY;
+
     public ItemTagWidget(ResourceLocation tag, int x, int y, boolean isComplete) {
         super(x, y, 16, 16, Component.empty());
         this.tag = tag;
@@ -42,15 +45,10 @@ public class ItemTagWidget extends AbstractWidget {
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        TagKey<Item> itemTag = ItemTags.create(this.tag);
-        List<Item> tagContents = new ArrayList<Item>();
-        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
-        if (tagContents != null && !tagContents.isEmpty()) {
-            // Cycle through each matching stack of the tag and display them one at a time
-            int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
-            Item[] tagContentsArray = tagContents.toArray(new Item[tagContents.size()]);
-            this.toDisplay = new ItemStack(tagContentsArray[index], 1);
-            GuiUtils.renderItemStack(guiGraphics, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
+        this.lastStack = this.currentStack;
+        this.currentStack = this.getDisplayStack();
+        if (!this.currentStack.isEmpty()) {
+            GuiUtils.renderItemStack(guiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
             if (this.isComplete) {
                 // Render completion checkmark if appropriate
                 guiGraphics.pose().pushPose();
@@ -58,17 +56,33 @@ public class ItemTagWidget extends AbstractWidget {
                 guiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
                 guiGraphics.pose().popPose();
             }
-        } else {
-            this.toDisplay = ItemStack.EMPTY;
-        }
-        
-        if (!this.toDisplay.isEmpty()) {
-            Minecraft mc = Minecraft.getInstance();
-            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+            
+            // Update the widget tooltip if necessary
+            this.updateTooltip();
         }
         
         // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
         this.setFocused(false);
+    }
+    
+    protected void updateTooltip() {
+        if (!ItemStack.isSameItemSameTags(this.currentStack, this.lastStack)) {
+            Minecraft mc = Minecraft.getInstance();
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+        }
+    }
+    
+    @Nonnull
+    protected ItemStack getDisplayStack() {
+        TagKey<Item> itemTag = ItemTags.create(this.tag);
+        List<Item> tagContents = new ArrayList<>();
+        ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(tagContents::add);
+        if (!tagContents.isEmpty()) {
+            // Cycle through each matching stack of the tag and display them one at a time
+            int index = (int)((System.currentTimeMillis() / 1000L) % tagContents.size());
+            return new ItemStack(tagContents.get(index), 1);
+        }
+        return ItemStack.EMPTY;
     }
     
     @Override
