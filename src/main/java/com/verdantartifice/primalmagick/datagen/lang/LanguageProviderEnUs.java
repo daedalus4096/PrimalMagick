@@ -3585,7 +3585,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchEntry("WARDING_MODULE").name("Warding Module")
             .stages()
                 .add("Primalite armor is pretty potent, but nobody likes getting hit in the face, even while armored.  I wonder if there's something I can do to protect myself further?")
-                .add("Nice!  A little runescribing here, a little magitech there, and I've got a device which will generate a magickal barrier around me!<BR>This Warding Module can be attached to any piece of magickal metal armor by combining them at a crafting table.  While attached, it will protect me by granting extra temporary health.<BR>This protection isn't free, though.  The ward requires Earth mana to generate, and I can't just siphon it from my wand directly.  I'll need to infuse the armor with mana using a Mana Charger or similar device befor the ward will activate.")
+                .add("Nice!  A little runescribing here, a little magitech there, and I've got a device which will generate a magickal barrier around me!<BR>This Warding Module can be attached to any piece of magickal metal armor by combining them at a crafting table.  While attached, it will protect me by granting extra temporary health.<BR>This protection isn't free, though.  The ward requires Earth mana to generate, and I can't just siphon it from my wand directly.  I'll need to infuse the armor with mana using a Mana Charger or similar device before the ward will activate.")
                 .end()
             .build();
         this.researchEntry("GREATER_WARDING_MODULE").name("Greater Warding Module")
