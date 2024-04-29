@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.client.events;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.BasicPixieRenderer;
-import com.verdantartifice.primalmagick.client.renderers.entity.FishingHookRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FlyingCarpetRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.ForbiddenTridentRenderer;
 import com.verdantartifice.primalmagick.client.renderers.entity.FriendlyWitchRenderer;
@@ -56,7 +55,6 @@ public class EntityRendererEvents {
         event.registerEntityRenderer(EntityTypesPM.IGNYX.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.ALCHEMICAL_BOMB.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.MANA_ARROW.get(), ManaArrowRenderer::new);
-        event.registerEntityRenderer(EntityTypesPM.FISHING_HOOK.get(), FishingHookRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.PRIMALITE_TRIDENT.get(), PrimaliteTridentRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HEXIUM_TRIDENT.get(), HexiumTridentRenderer::new);
         event.registerEntityRenderer(EntityTypesPM.HALLOWSTEEL_TRIDENT.get(), HallowsteelTridentRenderer::new);

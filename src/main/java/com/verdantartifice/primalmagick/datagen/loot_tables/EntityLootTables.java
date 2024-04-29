@@ -84,7 +84,6 @@ public class EntityLootTables extends EntityLootSubProvider {
         this.registerEmptyLootTable(EntityTypesPM.IGNYX.get());
         this.registerEmptyLootTable(EntityTypesPM.ALCHEMICAL_BOMB.get());
         this.registerEmptyLootTable(EntityTypesPM.MANA_ARROW.get());
-        this.registerEmptyLootTable(EntityTypesPM.FISHING_HOOK.get());
         this.registerEmptyLootTable(EntityTypesPM.PRIMALITE_TRIDENT.get());
         this.registerEmptyLootTable(EntityTypesPM.HEXIUM_TRIDENT.get());
         this.registerEmptyLootTable(EntityTypesPM.HALLOWSTEEL_TRIDENT.get());

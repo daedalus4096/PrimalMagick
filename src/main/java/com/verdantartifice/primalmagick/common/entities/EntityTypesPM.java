@@ -39,7 +39,6 @@ import com.verdantartifice.primalmagick.common.entities.misc.SinCrystalEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AbstractTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AlchemicalBombEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.AppleEntity;
-import com.verdantartifice.primalmagick.common.entities.projectiles.FishingHookEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.ForbiddenTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.HallowsteelTridentEntity;
 import com.verdantartifice.primalmagick.common.entities.projectiles.HexiumTridentEntity;
@@ -119,14 +118,6 @@ public class EntityTypesPM {
             .updateInterval(20)
             .setCustomClientFactory((spawnEntity, world) -> new ManaArrowEntity(EntityTypesPM.MANA_ARROW.get(), world))
             .build(PrimalMagick.MODID + ":mana_arrow"));
-    public static final RegistryObject<EntityType<FishingHookEntity>> FISHING_HOOK = ENTITY_TYPES.register("fishing_hook", () -> EntityType.Builder.<FishingHookEntity>createNothing(MobCategory.MISC)
-            .noSave()
-            .noSummon()
-            .sized(0.25F, 0.25F)
-            .clientTrackingRange(4)
-            .updateInterval(5)
-            .setCustomClientFactory(FishingHookEntity::new)
-            .build(PrimalMagick.MODID + ":fishing_hook"));
     public static final RegistryObject<EntityType<AbstractTridentEntity>> PRIMALITE_TRIDENT = ENTITY_TYPES.register("primalite_trident", () -> EntityType.Builder.<AbstractTridentEntity>of(PrimaliteTridentEntity::new, MobCategory.MISC)
             .sized(0.5F, 0.5F)
             .clientTrackingRange(4)

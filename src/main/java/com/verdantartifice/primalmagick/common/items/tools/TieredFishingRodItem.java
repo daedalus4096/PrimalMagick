@@ -1,13 +1,12 @@
 package com.verdantartifice.primalmagick.common.items.tools;
 
-import com.verdantartifice.primalmagick.common.entities.projectiles.FishingHookEntity;
-
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +14,8 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 /**
  * Definition of a fishing rod made of a magickal metal.
@@ -46,7 +47,7 @@ public class TieredFishingRodItem extends FishingRodItem {
             if (!level.isClientSide) {
                 int lure = EnchantmentHelper.getFishingSpeedBonus(stack);
                 int luck = EnchantmentHelper.getFishingLuckBonus(stack);
-                level.addFreshEntity(new FishingHookEntity(player, level, luck, lure));
+                level.addFreshEntity(new FishingHook(player, level, luck, lure));
             }
             player.awardStat(Stats.ITEM_USED.get(this));
             player.gameEvent(GameEvent.ITEM_INTERACT_START);
@@ -67,5 +68,10 @@ public class TieredFishingRodItem extends FishingRodItem {
     @Override
     public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
         return this.tier.getRepairIngredient().test(repair) || super.isValidRepairItem(toRepair, repair);
+    }
+
+    @Override
+    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+        return ToolActions.DEFAULT_FISHING_ROD_ACTIONS.contains(toolAction);
     }
 }
