@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joml.Vector2i;
@@ -172,6 +173,8 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         protected Optional<GridDefinition> gridDef;
         protected boolean reachable;
         protected boolean unlockable;
+        protected Component lastTooltip = Component.empty();
+        protected Component tooltip = Component.empty();
         
         public NodeButton(ScribeGainComprehensionScreen screen, int xIndex, int yIndex, int leftPos, int topPos) {
             super(leftPos, topPos, 12, 12, BUTTON_SPRITES, button -> {
@@ -204,8 +207,10 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
         @Override
         public void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
             // Configure tooltip
-            this.gridDef.ifPresentOrElse(def -> {
-                def.getNode(this.xIndex, this.yIndex).ifPresentOrElse(node -> {
+            this.lastTooltip = this.tooltip;
+            MutableObject<Component> mutableTooltip = new MutableObject<>(Component.empty());
+            this.gridDef.ifPresent(def -> {
+                def.getNode(this.xIndex, this.yIndex).ifPresent(node -> {
                     Component rewardText = node.getReward().getDescription(this.player, this.registryAccess);
                     if (this.isActive()) {
                         List<Component> lines = new ArrayList<>();
@@ -223,16 +228,16 @@ public class ScribeGainComprehensionScreen extends AbstractScribeTableScreen<Scr
                             lines.add(CommonComponents.EMPTY);
                             lines.add(Component.translatable("tooltip.primalmagick.scribe_table.grid.no_path").withStyle(ChatFormatting.RED));
                         }
-                        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
+                        mutableTooltip.setValue(CommonComponents.joinLines(lines));
                     } else {
-                        this.setTooltip(Tooltip.create(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText)));
+                        mutableTooltip.setValue(Component.translatable("tooltip.primalmagick.scribe_table.grid.reward.unlocked", rewardText));
                     }
-                }, () -> {
-                    this.setTooltip(null);
                 });
-            }, () -> {
-                this.setTooltip(null);
             });
+            this.tooltip = mutableTooltip.getValue();
+            if (!this.lastTooltip.equals(this.tooltip)) {
+                this.setTooltip(Tooltip.create(this.tooltip));
+            }
 
             // Render node button background
             pGuiGraphics.pose().pushPose();

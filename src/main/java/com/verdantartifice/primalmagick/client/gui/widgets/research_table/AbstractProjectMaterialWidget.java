@@ -31,6 +31,8 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
     protected final boolean complete;
     protected final boolean consumed;
     protected final boolean hasBonus;
+    protected Component lastTooltip = Component.empty();
+    protected Component tooltip = Component.empty();
     
     public AbstractProjectMaterialWidget(T material, int x, int y, Set<Block> surroundings) {
         super(x, y, 16, 16, Component.empty());
@@ -65,6 +67,9 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
             guiGraphics.pose().popPose();
         }
         
+        
+        // Update tooltip if necessary
+        this.lastTooltip = this.tooltip;
         List<Component> lines = new ArrayList<>(this.getHoverText());
         if (this.consumed) {
             lines.add(Component.translatable("tooltip.primalmagick.research_table.material.consumed").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
@@ -72,7 +77,10 @@ public abstract class AbstractProjectMaterialWidget<T extends AbstractProjectMat
         if (this.hasBonus) {
             lines.add(Component.translatable("tooltip.primalmagick.research_table.material.has_bonus").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
         }
-        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
+        this.tooltip = CommonComponents.joinLines(lines);
+        if (!this.lastTooltip.equals(this.tooltip)) {
+            this.setTooltip(Tooltip.create(this.tooltip));
+        }
     }
     
     /**

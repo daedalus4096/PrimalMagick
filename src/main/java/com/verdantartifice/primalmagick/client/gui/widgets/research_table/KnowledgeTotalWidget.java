@@ -34,6 +34,8 @@ public class KnowledgeTotalWidget extends AbstractWidget {
     protected final KnowledgeType type;
     protected final LazyOptional<IPlayerKnowledge> knowledgeOpt;
     protected final OptionalInt successDeltaOpt;
+    protected Component lastTooltip = Component.empty();
+    protected Component tooltip = Component.empty();
     
     public KnowledgeTotalWidget(int x, int y, KnowledgeType type) {
         this(x, y, type, OptionalInt.empty());
@@ -112,7 +114,11 @@ public class KnowledgeTotalWidget extends AbstractWidget {
         });
         
         // Assemble tooltip
-        this.setTooltip(Tooltip.create(CommonComponents.joinLines(lines)));
+        this.lastTooltip = this.tooltip;
+        this.tooltip = CommonComponents.joinLines(lines);
+        if (!this.lastTooltip.equals(this.tooltip)) {
+            this.setTooltip(Tooltip.create(this.tooltip));
+        }
     }
     
     @Override

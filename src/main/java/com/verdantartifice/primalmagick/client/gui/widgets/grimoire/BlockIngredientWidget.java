@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
@@ -25,7 +26,8 @@ import net.minecraft.world.level.block.Blocks;
  */
 public class BlockIngredientWidget extends AbstractWidget {
     protected final BlockIngredient ingredient;
-    protected ItemStack toDisplay = ItemStack.EMPTY;
+    protected ItemStack lastStack = ItemStack.EMPTY;
+    protected ItemStack currentStack = ItemStack.EMPTY;
     
     public BlockIngredientWidget(@Nullable BlockIngredient ingredient, int xIn, int yIn) {
         super(xIn, yIn, 16, 16, Component.empty());
@@ -34,24 +36,40 @@ public class BlockIngredientWidget extends AbstractWidget {
 
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        this.lastStack = this.currentStack;
+        this.currentStack = this.getDisplayStack();
+        if (!this.currentStack.isEmpty()) {
+            GuiUtils.renderItemStack(guiGraphics, this.currentStack, this.getX(), this.getY(), this.getMessage().getString(), false);
+
+            // Update the widget's tooltip if necessary
+            this.updateTooltip();
+        }
+        
+        // Don't allow the widget to become focused, to prevent keyboard navigation from moving the active tooltip
+        this.setFocused(false);
+    }
+    
+    protected void updateTooltip() {
+        if (!ItemStack.isSameItemSameTags(this.currentStack, this.lastStack)) {
+            Minecraft mc = Minecraft.getInstance();
+            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.currentStack.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
+        }
+    }
+    
+    @Nonnull
+    protected ItemStack getDisplayStack() {
         if (this.ingredient != null) {
             Block[] matching = this.ingredient.getMatchingBlocks();
             if (matching != null && matching.length > 0) {
                 // Cycle through each matching stack of the ingredient and display them one at a time
                 int index = (int)((System.currentTimeMillis() / 1000L) % matching.length);
                 Block block = matching[index];
-                this.toDisplay = (block != null) ? 
+                return (block != null) ? 
                         new ItemStack(block) : 
                         new ItemStack(Blocks.BARRIER).setHoverName(Component.translatable("grimoire.primalmagick.missing_block"));
-                GuiUtils.renderItemStack(guiGraphics, this.toDisplay, this.getX(), this.getY(), this.getMessage().getString(), false);
-            } else {
-                this.toDisplay = ItemStack.EMPTY;
             }
         }
-        if (!this.toDisplay.isEmpty()) {
-            Minecraft mc = Minecraft.getInstance();
-            this.setTooltip(Tooltip.create(CommonComponents.joinLines(this.toDisplay.getTooltipLines(mc.player, mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL))));
-        }
+        return ItemStack.EMPTY;
     }
     
     @Override

@@ -32,6 +32,8 @@ public class ResearchWidget extends AbstractWidget {
     protected final boolean isComplete;
     protected final boolean hasHint;
     protected final ResourceLocation iconLoc;
+    protected MutableComponent lastTooltip = Component.empty();
+    protected MutableComponent tooltip = Component.empty();
     
     public ResearchWidget(SimpleResearchKey key, int x, int y, boolean isComplete) {
         this(key, x, y, isComplete, false);
@@ -75,18 +77,21 @@ public class ResearchWidget extends AbstractWidget {
         }
         
         // Prepare the tooltip
-        MutableComponent tooltip = Component.empty();
+        this.lastTooltip = this.tooltip;
+        this.tooltip = Component.empty();
         if (this.hasHint) {
             if (Screen.hasShiftDown()) {
-                tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".hint"));
+                this.tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".hint"));
             } else {
-                tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text")).append(CommonComponents.NEW_LINE);
-                tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+                this.tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text")).append(CommonComponents.NEW_LINE);
+                this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
         } else {
-            tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text"));
+            this.tooltip.append(Component.translatable("research.primalmagick." + this.key.getRootKey() + ".text"));
         }
-        this.setTooltip(Tooltip.create(tooltip));
+        if (!this.lastTooltip.equals(this.tooltip)) {
+            this.setTooltip(Tooltip.create(this.tooltip));
+        }
     }
     
     @Override
