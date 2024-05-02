@@ -21,6 +21,8 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<EntityScanKey>> ENTITY_SCAN = register("entity_scan", EntityScanKey.CODEC);
     public static final RegistryObject<ResearchKeyType<StackCraftedKey>> STACK_CRAFTED = register("stack_crafted", StackCraftedKey.CODEC);
     public static final RegistryObject<ResearchKeyType<TagCraftedKey>> TAG_CRAFTED = register("tag_crafted", TagCraftedKey.CODEC);
+    public static final RegistryObject<ResearchKeyType<RuneEnchantmentKey>> RUNE_ENCHANTMENT = register("rune_enchantment", RuneEnchantmentKey.CODEC);
+    public static final RegistryObject<ResearchKeyType<RuneEnchantmentPartialKey>> RUNE_ENCHANTMENT_PARTIAL = register("rune_enchantment_partial", RuneEnchantmentPartialKey.CODEC);
     
     protected static <T extends AbstractResearchKey> RegistryObject<ResearchKeyType<T>> register(String id, Codec<T> codec) {
         return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(codec));
