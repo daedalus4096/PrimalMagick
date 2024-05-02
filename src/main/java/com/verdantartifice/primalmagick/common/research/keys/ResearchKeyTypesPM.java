@@ -19,6 +19,8 @@ public class ResearchKeyTypesPM {
     public static final RegistryObject<ResearchKeyType<ResearchStageKey>> RESEARCH_STAGE = register("research_stage", ResearchStageKey.CODEC);
     public static final RegistryObject<ResearchKeyType<ItemScanKey>> ITEM_SCAN = register("item_scan", ItemScanKey.CODEC);
     public static final RegistryObject<ResearchKeyType<EntityScanKey>> ENTITY_SCAN = register("entity_scan", EntityScanKey.CODEC);
+    public static final RegistryObject<ResearchKeyType<StackCraftedKey>> STACK_CRAFTED = register("stack_crafted", StackCraftedKey.CODEC);
+    public static final RegistryObject<ResearchKeyType<TagCraftedKey>> TAG_CRAFTED = register("tag_crafted", TagCraftedKey.CODEC);
     
     protected static <T extends AbstractResearchKey> RegistryObject<ResearchKeyType<T>> register(String id, Codec<T> codec) {
         return DEFERRED_TYPES.register(id, () -> new ResearchKeyType<T>(codec));
