@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
+import java.util.Objects;
+
 import com.mojang.serialization.Codec;
 
 public class ResearchEntryKey extends AbstractResearchKey {
@@ -23,5 +25,22 @@ public class ResearchEntryKey extends AbstractResearchKey {
     @Override
     protected ResearchKeyType<?> getType() {
         return ResearchKeyTypesPM.RESEARCH_ENTRY.get();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rootKey);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ResearchEntryKey other = (ResearchEntryKey) obj;
+        return Objects.equals(rootKey, other.rootKey);
     }
 }
