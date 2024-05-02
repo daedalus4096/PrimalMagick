@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -10,11 +11,11 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ResearchEntryRequirement extends AbstractRequirement {
-    public static final Codec<ResearchEntryRequirement> CODEC = Codec.STRING.fieldOf("rootKey").xmap(ResearchEntryRequirement::new, req -> req.rootKey).codec();
+    public static final Codec<ResearchEntryRequirement> CODEC = ResearchEntryKey.CODEC.fieldOf("rootKey").xmap(ResearchEntryRequirement::new, req -> req.rootKey).codec();
     
-    protected final String rootKey; // TODO Replace with a ResourceKey once the research system refactor is complete
+    protected final ResearchEntryKey rootKey;
     
-    public ResearchEntryRequirement(String rootKey) {
+    public ResearchEntryRequirement(ResearchEntryKey rootKey) {
         this.rootKey = rootKey;
     }
 
