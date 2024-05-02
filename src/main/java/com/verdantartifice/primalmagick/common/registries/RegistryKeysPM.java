@@ -5,6 +5,7 @@ import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -19,6 +20,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<BookLanguage>> BOOK_LANGUAGES = key("book_languages");
     public static final ResourceKey<Registry<Culture>> CULTURES = key("cultures");
     public static final ResourceKey<Registry<ResearchName>> RESEARCH_NAMES = key("research_names");
+    public static final ResourceKey<Registry<RequirementType<?>>> REQUIREMENT_TYPES = key("requirement_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));
