@@ -18,6 +18,11 @@ import javax.annotation.Nullable;
  */
 public class ResearchEntries {
     @Nullable
+    public static ResearchEntry getEntry(String keyStr) {
+        // TODO Stub
+    }
+    
+    @Nullable
     public static ResearchEntry getEntry(SimpleResearchKey key) {
         for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
             ResearchEntry entry = discipline.getEntry(key);

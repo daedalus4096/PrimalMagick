@@ -20,7 +20,7 @@ public class ResearchEntryRequirement extends AbstractRequirement {
     }
 
     @Override
-    public boolean isKnownBy(Player player) {
+    public boolean isMetBy(Player player) {
         // TODO Auto-generated method stub
         return false;
     }

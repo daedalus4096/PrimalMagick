@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
@@ -38,7 +38,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @return a set of keys for all research entries known by the player
      */
     @Nonnull
-    public Set<SimpleResearchKey> getResearchSet();
+    public Set<AbstractResearchKey> getResearchSet();
     
     /**
      * Get the status of a given research for the player.
@@ -47,7 +47,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @return the current status of the given research entry
      */
     @Nonnull
-    public ResearchStatus getResearchStatus(@Nullable SimpleResearchKey research);
+    public ResearchStatus getResearchStatus(@Nullable AbstractResearchKey research);
     
     /**
      * Determine if the given research has been completed by the player.
@@ -55,7 +55,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(@Nullable SimpleResearchKey research);
+    public boolean isResearchComplete(@Nullable AbstractResearchKey research);
     
     /**
      * Determine if the given research has been known by the player.  If a stage number is defined in the given research
@@ -65,7 +65,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return true if the given research is known, false otherwise
      */
-    public boolean isResearchKnown(@Nullable SimpleResearchKey research);
+//    public boolean isResearchKnown(@Nullable SimpleResearchKey research);
     
     /**
      * Get the current stage number of the given research for the player.
@@ -73,7 +73,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return if the given research has been started, the current stage number; -1 otherwise
      */
-    public int getResearchStage(@Nullable SimpleResearchKey research);
+    public int getResearchStage(@Nullable AbstractResearchKey research);
     
     /**
      * Add the given research to the player's known set.
@@ -81,7 +81,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return true if the research was previously unknown and successfully added, false otherwise
      */
-    public boolean addResearch(@Nullable SimpleResearchKey research);
+    public boolean addResearch(@Nullable AbstractResearchKey research);
     
     /**
      * Set the current stage number of the given known research for the player.
@@ -90,7 +90,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param newStage the new stage number for the research
      * @return true if the research was previously known and the new stage number valid, false otherwise
      */
-    public boolean setResearchStage(@Nullable SimpleResearchKey research, int newStage);
+    public boolean setResearchStage(@Nullable AbstractResearchKey research, int newStage);
     
     /**
      * Remove the given research from the player's known set.
@@ -98,7 +98,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return true if the research was known and successfully removed, false otherwise
      */
-    public boolean removeResearch(@Nullable SimpleResearchKey research);
+    public boolean removeResearch(@Nullable AbstractResearchKey research);
     
     /**
      * Attach the given flag to the given research for the player.
@@ -107,7 +107,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param flag the flag to be set
      * @return true if the flag was successfully set, false otherwise
      */
-    public boolean addResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
+    public boolean addResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag);
     
     /**
      * Detach the given flag from the given research for the player.
@@ -116,7 +116,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param flag the flag to be removed
      * @return true if the flag was previously set and successfully removed, false otherwise
      */
-    public boolean removeResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
+    public boolean removeResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag);
     
     /**
      * Determine whether the given flag is attached to the given research for the player.
@@ -125,7 +125,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param flag the flag to be queried
      * @return true if the flag is attached to the research, false otherwise
      */
-    public boolean hasResearchFlag(@Nullable SimpleResearchKey research, @Nullable ResearchFlag flag);
+    public boolean hasResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag);
     
     /**
      * Get the set of flags attached to the given research for the player.
@@ -134,7 +134,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @return the set of flags attached to the research
      */
     @Nonnull
-    public Set<ResearchFlag> getResearchFlags(@Nullable SimpleResearchKey research);
+    public Set<ResearchFlag> getResearchFlags(@Nullable AbstractResearchKey research);
     
     /**
      * Add the given number of points to the given knowledge type for the player.

@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 public abstract class AbstractRequirement {
     public static final Codec<AbstractRequirement> CODEC = RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, RequirementType::codec);
     
-    public abstract boolean isKnownBy(@Nullable Player player);
+    public abstract boolean isMetBy(@Nullable Player player);
     
     protected abstract RequirementType<?> getType();
 }

@@ -2,10 +2,14 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import org.apache.commons.lang3.mutable.MutableBoolean;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.player.Player;
 
 public class ResearchStageKey extends ResearchEntryKey {
     public static final Codec<ResearchStageKey> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -52,5 +56,20 @@ public class ResearchStageKey extends ResearchEntryKey {
             return false;
         ResearchStageKey other = (ResearchStageKey) obj;
         return stage == other.stage;
+    }
+
+    @Override
+    public boolean isKnownBy(Player player) {
+        // Rather than testing if the research entry is complete (because it probably won't be if you're using
+        // this key), test if the research stage is at least as high as the one specified in this key.
+        if (player == null) {
+            return false;
+        } else {
+            MutableBoolean retVal = new MutableBoolean(false);
+            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
+                retVal.setValue(knowledge.getResearchStage(this) + 1 >= this.getStage());
+            });
+            return retVal.booleanValue();
+        }
     }
 }
