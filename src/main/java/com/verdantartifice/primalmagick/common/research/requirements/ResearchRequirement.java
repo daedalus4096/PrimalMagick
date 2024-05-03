@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
@@ -10,23 +11,22 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class ResearchEntryRequirement extends AbstractRequirement {
-    public static final Codec<ResearchEntryRequirement> CODEC = ResearchEntryKey.CODEC.fieldOf("rootKey").xmap(ResearchEntryRequirement::new, req -> req.rootKey).codec();
+public class ResearchRequirement extends AbstractRequirement {
+    public static final Codec<ResearchRequirement> CODEC = ResearchEntryKey.CODEC.fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey).codec();
     
     protected final ResearchEntryKey rootKey;
     
-    public ResearchEntryRequirement(ResearchEntryKey rootKey) {
-        this.rootKey = rootKey;
+    public ResearchRequirement(ResearchEntryKey rootKey) {
+        this.rootKey = Preconditions.checkNotNull(rootKey);
     }
 
     @Override
     public boolean isMetBy(Player player) {
-        // TODO Auto-generated method stub
-        return false;
+        return player == null ? false : this.rootKey.isKnownBy(player);
     }
 
     @Override
     protected RequirementType<?> getType() {
-        return RequirementsPM.RESEARCH_ENTRY.get();
+        return RequirementsPM.RESEARCH.get();
     }
 }
