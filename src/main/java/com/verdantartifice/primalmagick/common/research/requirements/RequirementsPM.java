@@ -16,6 +16,7 @@ public class RequirementsPM {
     public static final Supplier<IForgeRegistry<RequirementType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
     
     public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement.CODEC);
+    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", StatRequirement.CODEC);
     public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement.CODEC);
     public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement.CODEC);
     public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement.CODEC);
