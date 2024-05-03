@@ -3,8 +3,6 @@ package com.verdantartifice.primalmagick.common.research.keys;
 import java.util.Objects;
 
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 public class ResearchEntryKey extends AbstractResearchKey {
     public static final Codec<ResearchEntryKey> CODEC = Codec.STRING.fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
@@ -45,9 +43,14 @@ public class ResearchEntryKey extends AbstractResearchKey {
         ResearchEntryKey other = (ResearchEntryKey) obj;
         return Objects.equals(rootKey, other.rootKey);
     }
-
-    @Override
-    public ResearchEntry getResearchEntry() {
-        return ResearchEntries.getEntry(this.rootKey);
+    
+    /**
+     * Return a copy of this key with the assurance that it refers only to the research entry,
+     * and not a particular stage.
+     * 
+     * @return the new research entry key
+     */
+    public ResearchEntryKey stripStage() {
+        return new ResearchEntryKey(this.rootKey);
     }
 }

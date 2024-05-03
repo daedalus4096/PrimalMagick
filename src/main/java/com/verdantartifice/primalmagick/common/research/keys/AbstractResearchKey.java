@@ -6,7 +6,6 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -33,11 +32,5 @@ public abstract class AbstractResearchKey {
             });
             return retVal.booleanValue();
         }
-    }
-    
-    @Nullable
-    public ResearchEntry getResearchEntry() {
-        // Most research key types don't have a corresponding research entry; override in those that do
-        return null;
     }
 }

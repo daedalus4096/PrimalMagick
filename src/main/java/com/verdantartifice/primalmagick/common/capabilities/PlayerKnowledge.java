@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SyncKnowledgePacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
@@ -219,7 +220,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             return ResearchStatus.UNKNOWN;
         } else {
             // Research is complete if it is known and its current stage equals or exceeds the number of stages defined in its entry
-            ResearchEntry entry = research.getResearchEntry();
+            ResearchEntry entry = ResearchEntries.getEntry(research);
             if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) >= entry.getStages().size()) {
                 return ResearchStatus.COMPLETE;
             } else {

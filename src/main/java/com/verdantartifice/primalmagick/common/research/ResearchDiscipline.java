@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ public class ResearchDiscipline {
     protected final CompoundResearchKey unlockResearchKey;
     protected final ResourceLocation iconLocation;
     protected final Stat craftingStat;
-    protected final Map<SimpleResearchKey, ResearchEntry> entries = new HashMap<>();
+    protected final Map<ResearchEntryKey, ResearchEntry> entries = new HashMap<>();
     protected List<ResearchEntry> finales = null;
     
     protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey, @Nonnull ResourceLocation icon, @Nullable Stat craftingStat) {
@@ -68,7 +69,7 @@ public class ResearchDiscipline {
     }
     
     @Nullable
-    public ResearchEntry getEntry(SimpleResearchKey key) {
+    public ResearchEntry getEntry(ResearchEntryKey key) {
         return this.entries.get(key);
     }
     

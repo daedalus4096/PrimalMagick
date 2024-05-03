@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -33,7 +34,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchEntry {
-    protected SimpleResearchKey key;
+    protected ResearchEntryKey key;
     protected String disciplineKey;
     protected String nameTranslationKey;
     protected ResearchEntry.Icon icon;
@@ -44,7 +45,7 @@ public class ResearchEntry {
     protected List<ResearchStage> stages = new ArrayList<>();
     protected List<ResearchAddendum> addenda = new ArrayList<>();
     
-    protected ResearchEntry(@Nonnull SimpleResearchKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
+    protected ResearchEntry(@Nonnull ResearchEntryKey key, @Nonnull String disciplineKey, @Nonnull String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
         this.key = key;
         this.disciplineKey = disciplineKey;
         this.nameTranslationKey = nameTranslationKey;
@@ -54,7 +55,7 @@ public class ResearchEntry {
     }
     
     @Nullable
-    public static ResearchEntry create(@Nullable SimpleResearchKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
+    public static ResearchEntry create(@Nullable ResearchEntryKey key, @Nullable String disciplineKey, @Nullable String nameTranslationKey, @Nullable ResearchEntry.Icon icon) {
         if (key == null || disciplineKey == null || nameTranslationKey == null) {
             return null;
         } else {
@@ -155,7 +156,7 @@ public class ResearchEntry {
     }
     
     @Nonnull
-    public SimpleResearchKey getKey() {
+    public ResearchEntryKey getKey() {
         return this.key;
     }
     

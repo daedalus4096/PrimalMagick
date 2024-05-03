@@ -10,6 +10,9 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+
 /**
  * Convenience class for accessing research entries without having to manually navigate the
  * discipline hierarchy.
@@ -18,16 +21,13 @@ import javax.annotation.Nullable;
  */
 public class ResearchEntries {
     @Nullable
-    public static ResearchEntry getEntry(String keyStr) {
-        // TODO Stub
-    }
-    
-    @Nullable
-    public static ResearchEntry getEntry(SimpleResearchKey key) {
-        for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
-            ResearchEntry entry = discipline.getEntry(key);
-            if (entry != null) {
-                return entry;
+    public static ResearchEntry getEntry(AbstractResearchKey key) {
+        if (key instanceof ResearchEntryKey entryKey) {
+            for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
+                ResearchEntry entry = discipline.getEntry(entryKey);
+                if (entry != null) {
+                    return entry;
+                }
             }
         }
         return null;
