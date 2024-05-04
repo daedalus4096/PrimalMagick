@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 
 /**
  * Requirement that the player possesses a stack(s) of the given item at least as large as the
- * given stack, with the same tags.  The item is intended for consumption as part of the check.
+ * given stack, with the same NBT.  The item is intended for consumption as part of the check.
  * 
  * @author Daedalus4096
  */
@@ -18,6 +18,9 @@ public class ItemStackRequirement extends AbstractRequirement {
     protected final ItemStack stack;
     
     public ItemStackRequirement(ItemStack stack) {
+        if (stack == null || stack.isEmpty()) {
+            throw new IllegalArgumentException("Item stack may not be empty");
+        }
         this.stack = stack.copy();
     }
 

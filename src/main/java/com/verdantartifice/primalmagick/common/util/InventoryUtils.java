@@ -112,14 +112,34 @@ public class InventoryUtils {
      * @param amount the minimum number of items the player must be carrying for success
      * @return true if the player is carrying at least that many of the given tag's items, false otherwise
      */
+    @Deprecated
     public static boolean isPlayerCarrying(@Nullable Player player, @Nullable ResourceLocation tagName, int amount) {
-        if (player == null) {
-            return false;
-        }
         if (tagName == null) {
             return true;
         }
-        TagKey<Item> tag = ItemTags.create(tagName);
+        return isPlayerCarrying(player, ItemTags.create(tagName), amount);
+    }
+    
+    /**
+     * Determine if the given player is carrying items of the given tag in their main inventory.  Does
+     * not consider equipped items or nested inventories (e.g. backpacks).  If the given amount is
+     * greater than one, this method will search for any combination of itemstacks in the player's
+     * inventory that total the given count, rather than requiring a single stack of that size.  The
+     * found items need not be the same, so long as all of them belong to the tag.  Does not attempt
+     * to match NBT data, as that cannot be conveyed by a tag.
+     * 
+     * @param player the player whose inventory to search
+     * @param tag the tag containing the items to be searched for
+     * @param amount the minimum number of items the player must be carrying for success
+     * @return true if the player is carrying at least that many of the given tag's items, false otherwise
+     */
+    public static boolean isPlayerCarrying(@Nullable Player player, @Nullable TagKey<Item> tag, int amount) {
+        if (player == null) {
+            return false;
+        }
+        if (tag == null) {
+            return true;
+        }
         for (ItemStack searchStack : player.getInventory().items) {
             // Only the items need match, not the NBT data
             if (!searchStack.isEmpty() && searchStack.is(tag)) {
@@ -214,22 +234,43 @@ public class InventoryUtils {
      * (e.g. an empty bucket from a milk bucket), the container will be refunded to the player.
      * 
      * @param player the player whose inventory to search
-     * @param tagName the tag containing the items to be removed
+     * @param tagName the name of the tag containing the items to be removed
      * @param amount the quantity of items to be removed
      * @return true if the given tag's items were removed in the given quantity, false otherwise
      */
+    @Deprecated
     public static boolean consumeItem(@Nullable Player player, @Nullable ResourceLocation tagName, int amount) {
+        if (tagName == null) {
+            return true;
+        }
+        return consumeItem(player, ItemTags.create(tagName), amount);
+    }
+    
+    /**
+     * Attempts to remove the given quantity of items in the given tag from the player's main inventory.
+     * Does not consider equipped items or nested inventories (e.g. backpacks).  If the given amount is
+     * greater than one, this method will search for any combination of itemstacks in the player's
+     * inventory that total the given count, rather than requiring a single stack of that size.  The found
+     * items need not be the same, so long as all of them belong to the tag.  Does not attempt to match
+     * NBT data, as that cannot be conveyed by a tag.  Should the items being removed have a container
+     * (e.g. an empty bucket from a milk bucket), the container will be refunded to the player.
+     * 
+     * @param player the player whose inventory to search
+     * @param tag the tag containing the items to be removed
+     * @param amount the quantity of items to be removed
+     * @return true if the given tag's items were removed in the given quantity, false otherwise
+     */
+    public static boolean consumeItem(@Nullable Player player, @Nullable TagKey<Item> tag, int amount) {
         if (player == null) {
             return false;
         }
-        if (tagName == null || amount <= 0) {
+        if (tag == null || amount <= 0) {
             return true;
         }
-        if (!isPlayerCarrying(player, tagName, amount)) {
+        if (!isPlayerCarrying(player, tag, amount)) {
             // If the player is not carrying enough of the given items, return false immediately
             return false;
         }
-        TagKey<Item> tag = ItemTags.create(tagName);
         for (int index = 0; index < player.getInventory().items.size(); index++) {
             ItemStack searchStack = player.getInventory().items.get(index);
             // Only the items need match, not the NBT data
