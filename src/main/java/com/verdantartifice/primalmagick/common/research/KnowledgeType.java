@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.research;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +12,8 @@ import net.minecraft.util.StringRepresentable;
 public enum KnowledgeType implements StringRepresentable {
     OBSERVATION("observation", 16, PrimalMagick.resource("textures/research/knowledge_observation.png")),
     THEORY("theory", 32, PrimalMagick.resource("textures/research/knowledge_theory.png"));
+    
+    public static final Codec<KnowledgeType> CODEC = StringRepresentable.fromValues(KnowledgeType::values);
     
     private final String name;
     private final short progression;  // How many points make a complete level for this knowledge type

@@ -3,6 +3,11 @@ package com.verdantartifice.primalmagick.common.research;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+
+import net.minecraft.util.ExtraCodecs;
+
 /**
  * Represents a packet of knowledge levels (e.g. 3 levels worth of observations).  Primarily used to
  * parse knowledge requirements for research and display them in the grimoire.
@@ -10,6 +15,11 @@ import javax.annotation.Nullable;
  * @author Daedalus4096
  */
 public class Knowledge {
+    public static final Codec<Knowledge> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            KnowledgeType.CODEC.fieldOf("type").forGetter(k -> k.type), 
+            ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(k -> k.amount)
+        ).apply(instance, Knowledge::new));
+    
     protected KnowledgeType type;
     protected int amount;
     
