@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryBuilder;
@@ -14,6 +15,10 @@ import net.minecraftforge.registries.RegistryObject;
 public class ResearchKeyTypesPM {
     private static final DeferredRegister<ResearchKeyType<?>> DEFERRED_TYPES = DeferredRegister.create(RegistryKeysPM.RESEARCH_KEY_TYPES, PrimalMagick.MODID);
     public static final Supplier<IForgeRegistry<ResearchKeyType<?>>> TYPES = DEFERRED_TYPES.makeRegistry(RegistryBuilder::new);
+    
+    public static void init() {
+        DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
     
     public static final RegistryObject<ResearchKeyType<ResearchEntryKey>> RESEARCH_ENTRY = register("research_entry", ResearchEntryKey.CODEC);
     public static final RegistryObject<ResearchKeyType<ResearchStageKey>> RESEARCH_STAGE = register("research_stage", ResearchStageKey.CODEC);

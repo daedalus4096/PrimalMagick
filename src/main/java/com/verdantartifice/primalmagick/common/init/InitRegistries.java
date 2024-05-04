@@ -15,6 +15,8 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
@@ -46,5 +48,7 @@ public class InitRegistries {
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
         ResearchNames.init();
+        ResearchKeyTypesPM.init();
+        RequirementsPM.init();
     }
 }
