@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import com.mojang.serialization.Codec;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -14,16 +17,16 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class AndRequirement extends AbstractRequirement {
+public class AndRequirement extends AbstractRequirement<AndRequirement> {
     public static final Codec<AndRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").xmap(AndRequirement::new, req -> req.subs).codec();
     
-    protected final List<AbstractRequirement> subs = new ArrayList<>();
+    protected final List<AbstractRequirement<?>> subs = new ArrayList<>();
     
-    public AndRequirement(List<AbstractRequirement> components) {
+    public AndRequirement(List<AbstractRequirement<?>> components) {
         this.subs.addAll(components);
     }
     
-    public AndRequirement(AbstractRequirement... components) {
+    public AndRequirement(AbstractRequirement<?>... components) {
         this(Arrays.asList(components));
     }
 
@@ -48,13 +51,23 @@ public class AndRequirement extends AbstractRequirement {
     }
 
     @Override
-    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
-        Stream<AbstractRequirement> selfStream = category == this.getCategory() ? Stream.of(this) : Stream.empty();
+    public Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category) {
+        Stream<AbstractRequirement<?>> selfStream = category == this.getCategory() ? Stream.of(this) : Stream.empty();
         return Stream.concat(selfStream, this.subs.stream().flatMap(req -> req.streamByCategory(category)));
     }
 
     @Override
-    protected RequirementType<?> getType() {
+    protected RequirementType<AndRequirement> getType() {
         return RequirementsPM.AND.get();
+    }
+
+    @Nonnull
+    public static AndRequirement fromNetwork(FriendlyByteBuf buf) {
+        return new AndRequirement(buf.readList(AbstractRequirement::fromNetwork));
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeCollection(this.subs, (b, s) -> s.toNetwork(b));
     }
 }

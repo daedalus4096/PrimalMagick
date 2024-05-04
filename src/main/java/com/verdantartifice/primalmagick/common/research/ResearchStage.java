@@ -48,7 +48,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
     public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
         String textKey = buf.readUtf();
-        Optional<AbstractRequirement<?>> compReqOpt = null;    // TODO Deserialize optional requirements
+        Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
         List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
         List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
@@ -60,7 +60,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
     public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
         stage.parentKey.toNetwork(buf);
         buf.writeUtf(stage.textTranslationKey);
-        // TODO Serialize optional requirements
+        buf.writeOptional(stage.completionRequirementOpt, (b, r) -> r.toNetwork(b));
         buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
         buf.writeCollection(stage.siblings, (b, s) -> s.toNetwork(b));
         buf.writeCollection(stage.revelations, (b, r) -> r.toNetwork(b));

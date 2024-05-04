@@ -22,13 +22,13 @@ public class RequirementsPM {
     }
     
     public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement.CODEC, ResearchRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", KnowledgeRequirement.CODEC);
-    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", ItemStackRequirement.CODEC);
-    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", ItemTagRequirement.CODEC);
-    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", StatRequirement.CODEC);
-    public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement.CODEC);
-    public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement.CODEC);
-    public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement.CODEC);
+    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", KnowledgeRequirement.CODEC, KnowledgeRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", ItemStackRequirement.CODEC, ItemStackRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", ItemTagRequirement.CODEC, ItemTagRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", StatRequirement.CODEC, StatRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement.CODEC, AndRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement.CODEC, OrRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement.CODEC, QuorumRequirement::fromNetwork);
     
     protected static <T extends AbstractRequirement<T>> RegistryObject<RequirementType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(PrimalMagick.resource(id), codec, networkReader));
