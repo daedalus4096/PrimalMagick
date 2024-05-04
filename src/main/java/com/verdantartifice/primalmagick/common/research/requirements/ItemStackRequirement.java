@@ -2,9 +2,12 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -14,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ItemStackRequirement extends AbstractRequirement {
+public class ItemStackRequirement extends AbstractRequirement<ItemStackRequirement> {
     public static final Codec<ItemStackRequirement> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(ItemStackRequirement::new, req -> req.stack).codec();
     
     protected final ItemStack stack;
@@ -44,12 +47,22 @@ public class ItemStackRequirement extends AbstractRequirement {
     }
 
     @Override
-    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+    public Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category) {
         return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override
-    protected RequirementType<?> getType() {
+    protected RequirementType<ItemStackRequirement> getType() {
         return RequirementsPM.ITEM_STACK.get();
+    }
+
+    @Nonnull
+    public static ItemStackRequirement fromNetwork(FriendlyByteBuf buf) {
+        return new ItemStackRequirement(buf.readItem());
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeItemStack(this.stack, false);
     }
 }

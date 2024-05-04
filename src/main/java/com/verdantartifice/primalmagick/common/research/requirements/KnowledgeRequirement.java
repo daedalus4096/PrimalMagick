@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 
 import java.util.stream.Stream;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.google.common.base.Preconditions;
@@ -11,6 +13,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
@@ -19,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class KnowledgeRequirement extends AbstractRequirement {
+public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequirement> {
     public static final Codec<KnowledgeRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             KnowledgeType.CODEC.fieldOf("knowledgeType").forGetter(req -> req.knowledgeType),
             ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(req -> req.amount)
@@ -64,12 +67,23 @@ public class KnowledgeRequirement extends AbstractRequirement {
     }
 
     @Override
-    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+    public Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category) {
         return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override
-    protected RequirementType<?> getType() {
+    protected RequirementType<KnowledgeRequirement> getType() {
         return RequirementsPM.KNOWLEDGE.get();
+    }
+
+    @Nonnull
+    public static KnowledgeRequirement fromNetwork(FriendlyByteBuf buf) {
+        return new KnowledgeRequirement(buf.readEnum(KnowledgeType.class), buf.readVarInt());
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeEnum(this.knowledgeType);
+        buf.writeVarInt(this.amount);
     }
 }

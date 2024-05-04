@@ -31,7 +31,7 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement> completionRequirementOpt, List<ResourceLocation> recipes,
+public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
         List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, List<AbstractResearchKey<?>> hints, SourceList attunements) {
     public static final Codec<ResearchStage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
@@ -48,7 +48,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
     public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
         String textKey = buf.readUtf();
-        Optional<AbstractRequirement> compReqOpt = null;    // TODO Deserialize optional requirements
+        Optional<AbstractRequirement<?>> compReqOpt = null;    // TODO Deserialize optional requirements
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
         List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
         List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
@@ -84,7 +84,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
     }
     
-    public List<AbstractRequirement> getRequirementsByCategory(RequirementCategory category) {
+    public List<AbstractRequirement<?>> getRequirementsByCategory(RequirementCategory category) {
         if (this.completionRequirementOpt.isEmpty()) {
             return Collections.emptyList();
         } else {
@@ -96,7 +96,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         if (this.completionRequirementOpt.isEmpty()) {
             return Collections.emptyList();
         } else {
-            Stream<AbstractRequirement> reqStream = this.completionRequirementOpt.get().streamByCategory(category);
+            Stream<AbstractRequirement<?>> reqStream = this.completionRequirementOpt.get().streamByCategory(category);
             if (player == null) {
                 return Collections.nCopies((int)reqStream.count(), false);
             } else {
