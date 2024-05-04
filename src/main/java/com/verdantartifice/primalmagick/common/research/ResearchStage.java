@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
@@ -160,89 +162,24 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
     }
     
-    public List<Boolean> getObtainRequirementCompletion(@Nullable Player player) {
-        if (this.mustObtain.isEmpty()) {
+    public List<AbstractRequirement> getRequirementsByCategory(RequirementCategory category) {
+        if (this.completionRequirementOpt.isEmpty()) {
             return Collections.emptyList();
+        } else {
+            return this.completionRequirementOpt.get().streamByCategory(category).toList();
         }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.mustObtain.size(), Boolean.FALSE);
-        }
-        
-        List<Boolean> retVal = new ArrayList<>();
-        for (Object obj : this.mustObtain) {
-            if (obj instanceof ItemStack) {
-                // If the obtain requirement is a specific itemstack, check if the player is carrying some
-                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ItemStack)obj)));
-            } else if (obj instanceof ResourceLocation) {
-                // If the obtain requirement is a tag, check if the player is carrying one of any of the tag's contents
-                retVal.add(Boolean.valueOf(InventoryUtils.isPlayerCarrying(player, (ResourceLocation)obj, 1)));
+    }
+    
+    public List<Boolean> getRequirementCompletionByCategory(@Nullable Player player, RequirementCategory category) {
+        if (this.completionRequirementOpt.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            Stream<AbstractRequirement> reqStream = this.completionRequirementOpt.get().streamByCategory(category);
+            if (player == null) {
+                return Collections.nCopies((int)reqStream.count(), false);
             } else {
-                // If the obtain requirement is invalid, just assume the player has it
-                retVal.add(Boolean.TRUE);
+                return reqStream.map(req -> req.isMetBy(player)).toList();
             }
         }
-        return retVal;
-    }
-    
-    public List<Boolean> getCraftRequirementCompletion(@Nullable Player player) {
-        if (this.craftReference.isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
-        }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (knowledge == null) {
-            // If the player's knowledge capability is invalid, return false for all requirements
-            return Collections.nCopies(this.craftReference.size(), Boolean.FALSE);
-        }
-        
-        List<Boolean> retVal = new ArrayList<>();
-        for (Integer craftRef : this.craftReference) {
-            // Check if the player knows the special research entry corresponding to the required hash code
-            retVal.add(Boolean.valueOf(knowledge.isResearchKnown(SimpleResearchKey.parseCrafted(craftRef))));
-        }
-        return retVal;
-    }
-    
-    public List<Boolean> getKnowledgeRequirementCompletion(@Nullable Player player) {
-        if (this.requiredKnowledge.isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
-        }
-        IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
-        if (knowledge == null) {
-            // If the player's knowledge capability is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredKnowledge.size(), Boolean.FALSE);
-        }
-        
-        List<Boolean> retVal = new ArrayList<>();
-        for (Knowledge knowPacket : this.requiredKnowledge) {
-            // Check if the player has enough levels in each required type of knowledge
-            retVal.add(Boolean.valueOf(knowledge.getKnowledge(knowPacket.getType()) >= knowPacket.getAmount()));
-        }
-        return retVal;
-    }
-    
-    public List<Boolean> getResearchRequirementCompletion(@Nullable Player player) {
-        if (this.requiredResearch == null || this.requiredResearch.getKeys().isEmpty()) {
-            return Collections.emptyList();
-        }
-        if (player == null) {
-            // If the player is invalid, return false for all requirements
-            return Collections.nCopies(this.requiredResearch.getKeys().size(), Boolean.FALSE);
-        }
-        
-        List<Boolean> retVal = new ArrayList<>();
-        for (SimpleResearchKey key : this.requiredResearch.getKeys()) {
-            // Do a strict knowledge check for each required research entry
-            retVal.add(Boolean.valueOf(key.isKnownByStrict(player)));
-        }
-        return retVal;
     }
 }
