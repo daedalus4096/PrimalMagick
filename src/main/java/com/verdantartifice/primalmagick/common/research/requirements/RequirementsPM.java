@@ -17,6 +17,7 @@ public class RequirementsPM {
     
     public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement.CODEC);
     public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", KnowledgeRequirement.CODEC);
+    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", ItemStackRequirement.CODEC);
     public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", StatRequirement.CODEC);
     public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement.CODEC);
     public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement.CODEC);
