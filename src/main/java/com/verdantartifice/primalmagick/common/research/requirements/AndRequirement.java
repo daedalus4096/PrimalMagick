@@ -14,12 +14,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class AndRequirement extends AbstractRequirement {
-    public static final Codec<AndRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("components").xmap(AndRequirement::new, req -> req.components).codec();
+    public static final Codec<AndRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").xmap(AndRequirement::new, req -> req.subs).codec();
     
-    protected final List<AbstractRequirement> components = new ArrayList<>();
+    protected final List<AbstractRequirement> subs = new ArrayList<>();
     
     public AndRequirement(List<AbstractRequirement> components) {
-        this.components.addAll(components);
+        this.subs.addAll(components);
     }
     
     public AndRequirement(AbstractRequirement... components) {
@@ -31,8 +31,14 @@ public class AndRequirement extends AbstractRequirement {
         if (player == null) {
             return false;
         } else {
-            return this.components.stream().allMatch(req -> req.isMetBy(player));
+            return this.subs.stream().allMatch(req -> req.isMetBy(player));
         }
+    }
+
+    @Override
+    public void consumeComponents(Player player) {
+        // Consume components from all sub-requirements
+        this.subs.forEach(req -> req.consumeComponents(player));
     }
 
     @Override

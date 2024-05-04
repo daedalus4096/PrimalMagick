@@ -14,12 +14,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class OrRequirement extends AbstractRequirement {
-    public static final Codec<OrRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("components").xmap(OrRequirement::new, req -> req.components).codec();
+    public static final Codec<OrRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").xmap(OrRequirement::new, req -> req.subs).codec();
     
-    protected final List<AbstractRequirement> components = new ArrayList<>();
+    protected final List<AbstractRequirement> subs = new ArrayList<>();
     
     public OrRequirement(List<AbstractRequirement> components) {
-        this.components.addAll(components);
+        this.subs.addAll(components);
     }
     
     public OrRequirement(AbstractRequirement... components) {
@@ -31,8 +31,14 @@ public class OrRequirement extends AbstractRequirement {
         if (player == null) {
             return false;
         } else {
-            return this.components.stream().anyMatch(req -> req.isMetBy(player));
+            return this.subs.stream().anyMatch(req -> req.isMetBy(player));
         }
+    }
+
+    @Override
+    public void consumeComponents(Player player) {
+        // Consume requirements from all sub-requirements that were met
+        this.subs.stream().filter(req -> req.isMetBy(player)).forEach(req -> req.consumeComponents(player));
     }
 
     @Override

@@ -14,6 +14,7 @@ public abstract class AbstractRequirement {
     public static final Codec<AbstractRequirement> CODEC = RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, RequirementType::codec);
     
     public abstract boolean isMetBy(@Nullable Player player);
+    public abstract void consumeComponents(@Nullable Player player);
     
     protected abstract RequirementType<?> getType();
 }

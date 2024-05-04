@@ -42,8 +42,12 @@ public class StatRequirement extends AbstractRequirement {
     }
 
     @Override
+    public void consumeComponents(Player player) {
+        // No action needed; statistics are never consumed
+    }
+
+    @Override
     protected RequirementType<?> getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return RequirementsPM.STAT.get();
     }
 }

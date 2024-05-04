@@ -26,6 +26,11 @@ public class ResearchRequirement extends AbstractRequirement {
     }
 
     @Override
+    public void consumeComponents(Player player) {
+        // No action needed; research is never consumed
+    }
+
+    @Override
     protected RequirementType<?> getType() {
         return RequirementsPM.RESEARCH.get();
     }

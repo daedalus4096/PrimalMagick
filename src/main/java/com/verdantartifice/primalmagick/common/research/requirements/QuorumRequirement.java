@@ -19,10 +19,10 @@ import net.minecraft.world.entity.player.Player;
 public class QuorumRequirement extends AbstractRequirement {
     public static final Codec<QuorumRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("requiredCount").forGetter(req -> req.requiredCount), 
-            AbstractRequirement.CODEC.listOf().fieldOf("components").forGetter(req -> req.components)
+            AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").forGetter(req -> req.subs)
         ).apply(instance, QuorumRequirement::new));
     
-    protected final List<AbstractRequirement> components = new ArrayList<>();
+    protected final List<AbstractRequirement> subs = new ArrayList<>();
     protected final int requiredCount;
     
     public QuorumRequirement(int requiredCount, List<AbstractRequirement> components) {
@@ -30,7 +30,7 @@ public class QuorumRequirement extends AbstractRequirement {
             throw new IllegalArgumentException("Required count must be positive");
         }
         this.requiredCount = requiredCount;
-        this.components.addAll(components);
+        this.subs.addAll(components);
     }
     
     public QuorumRequirement(int requiredCount, AbstractRequirement... components) {
@@ -42,14 +42,18 @@ public class QuorumRequirement extends AbstractRequirement {
         if (player == null) {
             return false;
         } else {
-            return (this.components.stream().mapToInt(req -> req.isMetBy(player) ? 1 : 0).sum() >= this.requiredCount);
+            return (this.subs.stream().mapToInt(req -> req.isMetBy(player) ? 1 : 0).sum() >= this.requiredCount);
         }
     }
 
     @Override
-    protected RequirementType<?> getType() {
-        // TODO Auto-generated method stub
-        return null;
+    public void consumeComponents(Player player) {
+        // Consume requirements from all sub-requirements that were met
+        this.subs.stream().filter(req -> req.isMetBy(player)).forEach(req -> req.consumeComponents(player));
     }
 
+    @Override
+    protected RequirementType<?> getType() {
+        return RequirementsPM.QUORUM.get();
+    }
 }
