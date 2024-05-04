@@ -8,6 +8,8 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -15,8 +17,8 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractResearchKey {
-    public static final Codec<AbstractResearchKey> CODEC = ResearchKeyTypesPM.TYPES.get().getCodec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
+    public static final Codec<AbstractResearchKey<?>> CODEC = ResearchKeyTypesPM.TYPES.get().getCodec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
     
     @Override
     public abstract String toString();
@@ -28,7 +30,7 @@ public abstract class AbstractResearchKey {
      */
     public abstract RequirementCategory getRequirementCategory();
 
-    protected abstract ResearchKeyType<?> getType();
+    protected abstract ResearchKeyType<T> getType();
     
     public boolean isKnownBy(@Nullable Player player) {
         if (player == null) {
@@ -41,4 +43,16 @@ public abstract class AbstractResearchKey {
             return retVal.booleanValue();
         }
     }
+    
+    public static AbstractResearchKey<?> fromNetwork(FriendlyByteBuf buf) {
+        ResourceLocation typeId = buf.readResourceLocation();
+        return ResearchKeyTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+    }
+    
+    public void toNetwork(FriendlyByteBuf buf) {
+        buf.writeResourceLocation(this.getType().id());
+        this.toNetworkInner(buf);
+    }
+    
+    public abstract void toNetworkInner(FriendlyByteBuf buf);
 }

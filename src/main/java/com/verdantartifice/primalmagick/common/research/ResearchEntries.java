@@ -21,7 +21,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
  */
 public class ResearchEntries {
     @Nullable
-    public static ResearchEntry getEntry(AbstractResearchKey key) {
+    public static ResearchEntry getEntry(AbstractResearchKey<?> key) {
         if (key instanceof ResearchEntryKey entryKey) {
             for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
                 ResearchEntry entry = discipline.getEntry(entryKey);

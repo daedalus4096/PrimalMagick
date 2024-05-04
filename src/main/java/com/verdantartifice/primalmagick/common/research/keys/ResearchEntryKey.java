@@ -2,10 +2,14 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
-public class ResearchEntryKey extends AbstractResearchKey {
+import net.minecraft.network.FriendlyByteBuf;
+
+public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     public static final Codec<ResearchEntryKey> CODEC = Codec.STRING.fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
     
     protected final String rootKey; // TODO Replace with a ResourceKey once the research system refactor is complete
@@ -29,7 +33,7 @@ public class ResearchEntryKey extends AbstractResearchKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    protected ResearchKeyType<ResearchEntryKey> getType() {
         return ResearchKeyTypesPM.RESEARCH_ENTRY.get();
     }
 
@@ -50,13 +54,13 @@ public class ResearchEntryKey extends AbstractResearchKey {
         return Objects.equals(rootKey, other.rootKey);
     }
     
-    /**
-     * Return a copy of this key with the assurance that it refers only to the research entry,
-     * and not a particular stage.
-     * 
-     * @return the new research entry key
-     */
-    public ResearchEntryKey stripStage() {
-        return new ResearchEntryKey(this.rootKey);
+    @Nonnull
+    public static ResearchEntryKey fromNetwork(FriendlyByteBuf buf) {
+        return new ResearchEntryKey(buf.readUtf());
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeUtf(this.rootKey);
     }
 }

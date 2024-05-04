@@ -2,15 +2,18 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class EntityScanKey extends AbstractResearchKey {
+public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     public static final Codec<EntityScanKey> CODEC = ResourceLocation.CODEC.fieldOf("entityType").xmap(loc -> {
         return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
     }, key -> {
@@ -36,7 +39,7 @@ public class EntityScanKey extends AbstractResearchKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    protected ResearchKeyType<EntityScanKey> getType() {
         return ResearchKeyTypesPM.ENTITY_SCAN.get();
     }
 
@@ -56,5 +59,15 @@ public class EntityScanKey extends AbstractResearchKey {
         EntityScanKey other = (EntityScanKey) obj;
         return EntityType.getKey(other.entityType).equals(EntityType.getKey(this.entityType));
     }
-
+    
+    @Nonnull
+    public static EntityScanKey fromNetwork(FriendlyByteBuf buf) {
+        ResourceLocation loc = buf.readResourceLocation();
+        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeResourceLocation(EntityType.getKey(this.entityType));
+    }
 }

@@ -2,15 +2,18 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class RuneEnchantmentKey extends AbstractResearchKey {
+public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> {
     public static final Codec<RuneEnchantmentKey> CODEC = ResourceLocation.CODEC.fieldOf("enchantment").xmap(loc -> {
         return new RuneEnchantmentKey(ForgeRegistries.ENCHANTMENTS.getValue(loc));
     }, key -> {
@@ -36,7 +39,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    protected ResearchKeyType<RuneEnchantmentKey> getType() {
         return ResearchKeyTypesPM.RUNE_ENCHANTMENT.get();
     }
 
@@ -57,4 +60,14 @@ public class RuneEnchantmentKey extends AbstractResearchKey {
         return ForgeRegistries.ENCHANTMENTS.getKey(this.enchant).equals(ForgeRegistries.ENCHANTMENTS.getKey(other.enchant));
     }
 
+    @Nonnull
+    public static RuneEnchantmentKey fromNetwork(FriendlyByteBuf buf) {
+        ResourceLocation loc = buf.readResourceLocation();
+        return new RuneEnchantmentKey(ForgeRegistries.ENCHANTMENTS.getValue(loc));
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeResourceLocation(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
+    }
 }

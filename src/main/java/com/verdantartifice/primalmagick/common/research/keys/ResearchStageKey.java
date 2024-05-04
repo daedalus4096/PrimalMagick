@@ -2,26 +2,35 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
-public class ResearchStageKey extends ResearchEntryKey {
+public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     public static final Codec<ResearchStageKey> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("rootKey").forGetter(ResearchStageKey::getRootKey), 
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("stage").forGetter(ResearchStageKey::getStage)
         ).apply(instance, ResearchStageKey::new));
     
+    protected final String rootKey; // TODO Replace with a ResourceKey once the research system refactor is complete
     protected final int stage;
     
     public ResearchStageKey(String rootKey, int stage) {
-        super(rootKey);
+        this.rootKey = rootKey;
         this.stage = stage;
+    }
+    
+    public String getRootKey() {
+        return this.rootKey;
     }
     
     public int getStage() {
@@ -34,7 +43,12 @@ public class ResearchStageKey extends ResearchEntryKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.RESEARCH;
+    }
+
+    @Override
+    protected ResearchKeyType<ResearchStageKey> getType() {
         return ResearchKeyTypesPM.RESEARCH_STAGE.get();
     }
 
@@ -71,5 +85,16 @@ public class ResearchStageKey extends ResearchEntryKey {
             });
             return retVal.booleanValue();
         }
+    }
+
+    @Nonnull
+    public static ResearchStageKey fromNetwork(FriendlyByteBuf buf) {
+        return new ResearchStageKey(buf.readUtf(), buf.readVarInt());
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeUtf(this.rootKey);
+        buf.writeVarInt(this.stage);
     }
 }

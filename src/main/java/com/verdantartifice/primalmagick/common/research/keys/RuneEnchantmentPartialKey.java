@@ -2,16 +2,20 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class RuneEnchantmentPartialKey extends RuneEnchantmentKey {
+public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantmentPartialKey> {
     public static final Codec<RuneEnchantmentPartialKey> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("enchantment").xmap(loc -> {
                 return ForgeRegistries.ENCHANTMENTS.getValue(loc);
@@ -21,10 +25,13 @@ public class RuneEnchantmentPartialKey extends RuneEnchantmentKey {
             RuneType.CODEC.fieldOf("runeType").forGetter(key -> key.runeType)
         ).apply(instance, RuneEnchantmentPartialKey::new));
     
+    private static final String PREFIX = "&";
+    
+    protected final Enchantment enchant;
     protected final RuneType runeType;
     
     public RuneEnchantmentPartialKey(Enchantment enchant, RuneType runeType) {
-        super(enchant);
+        this.enchant = Preconditions.checkNotNull(enchant);
         this.runeType = Preconditions.checkNotNull(runeType);
         if (this.runeType == RuneType.POWER) {
             throw new IllegalArgumentException("Rune type may not be a power rune");
@@ -33,11 +40,16 @@ public class RuneEnchantmentPartialKey extends RuneEnchantmentKey {
 
     @Override
     public String toString() {
-        return super.toString() + "." + this.runeType.getSerializedName();
+        return PREFIX + ForgeRegistries.ENCHANTMENTS.getKey(this.enchant).toString() + "." + this.runeType.getSerializedName();
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.RESEARCH;
+    }
+
+    @Override
+    protected ResearchKeyType<RuneEnchantmentPartialKey> getType() {
         return ResearchKeyTypesPM.RUNE_ENCHANTMENT_PARTIAL.get();
     }
 
@@ -59,5 +71,18 @@ public class RuneEnchantmentPartialKey extends RuneEnchantmentKey {
             return false;
         RuneEnchantmentPartialKey other = (RuneEnchantmentPartialKey) obj;
         return runeType == other.runeType;
+    }
+
+    @Nonnull
+    public static RuneEnchantmentPartialKey fromNetwork(FriendlyByteBuf buf) {
+        ResourceLocation loc = buf.readResourceLocation();
+        RuneType runeType = buf.readEnum(RuneType.class);
+        return new RuneEnchantmentPartialKey(ForgeRegistries.ENCHANTMENTS.getValue(loc), runeType);
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeResourceLocation(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
+        buf.writeEnum(this.runeType);
     }
 }

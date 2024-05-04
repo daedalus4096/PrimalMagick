@@ -2,13 +2,16 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
-public class StackCraftedKey extends AbstractResearchKey {
+public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     public static final Codec<StackCraftedKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack).codec();
     private static final String PREFIX = "[#]";
     
@@ -32,7 +35,7 @@ public class StackCraftedKey extends AbstractResearchKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    protected ResearchKeyType<StackCraftedKey> getType() {
         return ResearchKeyTypesPM.STACK_CRAFTED.get();
     }
 
@@ -51,5 +54,15 @@ public class StackCraftedKey extends AbstractResearchKey {
             return false;
         StackCraftedKey other = (StackCraftedKey) obj;
         return ItemStack.isSameItemSameTags(this.stack, other.stack);
+    }
+
+    @Nonnull
+    public static StackCraftedKey fromNetwork(FriendlyByteBuf buf) {
+        return new StackCraftedKey(buf.readItem());
+    }
+    
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeItemStack(this.stack, false);
     }
 }

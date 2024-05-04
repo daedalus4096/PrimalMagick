@@ -16,9 +16,9 @@ import net.minecraft.world.entity.player.Player;
 public class ResearchRequirement extends AbstractRequirement {
     public static final Codec<ResearchRequirement> CODEC = AbstractResearchKey.CODEC.fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey).codec();
     
-    protected final AbstractResearchKey rootKey;
+    protected final AbstractResearchKey<?> rootKey;
     
-    public ResearchRequirement(AbstractResearchKey rootKey) {
+    public ResearchRequirement(AbstractResearchKey<?> rootKey) {
         this.rootKey = Preconditions.checkNotNull(rootKey);
     }
 

@@ -32,7 +32,7 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement> completionRequirementOpt, List<ResourceLocation> recipes,
-        List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, List<AbstractResearchKey> hints, SourceList attunements) {
+        List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, List<AbstractResearchKey<?>> hints, SourceList attunements) {
     public static final Codec<ResearchStage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
@@ -46,26 +46,25 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
     
     @Nonnull
     public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
-        ResearchEntryKey parentKey = null;  // TODO Deserialize parent key
+        ResearchEntryKey parentKey = ResearchEntryKey.fromNetwork(buf);
         String textKey = buf.readUtf();
         Optional<AbstractRequirement> compReqOpt = null;    // TODO Deserialize optional requirements
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
-        List<ResearchEntryKey> siblings = null; // TODO Deserialize sibling list
-        List<ResearchEntryKey> revelations = null;  // TODO Deserialize revelation list
-        List<AbstractResearchKey> hints = null; // TODO Deserialize hint indicator list
+        List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
+        List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
+        List<AbstractResearchKey<?>> hints = buf.readList(AbstractResearchKey::fromNetwork);
         SourceList attunements = SourceList.fromNetwork(buf);
-        
         return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, hints, attunements);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
-        // TODO Serialize parent key
+        stage.parentKey.toNetwork(buf);
         buf.writeUtf(stage.textTranslationKey);
         // TODO Serialize optional requirements
         buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
-        // TODO Serialize sibling list
-        // TODO Serialize revelation list
-        // TODO Serialize hint indicator list
+        buf.writeCollection(stage.siblings, (b, s) -> s.toNetwork(b));
+        buf.writeCollection(stage.revelations, (b, r) -> r.toNetwork(b));
+        buf.writeCollection(stage.hints, (b, h) -> h.toNetwork(b));
         SourceList.toNetwork(buf, stage.attunements);
     }
     

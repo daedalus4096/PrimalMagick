@@ -48,11 +48,11 @@ import net.minecraftforge.common.util.LazyOptional;
 public class PlayerKnowledge implements IPlayerKnowledge {
     private static final Logger LOGGER = LogManager.getLogger();
     
-    private final Set<AbstractResearchKey> research = ConcurrentHashMap.newKeySet();                // Set of known research
-    private final Map<AbstractResearchKey, Integer> stages = new ConcurrentHashMap<>();             // Map of research keys to current stage numbers
-    private final Map<AbstractResearchKey, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();    // Map of research keys to attached flag sets
-    private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                // Map of knowledge types to accrued points
-    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();              // Grimoire research topic history
+    private final Set<AbstractResearchKey<?>> research = ConcurrentHashMap.newKeySet();                 // Set of known research
+    private final Map<AbstractResearchKey<?>, Integer> stages = new ConcurrentHashMap<>();              // Map of research keys to current stage numbers
+    private final Map<AbstractResearchKey<?>, Set<ResearchFlag>> flags = new ConcurrentHashMap<>();     // Map of research keys to attached flag sets
+    private final Map<KnowledgeType, Integer> knowledge = new ConcurrentHashMap<>();                    // Map of knowledge types to accrued points
+    private final LinkedList<AbstractResearchTopic> topicHistory = new LinkedList<>();                  // Grimoire research topic history
     
     private Project project = null;     // Currently active research project
     private AbstractResearchTopic topic = null; // Last active grimoire research topic
@@ -65,7 +65,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize known research, including stage number and attached flags
         ListTag researchList = new ListTag();
-        for (AbstractResearchKey key : this.research) {
+        for (AbstractResearchKey<?> key : this.research) {
             CompoundTag tag = new CompoundTag();
             AbstractResearchKey.CODEC.encodeStart(NbtOps.INSTANCE, key).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> tag.put("key", encodedTag));
             if (this.stages.containsKey(key)) {
@@ -209,13 +209,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     @Nonnull
-    public Set<AbstractResearchKey> getResearchSet() {
+    public Set<AbstractResearchKey<?>> getResearchSet() {
         return Collections.unmodifiableSet(this.research);
     }
 
     @Override
     @Nonnull
-    public ResearchStatus getResearchStatus(@Nullable AbstractResearchKey research) {
+    public ResearchStatus getResearchStatus(@Nullable AbstractResearchKey<?> research) {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
@@ -230,11 +230,11 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean isResearchComplete(@Nullable AbstractResearchKey research) {
+    public boolean isResearchComplete(@Nullable AbstractResearchKey<?> research) {
         return (this.getResearchStatus(research) == ResearchStatus.COMPLETE);
     }
 
-    protected boolean isResearchKnown(@Nullable AbstractResearchKey research) {
+    protected boolean isResearchKnown(@Nullable AbstractResearchKey<?> research) {
         if (research == null) {
             return false;
         } else {
@@ -243,7 +243,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public int getResearchStage(@Nullable AbstractResearchKey research) {
+    public int getResearchStage(@Nullable AbstractResearchKey<?> research) {
         if (research == null || !this.research.contains(research)) {
             return -1;
         } else {
@@ -252,7 +252,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean addResearch(@Nullable AbstractResearchKey research) {
+    public boolean addResearch(@Nullable AbstractResearchKey<?> research) {
         if (research != null && !this.isResearchKnown(research)) {
             this.research.add(research);
             return true;
@@ -262,7 +262,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean setResearchStage(@Nullable AbstractResearchKey research, int newStage) {
+    public boolean setResearchStage(@Nullable AbstractResearchKey<?> research, int newStage) {
         if (research == null || !this.research.contains(research) || newStage <= 0) {
             return false;
         } else {
@@ -272,7 +272,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
 
     @Override
-    public boolean removeResearch(@Nullable AbstractResearchKey research) {
+    public boolean removeResearch(@Nullable AbstractResearchKey<?> research) {
         if (research != null && this.isResearchKnown(research)) {
             this.research.remove(research);
             return true;
@@ -282,7 +282,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean addResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean addResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         }
@@ -290,7 +290,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean removeResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean removeResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         } else {
@@ -298,7 +298,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         }
     }
     
-    protected boolean removeResearchFlagInner(@Nonnull AbstractResearchKey research, @Nonnull ResearchFlag flag) {
+    protected boolean removeResearchFlagInner(@Nonnull AbstractResearchKey<?> research, @Nonnull ResearchFlag flag) {
         Set<ResearchFlag> researchFlags = this.flags.get(research);
         if (researchFlags != null) {
             boolean retVal = researchFlags.remove(flag);
@@ -312,7 +312,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     }
     
     @Override
-    public boolean hasResearchFlag(@Nullable AbstractResearchKey research, @Nullable ResearchFlag flag) {
+    public boolean hasResearchFlag(@Nullable AbstractResearchKey<?> research, @Nullable ResearchFlag flag) {
         if (research == null || flag == null) {
             return false;
         } else {
@@ -323,7 +323,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
     
     @Override
     @Nonnull
-    public Set<ResearchFlag> getResearchFlags(@Nullable AbstractResearchKey research) {
+    public Set<ResearchFlag> getResearchFlags(@Nullable AbstractResearchKey<?> research) {
         if (research == null) {
             return Collections.emptySet();
         } else {
@@ -401,9 +401,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
             PacketHandler.sendToPlayer(new SyncKnowledgePacket(player), player);
             
             // Remove all popup flags after syncing to prevent spam
-            for (AbstractResearchKey key : this.flags.keySet()) {
-                this.removeResearchFlagInner(key, ResearchFlag.POPUP);
-            }
+            this.flags.keySet().forEach(key -> this.removeResearchFlagInner(key, ResearchFlag.POPUP));
         }
     }
     

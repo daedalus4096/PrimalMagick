@@ -2,13 +2,16 @@ package com.verdantartifice.primalmagick.common.research.keys;
 
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 
-public class ItemScanKey extends AbstractResearchKey {
+public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     public static final Codec<ItemScanKey> CODEC = ItemStack.SINGLE_ITEM_CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack).codec();
     private static final String PREFIX = "!";
     
@@ -32,7 +35,7 @@ public class ItemScanKey extends AbstractResearchKey {
     }
 
     @Override
-    protected ResearchKeyType<?> getType() {
+    protected ResearchKeyType<ItemScanKey> getType() {
         return ResearchKeyTypesPM.ITEM_SCAN.get();
     }
 
@@ -51,5 +54,15 @@ public class ItemScanKey extends AbstractResearchKey {
             return false;
         ItemScanKey other = (ItemScanKey) obj;
         return ItemStack.isSameItem(this.stack, other.stack);
+    }
+    
+    @Nonnull
+    public static ItemScanKey fromNetwork(FriendlyByteBuf buf) {
+        return new ItemScanKey(buf.readItem());
+    }
+
+    @Override
+    public void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeItem(this.stack);
     }
 }
