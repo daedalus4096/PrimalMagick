@@ -46,6 +46,11 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     }
 
     @Override
+    public boolean contains(AbstractResearchKey<?> researchKey) {
+        return this.rootKey.equals(researchKey);
+    }
+
+    @Override
     protected RequirementType<ResearchRequirement> getType() {
         return RequirementsPM.RESEARCH.get();
     }

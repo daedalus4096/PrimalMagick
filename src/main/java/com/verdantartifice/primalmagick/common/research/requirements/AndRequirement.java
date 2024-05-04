@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -54,6 +55,11 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     public Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category) {
         Stream<AbstractRequirement<?>> selfStream = category == this.getCategory() ? Stream.of(this) : Stream.empty();
         return Stream.concat(selfStream, this.subs.stream().flatMap(req -> req.streamByCategory(category)));
+    }
+
+    @Override
+    public boolean contains(AbstractResearchKey<?> researchKey) {
+        return this.subs.stream().anyMatch(req -> req.contains(researchKey));
     }
 
     @Override

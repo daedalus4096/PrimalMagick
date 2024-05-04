@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
@@ -65,6 +66,11 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     public Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category) {
         Stream<AbstractRequirement<?>> selfStream = category == this.getCategory() ? Stream.of(this) : Stream.empty();
         return Stream.concat(selfStream, this.subs.stream().flatMap(req -> req.streamByCategory(category)));
+    }
+
+    @Override
+    public boolean contains(AbstractResearchKey<?> researchKey) {
+        return this.subs.stream().anyMatch(req -> req.contains(researchKey));
     }
 
     @Override

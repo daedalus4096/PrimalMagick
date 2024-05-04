@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +23,16 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     
     public abstract RequirementCategory getCategory();
     public abstract Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category);
+    
+    /**
+     * Returns true if the given research key is part of this requirement.
+     * 
+     * @param researchKey the research key to be tested
+     * @return whether the given research key is part of this requirement
+     */
+    public boolean contains(AbstractResearchKey<?> researchKey) {
+        return false;
+    }
     
     protected abstract RequirementType<T> getType();
     
