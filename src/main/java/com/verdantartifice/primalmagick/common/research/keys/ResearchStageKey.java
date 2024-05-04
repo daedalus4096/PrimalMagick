@@ -93,7 +93,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeUtf(this.rootKey);
         buf.writeVarInt(this.stage);
     }

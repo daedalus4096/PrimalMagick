@@ -67,7 +67,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(EntityType.getKey(this.entityType));
     }
 }

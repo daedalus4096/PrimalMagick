@@ -60,7 +60,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeUtf(this.rootKey);
     }
 }

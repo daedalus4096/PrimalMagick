@@ -35,5 +35,5 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
         this.toNetworkInner(buf);
     }
     
-    public abstract void toNetworkInner(FriendlyByteBuf buf);
+    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

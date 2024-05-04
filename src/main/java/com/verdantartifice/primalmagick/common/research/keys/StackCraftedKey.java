@@ -62,7 +62,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeItemStack(this.stack, false);
     }
 }

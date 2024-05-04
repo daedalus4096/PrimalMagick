@@ -62,7 +62,7 @@ public class ItemStackRequirement extends AbstractRequirement<ItemStackRequireme
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeItemStack(this.stack, false);
     }
 }

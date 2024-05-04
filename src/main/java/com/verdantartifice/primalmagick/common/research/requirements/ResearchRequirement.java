@@ -56,7 +56,7 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         this.rootKey.toNetwork(buf);
     }
 }

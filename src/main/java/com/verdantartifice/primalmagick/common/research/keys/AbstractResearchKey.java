@@ -54,5 +54,5 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         this.toNetworkInner(buf);
     }
     
-    public abstract void toNetworkInner(FriendlyByteBuf buf);
+    protected abstract void toNetworkInner(FriendlyByteBuf buf);
 }

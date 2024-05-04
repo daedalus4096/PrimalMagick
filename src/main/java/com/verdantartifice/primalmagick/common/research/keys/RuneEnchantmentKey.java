@@ -67,7 +67,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
     }
 }

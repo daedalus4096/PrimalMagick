@@ -78,7 +78,7 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeVarInt(this.requiredCount);
         buf.writeCollection(this.subs, (b, s) -> s.toNetwork(b));
     }

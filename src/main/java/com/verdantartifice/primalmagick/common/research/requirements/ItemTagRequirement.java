@@ -73,7 +73,7 @@ public class ItemTagRequirement extends AbstractRequirement<ItemTagRequirement> 
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.tag.location());
         buf.writeVarInt(this.amount);
     }

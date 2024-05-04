@@ -62,7 +62,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     }
 
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeItem(this.stack);
     }
 }

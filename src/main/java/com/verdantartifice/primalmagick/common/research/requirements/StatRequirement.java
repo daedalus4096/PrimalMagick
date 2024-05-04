@@ -72,7 +72,7 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
     }
     
     @Override
-    public void toNetworkInner(FriendlyByteBuf buf) {
+    protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.stat.getLocation());
         buf.writeVarInt(this.requiredValue);
     }
