@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.research.keys;
 import java.util.Objects;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +24,11 @@ public class StackCraftedKey extends AbstractResearchKey {
     @Override
     public String toString() {
         return PREFIX + ItemUtils.getHashCode(this.stack);
+    }
+
+    @Override
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.MUST_CRAFT;
     }
 
     @Override

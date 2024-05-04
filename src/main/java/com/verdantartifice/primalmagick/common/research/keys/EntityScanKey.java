@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -27,6 +28,11 @@ public class EntityScanKey extends AbstractResearchKey {
     @Override
     public String toString() {
         return PREFIX + ForgeRegistries.ENTITY_TYPES.getKey(this.entityType).toString();
+    }
+
+    @Override
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.RESEARCH;
     }
 
     @Override

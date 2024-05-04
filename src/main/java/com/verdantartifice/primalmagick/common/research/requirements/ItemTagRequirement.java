@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.stream.Stream;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -44,6 +46,16 @@ public class ItemTagRequirement extends AbstractRequirement {
         if (player != null && this.isMetBy(player)) {
             InventoryUtils.consumeItem(player, this.tag, this.amount);
         }
+    }
+
+    @Override
+    public RequirementCategory getCategory() {
+        return RequirementCategory.MUST_OBTAIN;
+    }
+
+    @Override
+    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+        return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override

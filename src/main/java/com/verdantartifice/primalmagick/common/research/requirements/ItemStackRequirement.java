@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.stream.Stream;
+
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
@@ -34,6 +36,16 @@ public class ItemStackRequirement extends AbstractRequirement {
         if (player != null && this.isMetBy(player)) {
             InventoryUtils.consumeItem(player, this.stack);
         }
+    }
+
+    @Override
+    public RequirementCategory getCategory() {
+        return RequirementCategory.MUST_OBTAIN;
+    }
+
+    @Override
+    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+        return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override

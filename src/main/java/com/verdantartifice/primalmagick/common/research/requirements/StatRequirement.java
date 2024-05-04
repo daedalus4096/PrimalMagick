@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.stream.Stream;
+
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -44,6 +46,16 @@ public class StatRequirement extends AbstractRequirement {
     @Override
     public void consumeComponents(Player player) {
         // No action needed; statistics are never consumed
+    }
+
+    @Override
+    public RequirementCategory getCategory() {
+        return RequirementCategory.STAT;
+    }
+
+    @Override
+    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+        return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.research.keys;
 import java.util.Objects;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 public class ResearchEntryKey extends AbstractResearchKey {
     public static final Codec<ResearchEntryKey> CODEC = Codec.STRING.fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
@@ -20,6 +21,11 @@ public class ResearchEntryKey extends AbstractResearchKey {
     @Override
     public String toString() {
         return this.rootKey;
+    }
+
+    @Override
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.RESEARCH;
     }
 
     @Override

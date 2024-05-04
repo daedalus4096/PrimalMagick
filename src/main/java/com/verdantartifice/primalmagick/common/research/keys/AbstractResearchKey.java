@@ -6,6 +6,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.world.entity.player.Player;
 
@@ -19,6 +20,13 @@ public abstract class AbstractResearchKey {
     
     @Override
     public abstract String toString();
+    
+    /**
+     * Returns the category of requirement to be used when this key is part of a {@link com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement}.
+     * 
+     * @return this key's corresponding requirement category
+     */
+    public abstract RequirementCategory getRequirementCategory();
 
     protected abstract ResearchKeyType<?> getType();
     

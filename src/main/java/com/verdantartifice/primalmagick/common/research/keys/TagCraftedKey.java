@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -22,6 +23,11 @@ public class TagCraftedKey extends AbstractResearchKey {
     @Override
     public String toString() {
         return PREFIX + this.tagKey.hashCode();
+    }
+
+    @Override
+    public RequirementCategory getRequirementCategory() {
+        return RequirementCategory.MUST_CRAFT;
     }
 
     @Override

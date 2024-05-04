@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.stream.Stream;
+
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.google.common.base.Preconditions;
@@ -54,6 +56,16 @@ public class KnowledgeRequirement extends AbstractRequirement {
         if (player != null && this.isMetBy(player)) {
             ResearchManager.addKnowledge(player, this.knowledgeType, -(this.amount * this.knowledgeType.getProgression()));
         }
+    }
+
+    @Override
+    public RequirementCategory getCategory() {
+        return RequirementCategory.KNOWLEDGE;
+    }
+
+    @Override
+    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+        return category == this.getCategory() ? Stream.of(this) : Stream.empty();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.research.requirements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -50,6 +51,17 @@ public class QuorumRequirement extends AbstractRequirement {
     public void consumeComponents(Player player) {
         // Consume requirements from all sub-requirements that were met
         this.subs.stream().filter(req -> req.isMetBy(player)).forEach(req -> req.consumeComponents(player));
+    }
+
+    @Override
+    public RequirementCategory getCategory() {
+        return RequirementCategory.COMPOUND;
+    }
+
+    @Override
+    public Stream<AbstractRequirement> streamByCategory(RequirementCategory category) {
+        Stream<AbstractRequirement> selfStream = category == this.getCategory() ? Stream.of(this) : Stream.empty();
+        return Stream.concat(selfStream, this.subs.stream().flatMap(req -> req.streamByCategory(category)));
     }
 
     @Override

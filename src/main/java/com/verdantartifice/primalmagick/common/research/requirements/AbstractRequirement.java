@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.requirements;
 
+import java.util.stream.Stream;
+
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
@@ -15,6 +17,9 @@ public abstract class AbstractRequirement {
     
     public abstract boolean isMetBy(@Nullable Player player);
     public abstract void consumeComponents(@Nullable Player player);
+    
+    public abstract RequirementCategory getCategory();
+    public abstract Stream<AbstractRequirement> streamByCategory(RequirementCategory category);
     
     protected abstract RequirementType<?> getType();
 }
