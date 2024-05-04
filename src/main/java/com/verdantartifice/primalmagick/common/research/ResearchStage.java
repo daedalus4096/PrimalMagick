@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -13,25 +10,17 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
-import com.verdantartifice.primalmagick.common.util.JsonUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 
 /**
  * Definition of a research stage, a portion of a research entry.  A research stage contains text to be
@@ -56,93 +45,27 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         ).apply(instance, ResearchStage::new));
     
     @Nonnull
-    public static ResearchStage fromNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
-        ResearchStage stage = create(entry, buf.readUtf());
-        int recipeSize = buf.readVarInt();
-        for (int index = 0; index < recipeSize; index++) {
-            stage.recipes.add(new ResourceLocation(buf.readUtf()));
-        }
-        int obtainSize = buf.readVarInt();
-        for (int index = 0; index < obtainSize; index++) {
-            stage.mustObtain.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
-        }
-        int craftSize = buf.readVarInt();
-        for (int index = 0; index < craftSize; index++) {
-            stage.mustCraft.add(buf.readBoolean() ? buf.readItem() : new ResourceLocation(buf.readUtf()));
-        }
-        int refSize = buf.readVarInt();
-        for (int index = 0; index < refSize; index++) {
-            int ref = buf.readVarInt();
-            stage.craftReference.add(ref);
-        }
-        int knowSize = buf.readVarInt();
-        for (int index = 0; index < knowSize; index++) {
-            stage.requiredKnowledge.add(Knowledge.parse(buf.readUtf()));
-        }
-        int siblingSize = buf.readVarInt();
-        for (int index = 0; index < siblingSize; index++) {
-            stage.siblings.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        int revelationsSize = buf.readVarInt();
-        for (int index = 0; index < revelationsSize; index++) {
-            stage.revelations.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        int hintsSize = buf.readVarInt();
-        for (int index = 0; index < hintsSize; index++) {
-            stage.hints.add(SimpleResearchKey.parse(buf.readUtf()));
-        }
-        stage.requiredResearch = CompoundResearchKey.parse(buf.readUtf());
-        stage.attunements = SourceList.fromNetwork(buf);
-        return stage;
+    public static ResearchStage fromNetwork(FriendlyByteBuf buf) {
+        ResearchEntryKey parentKey = null;  // TODO Deserialize parent key
+        String textKey = buf.readUtf();
+        Optional<AbstractRequirement> compReqOpt = null;    // TODO Deserialize optional requirements
+        List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
+        List<ResearchEntryKey> siblings = null; // TODO Deserialize sibling list
+        List<ResearchEntryKey> revelations = null;  // TODO Deserialize revelation list
+        List<AbstractResearchKey> hints = null; // TODO Deserialize hint indicator list
+        SourceList attunements = SourceList.fromNetwork(buf);
+        
+        return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, hints, attunements);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
+        // TODO Serialize parent key
         buf.writeUtf(stage.textTranslationKey);
-        buf.writeVarInt(stage.recipes.size());
-        for (ResourceLocation recipe : stage.recipes) {
-            buf.writeUtf(recipe.toString());
-        }
-        buf.writeVarInt(stage.mustObtain.size());
-        for (Object obj : stage.mustObtain) {
-            if (obj instanceof ItemStack) {
-                buf.writeBoolean(true);
-                buf.writeItem((ItemStack)obj);
-            } else {
-                buf.writeBoolean(false);
-                buf.writeUtf(obj.toString());
-            }
-        }
-        buf.writeVarInt(stage.mustCraft.size());
-        for (Object obj : stage.mustCraft) {
-            if (obj instanceof ItemStack) {
-                buf.writeBoolean(true);
-                buf.writeItem((ItemStack)obj);
-            } else {
-                buf.writeBoolean(false);
-                buf.writeUtf(obj.toString());
-            }
-        }
-        buf.writeVarInt(stage.craftReference.size());
-        for (Integer ref : stage.craftReference) {
-            buf.writeVarInt(ref);
-        }
-        buf.writeVarInt(stage.requiredKnowledge.size());
-        for (Knowledge know : stage.requiredKnowledge) {
-            buf.writeUtf(know.toString());
-        }
-        buf.writeVarInt(stage.siblings.size());
-        for (SimpleResearchKey key : stage.siblings) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeVarInt(stage.revelations.size());
-        for (SimpleResearchKey key : stage.revelations) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeVarInt(stage.hints.size());
-        for (SimpleResearchKey key : stage.hints) {
-            buf.writeUtf(key.toString());
-        }
-        buf.writeUtf(stage.requiredResearch == null ? "" : stage.requiredResearch.toString());
+        // TODO Serialize optional requirements
+        buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
+        // TODO Serialize sibling list
+        // TODO Serialize revelation list
+        // TODO Serialize hint indicator list
         SourceList.toNetwork(buf, stage.attunements);
     }
     
