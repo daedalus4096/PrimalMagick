@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -113,6 +114,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
     
     public static class Builder {
         protected final String modId;
+        protected final ResearchEntry.Builder entryBuilder;
         protected final ResearchEntryKey parentKey;
         protected final int stageIndex;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
@@ -122,14 +124,15 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final List<AbstractResearchKey<?>> hints = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         
-        public Builder(String modId, ResearchEntryKey parentKey, int stageIndex) {
-            this.modId = modId;
-            this.parentKey = parentKey;
+        public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
+            this.modId = Preconditions.checkNotNull(modId);
+            this.entryBuilder = Preconditions.checkNotNull(entryBuilder);
+            this.parentKey = Preconditions.checkNotNull(parentKey);
             this.stageIndex = stageIndex;
         }
         
-        public Builder(ResearchEntryKey parentKey, int stageIndex) {
-            this(PrimalMagick.MODID, parentKey, stageIndex);
+        public Builder(ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
+            this(PrimalMagick.MODID, entryBuilder, parentKey, stageIndex);
         }
         
         public Builder requirement(AbstractRequirement<?> req) {
@@ -194,18 +197,20 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
         
         private void validate() {
-            if (this.modId == null || this.modId.isBlank()) {
+            if (this.modId.isBlank()) {
                 throw new IllegalStateException("Mod ID may not be empty");
-            } else if (this.parentKey == null) {
-                throw new IllegalStateException("Parent entry key may not be null");
             } else if (this.stageIndex < 0) {
                 throw new IllegalStateException("Stage index must be non-negative");
             }
         }
         
-        public ResearchStage build() {
+        ResearchStage build() {
             this.validate();
             return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.revelations, this.hints, this.attunements.build());
+        }
+        
+        public ResearchEntry.Builder end() {
+            return this.entryBuilder;
         }
     }
 }

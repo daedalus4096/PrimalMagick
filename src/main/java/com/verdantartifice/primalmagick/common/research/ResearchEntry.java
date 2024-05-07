@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -82,6 +83,10 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         buf.writeCollection(entry.addenda, ResearchAddendum::toNetwork);
     }
     
+    public static Builder builder(ResearchEntryKey key) {
+        return new Builder(key);
+    }
+    
     /**
      * Get whether this research entry is a finale for the given discipline key.
      * 
@@ -90,14 +95,6 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
      */
     public boolean isFinaleFor(String discipline) {
         return this.finales.contains(discipline);
-    }
-    
-    public boolean appendStage(@Nullable ResearchStage stage) {
-        return (stage == null) ? false : this.stages.add(stage);
-    }
-    
-    public boolean appendAddendum(@Nullable ResearchAddendum addendum) {
-        return (addendum == null) ? false : this.addenda.add(addendum);
     }
     
     @Nonnull
@@ -210,6 +207,111 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         public static void toNetwork(FriendlyByteBuf buf, @Nullable ResearchEntry.Icon icon) {
             buf.writeBoolean(icon.isItem);
             buf.writeResourceLocation(icon.location);
+        }
+    }
+    
+    public static class Builder {
+        protected final String modId;
+        protected final ResearchEntryKey key;
+        protected String disciplineKey = null;
+        protected String nameTranslationKey = null;
+        protected Optional<Icon> iconOpt = Optional.empty();
+        protected final List<ResearchEntryKey> parents = new ArrayList<>();
+        protected boolean hidden = false;
+        protected boolean finaleExempt = false;
+        protected final List<String> finales = new ArrayList<>();
+        protected final List<ResearchStage.Builder> stageBuilders = new ArrayList<>();
+        protected final List<ResearchAddendum.Builder> addendumBuilders = new ArrayList<>();
+        
+        public Builder(String modId, ResearchEntryKey key) {
+            this.modId = Preconditions.checkNotNull(modId);
+            this.key = Preconditions.checkNotNull(key);
+        }
+        
+        public Builder(String modId, String keyStr) {
+            this(modId, new ResearchEntryKey(keyStr));
+        }
+        
+        public Builder(ResearchEntryKey key) {
+            this(PrimalMagick.MODID, key);
+        }
+        
+        public Builder(String keyStr) {
+            this(new ResearchEntryKey(keyStr));
+        }
+        
+        public Builder discipline(String discKey) {
+            this.disciplineKey = discKey;
+            return this;
+        }
+        
+        public Builder name(String nameKey) {
+            this.nameTranslationKey = nameKey;
+            return this;
+        }
+        
+        public Builder icon(ItemLike item) {
+            this.iconOpt = Optional.of(Icon.of(item));
+            return this;
+        }
+        
+        public Builder icon(ResourceLocation loc) {
+            this.iconOpt = Optional.of(Icon.of(loc));
+            return this;
+        }
+        
+        public Builder parent(ResearchEntryKey key) {
+            this.parents.add(key);
+            return this;
+        }
+        
+        public Builder parent(String keyStr) {
+            return this.parent(new ResearchEntryKey(keyStr));
+        }
+        
+        public Builder hidden() {
+            this.hidden = true;
+            return this;
+        }
+        
+        public Builder finaleExempt() {
+            this.finaleExempt = true;
+            return this;
+        }
+        
+        public Builder finale(String discKey) {
+            this.finales.add(discKey);
+            return this;
+        }
+        
+        public ResearchStage.Builder stage() {
+            ResearchStage.Builder retVal = new ResearchStage.Builder(this.modId, this, this.key, this.stageBuilders.size());
+            this.stageBuilders.add(retVal);
+            return retVal;
+        }
+        
+        public ResearchAddendum.Builder addendum() {
+            ResearchAddendum.Builder retVal = new ResearchAddendum.Builder(this.modId, this, this.key, this.addendumBuilders.size());
+            this.addendumBuilders.add(retVal);
+            return retVal;
+        }
+        
+        private void validate() {
+            if (this.modId.isBlank()) {
+                throw new IllegalStateException("No mod ID specified for entry");
+            } else if (this.disciplineKey.isBlank()) {
+                throw new IllegalStateException("No discipline specified for entry");
+            } else if (this.nameTranslationKey.isBlank()) {
+                throw new IllegalStateException("No name translation key specified for entry");
+            } else if (this.stageBuilders.isEmpty()) {
+                throw new IllegalStateException("Entry must have at least one stage");
+            }
+        }
+        
+        public ResearchEntry build() {
+            this.validate();
+            return new ResearchEntry(this.key, this.disciplineKey, this.nameTranslationKey, this.iconOpt, this.parents, this.hidden, this.finaleExempt, this.finales,
+                    this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }
 }

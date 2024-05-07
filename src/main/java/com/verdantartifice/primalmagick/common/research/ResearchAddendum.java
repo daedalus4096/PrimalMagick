@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -60,6 +61,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
     
     public static class Builder {
         protected final String modId;
+        protected final ResearchEntry.Builder entryBuilder;
         protected final ResearchEntryKey parentKey;
         protected final int addendumIndex;
         protected final List<ResourceLocation> recipes = new ArrayList<>();
@@ -67,14 +69,15 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         
-        public Builder(String modId, ResearchEntryKey parentKey, int addendumIndex) {
-            this.modId = modId;
-            this.parentKey = parentKey;
+        public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int addendumIndex) {
+            this.modId = Preconditions.checkNotNull(modId);
+            this.entryBuilder = Preconditions.checkNotNull(entryBuilder);
+            this.parentKey = Preconditions.checkNotNull(parentKey);
             this.addendumIndex = addendumIndex;
         }
         
-        public Builder(ResearchEntryKey parentKey, int addendumIndex) {
-            this(PrimalMagick.MODID, parentKey, addendumIndex);
+        public Builder(ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int addendumIndex) {
+            this(PrimalMagick.MODID, entryBuilder, parentKey, addendumIndex);
         }
         
         public Builder recipe(String name) {
@@ -129,18 +132,20 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         private void validate() {
-            if (this.modId == null || this.modId.isBlank()) {
+            if (this.modId.isBlank()) {
                 throw new IllegalStateException("Mod ID may not be empty");
-            } else if (this.parentKey == null) {
-                throw new IllegalStateException("Parent entry key may not be null");
             } else if (this.addendumIndex < 0) {
                 throw new IllegalStateException("Addendum index must be non-negative");
             }
         }
         
-        public ResearchAddendum build() {
+        ResearchAddendum build() {
             this.validate();
             return new ResearchAddendum(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.attunements.build());
+        }
+        
+        public ResearchEntry.Builder end() {
+            return this.entryBuilder;
         }
     }
 }
