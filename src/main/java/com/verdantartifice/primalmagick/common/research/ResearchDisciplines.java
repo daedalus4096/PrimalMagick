@@ -11,9 +11,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -22,17 +25,34 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchDisciplines {
+    public static final ResourceKey<ResearchDiscipline> BASICS = create("basics");
+    public static final ResourceKey<ResearchDiscipline> MANAWEAVING = create("manaweaving");
+    public static final ResourceKey<ResearchDiscipline> ALCHEMY = create("alchemy");
+    public static final ResourceKey<ResearchDiscipline> SORCERY = create("sorcery");
+    public static final ResourceKey<ResearchDiscipline> RUNEWORKING = create("runeworking");
+    public static final ResourceKey<ResearchDiscipline> RITUAL = create("ritual");
+    public static final ResourceKey<ResearchDiscipline> MAGITECH = create("magitech");
+    public static final ResourceKey<ResearchDiscipline> SCANS = create("scans");
+    
+    public static ResourceKey<ResearchDiscipline> create(String name) {
+        return ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, PrimalMagick.resource(name));
+    }
+    
+    public static void bootstrap(BootstapContext<ResearchDiscipline> context) {
+        context.register(BASICS, ResearchDiscipline.builder(BASICS).icon(PrimalMagick.resource("textures/item/grimoire.png")).indexSortOrder(100).build());
+    }
+    
     protected static final Map<String, ResearchDiscipline> DISCIPLINES = new HashMap<>();
     protected static final List<ResearchDiscipline> DISCIPLINES_SORTED = new ArrayList<>();
     
-    public static final ResearchDiscipline BASICS = registerDiscipline("BASICS", null, PrimalMagick.resource("textures/item/grimoire.png"), null);
-    public static final ResearchDiscipline MANAWEAVING = registerDiscipline("MANAWEAVING", ResearchNames.UNLOCK_MANAWEAVING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_manaweaving.png"), StatsPM.CRAFTED_MANAWEAVING);
-    public static final ResearchDiscipline ALCHEMY = registerDiscipline("ALCHEMY", ResearchNames.UNLOCK_ALCHEMY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_alchemy.png"), StatsPM.CRAFTED_ALCHEMY);
-    public static final ResearchDiscipline SORCERY = registerDiscipline("SORCERY", ResearchNames.UNLOCK_SORCERY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_sorcery.png"), StatsPM.CRAFTED_SORCERY);
-    public static final ResearchDiscipline RUNEWORKING = registerDiscipline("RUNEWORKING", ResearchNames.UNLOCK_RUNEWORKING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_runeworking.png"), StatsPM.CRAFTED_RUNEWORKING);
-    public static final ResearchDiscipline RITUAL = registerDiscipline("RITUAL", ResearchNames.UNLOCK_RITUAL.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
-    public static final ResearchDiscipline MAGITECH = registerDiscipline("MAGITECH", ResearchNames.UNLOCK_MAGITECH.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
-    public static final ResearchDiscipline SCANS = registerDiscipline("SCANS", ResearchNames.UNLOCK_SCANS.get().compoundKey(), PrimalMagick.resource("textures/item/magnifying_glass.png"), null);
+//    public static final ResearchDiscipline BASICS = registerDiscipline("BASICS", null, PrimalMagick.resource("textures/item/grimoire.png"), null);
+//    public static final ResearchDiscipline MANAWEAVING = registerDiscipline("MANAWEAVING", ResearchNames.UNLOCK_MANAWEAVING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_manaweaving.png"), StatsPM.CRAFTED_MANAWEAVING);
+//    public static final ResearchDiscipline ALCHEMY = registerDiscipline("ALCHEMY", ResearchNames.UNLOCK_ALCHEMY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_alchemy.png"), StatsPM.CRAFTED_ALCHEMY);
+//    public static final ResearchDiscipline SORCERY = registerDiscipline("SORCERY", ResearchNames.UNLOCK_SORCERY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_sorcery.png"), StatsPM.CRAFTED_SORCERY);
+//    public static final ResearchDiscipline RUNEWORKING = registerDiscipline("RUNEWORKING", ResearchNames.UNLOCK_RUNEWORKING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_runeworking.png"), StatsPM.CRAFTED_RUNEWORKING);
+//    public static final ResearchDiscipline RITUAL = registerDiscipline("RITUAL", ResearchNames.UNLOCK_RITUAL.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
+//    public static final ResearchDiscipline MAGITECH = registerDiscipline("MAGITECH", ResearchNames.UNLOCK_MAGITECH.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
+//    public static final ResearchDiscipline SCANS = registerDiscipline("SCANS", ResearchNames.UNLOCK_SCANS.get().compoundKey(), PrimalMagick.resource("textures/item/magnifying_glass.png"), null);
     
     @Nullable
     public static ResearchDiscipline getDiscipline(String key) {

@@ -21,6 +21,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -41,17 +42,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String nameTranslationKey, Optional<Icon> iconOpt, List<ResearchEntryKey> parents,
-        boolean hidden, boolean finaleExempt, List<String> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey disciplineKey, String nameTranslationKey, Optional<Icon> iconOpt, List<ResearchEntryKey> parents,
+        boolean hidden, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static final Codec<ResearchEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
-            Codec.STRING.fieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKey),
+            ResearchDisciplineKey.CODEC.fieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKey),
             Codec.STRING.fieldOf("nameTranslationKey").forGetter(ResearchEntry::nameTranslationKey),
             Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
             ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
             Codec.BOOL.fieldOf("hidden").forGetter(ResearchEntry::hidden),
             Codec.BOOL.fieldOf("finaleExempt").forGetter(ResearchEntry::finaleExempt),
-            Codec.STRING.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
+            ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
             ResearchStage.CODEC.listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
             ResearchAddendum.CODEC.listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
         ).apply(instance, ResearchEntry::new));
@@ -59,13 +60,13 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
     @Nonnull
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
-        String disciplineKey = buf.readUtf();
+        ResearchDisciplineKey disciplineKey = ResearchDisciplineKey.fromNetwork(buf);
         String nameTranslationKey = buf.readUtf();
         Optional<Icon> iconOpt = buf.readOptional(Icon::fromNetwork);
         List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
         boolean hidden = buf.readBoolean();
         boolean finaleExempt = buf.readBoolean();
-        List<String> finales = buf.readList(b -> b.readUtf());
+        List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
         List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
         List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
         return new ResearchEntry(key, disciplineKey, nameTranslationKey, iconOpt, parents, hidden, finaleExempt, finales, stages, addenda);
@@ -73,13 +74,13 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
         entry.key.toNetwork(buf);
-        buf.writeUtf(entry.disciplineKey);
+        entry.disciplineKey.toNetwork(buf);
         buf.writeUtf(entry.nameTranslationKey);
         buf.writeOptional(entry.iconOpt, Icon::toNetwork);
         buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
         buf.writeBoolean(entry.finaleExempt);
-        buf.writeCollection(entry.finales, (b, f) -> b.writeUtf(f));
+        buf.writeCollection(entry.finales, (b, f) -> f.toNetwork(b));
         buf.writeCollection(entry.stages, ResearchStage::toNetwork);
         buf.writeCollection(entry.addenda, ResearchAddendum::toNetwork);
     }
@@ -94,8 +95,12 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
      * @param discipline the discipline to be tested
      * @return whether this research is a finale for the given discipline key
      */
-    public boolean isFinaleFor(String discipline) {
+    public boolean isFinaleFor(ResearchDisciplineKey discipline) {
         return this.finales.contains(discipline);
+    }
+    
+    public boolean isFinaleFor(ResourceKey<ResearchDiscipline> discipline) {
+        return this.isFinaleFor(new ResearchDisciplineKey(discipline));
     }
     
     @Nonnull
@@ -214,13 +219,13 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
     public static class Builder {
         protected final String modId;
         protected final ResearchEntryKey key;
-        protected String disciplineKey = null;
+        protected ResearchDisciplineKey disciplineKey = null;
         protected final String nameTranslationKey;
         protected Optional<Icon> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
         protected boolean finaleExempt = false;
-        protected final List<String> finales = new ArrayList<>();
+        protected final List<ResearchDisciplineKey> finales = new ArrayList<>();
         protected final List<ResearchStage.Builder> stageBuilders = new ArrayList<>();
         protected final List<ResearchAddendum.Builder> addendumBuilders = new ArrayList<>();
         
@@ -242,8 +247,8 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
             this(new ResearchEntryKey(rawKey));
         }
         
-        public Builder discipline(String discKey) {
-            this.disciplineKey = discKey;
+        public Builder discipline(ResourceKey<ResearchDiscipline> discKey) {
+            this.disciplineKey = new ResearchDisciplineKey(discKey);
             return this;
         }
         
@@ -276,8 +281,8 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
             return this;
         }
         
-        public Builder finale(String discKey) {
-            this.finales.add(discKey);
+        public Builder finale(ResourceKey<ResearchDiscipline> discKey) {
+            this.finales.add(new ResearchDisciplineKey(discKey));
             return this;
         }
         
@@ -296,7 +301,7 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         private void validate() {
             if (this.modId.isBlank()) {
                 throw new IllegalStateException("No mod ID specified for entry");
-            } else if (this.disciplineKey.isBlank()) {
+            } else if (this.disciplineKey == null) {
                 throw new IllegalStateException("No discipline specified for entry");
             } else if (this.stageBuilders.isEmpty()) {
                 throw new IllegalStateException("Entry must have at least one stage");

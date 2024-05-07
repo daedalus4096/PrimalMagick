@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
+import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
@@ -24,6 +25,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<ResearchName>> RESEARCH_NAMES = key("research_names");
     public static final ResourceKey<Registry<RequirementType<?>>> REQUIREMENT_TYPES = key("requirement_types");
     public static final ResourceKey<Registry<ResearchKeyType<?>>> RESEARCH_KEY_TYPES = key("research_key_types");
+    public static final ResourceKey<Registry<ResearchDiscipline>> RESEARCH_DISCIPLINES = key("research_disciplines");
     public static final ResourceKey<Registry<ResearchEntry>> RESEARCH_ENTRIES = key("research_entries");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {

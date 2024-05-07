@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.AndRequirem
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -25,10 +26,12 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirement, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
+public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
+    // TODO Add codec
+    
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_discipline", PrimalMagick.MODID, this.key.getRootKey());
+        return String.join(".", "research_discipline", PrimalMagick.MODID, this.key.getRootKey().location().getPath());
     }
     
     /**
@@ -41,6 +44,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
     }
     
+    public static Builder builder(ResourceKey<ResearchDiscipline> key) {
+        return new Builder(new ResearchDisciplineKey(key));
+    }
+
     public static class Builder {
         protected final ResearchDisciplineKey key;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
