@@ -1,60 +1,41 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.items.ItemsPM;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
+import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStack;
 
 /**
- * Convenience class for accessing research entries without having to manually navigate the
- * discipline hierarchy.
+ * Datapack registry for the mod's research entries, the backbone of its progression system.
  * 
  * @author Daedalus4096
  */
 public class ResearchEntries {
-    @Nullable
-    public static ResearchEntry getEntry(AbstractResearchKey<?> key) {
-        if (key instanceof ResearchEntryKey entryKey) {
-            for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
-                ResearchEntry entry = discipline.getEntry(entryKey);
-                if (entry != null) {
-                    return entry;
-                }
-            }
-        }
-        return null;
+    public static final ResourceKey<ResearchEntry> FIRST_STEPS = create("first_steps");
+    
+    public static ResourceKey<ResearchEntry> create(String name) {
+        return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
     }
     
-    @Nonnull
-    public static List<ResearchEntry> getEntries(@Nullable CompoundResearchKey key) {
-        List<ResearchEntry> retVal = Collections.synchronizedList(new ArrayList<>());
-        if (key != null) {
-            for (SimpleResearchKey simpleKey : key.getKeys()) {
-                ResearchEntry entry = getEntry(simpleKey);
-                if (entry != null) {
-                    retVal.add(entry);
-                }
-            }
-        }
-        return retVal;
+    public static void bootstrap(BootstapContext<ResearchEntry> context) {
+        bootstrapBasicsEntries(context);
     }
     
-    @Nonnull
-    public static Collection<ResearchEntry> getAllEntries() {
-        Set<ResearchEntry> entries = Collections.synchronizedSet(new HashSet<>());
-        for (ResearchDiscipline discipline : ResearchDisciplines.getAllDisciplines()) {
-            for (ResearchEntry entry : discipline.getEntries()) {
-                entries.add(entry);
-            }
-        }
-        return entries;
+    private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
+        String discipline = "BASICS";
+        context.register(FIRST_STEPS, ResearchEntry.builder(FIRST_STEPS).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
+                .stage().requirement(new ResearchRequirement(new StackCraftedKey(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get())))).recipe(ItemsPM.MUNDANE_WAND.get()).end()
+                .stage().requirement(new StatRequirement(StatsPM.MANA_SIPHONED, 10)).recipe(ItemsPM.MUNDANE_WAND.get()).end()
+                .stage().requirement(new StatRequirement(StatsPM.OBSERVATIONS_MADE, 1)).recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get())
+                        .recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
+                .stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
+                .build());
     }
 }

@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.worldgen.biome_modifiers.BiomeModifiersPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.ConfiguredFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.features.PlacedFeaturesPM;
@@ -43,6 +44,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
+            .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
             .add(RegistryKeysPM.BOOKS, BooksPM::bootstrap)
             .add(RegistryKeysPM.BOOK_LANGUAGES, BookLanguagesPM::bootstrap)
             .add(RegistryKeysPM.CULTURES, CulturesPM::bootstrap);

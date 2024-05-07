@@ -5,26 +5,29 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 
 public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
-    public static final Codec<ResearchEntryKey> CODEC = Codec.STRING.fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
+    public static final Codec<ResearchEntryKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
     
-    protected final String rootKey; // TODO Replace with a ResourceKey once the research system refactor is complete
+    protected final ResourceKey<ResearchEntry> rootKey;
     
-    public ResearchEntryKey(String rootKey) {
+    public ResearchEntryKey(ResourceKey<ResearchEntry> rootKey) {
         this.rootKey = rootKey;
     }
     
-    public String getRootKey() {
+    public ResourceKey<ResearchEntry> getRootKey() {
         return this.rootKey;
     }
 
     @Override
     public String toString() {
-        return this.rootKey;
+        return this.rootKey.toString();
     }
 
     @Override
@@ -56,11 +59,11 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     
     @Nonnull
     public static ResearchEntryKey fromNetwork(FriendlyByteBuf buf) {
-        return new ResearchEntryKey(buf.readUtf());
+        return new ResearchEntryKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES));
     }
     
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeUtf(this.rootKey);
+        buf.writeResourceKey(this.rootKey);
     }
 }

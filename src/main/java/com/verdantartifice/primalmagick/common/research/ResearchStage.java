@@ -183,7 +183,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         }
 
         private String getTextTranslationKey() {
-            return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().toLowerCase(), "text", "stage", Integer.toString(this.stageIndex));
+            return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().location().getPath().toLowerCase(), "text", "stage", Integer.toString(this.stageIndex));
         }
         
         protected Optional<AbstractRequirement<?>> getFinalRequirement() {

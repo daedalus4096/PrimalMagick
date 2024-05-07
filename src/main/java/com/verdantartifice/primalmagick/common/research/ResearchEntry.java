@@ -24,6 +24,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -83,7 +84,7 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         buf.writeCollection(entry.addenda, ResearchAddendum::toNetwork);
     }
     
-    public static Builder builder(ResearchEntryKey key) {
+    public static Builder builder(ResourceKey<ResearchEntry> key) {
         return new Builder(key);
     }
     
@@ -214,7 +215,7 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         protected final String modId;
         protected final ResearchEntryKey key;
         protected String disciplineKey = null;
-        protected String nameTranslationKey = null;
+        protected final String nameTranslationKey;
         protected Optional<Icon> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
@@ -226,27 +227,23 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
         public Builder(String modId, ResearchEntryKey key) {
             this.modId = Preconditions.checkNotNull(modId);
             this.key = Preconditions.checkNotNull(key);
+            this.nameTranslationKey = String.join(".", "research", modId.toLowerCase(), this.key.getRootKey().location().getPath().toLowerCase(), "title");
         }
         
-        public Builder(String modId, String keyStr) {
-            this(modId, new ResearchEntryKey(keyStr));
+        public Builder(String modId, ResourceKey<ResearchEntry> rawKey) {
+            this(modId, new ResearchEntryKey(rawKey));
         }
         
         public Builder(ResearchEntryKey key) {
             this(PrimalMagick.MODID, key);
         }
         
-        public Builder(String keyStr) {
-            this(new ResearchEntryKey(keyStr));
+        public Builder(ResourceKey<ResearchEntry> rawKey) {
+            this(new ResearchEntryKey(rawKey));
         }
         
         public Builder discipline(String discKey) {
             this.disciplineKey = discKey;
-            return this;
-        }
-        
-        public Builder name(String nameKey) {
-            this.nameTranslationKey = nameKey;
             return this;
         }
         
@@ -265,8 +262,8 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
             return this;
         }
         
-        public Builder parent(String keyStr) {
-            return this.parent(new ResearchEntryKey(keyStr));
+        public Builder parent(ResourceKey<ResearchEntry> rawKey) {
+            return this.parent(new ResearchEntryKey(rawKey));
         }
         
         public Builder hidden() {
@@ -301,8 +298,6 @@ public record ResearchEntry(ResearchEntryKey key, String disciplineKey, String n
                 throw new IllegalStateException("No mod ID specified for entry");
             } else if (this.disciplineKey.isBlank()) {
                 throw new IllegalStateException("No discipline specified for entry");
-            } else if (this.nameTranslationKey.isBlank()) {
-                throw new IllegalStateException("No name translation key specified for entry");
             } else if (this.stageBuilders.isEmpty()) {
                 throw new IllegalStateException("Entry must have at least one stage");
             }

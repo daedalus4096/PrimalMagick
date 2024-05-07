@@ -9,27 +9,30 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
 public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     public static final Codec<ResearchStageKey> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("rootKey").forGetter(ResearchStageKey::getRootKey), 
+            ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").forGetter(ResearchStageKey::getRootKey), 
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("stage").forGetter(ResearchStageKey::getStage)
         ).apply(instance, ResearchStageKey::new));
     
-    protected final String rootKey; // TODO Replace with a ResourceKey once the research system refactor is complete
+    protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;
     
-    public ResearchStageKey(String rootKey, int stage) {
+    public ResearchStageKey(ResourceKey<ResearchEntry> rootKey, int stage) {
         this.rootKey = rootKey;
         this.stage = stage;
     }
     
-    public String getRootKey() {
+    public ResourceKey<ResearchEntry> getRootKey() {
         return this.rootKey;
     }
     
@@ -39,7 +42,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Override
     public String toString() {
-        return this.rootKey + "@" + this.stage;
+        return this.rootKey.location().getPath() + "@" + this.stage;
     }
 
     @Override
@@ -54,22 +57,19 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Objects.hash(stage);
-        return result;
+        return Objects.hash(rootKey, stage);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         ResearchStageKey other = (ResearchStageKey) obj;
-        return stage == other.stage;
+        return Objects.equals(rootKey, other.rootKey) && stage == other.stage;
     }
 
     @Override
@@ -89,12 +89,12 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Nonnull
     public static ResearchStageKey fromNetwork(FriendlyByteBuf buf) {
-        return new ResearchStageKey(buf.readUtf(), buf.readVarInt());
+        return new ResearchStageKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES), buf.readVarInt());
     }
     
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeUtf(this.rootKey);
+        buf.writeResourceKey(RegistryKeysPM.RESEARCH_ENTRIES);
         buf.writeVarInt(this.stage);
     }
 }

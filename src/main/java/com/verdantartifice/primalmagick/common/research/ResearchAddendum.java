@@ -118,7 +118,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         }
         
         protected String getTextTranslationKey() {
-            return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().toLowerCase(), "text", "addenda", Integer.toString(this.addendumIndex));
+            return String.join(".", "research", this.modId.toLowerCase(), this.parentKey.getRootKey().location().getPath().toLowerCase(), "text", "addenda", Integer.toString(this.addendumIndex));
         }
         
         protected Optional<AbstractRequirement<?>> getFinalRequirement() {
