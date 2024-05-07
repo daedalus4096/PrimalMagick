@@ -1,11 +1,15 @@
 package com.verdantartifice.primalmagick.common.util;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
+import java.util.function.Function;
 
 import org.joml.Vector2i;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 
 import net.minecraft.Util;
 import net.minecraft.util.ExtraCodecs;
@@ -31,4 +35,11 @@ public class CodecUtils {
     }, vec -> {
         return List.of(vec.x(), vec.y());
     });
+    
+    private static final Function<Optional<Integer>, OptionalInt> toOptionalInt = intOpt -> intOpt.map(OptionalInt::of).orElseGet(OptionalInt::empty);
+    private static final Function<OptionalInt, Optional<Integer>> fromOptionalInt = intOpt -> intOpt.isPresent() ? Optional.of(intOpt.getAsInt()) : Optional.empty();
+    
+    public static MapCodec<OptionalInt> asOptionalInt(MapCodec<Optional<Integer>> codec) {
+        return codec.xmap(toOptionalInt, fromOptionalInt);
+    }
 }

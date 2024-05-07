@@ -8,12 +8,16 @@ import java.util.OptionalInt;
 import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.stats.Stat;
+import com.verdantartifice.primalmagick.common.stats.StatsManager;
+import com.verdantartifice.primalmagick.common.util.CodecUtils;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
@@ -27,7 +31,13 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
-    // TODO Add codec
+    public static final Codec<ResearchDiscipline> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
+            AbstractRequirement.CODEC.optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
+            ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
+            ResourceLocation.CODEC.optionalFieldOf("craftingStat").<Optional<Stat>>xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.getLocation())).forGetter(ResearchDiscipline::craftingStat),
+            CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
+        ).apply(instance, ResearchDiscipline::new));
     
     @Nonnull
     public String getNameTranslationKey() {
