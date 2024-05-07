@@ -1,23 +1,14 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 /**
  * Collection of all defined research disciplines and their defining JSON data files.
@@ -40,53 +31,29 @@ public class ResearchDisciplines {
     
     public static void bootstrap(BootstapContext<ResearchDiscipline> context) {
         context.register(BASICS, ResearchDiscipline.builder(BASICS).icon(PrimalMagick.resource("textures/item/grimoire.png")).indexSortOrder(100).build());
+        context.register(MANAWEAVING, ResearchDiscipline.builder(MANAWEAVING).unlock(ResearchEntries.UNLOCK_MANAWEAVING).icon(PrimalMagick.resource("textures/research/discipline_manaweaving.png"))
+                .craftingStat(StatsPM.CRAFTED_MANAWEAVING).indexSortOrder(200).build());
+        context.register(ALCHEMY, ResearchDiscipline.builder(ALCHEMY).unlock(ResearchEntries.UNLOCK_ALCHEMY).icon(PrimalMagick.resource("textures/research/discipline_alchemy.png"))
+                .craftingStat(StatsPM.CRAFTED_ALCHEMY).indexSortOrder(300).build());
+        context.register(SORCERY, ResearchDiscipline.builder(SORCERY).unlock(ResearchEntries.UNLOCK_SORCERY).icon(PrimalMagick.resource("textures/research/discipline_sorcery.png"))
+                .craftingStat(StatsPM.CRAFTED_SORCERY).indexSortOrder(400).build());
+        context.register(RUNEWORKING, ResearchDiscipline.builder(RUNEWORKING).unlock(ResearchEntries.UNLOCK_RUNEWORKING).icon(PrimalMagick.resource("textures/research/discipline_runeworking.png"))
+                .craftingStat(StatsPM.CRAFTED_SORCERY).indexSortOrder(500).build());
+        context.register(RITUAL, ResearchDiscipline.builder(RITUAL).unlock(ResearchEntries.UNLOCK_RITUAL).icon(PrimalMagick.resource("textures/research/discipline_ritual.png"))
+                .craftingStat(StatsPM.CRAFTED_RITUAL).indexSortOrder(600).build());
+        context.register(MAGITECH, ResearchDiscipline.builder(MAGITECH).unlock(ResearchEntries.UNLOCK_MAGITECH).icon(PrimalMagick.resource("textures/research/discipline_magitech.png"))
+                .craftingStat(StatsPM.CRAFTED_MAGITECH).indexSortOrder(700).build());
+        context.register(SCANS, ResearchDiscipline.builder(SCANS).unlock(ResearchEntries.UNLOCK_SCANS).icon(PrimalMagick.resource("textures/item/magnifying_glass.png")).build());
     }
     
-    protected static final Map<String, ResearchDiscipline> DISCIPLINES = new HashMap<>();
-    protected static final List<ResearchDiscipline> DISCIPLINES_SORTED = new ArrayList<>();
-    
-//    public static final ResearchDiscipline BASICS = registerDiscipline("BASICS", null, PrimalMagick.resource("textures/item/grimoire.png"), null);
-//    public static final ResearchDiscipline MANAWEAVING = registerDiscipline("MANAWEAVING", ResearchNames.UNLOCK_MANAWEAVING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_manaweaving.png"), StatsPM.CRAFTED_MANAWEAVING);
-//    public static final ResearchDiscipline ALCHEMY = registerDiscipline("ALCHEMY", ResearchNames.UNLOCK_ALCHEMY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_alchemy.png"), StatsPM.CRAFTED_ALCHEMY);
-//    public static final ResearchDiscipline SORCERY = registerDiscipline("SORCERY", ResearchNames.UNLOCK_SORCERY.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_sorcery.png"), StatsPM.CRAFTED_SORCERY);
-//    public static final ResearchDiscipline RUNEWORKING = registerDiscipline("RUNEWORKING", ResearchNames.UNLOCK_RUNEWORKING.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_runeworking.png"), StatsPM.CRAFTED_RUNEWORKING);
-//    public static final ResearchDiscipline RITUAL = registerDiscipline("RITUAL", ResearchNames.UNLOCK_RITUAL.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_ritual.png"), StatsPM.CRAFTED_RITUAL);
-//    public static final ResearchDiscipline MAGITECH = registerDiscipline("MAGITECH", ResearchNames.UNLOCK_MAGITECH.get().compoundKey(), PrimalMagick.resource("textures/research/discipline_magitech.png"), StatsPM.CRAFTED_MAGITECH);
-//    public static final ResearchDiscipline SCANS = registerDiscipline("SCANS", ResearchNames.UNLOCK_SCANS.get().compoundKey(), PrimalMagick.resource("textures/item/magnifying_glass.png"), null);
-    
-    @Nullable
-    public static ResearchDiscipline getDiscipline(String key) {
-        return DISCIPLINES.get(key);
-    }
-    
-    @Nonnull
-    public static Collection<ResearchDiscipline> getAllDisciplines() {
-        return Collections.unmodifiableCollection(DISCIPLINES.values());
-    }
-    
-    @Nonnull
-    public static List<ResearchDiscipline> getAllDisciplinesSorted() {
-        return Collections.unmodifiableList(DISCIPLINES_SORTED);
-    }
-    
-    @Nullable
-    public static ResearchDiscipline registerDiscipline(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon, @Nullable Stat craftingStat) {
-        if (key == null || DISCIPLINES.containsKey(key)) {
-            // Don't allow null or duplicate disciplines in the collection
-            return null;
-        } else {
-            ResearchDiscipline discipline = ResearchDiscipline.create(key, unlockResearchKey, icon, craftingStat);
-            if (discipline != null) {
-                DISCIPLINES.put(key, discipline);
-                DISCIPLINES_SORTED.add(discipline);
-            }
-            return discipline;
-        }
-    }
-    
-    static void clearAllResearch() {
-        for (ResearchDiscipline discipline : DISCIPLINES.values()) {
-            discipline.clearEntries();
-        }
+    /**
+     * Retrieves a list of the research disciplines that should be shown in the main index of the
+     * grimoire, in sorted order.  Disciplines without an index sort order are excluded.
+     * 
+     * @param registryAccess a registry access object
+     * @return a list of the research disciplines that should be shown in the grimoire index
+     */
+    public static List<ResearchDiscipline> getIndexDisciplines(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).stream().filter(d -> d.indexSortOrder().isPresent()).sorted((a, b) -> Integer.compare(a.indexSortOrder().getAsInt(), b.indexSortOrder().getAsInt())).toList();
     }
 }

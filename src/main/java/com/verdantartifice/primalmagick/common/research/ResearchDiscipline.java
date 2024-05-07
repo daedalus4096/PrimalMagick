@@ -13,8 +13,10 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
@@ -72,6 +74,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
         public Builder unlock(AbstractRequirement<?> requirement) {
             this.requirements.add(requirement);
             return this;
+        }
+        
+        public Builder unlock(ResourceKey<ResearchEntry> requiredResearchEntry) {
+            return this.unlock(new ResearchRequirement(new ResearchEntryKey(requiredResearchEntry)));
         }
         
         public Builder icon(ResourceLocation iconLocation) {
