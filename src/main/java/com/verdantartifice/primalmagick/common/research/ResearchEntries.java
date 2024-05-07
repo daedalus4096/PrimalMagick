@@ -19,6 +19,13 @@ import net.minecraft.world.item.ItemStack;
  */
 public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FIRST_STEPS = create("first_steps");
+    public static final ResourceKey<ResearchEntry> UNLOCK_MANAWEAVING = create("unlock_manaweaving");
+    public static final ResourceKey<ResearchEntry> UNLOCK_ALCHEMY = create("unlock_alchemy");
+    public static final ResourceKey<ResearchEntry> UNLOCK_SORCERY = create("unlock_sorcery");
+    public static final ResourceKey<ResearchEntry> UNLOCK_RUNEWORKING = create("unlock_runeworking");
+    public static final ResourceKey<ResearchEntry> UNLOCK_RITUAL = create("unlock_ritual");
+    public static final ResourceKey<ResearchEntry> UNLOCK_MAGITECH = create("unlock_magitech");
+    public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));

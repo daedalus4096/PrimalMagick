@@ -1,19 +1,21 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
+import com.google.common.base.Preconditions;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -23,73 +25,10 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class ResearchDiscipline {
-    protected final String key;
-    protected final CompoundResearchKey unlockResearchKey;
-    protected final ResourceLocation iconLocation;
-    protected final Stat craftingStat;
-    protected final Map<ResearchEntryKey, ResearchEntry> entries = new HashMap<>();
-    protected List<ResearchEntry> finales = null;
-    
-    protected ResearchDiscipline(@Nonnull String key, @Nullable CompoundResearchKey unlockResearchKey, @Nonnull ResourceLocation icon, @Nullable Stat craftingStat) {
-        this.key = key;
-        this.unlockResearchKey = unlockResearchKey;
-        this.iconLocation = icon;
-        this.craftingStat = craftingStat;
-    }
-    
-    @Nullable
-    public static ResearchDiscipline create(@Nullable String key, @Nullable CompoundResearchKey unlockResearchKey, @Nullable ResourceLocation icon, @Nullable Stat craftingStat) {
-        return (key == null || icon == null) ? null : new ResearchDiscipline(key, unlockResearchKey, icon, craftingStat);
-    }
-    
-    @Nonnull
-    public String getKey() {
-        return this.key;
-    }
-    
+public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirement, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_discipline", PrimalMagick.MODID, this.key);
-    }
-    
-    @Nullable
-    public CompoundResearchKey getUnlockResearchKey() {
-        return this.unlockResearchKey;
-    }
-    
-    @Nonnull
-    public ResourceLocation getIconLocation() {
-        return this.iconLocation;
-    }
-    
-    @Nullable
-    public Stat getCraftingStat() {
-        return this.craftingStat;
-    }
-    
-    @Nullable
-    public ResearchEntry getEntry(ResearchEntryKey key) {
-        return this.entries.get(key);
-    }
-    
-    @Nonnull
-    public Collection<ResearchEntry> getEntries() {
-        return Collections.unmodifiableCollection(this.entries.values());
-    }
-    
-    public boolean addEntry(@Nullable ResearchEntry entry) {
-        if (entry == null || this.entries.containsKey(entry.getKey())) {
-            // Don't allow null or duplicate entries in a discipline
-            return false;
-        } else {
-            this.entries.put(entry.getKey(), entry);
-            return true;
-        }
-    }
-    
-    void clearEntries() {
-        this.entries.clear();
+        return String.join(".", "research_discipline", PrimalMagick.MODID, this.key.getRootKey());
     }
     
     /**
@@ -98,10 +37,60 @@ public class ResearchDiscipline {
      * @return finale research entries for this discipline
      */
     @Nonnull
-    public List<ResearchEntry> getFinaleEntries() {
-        if (this.finales == null) {
-            this.finales = ResearchEntries.getAllEntries().stream().filter(e -> e.isFinaleFor(this.key)).collect(Collectors.toList());
+    public List<ResearchEntry> getFinaleEntries(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isFinaleFor(this.key.getRootKey())).toList();
+    }
+    
+    public static class Builder {
+        protected final ResearchDisciplineKey key;
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        protected ResourceLocation iconLocation = null;
+        protected Optional<Stat> craftingStat = Optional.empty();
+        protected OptionalInt indexSortOrder = OptionalInt.empty();
+        
+        public Builder(ResearchDisciplineKey key) {
+            this.key = Preconditions.checkNotNull(key);
         }
-        return this.finales;
+        
+        public Builder unlock(AbstractRequirement<?> requirement) {
+            this.requirements.add(requirement);
+            return this;
+        }
+        
+        public Builder icon(ResourceLocation iconLocation) {
+            this.iconLocation = iconLocation;
+            return this;
+        }
+        
+        public Builder craftingStat(Stat stat) {
+            this.craftingStat = Optional.of(stat);
+            return this;
+        }
+        
+        public Builder indexSortOrder(int order) {
+            this.indexSortOrder = OptionalInt.of(order);
+            return this;
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
+            } else {
+                return Optional.of(new AndRequirement(this.requirements));
+            }
+        }
+        
+        private void validate() {
+            if (this.iconLocation == null) {
+                throw new IllegalStateException("Research discipline must have an icon");
+            }
+        }
+        
+        public ResearchDiscipline build() {
+            this.validate();
+            return new ResearchDiscipline(this.key, this.getFinalRequirement(), this.iconLocation, this.craftingStat, this.indexSortOrder);
+        }
     }
 }
