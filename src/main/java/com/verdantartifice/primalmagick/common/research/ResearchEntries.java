@@ -3,14 +3,10 @@ package com.verdantartifice.primalmagick.common.research;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
-import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
-import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.ItemStack;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.
@@ -36,11 +32,11 @@ public class ResearchEntries {
     }
     
     private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
-        String discipline = "BASICS";
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.BASICS;
         context.register(FIRST_STEPS, ResearchEntry.builder(FIRST_STEPS).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
-                .stage().requirement(new ResearchRequirement(new StackCraftedKey(new ItemStack(ItemsPM.ARCANE_WORKBENCH.get())))).recipe(ItemsPM.MUNDANE_WAND.get()).end()
-                .stage().requirement(new StatRequirement(StatsPM.MANA_SIPHONED, 10)).recipe(ItemsPM.MUNDANE_WAND.get()).end()
-                .stage().requirement(new StatRequirement(StatsPM.OBSERVATIONS_MADE, 1)).recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get())
+                .stage().requiredCraft(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).end()
+                .stage().requiredStat(StatsPM.MANA_SIPHONED, 10).recipe(ItemsPM.MUNDANE_WAND.get()).end()
+                .stage().requiredStat(StatsPM.OBSERVATIONS_MADE, 1).recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get())
                         .recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .build());

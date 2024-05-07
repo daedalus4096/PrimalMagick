@@ -17,15 +17,23 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
+import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -138,6 +146,22 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         public Builder requirement(AbstractRequirement<?> req) {
             this.requirements.add(req);
             return this;
+        }
+        
+        public Builder requiredCraft(ItemStack stack) {
+            return this.requirement(new ResearchRequirement(new StackCraftedKey(stack.copy())));
+        }
+        
+        public Builder requiredCraft(ItemLike item) {
+            return this.requiredCraft(new ItemStack(item.asItem()));
+        }
+        
+        public Builder requiredCraft(TagKey<Item> tag) {
+            return this.requirement(new ResearchRequirement(new TagCraftedKey(tag)));
+        }
+        
+        public Builder requiredStat(Stat stat, int value) {
+            return this.requirement(new StatRequirement(stat, value));
         }
         
         public Builder recipe(String name) {
