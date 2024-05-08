@@ -109,8 +109,8 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
             return this;
         }
         
-        public Builder sibling(ResearchEntryKey siblingKey) {
-            this.siblings.add(siblingKey);
+        public Builder sibling(ResourceKey<ResearchEntry> siblingKey) {
+            this.siblings.add(new ResearchEntryKey(siblingKey));
             return this;
         }
         

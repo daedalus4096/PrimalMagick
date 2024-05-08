@@ -213,13 +213,13 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this;
         }
         
-        public Builder sibling(ResearchEntryKey siblingKey) {
-            this.siblings.add(siblingKey);
+        public Builder sibling(ResourceKey<ResearchEntry> siblingKey) {
+            this.siblings.add(new ResearchEntryKey(siblingKey));
             return this;
         }
         
-        public Builder reveals(ResearchEntryKey revelationKey) {
-            this.revelations.add(revelationKey);
+        public Builder reveals(ResourceKey<ResearchEntry> revelationKey) {
+            this.revelations.add(new ResearchEntryKey(revelationKey));
             return this;
         }
         

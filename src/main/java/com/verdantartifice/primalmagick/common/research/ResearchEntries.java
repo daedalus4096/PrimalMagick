@@ -47,7 +47,17 @@ public class ResearchEntries {
     // Ritual Magick research entries
     public static final ResourceKey<ResearchEntry> MANAFRUIT = create("manafruit");
     
-    // Magitech research entries
+    // TODO Magitech research entries
+    
+    // Internal research entries
+    public static final ResourceKey<ResearchEntry> DISCOVER_BLOOD = create("discover_blood");
+    public static final ResourceKey<ResearchEntry> DISCOVER_INFERNAL = create("discover_infernal");
+    public static final ResourceKey<ResearchEntry> DISCOVER_VOID = create("discover_void");
+    public static final ResourceKey<ResearchEntry> DISCOVER_FORBIDDEN = create("discover_forbidden");
+    public static final ResourceKey<ResearchEntry> DISCOVER_HALLOWED = create("discover_hallowed");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
@@ -55,6 +65,7 @@ public class ResearchEntries {
     
     public static void bootstrap(BootstapContext<ResearchEntry> context) {
         bootstrapBasicsEntries(context);
+        bootstrapInternalEntries(context);
     }
     
     private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
@@ -108,6 +119,20 @@ public class ResearchEntries {
                 .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
                 .stage().end()
                 .build());
+    }
+    
+    private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
+        register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+                .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_BLOOD).end()
+                .build());
+        register(context, DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+                .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_INFERNAL).end()
+                .build());
+        register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+                .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_VOID).end()
+                .build());
+        register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().build());
+        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png").build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {

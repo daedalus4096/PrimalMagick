@@ -42,16 +42,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey disciplineKey, String nameTranslationKey, Optional<Icon> iconOpt, List<ResearchEntryKey> parents,
-        boolean hidden, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, String nameTranslationKey, Optional<Icon> iconOpt, List<ResearchEntryKey> parents,
+        boolean hidden, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static final Codec<ResearchEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
-            ResearchDisciplineKey.CODEC.fieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKey),
+            ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
             Codec.STRING.fieldOf("nameTranslationKey").forGetter(ResearchEntry::nameTranslationKey),
             Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
             ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
-            Codec.BOOL.fieldOf("hidden").forGetter(ResearchEntry::hidden),
-            Codec.BOOL.fieldOf("finaleExempt").forGetter(ResearchEntry::finaleExempt),
+            Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
+            Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
+            Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
             ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
             ResearchStage.CODEC.listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
             ResearchAddendum.CODEC.listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
@@ -60,25 +61,27 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
     @Nonnull
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
-        ResearchDisciplineKey disciplineKey = ResearchDisciplineKey.fromNetwork(buf);
+        Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
         String nameTranslationKey = buf.readUtf();
         Optional<Icon> iconOpt = buf.readOptional(Icon::fromNetwork);
         List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
         boolean hidden = buf.readBoolean();
+        boolean internal = buf.readBoolean();
         boolean finaleExempt = buf.readBoolean();
         List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
         List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
         List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
-        return new ResearchEntry(key, disciplineKey, nameTranslationKey, iconOpt, parents, hidden, finaleExempt, finales, stages, addenda);
+        return new ResearchEntry(key, disciplineKeyOpt, nameTranslationKey, iconOpt, parents, hidden, internal, finaleExempt, finales, stages, addenda);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
         entry.key.toNetwork(buf);
-        entry.disciplineKey.toNetwork(buf);
+        buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
         buf.writeUtf(entry.nameTranslationKey);
         buf.writeOptional(entry.iconOpt, Icon::toNetwork);
         buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
+        buf.writeBoolean(entry.internal);
         buf.writeBoolean(entry.finaleExempt);
         buf.writeCollection(entry.finales, (b, f) -> f.toNetwork(b));
         buf.writeCollection(entry.stages, ResearchStage::toNetwork);
@@ -99,6 +102,12 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
         return this.finales.contains(discipline);
     }
     
+    /**
+     * Get whether this research entry is a finale for the given discipline key.
+     * 
+     * @param discipline the discipline to be tested
+     * @return whether this research is a finale for the given discipline key
+     */
     public boolean isFinaleFor(ResourceKey<ResearchDiscipline> discipline) {
         return this.isFinaleFor(new ResearchDisciplineKey(discipline));
     }
@@ -219,11 +228,12 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
     public static class Builder {
         protected final String modId;
         protected final ResearchEntryKey key;
-        protected ResearchDisciplineKey disciplineKey = null;
+        protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
         protected final String nameTranslationKey;
         protected Optional<Icon> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
+        protected boolean internal = false;
         protected boolean finaleExempt = false;
         protected final List<ResearchDisciplineKey> finales = new ArrayList<>();
         protected final List<ResearchStage.Builder> stageBuilders = new ArrayList<>();
@@ -248,7 +258,7 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
         }
         
         public Builder discipline(ResourceKey<ResearchDiscipline> discKey) {
-            this.disciplineKey = new ResearchDisciplineKey(discKey);
+            this.disciplineKeyOpt = Optional.of(new ResearchDisciplineKey(discKey));
             return this;
         }
         
@@ -280,6 +290,11 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
             return this;
         }
         
+        public Builder internal() {
+            this.internal = true;
+            return this;
+        }
+        
         public Builder finaleExempt() {
             this.finaleExempt = true;
             return this;
@@ -305,16 +320,16 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
         private void validate() {
             if (this.modId.isBlank()) {
                 throw new IllegalStateException("No mod ID specified for entry");
-            } else if (this.disciplineKey == null) {
-                throw new IllegalStateException("No discipline specified for entry");
-            } else if (this.stageBuilders.isEmpty()) {
-                throw new IllegalStateException("Entry must have at least one stage");
+            } else if (this.internal && this.disciplineKeyOpt.isEmpty()) {
+                throw new IllegalStateException("No discipline specified for non-internal entry");
+            } else if (this.internal && this.stageBuilders.isEmpty()) {
+                throw new IllegalStateException("Non-internal entries must have at least one stage");
             }
         }
         
         public ResearchEntry build() {
             this.validate();
-            return new ResearchEntry(this.key, this.disciplineKey, this.nameTranslationKey, this.iconOpt, this.parents, this.hidden, this.finaleExempt, this.finales,
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.nameTranslationKey, this.iconOpt, this.parents, this.hidden, this.internal, this.finaleExempt, this.finales,
                     this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }
