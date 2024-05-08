@@ -262,6 +262,10 @@ public record ResearchEntry(ResearchEntryKey key, ResearchDisciplineKey discipli
             return this;
         }
         
+        public Builder icon(String path) {
+            return this.icon(PrimalMagick.resource(path));
+        }
+        
         public Builder parent(ResearchEntryKey key) {
             this.parents.add(key);
             return this;

@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import java.util.function.Function;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 
@@ -15,6 +18,9 @@ import net.minecraft.resources.ResourceKey;
  */
 public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FIRST_STEPS = create("first_steps");
+    public static final ResourceKey<ResearchEntry> THEORYCRAFTING = create("theorycrafting");
+    public static final ResourceKey<ResearchEntry> ATTUNEMENTS = create("attunements");
+    public static final ResourceKey<ResearchEntry> LINGUISTICS = create("linguistics");
     public static final ResourceKey<ResearchEntry> UNLOCK_MANAWEAVING = create("unlock_manaweaving");
     public static final ResourceKey<ResearchEntry> UNLOCK_ALCHEMY = create("unlock_alchemy");
     public static final ResourceKey<ResearchEntry> UNLOCK_SORCERY = create("unlock_sorcery");
@@ -33,12 +39,38 @@ public class ResearchEntries {
     
     private static void bootstrapBasicsEntries(BootstapContext<ResearchEntry> context) {
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.BASICS;
-        context.register(FIRST_STEPS, ResearchEntry.builder(FIRST_STEPS).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
+        register(context, FIRST_STEPS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GRIMOIRE.get())
                 .stage().requiredCraft(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).end()
                 .stage().requiredStat(StatsPM.MANA_SIPHONED, 10).recipe(ItemsPM.MUNDANE_WAND.get()).end()
                 .stage().requiredStat(StatsPM.OBSERVATIONS_MADE, 1).recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get())
                         .recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .build());
+        register(context, THEORYCRAFTING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/knowledge_theory.png").parent(FIRST_STEPS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredCraft(ItemsPM.RESEARCH_TABLE.get()).requiredCraft(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get())
+                        .recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
+                .stage().requiredStat(StatsPM.THEORIES_FORMED, 1).recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
+                .stage().recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
+                .build());
+        register(context, ATTUNEMENTS, key -> ResearchEntry.builder(key).discipline(discipline).parent(FIRST_STEPS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        // FIXME Re-add for 1.21 release
+/*
+        register(context, LINGUISTICS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.WRITABLE_BOOK).parent(FIRST_STEPS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
+                .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).end()
+                .build());
+*/
+        register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_manaweaving.png").parent(FIRST_STEPS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+    }
+    
+    private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
+        return context.register(key, supplier.apply(key));
     }
 }

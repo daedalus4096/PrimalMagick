@@ -15,6 +15,9 @@ import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ItemTagRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
@@ -22,6 +25,7 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -125,6 +129,34 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         
         public Builder requiredCraft(TagKey<Item> tag) {
             return this.requirement(new ResearchRequirement(new TagCraftedKey(tag)));
+        }
+        
+        public Builder requiredItem(ItemStack stack) {
+            return this.requirement(new ItemStackRequirement(stack.copy()));
+        }
+        
+        public Builder requiredItem(ItemLike item, int count) {
+            return this.requiredItem(new ItemStack(item.asItem(), count));
+        }
+        
+        public Builder requiredItem(ItemLike item) {
+            return this.requiredItem(item, 1);
+        }
+        
+        public Builder requiredItem(TagKey<Item> tag, int count) {
+            return this.requirement(new ItemTagRequirement(tag, count));
+        }
+        
+        public Builder requiredItem(TagKey<Item> tag) {
+            return this.requiredItem(tag, 1);
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> entryKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(entryKey)));
+        }
+        
+        public Builder requiredKnowledge(KnowledgeType type, int levels) {
+            return this.requirement(new KnowledgeRequirement(type, levels));
         }
         
         public Builder requiredStat(Stat stat, int value) {
