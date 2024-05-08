@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceKey;
  * @author Daedalus4096
  */
 public class ResearchEntries {
+    // Fundamentals research entries
     public static final ResourceKey<ResearchEntry> FIRST_STEPS = create("first_steps");
     public static final ResourceKey<ResearchEntry> THEORYCRAFTING = create("theorycrafting");
     public static final ResourceKey<ResearchEntry> ATTUNEMENTS = create("attunements");
@@ -28,6 +29,25 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_RITUAL = create("unlock_ritual");
     public static final ResourceKey<ResearchEntry> UNLOCK_MAGITECH = create("unlock_magitech");
     public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
+    
+    // Manaweaving research entries
+    public static final ResourceKey<ResearchEntry> MANA_ARROWS = create("mana_arrows");
+    public static final ResourceKey<ResearchEntry> WAND_CHARGER = create("wand_charger");
+    public static final ResourceKey<ResearchEntry> MANA_SALTS = create("mana_salts");
+    
+    // Alchemy research entries
+    public static final ResourceKey<ResearchEntry> CALCINATOR_BASIC = create("calcinator_basic");
+    
+    // Sorcery research entries
+    public static final ResourceKey<ResearchEntry> WAND_INSCRIPTION = create("wand_inscription");
+    
+    // Runeworking research entries
+    public static final ResourceKey<ResearchEntry> RUNE_PROJECT = create("rune_project");
+    
+    // Ritual Magick research entries
+    public static final ResourceKey<ResearchEntry> MANAFRUIT = create("manafruit");
+    
+    // Magitech research entries
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
@@ -65,6 +85,26 @@ public class ResearchEntries {
                 .build());
 */
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_manaweaving.png").parent(FIRST_STEPS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        register(context, UNLOCK_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_alchemy.png").parent(MANA_ARROWS)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        register(context, UNLOCK_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_sorcery.png").parent(WAND_CHARGER)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        register(context, UNLOCK_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_runeworking.png").parent(CALCINATOR_BASIC)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        register(context, UNLOCK_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_ritual.png").parent(WAND_INSCRIPTION).parent(RUNE_PROJECT)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().end()
+                .build());
+        register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_magitech.png").parent(MANAFRUIT).parent(MANA_SALTS)
                 .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
                 .stage().end()
                 .build());
