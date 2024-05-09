@@ -20,6 +20,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 
 /**
@@ -31,7 +32,7 @@ import net.minecraft.util.StringRepresentable;
 @Immutable
 public class SourceList {
     public static final Codec<SourceList> CODEC = RecordCodecBuilder.create(instance -> {
-        return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Source.SORTED_SOURCES.toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
+        return instance.group(Codec.simpleMap(Source.CODEC, Codec.INT, StringRepresentable.keys(Sources.getAllSorted().toArray(Source[]::new))).xmap(Object2IntOpenHashMap::new, Object2IntOpenHashMap::new).fieldOf("sources").forGetter(sl -> sl.sources)).apply(instance, SourceList::new);
     });
     
     public static final SourceList EMPTY = new SourceList();
@@ -60,14 +61,14 @@ public class SourceList {
     @Nonnull
     public static SourceList fromNetwork(@Nonnull FriendlyByteBuf buf) {
         SourceList.Builder retVal = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             retVal.with(source, buf.readVarInt());
         }
         return retVal.build();
     }
     
     public static void toNetwork(@Nonnull FriendlyByteBuf buf, @Nonnull SourceList sources) {
-        Source.SORTED_SOURCES.stream().map(sources::getAmount).forEach(buf::writeVarInt);
+        Sources.getAllSorted().stream().map(sources::getAmount).forEach(buf::writeVarInt);
     }
     
     public int getAmount(@Nullable Source source) {
@@ -349,7 +350,7 @@ public class SourceList {
     @Nonnull
     public List<Source> getSourcesSorted() {
         // Get the sources in this list in prescribed order
-        return Source.SORTED_SOURCES.stream().filter(this::isPresent).toList();
+        return Sources.getAllSorted().stream().filter(this::isPresent).toList();
     }
     
     public int getSize() {
@@ -379,7 +380,7 @@ public class SourceList {
         for (Source source : this.getSources()) {
             if (source != null) {
                 CompoundTag singleTag = new CompoundTag();
-                singleTag.putString("key", source.getTag());
+                singleTag.putString("key", source.getId().toString());
                 singleTag.putInt("amount", this.getAmount(source));
                 tagList.add(singleTag);
             }
@@ -397,7 +398,7 @@ public class SourceList {
         for (int index = 0; index < tagList.size(); index++) {
             CompoundTag singleTag = tagList.getCompound(index);
             if (singleTag.contains("key")) {
-                retVal.with(Source.getSource(singleTag.getString("key")), singleTag.getInt("amount"));
+                retVal.with(Sources.get(new ResourceLocation(singleTag.getString("key"))), singleTag.getInt("amount"));
             }
         }
         return retVal.build();
@@ -406,10 +407,10 @@ public class SourceList {
     @Nonnull
     public JsonObject serializeJson() {
         JsonObject json = new JsonObject();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int value = this.getAmount(source);
             if (value > 0) {
-                json.addProperty(source.getTag(), value);
+                json.addProperty(source.getId().toString(), value);
             }
         }
         return json;
@@ -430,7 +431,7 @@ public class SourceList {
     
     @Override
     public String toString() {
-        List<String> pieces = Source.SORTED_SOURCES.stream().filter(this.sources::containsKey).map(source -> String.join("=", source.getTag(), Integer.toString(this.sources.getInt(source)))).toList();
+        List<String> pieces = Sources.getAllSorted().stream().filter(this.sources::containsKey).map(source -> String.join("=", source.getId().toString(), Integer.toString(this.sources.getInt(source)))).toList();
         return "SourceList[" + String.join(",", pieces) + "]";
     }
 
@@ -452,39 +453,39 @@ public class SourceList {
         }
         
         public Builder withEarth(int amount) {
-            return this.with(Source.EARTH, amount);
+            return this.with(Sources.EARTH, amount);
         }
         
         public Builder withSea(int amount) {
-            return this.with(Source.SEA, amount);
+            return this.with(Sources.SEA, amount);
         }
         
         public Builder withSky(int amount) {
-            return this.with(Source.SKY, amount);
+            return this.with(Sources.SKY, amount);
         }
         
         public Builder withSun(int amount) {
-            return this.with(Source.SUN, amount);
+            return this.with(Sources.SUN, amount);
         }
         
         public Builder withMoon(int amount) {
-            return this.with(Source.MOON, amount);
+            return this.with(Sources.MOON, amount);
         }
         
         public Builder withBlood(int amount) {
-            return this.with(Source.BLOOD, amount);
+            return this.with(Sources.BLOOD, amount);
         }
         
         public Builder withInfernal(int amount) {
-            return this.with(Source.INFERNAL, amount);
+            return this.with(Sources.INFERNAL, amount);
         }
         
         public Builder withVoid(int amount) {
-            return this.with(Source.VOID, amount);
+            return this.with(Sources.VOID, amount);
         }
         
         public Builder withHallowed(int amount) {
-            return this.with(Source.HALLOWED, amount);
+            return this.with(Sources.HALLOWED, amount);
         }
         
         public SourceList build() {
