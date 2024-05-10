@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -38,7 +38,7 @@ public class ResearchToast implements Toast {
         
         // Render the toast title text
         Component titleText = this.isComplete ? Component.translatable("label.primalmagick.toast.completed") : Component.translatable("label.primalmagick.toast.revealed");
-        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Source.VOID.getColor() : Source.INFERNAL.getColor(), false);
+        guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor(), false);
         
         // Render the description of the completed research
         Component descText = Component.translatable(this.entry.getNameTranslationKey());

@@ -13,6 +13,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -54,7 +55,7 @@ public class AmbrosiaItem extends Item {
                 int current = AttunementManager.getAttunement(player, this.source, AttunementType.INDUCED);
                 int toIncrement = Math.min(BONUS, limit - current);
                 if (toIncrement > 0) {
-                    for (Source source : Source.SORTED_SOURCES) {
+                    for (Source source : Sources.getAllSorted()) {
                         if (source == this.source) {
                             AttunementManager.incrementAttunement(player, source, AttunementType.INDUCED, toIncrement);
                         } else {

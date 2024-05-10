@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -22,15 +23,15 @@ public class DamageTypesPM {
     public static final ResourceKey<DamageType> BLEEDING = create("bleeding");
     public static final ResourceKey<DamageType> BLOOD_ROSE = create("blood_rose");
     public static final ResourceKey<DamageType> HELLISH_CHAIN = create("hellish_chain");
-    public static final ResourceKey<DamageType> SORCERY_EARTH = createSorcery("sorcery_earth", Source.EARTH);
-    public static final ResourceKey<DamageType> SORCERY_SEA = createSorcery("sorcery_sea", Source.SEA);
-    public static final ResourceKey<DamageType> SORCERY_SKY = createSorcery("sorcery_sky", Source.SKY);
-    public static final ResourceKey<DamageType> SORCERY_SUN = createSorcery("sorcery_sun", Source.SUN);
-    public static final ResourceKey<DamageType> SORCERY_MOON = createSorcery("sorcery_moon", Source.MOON);
-    public static final ResourceKey<DamageType> SORCERY_BLOOD = createSorcery("sorcery_blood", Source.BLOOD);
-    public static final ResourceKey<DamageType> SORCERY_INFERNAL = createSorcery("sorcery_infernal", Source.INFERNAL);
-    public static final ResourceKey<DamageType> SORCERY_VOID = createSorcery("sorcery_void", Source.VOID);
-    public static final ResourceKey<DamageType> SORCERY_HALLOWED = createSorcery("sorcery_hallowed", Source.HALLOWED);
+    public static final ResourceKey<DamageType> SORCERY_EARTH = createSorcery("sorcery_earth", Sources.EARTH);
+    public static final ResourceKey<DamageType> SORCERY_SEA = createSorcery("sorcery_sea", Sources.SEA);
+    public static final ResourceKey<DamageType> SORCERY_SKY = createSorcery("sorcery_sky", Sources.SKY);
+    public static final ResourceKey<DamageType> SORCERY_SUN = createSorcery("sorcery_sun", Sources.SUN);
+    public static final ResourceKey<DamageType> SORCERY_MOON = createSorcery("sorcery_moon", Sources.MOON);
+    public static final ResourceKey<DamageType> SORCERY_BLOOD = createSorcery("sorcery_blood", Sources.BLOOD);
+    public static final ResourceKey<DamageType> SORCERY_INFERNAL = createSorcery("sorcery_infernal", Sources.INFERNAL);
+    public static final ResourceKey<DamageType> SORCERY_VOID = createSorcery("sorcery_void", Sources.VOID);
+    public static final ResourceKey<DamageType> SORCERY_HALLOWED = createSorcery("sorcery_hallowed", Sources.HALLOWED);
     
     private static ResourceKey<DamageType> create(String name) {
         return ResourceKey.create(Registries.DAMAGE_TYPE, PrimalMagick.resource(name));

@@ -51,7 +51,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
@@ -179,18 +179,18 @@ public class PlayerEvents {
     }
 
     protected static void applyAttunementBuffs(ServerPlayer player) {
-        if (AttunementManager.meetsThreshold(player, Source.SEA, AttunementThreshold.GREATER)) {
+        if (AttunementManager.meetsThreshold(player, Sources.SEA, AttunementThreshold.GREATER)) {
             // Apply Water Breathing for 30.5s if the player has greater sea attunement
             player.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 610, 0, true, false, true));
         }
-        if (AttunementManager.meetsThreshold(player, Source.MOON, AttunementThreshold.GREATER)) {
+        if (AttunementManager.meetsThreshold(player, Sources.MOON, AttunementThreshold.GREATER)) {
             // Apply Night Vision for 30.5s if the player has greater moon attunement
             player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 610, 0, true, false, true));
         }
         
         AttributeInstance stepHeightAttribute = player.getAttribute(ForgeMod.STEP_HEIGHT_ADDITION.get());
         stepHeightAttribute.removeModifier(STEP_MODIFIER_EARTH.getId());
-        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Source.EARTH, AttunementThreshold.GREATER)) {
+        if (!player.isShiftKeyDown() && AttunementManager.meetsThreshold(player, Sources.EARTH, AttunementThreshold.GREATER)) {
             // If the player has greater earth attunement and is not sneaking, boost their step height
             stepHeightAttribute.addTransientModifier(STEP_MODIFIER_EARTH);
         }
@@ -264,14 +264,14 @@ public class PlayerEvents {
             Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
             boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
-            if (!knowledge.isResearchKnown(Source.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
+            if (!knowledge.isResearchKnown(Sources.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
-                ResearchManager.completeResearch(player, Source.INFERNAL.getDiscoverKey());
+                ResearchManager.completeResearch(player, Sources.INFERNAL.getDiscoverKey());
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(Source.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
+            if (!knowledge.isResearchKnown(Sources.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
-                ResearchManager.completeResearch(player, Source.VOID.getDiscoverKey());
+                ResearchManager.completeResearch(player, Sources.VOID.getDiscoverKey());
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
@@ -341,7 +341,7 @@ public class PlayerEvents {
     @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
         Level level = player.level();
-        if (AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.LESSER) && level.isDay() &&
+        if (AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.LESSER) && level.isDay() &&
                 player.getLightLevelDependentMagicValue() > 0.5F && level.canSeeSky(player.blockPosition())) {
             // If an attuned player is outdoors during the daytime, restore some hunger
             player.getFoodData().eat(1, 0.3F);
@@ -352,7 +352,7 @@ public class PlayerEvents {
         BlockPos pos = player.blockPosition();
         Level world = player.level();
         if (world.random.nextDouble() < 0.1D && 
-                AttunementManager.meetsThreshold(player, Source.SUN, AttunementThreshold.GREATER) && 
+                AttunementManager.meetsThreshold(player, Sources.SUN, AttunementThreshold.GREATER) && 
                 !player.isShiftKeyDown() && 
                 world.isEmptyBlock(pos) && 
                 world.getBlockState(pos) != BlocksPM.GLOW_FIELD.get().defaultBlockState() && 
@@ -372,7 +372,7 @@ public class PlayerEvents {
         }
         if (jumpPressed && !player.onGround() && !player.isInWater() && 
                 DOUBLE_JUMP_ALLOWED.getOrDefault(player.getUUID(), Boolean.FALSE).booleanValue() && 
-                AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+                AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
             // If the conditions are right, execute the second jump
             level.playLocalSound(player.getX(), player.getY(), player.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, 
                     SoundSource.PLAYERS, 0.1F, 1.0F + (0.05F * (float)level.random.nextGaussian()), false);
@@ -423,9 +423,9 @@ public class PlayerEvents {
                         LazyOptional<IManaStorage> manaCapOpt = slotStack.getCapability(PrimalMagickCapabilities.MANA_STORAGE);
                         if (manaCapOpt.isPresent()) {
                             IManaStorage manaCap = manaCapOpt.orElseThrow(IllegalArgumentException::new);
-                            if (manaCap.getManaStored(Source.EARTH) >= WardingModuleItem.REGEN_COST) {
+                            if (manaCap.getManaStored(Sources.EARTH) >= WardingModuleItem.REGEN_COST) {
                                 // Consume mana from warded armor stacks to regenerate a single point of ward
-                                manaCap.extractMana(Source.EARTH, WardingModuleItem.REGEN_COST, false);
+                                manaCap.extractMana(Sources.EARTH, WardingModuleItem.REGEN_COST, false);
                                 wardCap.incrementCurrentWard();
                                 wardCap.sync(player);
                                 player.connection.send(new ClientboundSetEquipmentPacket(player.getId(), List.of(Pair.of(slot, slotStack.copy()))));
@@ -597,7 +597,7 @@ public class PlayerEvents {
     public static void onJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player)event.getEntity();
-            if (AttunementManager.meetsThreshold(player, Source.SKY, AttunementThreshold.GREATER)) {
+            if (AttunementManager.meetsThreshold(player, Sources.SKY, AttunementThreshold.GREATER)) {
                 // Boost the player's vertical motion on jump if they have greater sky attunement
                 Vec3 motion = player.getDeltaMovement();
                 motion = motion.add(0.0D, 0.275D, 0.0D);

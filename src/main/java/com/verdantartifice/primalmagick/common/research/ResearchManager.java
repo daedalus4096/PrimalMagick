@@ -29,6 +29,7 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
@@ -70,10 +71,10 @@ public class ResearchManager {
     // Set of research keys whose children should not be shown in the Upcoming section of the grimoire
     // TODO Convert into tag
     private static final Set<SimpleResearchKey> OPAQUE_RESEARCH = ImmutableSet.of(
-            Source.BLOOD.getDiscoverKey(), 
-            Source.INFERNAL.getDiscoverKey(), 
-            Source.VOID.getDiscoverKey(), 
-            Source.HALLOWED.getDiscoverKey(),
+            Sources.BLOOD.getDiscoverKey(), 
+            Sources.INFERNAL.getDiscoverKey(), 
+            Sources.VOID.getDiscoverKey(), 
+            Sources.HALLOWED.getDiscoverKey(),
             SimpleResearchKey.parse("t_discover_forbidden")     // FIXME Don't use SRK::parse
     );
     

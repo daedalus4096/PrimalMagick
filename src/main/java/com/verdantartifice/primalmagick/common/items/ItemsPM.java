@@ -79,7 +79,7 @@ import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.runes.Rune;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
@@ -503,15 +503,15 @@ public class ItemsPM {
     public static final RegistryObject<SacredShieldItem> SACRED_SHIELD = registerDefaultInstance("sacred_shield", () -> new SacredShieldItem(new Item.Properties().rarity(Rarity.EPIC)));
     
     // Register mana arrow items
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Source.EARTH, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SEA = registerSupplier("mana_arrow_sea", () -> new ManaArrowItem(Source.SEA, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SKY = registerSupplier("mana_arrow_sky", () -> new ManaArrowItem(Source.SKY, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SUN = registerSupplier("mana_arrow_sun", () -> new ManaArrowItem(Source.SUN, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_MOON = registerSupplier("mana_arrow_moon", () -> new ManaArrowItem(Source.MOON, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_BLOOD = registerSupplier("mana_arrow_blood", () -> new ManaArrowItem(Source.BLOOD, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_INFERNAL = registerSupplier("mana_arrow_infernal", () -> new ManaArrowItem(Source.INFERNAL, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_VOID = registerSupplier("mana_arrow_void", () -> new ManaArrowItem(Source.VOID, new Item.Properties()));
-    public static final RegistryObject<ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Source.HALLOWED, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_EARTH = registerSupplier("mana_arrow_earth", () -> new ManaArrowItem(Sources.EARTH, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SEA = registerSupplier("mana_arrow_sea", () -> new ManaArrowItem(Sources.SEA, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SKY = registerSupplier("mana_arrow_sky", () -> new ManaArrowItem(Sources.SKY, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_SUN = registerSupplier("mana_arrow_sun", () -> new ManaArrowItem(Sources.SUN, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_MOON = registerSupplier("mana_arrow_moon", () -> new ManaArrowItem(Sources.MOON, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_BLOOD = registerSupplier("mana_arrow_blood", () -> new ManaArrowItem(Sources.BLOOD, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_INFERNAL = registerSupplier("mana_arrow_infernal", () -> new ManaArrowItem(Sources.INFERNAL, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_VOID = registerSupplier("mana_arrow_void", () -> new ManaArrowItem(Sources.VOID, new Item.Properties()));
+    public static final RegistryObject<ManaArrowItem> MANA_ARROW_HALLOWED = registerSupplier("mana_arrow_hallowed", () -> new ManaArrowItem(Sources.HALLOWED, new Item.Properties()));
     
     // Register armor items
     public static final RegistryObject<RobeArmorItem> IMBUED_WOOL_HEAD = registerSupplier("imbued_wool_head", () -> new RobeArmorItem(ArmorMaterialPM.IMBUED_WOOL, ArmorItem.Type.HELMET, 1, new Item.Properties().rarity(Rarity.COMMON)));
@@ -586,52 +586,52 @@ public class ItemsPM {
     public static final RegistryObject<KnowledgeGainItem> THEORY_NOTES = registerSupplier("theory_notes", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<KnowledgeGainItem> MYSTICAL_RELIC = registerSupplier("mystical_relic", () -> new KnowledgeGainItem(KnowledgeType.THEORY, KnowledgeType.THEORY.getProgression(), new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<Item> MYSTICAL_RELIC_FRAGMENT = registerSupplier("mystical_relic_fragment", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = registerSupplier("blood_notes", () -> new ForbiddenSourceGainItem(Source.BLOOD, new Item.Properties().rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<ForbiddenSourceGainItem> BLOOD_NOTES = registerSupplier("blood_notes", () -> new ForbiddenSourceGainItem(Sources.BLOOD, new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final RegistryObject<ResearchGainItem> SHEEP_TOME = registerSupplier("sheep_tome", () -> new ResearchGainItem(ResearchNames.simpleKey(ResearchNames.SPELL_PAYLOAD_POLYMORPH_SHEEP), new Item.Properties().rarity(Rarity.UNCOMMON)));
     
     // Register dust essence items
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = registerSupplier("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Source.EARTH));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SEA = registerSupplier("essence_dust_sea", () -> new EssenceItem(EssenceType.DUST, Source.SEA));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SKY = registerSupplier("essence_dust_sky", () -> new EssenceItem(EssenceType.DUST, Source.SKY));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SUN = registerSupplier("essence_dust_sun", () -> new EssenceItem(EssenceType.DUST, Source.SUN));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_MOON = registerSupplier("essence_dust_moon", () -> new EssenceItem(EssenceType.DUST, Source.MOON));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_BLOOD = registerSupplier("essence_dust_blood", () -> new EssenceItem(EssenceType.DUST, Source.BLOOD));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_INFERNAL = registerSupplier("essence_dust_infernal", () -> new EssenceItem(EssenceType.DUST, Source.INFERNAL));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_VOID = registerSupplier("essence_dust_void", () -> new EssenceItem(EssenceType.DUST, Source.VOID));
-    public static final RegistryObject<EssenceItem> ESSENCE_DUST_HALLOWED = registerSupplier("essence_dust_hallowed", () -> new EssenceItem(EssenceType.DUST, Source.HALLOWED));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_EARTH = registerSupplier("essence_dust_earth", () -> new EssenceItem(EssenceType.DUST, Sources.EARTH));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SEA = registerSupplier("essence_dust_sea", () -> new EssenceItem(EssenceType.DUST, Sources.SEA));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SKY = registerSupplier("essence_dust_sky", () -> new EssenceItem(EssenceType.DUST, Sources.SKY));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_SUN = registerSupplier("essence_dust_sun", () -> new EssenceItem(EssenceType.DUST, Sources.SUN));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_MOON = registerSupplier("essence_dust_moon", () -> new EssenceItem(EssenceType.DUST, Sources.MOON));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_BLOOD = registerSupplier("essence_dust_blood", () -> new EssenceItem(EssenceType.DUST, Sources.BLOOD));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_INFERNAL = registerSupplier("essence_dust_infernal", () -> new EssenceItem(EssenceType.DUST, Sources.INFERNAL));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_VOID = registerSupplier("essence_dust_void", () -> new EssenceItem(EssenceType.DUST, Sources.VOID));
+    public static final RegistryObject<EssenceItem> ESSENCE_DUST_HALLOWED = registerSupplier("essence_dust_hallowed", () -> new EssenceItem(EssenceType.DUST, Sources.HALLOWED));
 
     // Register shard essence items
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_EARTH = registerSupplier("essence_shard_earth", () -> new EssenceItem(EssenceType.SHARD, Source.EARTH));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SEA = registerSupplier("essence_shard_sea", () -> new EssenceItem(EssenceType.SHARD, Source.SEA));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SKY = registerSupplier("essence_shard_sky", () -> new EssenceItem(EssenceType.SHARD, Source.SKY));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SUN = registerSupplier("essence_shard_sun", () -> new EssenceItem(EssenceType.SHARD, Source.SUN));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_MOON = registerSupplier("essence_shard_moon", () -> new EssenceItem(EssenceType.SHARD, Source.MOON));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_BLOOD = registerSupplier("essence_shard_blood", () -> new EssenceItem(EssenceType.SHARD, Source.BLOOD));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_INFERNAL = registerSupplier("essence_shard_infernal", () -> new EssenceItem(EssenceType.SHARD, Source.INFERNAL));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_VOID = registerSupplier("essence_shard_void", () -> new EssenceItem(EssenceType.SHARD, Source.VOID));
-    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_HALLOWED = registerSupplier("essence_shard_hallowed", () -> new EssenceItem(EssenceType.SHARD, Source.HALLOWED));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_EARTH = registerSupplier("essence_shard_earth", () -> new EssenceItem(EssenceType.SHARD, Sources.EARTH));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SEA = registerSupplier("essence_shard_sea", () -> new EssenceItem(EssenceType.SHARD, Sources.SEA));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SKY = registerSupplier("essence_shard_sky", () -> new EssenceItem(EssenceType.SHARD, Sources.SKY));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_SUN = registerSupplier("essence_shard_sun", () -> new EssenceItem(EssenceType.SHARD, Sources.SUN));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_MOON = registerSupplier("essence_shard_moon", () -> new EssenceItem(EssenceType.SHARD, Sources.MOON));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_BLOOD = registerSupplier("essence_shard_blood", () -> new EssenceItem(EssenceType.SHARD, Sources.BLOOD));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_INFERNAL = registerSupplier("essence_shard_infernal", () -> new EssenceItem(EssenceType.SHARD, Sources.INFERNAL));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_VOID = registerSupplier("essence_shard_void", () -> new EssenceItem(EssenceType.SHARD, Sources.VOID));
+    public static final RegistryObject<EssenceItem> ESSENCE_SHARD_HALLOWED = registerSupplier("essence_shard_hallowed", () -> new EssenceItem(EssenceType.SHARD, Sources.HALLOWED));
 
     // Register crystal essence items
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_EARTH = registerSupplier("essence_crystal_earth", () -> new EssenceItem(EssenceType.CRYSTAL, Source.EARTH));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SEA = registerSupplier("essence_crystal_sea", () -> new EssenceItem(EssenceType.CRYSTAL, Source.SEA));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SKY = registerSupplier("essence_crystal_sky", () -> new EssenceItem(EssenceType.CRYSTAL, Source.SKY));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SUN = registerSupplier("essence_crystal_sun", () -> new EssenceItem(EssenceType.CRYSTAL, Source.SUN));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_MOON = registerSupplier("essence_crystal_moon", () -> new EssenceItem(EssenceType.CRYSTAL, Source.MOON));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_BLOOD = registerSupplier("essence_crystal_blood", () -> new EssenceItem(EssenceType.CRYSTAL, Source.BLOOD));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_INFERNAL = registerSupplier("essence_crystal_infernal", () -> new EssenceItem(EssenceType.CRYSTAL, Source.INFERNAL));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_VOID = registerSupplier("essence_crystal_void", () -> new EssenceItem(EssenceType.CRYSTAL, Source.VOID));
-    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_HALLOWED = registerSupplier("essence_crystal_hallowed", () -> new EssenceItem(EssenceType.CRYSTAL, Source.HALLOWED));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_EARTH = registerSupplier("essence_crystal_earth", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.EARTH));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SEA = registerSupplier("essence_crystal_sea", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SEA));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SKY = registerSupplier("essence_crystal_sky", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SKY));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_SUN = registerSupplier("essence_crystal_sun", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.SUN));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_MOON = registerSupplier("essence_crystal_moon", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.MOON));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_BLOOD = registerSupplier("essence_crystal_blood", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.BLOOD));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_INFERNAL = registerSupplier("essence_crystal_infernal", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.INFERNAL));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_VOID = registerSupplier("essence_crystal_void", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.VOID));
+    public static final RegistryObject<EssenceItem> ESSENCE_CRYSTAL_HALLOWED = registerSupplier("essence_crystal_hallowed", () -> new EssenceItem(EssenceType.CRYSTAL, Sources.HALLOWED));
 
     // Register cluster essence items
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_EARTH = registerSupplier("essence_cluster_earth", () -> new EssenceItem(EssenceType.CLUSTER, Source.EARTH));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SEA = registerSupplier("essence_cluster_sea", () -> new EssenceItem(EssenceType.CLUSTER, Source.SEA));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SKY = registerSupplier("essence_cluster_sky", () -> new EssenceItem(EssenceType.CLUSTER, Source.SKY));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SUN = registerSupplier("essence_cluster_sun", () -> new EssenceItem(EssenceType.CLUSTER, Source.SUN));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_MOON = registerSupplier("essence_cluster_moon", () -> new EssenceItem(EssenceType.CLUSTER, Source.MOON));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_BLOOD = registerSupplier("essence_cluster_blood", () -> new EssenceItem(EssenceType.CLUSTER, Source.BLOOD));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_INFERNAL = registerSupplier("essence_cluster_infernal", () -> new EssenceItem(EssenceType.CLUSTER, Source.INFERNAL));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_VOID = registerSupplier("essence_cluster_void", () -> new EssenceItem(EssenceType.CLUSTER, Source.VOID));
-    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_HALLOWED = registerSupplier("essence_cluster_hallowed", () -> new EssenceItem(EssenceType.CLUSTER, Source.HALLOWED));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_EARTH = registerSupplier("essence_cluster_earth", () -> new EssenceItem(EssenceType.CLUSTER, Sources.EARTH));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SEA = registerSupplier("essence_cluster_sea", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SEA));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SKY = registerSupplier("essence_cluster_sky", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SKY));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_SUN = registerSupplier("essence_cluster_sun", () -> new EssenceItem(EssenceType.CLUSTER, Sources.SUN));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_MOON = registerSupplier("essence_cluster_moon", () -> new EssenceItem(EssenceType.CLUSTER, Sources.MOON));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_BLOOD = registerSupplier("essence_cluster_blood", () -> new EssenceItem(EssenceType.CLUSTER, Sources.BLOOD));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_INFERNAL = registerSupplier("essence_cluster_infernal", () -> new EssenceItem(EssenceType.CLUSTER, Sources.INFERNAL));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_VOID = registerSupplier("essence_cluster_void", () -> new EssenceItem(EssenceType.CLUSTER, Sources.VOID));
+    public static final RegistryObject<EssenceItem> ESSENCE_CLUSTER_HALLOWED = registerSupplier("essence_cluster_hallowed", () -> new EssenceItem(EssenceType.CLUSTER, Sources.HALLOWED));
     
     // Register rune items
     public static final RegistryObject<Item> RUNE_UNATTUNED = registerSupplier("rune_unattuned", () -> new Item(new Item.Properties()));
@@ -658,56 +658,56 @@ public class ItemsPM {
     public static final RegistryObject<RuneItem> RUNE_GRACE = registerSupplier("rune_grace", () -> new RuneItem(Rune.GRACE));
     
     // Register ambrosia items
-    public static final RegistryObject<AmbrosiaItem> BASIC_EARTH_AMBROSIA = registerSupplier("ambrosia_basic_earth", () -> new AmbrosiaItem(Source.EARTH, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_SEA_AMBROSIA = registerSupplier("ambrosia_basic_sea", () -> new AmbrosiaItem(Source.SEA, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_SKY_AMBROSIA = registerSupplier("ambrosia_basic_sky", () -> new AmbrosiaItem(Source.SKY, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_SUN_AMBROSIA = registerSupplier("ambrosia_basic_sun", () -> new AmbrosiaItem(Source.SUN, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_MOON_AMBROSIA = registerSupplier("ambrosia_basic_moon", () -> new AmbrosiaItem(Source.MOON, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_BLOOD_AMBROSIA = registerSupplier("ambrosia_basic_blood", () -> new AmbrosiaItem(Source.BLOOD, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_INFERNAL_AMBROSIA = registerSupplier("ambrosia_basic_infernal", () -> new AmbrosiaItem(Source.INFERNAL, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_VOID_AMBROSIA = registerSupplier("ambrosia_basic_void", () -> new AmbrosiaItem(Source.VOID, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> BASIC_HALLOWED_AMBROSIA = registerSupplier("ambrosia_basic_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_EARTH_AMBROSIA = registerSupplier("ambrosia_greater_earth", () -> new AmbrosiaItem(Source.EARTH, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_SEA_AMBROSIA = registerSupplier("ambrosia_greater_sea", () -> new AmbrosiaItem(Source.SEA, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_SKY_AMBROSIA = registerSupplier("ambrosia_greater_sky", () -> new AmbrosiaItem(Source.SKY, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_SUN_AMBROSIA = registerSupplier("ambrosia_greater_sun", () -> new AmbrosiaItem(Source.SUN, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_MOON_AMBROSIA = registerSupplier("ambrosia_greater_moon", () -> new AmbrosiaItem(Source.MOON, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_BLOOD_AMBROSIA = registerSupplier("ambrosia_greater_blood", () -> new AmbrosiaItem(Source.BLOOD, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_INFERNAL_AMBROSIA = registerSupplier("ambrosia_greater_infernal", () -> new AmbrosiaItem(Source.INFERNAL, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_VOID_AMBROSIA = registerSupplier("ambrosia_greater_void", () -> new AmbrosiaItem(Source.VOID, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> GREATER_HALLOWED_AMBROSIA = registerSupplier("ambrosia_greater_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_EARTH_AMBROSIA = registerSupplier("ambrosia_supreme_earth", () -> new AmbrosiaItem(Source.EARTH, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_SEA_AMBROSIA = registerSupplier("ambrosia_supreme_sea", () -> new AmbrosiaItem(Source.SEA, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_SKY_AMBROSIA = registerSupplier("ambrosia_supreme_sky", () -> new AmbrosiaItem(Source.SKY, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_SUN_AMBROSIA = registerSupplier("ambrosia_supreme_sun", () -> new AmbrosiaItem(Source.SUN, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_MOON_AMBROSIA = registerSupplier("ambrosia_supreme_moon", () -> new AmbrosiaItem(Source.MOON, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_BLOOD_AMBROSIA = registerSupplier("ambrosia_supreme_blood", () -> new AmbrosiaItem(Source.BLOOD, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_INFERNAL_AMBROSIA = registerSupplier("ambrosia_supreme_infernal", () -> new AmbrosiaItem(Source.INFERNAL, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_VOID_AMBROSIA = registerSupplier("ambrosia_supreme_void", () -> new AmbrosiaItem(Source.VOID, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
-    public static final RegistryObject<AmbrosiaItem> SUPREME_HALLOWED_AMBROSIA = registerSupplier("ambrosia_supreme_hallowed", () -> new AmbrosiaItem(Source.HALLOWED, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_EARTH_AMBROSIA = registerSupplier("ambrosia_basic_earth", () -> new AmbrosiaItem(Sources.EARTH, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SEA_AMBROSIA = registerSupplier("ambrosia_basic_sea", () -> new AmbrosiaItem(Sources.SEA, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SKY_AMBROSIA = registerSupplier("ambrosia_basic_sky", () -> new AmbrosiaItem(Sources.SKY, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_SUN_AMBROSIA = registerSupplier("ambrosia_basic_sun", () -> new AmbrosiaItem(Sources.SUN, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_MOON_AMBROSIA = registerSupplier("ambrosia_basic_moon", () -> new AmbrosiaItem(Sources.MOON, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_BLOOD_AMBROSIA = registerSupplier("ambrosia_basic_blood", () -> new AmbrosiaItem(Sources.BLOOD, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_INFERNAL_AMBROSIA = registerSupplier("ambrosia_basic_infernal", () -> new AmbrosiaItem(Sources.INFERNAL, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_VOID_AMBROSIA = registerSupplier("ambrosia_basic_void", () -> new AmbrosiaItem(Sources.VOID, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> BASIC_HALLOWED_AMBROSIA = registerSupplier("ambrosia_basic_hallowed", () -> new AmbrosiaItem(Sources.HALLOWED, AmbrosiaItem.Type.BASIC, new Item.Properties().rarity(Rarity.UNCOMMON).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_EARTH_AMBROSIA = registerSupplier("ambrosia_greater_earth", () -> new AmbrosiaItem(Sources.EARTH, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_SEA_AMBROSIA = registerSupplier("ambrosia_greater_sea", () -> new AmbrosiaItem(Sources.SEA, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_SKY_AMBROSIA = registerSupplier("ambrosia_greater_sky", () -> new AmbrosiaItem(Sources.SKY, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_SUN_AMBROSIA = registerSupplier("ambrosia_greater_sun", () -> new AmbrosiaItem(Sources.SUN, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_MOON_AMBROSIA = registerSupplier("ambrosia_greater_moon", () -> new AmbrosiaItem(Sources.MOON, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_BLOOD_AMBROSIA = registerSupplier("ambrosia_greater_blood", () -> new AmbrosiaItem(Sources.BLOOD, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_INFERNAL_AMBROSIA = registerSupplier("ambrosia_greater_infernal", () -> new AmbrosiaItem(Sources.INFERNAL, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_VOID_AMBROSIA = registerSupplier("ambrosia_greater_void", () -> new AmbrosiaItem(Sources.VOID, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> GREATER_HALLOWED_AMBROSIA = registerSupplier("ambrosia_greater_hallowed", () -> new AmbrosiaItem(Sources.HALLOWED, AmbrosiaItem.Type.GREATER, new Item.Properties().rarity(Rarity.RARE).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_EARTH_AMBROSIA = registerSupplier("ambrosia_supreme_earth", () -> new AmbrosiaItem(Sources.EARTH, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_SEA_AMBROSIA = registerSupplier("ambrosia_supreme_sea", () -> new AmbrosiaItem(Sources.SEA, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_SKY_AMBROSIA = registerSupplier("ambrosia_supreme_sky", () -> new AmbrosiaItem(Sources.SKY, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_SUN_AMBROSIA = registerSupplier("ambrosia_supreme_sun", () -> new AmbrosiaItem(Sources.SUN, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_MOON_AMBROSIA = registerSupplier("ambrosia_supreme_moon", () -> new AmbrosiaItem(Sources.MOON, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_BLOOD_AMBROSIA = registerSupplier("ambrosia_supreme_blood", () -> new AmbrosiaItem(Sources.BLOOD, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_INFERNAL_AMBROSIA = registerSupplier("ambrosia_supreme_infernal", () -> new AmbrosiaItem(Sources.INFERNAL, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_VOID_AMBROSIA = registerSupplier("ambrosia_supreme_void", () -> new AmbrosiaItem(Sources.VOID, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
+    public static final RegistryObject<AmbrosiaItem> SUPREME_HALLOWED_AMBROSIA = registerSupplier("ambrosia_supreme_hallowed", () -> new AmbrosiaItem(Sources.HALLOWED, AmbrosiaItem.Type.SUPREME, new Item.Properties().rarity(Rarity.EPIC).food(FoodsPM.AMBROSIA)));
     
     // Register attunement shackle items
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_EARTH = registerSupplier("attunement_shackles_earth", () -> new AttunementShacklesItem(Source.EARTH, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SEA = registerSupplier("attunement_shackles_sea", () -> new AttunementShacklesItem(Source.SEA, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SKY = registerSupplier("attunement_shackles_sky", () -> new AttunementShacklesItem(Source.SKY, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SUN = registerSupplier("attunement_shackles_sun", () -> new AttunementShacklesItem(Source.SUN, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_MOON = registerSupplier("attunement_shackles_moon", () -> new AttunementShacklesItem(Source.MOON, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_BLOOD = registerSupplier("attunement_shackles_blood", () -> new AttunementShacklesItem(Source.BLOOD, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_INFERNAL = registerSupplier("attunement_shackles_infernal", () -> new AttunementShacklesItem(Source.INFERNAL, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_VOID = registerSupplier("attunement_shackles_void", () -> new AttunementShacklesItem(Source.VOID, new Item.Properties()));
-    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_HALLOWED = registerSupplier("attunement_shackles_hallowed", () -> new AttunementShacklesItem(Source.HALLOWED, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_EARTH = registerSupplier("attunement_shackles_earth", () -> new AttunementShacklesItem(Sources.EARTH, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SEA = registerSupplier("attunement_shackles_sea", () -> new AttunementShacklesItem(Sources.SEA, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SKY = registerSupplier("attunement_shackles_sky", () -> new AttunementShacklesItem(Sources.SKY, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_SUN = registerSupplier("attunement_shackles_sun", () -> new AttunementShacklesItem(Sources.SUN, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_MOON = registerSupplier("attunement_shackles_moon", () -> new AttunementShacklesItem(Sources.MOON, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_BLOOD = registerSupplier("attunement_shackles_blood", () -> new AttunementShacklesItem(Sources.BLOOD, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_INFERNAL = registerSupplier("attunement_shackles_infernal", () -> new AttunementShacklesItem(Sources.INFERNAL, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_VOID = registerSupplier("attunement_shackles_void", () -> new AttunementShacklesItem(Sources.VOID, new Item.Properties()));
+    public static final RegistryObject<AttunementShacklesItem> ATTUNEMENT_SHACKLES_HALLOWED = registerSupplier("attunement_shackles_hallowed", () -> new AttunementShacklesItem(Sources.HALLOWED, new Item.Properties()));
     
     // Register humming artifact items
     public static final RegistryObject<Item> HUMMING_ARTIFACT_UNATTUNED = registerSupplier("humming_artifact_unattuned", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_EARTH = registerSupplier("humming_artifact_earth", () -> new HummingArtifactItem(Source.EARTH, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SEA = registerSupplier("humming_artifact_sea", () -> new HummingArtifactItem(Source.SEA, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SKY = registerSupplier("humming_artifact_sky", () -> new HummingArtifactItem(Source.SKY, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SUN = registerSupplier("humming_artifact_sun", () -> new HummingArtifactItem(Source.SUN, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_MOON = registerSupplier("humming_artifact_moon", () -> new HummingArtifactItem(Source.MOON, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_BLOOD = registerSupplier("humming_artifact_blood", () -> new HummingArtifactItem(Source.BLOOD, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_INFERNAL = registerSupplier("humming_artifact_infernal", () -> new HummingArtifactItem(Source.INFERNAL, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_VOID = registerSupplier("humming_artifact_void", () -> new HummingArtifactItem(Source.VOID, new Item.Properties().rarity(Rarity.RARE)));
-    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_HALLOWED = registerSupplier("humming_artifact_hallowed", () -> new HummingArtifactItem(Source.HALLOWED, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_EARTH = registerSupplier("humming_artifact_earth", () -> new HummingArtifactItem(Sources.EARTH, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SEA = registerSupplier("humming_artifact_sea", () -> new HummingArtifactItem(Sources.SEA, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SKY = registerSupplier("humming_artifact_sky", () -> new HummingArtifactItem(Sources.SKY, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_SUN = registerSupplier("humming_artifact_sun", () -> new HummingArtifactItem(Sources.SUN, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_MOON = registerSupplier("humming_artifact_moon", () -> new HummingArtifactItem(Sources.MOON, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_BLOOD = registerSupplier("humming_artifact_blood", () -> new HummingArtifactItem(Sources.BLOOD, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_INFERNAL = registerSupplier("humming_artifact_infernal", () -> new HummingArtifactItem(Sources.INFERNAL, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_VOID = registerSupplier("humming_artifact_void", () -> new HummingArtifactItem(Sources.VOID, new Item.Properties().rarity(Rarity.RARE)));
+    public static final RegistryObject<HummingArtifactItem> HUMMING_ARTIFACT_HALLOWED = registerSupplier("humming_artifact_hallowed", () -> new HummingArtifactItem(Sources.HALLOWED, new Item.Properties().rarity(Rarity.RARE)));
     
     // Register sanguine core items
     public static final RegistryObject<Item> SANGUINE_CORE_BLANK = registerSupplier("sanguine_core_blank", () -> new Item(new Item.Properties()));
@@ -834,33 +834,33 @@ public class ItemsPM {
     public static final RegistryObject<ForgeSpawnEggItem> PRIMALITE_GOLEM_SPAWN_EGG = registerSupplier("primalite_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.PRIMALITE_GOLEM.get(), 0x27E1C7, 0x026278, new Item.Properties()));
     public static final RegistryObject<ForgeSpawnEggItem> HEXIUM_GOLEM_SPAWN_EGG = registerSupplier("hexium_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HEXIUM_GOLEM.get(), 0x791E29, 0x100736, new Item.Properties()));
     public static final RegistryObject<ForgeSpawnEggItem> HALLOWSTEEL_GOLEM_SPAWN_EGG = registerSupplier("hallowsteel_golem_spawn_egg", () -> new ForgeSpawnEggItem(() -> EntityTypesPM.HALLOWSTEEL_GOLEM.get(), 0xFDFFE0, 0xEDE1A2, new Item.Properties()));
-    public static final RegistryObject<PixieItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", () -> new PixieItem(() -> EntityTypesPM.GRAND_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), Source.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_SEA_PIXIE = registerSupplier("pixie_basic_sea", () -> new PixieItem(() -> EntityTypesPM.BASIC_SEA_PIXIE.get(), Source.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_SEA_PIXIE = registerSupplier("pixie_grand_sea", () -> new PixieItem(() -> EntityTypesPM.GRAND_SEA_PIXIE.get(), Source.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_SEA_PIXIE = registerSupplier("pixie_majestic_sea", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), Source.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_SKY_PIXIE = registerSupplier("pixie_basic_sky", () -> new PixieItem(() -> EntityTypesPM.BASIC_SKY_PIXIE.get(), Source.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_SKY_PIXIE = registerSupplier("pixie_grand_sky", () -> new PixieItem(() -> EntityTypesPM.GRAND_SKY_PIXIE.get(), Source.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_SKY_PIXIE = registerSupplier("pixie_majestic_sky", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), Source.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_SUN_PIXIE = registerSupplier("pixie_basic_sun", () -> new PixieItem(() -> EntityTypesPM.BASIC_SUN_PIXIE.get(), Source.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_SUN_PIXIE = registerSupplier("pixie_grand_sun", () -> new PixieItem(() -> EntityTypesPM.GRAND_SUN_PIXIE.get(), Source.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_SUN_PIXIE = registerSupplier("pixie_majestic_sun", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), Source.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_MOON_PIXIE = registerSupplier("pixie_basic_moon", () -> new PixieItem(() -> EntityTypesPM.BASIC_MOON_PIXIE.get(), Source.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_MOON_PIXIE = registerSupplier("pixie_grand_moon", () -> new PixieItem(() -> EntityTypesPM.GRAND_MOON_PIXIE.get(), Source.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_MOON_PIXIE = registerSupplier("pixie_majestic_moon", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), Source.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_BLOOD_PIXIE = registerSupplier("pixie_basic_blood", () -> new PixieItem(() -> EntityTypesPM.BASIC_BLOOD_PIXIE.get(), Source.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_BLOOD_PIXIE = registerSupplier("pixie_grand_blood", () -> new PixieItem(() -> EntityTypesPM.GRAND_BLOOD_PIXIE.get(), Source.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_BLOOD_PIXIE = registerSupplier("pixie_majestic_blood", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), Source.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_INFERNAL_PIXIE = registerSupplier("pixie_basic_infernal", () -> new PixieItem(() -> EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), Source.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_INFERNAL_PIXIE = registerSupplier("pixie_grand_infernal", () -> new PixieItem(() -> EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), Source.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_INFERNAL_PIXIE = registerSupplier("pixie_majestic_infernal", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), Source.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_VOID_PIXIE = registerSupplier("pixie_basic_void", () -> new PixieItem(() -> EntityTypesPM.BASIC_VOID_PIXIE.get(), Source.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_VOID_PIXIE = registerSupplier("pixie_grand_void", () -> new PixieItem(() -> EntityTypesPM.GRAND_VOID_PIXIE.get(), Source.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_VOID_PIXIE = registerSupplier("pixie_majestic_void", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), Source.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
-    public static final RegistryObject<PixieItem> BASIC_HALLOWED_PIXIE = registerSupplier("pixie_basic_hallowed", () -> new PixieItem(() -> EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), Source.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
-    public static final RegistryObject<PixieItem> GRAND_HALLOWED_PIXIE = registerSupplier("pixie_grand_hallowed", () -> new PixieItem(() -> EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), Source.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<PixieItem> MAJESTIC_HALLOWED_PIXIE = registerSupplier("pixie_majestic_hallowed", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), Source.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_EARTH_PIXIE = registerSupplier("pixie_basic_earth", () -> new PixieItem(() -> EntityTypesPM.BASIC_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_EARTH_PIXIE = registerSupplier("pixie_grand_earth", () -> new PixieItem(() -> EntityTypesPM.GRAND_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_EARTH_PIXIE = registerSupplier("pixie_majestic_earth", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_EARTH_PIXIE.get(), Sources.EARTH, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_SEA_PIXIE = registerSupplier("pixie_basic_sea", () -> new PixieItem(() -> EntityTypesPM.BASIC_SEA_PIXIE.get(), Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_SEA_PIXIE = registerSupplier("pixie_grand_sea", () -> new PixieItem(() -> EntityTypesPM.GRAND_SEA_PIXIE.get(), Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_SEA_PIXIE = registerSupplier("pixie_majestic_sea", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SEA_PIXIE.get(), Sources.SEA, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_SKY_PIXIE = registerSupplier("pixie_basic_sky", () -> new PixieItem(() -> EntityTypesPM.BASIC_SKY_PIXIE.get(), Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_SKY_PIXIE = registerSupplier("pixie_grand_sky", () -> new PixieItem(() -> EntityTypesPM.GRAND_SKY_PIXIE.get(), Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_SKY_PIXIE = registerSupplier("pixie_majestic_sky", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SKY_PIXIE.get(), Sources.SKY, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_SUN_PIXIE = registerSupplier("pixie_basic_sun", () -> new PixieItem(() -> EntityTypesPM.BASIC_SUN_PIXIE.get(), Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_SUN_PIXIE = registerSupplier("pixie_grand_sun", () -> new PixieItem(() -> EntityTypesPM.GRAND_SUN_PIXIE.get(), Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_SUN_PIXIE = registerSupplier("pixie_majestic_sun", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_SUN_PIXIE.get(), Sources.SUN, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_MOON_PIXIE = registerSupplier("pixie_basic_moon", () -> new PixieItem(() -> EntityTypesPM.BASIC_MOON_PIXIE.get(), Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_MOON_PIXIE = registerSupplier("pixie_grand_moon", () -> new PixieItem(() -> EntityTypesPM.GRAND_MOON_PIXIE.get(), Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_MOON_PIXIE = registerSupplier("pixie_majestic_moon", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_MOON_PIXIE.get(), Sources.MOON, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_BLOOD_PIXIE = registerSupplier("pixie_basic_blood", () -> new PixieItem(() -> EntityTypesPM.BASIC_BLOOD_PIXIE.get(), Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_BLOOD_PIXIE = registerSupplier("pixie_grand_blood", () -> new PixieItem(() -> EntityTypesPM.GRAND_BLOOD_PIXIE.get(), Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_BLOOD_PIXIE = registerSupplier("pixie_majestic_blood", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_BLOOD_PIXIE.get(), Sources.BLOOD, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_INFERNAL_PIXIE = registerSupplier("pixie_basic_infernal", () -> new PixieItem(() -> EntityTypesPM.BASIC_INFERNAL_PIXIE.get(), Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_INFERNAL_PIXIE = registerSupplier("pixie_grand_infernal", () -> new PixieItem(() -> EntityTypesPM.GRAND_INFERNAL_PIXIE.get(), Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_INFERNAL_PIXIE = registerSupplier("pixie_majestic_infernal", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_INFERNAL_PIXIE.get(), Sources.INFERNAL, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_VOID_PIXIE = registerSupplier("pixie_basic_void", () -> new PixieItem(() -> EntityTypesPM.BASIC_VOID_PIXIE.get(), Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_VOID_PIXIE = registerSupplier("pixie_grand_void", () -> new PixieItem(() -> EntityTypesPM.GRAND_VOID_PIXIE.get(), Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_VOID_PIXIE = registerSupplier("pixie_majestic_void", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_VOID_PIXIE.get(), Sources.VOID, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
+    public static final RegistryObject<PixieItem> BASIC_HALLOWED_PIXIE = registerSupplier("pixie_basic_hallowed", () -> new PixieItem(() -> EntityTypesPM.BASIC_HALLOWED_PIXIE.get(), Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));
+    public static final RegistryObject<PixieItem> GRAND_HALLOWED_PIXIE = registerSupplier("pixie_grand_hallowed", () -> new PixieItem(() -> EntityTypesPM.GRAND_HALLOWED_PIXIE.get(), Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<PixieItem> MAJESTIC_HALLOWED_PIXIE = registerSupplier("pixie_majestic_hallowed", () -> new PixieItem(() -> EntityTypesPM.MAJESTIC_HALLOWED_PIXIE.get(), Sources.HALLOWED, new Item.Properties().stacksTo(16).rarity(Rarity.RARE)));
     
     // Register drained pixie items
     public static final RegistryObject<Item> DRAINED_BASIC_EARTH_PIXIE = registerWithoutTab("drained_pixie_basic_earth", () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.COMMON)));

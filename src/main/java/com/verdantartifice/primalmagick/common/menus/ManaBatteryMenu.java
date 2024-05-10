@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.common.menus.data.ContainerSynchronizerL
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.mana.ManaBatteryTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -157,12 +158,12 @@ public class ManaBatteryMenu extends AbstractTileSidedInventoryMenu<ManaBatteryT
     }
     
     public int getCurrentMana(Source source) {
-        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        int sourceIndex = Sources.getAllSorted().indexOf(source);
         return this.data.get(2 + (2 * sourceIndex));
     }
     
     public int getMaxMana(Source source) {
-        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
+        int sourceIndex = Sources.getAllSorted().indexOf(source);
         return this.data.get(3 + (2 * sourceIndex));
     }
 }

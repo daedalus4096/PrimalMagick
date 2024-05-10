@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.common.research.ScanItemResearchTrigger;
 import com.verdantartifice.primalmagick.common.research.ScanItemTagResearchTrigger;
 import com.verdantartifice.primalmagick.common.research.ScanSourceUnlockTrigger;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.EntityTypeTagsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -28,7 +28,7 @@ public class InitResearch {
     }
     
     private static void initScanResearch() {
-        ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Source.HALLOWED));
+        ResearchManager.registerScanTrigger(new ScanSourceUnlockTrigger(ItemsPM.HALLOWED_ORB.get(), Sources.HALLOWED));
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.HALLOWED_ORB.get(), SimpleResearchKey.find("b_sotu_scan_hallowed_orb").orElseThrow()));
         SimpleResearchKey rawMarble = SimpleResearchKey.find("RAW_MARBLE").orElseThrow();
         ResearchManager.registerScanTrigger(new ScanItemResearchTrigger(ItemsPM.MARBLE_RAW.get(), rawMarble));

@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
 import net.minecraft.client.Minecraft;
@@ -50,7 +51,7 @@ public class WandHudOverlay implements IGuiOverlay {
         int index = 0;
         int maxMana = wand.getMaxMana(stack);
         Component maxText = wand.getMaxManaText(stack);
-        List<Source> discoveredSources = Source.SORTED_SOURCES.stream().filter(s -> s.isDiscovered(mc.player)).collect(Collectors.toList());
+        List<Source> discoveredSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).collect(Collectors.toList());
         for (Source source : discoveredSources) {
             int curMana = wand.getMana(stack, source);
             Component curText = wand.getManaText(stack, source);

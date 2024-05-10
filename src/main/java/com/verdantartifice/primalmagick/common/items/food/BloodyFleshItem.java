@@ -5,7 +5,7 @@ import java.util.List;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -32,9 +32,9 @@ public class BloodyFleshItem extends Item {
         if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
             Player player = (Player)entityLiving;
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Source.BLOOD.getDiscoverKey())) {
+                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Sources.BLOOD.getDiscoverKey())) {
                     // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
-                    ResearchManager.completeResearch(player, Source.BLOOD.getDiscoverKey());
+                    ResearchManager.completeResearch(player, Sources.BLOOD.getDiscoverKey());
                     player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
                 }
             });
@@ -44,7 +44,7 @@ public class BloodyFleshItem extends Item {
     
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.1").withStyle(Source.BLOOD.getChatColor(), ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.2").withStyle(Source.BLOOD.getChatColor(), ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.1").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("item.primalmagick.bloody_flesh.tooltip.2").withStyle(Sources.BLOOD.getChatColor(), ChatFormatting.ITALIC));
     }
 }

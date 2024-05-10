@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInven
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.devices.EssenceCaskTileEntity;
 
@@ -153,7 +154,7 @@ public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskT
         
         // If the research has not been discovered, but there's an essence of that type in the cask, then it's visible
         int typeIndex = type.ordinal();
-        int rowSize = Source.SORTED_SOURCES.size();
+        int rowSize = Sources.getAllSorted().size();
         for (int index = 0; index < this.caskData.getCount(); index++) {
             if (index / rowSize == typeIndex && this.caskData.get(index) > 0) {
                 return true;
@@ -175,8 +176,8 @@ public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskT
         }
         
         // If the source has not been discovered, but there's an essence of that source in the cask, then it's visible
-        int sourceIndex = Source.SORTED_SOURCES.indexOf(source);
-        int rowSize = Source.SORTED_SOURCES.size();
+        int sourceIndex = Sources.getAllSorted().indexOf(source);
+        int rowSize = Sources.getAllSorted().size();
         for (int index = 0; index < this.caskData.getCount(); index++) {
             if (index % rowSize == sourceIndex && this.caskData.get(index) > 0) {
                 return true;

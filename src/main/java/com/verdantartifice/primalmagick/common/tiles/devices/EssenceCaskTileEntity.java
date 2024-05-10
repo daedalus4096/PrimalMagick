@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
 import com.verdantartifice.primalmagick.common.misc.DeviceTier;
 import com.verdantartifice.primalmagick.common.misc.ITieredDevice;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 
@@ -48,7 +49,7 @@ import net.minecraftforge.items.ItemStackHandler;
  */
 public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implements MenuProvider {
     public static final int NUM_ROWS = EssenceType.values().length;
-    public static final int NUM_COLS = Source.SORTED_SOURCES.size();
+    public static final int NUM_COLS = Sources.getAllSorted().size();
     public static final int NUM_SLOTS = NUM_ROWS * NUM_COLS;
     protected static final int INPUT_INV_INDEX = 0;
 
@@ -103,7 +104,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     public EssenceCaskTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.ESSENCE_CASK.get(), pos, state);
         for (EssenceType row : EssenceType.values()) {
-            for (Source col : Source.SORTED_SOURCES) {
+            for (Source col : Sources.getAllSorted()) {
                 this.contents.put(row, col, 0);
             }
         }
@@ -167,7 +168,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
     }
     
     protected Source getEssenceSourceForIndex(int index) {
-        return (index < 0 || index >= NUM_SLOTS) ? null : Source.SORTED_SOURCES.get(index % NUM_COLS);
+        return (index < 0 || index >= NUM_SLOTS) ? null : Sources.getAllSorted().get(index % NUM_COLS);
     }
     
     public int getEssenceCount(EssenceType essenceType, Source source) {
@@ -217,7 +218,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
         CompoundTag contentsTag = compound.getCompound("CaskContents");
         for (EssenceType type : EssenceType.values()) {
             CompoundTag typeContents = contentsTag.getCompound(type.getSerializedName());
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 int count = typeContents.getInt(source.getTag());
                 this.contents.put(type, source, count);
             }
@@ -234,7 +235,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
         CompoundTag contentsTag = new CompoundTag();
         for (EssenceType type : EssenceType.values()) {
             CompoundTag typeContents = new CompoundTag();
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 int count = this.contents.contains(type, source) ? this.contents.get(type, source) : 0;
                 typeContents.put(source.getTag(), IntTag.valueOf(count));
             }

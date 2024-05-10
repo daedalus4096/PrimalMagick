@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -30,7 +31,7 @@ public class ConjureStoneSpellPayload extends AbstractConjureBlockSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.EARTH;
+        return Sources.EARTH;
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.verdantartifice.primalmagick.common.misc.BlockBreaker;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.tags.BlockTagsForgeExt;
 
@@ -119,7 +120,7 @@ public class ShearSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.SKY;
+        return Sources.SKY;
     }
 
     @Override

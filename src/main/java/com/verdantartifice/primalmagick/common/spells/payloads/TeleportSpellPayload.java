@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.util.EntityUtils;
 
@@ -53,7 +54,7 @@ public class TeleportSpellPayload extends AbstractSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.VOID;
+        return Sources.VOID;
     }
 
     @Override

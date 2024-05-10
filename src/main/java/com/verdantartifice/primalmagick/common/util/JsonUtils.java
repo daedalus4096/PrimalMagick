@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -121,7 +122,7 @@ public class JsonUtils {
     @Nonnull
     public static SourceList toSourceList(@Nonnull JsonObject jsonObject) {
         SourceList.Builder retVal = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             retVal.with(source, GsonHelper.getAsInt(jsonObject, source.getTag(), 0));
         }
         return retVal.build();

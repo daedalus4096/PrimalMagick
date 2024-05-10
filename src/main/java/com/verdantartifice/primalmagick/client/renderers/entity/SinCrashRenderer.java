@@ -9,7 +9,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.renderers.entity.model.SpellProjectileModel;
 import com.verdantartifice.primalmagick.client.renderers.models.ModelLayersPM;
 import com.verdantartifice.primalmagick.common.entities.projectiles.SinCrashEntity;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -46,7 +46,7 @@ public class SinCrashRenderer extends EntityRenderer<SinCrashEntity> {
         float yaw = Mth.rotLerp(entity.yRotO, entity.getYRot(), partialTicks);
         float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
         float ticks = (float)entity.tickCount + partialTicks;
-        Color c = new Color(Source.VOID.getColor());
+        Color c = new Color(Sources.VOID.getColor());
         float r = (float)c.getRed() / 255.0F;
         float g = (float)c.getGreen() / 255.0F;
         float b = (float)c.getBlue() / 255.0F;

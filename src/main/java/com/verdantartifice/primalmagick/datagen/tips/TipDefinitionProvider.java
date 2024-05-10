@@ -14,7 +14,7 @@ import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.client.tips.TipDefinition;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -59,10 +59,10 @@ public class TipDefinitionProvider implements DataProvider {
         TipDefinition.builder("sky_shrine_loc").save(consumer);
         TipDefinition.builder("sun_shrine_loc").save(consumer);
         TipDefinition.builder("moon_shrine_loc").save(consumer);
-        TipDefinition.builder("no_blood_shrines").requiredResearch(CompoundResearchKey.from(Source.BLOOD.getDiscoverKey())).save(consumer);
-        TipDefinition.builder("no_infernal_shrines").requiredResearch(CompoundResearchKey.from(Source.INFERNAL.getDiscoverKey())).save(consumer);
-        TipDefinition.builder("no_void_shrines").requiredResearch(CompoundResearchKey.from(Source.VOID.getDiscoverKey())).save(consumer);
-        TipDefinition.builder("no_hallowed_shrines").requiredResearch(CompoundResearchKey.from(Source.HALLOWED.getDiscoverKey())).save(consumer);
+        TipDefinition.builder("no_blood_shrines").requiredResearch(CompoundResearchKey.from(Sources.BLOOD.getDiscoverKey())).save(consumer);
+        TipDefinition.builder("no_infernal_shrines").requiredResearch(CompoundResearchKey.from(Sources.INFERNAL.getDiscoverKey())).save(consumer);
+        TipDefinition.builder("no_void_shrines").requiredResearch(CompoundResearchKey.from(Sources.VOID.getDiscoverKey())).save(consumer);
+        TipDefinition.builder("no_hallowed_shrines").requiredResearch(CompoundResearchKey.from(Sources.HALLOWED.getDiscoverKey())).save(consumer);
         TipDefinition.builder("go_explore").save(consumer);
         TipDefinition.builder("new_disciplines").save(consumer);
         TipDefinition.builder("salt").save(consumer);

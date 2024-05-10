@@ -8,6 +8,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.ManaBatteryMenu;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -39,7 +40,7 @@ public class ManaBatteryScreen extends AbstractContainerScreenPM<ManaBatteryMenu
     protected void init() {
         super.init();
         Minecraft mc = Minecraft.getInstance();
-        List<Source> knownSources = Source.SORTED_SOURCES.stream().filter(s -> s.isDiscovered(mc.player)).toList();
+        List<Source> knownSources = Sources.getAllSorted().stream().filter(s -> s.isDiscovered(mc.player)).toList();
         int gapWidth = (AVAILABLE_GAUGE_WIDTH - (GAUGE_WIDTH * knownSources.size())) / (knownSources.size() - 1);
         int bonusEdge = AVAILABLE_GAUGE_WIDTH - (GAUGE_WIDTH * knownSources.size()) - (gapWidth * (knownSources.size() - 1));
         int xOffset = GAUGE_START_X + (bonusEdge / 2);

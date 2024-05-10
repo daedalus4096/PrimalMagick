@@ -17,6 +17,7 @@ import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -97,9 +98,9 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             case 1:
                 return InfernalFurnaceTileEntity.this.processTimeTotal;
             case 2:
-                return InfernalFurnaceTileEntity.this.manaStorage.getManaStored(Source.INFERNAL);
+                return InfernalFurnaceTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
             case 3:
-                return InfernalFurnaceTileEntity.this.manaStorage.getMaxManaStored(Source.INFERNAL);
+                return InfernalFurnaceTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
             case 4:
                 return InfernalFurnaceTileEntity.this.superchargeTime;
             case 5:
@@ -136,7 +137,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     
     public InfernalFurnaceTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.INFERNAL_FURNACE.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 100, 100, Source.INFERNAL);
+        this.manaStorage = new ManaStorage(10000, 100, 100, Sources.INFERNAL);
     }
 
     @Override
@@ -185,7 +186,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     }
     
     private boolean isCharged() {
-        int current = this.getMana(Source.INFERNAL);
+        int current = this.getMana(Sources.INFERNAL);
         return current > 0 && current >= getManaNeeded(this.getLevel(), this);
     }
     
@@ -214,10 +215,10 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(FUEL_INV_INDEX, 1);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -319,8 +320,8 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
                 existingOutput.grow(recipeOutput.getCount());
             }
             
-            if (entity.manaStorage.canExtract(Source.INFERNAL)) {
-                entity.manaStorage.extractMana(Source.INFERNAL, getManaNeeded(entity.getLevel(), entity), false);
+            if (entity.manaStorage.canExtract(Sources.INFERNAL)) {
+                entity.manaStorage.extractMana(Sources.INFERNAL, getManaNeeded(entity.getLevel(), entity), false);
             }
             inputStack.shrink(1);
             return true;
@@ -384,7 +385,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -396,7 +397,7 @@ public class InfernalFurnaceTileEntity extends AbstractTileSidedInventoryPM impl
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.INFERNAL);
+        return this.manaStorage.getMaxManaStored(Sources.INFERNAL);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.verdantartifice.primalmagick.client.gui;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.gui.widgets.ManaGaugeWidget;
 import com.verdantartifice.primalmagick.common.menus.HoneyExtractorMenu;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -37,7 +37,7 @@ public class HoneyExtractorScreen extends AbstractContainerScreenPM<HoneyExtract
     @Override
     protected void init() {
         super.init();
-        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Source.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
+        this.manaGauge = this.addRenderableWidget(new ManaGaugeWidget(this.leftPos + 10, this.topPos + 6, Sources.SKY, this.menu.getCurrentMana(), this.menu.getMaxMana()));
     }
 
     @Override

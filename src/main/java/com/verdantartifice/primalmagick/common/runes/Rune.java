@@ -13,7 +13,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
@@ -27,15 +27,15 @@ import net.minecraft.world.item.Rarity;
 public abstract class Rune {
     protected static final Map<ResourceLocation, Rune> REGISTRY = new HashMap<>();
     
-    public static final SourceRune EARTH = new SourceRune("earth", ResearchNames.RUNE_EARTH, Source.EARTH);
-    public static final SourceRune SEA = new SourceRune("sea", ResearchNames.RUNE_SEA, Source.SEA);
-    public static final SourceRune SKY = new SourceRune("sky", ResearchNames.RUNE_SKY, Source.SKY);
-    public static final SourceRune SUN = new SourceRune("sun", ResearchNames.RUNE_SUN, Source.SUN);
-    public static final SourceRune MOON = new SourceRune("moon", ResearchNames.RUNE_MOON, Source.MOON);
-    public static final SourceRune BLOOD = new SourceRune("blood", ResearchNames.RUNE_BLOOD, Source.BLOOD);
-    public static final SourceRune INFERNAL = new SourceRune("infernal", ResearchNames.RUNE_INFERNAL, Source.INFERNAL);
-    public static final SourceRune VOID = new SourceRune("void", ResearchNames.RUNE_VOID, Source.VOID);
-    public static final SourceRune HALLOWED = new SourceRune("hallowed", ResearchNames.RUNE_HALLOWED, Source.HALLOWED);
+    public static final SourceRune EARTH = new SourceRune("earth", ResearchNames.RUNE_EARTH, Sources.EARTH);
+    public static final SourceRune SEA = new SourceRune("sea", ResearchNames.RUNE_SEA, Sources.SEA);
+    public static final SourceRune SKY = new SourceRune("sky", ResearchNames.RUNE_SKY, Sources.SKY);
+    public static final SourceRune SUN = new SourceRune("sun", ResearchNames.RUNE_SUN, Sources.SUN);
+    public static final SourceRune MOON = new SourceRune("moon", ResearchNames.RUNE_MOON, Sources.MOON);
+    public static final SourceRune BLOOD = new SourceRune("blood", ResearchNames.RUNE_BLOOD, Sources.BLOOD);
+    public static final SourceRune INFERNAL = new SourceRune("infernal", ResearchNames.RUNE_INFERNAL, Sources.INFERNAL);
+    public static final SourceRune VOID = new SourceRune("void", ResearchNames.RUNE_VOID, Sources.VOID);
+    public static final SourceRune HALLOWED = new SourceRune("hallowed", ResearchNames.RUNE_HALLOWED, Sources.HALLOWED);
     public static final VerbRune ABSORB = new VerbRune("absorb", ResearchNames.RUNE_ABSORB);
     public static final VerbRune DISPEL = new VerbRune("dispel", ResearchNames.RUNE_DISPEL);
     public static final VerbRune PROJECT = new VerbRune("project", ResearchNames.RUNE_PROJECT);

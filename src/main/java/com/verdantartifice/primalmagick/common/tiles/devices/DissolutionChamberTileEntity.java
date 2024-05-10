@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -66,9 +67,9 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             case 1:
                 return DissolutionChamberTileEntity.this.processTimeTotal;
             case 2:
-                return DissolutionChamberTileEntity.this.manaStorage.getManaStored(Source.EARTH);
+                return DissolutionChamberTileEntity.this.manaStorage.getManaStored(Sources.EARTH);
             case 3:
-                return DissolutionChamberTileEntity.this.manaStorage.getMaxManaStored(Source.EARTH);
+                return DissolutionChamberTileEntity.this.manaStorage.getMaxManaStored(Sources.EARTH);
             default:
                 return 0;
             }
@@ -95,7 +96,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     
     public DissolutionChamberTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.DISSOLUTION_CHAMBER.get(), pos, state);
-        this.manaStorage = new ManaStorage(25600, 100, 100, Source.EARTH);
+        this.manaStorage = new ManaStorage(25600, 100, 100, Sources.EARTH);
     }
     
     @Override
@@ -141,10 +142,10 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             // Fill up internal mana storage with that from any inserted wands
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand wand) {
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.EARTH) - entity.manaStorage.getManaStored(Source.EARTH);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.EARTH) - entity.manaStorage.getManaStored(Sources.EARTH);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.EARTH, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.EARTH, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.EARTH, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.EARTH, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -175,7 +176,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
             ItemStack output = recipe.value().getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Source.EARTH) < (100 * recipe.value().getManaCosts().getAmount(Source.EARTH))) {
+            } else if (this.getMana(Sources.EARTH) < (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH))) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);
@@ -211,7 +212,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
                     stack.shrink(1);
                 }
             }
-            this.setMana(Source.EARTH, this.getMana(Source.EARTH) - (100 * recipe.value().getManaCosts().getAmount(Source.EARTH)));
+            this.setMana(Sources.EARTH, this.getMana(Sources.EARTH) - (100 * recipe.value().getManaCosts().getAmount(Sources.EARTH)));
         }
     }
     
@@ -249,7 +250,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -261,7 +262,7 @@ public class DissolutionChamberTileEntity extends AbstractTileSidedInventoryPM i
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.EARTH);
+        return this.manaStorage.getMaxManaStored(Sources.EARTH);
     }
 
     @Override

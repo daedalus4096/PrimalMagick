@@ -2,7 +2,7 @@ package com.verdantartifice.primalmagick.common.blocks.devices;
 
 import com.mojang.serialization.MapCodec;
 import com.verdantartifice.primalmagick.client.fx.particles.ParticleTypesPM;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,7 +33,7 @@ public class VoidTurbineBlock extends AbstractWindGeneratorBlock {
 
     @Override
     public int getCoreColor() {
-        return Source.VOID.getColor();
+        return Sources.VOID.getColor();
     }
 
     @Override

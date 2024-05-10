@@ -25,6 +25,7 @@ import com.verdantartifice.primalmagick.common.menus.RunecarvingTableMenu;
 import com.verdantartifice.primalmagick.common.menus.WandAssemblyTableMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.WandSlot;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.renderer.texture.atlas.sources.PalettedPermutations;
 import net.minecraft.client.renderer.texture.atlas.sources.SingleFile;
@@ -91,7 +92,7 @@ public class SpriteSourceProviderPM extends SpriteSourceProvider {
         
         // Add source textures to the block atlas
         this.addSingle(blockAtlas, Source.getUnknownAtlasLocation());
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             this.addSingle(blockAtlas, source.getAtlasLocation());
         }
         

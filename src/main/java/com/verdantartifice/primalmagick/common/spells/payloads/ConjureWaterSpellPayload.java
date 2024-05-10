@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -31,7 +32,7 @@ public class ConjureWaterSpellPayload extends AbstractConjureFluidSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.SEA;
+        return Sources.SEA;
     }
 
     @Override

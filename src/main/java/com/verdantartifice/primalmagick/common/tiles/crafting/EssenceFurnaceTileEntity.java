@@ -8,8 +8,8 @@ import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
@@ -37,7 +37,7 @@ public class EssenceFurnaceTileEntity extends AbstractCalcinatorTileEntity {
     protected List<ItemStack> getCalcinationOutput(ItemStack inputStack, boolean alwaysGenerateDregs) {
         List<ItemStack> output = new ArrayList<>();
         AffinityManager.getInstance().getAffinityValues(inputStack, this.level).filter(Predicate.not(SourceList::isEmpty)).ifPresent(sources -> {
-            Source.SORTED_SOURCES.stream()
+            Sources.getAllSorted().stream()
                     .filter(s -> sources.getAmount(s) >= EssenceType.DUST.getAffinity())
                     .map(s -> this.getOutputEssence(EssenceType.DUST, s, 1))
                     .filter(Predicate.not(ItemStack::isEmpty))

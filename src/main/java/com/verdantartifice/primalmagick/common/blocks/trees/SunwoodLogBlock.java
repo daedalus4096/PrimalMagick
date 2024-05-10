@@ -1,7 +1,7 @@
 package com.verdantartifice.primalmagick.common.blocks.trees;
 
 import com.verdantartifice.primalmagick.common.blockstates.properties.TimePhase;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -26,6 +26,6 @@ public class SunwoodLogBlock extends AbstractPhasingLogBlock {
 
     @Override
     public int getPulseColor() {
-        return Source.SUN.getColor();
+        return Sources.SUN.getColor();
     }
 }

@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.entities.companions.pixies;
 import java.util.EnumSet;
 
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.payloads.HealingSpellPayload;
 import com.verdantartifice.primalmagick.common.spells.vehicles.BoltSpellVehicle;
@@ -26,7 +27,7 @@ public abstract class AbstractSunPixieEntity extends AbstractPixieEntity {
 
     @Override
     protected Source getPixieSource() {
-        return Source.SUN;
+        return Sources.SUN;
     }
 
     @Override

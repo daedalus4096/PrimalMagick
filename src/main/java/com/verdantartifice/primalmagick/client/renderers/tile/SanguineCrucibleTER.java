@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.verdantartifice.primalmagick.client.fx.FxDispatcher;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.devices.SanguineCrucibleTileEntity;
 
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ import net.minecraft.world.level.Level;
  */
 public class SanguineCrucibleTER implements BlockEntityRenderer<SanguineCrucibleTileEntity> {
     protected static final ResourceLocation WATER_TEXTURE = new ResourceLocation("block/water_still");
-    protected static final Color COLOR = new Color(Source.BLOOD.getColor()).brighter().brighter();
+    protected static final Color COLOR = new Color(Sources.BLOOD.getColor()).brighter().brighter();
     protected static final float R = COLOR.getRed() / 255.0F;
     protected static final float G = COLOR.getGreen() / 255.0F;
     protected static final float B = COLOR.getBlue() / 255.0F;

@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.client.fx.particles;
 
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
@@ -65,21 +65,21 @@ public class DripParticlePM extends TextureSheetParticle {
         DripParticlePM.Hang particle = new DripParticlePM.Hang(pLevel, pX, pY, pZ, ParticleTypesPM.FALLING_BLOOD_DROP.get());
         particle.gravity *= 0.01F;
         particle.lifetime = 100;
-        particle.setColor(Source.BLOOD.getColor());
+        particle.setColor(Sources.BLOOD.getColor());
         return particle;
     }
     
     public static TextureSheetParticle createBloodDropFallParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
         DripParticlePM.Fall particle = new DripParticlePM.Fall(pLevel, pX, pY, pZ, ParticleTypesPM.LANDING_BLOOD_DROP.get());
         particle.gravity = 0.01F;
-        particle.setColor(Source.BLOOD.getColor());
+        particle.setColor(Sources.BLOOD.getColor());
         return particle;
     }
     
     public static TextureSheetParticle createBloodDropLandParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ, double pXSpeed, double pYSpeed, double pZSpeed) {
         DripParticlePM.Land particle = new DripParticlePM.Land(pLevel, pX, pY, pZ);
         particle.lifetime = (int)(28.0D / (Math.random() * 0.8D + 0.2D));
-        particle.setColor(Source.BLOOD.getColor());
+        particle.setColor(Sources.BLOOD.getColor());
         return particle;
     }
     

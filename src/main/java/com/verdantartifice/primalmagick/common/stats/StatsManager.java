@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerStats;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -139,15 +140,15 @@ public class StatsManager {
     
     @Nullable
     protected static Stat getShrineStatForSource(@Nonnull Source source) {
-        if (source.equals(Source.EARTH)) {
+        if (source.equals(Sources.EARTH)) {
             return StatsPM.SHRINE_FOUND_EARTH;
-        } else if (source.equals(Source.SEA)) {
+        } else if (source.equals(Sources.SEA)) {
             return StatsPM.SHRINE_FOUND_SEA;
-        } else if (source.equals(Source.SKY)) {
+        } else if (source.equals(Sources.SKY)) {
             return StatsPM.SHRINE_FOUND_SKY;
-        } else if (source.equals(Source.SUN)) {
+        } else if (source.equals(Sources.SUN)) {
             return StatsPM.SHRINE_FOUND_SUN;
-        } else if (source.equals(Source.MOON)) {
+        } else if (source.equals(Sources.MOON)) {
             return StatsPM.SHRINE_FOUND_MOON;
         } else {
             return null;

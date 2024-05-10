@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.blocks.crafting.CalcinatorBlock;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 
 import net.minecraft.core.BlockPos;
@@ -52,7 +53,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
         List<ItemStack> output = new ArrayList<>();
         EssenceType maxEssenceType = this.getMaxOutputEssenceType();
         AffinityManager.getInstance().getAffinityValues(inputStack, this.level).filter(Predicate.not(SourceList::isEmpty)).ifPresent(sources -> {
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 int amount = sources.getAmount(source);
                 if (amount > 0) {
                     EssenceType currentEssenceType = maxEssenceType;

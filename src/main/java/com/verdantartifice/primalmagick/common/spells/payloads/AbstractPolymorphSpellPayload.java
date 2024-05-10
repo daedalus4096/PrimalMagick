@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.verdantartifice.primalmagick.common.misc.EntitySwapper;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
@@ -68,7 +69,7 @@ public abstract class AbstractPolymorphSpellPayload extends AbstractSpellPayload
     
     @Override
     public Source getSource() {
-        return Source.MOON;
+        return Sources.MOON;
     }
 
     @Override

@@ -26,6 +26,7 @@ import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
 import com.verdantartifice.primalmagick.common.tiles.base.IOwnedTileEntity;
@@ -85,9 +86,9 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             case 1:
                 return ConcocterTileEntity.this.cookTimeTotal;
             case 2:
-                return ConcocterTileEntity.this.manaStorage.getManaStored(Source.INFERNAL);
+                return ConcocterTileEntity.this.manaStorage.getManaStored(Sources.INFERNAL);
             case 3:
-                return ConcocterTileEntity.this.manaStorage.getMaxManaStored(Source.INFERNAL);
+                return ConcocterTileEntity.this.manaStorage.getMaxManaStored(Sources.INFERNAL);
             default:
                 return 0;
             }
@@ -114,7 +115,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     
     public ConcocterTileEntity(BlockPos pos, BlockState state) {
         super(TileEntityTypesPM.CONCOCTER.get(), pos, state);
-        this.manaStorage = new ManaStorage(10000, 1000, 1000, Source.INFERNAL);
+        this.manaStorage = new ManaStorage(10000, 1000, 1000, Sources.INFERNAL);
         this.researchCache = new TileResearchCache();
     }
     
@@ -217,10 +218,10 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             ItemStack wandStack = entity.getItem(WAND_INV_INDEX, 0);
             if (!wandStack.isEmpty() && wandStack.getItem() instanceof IWand) {
                 IWand wand = (IWand)wandStack.getItem();
-                int centimanaMissing = entity.manaStorage.getMaxManaStored(Source.INFERNAL) - entity.manaStorage.getManaStored(Source.INFERNAL);
+                int centimanaMissing = entity.manaStorage.getMaxManaStored(Sources.INFERNAL) - entity.manaStorage.getManaStored(Sources.INFERNAL);
                 int centimanaToTransfer = Mth.clamp(centimanaMissing, 0, 100);
-                if (wand.consumeMana(wandStack, null, Source.INFERNAL, centimanaToTransfer)) {
-                    entity.manaStorage.receiveMana(Source.INFERNAL, centimanaToTransfer, false);
+                if (wand.consumeMana(wandStack, null, Sources.INFERNAL, centimanaToTransfer)) {
+                    entity.manaStorage.receiveMana(Sources.INFERNAL, centimanaToTransfer, false);
                     shouldMarkDirty = true;
                 }
             }
@@ -260,7 +261,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
             ItemStack output = recipe.getResultItem(registryAccess);
             if (output.isEmpty()) {
                 return false;
-            } else if (this.getMana(Source.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Source.INFERNAL))) {
+            } else if (this.getMana(Sources.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL))) {
                 return false;
             } else if (!this.isResearchKnown(recipe.getRequiredResearch())) {
                 return false;
@@ -298,7 +299,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
                     stack.shrink(1);
                 }
             }
-            this.setMana(Source.INFERNAL, this.getMana(Source.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Source.INFERNAL)));
+            this.setMana(Sources.INFERNAL, this.getMana(Sources.INFERNAL) - (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL)));
         }
     }
     
@@ -336,7 +337,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     public SourceList getAllMana() {
         SourceList.Builder mana = SourceList.builder();
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             int amount = this.manaStorage.getManaStored(source);
             if (amount > 0) {
                 mana.with(source, amount);
@@ -348,7 +349,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     @Override
     public int getMaxMana() {
         // TODO Fix up
-        return this.manaStorage.getMaxManaStored(Source.INFERNAL);
+        return this.manaStorage.getMaxManaStored(Sources.INFERNAL);
     }
 
     @Override

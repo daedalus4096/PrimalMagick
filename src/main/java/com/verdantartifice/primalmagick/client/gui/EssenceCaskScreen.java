@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.menus.EssenceCaskMenu;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.misc.WithdrawCaskEssencePacket;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -50,8 +51,8 @@ public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu
         this.caskWidgets.clear();
         
         int visibleRows = Arrays.stream(EssenceType.values()).mapToInt(t -> this.menu.isEssenceTypeVisible(t, mc.player) ? 1 : 0).sum();
-        int visibleCols = Source.SORTED_SOURCES.stream().mapToInt(s -> this.menu.isEssenceSourceVisible(s, mc.player) ? 1 : 0).sum();
-        int startX = this.leftPos + 8 + (((Source.SORTED_SOURCES.size() - visibleCols) * 18) / 2);
+        int visibleCols = Sources.getAllSorted().stream().mapToInt(s -> this.menu.isEssenceSourceVisible(s, mc.player) ? 1 : 0).sum();
+        int startX = this.leftPos + 8 + (((Sources.getAllSorted().size() - visibleCols) * 18) / 2);
         int startY = this.topPos + 18 + (((EssenceType.values().length - visibleRows) * 18) / 2);
         
         int index = 0;
@@ -59,9 +60,9 @@ public class EssenceCaskScreen extends AbstractContainerScreenPM<EssenceCaskMenu
         int yPos = startY;
         for (int row = 0; row < EssenceType.values().length; row++) {
             boolean rowPopulated = false;
-            for (int col = 0; col < Source.SORTED_SOURCES.size(); col++) {
+            for (int col = 0; col < Sources.getAllSorted().size(); col++) {
                 EssenceType cellType = EssenceType.values()[row];
-                Source cellSource = Source.SORTED_SOURCES.get(col);
+                Source cellSource = Sources.getAllSorted().get(col);
                 if (this.menu.isEssenceTypeVisible(cellType, mc.player) && this.menu.isEssenceSourceVisible(cellSource, mc.player)) {
                     int count = this.menu.getEssenceCount(index);
                     this.caskWidgets.add(this.addRenderableWidget(new EssenceCaskWidget(index, cellType, cellSource, count, xPos, yPos, this::onWidgetClicked)));

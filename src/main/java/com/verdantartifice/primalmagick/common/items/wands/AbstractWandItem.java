@@ -21,6 +21,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellManager;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -100,7 +101,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     public SourceList getAllMana(ItemStack stack) {
         SourceList retVal = SourceList.EMPTY;
         boolean isInfinite = this.getMaxMana(stack) == -1;
-        for (Source source : Source.SORTED_SOURCES) {
+        for (Source source : Sources.getAllSorted()) {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, -1);
@@ -331,7 +332,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
         boolean showDetails = (FMLEnvironment.dist == Dist.CLIENT) ? ClientUtils.hasShiftDown() : false;
         if (showDetails) {
             // Add detailed mana information
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the listing if it's been discovered
                 if (source.isDiscovered(player)) {
                     Component nameComp = source.getNameText();
@@ -362,7 +363,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
             // Add mana summary
             boolean first = true;
             Component summaryText = Component.literal("");
-            for (Source source : Source.SORTED_SOURCES) {
+            for (Source source : Sources.getAllSorted()) {
                 // Only include a mana source in the summary if it's been discovered
                 if (source.isDiscovered(player)) {
                     Component manaText = this.getManaText(stack, source).withStyle(source.getChatColor());
@@ -521,7 +522,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
                     if (transform.isValid(level, player, wandPos)) {
                         if (level.isClientSide) {
                             // Trigger visual effects during channel
-                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Source.HALLOWED.getColor());
+                            FxDispatcher.INSTANCE.spellImpact(wandPos.getX() + 0.5D, wandPos.getY() + 0.5D, wandPos.getZ() + 0.5D, 2, Sources.HALLOWED.getColor());
                         }
                         if (this.getUseDuration(stack) - count >= WandTransforms.CHANNEL_DURATION) {
                             if (!level.isClientSide && player instanceof ServerPlayer) {

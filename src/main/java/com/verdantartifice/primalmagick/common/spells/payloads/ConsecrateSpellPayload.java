@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -32,7 +33,7 @@ public class ConsecrateSpellPayload extends AbstractConjureBlockSpellPayload {
     
     @Override
     public Source getSource() {
-        return Source.HALLOWED;
+        return Sources.HALLOWED;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 import com.verdantartifice.primalmagick.common.spells.SpellProperty;
 
@@ -54,7 +55,7 @@ public class LunarDamageSpellPayload extends AbstractDamageSpellPayload {
 
     @Override
     public Source getSource() {
-        return Source.MOON;
+        return Sources.MOON;
     }
 
     @Override

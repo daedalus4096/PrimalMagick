@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.mods.AmplifySpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.EmptySpellMod;
@@ -80,15 +81,15 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
     protected void addLocalizations() {
         // Generate magickal source localizations; it's important to do these first so that the language provider has access to
         // the localized source names for the source-multiplied language builders used later.
-        this.source(Source.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
-        this.source(Source.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
-        this.source(Source.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
-        this.source(Source.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
-        this.source(Source.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
-        this.source(Source.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
-        this.source(Source.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
-        this.source(Source.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
-        this.source(Source.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
+        this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
+        this.source(Sources.SEA).name("Sea").attunement("Minor attunement to the Sea source makes it easier to channel mana.  In practice, I'll pay 5% less Sea mana for all purposes.<BR>Lesser attunement to the Sea will grant me the grace of a dolphin, greatly increasing my swim speed.<BR>Finally, greater attunement to the Sea will allow me to breathe water as if it were air.").build();
+        this.source(Sources.SKY).name("Sky").attunement("Minor attunement to the Sky source makes it easier to channel mana.  In practice, I'll pay 5% less Sky mana for all purposes.<BR>Lesser attunement to the Sky will infuse me with speed and dexterity, increasing my movement speed and greatly reducing any fall damage I take.<BR>Finally, greater attunement to the Sky truly allows me to soar.  While it won't truly let me fly, I'll be able to jump higher, and even jump a second time while in midair.").build();
+        this.source(Sources.SUN).name("Sun").attunement("Minor attunement to the Sun source makes it easier to channel mana.  In practice, I'll pay 5% less Sun mana for all purposes.<BR>Lesser attunement to the Sun will allow me to draw nourishment from it like a plant, filling my belly so long as I'm outdoors during the daytime.<BR>Finally, greater attunement to the Sun grants me true radiance.  Whenever I'm in a dark area, I'll have a chance to create lasting light in my wake.  Should I not desire this to happen, I need only sneak.").build();
+        this.source(Sources.MOON).name("Moon").attunement("Minor attunement to the Moon source makes it easier to channel mana.  In practice, I'll pay 5% less Moon mana for all purposes.<BR>Lesser attunement to the Moon will let me defensively wrap myself in shifting illusions, giving me a chance to become invisible whenever I take damage.<BR>Finally, greater attunement to the Moon allows me to become one with the night, seeing through the darkness as if it were day.").build();
+        this.source(Sources.BLOOD).name("Blood").attunement("Minor attunement to the Blood source makes it easier to channel mana.  In practice, I'll pay 5% less Blood mana for all purposes.<BR>Lesser attunement to the Blood will let me exsanguinate my foes, causing them to bleed for more damage whenever I score a solid hit on one.  All except for the loathsome undead, that is, who have no blood to shed.<BR>Finally, greater attunement to the Blood will cause me to siphon my enemies' life force, granting me a chance to heal my wounds as I harm them.").build();
+        this.source(Sources.INFERNAL).name("Infernal").attunement("Minor attunement to the Infernal source makes it easier to channel mana.  In practice, I'll pay 5% less Infernal mana for all purposes.<BR>Lesser attunement to the Infernal will let me lash out with a Hellish Chain when I strike, dealing bonus fire damage to the next-closest victim to my original target.<BR>Finally, greater attunement to the Infernal will let me become one with the flames, and immune to their ravages.").build();
+        this.source(Sources.VOID).name("Void").attunement("Minor attunement to the Void source makes it easier to channel mana.  In practice, I'll pay 5% less Void mana for all purposes.<BR>Lesser attunement to the Void will infuse my flesh with nothingness, reducing all damage I take.<BR>Finally, greater attunement to the Void will channel the hunger of the eldritch through my attacks, granting them all increased potency.").build();
+        this.source(Sources.HALLOWED).name("Hallowed").attunement("Minor attunement to the Hallowed source makes it easier to channel mana.  In practice, I'll pay 5% less Hallowed mana for all purposes.<BR>Lesser attunement to the Hallowed will make me anathema to the undead, doubling all damage I deal to them.<BR>Finally, greater attunement to the Hallowed will empower my soul such that, when fatally wounded, I will not die but live on.  Such an effort will weaken my soul for a short time, preventing such a miracle from happening again until I recover.").build();
         this.add(Source.getUnknownTranslationKey(), "Unknown");
         
         // Generate item group (i.e. creative tab) localizations
@@ -1448,37 +1449,37 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         
         // Generate attunement threshold localizations
         this.attunementThreshold(AttunementThreshold.MINOR).name("Minor")
-            .effect(Source.EARTH, "5% Earth mana discount")
-            .effect(Source.SEA, "5% Sea mana discount")
-            .effect(Source.SKY, "5% Sky mana discount")
-            .effect(Source.SUN, "5% Sun mana discount")
-            .effect(Source.MOON, "5% Moon mana discount")
-            .effect(Source.BLOOD, "5% Blood mana discount")
-            .effect(Source.INFERNAL, "5% Infernal mana discount")
-            .effect(Source.VOID, "5% Void mana discount")
-            .effect(Source.HALLOWED, "5% Hallowed mana discount")
+            .effect(Sources.EARTH, "5% Earth mana discount")
+            .effect(Sources.SEA, "5% Sea mana discount")
+            .effect(Sources.SKY, "5% Sky mana discount")
+            .effect(Sources.SUN, "5% Sun mana discount")
+            .effect(Sources.MOON, "5% Moon mana discount")
+            .effect(Sources.BLOOD, "5% Blood mana discount")
+            .effect(Sources.INFERNAL, "5% Infernal mana discount")
+            .effect(Sources.VOID, "5% Void mana discount")
+            .effect(Sources.HALLOWED, "5% Hallowed mana discount")
             .build();
         this.attunementThreshold(AttunementThreshold.LESSER).name("Lesser")
-            .effect(Source.EARTH, "Increased attack/mining speed")
-            .effect(Source.SEA, "Greatly increased swim speed")
-            .effect(Source.SKY, "Increased movement speed, greatly reduced fall damage")
-            .effect(Source.SUN, "Photosynthesis")
-            .effect(Source.MOON, "Chance to become invisible on taking damage")
-            .effect(Source.BLOOD, "Exsanguination")
-            .effect(Source.INFERNAL, "Hellish chain")
-            .effect(Source.VOID, "Reduced damage taken")
-            .effect(Source.HALLOWED, "Smite undead")
+            .effect(Sources.EARTH, "Increased attack/mining speed")
+            .effect(Sources.SEA, "Greatly increased swim speed")
+            .effect(Sources.SKY, "Increased movement speed, greatly reduced fall damage")
+            .effect(Sources.SUN, "Photosynthesis")
+            .effect(Sources.MOON, "Chance to become invisible on taking damage")
+            .effect(Sources.BLOOD, "Exsanguination")
+            .effect(Sources.INFERNAL, "Hellish chain")
+            .effect(Sources.VOID, "Reduced damage taken")
+            .effect(Sources.HALLOWED, "Smite undead")
             .build();
         this.attunementThreshold(AttunementThreshold.GREATER).name("Greater")
-            .effect(Source.EARTH, "Step height increase")
-            .effect(Source.SEA, "Underwater breathing")
-            .effect(Source.SKY, "Increased jump height, double jump")
-            .effect(Source.SUN, "Chance to create light in dark areas")
-            .effect(Source.MOON, "Night vision")
-            .effect(Source.BLOOD, "Lifesteal")
-            .effect(Source.INFERNAL, "Fire immunity")
-            .effect(Source.VOID, "Increased damage dealt")
-            .effect(Source.HALLOWED, "Prevent death when fatally wounded")
+            .effect(Sources.EARTH, "Step height increase")
+            .effect(Sources.SEA, "Underwater breathing")
+            .effect(Sources.SKY, "Increased jump height, double jump")
+            .effect(Sources.SUN, "Chance to create light in dark areas")
+            .effect(Sources.MOON, "Night vision")
+            .effect(Sources.BLOOD, "Lifesteal")
+            .effect(Sources.INFERNAL, "Fire immunity")
+            .effect(Sources.VOID, "Increased damage dealt")
+            .effect(Sources.HALLOWED, "Prevent death when fatally wounded")
             .build();
         
         // Generate command output localizations
@@ -1947,11 +1948,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();
-        this.researchRequirement(Source.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
-        this.researchRequirement(Source.INFERNAL.getDiscoverKey()).name("Discover a source of hellish power").build();
-        this.researchRequirement(Source.VOID.getDiscoverKey()).name("Discover a source of eldritch power").build();
+        this.researchRequirement(Sources.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
+        this.researchRequirement(Sources.INFERNAL.getDiscoverKey()).name("Discover a source of hellish power").build();
+        this.researchRequirement(Sources.VOID.getDiscoverKey()).name("Discover a source of eldritch power").build();
         this.researchRequirement("t_discover_forbidden").name("Discover a source of forbidden magick").build();
-        this.researchRequirement(Source.HALLOWED.getDiscoverKey()).name("Discover the secrets of the universe").build();
+        this.researchRequirement(Sources.HALLOWED.getDiscoverKey()).name("Discover the secrets of the universe").build();
         this.researchRequirement("t_spells_cast_expert").name("Cast 10 spells").build();
         this.researchRequirement("t_spells_cast_master").name("Cast 50 spells").build();
         this.researchRequirement("t_spells_cast_supreme").name("Cast 250 spells").build();
