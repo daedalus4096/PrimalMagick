@@ -15,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -556,15 +557,13 @@ public class PrimalMagickCommand {
 
     private static int unlockAllSources(CommandSourceStack source, ServerPlayer target) {
         // Grant the target player the unlock research for all sources.  Can't do this with grantResearch because source unlocks aren't in the grimoire.
-        int unlocked = 0;
-        for (Source toUnlock : Source.SOURCES.values()) {
-            if (!toUnlock.isDiscovered(target)) {
-                if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
-                    unlocked++;
-                }
+        MutableInt unlocked = new MutableInt(0);
+        Sources.stream().filter(s -> !s.isDiscovered(target)).forEach(toUnlock -> {
+            if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
+                unlocked.increment();
             }
-        }
-        final int totalUnlocked = unlocked;
+        });
+        final int totalUnlocked = unlocked.getValue();
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock_all", target.getName(), totalUnlocked), true);
         if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
             target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock_all.target", source.getTextName(), totalUnlocked));

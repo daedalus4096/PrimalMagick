@@ -67,7 +67,7 @@ public class AttunementReward extends AbstractReward {
 
     @Override
     public ResourceLocation getIconLocation(Player player) {
-        return this.source.isDiscovered(player) ? this.source.getImage() : Source.UNKNOWN_IMAGE;
+        return this.source.isDiscovered(player) ? this.source.getImage() : Source.getUnknownImage();
     }
 
     @Override

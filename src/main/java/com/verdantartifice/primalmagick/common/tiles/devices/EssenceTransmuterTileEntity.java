@@ -231,11 +231,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         if (this.nextOutputSource == null || this.nextOutputSource.equals(inputSource)) {
             // Generate a new random, known source different from the input
             WeightedRandomBag<Source> bag = new WeightedRandomBag<>();
-            for (Source source : Source.SOURCES.values()) {
-                if (!source.equals(inputSource) && this.isSourceKnown(source)) {
-                    bag.add(source, 1.0D);
-                }
-            }
+            Sources.stream().filter(s -> !s.equals(inputSource) && this.isSourceKnown(s)).forEach(s -> bag.add(s, 1.0D));
             this.nextOutputSource = bag.getRandom(rng);
         }
         return this.nextOutputSource;

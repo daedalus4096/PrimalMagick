@@ -8,7 +8,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 /**
  * Debug command argument definition for a source.
@@ -34,12 +34,7 @@ public class SourceArgument implements ArgumentType<SourceInput> {
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         // Suggest all defined sources for tab completion
         String remaining = builder.getRemaining().toUpperCase();
-        for (Source source : Source.SOURCES.values()) {
-            String key = source.getTag().toUpperCase();
-            if (key.startsWith(remaining)) {
-                builder.suggest(key);
-            }
-        }
+        Sources.stream().map(s -> s.getId().getPath().toUpperCase()).filter(k -> k.startsWith(remaining)).forEach(k -> builder.suggest(k));
         return builder.buildFuture();
     }
 }

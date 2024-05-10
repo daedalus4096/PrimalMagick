@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -46,7 +47,15 @@ public class Sources {
     }
     
     private static List<Source> getAllSortedInner() {
-        return SOURCES.values().stream().sorted((a, b) -> Integer.compare(a.getSortOrder(), b.getSortOrder())).toList();
+        return streamSorted().toList();
+    }
+    
+    public static Stream<Source> stream() {
+        return SOURCES.values().stream();
+    }
+    
+    public static Stream<Source> streamSorted() {
+        return stream().sorted((a, b) -> Integer.compare(a.getSortOrder(), b.getSortOrder()));
     }
     
     private static void invalidate() {
