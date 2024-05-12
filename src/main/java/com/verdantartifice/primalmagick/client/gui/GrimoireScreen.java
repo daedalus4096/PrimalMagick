@@ -47,7 +47,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.BookLanguagesPM;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.crafting.IHasRequiredResearch;
+import com.verdantartifice.primalmagick.common.crafting.IHasRequirement;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
@@ -509,7 +509,7 @@ public class GrimoireScreen extends Screen {
         // Append unlocked addendum text
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+            if (addendum.getRequirement() != null && addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
                 Component headerText = Component.translatable("grimoire.primalmagick.addendum_header", ++addendumCount);
                 Component addendumText = Component.translatable(addendum.getTextTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
@@ -587,7 +587,7 @@ public class GrimoireScreen extends Screen {
         // Add attunement gain page if applicable
         SourceList attunements = stage.getAttunements();
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+            if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
                 attunements = attunements.merge(addendum.getAttunements());
             }
         }
@@ -608,7 +608,7 @@ public class GrimoireScreen extends Screen {
             }
         }
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(this.getMinecraft().player)) {
+            if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
                 for (ResourceLocation loc : addendum.getRecipes()) {
                     if (!locList.contains(loc)) {
                         locList.add(loc);
@@ -1019,8 +1019,8 @@ public class GrimoireScreen extends Screen {
         if (!recipe.id().getNamespace().equals(PrimalMagick.MODID) || recipe.value().getResultItem(registryAccess).isEmpty()) {
             return false;
         }
-        if (recipe.value() instanceof IHasRequiredResearch hrr) {
-            CompoundResearchKey parents = hrr.getRequiredResearch();
+        if (recipe.value() instanceof IHasRequirement hrr) {
+            CompoundResearchKey parents = hrr.getRequirement();
             return (parents == null || parents.isKnownByStrict(mc.player));
         } else {
             return ResearchManager.isRecipeVisible(recipe.id(), mc.player);

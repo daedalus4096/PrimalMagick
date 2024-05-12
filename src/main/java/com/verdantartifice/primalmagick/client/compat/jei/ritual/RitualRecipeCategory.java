@@ -80,7 +80,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
-        if (recipe.getRequiredResearch() != null && !recipe.getRequiredResearch().getKeys().isEmpty()) {
+        if (recipe.getRequirement() != null && !recipe.getRequirement().getKeys().isEmpty()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -92,7 +92,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
     public List<Component> getTooltipStrings(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
         IRitualRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
-        CompoundResearchKey compoundResearch = recipe.getRequiredResearch();
+        CompoundResearchKey compoundResearch = recipe.getRequirement();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {

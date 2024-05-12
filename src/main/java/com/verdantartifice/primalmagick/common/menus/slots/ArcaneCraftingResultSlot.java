@@ -83,7 +83,7 @@ public class ArcaneCraftingResultSlot extends Slot {
             
             // Increment the craft counter for the recipe's discipline
             if (this.container instanceof RecipeCraftingHolder recipeHolder && recipeHolder.getRecipeUsed() != null && recipeHolder.getRecipeUsed().value() instanceof IArcaneRecipe arcaneRecipe) {
-                CompoundResearchKey key = arcaneRecipe.getRequiredResearch();
+                CompoundResearchKey key = arcaneRecipe.getRequirement();
                 List<ResearchEntry> entryList = ResearchEntries.getEntries(key);
                 Set<String> recordedDisciplines = new HashSet<>();
                 for (ResearchEntry entry : entryList) {

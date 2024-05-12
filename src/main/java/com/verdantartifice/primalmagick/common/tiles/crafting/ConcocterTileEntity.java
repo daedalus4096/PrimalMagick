@@ -192,7 +192,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     
     protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
         // Get a set of all the research keys used in any concocting recipe
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.value().getRequiredResearch().getKeys())
+        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.value().getRequirement().getKeys())
                 .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());
     }
     
@@ -263,7 +263,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
                 return false;
             } else if (this.getMana(Sources.INFERNAL) < (100 * recipe.getManaCosts().getAmount(Sources.INFERNAL))) {
                 return false;
-            } else if (!this.isResearchKnown(recipe.getRequiredResearch())) {
+            } else if (!this.isResearchKnown(recipe.getRequirement())) {
                 return false;
             } else {
                 ItemStack currentOutput = this.getItem(OUTPUT_INV_INDEX, 0);

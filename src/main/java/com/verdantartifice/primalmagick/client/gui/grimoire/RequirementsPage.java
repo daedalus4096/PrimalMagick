@@ -120,16 +120,16 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Init research requirement widgets
-        if (!this.stage.getRequiredResearch().isEmpty()) {
+        if (!this.stage.getRequirement().isEmpty()) {
             y += mc.font.lineHeight;   // Make room for section header
             List<Boolean> completion = this.stage.getResearchRequirementCompletion(mc.player);
-            for (int index = 0; index < this.stage.getRequiredResearch().getKeys().size(); index++) {
+            for (int index = 0; index < this.stage.getRequirement().getKeys().size(); index++) {
                 if (index > 0 && index % ITEMS_PER_ROW == 0) {
                     // If the number of items exceeds the capacity of the row, wrap to the next one
                     x = startX;
                     y += 18;
                 }
-                SimpleResearchKey key = this.stage.getRequiredResearch().getKeys().get(index);
+                SimpleResearchKey key = this.stage.getRequirement().getKeys().get(index);
                 screen.addWidgetToScreen(new ResearchWidget(key, x + 8 + (side * 144), y, completion.get(index).booleanValue(), this.stage.getHints().contains(key)));
                 x += 18;
             }
@@ -185,11 +185,11 @@ public class RequirementsPage extends AbstractPage {
         }
         
         // Render research requirement section
-        if (!this.stage.getRequiredResearch().isEmpty()) {
+        if (!this.stage.getRequirement().isEmpty()) {
             Component leadComponent = Component.translatable("grimoire.primalmagick.required_research_header").withStyle(ChatFormatting.UNDERLINE);
             guiGraphics.drawString(mc.font, leadComponent, x - 3 + (side * 140), y - 6, Color.BLACK.getRGB(), false);
             y += mc.font.lineHeight;
-            y += (18 * (1 + (this.stage.getRequiredResearch().getKeys().size() / ITEMS_PER_ROW)));  // Make room for research widgets
+            y += (18 * (1 + (this.stage.getRequirement().getKeys().size() / ITEMS_PER_ROW)));  // Make room for research widgets
         }
         
         guiGraphics.pose().popPose();

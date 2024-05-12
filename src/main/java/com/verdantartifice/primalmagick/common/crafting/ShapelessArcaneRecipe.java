@@ -1,11 +1,12 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
@@ -23,14 +24,14 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
  * @see {@link net.minecraft.item.crafting.ShapelessRecipe}
  */
 public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingContainer> implements IShapelessArcaneRecipePM {
-    protected final CompoundResearchKey research;
+    protected final Optional<AbstractRequirement<?>> requirement;
     protected final SourceList manaCosts;
     protected final NonNullList<Ingredient> recipeItems;
     protected final boolean isSimple;
     
-    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, CompoundResearchKey research, SourceList manaCosts) {
+    public ShapelessArcaneRecipe(String group, ItemStack output, NonNullList<Ingredient> items, Optional<AbstractRequirement<?>> requirement, SourceList manaCosts) {
         super(group, output);
-        this.research = research;
+        this.requirement = requirement;
         this.manaCosts = manaCosts;
         this.recipeItems = items;
         this.isSimple = items.stream().allMatch(Ingredient::isSimple);
@@ -47,8 +48,8 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
     }
 
     @Override
-    public CompoundResearchKey getRequiredResearch() {
-        return this.research;
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
     
     @Override
@@ -76,7 +77,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(sar -> sar.recipeItems),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(sar -> sar.research),
+                    AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
                 ).apply(instance, ShapelessArcaneRecipe::new);
         });
@@ -89,7 +90,7 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
         @Override
         public ShapelessArcaneRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf());
+            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             
             SourceList manaCosts = SourceList.fromNetwork(buffer);
             
@@ -100,13 +101,13 @@ public class ShapelessArcaneRecipe extends AbstractStackCraftingRecipe<CraftingC
             }
             
             ItemStack result = buffer.readItem();
-            return new ShapelessArcaneRecipe(group, result, ingredients, research, manaCosts);
+            return new ShapelessArcaneRecipe(group, result, ingredients, requirement, manaCosts);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, ShapelessArcaneRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeUtf(recipe.research.toString());
+            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             SourceList.toNetwork(buffer, recipe.manaCosts);
             buffer.writeVarInt(recipe.recipeItems.size());
             for (Ingredient ingredient : recipe.recipeItems) {

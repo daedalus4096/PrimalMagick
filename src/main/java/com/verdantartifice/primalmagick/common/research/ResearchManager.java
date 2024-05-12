@@ -130,7 +130,7 @@ public class ResearchManager {
         
         // If that doesn't pan out, check to see if any unlocked addendum lists the recipe
         for (ResearchAddendum addendum : entry.getAddenda()) {
-            if (addendum.getRequiredResearch() != null && addendum.getRecipes().contains(recipeId) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+            if (addendum.getRequirement() != null && addendum.getRecipes().contains(recipeId) && addendum.getRequirement().isKnownByStrict(player)) {
                 return true;
             }
         }
@@ -215,7 +215,7 @@ public class ResearchManager {
                         }
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
-                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                            for (SimpleResearchKey requiredKey : stage.getRequirement().getKeys()) {
                                 completeResearch(player, requiredKey, true, true, false);
                             }
                         }
@@ -227,7 +227,7 @@ public class ResearchManager {
                     // Mark as updated any research entry that has a stage which requires completion of this entry
                     for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
                         for (ResearchStage searchStage : searchEntry.getStages()) {
-                            if (searchStage.getRequiredResearch().contains(strippedKey)) {
+                            if (searchStage.getRequirement().contains(strippedKey)) {
                                 knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
                                 break;
                             }
@@ -253,7 +253,7 @@ public class ResearchManager {
                         }
                         for (ResearchStage stage : entry.getStages()) {
                             // Complete any research required as a prerequisite for any of the entry's stages
-                            for (SimpleResearchKey requiredKey : stage.getRequiredResearch().getKeys()) {
+                            for (SimpleResearchKey requiredKey : stage.getRequirement().getKeys()) {
                                 completeResearch(player, requiredKey, true, true, false);
                             }
                         }
@@ -420,7 +420,7 @@ public class ResearchManager {
             if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
                 RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
                 for (ResearchAddendum addendum : entry.getAddenda()) {
-                    if (addendum.getRequiredResearch() == null || addendum.getRequiredResearch().isKnownByStrict(player)) {
+                    if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(player)) {
                         // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
                         Set<RecipeHolder<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                         ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
@@ -466,7 +466,7 @@ public class ResearchManager {
             for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
                 if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
                     for (ResearchAddendum addendum : searchEntry.getAddenda()) {
-                        if (addendum.getRequiredResearch() != null && addendum.getRequiredResearch().contains(key) && addendum.getRequiredResearch().isKnownByStrict(player)) {
+                        if (addendum.getRequirement() != null && addendum.getRequirement().contains(key) && addendum.getRequirement().isKnownByStrict(player)) {
                             // Announce completion of the addendum
                             Component nameComp = Component.translatable(searchEntry.getNameTranslationKey());
                             player.sendSystemMessage(Component.translatable("event.primalmagick.add_addendum", nameComp));

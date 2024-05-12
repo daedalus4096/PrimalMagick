@@ -55,7 +55,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.value().getRequiredResearch() != null && !recipe.value().getRequiredResearch().getKeys().isEmpty()) {
+        if (recipe.value().getRequirement() != null && !recipe.value().getRequirement().getKeys().isEmpty()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -65,7 +65,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public List<Component> getTooltipStrings(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        CompoundResearchKey compoundResearch = recipe.value().getRequiredResearch();
+        CompoundResearchKey compoundResearch = recipe.value().getRequirement();
         if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
              mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
              mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {

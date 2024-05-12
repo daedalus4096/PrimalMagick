@@ -1,8 +1,10 @@
 package com.verdantartifice.primalmagick.common.crafting;
 
+import java.util.Optional;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -21,13 +23,13 @@ import net.minecraft.world.level.Level;
  * @author Daedalus4096
  */
 public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> implements IRunecarvingRecipe {
-    protected final CompoundResearchKey research;
+    protected final Optional<AbstractRequirement<?>> requirement;
     protected final Ingredient ingredient1;
     protected final Ingredient ingredient2;
     
-    public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, CompoundResearchKey research) {
+    public RunecarvingRecipe(String group, ItemStack result, Ingredient ingredient1, Ingredient ingredient2, Optional<AbstractRequirement<?>> requirement) {
         super(group, result);
-        this.research = research;
+        this.requirement = requirement;
         this.ingredient1 = ingredient1;
         this.ingredient2 = ingredient2;
     }
@@ -58,8 +60,8 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     }
 
     @Override
-    public CompoundResearchKey getRequiredResearch() {
-        return this.research;
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
 
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
@@ -69,7 +71,7 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    CompoundResearchKey.CODEC.fieldOf("research").forGetter(rr -> rr.research)
+                    AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(rr -> rr.requirement)
                 ).apply(instance, RunecarvingRecipe::new);
         });
         
@@ -80,18 +82,18 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
 
         @Override
         public RunecarvingRecipe fromNetwork(FriendlyByteBuf buffer) {
-            String group = buffer.readUtf(32767);
-            CompoundResearchKey research = CompoundResearchKey.parse(buffer.readUtf(32767));
+            String group = buffer.readUtf();
+            Optional<AbstractRequirement<?>> requirement = buffer.readOptional(AbstractRequirement::fromNetwork);
             Ingredient ing1 = Ingredient.fromNetwork(buffer);
             Ingredient ing2 = Ingredient.fromNetwork(buffer);
             ItemStack result = buffer.readItem();
-            return new RunecarvingRecipe(group, result, ing1, ing2, research);
+            return new RunecarvingRecipe(group, result, ing1, ing2, requirement);
         }
 
         @Override
         public void toNetwork(FriendlyByteBuf buffer, RunecarvingRecipe recipe) {
             buffer.writeUtf(recipe.group);
-            buffer.writeUtf(recipe.research.toString());
+            buffer.writeOptional(recipe.requirement, (b, r) -> r.toNetwork(b));
             recipe.ingredient1.toNetwork(buffer);
             recipe.ingredient2.toNetwork(buffer);
             buffer.writeItem(recipe.output);
