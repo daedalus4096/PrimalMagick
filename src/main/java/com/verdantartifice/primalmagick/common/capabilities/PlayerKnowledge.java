@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.MainIndexResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.ResearchTopicFactory;
@@ -30,6 +31,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectFactory;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtOps;
@@ -215,26 +217,28 @@ public class PlayerKnowledge implements IPlayerKnowledge {
 
     @Override
     @Nonnull
-    public ResearchStatus getResearchStatus(@Nullable AbstractResearchKey<?> research) {
+    public ResearchStatus getResearchStatus(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research) {
         if (!this.isResearchKnown(research)) {
             return ResearchStatus.UNKNOWN;
         } else {
             // Research is complete if it is known and its current stage equals or exceeds the number of stages defined in its entry
-            ResearchEntry entry = ResearchEntries.getEntry(research);
-            if (entry == null || entry.getStages().isEmpty() || this.getResearchStage(research) >= entry.getStages().size()) {
-                return ResearchStatus.COMPLETE;
-            } else {
-                return ResearchStatus.IN_PROGRESS;
+            if (research instanceof ResearchEntryKey entryKey) {
+                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                if (entry == null || entry.stages().isEmpty() || this.getResearchStage(research) >= entry.stages().size()) {
+                    return ResearchStatus.COMPLETE;
+                }
             }
+            return ResearchStatus.IN_PROGRESS;
         }
     }
 
     @Override
-    public boolean isResearchComplete(@Nullable AbstractResearchKey<?> research) {
-        return (this.getResearchStatus(research) == ResearchStatus.COMPLETE);
+    public boolean isResearchComplete(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research) {
+        return (this.getResearchStatus(registryAccess, research) == ResearchStatus.COMPLETE);
     }
 
-    protected boolean isResearchKnown(@Nullable AbstractResearchKey<?> research) {
+    @Override
+    public boolean isResearchKnown(@Nullable AbstractResearchKey<?> research) {
         if (research == null) {
             return false;
         } else {

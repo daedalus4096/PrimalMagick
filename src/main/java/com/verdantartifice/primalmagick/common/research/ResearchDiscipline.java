@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
 
@@ -44,6 +45,10 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
     @Nonnull
     public String getNameTranslationKey() {
         return String.join(".", "research_discipline", PrimalMagick.MODID, this.key.getRootKey().location().getPath());
+    }
+    
+    public Stream<ResearchEntry> getEntryStream(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream().filter(e -> e.isForDiscipline(this.key));
     }
     
     /**

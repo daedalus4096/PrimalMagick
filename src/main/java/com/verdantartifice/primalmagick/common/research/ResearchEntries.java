@@ -2,6 +2,8 @@ package com.verdantartifice.primalmagick.common.research;
 
 import java.util.function.Function;
 
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -141,6 +143,7 @@ public class ResearchEntries {
         return context.register(key, supplier.apply(key));
     }
     
+    @Nullable
     public static ResearchEntry getEntry(RegistryAccess registryAccess, ResearchEntryKey key) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(key.getRootKey());
     }

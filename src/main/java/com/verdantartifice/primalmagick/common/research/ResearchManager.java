@@ -164,20 +164,21 @@ public class ResearchManager {
         if (player == null || key == null) {
             return false;
         }
-        return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchComplete(key)).orElse(false);
+        RegistryAccess registryAccess = player.level().registryAccess();
+        return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchComplete(registryAccess, key)).orElse(false);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key) {
         // Complete the given research and sync it to the player's client
         return completeResearch(player, key, true);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync) {
         // Complete the given research, optionally syncing it to the player's client
         return completeResearch(player, key, sync, true, true);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Repeatedly progress the given research until it is completed, optionally syncing it to the player's client
         boolean retVal = false;
         while (progressResearch(player, key, sync, showNewFlags, showPopups)) {
@@ -190,7 +191,7 @@ public class ResearchManager {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (!knowledge.isResearchComplete(key)) {
+                if (!knowledge.isResearchComplete(registryAccess, key)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
                     if (entry != null) {
                         // Recursively force-grant all of this entry's parent entries, even if not all of them are required
@@ -225,7 +226,7 @@ public class ResearchManager {
         if (player != null && key != null) {
             RegistryAccess registryAccess = player.level().registryAccess();
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (!knowledge.isResearchComplete(key)) {
+                if (!knowledge.isResearchComplete(registryAccess, key)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
                     if (entry != null) {
                         // Recursively force-grant all of this entry's parent entries, even if not all of them are required
@@ -251,10 +252,11 @@ public class ResearchManager {
     
     public static void forceRevokeWithAllChildren(@Nullable Player player, @Nullable ResearchEntryKey key) {
         if (player != null && key != null) {
+            RegistryAccess registryAccess = player.level().registryAccess();
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (knowledge.isResearchComplete(key)) {
+                if (knowledge.isResearchComplete(registryAccess, key)) {
                     // Revoke all child research of this entry
-                    player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> {
+                    registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(entry -> {
                         if (entry.parents().contains(key)) {
                             forceRevokeWithAllChildren(player, entry.key());
                         }
@@ -301,27 +303,28 @@ public class ResearchManager {
         return true;
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable ResearchEntryKey key) {
         // Progress the given research to its next stage and sync to the player's client
         return progressResearch(player, key, true);
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync) {
         // Progress the given research to its next stage and sync to the player's client
         return progressResearch(player, key, sync, true, true);
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nullable SimpleResearchKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Progress the given research to its next stage and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
         }
-        
+        RegistryAccess registryAccess = player.level().registryAccess();
+
         IPlayerKnowledge knowledge = PrimalMagickCapabilities.getKnowledge(player).orElse(null);
         if (knowledge == null) {
             return false;
         }
-        if (knowledge.isResearchComplete(key) || !hasPrerequisites(player, key)) {
+        if (knowledge.isResearchComplete(registryAccess, key) || !hasPrerequisites(player, key)) {
             // If the research is already complete or the player doesn't have the prerequisites, abort
             return false;
         }
@@ -333,9 +336,9 @@ public class ResearchManager {
             added = true;
         }
         
-        ResearchEntry entry = ResearchEntries.getEntry(key);
+        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
         boolean entryComplete = true;   // Default to true for non-entry research (e.g. stat triggers)
-        if (entry != null && !entry.getStages().isEmpty()) {
+        if (entry != null && !entry.stages().isEmpty()) {
             // Get the current stage number of the research entry
             ResearchStage currentStage = null;
             int currentStageNum = knowledge.getResearchStage(key);
@@ -345,23 +348,23 @@ public class ResearchManager {
             if (!added) {
                 currentStageNum++;
             }
-            if (currentStageNum == (entry.getStages().size() - 1) && !entry.getStages().get(currentStageNum).hasPrerequisites()) {
+            if (currentStageNum == (entry.stages().size() - 1) && !entry.stages().get(currentStageNum).hasPrerequisites()) {
                 // If we've advanced to the final stage of the entry and it has no further prereqs (which it shouldn't), then
                 // advance one more to be considered complete
                 currentStageNum++;
             }
-            currentStageNum = Math.min(currentStageNum, entry.getStages().size());
+            currentStageNum = Math.min(currentStageNum, entry.stages().size());
             if (currentStageNum >= 0) {
-                currentStage = entry.getStages().get(Math.min(currentStageNum, entry.getStages().size() - 1));
+                currentStage = entry.stages().get(Math.min(currentStageNum, entry.stages().size() - 1));
             }
             knowledge.setResearchStage(key, currentStageNum);
             
             // Determine whether the entry has been completed
-            entryComplete = (currentStageNum >= entry.getStages().size());
+            entryComplete = (currentStageNum >= entry.stages().size());
             
             if (currentStage != null) {
                 // Process any attunement grants in the newly-reached stage
-                SourceList attunements = currentStage.getAttunements();
+                SourceList attunements = currentStage.attunements();
                 for (Source source : attunements.getSources()) {
                     int amount = attunements.getAmount(source);
                     if (amount > 0) {
@@ -372,18 +375,18 @@ public class ResearchManager {
                 // Add any unlocked recipes from the current stage to the player's arcane recipe book
                 if (player instanceof ServerPlayer serverPlayer) {
                     RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
-                    Set<RecipeHolder<?>> recipesToUnlock = currentStage.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                    Set<RecipeHolder<?>> recipesToUnlock = currentStage.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                     ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                     serverPlayer.awardRecipes(recipesToUnlock);
                 }
                 
                 // Grant any sibling research from the current stage
-                for (SimpleResearchKey sibling : currentStage.getSiblings()) {
+                for (ResearchEntryKey sibling : currentStage.siblings()) {
                     completeResearch(player, sibling, sync);
                 }
                 
                 // Open any research to be revealed by the current stage
-                for (SimpleResearchKey revelation : currentStage.getRevelations()) {
+                for (ResearchEntryKey revelation : currentStage.revelations()) {
                     if (!knowledge.isResearchKnown(revelation)) {
                         knowledge.addResearch(revelation);
                         if (showPopups) {
@@ -394,17 +397,17 @@ public class ResearchManager {
                 }
             }
             
-            if (entryComplete && !entry.getAddenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
+            if (entryComplete && !entry.addenda().isEmpty() && player instanceof ServerPlayer serverPlayer) {
                 RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
-                for (ResearchAddendum addendum : entry.getAddenda()) {
-                    if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(player)) {
+                for (ResearchAddendum addendum : entry.addenda()) {
+                    if (addendum.completionRequirementOpt().isPresent() || addendum.completionRequirementOpt().get().isMetBy(player)) {
                         // Add any unlocked recipes from this entry's addenda to the player's arcane recipe book
-                        Set<RecipeHolder<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                        Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                         ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                         serverPlayer.awardRecipes(recipesToUnlock);
                         
                         // Grant any sibling research from this entry's addenda
-                        for (SimpleResearchKey sibling : addendum.getSiblings()) {
+                        for (ResearchEntryKey sibling : addendum.siblings()) {
                             completeResearch(player, sibling, sync);
                         }
                     }
@@ -414,17 +417,6 @@ public class ResearchManager {
             // Give the player experience for advancing their research
             if (!added) {
                 player.giveExperiencePoints(5);
-            }
-        }
-        
-        if (Source.isSourceDiscoverKey(key)) {
-            // If unlocking a source, also unlock that source's sibling research, if any
-            Source source = Source.getSource(key);
-            if (source != null) {
-                LOGGER.debug("Unlocking sibling research for source {}", source.getTag());
-                for (SimpleResearchKey sibling : source.getSiblings()) {
-                    completeResearch(player, sibling, sync);
-                }
             }
         }
         
@@ -440,17 +432,17 @@ public class ResearchManager {
             }
             
             // Reveal any addenda that depended on this research
-            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
-                if (!searchEntry.getAddenda().isEmpty() && knowledge.isResearchComplete(searchEntry.getKey())) {
-                    for (ResearchAddendum addendum : searchEntry.getAddenda()) {
-                        if (addendum.getRequirement() != null && addendum.getRequirement().contains(key) && addendum.getRequirement().isKnownByStrict(player)) {
+            registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
+                if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(registryAccess, searchEntry.key())) {
+                    for (ResearchAddendum addendum : searchEntry.addenda()) {
+                        addendum.completionRequirementOpt().filter(req -> req.contains(key) && req.isMetBy(player)).ifPresent(req -> {
                             // Announce completion of the addendum
-                            Component nameComp = Component.translatable(searchEntry.getNameTranslationKey());
+                            Component nameComp = Component.translatable(searchEntry.nameTranslationKey());
                             player.sendSystemMessage(Component.translatable("event.primalmagick.add_addendum", nameComp));
-                            knowledge.addResearchFlag(searchEntry.getKey(), IPlayerKnowledge.ResearchFlag.UPDATED);
+                            knowledge.addResearchFlag(searchEntry.key(), IPlayerKnowledge.ResearchFlag.UPDATED);
                             
                             // Process attunement grants
-                            SourceList attunements = addendum.getAttunements();
+                            SourceList attunements = addendum.attunements();
                             for (Source source : attunements.getSources()) {
                                 int amount = attunements.getAmount(source);
                                 if (amount > 0) {
@@ -461,38 +453,41 @@ public class ResearchManager {
                             // Add any unlocked recipes to the player's arcane recipe book
                             if (player instanceof ServerPlayer serverPlayer) {
                                 RecipeManager recipeManager = serverPlayer.level().getRecipeManager();
-                                Set<RecipeHolder<?>> recipesToUnlock = addendum.getRecipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
+                                Set<RecipeHolder<?>> recipesToUnlock = addendum.recipes().stream().map(r -> recipeManager.byKey(r).orElse(null)).filter(Objects::nonNull).collect(Collectors.toSet());
                                 ArcaneRecipeBookManager.addRecipes(recipesToUnlock, serverPlayer);
                                 serverPlayer.awardRecipes(recipesToUnlock);
                             }
                             
                             // Grant any unlocked sibling research
-                            for (SimpleResearchKey sibling : addendum.getSiblings()) {
+                            for (ResearchEntryKey sibling : addendum.siblings()) {
                                 completeResearch(player, sibling, sync);
                             }
-                        }
+                        });
                     }
                 }
-            }
+            });
             
             // If completing this entry finished its discipline, reveal any appropriate finale research
             if (entry != null) {
-                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                if (discipline != null) {
-                    for (ResearchEntry finaleEntry : discipline.getFinaleEntries()) {
-                        SimpleResearchKey finaleKey = finaleEntry.getKey();
-                        if (!knowledge.isResearchKnown(finaleKey)) {
-                            boolean shouldUnlock = finaleEntry.getFinaleDisciplines().stream().map(ResearchDisciplines::getDiscipline).filter(Objects::nonNull).flatMap(d -> d.getEntries().stream()).filter(e -> e.getFinaleDisciplines().isEmpty() && !e.isFinaleExempt()).allMatch(e -> e.isComplete(player));
-                            if (shouldUnlock) {
-                                knowledge.addResearch(finaleKey);
-                                if (showPopups) {
-                                    knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                entry.disciplineKeyOpt().ifPresent(disciplineKey -> {
+                    ResearchDiscipline discipline = registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(disciplineKey.getRootKey());
+                    if (discipline != null) {
+                        for (ResearchEntry finaleEntry : discipline.getFinaleEntries(registryAccess)) {
+                            ResearchEntryKey finaleKey = finaleEntry.key();
+                            if (!knowledge.isResearchKnown(finaleKey)) {
+                                boolean shouldUnlock = finaleEntry.finales().stream().map(k -> registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(k.getRootKey()))
+                                        .filter(Objects::nonNull).flatMap(d -> d.getEntryStream(registryAccess)).filter(e -> e.finales().isEmpty() && !e.finaleExempt()).allMatch(e -> e.isComplete(player));
+                                if (shouldUnlock) {
+                                    knowledge.addResearch(finaleKey);
+                                    if (showPopups) {
+                                        knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.POPUP);
+                                    }
+                                    knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
                                 }
-                                knowledge.addResearchFlag(finaleKey, IPlayerKnowledge.ResearchFlag.NEW);
                             }
                         }
                     }
-                }
+                });
             }
         }
         

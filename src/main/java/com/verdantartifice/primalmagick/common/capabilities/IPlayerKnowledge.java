@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -47,7 +48,7 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @return the current status of the given research entry
      */
     @Nonnull
-    public ResearchStatus getResearchStatus(@Nullable AbstractResearchKey<?> research);
+    public ResearchStatus getResearchStatus(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research);
     
     /**
      * Determine if the given research has been completed by the player.
@@ -55,7 +56,15 @@ public interface IPlayerKnowledge extends INBTSerializable<CompoundTag> {
      * @param research a key for the desired research entry
      * @return true if the given research is complete, false otherwise
      */
-    public boolean isResearchComplete(@Nullable AbstractResearchKey<?> research);
+    public boolean isResearchComplete(@Nonnull RegistryAccess registryAccess, @Nullable AbstractResearchKey<?> research);
+    
+    /**
+     * Determine if the given research has been started by the player.
+     * 
+     * @param research a key for the desired research entry
+     * @return true if the given research is started, false otherwise
+     */
+    public boolean isResearchKnown(@Nullable AbstractResearchKey<?> research);
     
     /**
      * Get the current stage number of the given research for the player.

@@ -92,6 +92,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return new Builder(key);
     }
     
+    public boolean isForDiscipline(ResearchDisciplineKey discipline) {
+        return this.disciplineKeyOpt.isPresent() && this.disciplineKeyOpt.get().equals(discipline);
+    }
+    
     /**
      * Get whether this research entry is a finale for the given discipline key.
      * 
@@ -126,11 +130,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public boolean isComplete(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
+        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.COMPLETE;
     }
     
     public boolean isInProgress(@Nonnull Player player) {
-        return this.getKnowledge(player).getResearchStatus(this.key()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
+        return this.getKnowledge(player).getResearchStatus(player.level().registryAccess(), this.key()) == IPlayerKnowledge.ResearchStatus.IN_PROGRESS;
     }
     
     public boolean isAvailable(@Nonnull Player player) {
@@ -174,7 +178,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
                 });
             }
             registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
-                if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(searchEntry.key())) {
+                if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(registryAccess, searchEntry.key())) {
                     for (ResearchAddendum addendum : searchEntry.addenda()) {
                         addendum.completionRequirementOpt().ifPresent(req -> {
                             if (req.contains(this.key) && req.isMetBy(player)) {
