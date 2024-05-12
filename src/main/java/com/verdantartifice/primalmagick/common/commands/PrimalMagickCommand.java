@@ -546,10 +546,7 @@ public class PrimalMagickCommand {
 
     private static int listUnlockedSources(CommandSourceStack source, ServerPlayer target) {
         // List the unlocked sources for the target player in prescribed order
-        List<String> unlockedTags = Sources.getAllSorted().stream()
-                                        .filter((s) -> s.isDiscovered(target))
-                                        .map((s) -> s.getTag().toUpperCase())
-                                        .collect(Collectors.toList());
+        List<String> unlockedTags = Sources.streamSorted().filter(s -> s.isDiscovered(target)).map(s -> s.getId().getPath().toUpperCase()).toList();
         String tagStr = String.join(", ", unlockedTags);
         source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.list", target.getName(), tagStr), true);
         return 0;
