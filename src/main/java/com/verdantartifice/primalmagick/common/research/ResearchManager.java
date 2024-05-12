@@ -67,16 +67,6 @@ public class ResearchManager {
     // Reverse map of recipe IDs to the research entries that contain the stage or addendum that grants them
     private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
     
-    // Set of research keys whose children should not be shown in the Upcoming section of the grimoire
-    // TODO Convert into tag
-    private static final Set<SimpleResearchKey> OPAQUE_RESEARCH = ImmutableSet.of(
-            ResearchEntries.DISCOVER_BLOOD, 
-            ResearchEntries.DISCOVER_INFERNAL, 
-            ResearchEntries.DISCOVER_VOID, 
-            ResearchEntries.DISCOVER_HALLOWED,
-            SimpleResearchKey.parse("t_discover_forbidden")     // FIXME Don't use SRK::parse
-    );
-    
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
     }
@@ -100,10 +90,6 @@ public class ResearchManager {
     
     static void clearRecipeMap() {
         RECIPE_MAP.clear();
-    }
-    
-    public static boolean isOpaque(SimpleResearchKey key) {
-        return OPAQUE_RESEARCH.contains(key);
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {

@@ -17,9 +17,13 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.tags.ResearchEntryTagsPM;
 
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -134,17 +138,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     }
     
     public boolean isUpcoming(@Nonnull Player player) {
-        for (ResearchEntryKey parentKey : this.parents) {
-            if (ResearchManager.isOpaque(parentKey) && !parentKey.isKnownBy(player)) {
-                return false;
-            } else {
-                ResearchEntry parent = ResearchEntries.getEntry(parentKey);
-                if (parent != null && !parent.isAvailable(player)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        Registry<ResearchEntry> registry = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES);
+        return !this.parents.stream().map(k -> registry.getHolder(k.getRootKey())).anyMatch(opt -> {
+            return opt.isPresent() && ((opt.get().is(ResearchEntryTagsPM.OPAQUE) && !opt.get().get().key().isKnownBy(player)) || !opt.get().get().isAvailable(player));
+        });
     }
     
     @Nonnull
@@ -156,6 +153,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public Set<ResourceLocation> getKnownRecipeIds(Player player) {
         Set<ResourceLocation> retVal = new HashSet<>();
         IPlayerKnowledge knowledge = this.getKnowledge(player);
+        RegistryAccess registryAccess = player.level().registryAccess();
         
         ResearchStage currentStage = null;
         int currentStageNum = knowledge.getResearchStage(key);
@@ -175,7 +173,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
                     }
                 });
             }
-            for (ResearchEntry searchEntry : ResearchEntries.getAllEntries()) {
+            registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).forEach(searchEntry -> {
                 if (!searchEntry.addenda().isEmpty() && knowledge.isResearchComplete(searchEntry.key())) {
                     for (ResearchAddendum addendum : searchEntry.addenda()) {
                         addendum.completionRequirementOpt().ifPresent(req -> {
@@ -185,7 +183,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
                         });
                     }
                 }
-            }
+            });
         }
         
         return retVal;

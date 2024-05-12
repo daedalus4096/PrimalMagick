@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.worldgen.structures.StructureSets
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructuresPM;
 import com.verdantartifice.primalmagick.datagen.tags.BookLanguageTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.DamageTypeTagsProviderPM;
+import com.verdantartifice.primalmagick.datagen.tags.ResearchEntryTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.StructureTagsProviderPM;
 
 import net.minecraft.core.Cloner;
@@ -60,6 +61,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
         generator.addProvider(isServer, new DamageTypeTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new StructureTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         generator.addProvider(isServer, new BookLanguageTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
+        generator.addProvider(isServer, new ResearchEntryTagsProviderPM(output, provider.thenApply(r -> append(r, BUILDER)), helper));
         return registryDataGenerator.getRegistryProvider();
     }
     
