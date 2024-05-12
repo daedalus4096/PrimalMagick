@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.crafting.ShapelessArcaneTagRecipe;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
@@ -26,7 +29,7 @@ public class ArcaneShapelessTagRecipeBuilder {
     protected final int resultAmount;
     protected final NonNullList<Ingredient> ingredients = NonNullList.create();
     protected String group;
-    protected CompoundResearchKey research;
+    protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
 
     protected ArcaneShapelessTagRecipeBuilder(TagKey<Item> result, int count) {
@@ -121,25 +124,9 @@ public class ArcaneShapelessTagRecipeBuilder {
         return this;
     }
     
-    /**
-     * Adds a research requirement to this recipe.
-     * 
-     * @param research the research requirement to add
-     * @return the modified builder
-     */
-    public ArcaneShapelessTagRecipeBuilder research(CompoundResearchKey research) {
-        this.research = research.copy();
+    public ArcaneShapelessTagRecipeBuilder requirement(AbstractRequirement<?> requirement) {
+        this.requirements.add(requirement);
         return this;
-    }
-    
-    /**
-     * Adds a research requirement to this recipe.  Throws if the optional is empty.
-     * 
-     * @param researchOpt the research requirement to add
-     * @return the modified builder
-     */
-    public ArcaneShapelessTagRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
-        return this.research(researchOpt.orElseThrow());
     }
     
     /**
@@ -153,6 +140,16 @@ public class ArcaneShapelessTagRecipeBuilder {
         return this;
     }
     
+    protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+        if (this.requirements.isEmpty()) {
+            return Optional.empty();
+        } else if (this.requirements.size() == 1) {
+            return Optional.of(this.requirements.get(0));
+        } else {
+            return Optional.of(new AndRequirement(this.requirements));
+        }
+    }
+    
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
@@ -161,7 +158,7 @@ public class ArcaneShapelessTagRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapelessArcaneTagRecipe recipe = new ShapelessArcaneTagRecipe(Objects.requireNonNullElse(this.group, ""), this.resultTag, this.resultAmount, this.ingredients, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
 
@@ -174,8 +171,8 @@ public class ArcaneShapelessTagRecipeBuilder {
         if (this.ingredients.isEmpty()) {
             throw new IllegalStateException("No ingredients defined for arcane shapeless tag recipe " + id + "!");
         }
-        if (this.research == null) {
-            throw new IllegalStateException("No research is defined for arcane shapeless tag recipe " + id + "!");
+        if (this.requirements.isEmpty()) {
+            throw new IllegalStateException("No requirement is defined for arcane shapeless tag recipe " + id + "!");
         }
     }
 }

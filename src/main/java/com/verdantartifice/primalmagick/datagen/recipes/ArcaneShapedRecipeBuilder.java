@@ -8,7 +8,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.crafting.ShapedArcaneRecipe;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.data.recipes.RecipeOutput;
@@ -32,7 +33,7 @@ public class ArcaneShapedRecipeBuilder {
     protected final List<String> patternRows = new ArrayList<>();
     protected final Map<Character, Ingredient> key = new LinkedHashMap<>();
     protected String group;
-    protected CompoundResearchKey research;
+    protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     protected SourceList manaCosts;
     
     protected ArcaneShapedRecipeBuilder(ItemLike result, int count) {
@@ -126,25 +127,9 @@ public class ArcaneShapedRecipeBuilder {
         return this;
     }
     
-    /**
-     * Adds a research requirement to this recipe.
-     * 
-     * @param research the research requirement to add
-     * @return the modified builder
-     */
-    public ArcaneShapedRecipeBuilder research(CompoundResearchKey research) {
-        this.research = research.copy();
+    public ArcaneShapedRecipeBuilder requirement(AbstractRequirement<?> requirement) {
+        this.requirements.add(requirement);
         return this;
-    }
-    
-    /**
-     * Adds a research requirement to this recipe.  Throws if the optional is empty.
-     * 
-     * @param researchOpt the research requirement to add
-     * @return the modified builder
-     */
-    public ArcaneShapedRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
-        return this.research(researchOpt.orElseThrow());
     }
     
     /**
@@ -158,6 +143,16 @@ public class ArcaneShapedRecipeBuilder {
         return this;
     }
     
+    protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+        if (this.requirements.isEmpty()) {
+            return Optional.empty();
+        } else if (this.requirements.size() == 1) {
+            return Optional.of(this.requirements.get(0));
+        } else {
+            return Optional.of(new AndRequirement(this.requirements));
+        }
+    }
+    
     /**
      * Builds this recipe into an {@link IFinishedRecipe}.
      * 
@@ -166,7 +161,7 @@ public class ArcaneShapedRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         ShapedRecipePattern pattern = this.validate(id);
-        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.research, Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
+        ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(Objects.requireNonNullElse(this.group, ""), this.result, pattern, this.getFinalRequirement(), Objects.requireNonNullElse(this.manaCosts, SourceList.EMPTY));
         output.accept(id, recipe, null);
     }
     
@@ -202,8 +197,8 @@ public class ArcaneShapedRecipeBuilder {
      * @param id the ID of the recipe
      */
     protected ShapedRecipePattern validate(ResourceLocation id) {
-        if (this.research == null) {
-            throw new IllegalStateException("No research is defined for arcane shaped recipe " + id + "!");
+        if (this.requirements.isEmpty()) {
+            throw new IllegalStateException("No requirement is defined for arcane shaped recipe " + id + "!");
         } else if (this.patternRows.size() == 1 && this.patternRows.get(0).length() == 1) {
             throw new IllegalStateException("Arcane shaped recipe " + id + " only takes in a single item - should it be a shapeless recipe instead?");
         }

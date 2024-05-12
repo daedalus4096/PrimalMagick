@@ -1,10 +1,13 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.crafting.RunecarvingRecipe;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
 
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +28,7 @@ public class RunecarvingRecipeBuilder {
     protected Ingredient ingredient1;
     protected Ingredient ingredient2;
     protected String group;
-    protected CompoundResearchKey research;
+    protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
     
     protected RunecarvingRecipeBuilder(ItemLike item, int count) {
         this.result = new ItemStack(item, count);
@@ -125,25 +128,19 @@ public class RunecarvingRecipeBuilder {
         return this;
     }
     
-    /**
-     * Adds a research requirement to this recipe.
-     * 
-     * @param research the research requirement to add
-     * @return the modified builder
-     */
-    public RunecarvingRecipeBuilder research(CompoundResearchKey research) {
-        this.research = research.copy();
+    public RunecarvingRecipeBuilder requirement(AbstractRequirement<?> requirement) {
+        this.requirements.add(requirement);
         return this;
     }
     
-    /**
-     * Adds a research requirement to this recipe.  Throws if the optional is empty.
-     * 
-     * @param researchOpt the research requirement to add
-     * @return the modified builder
-     */
-    public RunecarvingRecipeBuilder research(Optional<CompoundResearchKey> researchOpt) {
-        return this.research(researchOpt.orElseThrow());
+    protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+        if (this.requirements.isEmpty()) {
+            return Optional.empty();
+        } else if (this.requirements.size() == 1) {
+            return Optional.of(this.requirements.get(0));
+        } else {
+            return Optional.of(new AndRequirement(this.requirements));
+        }
     }
     
     /**
@@ -154,7 +151,7 @@ public class RunecarvingRecipeBuilder {
      */
     public void build(RecipeOutput output, ResourceLocation id) {
         this.validate(id);
-        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.research);
+        RunecarvingRecipe recipe = new RunecarvingRecipe(Objects.requireNonNullElse(this.group, ""), this.result, this.ingredient1, this.ingredient2, this.getFinalRequirement());
         output.accept(id, recipe, null);
     }
     
@@ -194,8 +191,8 @@ public class RunecarvingRecipeBuilder {
              this.ingredient2 == null || this.ingredient2.isEmpty() ) {
             throw new IllegalStateException("Missing ingredient for runecarving recipe " + id + "!");
         }
-        if (this.research == null) {
-            throw new IllegalStateException("No research is defined for runecarving recipe " + id + "!");
+        if (this.requirements.isEmpty()) {
+            throw new IllegalStateException("No requirement is defined for runecarving recipe " + id + "!");
         }
     }
 }
