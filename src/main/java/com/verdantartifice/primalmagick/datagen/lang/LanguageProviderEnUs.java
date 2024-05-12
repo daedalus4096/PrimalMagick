@@ -1948,11 +1948,11 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
 
         // Generate research requirement localizations
         this.researchRequirement("u_unknown_rune").name("Unknown Rune").build();
-        this.researchRequirement(Sources.BLOOD.getDiscoverKey()).name("Discover a source of sanguine power").build();
-        this.researchRequirement(Sources.INFERNAL.getDiscoverKey()).name("Discover a source of hellish power").build();
-        this.researchRequirement(Sources.VOID.getDiscoverKey()).name("Discover a source of eldritch power").build();
+        this.researchRequirement(ResearchEntries.DISCOVER_BLOOD).name("Discover a source of sanguine power").build();
+        this.researchRequirement(ResearchEntries.DISCOVER_INFERNAL).name("Discover a source of hellish power").build();
+        this.researchRequirement(ResearchEntries.DISCOVER_VOID).name("Discover a source of eldritch power").build();
         this.researchRequirement("t_discover_forbidden").name("Discover a source of forbidden magick").build();
-        this.researchRequirement(Sources.HALLOWED.getDiscoverKey()).name("Discover the secrets of the universe").build();
+        this.researchRequirement(ResearchEntries.DISCOVER_HALLOWED).name("Discover the secrets of the universe").build();
         this.researchRequirement("t_spells_cast_expert").name("Cast 10 spells").build();
         this.researchRequirement("t_spells_cast_master").name("Cast 50 spells").build();
         this.researchRequirement("t_spells_cast_supreme").name("Cast 250 spells").build();

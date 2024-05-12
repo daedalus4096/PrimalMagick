@@ -3,6 +3,7 @@ package com.verdantartifice.primalmagick.common.items.food;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -32,9 +33,9 @@ public class BloodyFleshItem extends Item {
         if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
             Player player = (Player)entityLiving;
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(Sources.BLOOD.getDiscoverKey())) {
+                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(ResearchEntries.DISCOVER_BLOOD)) {
                     // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
-                    ResearchManager.completeResearch(player, Sources.BLOOD.getDiscoverKey());
+                    ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_BLOOD);
                     player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
                 }
             });

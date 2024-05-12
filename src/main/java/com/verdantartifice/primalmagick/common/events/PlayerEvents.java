@@ -47,6 +47,7 @@ import com.verdantartifice.primalmagick.common.misc.InteractionRecord;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
@@ -264,14 +265,14 @@ public class PlayerEvents {
             Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
             boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
-            if (!knowledge.isResearchKnown(Sources.INFERNAL.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_NETHER)) {
+            if (!knowledge.isResearchKnown(ResearchEntries.DISCOVER_INFERNAL) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
-                ResearchManager.completeResearch(player, Sources.INFERNAL.getDiscoverKey());
+                ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_INFERNAL);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(Sources.VOID.getDiscoverKey()) && biomeHolder.is(BiomeTags.IS_END)) {
+            if (!knowledge.isResearchKnown(ResearchEntries.DISCOVER_VOID) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
-                ResearchManager.completeResearch(player, Sources.VOID.getDiscoverKey());
+                ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_VOID);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             

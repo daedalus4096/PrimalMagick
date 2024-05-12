@@ -14,6 +14,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -164,7 +165,7 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("FORBIDDEN_MAGICK", discipline).parent("TERRESTRIAL_MAGICK").parent("t_discover_forbidden")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("FORBIDDEN_MAGICK").parent(Sources.BLOOD.getDiscoverKey())
+        ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_BLOOD)
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.BONES).requiredItemStack(ItemsPM.BLOODY_FLESH.get())
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -172,7 +173,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).icon(Sources.INFERNAL.getImage()).parent("FORBIDDEN_MAGICK").parent(Sources.INFERNAL.getDiscoverKey())
+        ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).icon(Sources.INFERNAL.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.RODS_BLAZE).requiredItemStack(Items.SOUL_SAND)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -180,7 +181,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_VOID", discipline).icon(Sources.VOID.getImage()).parent("FORBIDDEN_MAGICK").parent(Sources.VOID.getDiscoverKey())
+        ResearchEntryBuilder.entry("SOURCE_VOID", discipline).icon(Sources.VOID.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(Tags.Items.END_STONES).requiredItemTag(Tags.Items.ENDER_PEARLS)
                     .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
@@ -188,7 +189,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 5).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("HEAVENLY_MAGICK", discipline).parent("FORBIDDEN_MAGICK").parent(Sources.HALLOWED.getDiscoverKey())
+        ResearchEntryBuilder.entry("HEAVENLY_MAGICK", discipline).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_HALLOWED", discipline).icon(Sources.HALLOWED.getImage()).parent("HEAVENLY_MAGICK")
@@ -238,7 +239,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("WAND_CAP_HEXIUM").parent("WAND_GEM_WIZARD")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_manaweaving_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_manaweaving_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                     .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
@@ -354,19 +355,19 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_BONE", discipline).icon(ItemsPM.BONE_WAND_CORE_ITEM.get()).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
-            .parent(Sources.BLOOD.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_BLOOD)
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.BONE).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 3).recipe(ItemsPM.BONE_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BONE_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_BLAZE_ROD", discipline).icon(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
-            .parent(Sources.INFERNAL.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.RODS_BLAZE).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_PURPUR", discipline).icon(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).parent("MASTER_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
-            .parent(Sources.VOID.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.PURPUR_BLOCK).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 3).recipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get()).build())
@@ -382,7 +383,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.SPELLCLOTH_LEGS.get()).recipe(ItemsPM.SPELLCLOTH_FEET.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HEXWEAVE", discipline).icon(ItemsPM.HEXWEAVE_HEAD.get()).parent("MASTER_MANAWEAVING").parent("SPELLCLOTH").parent("SHARD_SYNTHESIS")
-            .parent(Sources.BLOOD.getDiscoverKey()).parent(Sources.INFERNAL.getDiscoverKey()).parent(Sources.VOID.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_BLOOD).parent(ResearchEntries.DISCOVER_INFERNAL).parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEXWEAVE.get()).recipe(ItemsPM.HEXWEAVE_HEAD.get()).recipe(ItemsPM.HEXWEAVE_CHEST.get())
                     .recipe(ItemsPM.HEXWEAVE_LEGS.get()).recipe(ItemsPM.HEXWEAVE_FEET.get()).build())
@@ -397,39 +398,39 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredResearch("t_mana_siphoned_expert").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SEA.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
                     .recipe(ItemsPM.ARTIFICIAL_FONT_SUN.get()).recipe(ItemsPM.ARTIFICIAL_FONT_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.ARTIFICIAL_FONT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.ARTIFICIAL_FONT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("FORBIDDEN_MANA_FONTS", discipline).icon(ItemsPM.FORBIDDEN_FONT_EARTH.get()).parent("ARTIFICIAL_MANA_FONTS").parent("MASTER_MANAWEAVING")
             .parent("CRYSTAL_SYNTHESIS").parent("HEXIUM")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_FONT_EARTH.get()).recipe(ItemsPM.FORBIDDEN_FONT_SEA.get()).recipe(ItemsPM.FORBIDDEN_FONT_SKY.get())
                     .recipe(ItemsPM.FORBIDDEN_FONT_SUN.get()).recipe(ItemsPM.FORBIDDEN_FONT_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.FORBIDDEN_FONT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("HEAVENLY_MANA_FONTS", discipline).icon(ItemsPM.HEAVENLY_FONT_EARTH.get()).parent("FORBIDDEN_MANA_FONTS").parent("SUPREME_MANAWEAVING")
             .parent("CLUSTER_SYNTHESIS").parent("HALLOWSTEEL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEAVENLY_FONT_EARTH.get()).recipe(ItemsPM.HEAVENLY_FONT_SEA.get()).recipe(ItemsPM.HEAVENLY_FONT_SKY.get())
                     .recipe(ItemsPM.HEAVENLY_FONT_SUN.get()).recipe(ItemsPM.HEAVENLY_FONT_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.HEAVENLY_FONT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.HEAVENLY_FONT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MANA_ARROWS", discipline).icon(ItemsPM.MANA_ARROW_EARTH.get()).parent("BASIC_MANAWEAVING")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredCraftStack(Items.ARROW).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_ARROW_EARTH.get()).recipe(ItemsPM.MANA_ARROW_SEA.get()).recipe(ItemsPM.MANA_ARROW_SKY.get()).recipe(ItemsPM.MANA_ARROW_SUN.get())
                     .recipe(ItemsPM.MANA_ARROW_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.MANA_ARROW_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.MANA_ARROW_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.MANA_ARROW_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.MANA_ARROW_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.MANA_ARROW_HALLOWED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("ESSENCE_CASK_ENCHANTED", discipline).icon(ItemsPM.ESSENCE_CASK_ENCHANTED.get()).parent("EXPERT_MANAWEAVING").parent("WAND_CORE_HEARTWOOD")
             .parent("SHARD_SYNTHESIS").parent("PRIMALITE")
@@ -455,10 +456,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
                     .recipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).build())
             .build(consumer);
     }
     
@@ -477,7 +478,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("COMPLETE_ALCHEMY", discipline).hidden().icon("textures/research/discipline_alchemy.png").finale(discipline)
@@ -593,7 +594,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.MODID, "essence_shard_hallowed_from_crystal").build())
             .build(consumer);
         ResearchEntryBuilder.entry("HEXIUM", discipline).icon(ItemsPM.HEXIUM_INGOT.get()).parent("MASTER_ALCHEMY").parent("PRIMALITE").parent("SHARD_SYNTHESIS")
-            .parent(Sources.BLOOD.getDiscoverKey()).parent(Sources.INFERNAL.getDiscoverKey()).parent(Sources.VOID.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_BLOOD).parent(ResearchEntries.DISCOVER_INFERNAL).parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_SHARD_BLOOD.get()).requiredItemStack(ItemsPM.ESSENCE_SHARD_INFERNAL.get())
                     .requiredItemStack(ItemsPM.ESSENCE_SHARD_VOID.get()).requiredCraftStack(ItemsPM.PRIMALITE_INGOT.get()).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 2).attunement(Sources.INFERNAL, 2).attunement(Sources.VOID, 2).sibling("t_sotu_research_hexium")
@@ -637,7 +638,7 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.MODID, "essence_crystal_hallowed_from_cluster").build())
             .build(consumer);
         ResearchEntryBuilder.entry("HALLOWSTEEL", discipline).icon(ItemsPM.HALLOWSTEEL_INGOT.get()).parent("SUPREME_ALCHEMY").parent("HEXIUM").parent("CRYSTAL_SYNTHESIS")
-            .parent(Sources.HALLOWED.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_CRYSTAL_HALLOWED.get()).requiredCraftStack(ItemsPM.HEXIUM_INGOT.get())
                     .requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 3).recipe(ItemsPM.HALLOWSTEEL_INGOT.get()).recipe(ItemsPM.HALLOWSTEEL_NUGGET.get())
@@ -658,12 +659,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_ENCHANTED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CALCINATOR_FORBIDDEN", discipline).icon(ItemsPM.CALCINATOR_FORBIDDEN.get()).parent("MASTER_ALCHEMY").parent("MASTER_MANAWEAVING")
-            .parent("CRYSTAL_SYNTHESIS").parent("CALCINATOR_ENCHANTED") .parent(Sources.BLOOD.getDiscoverKey()).parent(Sources.INFERNAL.getDiscoverKey()).parent(Sources.VOID.getDiscoverKey())
+            .parent("CRYSTAL_SYNTHESIS").parent("CALCINATOR_ENCHANTED") .parent(ResearchEntries.DISCOVER_BLOOD).parent(ResearchEntries.DISCOVER_INFERNAL).parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CALCINATOR_HEAVENLY", discipline).icon(ItemsPM.CALCINATOR_HEAVENLY.get()).parent("SUPREME_ALCHEMY").parent("SUPREME_MANAWEAVING")
-            .parent("CLUSTER_SYNTHESIS").parent("CALCINATOR_FORBIDDEN").parent(Sources.HALLOWED.getDiscoverKey())
+            .parent("CLUSTER_SYNTHESIS").parent("CALCINATOR_FORBIDDEN").parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.CALCINATOR_HEAVENLY.get()).build())
             .build(consumer);
@@ -728,7 +729,7 @@ public class ResearchProvider implements DataProvider {
                     .build())
             .build(consumer);
         ResearchEntryBuilder.entry("IGNYX", discipline).icon(ItemsPM.IGNYX.get()).parent("EXPERT_ALCHEMY").parent("CALCINATOR_BASIC").parent("STONEMELDING")
-            .parent(Sources.INFERNAL.getDiscoverKey())
+            .parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).requiredItemTag(ItemTags.COALS).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.IGNYX.get()).recipe(ItemsPM.IGNYX_BLOCK.get())
                     .recipe(PrimalMagick.resource("ignyx_from_storage_block")).recipe(PrimalMagick.resource("torch_from_ignyx")).build())
@@ -737,7 +738,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).requiredItemTag(Tags.Items.GEMS_AMETHYST).build())
             .stage(ResearchStageBuilder.stage().attunement(SourceList.builder().withEarth(3).withSun(3).build()).recipe(ItemsPM.ENERGIZED_AMETHYST.get()).recipe(ItemsPM.DAMAGED_BUDDING_AMETHYST_BLOCK.get())
                     .recipe(ItemsPM.CHIPPED_BUDDING_AMETHYST_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_AMETHYST_BLOCK.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.ENERGIZED_DIAMOND.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.ENERGIZED_DIAMOND.get())
                     .recipe(ItemsPM.DAMAGED_BUDDING_DIAMOND_BLOCK.get()).recipe(ItemsPM.CHIPPED_BUDDING_DIAMOND_BLOCK.get()).recipe(ItemsPM.FLAWED_BUDDING_DIAMOND_BLOCK.get())
                     .recipe(ItemsPM.ENERGIZED_EMERALD.get()).recipe(ItemsPM.DAMAGED_BUDDING_EMERALD_BLOCK.get()).recipe(ItemsPM.CHIPPED_BUDDING_EMERALD_BLOCK.get())
                     .recipe(ItemsPM.FLAWED_BUDDING_EMERALD_BLOCK.get()).recipe(ItemsPM.ENERGIZED_QUARTZ.get()).recipe(ItemsPM.DAMAGED_BUDDING_QUARTZ_BLOCK.get())
@@ -760,7 +761,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_VEHICLE_BOLT").parent("SPELL_MOD_QUICKEN")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme")
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme")
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
@@ -797,19 +798,19 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.MOON, 1).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("EXPERT_SORCERY").parent(Sources.BLOOD.getDiscoverKey())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_BLOOD)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 1).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLAME", discipline).icon(Sources.INFERNAL.getImage()).parent("EXPERT_SORCERY").parent(Sources.INFERNAL.getDiscoverKey())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLAME", discipline).icon(Sources.INFERNAL.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 1).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_VOID", discipline).icon(Sources.VOID.getImage()).parent("EXPERT_SORCERY").parent(Sources.VOID.getDiscoverKey())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_VOID", discipline).icon(Sources.VOID.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 1).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", discipline).icon(Sources.HALLOWED.getImage()).parent("MASTER_SORCERY").parent(Sources.HALLOWED.getDiscoverKey())
+        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", discipline).icon(Sources.HALLOWED.getImage()).parent("MASTER_SORCERY").parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 1).build())
             .build(consumer);
@@ -904,7 +905,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_POWER")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
             .build(consumer);
@@ -949,15 +950,15 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_SELF.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_BLOOD", discipline).icon(ItemsPM.RUNE_BLOOD.get()).parent("EXPERT_RUNEWORKING").parent(Sources.BLOOD.getDiscoverKey())
+        ResearchEntryBuilder.entry("RUNE_BLOOD", discipline).icon(ItemsPM.RUNE_BLOOD.get()).parent("EXPERT_RUNEWORKING").parent(ResearchEntries.DISCOVER_BLOOD)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 1).recipe(ItemsPM.RUNE_BLOOD.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_INFERNAL", discipline).icon(ItemsPM.RUNE_INFERNAL.get()).parent("EXPERT_RUNEWORKING").parent(Sources.INFERNAL.getDiscoverKey())
+        ResearchEntryBuilder.entry("RUNE_INFERNAL", discipline).icon(ItemsPM.RUNE_INFERNAL.get()).parent("EXPERT_RUNEWORKING").parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 1).recipe(ItemsPM.RUNE_INFERNAL.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_VOID", discipline).icon(ItemsPM.RUNE_VOID.get()).parent("EXPERT_RUNEWORKING").parent(Sources.VOID.getDiscoverKey())
+        ResearchEntryBuilder.entry("RUNE_VOID", discipline).icon(ItemsPM.RUNE_VOID.get()).parent("EXPERT_RUNEWORKING").parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 1).recipe(ItemsPM.RUNE_VOID.get()).build())
             .build(consumer);
@@ -981,7 +982,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_CREATURE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_HALLOWED", discipline).icon(ItemsPM.RUNE_HALLOWED.get()).parent("MASTER_RUNEWORKING").parent(Sources.HALLOWED.getDiscoverKey())
+        ResearchEntryBuilder.entry("RUNE_HALLOWED", discipline).icon(ItemsPM.RUNE_HALLOWED.get()).parent("MASTER_RUNEWORKING").parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_HALLOWED.get()).build())
             .build(consumer);
@@ -989,12 +990,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_INSIGHT.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_POWER", discipline).icon(ItemsPM.RUNE_POWER.get()).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent(Sources.BLOOD.getDiscoverKey())
-            .parent(Sources.INFERNAL.getDiscoverKey()).parent(Sources.VOID.getDiscoverKey()).parent("RUNE_INSIGHT")
+        ResearchEntryBuilder.entry("RUNE_POWER", discipline).icon(ItemsPM.RUNE_POWER.get()).parent("MASTER_RUNEWORKING").parent("CRYSTAL_SYNTHESIS").parent(ResearchEntries.DISCOVER_BLOOD)
+            .parent(ResearchEntries.DISCOVER_INFERNAL).parent(ResearchEntries.DISCOVER_VOID).parent("RUNE_INSIGHT")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().sibling("t_sotu_research_power_rune").recipe(ItemsPM.RUNE_POWER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("RUNE_GRACE", discipline).icon(ItemsPM.RUNE_GRACE.get()).parent("SUPREME_RUNEWORKING").parent("CLUSTER_SYNTHESIS").parent(Sources.HALLOWED.getDiscoverKey())
+        ResearchEntryBuilder.entry("RUNE_GRACE", discipline).icon(ItemsPM.RUNE_GRACE.get()).parent("SUPREME_RUNEWORKING").parent("CLUSTER_SYNTHESIS").parent(ResearchEntries.DISCOVER_HALLOWED)
             .parent("RUNE_POWER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNE_GRACE.get()).build())
@@ -1013,7 +1014,7 @@ public class ResearchProvider implements DataProvider {
                     .requiredItemStack(ItemsPM.RUNE_SKY.get()).requiredItemStack(ItemsPM.RUNE_SUN.get()).requiredItemStack(ItemsPM.RUNE_MOON.get()).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNIC_ARMOR_TRIM_SMITHING_TEMPLATE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("ENDERWARD", discipline).icon(ItemsPM.ENDERWARD.get()).parent("MASTER_RUNEWORKING").parent("RUNE_DISPEL").parent(Sources.VOID.getDiscoverKey())
+        ResearchEntryBuilder.entry("ENDERWARD", discipline).icon(ItemsPM.ENDERWARD.get()).parent("MASTER_RUNEWORKING").parent("RUNE_DISPEL").parent(ResearchEntries.DISCOVER_VOID)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 3).recipe(ItemsPM.ENDERWARD.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("RECALL_STONE").build())
@@ -1035,7 +1036,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("BLOODLETTER").parent("SOUL_ANVIL")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
         ResearchEntryBuilder.entry("COMPLETE_RITUAL", discipline).hidden().icon("textures/research/discipline_ritual.png").finale(discipline)
@@ -1077,7 +1078,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 1).recipe(ItemsPM.SOUL_ANVIL.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CELESTIAL_HARP", discipline).icon(ItemsPM.CELESTIAL_HARP.get()).parent("SUPREME_RITUAL").parent(Sources.HALLOWED.getDiscoverKey())
+        ResearchEntryBuilder.entry("CELESTIAL_HARP", discipline).icon(ItemsPM.CELESTIAL_HARP.get()).parent("SUPREME_RITUAL").parent(ResearchEntries.DISCOVER_HALLOWED)
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.NOTE_BLOCK).requiredItemStack(Items.JUKEBOX).requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 1).recipe(ItemsPM.CELESTIAL_HARP.get()).build())
             .build(consumer);
@@ -1110,13 +1111,13 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.BASIC_SKY_PIXIE.get()).recipe(PrimalMagick.resource("pixie_basic_sky_revive"))
                     .recipe(ItemsPM.BASIC_SUN_PIXIE.get()).recipe(PrimalMagick.resource("pixie_basic_sun_revive"))
                     .recipe(ItemsPM.BASIC_MOON_PIXIE.get()).recipe(PrimalMagick.resource("pixie_basic_moon_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_basic_blood_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_basic_infernal_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_basic_void_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_basic_hallowed_revive")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("GRAND_PIXIES", discipline).icon(ItemsPM.GRAND_EARTH_PIXIE.get()).parent("MASTER_RITUAL").parent("PIXIES").parent("CRYSTAL_SYNTHESIS")
@@ -1128,13 +1129,13 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.GRAND_SKY_PIXIE.get()).recipe(PrimalMagick.resource("pixie_grand_sky_revive"))
                     .recipe(ItemsPM.GRAND_SUN_PIXIE.get()).recipe(PrimalMagick.resource("pixie_grand_sun_revive"))
                     .recipe(ItemsPM.GRAND_MOON_PIXIE.get()).recipe(PrimalMagick.resource("pixie_grand_moon_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GRAND_BLOOD_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_grand_blood_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GRAND_INFERNAL_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_grand_infernal_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 3).recipe(ItemsPM.GRAND_VOID_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 3).recipe(ItemsPM.GRAND_VOID_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_grand_void_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GRAND_HALLOWED_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_grand_hallowed_revive")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("MAJESTIC_PIXIES", discipline).icon(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).parent("SUPREME_RITUAL").parent("GRAND_PIXIES").parent("CLUSTER_SYNTHESIS")
@@ -1146,13 +1147,13 @@ public class ResearchProvider implements DataProvider {
                     .recipe(ItemsPM.MAJESTIC_SKY_PIXIE.get()).recipe(PrimalMagick.resource("pixie_majestic_sky_revive"))
                     .recipe(ItemsPM.MAJESTIC_SUN_PIXIE.get()).recipe(PrimalMagick.resource("pixie_majestic_sun_revive"))
                     .recipe(ItemsPM.MAJESTIC_MOON_PIXIE.get()).recipe(PrimalMagick.resource("pixie_majestic_moon_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 4).recipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 4).recipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_majestic_blood_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_majestic_infernal_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 4).recipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 4).recipe(ItemsPM.MAJESTIC_VOID_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_majestic_void_revive")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get())
                     .recipe(PrimalMagick.resource("pixie_majestic_hallowed_revive")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("AMBROSIA", discipline).icon(ItemsPM.BASIC_EARTH_AMBROSIA.get()).parent("EXPERT_RITUAL").parent("ATTUNEMENTS").parent("MANAFRUIT")
@@ -1161,10 +1162,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
                     .recipe(ItemsPM.BASIC_EARTH_AMBROSIA.get()).recipe(ItemsPM.BASIC_SEA_AMBROSIA.get()).recipe(ItemsPM.BASIC_SKY_AMBROSIA.get()).recipe(ItemsPM.BASIC_SUN_AMBROSIA.get())
                     .recipe(ItemsPM.BASIC_MOON_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_AMBROSIA.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("GREATER_AMBROSIA", discipline).icon(ItemsPM.GREATER_EARTH_AMBROSIA.get()).parent("MASTER_RITUAL").parent("AMBROSIA").parent("CRYSTAL_SYNTHESIS")
             .parent("RUNE_POWER").parent("BLOODLETTER")
@@ -1172,10 +1173,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 3).attunement(Sources.SEA, 3).attunement(Sources.SKY, 3).attunement(Sources.SUN, 3).attunement(Sources.MOON, 3)
                     .recipe(ItemsPM.GREATER_EARTH_AMBROSIA.get()).recipe(ItemsPM.GREATER_SEA_AMBROSIA.get()).recipe(ItemsPM.GREATER_SKY_AMBROSIA.get()).recipe(ItemsPM.GREATER_SUN_AMBROSIA.get())
                     .recipe(ItemsPM.GREATER_MOON_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GREATER_BLOOD_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GREATER_INFERNAL_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 3).recipe(ItemsPM.GREATER_VOID_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GREATER_HALLOWED_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GREATER_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GREATER_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 3).recipe(ItemsPM.GREATER_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GREATER_HALLOWED_AMBROSIA.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_AMBROSIA", discipline).icon(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).parent("SUPREME_RITUAL").parent("GREATER_AMBROSIA").parent("CLUSTER_SYNTHESIS")
             .parent("CELESTIAL_HARP")
@@ -1183,10 +1184,10 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 4).attunement(Sources.SEA, 4).attunement(Sources.SKY, 4).attunement(Sources.SUN, 4).attunement(Sources.MOON, 4)
                     .recipe(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SEA_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SKY_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SUN_AMBROSIA.get())
                     .recipe(ItemsPM.SUPREME_MOON_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).attunement(Sources.BLOOD, 4).recipe(ItemsPM.SUPREME_BLOOD_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.SUPREME_INFERNAL_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).attunement(Sources.VOID, 4).recipe(ItemsPM.SUPREME_VOID_AMBROSIA.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).attunement(Sources.BLOOD, 4).recipe(ItemsPM.SUPREME_BLOOD_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.SUPREME_INFERNAL_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).attunement(Sources.VOID, 4).recipe(ItemsPM.SUPREME_VOID_AMBROSIA.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("FLYING_CARPET", discipline).icon(ItemsPM.FLYING_CARPET.get()).parent("MASTER_RITUAL").parent("CRYSTAL_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_PROJECT")
             .parent("RUNE_ITEM").parent("RUNE_POWER").parent("INCENSE_BRAZIER").parent("RITUAL_LECTERN").parent("RITUAL_BELL")
@@ -1233,28 +1234,28 @@ public class ResearchProvider implements DataProvider {
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_MOON")
                     .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.LUCKY_STRIKE.get())).sibling("UNLOCK_RUNE_ENCHANTMENTS").build())
             .build(consumer);
-        ResearchEntryBuilder.entry("FORBIDDEN_TRIDENT", discipline).icon(ItemsPM.FORBIDDEN_TRIDENT.get()).parent(Sources.BLOOD.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM")
+        ResearchEntryBuilder.entry("FORBIDDEN_TRIDENT", discipline).icon(ItemsPM.FORBIDDEN_TRIDENT.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent("MASTER_RITUAL").parent("HEXIUM")
             .parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_BLOOD").parent("BLOODLETTER")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_PROJECT").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_BLOOD")
                     .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.RENDING.get())).sibling("UNLOCK_RUNE_ENCHANTMENTS").build())
             .build(consumer);
-        ResearchEntryBuilder.entry("FORBIDDEN_BOW", discipline).icon(ItemsPM.FORBIDDEN_BOW.get()).parent(Sources.INFERNAL.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM")
+        ResearchEntryBuilder.entry("FORBIDDEN_BOW", discipline).icon(ItemsPM.FORBIDDEN_BOW.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent("MASTER_RITUAL").parent("HEXIUM")
             .parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_INFERNAL").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_ABSORB").requiredResearch("RUNE_CREATURE").requiredResearch("RUNE_INFERNAL")
                     .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.SOULPIERCING.get())).sibling("UNLOCK_RUNE_ENCHANTMENTS").build())
             .build(consumer);
-        ResearchEntryBuilder.entry("FORBIDDEN_SWORD", discipline).icon(ItemsPM.FORBIDDEN_SWORD.get()).parent(Sources.VOID.getDiscoverKey()).parent("MASTER_RITUAL").parent("HEXIUM")
+        ResearchEntryBuilder.entry("FORBIDDEN_SWORD", discipline).icon(ItemsPM.FORBIDDEN_SWORD.get()).parent(ResearchEntries.DISCOVER_VOID).parent("MASTER_RITUAL").parent("HEXIUM")
             .parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_VOID").parent("BLOODLETTER").parent("SOUL_ANVIL")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).build())
             .addendum(ResearchAddendumBuilder.addendum().requiredResearch("MASTER_RUNEWORKING").requiredResearch("RUNE_SUMMON").requiredResearch("RUNE_ITEM").requiredResearch("RUNE_VOID")
                     .sibling(SimpleResearchKey.parseRuneEnchantment(EnchantmentsPM.ESSENCE_THIEF.get())).sibling("UNLOCK_RUNE_ENCHANTMENTS").build())
             .build(consumer);
-        ResearchEntryBuilder.entry("SACRED_SHIELD", discipline).icon(ItemsPM.SACRED_SHIELD.get()).parent(Sources.HALLOWED.getDiscoverKey()).parent("SUPREME_RITUAL").parent("HALLOWSTEEL")
+        ResearchEntryBuilder.entry("SACRED_SHIELD", discipline).icon(ItemsPM.SACRED_SHIELD.get()).parent(ResearchEntries.DISCOVER_HALLOWED).parent("SUPREME_RITUAL").parent("HALLOWSTEEL")
             .parent("SHARD_SYNTHESIS").parent("MANA_SALTS").parent("RUNE_HALLOWED").parent("CELESTIAL_HARP")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SACRED_SHIELD.get()).build())
@@ -1277,12 +1278,12 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().attunement(Sources.SEA, 2).recipe(PrimalMagick.resource("hydromelon_seeds_from_ritual")).recipe(ItemsPM.HYDROMELON.get())
                     .recipe(ItemsPM.HYDROMELON_SEEDS.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("BLOOD_ROSE", discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(Sources.BLOOD.getDiscoverKey()).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
+        ResearchEntryBuilder.entry("BLOOD_ROSE", discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
             .parent("RUNE_BLOOD")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.ROSE_BUSH).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("EMBERFLOWER", discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(Sources.INFERNAL.getDiscoverKey()).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
+        ResearchEntryBuilder.entry("EMBERFLOWER", discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent("EXPERT_RITUAL").parent("HYDROMELON").parent("BLOODLETTER")
             .parent("RUNE_INFERNAL")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SUNFLOWER).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).build())
@@ -1303,7 +1304,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HEXIUM_GOLEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(Sources.HALLOWED.getDiscoverKey()).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel", true)
+            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel", true)
                     .reveals("SECRETS_OF_THE_UNIVERSE").build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
             .build(consumer);
@@ -1336,7 +1337,7 @@ public class ResearchProvider implements DataProvider {
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).build())
             .build(consumer);
-        ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).icon(ItemsPM.CONCOCTER.get()).parent("EXPERT_MAGITECH").parent("SKYGLASS").parent(Sources.INFERNAL.getDiscoverKey())
+        ResearchEntryBuilder.entry("CONCOCTING_TINCTURES", discipline).icon(ItemsPM.CONCOCTER.get()).parent("EXPERT_MAGITECH").parent("SKYGLASS").parent(ResearchEntries.DISCOVER_INFERNAL)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe(PrimalMagick.resource("night_vision_tincture"))
                     .recipe(PrimalMagick.resource("long_night_vision_tincture")).recipe(PrimalMagick.resource("invisibility_tincture"))
@@ -1349,10 +1350,10 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("strength_tincture")).recipe(PrimalMagick.resource("long_strength_tincture"))
                     .recipe(PrimalMagick.resource("strong_strength_tincture")).recipe(PrimalMagick.resource("slow_falling_tincture"))
                     .recipe(PrimalMagick.resource("long_slow_falling_tincture")).recipe(PrimalMagick.resource("luck_tincture")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(PrimalMagick.resource("healing_tincture"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(PrimalMagick.resource("healing_tincture"))
                     .recipe(PrimalMagick.resource("strong_healing_tincture")).recipe(PrimalMagick.resource("regeneration_tincture"))
                     .recipe(PrimalMagick.resource("long_regeneration_tincture")).recipe(PrimalMagick.resource("strong_regeneration_tincture")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(PrimalMagick.resource("fire_resistance_tincture"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(PrimalMagick.resource("fire_resistance_tincture"))
                     .recipe(PrimalMagick.resource("long_fire_resistance_tincture")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_PHILTERS", discipline).icon(ItemsPM.CONCOCTER.get()).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES").parent("SHARD_SYNTHESIS")
@@ -1368,10 +1369,10 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("strength_philter")).recipe(PrimalMagick.resource("long_strength_philter"))
                     .recipe(PrimalMagick.resource("strong_strength_philter")).recipe(PrimalMagick.resource("slow_falling_philter"))
                     .recipe(PrimalMagick.resource("long_slow_falling_philter")).recipe(PrimalMagick.resource("luck_philter")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(PrimalMagick.resource("healing_philter"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(PrimalMagick.resource("healing_philter"))
                     .recipe(PrimalMagick.resource("strong_healing_philter")).recipe(PrimalMagick.resource("regeneration_philter"))
                     .recipe(PrimalMagick.resource("long_regeneration_philter")).recipe(PrimalMagick.resource("strong_regeneration_philter")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(PrimalMagick.resource("fire_resistance_philter"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(PrimalMagick.resource("fire_resistance_philter"))
                     .recipe(PrimalMagick.resource("long_fire_resistance_philter")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_ELIXIRS", discipline).icon(ItemsPM.CONCOCTER.get()).parent("SUPREME_MAGITECH").parent("CONCOCTING_PHILTERS").parent("CRYSTAL_SYNTHESIS")
@@ -1387,10 +1388,10 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("strength_elixir")).recipe(PrimalMagick.resource("long_strength_elixir"))
                     .recipe(PrimalMagick.resource("strong_strength_elixir")).recipe(PrimalMagick.resource("slow_falling_elixir"))
                     .recipe(PrimalMagick.resource("long_slow_falling_elixir")).recipe(PrimalMagick.resource("luck_elixir")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(PrimalMagick.resource("healing_elixir"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(PrimalMagick.resource("healing_elixir"))
                     .recipe(PrimalMagick.resource("strong_healing_elixir")).recipe(PrimalMagick.resource("regeneration_elixir"))
                     .recipe(PrimalMagick.resource("long_regeneration_elixir")).recipe(PrimalMagick.resource("strong_regeneration_elixir")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(PrimalMagick.resource("fire_resistance_elixir"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(PrimalMagick.resource("fire_resistance_elixir"))
                     .recipe(PrimalMagick.resource("long_fire_resistance_elixir")).build())
             .build(consumer);
         ResearchEntryBuilder.entry("CONCOCTING_BOMBS", discipline).icon(ItemsPM.CONCOCTER.get()).parent("MASTER_MAGITECH").parent("CONCOCTING_TINCTURES").parent("SHARD_SYNTHESIS")
@@ -1406,15 +1407,15 @@ public class ResearchProvider implements DataProvider {
                     .recipe(PrimalMagick.resource("strength_bomb")).recipe(PrimalMagick.resource("long_strength_bomb"))
                     .recipe(PrimalMagick.resource("strong_strength_bomb")).recipe(PrimalMagick.resource("slow_falling_bomb"))
                     .recipe(PrimalMagick.resource("long_slow_falling_bomb")).recipe(PrimalMagick.resource("luck_bomb")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(PrimalMagick.resource("healing_bomb"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(PrimalMagick.resource("healing_bomb"))
                     .recipe(PrimalMagick.resource("strong_healing_bomb")).recipe(PrimalMagick.resource("regeneration_bomb"))
                     .recipe(PrimalMagick.resource("long_regeneration_bomb")).recipe(PrimalMagick.resource("strong_regeneration_bomb"))
                     .recipe(PrimalMagick.resource("harming_bomb")).recipe(PrimalMagick.resource("strong_harming_bomb"))
                     .recipe(PrimalMagick.resource("poison_bomb")).recipe(PrimalMagick.resource("long_poison_bomb"))
                     .recipe(PrimalMagick.resource("strong_poison_bomb")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(PrimalMagick.resource("fire_resistance_bomb"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(PrimalMagick.resource("fire_resistance_bomb"))
                     .recipe(PrimalMagick.resource("long_fire_resistance_bomb")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(PrimalMagick.resource("slowness_bomb"))
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(PrimalMagick.resource("slowness_bomb"))
                     .recipe(PrimalMagick.resource("long_slowness_bomb")).recipe(PrimalMagick.resource("strong_slowness_bomb"))
                     .recipe(PrimalMagick.resource("weakness_bomb")).recipe(PrimalMagick.resource("long_weakness_bomb")).build())
             .build(consumer);
@@ -1546,10 +1547,10 @@ public class ResearchProvider implements DataProvider {
         ResearchEntryBuilder.entry("HUMMING_ARTIFACT", discipline).hidden().icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SEA.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
                     .recipe(ItemsPM.HUMMING_ARTIFACT_SUN.get()).recipe(ItemsPM.HUMMING_ARTIFACT_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.BLOOD.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.INFERNAL.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.VOID.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(Sources.HALLOWED.getDiscoverKey()).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
+            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
             .build(consumer);
         ResearchEntryBuilder.entry("TREEFOLK", discipline).hidden().icon(ItemsPM.HEARTWOOD.get()).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
