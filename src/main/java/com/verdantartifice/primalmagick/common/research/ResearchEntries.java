@@ -5,9 +5,11 @@ import java.util.function.Function;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 
@@ -137,5 +139,9 @@ public class ResearchEntries {
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
         return context.register(key, supplier.apply(key));
+    }
+    
+    public static ResearchEntry getEntry(RegistryAccess registryAccess, ResearchEntryKey key) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(key.getRootKey());
     }
 }
