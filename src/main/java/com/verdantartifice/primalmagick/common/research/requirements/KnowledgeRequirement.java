@@ -62,6 +62,12 @@ public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequireme
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        // Do nothing; materials are not consumed when force completing a knowledge requirement
+        return true;
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.KNOWLEDGE;
     }

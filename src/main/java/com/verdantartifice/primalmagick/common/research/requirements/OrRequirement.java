@@ -47,6 +47,11 @@ public class OrRequirement extends AbstractRequirement<OrRequirement> {
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        return this.subs.stream().map(req -> req.forceComplete(player)).anyMatch(val -> val);
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.COMPOUND;
     }

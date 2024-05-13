@@ -47,6 +47,11 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        return this.subs.stream().map(req -> req.forceComplete(player)).allMatch(val -> val);
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.COMPOUND;
     }

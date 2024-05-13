@@ -17,10 +17,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.common.collect.ImmutableSet;
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
@@ -29,6 +25,8 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.crafting.recipe_book.ArcaneRecipeBookManager;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.EntityScanKey;
+import com.verdantartifice.primalmagick.common.research.keys.ItemScanKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -58,8 +56,6 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchManager {
-    private static final Logger LOGGER = LogManager.getLogger();
-
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
@@ -198,10 +194,8 @@ public class ResearchManager {
                         entry.parents().forEach(parentKey -> forceGrantWithAllParents(player, parentKey));
 
                         for (ResearchStage stage : entry.stages()) {
-                            // Complete any research required as a prerequisite for any of the entry's stages
-                            for (SimpleResearchKey requiredKey : stage.getRequirement().getKeys()) {
-                                completeResearch(player, requiredKey, true, true, false);
-                            }
+                            // Force complete any requirements for any of the entry's stages
+                            stage.completionRequirementOpt().ifPresent(req -> req.forceComplete(player));
                         }
                     }
                     
@@ -233,10 +227,8 @@ public class ResearchManager {
                         entry.parents().forEach(parentKey -> forceGrantWithAllParents(player, parentKey));
 
                         for (ResearchStage stage : entry.stages()) {
-                            // Complete any research required as a prerequisite for any of the entry's stages
-                            for (SimpleResearchKey requiredKey : stage.getRequirement().getKeys()) {
-                                completeResearch(player, requiredKey, true, true, false);
-                            }
+                            // Force complete any requirements for any of the entry's stages
+                            stage.completionRequirementOpt().ifPresent(req -> req.forceComplete(player));
                         }
                     }
                 }
@@ -658,7 +650,7 @@ public class ResearchManager {
         checkScanTriggers(player, stack.getItem());
         
         // Generate a research key for the itemstack and add that research to the player
-        SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
+        ItemScanKey key = new ItemScanKey(stack);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the itemstack is worth and add those to the player's knowledge
             getObservationPointsAsync(stack, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
@@ -694,7 +686,7 @@ public class ResearchManager {
         }
         
         // Generate a research key for the entity type and add that research to the player
-        SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
+        EntityScanKey key = new EntityScanKey(type);
         if (key != null && knowledge.addResearch(key)) {
             // Determine how many observation points the entity is worth and add those to the player's knowledge
             getObservationPointsAsync(type, player.getCommandSenderWorld()).thenAccept(obsPoints -> {
@@ -728,7 +720,7 @@ public class ResearchManager {
             return 0;
         }
         int count = 0;
-        SimpleResearchKey key;
+        ItemScanKey key;
         ItemStack stack;
         
         // Iterate over all registered items in the game
@@ -737,7 +729,7 @@ public class ResearchManager {
             // Generate a research key for the itemstack and add that research to the player
             stack = new ItemStack(item);
             if (!stack.isEmpty()) { // Skip over air
-                key = SimpleResearchKey.parseItemScan(stack);
+                key = new ItemScanKey(stack);
                 if (key != null && knowledge.addResearch(key)) {
                     count++;
         

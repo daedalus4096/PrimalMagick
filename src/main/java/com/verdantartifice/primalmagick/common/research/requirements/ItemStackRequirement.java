@@ -42,6 +42,12 @@ public class ItemStackRequirement extends AbstractRequirement<ItemStackRequireme
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        // Do nothing; materials are not consumed when force completing an item requirement
+        return true;
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.MUST_OBTAIN;
     }

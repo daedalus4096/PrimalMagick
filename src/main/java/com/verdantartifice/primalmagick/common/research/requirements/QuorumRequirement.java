@@ -58,6 +58,11 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        return this.subs.stream().mapToInt(req -> req.forceComplete(player) ? 1 : 0).sum() >= this.requiredCount;
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.COMPOUND;
     }

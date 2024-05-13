@@ -52,6 +52,12 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
     }
 
     @Override
+    public boolean forceComplete(Player player) {
+        StatsManager.setValueIfMax(player, this.stat, this.requiredValue);
+        return true;
+    }
+
+    @Override
     public RequirementCategory getCategory() {
         return RequirementCategory.STAT;
     }

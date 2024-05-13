@@ -20,6 +20,7 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     
     public abstract boolean isMetBy(@Nullable Player player);
     public abstract void consumeComponents(@Nullable Player player);
+    public abstract boolean forceComplete(@Nullable Player player);
     
     public abstract RequirementCategory getCategory();
     public abstract Stream<AbstractRequirement<?>> streamByCategory(RequirementCategory category);
