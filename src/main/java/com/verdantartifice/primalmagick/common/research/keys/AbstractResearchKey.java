@@ -38,7 +38,7 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                retVal.setValue(knowledge.isResearchComplete(this));
+                retVal.setValue(knowledge.isResearchComplete(player.level().registryAccess(), this));
             });
             return retVal.booleanValue();
         }
