@@ -50,14 +50,15 @@ import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabili
 import com.verdantartifice.primalmagick.common.crafting.IHasRequirement;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchTopicHistoryPacket;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.DisciplineResearchTopic;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
@@ -89,8 +90,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -296,14 +299,14 @@ public class GrimoireScreen extends Screen {
     }
 
     private List<ResearchDiscipline> buildDisciplineList() {
-        // Gather a list of all research disciplines, sorted by their registration order
-        return ResearchDisciplines.getAllDisciplinesSorted();
+        // Gather a list of all research disciplines, sorted by their registration order, that appear in the main index
+        return ResearchDisciplines.getIndexDisciplines(this.minecraft.level.registryAccess());
     }
     
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
         // Gather a list of all research entries for the given discipline, sorted by their display names
-        return discipline.getEntries().stream()
-                .sorted(Comparator.comparing(e -> (Component.translatable(e.getNameTranslationKey())).getString()))
+        return discipline.getEntryStream(this.minecraft.level.registryAccess())
+                .sorted(Comparator.comparing(e -> (Component.translatable(e.nameTranslationKey())).getString()))
                 .collect(Collectors.toList());
     }
     
@@ -318,7 +321,7 @@ public class GrimoireScreen extends Screen {
         int heightRemaining = 182;  // Leave enough room for the page header
         DisciplineIndexPage tempPage = new DisciplineIndexPage(true);
         for (ResearchDiscipline discipline : disciplines) {
-            if (!discipline.getKey().equals("SCANS") && (discipline.getUnlockResearchKey() == null || discipline.getUnlockResearchKey().isKnownByStrict(Minecraft.getInstance().player))) {
+            if (discipline.unlockRequirementOpt().isEmpty() || discipline.unlockRequirementOpt().get().isMetBy(Minecraft.getInstance().player)) {
                 tempPage.addDiscipline(discipline);
                 heightRemaining -= 12;
                 
@@ -367,9 +370,9 @@ public class GrimoireScreen extends Screen {
                 completeList.add(entry);
             } else if (entry.isInProgress(mc.player)) {
                 inProgressList.add(entry);
-            } else if (!entry.isHidden() && entry.isAvailable(mc.player)) {
+            } else if (!entry.hidden() && entry.isAvailable(mc.player)) {
                 availableList.add(entry);
-            } else if (!entry.isHidden() && entry.isUpcoming(mc.player)) {
+            } else if (!entry.hidden() && entry.isUpcoming(mc.player)) {
                 upcomingList.add(entry);
             }
         }
@@ -487,31 +490,34 @@ public class GrimoireScreen extends Screen {
     }
     
     protected void parseEntryPages(ResearchEntry entry) {
-        if (entry == null || entry.getStages().isEmpty()) {
+        if (entry == null || entry.stages().isEmpty()) {
             return;
         }
         
+        Player player = this.minecraft.player;
+        Level level = this.minecraft.level;
+        
         // Determine current research stage
         boolean complete = false;
-        this.currentStageIndex = this.knowledge.getResearchStage(entry.getKey());
-        if (this.currentStageIndex >= entry.getStages().size()) {
-            this.currentStageIndex = entry.getStages().size() - 1;
+        this.currentStageIndex = this.knowledge.getResearchStage(entry.key());
+        if (this.currentStageIndex >= entry.stages().size()) {
+            this.currentStageIndex = entry.stages().size() - 1;
             complete = true;
         }
         if (this.currentStageIndex < 0) {
             this.currentStageIndex = 0;
         }
-        ResearchStage stage = entry.getStages().get(this.currentStageIndex);
-        List<ResearchAddendum> addenda = complete ? entry.getAddenda() : Collections.emptyList();
+        ResearchStage stage = entry.stages().get(this.currentStageIndex);
+        List<ResearchAddendum> addenda = complete ? entry.addenda() : Collections.emptyList();
         
-        String rawText = (Component.translatable(stage.getTextTranslationKey())).getString();
+        String rawText = (Component.translatable(stage.textTranslationKey())).getString();
         
         // Append unlocked addendum text
         int addendumCount = 0;
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequirement() != null && addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
+            if (addendum.completionRequirementOpt().isPresent() && addendum.completionRequirementOpt().get().isMetBy(player)) {
                 Component headerText = Component.translatable("grimoire.primalmagick.addendum_header", ++addendumCount);
-                Component addendumText = Component.translatable(addendum.getTextTranslationKey());
+                Component addendumText = Component.translatable(addendum.textTranslationKey());
                 rawText += ("<PAGE>" + headerText.getString() + "<BR>" + addendumText.getString());
             }
         }
@@ -585,10 +591,10 @@ public class GrimoireScreen extends Screen {
         }
         
         // Add attunement gain page if applicable
-        SourceList attunements = stage.getAttunements();
+        SourceList attunements = stage.attunements();
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
-                attunements = attunements.merge(addendum.getAttunements());
+            if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
+                attunements = attunements.merge(addendum.attunements());
             }
         }
         if (!attunements.isEmpty()) {
@@ -596,20 +602,20 @@ public class GrimoireScreen extends Screen {
         }
         
         // Add requirements page if applicable
-        if (!entry.getKey().isKnownByStrict(this.minecraft.player) && stage.hasPrerequisites()) {
+        if (!entry.key().isKnownBy(player) && stage.hasPrerequisites()) {
             this.pages.add(new RequirementsPage(stage));
         }
         
         // Generate recipe pages from stage and addenda
         List<ResourceLocation> locList = new ArrayList<>();
-        for (ResourceLocation loc : stage.getRecipes()) {
+        for (ResourceLocation loc : stage.recipes()) {
             if (!locList.contains(loc)) {
                 locList.add(loc);
             }
         }
         for (ResearchAddendum addendum : addenda) {
-            if (addendum.getRequirement() == null || addendum.getRequirement().isKnownByStrict(this.getMinecraft().player)) {
-                for (ResourceLocation loc : addendum.getRecipes()) {
+            if (addendum.completionRequirementOpt().isEmpty() || addendum.completionRequirementOpt().get().isMetBy(player)) {
+                for (ResourceLocation loc : addendum.recipes()) {
                     if (!locList.contains(loc)) {
                         locList.add(loc);
                     }
@@ -617,9 +623,9 @@ public class GrimoireScreen extends Screen {
             }
         }
         for (ResourceLocation recipeLoc : locList) {
-            Optional<RecipeHolder<?>> opt = this.minecraft.level.getRecipeManager().byKey(recipeLoc);
+            Optional<RecipeHolder<?>> opt = level.getRecipeManager().byKey(recipeLoc);
             opt.ifPresent(recipe -> {
-                AbstractRecipePage page = RecipePageFactory.createPage(recipe, this.minecraft.level.registryAccess());
+                AbstractRecipePage page = RecipePageFactory.createPage(recipe, level.registryAccess());
                 if (page != null) {
                     this.pages.add(page);
                 }
@@ -784,7 +790,9 @@ public class GrimoireScreen extends Screen {
         // Add the first page with no contents to show the meter
         this.pages.add(new AttunementPage(source, true));
         
-        String rawText = (Component.translatable("source.primalmagick." + source.getTag() + ".attunement.text")).getString();
+        ResourceLocation sourceId = source.getId();
+        String componentKey = String.join(".", "source", sourceId.getNamespace(), sourceId.getPath(), "attunement", "text");
+        String rawText = (Component.translatable(componentKey)).getString();
         
         // Process text
         int lineHeight = this.font.lineHeight;
@@ -858,7 +866,7 @@ public class GrimoireScreen extends Screen {
     protected void parseRuneEnchantmentPage(Enchantment enchant) {
         Minecraft mc = Minecraft.getInstance();
         ResourceLocation enchantKey = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
-        String rawText = ResearchManager.isResearchComplete(mc.player, SimpleResearchKey.parseRuneEnchantment(enchant)) ?
+        String rawText = ResearchManager.isResearchComplete(mc.player, new RuneEnchantmentKey(enchant)) ?
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "text"))).getString() :
                 (Component.translatable(String.join(".", "enchantment", enchantKey.getNamespace(), enchantKey.getPath(), "rune_enchantment", "partial_text"))).getString();
         
@@ -938,11 +946,11 @@ public class GrimoireScreen extends Screen {
         Minecraft mc = Minecraft.getInstance();
 
         for (Enchantment enchant : RuneManager.getRuneEnchantmentsSorted()) {
-            List<SimpleResearchKey> researchKeys = List.of(
-                    SimpleResearchKey.parseRuneEnchantment(enchant), 
-                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.VERB), 
-                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.NOUN), 
-                    SimpleResearchKey.parsePartialRuneEnchantment(enchant, RuneType.SOURCE));
+            List<AbstractResearchKey<?>> researchKeys = List.of(
+                    new RuneEnchantmentKey(enchant), 
+                    new RuneEnchantmentPartialKey(enchant, RuneType.VERB),
+                    new RuneEnchantmentPartialKey(enchant, RuneType.NOUN),
+                    new RuneEnchantmentPartialKey(enchant, RuneType.SOURCE));
             if (researchKeys.stream().anyMatch(key -> ResearchManager.isResearchComplete(mc.player, key))) {
                 tempPage.addEnchantment(enchant);
                 heightRemaining -= 12;
@@ -1020,8 +1028,7 @@ public class GrimoireScreen extends Screen {
             return false;
         }
         if (recipe.value() instanceof IHasRequirement hrr) {
-            CompoundResearchKey parents = hrr.getRequirement();
-            return (parents == null || parents.isKnownByStrict(mc.player));
+            return hrr.getRequirement().isEmpty() || hrr.getRequirement().get().isMetBy(mc.player);
         } else {
             return ResearchManager.isRecipeVisible(recipe.id(), mc.player);
         }
