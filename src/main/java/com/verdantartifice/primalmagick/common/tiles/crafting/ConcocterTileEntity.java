@@ -23,6 +23,7 @@ import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -73,8 +74,8 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
-    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
+    protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
+    protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData concocterData = new ContainerData() {
@@ -186,11 +187,11 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         }
     }
     
-    protected Set<SimpleResearchKey> getRelevantResearch() {
+    protected Set<AbstractResearchKey<?>> getRelevantResearch() {
         return this.relevantResearch;
     }
     
-    protected static Set<SimpleResearchKey> assembleRelevantResearch(Level level) {
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch(Level level) {
         // Get a set of all the research keys used in any concocting recipe
         return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.value().getRequirement().getKeys())
                 .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());

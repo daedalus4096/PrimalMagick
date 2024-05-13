@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
@@ -24,7 +23,7 @@ import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.CalcinatorMenu;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tiles.base.AbstractTileSidedInventoryPM;
@@ -76,8 +75,8 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
     
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
-    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
+    protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
+    protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData calcinatorData = new ContainerData() {
@@ -398,17 +397,17 @@ public abstract class AbstractCalcinatorTileEntity extends AbstractTileSidedInve
                 return source.isDiscovered(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(source.getDiscoverKey());
+                return this.researchCache.isResearchComplete(source.getDiscoverKey().orElse(null));
             }
         }
     }
     
-    protected Set<SimpleResearchKey> getRelevantResearch() {
+    protected Set<AbstractResearchKey<?>> getRelevantResearch() {
         return this.relevantResearch;
     }
     
-    protected static Set<SimpleResearchKey> assembleRelevantResearch() {
-        return Sources.getAllSorted().stream().map(s -> s.getDiscoverKey()).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch() {
+        return Sources.streamSorted().map(s -> s.getDiscoverKey()).filter(o -> o.isPresent()).map(o -> o.get()).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override

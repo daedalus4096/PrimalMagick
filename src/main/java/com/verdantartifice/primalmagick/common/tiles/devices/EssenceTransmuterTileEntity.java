@@ -2,7 +2,6 @@ package com.verdantartifice.primalmagick.common.tiles.devices;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
@@ -21,7 +20,7 @@ import com.verdantartifice.primalmagick.common.capabilities.TileResearchCache;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.EssenceTransmuterMenu;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -40,6 +39,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -78,8 +78,8 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
     protected LazyOptional<IManaStorage> manaStorageOpt = LazyOptional.of(() -> this.manaStorage);
     protected LazyOptional<ITileResearchCache> researchCacheOpt = LazyOptional.of(() -> this.researchCache);
     
-    protected Set<SimpleResearchKey> relevantResearch = Collections.emptySet();
-    protected final Predicate<SimpleResearchKey> relevantFilter = k -> this.getRelevantResearch().contains(k);
+    protected Set<AbstractResearchKey<?>> relevantResearch = Collections.emptySet();
+    protected final Predicate<AbstractResearchKey<?>> relevantFilter = k -> this.getRelevantResearch().contains(k);
     
     // Define a container-trackable representation of this tile's relevant data
     protected final ContainerData transmuterData = new ContainerData() {
@@ -131,7 +131,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         this.processTimeTotal = compound.getInt("ProcessTimeTotal");
         this.manaStorage.deserializeNBT(compound.getCompound("ManaStorage"));
         this.researchCache.deserializeNBT(compound.getCompound("ResearchCache"));
-        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Source.getSource(compound.getString("NextSource")) : null;
+        this.nextOutputSource = compound.contains("NextSource", Tag.TAG_STRING) ? Sources.get(new ResourceLocation(compound.getString("NextSource"))) : null;
         
         this.ownerUUID = null;
         if (compound.contains("OwnerUUID")) {
@@ -150,7 +150,7 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
         compound.put("ManaStorage", this.manaStorage.serializeNBT());
         compound.put("ResearchCache", this.researchCache.serializeNBT());
         if (this.nextOutputSource != null) {
-            compound.putString("NextSource", this.nextOutputSource.getTag());
+            compound.putString("NextSource", this.nextOutputSource.getId().toString());
         }
         if (this.ownerUUID != null) {
             compound.putString("OwnerUUID", this.ownerUUID.toString());
@@ -373,17 +373,17 @@ public class EssenceTransmuterTileEntity extends AbstractTileSidedInventoryPM im
                 return source.isDiscovered(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(source.getDiscoverKey());
+                return this.researchCache.isResearchComplete(source.getDiscoverKey().orElse(null));
             }
         }
     }
     
-    protected Set<SimpleResearchKey> getRelevantResearch() {
+    protected Set<AbstractResearchKey<?>> getRelevantResearch() {
         return this.relevantResearch;
     }
     
-    protected static Set<SimpleResearchKey> assembleRelevantResearch() {
-        return Sources.getAllSorted().stream().map(s -> s.getDiscoverKey()).filter(Objects::nonNull).collect(Collectors.toUnmodifiableSet());
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch() {
+        return Sources.streamSorted().map(s -> s.getDiscoverKey()).filter(o -> o.isPresent()).map(o -> o.get()).collect(Collectors.toUnmodifiableSet());
     }
 
     @Override
