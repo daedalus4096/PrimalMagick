@@ -17,9 +17,8 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellBoltPacket;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.util.EntitySelectorsPM;
@@ -103,15 +102,12 @@ public class CombatEvents {
         // Handle effects triggered by damage target
         if (event.getEntity() instanceof Player target) {
             // Gain appropriate research for damage sources, if applicable
-            if (ResearchManager.isResearchComplete(target, SimpleResearchKey.FIRST_STEPS)) {
-                SimpleResearchKey drownKey = ResearchNames.INTERNAL_DROWN_A_LITTLE.get().simpleKey();
-                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, drownKey)) {
-                    ResearchManager.completeResearch(target, drownKey);
+            if (ResearchManager.isResearchComplete(target, ResearchEntries.FIRST_STEPS)) {
+                if (event.getSource() == target.damageSources().drown() && !ResearchManager.isResearchComplete(target, ResearchEntries.DROWN_A_LITTLE)) {
+                    ResearchManager.completeResearch(target, ResearchEntries.DROWN_A_LITTLE);
                 }
-                
-                SimpleResearchKey lavaKey = ResearchNames.INTERNAL_FEEL_THE_BURN.get().simpleKey();
-                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, lavaKey)) {
-                    ResearchManager.completeResearch(target, lavaKey);
+                if (event.getSource() == target.damageSources().lava() && !ResearchManager.isResearchComplete(target, ResearchEntries.FEEL_THE_BURN)) {
+                    ResearchManager.completeResearch(target, ResearchEntries.FEEL_THE_BURN);
                 }
             }
 

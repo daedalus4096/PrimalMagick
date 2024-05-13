@@ -16,9 +16,11 @@ import com.verdantartifice.primalmagick.common.crafting.WandTransforms;
 import com.verdantartifice.primalmagick.common.effects.EffectsPM;
 import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -66,6 +68,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  */
 public abstract class AbstractWandItem extends Item implements IWand {
     protected static final DecimalFormat MANA_FORMATTER = new DecimalFormat("#######.##");
+    protected static final ResearchEntryKey WAND_TRANSFORM_HINT_KEY = new ResearchEntryKey(ResearchEntries.WAND_TRANSFORM_HINT);
     
     public AbstractWandItem(Properties properties) {
         super(properties);
@@ -542,12 +545,11 @@ public abstract class AbstractWandItem extends Item implements IWand {
         super.releaseUsing(stack, worldIn, entityLiving, timeLeft);
         
         // Give a hint the first time the player aborts a wand transform early
-        SimpleResearchKey hintKey = ResearchNames.INTERNAL_WAND_TRANSFORM_HINT.get().simpleKey();
         BlockPos wandPos = this.getPositionInUse(stack);
-        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !hintKey.isKnownByStrict(player)) {
+        if (wandPos != null && !worldIn.isClientSide && entityLiving instanceof Player player && !WAND_TRANSFORM_HINT_KEY.isKnownBy(player)) {
             for (IWandTransform transform : WandTransforms.getAll()) {
                 if (transform.isValid(worldIn, player, wandPos) && this.getUseDuration(stack) - timeLeft < WandTransforms.CHANNEL_DURATION) {
-                    ResearchManager.completeResearch(player, hintKey);
+                    ResearchManager.completeResearch(player, WAND_TRANSFORM_HINT_KEY);
                     player.sendSystemMessage(Component.translatable("event.primalmagick.wand_transform_hint").withStyle(ChatFormatting.GREEN));
                     break;
                 }

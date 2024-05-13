@@ -2,10 +2,8 @@ package com.verdantartifice.primalmagick.common.items.food;
 
 import java.util.List;
 
-import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.ChatFormatting;
@@ -30,15 +28,12 @@ public class BloodyFleshItem extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        if (!worldIn.isClientSide && (entityLiving instanceof Player)) {
-            Player player = (Player)entityLiving;
-            PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                if (knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS) && !knowledge.isResearchKnown(ResearchEntries.DISCOVER_BLOOD)) {
-                    // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
-                    ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_BLOOD);
-                    player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
-                }
-            });
+        if (!worldIn.isClientSide && entityLiving instanceof Player player) {
+            if (ResearchManager.isResearchKnown(player, ResearchEntries.FIRST_STEPS) && !ResearchManager.isResearchKnown(player, ResearchEntries.DISCOVER_BLOOD)) {
+                // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
+                ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_BLOOD);
+                player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);
+            }
         }
         return super.finishUsingItem(stack, worldIn, entityLiving);
     }

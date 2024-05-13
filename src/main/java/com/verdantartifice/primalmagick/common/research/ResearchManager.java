@@ -37,6 +37,7 @@ import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -140,20 +141,39 @@ public class ResearchManager {
         }
     }
     
-    public static boolean hasPrerequisites(@Nullable Player player, @Nullable ResearchEntryKey key) {
+    public static boolean hasPrerequisites(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
         if (player == null) {
             return false;
         }
         if (key == null) {
             return true;
         }
-        Optional<Holder.Reference<ResearchEntry>> entryRefOpt = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(key.getRootKey());
-        if (entryRefOpt.isEmpty() || entryRefOpt.get().get().parents().isEmpty()) {
-            return true;
+        if (key instanceof ResearchEntryKey entryKey) {
+            Optional<Holder.Reference<ResearchEntry>> entryRefOpt = player.level().registryAccess().registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(entryKey.getRootKey());
+            if (entryRefOpt.isEmpty() || entryRefOpt.get().get().parents().isEmpty()) {
+                return true;
+            } else {
+                // Perform a strict completion check on the given entry's parent research
+                return entryRefOpt.get().get().parents().stream().allMatch(k -> k.isKnownBy(player));
+            }
         } else {
-            // Perform a strict completion check on the given entry's parent research
-            return entryRefOpt.get().get().parents().stream().allMatch(k -> k.isKnownBy(player));
+            return true;
         }
+    }
+    
+    public static boolean isResearchKnown(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        return isResearchKnown(player, new ResearchEntryKey(rawKey));
+    }
+    
+    public static boolean isResearchKnown(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
+        if (player == null || key == null) {
+            return false;
+        }
+        return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchKnown(key)).orElse(false);
+    }
+    
+    public static boolean isResearchComplete(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        return isResearchComplete(player, new ResearchEntryKey(rawKey));
     }
     
     public static boolean isResearchComplete(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
@@ -164,17 +184,21 @@ public class ResearchManager {
         return PrimalMagickCapabilities.getKnowledge(player).map(k -> k.isResearchComplete(registryAccess, key)).orElse(false);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key) {
+    public static boolean completeResearch(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        return completeResearch(player, new ResearchEntryKey(rawKey));
+    }
+    
+    public static boolean completeResearch(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
         // Complete the given research and sync it to the player's client
         return completeResearch(player, key, true);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable AbstractResearchKey<?> key, boolean sync) {
         // Complete the given research, optionally syncing it to the player's client
         return completeResearch(player, key, sync, true, true);
     }
     
-    public static boolean completeResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
+    public static boolean completeResearch(@Nullable Player player, @Nullable AbstractResearchKey<?> key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Repeatedly progress the given research until it is completed, optionally syncing it to the player's client
         boolean retVal = false;
         while (progressResearch(player, key, sync, showNewFlags, showPopups)) {
@@ -305,7 +329,7 @@ public class ResearchManager {
         return progressResearch(player, key, sync, true, true);
     }
     
-    public static boolean progressResearch(@Nullable Player player, @Nullable ResearchEntryKey key, boolean sync, boolean showNewFlags, boolean showPopups) {
+    public static boolean progressResearch(@Nullable Player player, @Nullable AbstractResearchKey<?> key, boolean sync, boolean showNewFlags, boolean showPopups) {
         // Progress the given research to its next stage and optionally sync to the player's client
         if (player == null || key == null) {
             return false;
@@ -328,7 +352,7 @@ public class ResearchManager {
             added = true;
         }
         
-        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
+        ResearchEntry entry = key instanceof ResearchEntryKey entryKey ? ResearchEntries.getEntry(registryAccess, entryKey) : null;
         boolean entryComplete = true;   // Default to true for non-entry research (e.g. stat triggers)
         if (entry != null && !entry.stages().isEmpty()) {
             // Get the current stage number of the research entry

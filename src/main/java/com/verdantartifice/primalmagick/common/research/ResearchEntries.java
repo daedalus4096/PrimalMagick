@@ -33,6 +33,8 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_RITUAL = create("unlock_ritual");
     public static final ResourceKey<ResearchEntry> UNLOCK_MAGITECH = create("unlock_magitech");
     public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> UNLOCK_RUNE_ENCHANTMENTS = create("unlock_rune_enchantments");
     
     // Manaweaving research entries
     public static final ResourceKey<ResearchEntry> MANA_ARROWS = create("mana_arrows");
@@ -62,6 +64,15 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
+    public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
+    public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
+    public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
+    public static final ResourceKey<ResearchEntry> DROWN_A_LITTLE = create("drown_a_little");
+    public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
+    public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
+    public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));

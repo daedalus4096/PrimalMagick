@@ -553,8 +553,8 @@ public class PlayerEvents {
     public static void onWakeUp(PlayerWakeUpEvent event) {
         Player player = event.getEntity();
         if (player != null && !player.level().isClientSide) {
-            if ( ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_FOUND_SHRINE.get().simpleKey()) &&
-                 !ResearchManager.isResearchComplete(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey()) ) {
+            if ( ResearchManager.isResearchComplete(player, ResearchEntries.FOUND_SHRINE) &&
+                 !ResearchManager.isResearchComplete(player, ResearchEntries.GOT_DREAM) ) {
                 // If the player is at the appropriate point of the FTUX, grant them the dream journal and research
                 grantDreamJournal(player);
             }
@@ -581,7 +581,7 @@ public class PlayerEvents {
     
     protected static void grantDreamJournal(Player player) {
         // First grant the appropriate research entry to continue FTUX
-        ResearchManager.completeResearch(player, ResearchNames.INTERNAL_GOT_DREAM.get().simpleKey());
+        ResearchManager.completeResearch(player, ResearchEntries.GOT_DREAM);
         
         // Construct the dream journal item
         ItemStack journal = StaticBookItem.make(ItemsPM.STATIC_BOOK, Optional.of(BooksPM.DREAM_JOURNAL), Optional.of(BookLanguagesPM.DEFAULT), Optional.of(player.getName().getString()), 
