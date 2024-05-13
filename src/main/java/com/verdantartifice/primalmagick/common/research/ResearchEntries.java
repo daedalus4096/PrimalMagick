@@ -35,6 +35,11 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> UNLOCK_RUNE_ENCHANTMENTS = create("unlock_rune_enchantments");
+    public static final ResourceKey<ResearchEntry> SOURCE_EARTH = create("source_earth");
+    public static final ResourceKey<ResearchEntry> SOURCE_SEA = create("source_sea");
+    public static final ResourceKey<ResearchEntry> SOURCE_SKY = create("source_sky");
+    public static final ResourceKey<ResearchEntry> SOURCE_SUN = create("source_sun");
+    public static final ResourceKey<ResearchEntry> SOURCE_MOON = create("source_moon");
     
     // Manaweaving research entries
     public static final ResourceKey<ResearchEntry> MANA_ARROWS = create("mana_arrows");
@@ -69,10 +74,16 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
+    public static final ResourceKey<ResearchEntry> ENV_EARTH = create("env_earth");
+    public static final ResourceKey<ResearchEntry> ENV_SEA = create("env_sea");
+    public static final ResourceKey<ResearchEntry> ENV_SKY = create("env_sky");
+    public static final ResourceKey<ResearchEntry> ENV_SUN = create("env_sun");
+    public static final ResourceKey<ResearchEntry> ENV_MOON = create("env_moon");
     public static final ResourceKey<ResearchEntry> DROWN_A_LITTLE = create("drown_a_little");
     public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
+    public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));

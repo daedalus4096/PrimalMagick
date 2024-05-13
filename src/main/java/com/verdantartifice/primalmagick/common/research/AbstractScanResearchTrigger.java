@@ -10,8 +10,6 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public abstract class AbstractScanResearchTrigger implements IScanTrigger {
-    protected static final Supplier<SimpleResearchKey> SCANS_KEY = ResearchNames.simpleKey(ResearchNames.UNLOCK_SCANS);
-
     protected final SimpleResearchKey toUnlock;
     protected final boolean unlockScansPage;
     
@@ -23,7 +21,7 @@ public abstract class AbstractScanResearchTrigger implements IScanTrigger {
     @Override
     public void onMatch(ServerPlayer player, Object obj) {
         if (this.unlockScansPage) {
-            ResearchManager.completeResearch(player, SCANS_KEY.get());
+            ResearchManager.completeResearch(player, ResearchEntries.UNLOCK_SCANS);
         }
         ResearchManager.completeResearch(player, this.toUnlock);
     }

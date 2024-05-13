@@ -51,6 +51,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -118,9 +119,18 @@ public class PlayerEvents {
     
     private static final Map<UUID, Boolean> DOUBLE_JUMP_ALLOWED = new HashMap<>();
     private static final Set<UUID> NEAR_DEATH_ELIGIBLE = new HashSet<>();
-    private static final Supplier<SimpleResearchKey> NDE_RESEARCH_KEY = ResearchNames.simpleKey(ResearchNames.INTERNAL_NEAR_DEATH_EXPERIENCE);
     private static final UUID STEP_MODIFIER_EARTH_UUID = UUID.fromString("17b138bf-1d32-43a9-a690-59e0e4e0d0b6");
     private static final AttributeModifier STEP_MODIFIER_EARTH = new AttributeModifier(STEP_MODIFIER_EARTH_UUID, "Earth attunement step height bonus", 0.4D, AttributeModifier.Operation.ADDITION);
+    private static final ResearchStageKey SOURCE_EARTH_START = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 1);
+    private static final ResearchStageKey SOURCE_EARTH_END = new ResearchStageKey(ResearchEntries.SOURCE_EARTH, 2);
+    private static final ResearchStageKey SOURCE_SEA_START = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 1);
+    private static final ResearchStageKey SOURCE_SEA_END = new ResearchStageKey(ResearchEntries.SOURCE_SEA, 2);
+    private static final ResearchStageKey SOURCE_SKY_START = new ResearchStageKey(ResearchEntries.SOURCE_SKY, 1);
+    private static final ResearchStageKey SOURCE_SKY_END = new ResearchStageKey(ResearchEntries.SOURCE_SKY, 2);
+    private static final ResearchStageKey SOURCE_SUN_START = new ResearchStageKey(ResearchEntries.SOURCE_SUN, 1);
+    private static final ResearchStageKey SOURCE_SUN_END = new ResearchStageKey(ResearchEntries.SOURCE_SUN, 2);
+    private static final ResearchStageKey SOURCE_MOON_START = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 1);
+    private static final ResearchStageKey SOURCE_MOON_END = new ResearchStageKey(ResearchEntries.SOURCE_MOON, 2);
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
@@ -171,9 +181,9 @@ public class PlayerEvents {
         }
         if ( NEAR_DEATH_ELIGIBLE.contains(playerId) && 
              health >= player.getMaxHealth() &&
-             ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS) ) {
-            if (!ResearchManager.isResearchComplete(player, NDE_RESEARCH_KEY.get())) {
-                ResearchManager.completeResearch(player, NDE_RESEARCH_KEY.get());
+             ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS) ) {
+            if (!ResearchManager.isResearchComplete(player, ResearchEntries.NEAR_DEATH_EXPERIENCE)) {
+                ResearchManager.completeResearch(player, ResearchEntries.NEAR_DEATH_EXPERIENCE);
             }
             NEAR_DEATH_ELIGIBLE.remove(playerId);
         }
@@ -257,7 +267,7 @@ public class PlayerEvents {
     protected static void checkEnvironmentalResearch(ServerPlayer player) {
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             Level level = player.level();
-            if (!knowledge.isResearchKnown(SimpleResearchKey.FIRST_STEPS)) {
+            if (!ResearchManager.isResearchKnown(player, ResearchEntries.FIRST_STEPS)) {
                 // Only check environmental research if the player has started progression
                 return;
             }
@@ -265,58 +275,53 @@ public class PlayerEvents {
             Holder<Biome> biomeHolder = level.getBiome(player.blockPosition());
             boolean inOverworld = level.dimension().equals(Level.OVERWORLD);
             
-            if (!knowledge.isResearchKnown(ResearchEntries.DISCOVER_INFERNAL) && biomeHolder.is(BiomeTags.IS_NETHER)) {
+            if (!ResearchManager.isResearchKnown(player, ResearchEntries.DISCOVER_INFERNAL) && biomeHolder.is(BiomeTags.IS_NETHER)) {
                 // If the player is in a Nether-based biome, discover the Infernal source
                 ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_INFERNAL);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.infernal").withStyle(ChatFormatting.GREEN), false);
             }
-            if (!knowledge.isResearchKnown(ResearchEntries.DISCOVER_VOID) && biomeHolder.is(BiomeTags.IS_END)) {
+            if (!ResearchManager.isResearchKnown(player, ResearchEntries.DISCOVER_VOID) && biomeHolder.is(BiomeTags.IS_END)) {
                 // If the player is in an End-based biome, discover the Void source
                 ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_VOID);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.void").withStyle(ChatFormatting.GREEN), false);
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_EARTH.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_EARTH.get().simpleKey();
-                if (player.position().y < -16.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (ResearchManager.isResearchKnown(player, SOURCE_EARTH_START) && !ResearchManager.isResearchKnown(player, SOURCE_EARTH_END)) {
+                if (player.position().y < -16.0D && inOverworld && !ResearchManager.isResearchKnown(player, ResearchEntries.ENV_EARTH)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_EARTH);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sea Source research, check if they're in the ocean
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SEA.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SEA.get().simpleKey();
-                if (biomeHolder.is(BiomeTags.IS_OCEAN) && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (ResearchManager.isResearchKnown(player, SOURCE_SEA_START) && !ResearchManager.isResearchKnown(player, SOURCE_SEA_END)) {
+                if (biomeHolder.is(BiomeTags.IS_OCEAN) && !ResearchManager.isResearchKnown(player, ResearchEntries.ENV_SEA)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SEA);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sky Source research, check if they're high up enough
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SKY.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SKY.get().simpleKey();
-                if (player.position().y > 128.0D && inOverworld && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (ResearchManager.isResearchKnown(player, SOURCE_SKY_START) && !ResearchManager.isResearchKnown(player, SOURCE_SKY_END)) {
+                if (player.position().y > 128.0D && inOverworld && !ResearchManager.isResearchKnown(player, ResearchEntries.ENV_SKY)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SKY);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_SUN.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_SUN.get().simpleKey();
-                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (ResearchManager.isResearchKnown(player, SOURCE_SUN_START) && !ResearchManager.isResearchKnown(player, SOURCE_SUN_END)) {
+                if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !ResearchManager.isResearchKnown(player, ResearchEntries.ENV_SUN)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
                 }
             }
             
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
-            if (knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(1)) && !knowledge.isResearchKnown(ResearchNames.SOURCE_MOON.get().simpleKey(2))) {
-                SimpleResearchKey key = ResearchNames.INTERNAL_ENV_MOON.get().simpleKey();
-                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !knowledge.isResearchKnown(key)) {
-                    ResearchManager.completeResearch(player, key);
+            if (ResearchManager.isResearchKnown(player, SOURCE_MOON_START) && !ResearchManager.isResearchKnown(player, SOURCE_MOON_END)) {
+                if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !ResearchManager.isResearchKnown(player, ResearchEntries.ENV_MOON)) {
+                    ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
                 }
             }

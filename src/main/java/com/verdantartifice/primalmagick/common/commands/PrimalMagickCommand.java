@@ -555,8 +555,8 @@ public class PrimalMagickCommand {
     private static int unlockAllSources(CommandSourceStack source, ServerPlayer target) {
         // Grant the target player the unlock research for all sources.  Can't do this with grantResearch because source unlocks aren't in the grimoire.
         MutableInt unlocked = new MutableInt(0);
-        Sources.stream().filter(s -> !s.isDiscovered(target)).forEach(toUnlock -> {
-            if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
+        Sources.stream().filter(s -> !s.isDiscovered(target) && s.getDiscoverKey().isPresent()).map(s -> s.getDiscoverKey().get()).forEach(toUnlock -> {
+            if (ResearchManager.completeResearch(target, toUnlock)) {
                 unlocked.increment();
             }
         });
@@ -576,7 +576,7 @@ public class PrimalMagickCommand {
             source.sendFailure(Component.translatable("commands.primalmagick.source.noexist", tag));
         } else if (toUnlock.isDiscovered(target)) {
             source.sendFailure(Component.translatable("commands.primalmagick.sources.unlock.already_unlocked", target.getName(), tag.toUpperCase()));
-        } else if (ResearchManager.completeResearch(target, toUnlock.getDiscoverKey())) {
+        } else if (toUnlock.getDiscoverKey().isPresent() && ResearchManager.completeResearch(target, toUnlock.getDiscoverKey().get())) {
             source.sendSuccess(() -> Component.translatable("commands.primalmagick.sources.unlock.success", target.getName(), tag.toUpperCase()), true);
             if (source.getPlayer() == null || source.getPlayer().getId() != target.getId()) {
                 target.sendSystemMessage(Component.translatable("commands.primalmagick.sources.unlock.target", source.getTextName(), tag.toUpperCase()));
