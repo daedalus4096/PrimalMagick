@@ -6,9 +6,14 @@ import java.util.function.BiConsumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 
@@ -18,10 +23,10 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public record TipDefinition(String translationKey, Optional<CompoundResearchKey> requiredResearch) {
+public record TipDefinition(String translationKey, Optional<AbstractRequirement<?>> requirement) {
     public static final Codec<TipDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("translationKey").forGetter(TipDefinition::translationKey), 
-            CompoundResearchKey.CODEC.optionalFieldOf("requiredResearch").forGetter(TipDefinition::requiredResearch)
+            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(TipDefinition::requirement)
         ).apply(instance, TipDefinition::new));
     
     public Component getText() {
@@ -29,11 +34,7 @@ public record TipDefinition(String translationKey, Optional<CompoundResearchKey>
     }
     
     public boolean shouldShow(Player player) {
-        if (this.requiredResearch().isPresent()) {
-            return this.requiredResearch().get().isKnownByStrict(player);
-        } else {
-            return true;
-        }
+        return this.requirement.map(req -> req.isMetBy(player)).orElse(true);
     }
     
     public static Builder builder(ResourceLocation id) {
@@ -47,12 +48,12 @@ public record TipDefinition(String translationKey, Optional<CompoundResearchKey>
     public static class Builder {
         protected final ResourceLocation id;
         protected String translationKey;
-        protected Optional<CompoundResearchKey> requiredResearch;
+        protected Optional<AbstractRequirement<?>> requirement;
         
         protected Builder(ResourceLocation id) {
             this.id = id;
             this.translationKey = String.join(".", "tip", id.getNamespace(), id.getPath());
-            this.requiredResearch = Optional.empty();
+            this.requirement = Optional.empty();
         }
         
         public Builder translationKey(String key) {
@@ -60,13 +61,21 @@ public record TipDefinition(String translationKey, Optional<CompoundResearchKey>
             return this;
         }
         
-        public Builder requiredResearch(CompoundResearchKey researchKey) {
-            this.requiredResearch = Optional.ofNullable(researchKey);
+        public Builder requirement(AbstractRequirement<?> requirement) {
+            this.requirement = Optional.ofNullable(requirement);
             return this;
         }
         
+        public Builder requiredResearch(AbstractResearchKey<?> researchKey) {
+            return this.requirement(new ResearchRequirement(researchKey));
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> rawResearchKey) {
+            return this.requiredResearch(new ResearchEntryKey(rawResearchKey));
+        }
+        
         public TipDefinition build() {
-            return new TipDefinition(this.translationKey, this.requiredResearch);
+            return new TipDefinition(this.translationKey, this.requirement);
         }
         
         public void save(BiConsumer<ResourceLocation, TipDefinition> consumer) {

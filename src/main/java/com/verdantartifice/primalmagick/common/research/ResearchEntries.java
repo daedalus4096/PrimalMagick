@@ -35,30 +35,43 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> UNLOCK_RUNE_ENCHANTMENTS = create("unlock_rune_enchantments");
+    public static final ResourceKey<ResearchEntry> TERRESTRIAL_MAGICK = create("terrestrial_magick");
     public static final ResourceKey<ResearchEntry> SOURCE_EARTH = create("source_earth");
     public static final ResourceKey<ResearchEntry> SOURCE_SEA = create("source_sea");
     public static final ResourceKey<ResearchEntry> SOURCE_SKY = create("source_sky");
     public static final ResourceKey<ResearchEntry> SOURCE_SUN = create("source_sun");
     public static final ResourceKey<ResearchEntry> SOURCE_MOON = create("source_moon");
+    public static final ResourceKey<ResearchEntry> SECRETS_OF_THE_UNIVERSE = create("secrets_of_the_universe");
     
     // Manaweaving research entries
+    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> MANA_ARROWS = create("mana_arrows");
     public static final ResourceKey<ResearchEntry> WAND_CHARGER = create("wand_charger");
     public static final ResourceKey<ResearchEntry> MANA_SALTS = create("mana_salts");
-    
+    public static final ResourceKey<ResearchEntry> IMBUED_WOOL = create("imbued_wool");
+    public static final ResourceKey<ResearchEntry> STAVES = create("staves");
+
     // Alchemy research entries
+    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> CALCINATOR_BASIC = create("calcinator_basic");
     
     // Sorcery research entries
+    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_INSCRIPTION = create("wand_inscription");
     
     // Runeworking research entries
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> BASIC_RUNEWORKING = create("basic_runeworking");
     public static final ResourceKey<ResearchEntry> RUNE_PROJECT = create("rune_project");
     
     // Ritual Magick research entries
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> BASIC_RITUAL = create("basic_ritual");
     public static final ResourceKey<ResearchEntry> MANAFRUIT = create("manafruit");
-    
+    public static final ResourceKey<ResearchEntry> AMBROSIA = create("ambrosia");
+
     // TODO Magitech research entries
+    // TODO Place in correct order after bootstrapping
     
     // Internal research entries
     public static final ResourceKey<ResearchEntry> DISCOVER_BLOOD = create("discover_blood");
@@ -66,9 +79,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> DISCOVER_VOID = create("discover_void");
     public static final ResourceKey<ResearchEntry> DISCOVER_FORBIDDEN = create("discover_forbidden");
     public static final ResourceKey<ResearchEntry> DISCOVER_HALLOWED = create("discover_hallowed");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
@@ -84,6 +94,9 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
