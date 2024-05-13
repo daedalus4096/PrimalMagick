@@ -6,18 +6,15 @@ import org.apache.logging.log4j.Logger;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.network.packets.IMessageToServer;
-import com.verdantartifice.primalmagick.common.research.Knowledge;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.util.InventoryUtils;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.network.NetworkDirection;
 
@@ -29,21 +26,13 @@ import net.minecraftforge.network.NetworkDirection;
 public class SyncProgressPacket implements IMessageToServer {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    protected SimpleResearchKey key;
-    protected boolean firstSync;
-    protected boolean runChecks;
-    protected boolean noFlags;
-    protected boolean noPopups;
+    protected final ResearchEntryKey key;
+    protected final boolean firstSync;
+    protected final boolean runChecks;
+    protected final boolean noFlags;
+    protected final boolean noPopups;
     
-    public SyncProgressPacket() {
-        this.key = null;
-        this.firstSync = false;
-        this.runChecks = false;
-        this.noFlags = false;
-        this.noPopups = false;
-    }
-    
-    public SyncProgressPacket(SimpleResearchKey key, boolean firstSync, boolean runChecks, boolean noFlags, boolean noPopups) {
+    public SyncProgressPacket(ResearchEntryKey key, boolean firstSync, boolean runChecks, boolean noFlags, boolean noPopups) {
         this.key = key;
         this.firstSync = firstSync;
         this.runChecks = runChecks;
@@ -56,7 +45,7 @@ public class SyncProgressPacket implements IMessageToServer {
     }
     
     public static void encode(SyncProgressPacket message, FriendlyByteBuf buf) {
-        buf.writeUtf(message.key.getRootKey());
+        message.key.toNetwork(buf);
         buf.writeBoolean(message.firstSync);
         buf.writeBoolean(message.runChecks);
         buf.writeBoolean(message.noFlags);
@@ -64,13 +53,7 @@ public class SyncProgressPacket implements IMessageToServer {
     }
     
     public static SyncProgressPacket decode(FriendlyByteBuf buf) {
-        SyncProgressPacket message = new SyncProgressPacket();
-        message.key = SimpleResearchKey.parse(buf.readUtf());
-        message.firstSync = buf.readBoolean();
-        message.runChecks = buf.readBoolean();
-        message.noFlags = buf.readBoolean();
-        message.noPopups = buf.readBoolean();
-        return message;
+        return new SyncProgressPacket(ResearchEntryKey.fromNetwork(buf), buf.readBoolean(), buf.readBoolean(), buf.readBoolean(), buf.readBoolean());
     }
     
     public static void onMessage(SyncProgressPacket message, CustomPayloadEvent.Context ctx) {
@@ -81,16 +64,18 @@ public class SyncProgressPacket implements IMessageToServer {
                 if (message.runChecks && !checkAndConsumePrerequisites(player, message.key)) {
                     return;
                 }
+                
                 // Do the actual progression
-                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey(), player.getName().getString());
+                LOGGER.debug("Progressing research {} for player {}", message.key.getRootKey().location(), player.getName().getString());
                 ResearchManager.progressResearch(player, message.key, true, !message.noFlags, !message.noPopups);
             }
         }
     }
     
-    protected static boolean checkAndConsumePrerequisites(Player player, SimpleResearchKey key) {
-        ResearchEntry entry = ResearchEntries.getEntry(key);
-        if (entry == null || entry.getStages().isEmpty()) {
+    protected static boolean checkAndConsumePrerequisites(Player player, ResearchEntryKey key) {
+        RegistryAccess registryAccess = player.level().registryAccess();
+        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, key);
+        if (entry == null || entry.stages().isEmpty()) {
             return true;
         }
 
@@ -104,24 +89,15 @@ public class SyncProgressPacket implements IMessageToServer {
         if (currentStageNum < 0) {
             return false;
         }
-        if (currentStageNum >= entry.getStages().size()) {
+        if (currentStageNum >= entry.stages().size()) {
             return true;
         }
         
-        ResearchStage stage = entry.getStages().get(currentStageNum);
+        ResearchStage stage = entry.stages().get(currentStageNum);
         boolean retVal = stage.arePrerequisitesMet(player);
         if (retVal) {
             // Consume the met prerequisite items and knowledge
-            for (Object obj : stage.getMustObtain()) {
-                if (obj instanceof ItemStack) {
-                    InventoryUtils.consumeItem(player, (ItemStack)obj);
-                } else if (obj instanceof ResourceLocation) {
-                    InventoryUtils.consumeItem(player, (ResourceLocation)obj, 1);
-                }
-            }
-            for (Knowledge know : stage.getRequiredKnowledge()) {
-                ResearchManager.addKnowledge(player, know.getType(), -(know.getAmount() * know.getType().getProgression()));
-            }
+            stage.completionRequirementOpt().ifPresent(req -> req.consumeComponents(player));
         }
         return retVal;
     }
