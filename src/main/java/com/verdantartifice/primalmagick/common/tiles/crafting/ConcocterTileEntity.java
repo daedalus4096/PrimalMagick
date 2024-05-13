@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.tiles.crafting;
 
 import java.util.Collections;
+import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -21,9 +23,8 @@ import com.verdantartifice.primalmagick.common.concoctions.FuseType;
 import com.verdantartifice.primalmagick.common.crafting.IConcoctingRecipe;
 import com.verdantartifice.primalmagick.common.crafting.RecipeTypesPM;
 import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.IManaContainer;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -52,6 +53,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -172,17 +174,17 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         return null;
     }
 
-    protected boolean isResearchKnown(@Nullable CompoundResearchKey key) {
-        if (key == null) {
+    protected boolean isResearchKnown(Optional<AbstractRequirement<?>> requirementOpt) {
+        if (requirementOpt.isEmpty()) {
             return true;
         } else {
             Player owner = this.getTileOwner();
             if (owner != null) {
-                // Check the live research list if possible
-                return key.isKnownByStrict(owner);
+                // Check the live data if possible
+                return requirementOpt.get().isMetBy(owner);
             } else {
                 // Check the research cache if the owner is unavailable
-                return this.researchCache.isResearchComplete(key);
+                return this.researchCache.isResearchComplete(requirementOpt.get().streamKeys().toList());
             }
         }
     }
@@ -191,10 +193,13 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
         return this.relevantResearch;
     }
     
-    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch(Level level) {
+    protected static Set<AbstractResearchKey<?>> assembleRelevantResearch(RecipeManager recipeManager) {
         // Get a set of all the research keys used in any concocting recipe
-        return level.getRecipeManager().getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().map(r -> r.value().getRequirement().getKeys())
-                .flatMap(l -> l.stream()).distinct().collect(Collectors.toUnmodifiableSet());
+        return recipeManager.getAllRecipesFor(RecipeTypesPM.CONCOCTING.get()).stream().flatMap(holder -> {
+            return holder.value().getRequirement().map(req -> {
+                return req.streamKeys();
+            }).orElse(Stream.empty());
+        }).distinct().collect(Collectors.toUnmodifiableSet());
     }
     
     @Override
@@ -206,7 +211,7 @@ public class ConcocterTileEntity extends AbstractTileSidedInventoryPM implements
     public void onLoad() {
         super.onLoad();
         if (!this.level.isClientSide) {
-            this.relevantResearch = assembleRelevantResearch(this.level);
+            this.relevantResearch = assembleRelevantResearch(this.level.getRecipeManager());
         }
         this.cookTimeTotal = this.getCookTimeTotal();
     }

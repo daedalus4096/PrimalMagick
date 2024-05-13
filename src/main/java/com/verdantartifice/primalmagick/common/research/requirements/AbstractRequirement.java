@@ -35,6 +35,15 @@ public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
         return false;
     }
     
+    /**
+     * Returns a stream of the research keys used in this requirement, if any.
+     * 
+     * @return a stream of the research keys used in this requirement
+     */
+    public Stream<AbstractResearchKey<?>> streamKeys() {
+        return Stream.empty();
+    }
+    
     protected abstract RequirementType<T> getType();
     
     public static AbstractRequirement<?> fromNetwork(FriendlyByteBuf buf) {

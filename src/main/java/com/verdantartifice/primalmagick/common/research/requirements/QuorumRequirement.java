@@ -79,6 +79,11 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     }
 
     @Override
+    public Stream<AbstractResearchKey<?>> streamKeys() {
+        return this.subs.stream().flatMap(req -> req.streamKeys());
+    }
+
+    @Override
     protected RequirementType<QuorumRequirement> getType() {
         return RequirementsPM.QUORUM.get();
     }

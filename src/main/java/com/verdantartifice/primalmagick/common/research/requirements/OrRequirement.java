@@ -68,6 +68,11 @@ public class OrRequirement extends AbstractRequirement<OrRequirement> {
     }
 
     @Override
+    public Stream<AbstractResearchKey<?>> streamKeys() {
+        return this.subs.stream().flatMap(req -> req.streamKeys());
+    }
+
+    @Override
     protected RequirementType<OrRequirement> getType() {
         return RequirementsPM.OR.get();
     }

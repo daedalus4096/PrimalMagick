@@ -67,6 +67,11 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     }
 
     @Override
+    public Stream<AbstractResearchKey<?>> streamKeys() {
+        return Stream.of(this.rootKey);
+    }
+
+    @Override
     protected RequirementType<ResearchRequirement> getType() {
         return RequirementsPM.RESEARCH.get();
     }

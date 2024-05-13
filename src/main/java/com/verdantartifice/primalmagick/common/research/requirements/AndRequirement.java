@@ -68,6 +68,11 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     }
 
     @Override
+    public Stream<AbstractResearchKey<?>> streamKeys() {
+        return this.subs.stream().flatMap(req -> req.streamKeys());
+    }
+
+    @Override
     protected RequirementType<AndRequirement> getType() {
         return RequirementsPM.AND.get();
     }
