@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.research;
 
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 import javax.annotation.Nullable;
 
@@ -181,5 +182,9 @@ public class ResearchEntries {
     @Nullable
     public static ResearchEntry getEntry(RegistryAccess registryAccess, ResearchEntryKey key) {
         return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(key.getRootKey());
+    }
+    
+    public static Stream<ResearchEntry> stream(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).stream();
     }
 }
