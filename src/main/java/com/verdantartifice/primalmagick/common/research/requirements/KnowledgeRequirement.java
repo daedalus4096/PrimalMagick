@@ -38,6 +38,14 @@ public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequireme
         this.knowledgeType = Preconditions.checkNotNull(knowledgeType);
         this.amount = amount;
     }
+    
+    public KnowledgeType getKnowledgeType() {
+        return this.knowledgeType;
+    }
+    
+    public int getAmount() {
+        return this.amount;
+    }
 
     @Override
     public boolean isMetBy(Player player) {

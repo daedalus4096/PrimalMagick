@@ -39,6 +39,14 @@ public class ItemTagRequirement extends AbstractRequirement<ItemTagRequirement> 
         this.tag = Preconditions.checkNotNull(tag);
         this.amount = amount;
     }
+    
+    public TagKey<Item> getTag() {
+        return this.tag;
+    }
+    
+    public int getAmount() {
+        return this.amount;
+    }
 
     @Override
     public boolean isMetBy(Player player) {

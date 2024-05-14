@@ -28,6 +28,10 @@ public class ItemStackRequirement extends AbstractRequirement<ItemStackRequireme
         }
         this.stack = stack.copy();
     }
+    
+    public ItemStack getStack() {
+        return this.stack;
+    }
 
     @Override
     public boolean isMetBy(Player player) {

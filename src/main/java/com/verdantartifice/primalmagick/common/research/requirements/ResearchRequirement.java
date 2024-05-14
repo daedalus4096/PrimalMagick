@@ -27,6 +27,10 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     public ResearchRequirement(AbstractResearchKey<?> rootKey) {
         this.rootKey = Preconditions.checkNotNull(rootKey);
     }
+    
+    public AbstractResearchKey<?> getRootKey() {
+        return this.rootKey;
+    }
 
     @Override
     public boolean isMetBy(Player player) {
