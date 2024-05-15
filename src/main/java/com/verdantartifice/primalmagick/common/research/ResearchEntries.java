@@ -98,6 +98,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
+    public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
@@ -181,7 +182,12 @@ public class ResearchEntries {
     
     @Nullable
     public static ResearchEntry getEntry(RegistryAccess registryAccess, ResearchEntryKey key) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(key.getRootKey());
+        return getEntry(registryAccess, key.getRootKey());
+    }
+    
+    @Nullable
+    public static ResearchEntry getEntry(RegistryAccess registryAccess, ResourceKey<ResearchEntry> rawKey) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).get(rawKey);
     }
     
     public static Stream<ResearchEntry> stream(RegistryAccess registryAccess) {

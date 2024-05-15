@@ -58,7 +58,7 @@ public class DisciplinePage extends AbstractPage {
     public void render(GuiGraphics guiGraphics, int side, int x, int y, int mouseX, int mouseY) {
         // Just render the title; buttons have already been added
         if (this.isFirstPage() && side == 0) {
-            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, this.discipline.getIconLocation());
+            this.renderTitle(guiGraphics, side, x, y, mouseX, mouseY, this.discipline.iconLocation());
         }
     }
     
@@ -68,7 +68,7 @@ public class DisciplinePage extends AbstractPage {
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry entry) {
                 // If the current content object is a research entry, add a button for it to the screen
-                Component text = Component.translatable(entry.getNameTranslationKey());
+                Component text = Component.translatable(entry.nameTranslationKey());
                 if (entry.isAvailable(mc.player)) {
                     screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry, true));
                 } else {

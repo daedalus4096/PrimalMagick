@@ -50,8 +50,13 @@ public class ResearchDisciplines {
     }
     
     @Nullable
-    public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
-        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(disciplineKey.getRootKey());
+    public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResearchDisciplineKey key) {
+        return getDiscipline(registryAccess, key.getRootKey());
+    }
+    
+    @Nullable
+    public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResourceKey<ResearchDiscipline> rawKey) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(rawKey);
     }
     
     /**

@@ -97,13 +97,16 @@ public class RecipeMetadataPage extends AbstractPage {
         }
         if (entry != null) {
             y += mc.font.lineHeight + 3;
-            ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-            if (discipline != null) {
-                screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), y, Component.translatable(discipline.getNameTranslationKey()), screen, discipline, false, false));
-            }
+            final int discY = y;
+            entry.disciplineKeyOpt().ifPresent(disciplineKey -> {
+                ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), disciplineKey);
+                if (discipline != null) {
+                    screen.addWidgetToScreen(new DisciplineButton(x + 12 + (side * 140), discY, Component.translatable(discipline.getNameTranslationKey()), screen, discipline, false, false));
+                }
+            });
             
             y += 3 * mc.font.lineHeight;
-            screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, Component.translatable(entry.getNameTranslationKey()), screen, entry, false));
+            screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, Component.translatable(entry.nameTranslationKey()), screen, entry, false));
         }
     }
 }
