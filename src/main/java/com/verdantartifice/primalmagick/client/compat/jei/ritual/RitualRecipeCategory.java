@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.client.compat.jei.ritual;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
@@ -10,7 +11,7 @@ import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRitualRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -80,7 +81,7 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
         if (recipe.getManaCosts() != null && !recipe.getManaCosts().isEmpty()) {
             this.manaCostIcon.draw(guiGraphics, MANA_COST_X_OFFSET, MANA_COST_Y_OFFSET);
         }
-        if (recipe.getRequirement() != null && !recipe.getRequirement().getKeys().isEmpty()) {
+        if (recipe.getRequirement().isPresent()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -90,17 +91,18 @@ public class RitualRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRitualR
 
     @Override
     public List<Component> getTooltipStrings(RecipeHolder<IRitualRecipe> recipeHolder, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+        Minecraft mc = Minecraft.getInstance();
         IRitualRecipe recipe = recipeHolder.value();
         SourceList manaCosts = recipe.getManaCosts();
-        CompoundResearchKey compoundResearch = recipe.getRequirement();
+        Optional<AbstractRequirement<?>> requirementOpt = recipe.getRequirement();
         if ( manaCosts != null && !manaCosts.isEmpty() && 
              mouseX >= MANA_COST_X_OFFSET && mouseX < MANA_COST_X_OFFSET + this.manaCostIcon.getWidth() &&
              mouseY >= MANA_COST_Y_OFFSET && mouseY < MANA_COST_Y_OFFSET + this.manaCostIcon.getHeight() ) {
             return JeiHelper.getManaCostTooltipStrings(manaCosts);
-        } else if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
+        } else if ( requirementOpt.isPresent() &&
                     mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
                     mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
+            return JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get());
         } else {
             return super.getTooltipStrings(recipeHolder, recipeSlotsView, mouseX, mouseY);
         }

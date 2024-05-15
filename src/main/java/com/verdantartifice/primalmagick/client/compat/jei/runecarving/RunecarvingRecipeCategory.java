@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.compat.jei.runecarving;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.compat.jei.JeiHelper;
@@ -9,7 +10,7 @@ import com.verdantartifice.primalmagick.client.compat.jei.RecipeCategoryPM;
 import com.verdantartifice.primalmagick.client.util.RecipeUtils;
 import com.verdantartifice.primalmagick.common.crafting.IRunecarvingRecipe;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawableStatic;
@@ -18,6 +19,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -55,7 +57,7 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public void draw(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-        if (recipe.value().getRequirement() != null && !recipe.value().getRequirement().getKeys().isEmpty()) {
+        if (recipe.value().getRequirement().isPresent()) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().scale(0.5F, 0.5F, 0.5F);
             this.researchIcon.draw(guiGraphics, RESEARCH_X_OFFSET * 2, RESEARCH_Y_OFFSET * 2);
@@ -65,11 +67,12 @@ public class RunecarvingRecipeCategory extends RecipeCategoryPM<RecipeHolder<IRu
 
     @Override
     public List<Component> getTooltipStrings(RecipeHolder<IRunecarvingRecipe> recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
-        CompoundResearchKey compoundResearch = recipe.value().getRequirement();
-        if ( compoundResearch != null && !compoundResearch.getKeys().isEmpty() &&
+        Minecraft mc = Minecraft.getInstance();
+        Optional<AbstractRequirement<?>> requirementOpt = recipe.value().getRequirement();
+        if ( requirementOpt.isPresent() &&
              mouseX >= RESEARCH_X_OFFSET && mouseX < RESEARCH_X_OFFSET + this.researchIcon.getWidth() &&
              mouseY >= RESEARCH_Y_OFFSET && mouseY < RESEARCH_Y_OFFSET + this.researchIcon.getHeight() ) {
-            return JeiHelper.getRequiredResearchTooltipStrings(compoundResearch);
+            return JeiHelper.getRequirementTooltipStrings(mc.level.registryAccess(), requirementOpt.get());
         } else {
             return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
         }

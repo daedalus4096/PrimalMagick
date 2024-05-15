@@ -2,8 +2,11 @@ package com.verdantartifice.primalmagick.common.research;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.RegistryAccess;
@@ -44,6 +47,11 @@ public class ResearchDisciplines {
         context.register(MAGITECH, ResearchDiscipline.builder(MAGITECH).unlock(ResearchEntries.UNLOCK_MAGITECH).icon(PrimalMagick.resource("textures/research/discipline_magitech.png"))
                 .craftingStat(StatsPM.CRAFTED_MAGITECH).indexSortOrder(700).build());
         context.register(SCANS, ResearchDiscipline.builder(SCANS).unlock(ResearchEntries.UNLOCK_SCANS).icon(PrimalMagick.resource("textures/item/magnifying_glass.png")).build());
+    }
+    
+    @Nullable
+    public static ResearchDiscipline getDiscipline(RegistryAccess registryAccess, ResearchDisciplineKey disciplineKey) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).get(disciplineKey.getRootKey());
     }
     
     /**

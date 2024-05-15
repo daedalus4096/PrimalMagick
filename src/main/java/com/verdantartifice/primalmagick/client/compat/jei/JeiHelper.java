@@ -28,12 +28,12 @@ import com.verdantartifice.primalmagick.common.menus.ConcocterMenu;
 import com.verdantartifice.primalmagick.common.menus.DissolutionChamberMenu;
 import com.verdantartifice.primalmagick.common.menus.InfernalFurnaceMenu;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -49,6 +49,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -158,24 +159,30 @@ public class JeiHelper implements IModPlugin {
         return tooltip;
     }
     
-    public static List<Component> getRequiredResearchTooltipStrings(CompoundResearchKey compoundResearch) {
+    public static List<Component> getRequirementTooltipStrings(RegistryAccess registryAccess, AbstractRequirement<?> requirement) {
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(Component.translatable("label.primalmagick.crafting.research_header"));
-        for (SimpleResearchKey key : compoundResearch.getKeys()) {
-            ResearchEntry entry = ResearchEntries.getEntry(key);
-            if (entry == null) {
-                tooltip.add(Component.translatable("research.primalmagick." + key.getRootKey().toLowerCase() + ".title"));
-            } else {
-                MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
-                ResearchDiscipline disc = ResearchDisciplines.getDiscipline(entry.getDisciplineKey());
-                if (disc != null) {
-                    comp.append(Component.literal(" ("));
-                    comp.append(Component.translatable(disc.getNameTranslationKey()));
-                    comp.append(Component.literal(")"));
+        requirement.streamKeys().forEach(key -> {
+            if (key instanceof ResearchEntryKey entryKey) {
+                ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
+                if (entry != null) {
+                    MutableComponent comp = Component.translatable(entry.nameTranslationKey());
+                    entry.disciplineKeyOpt().ifPresent(discKey -> {
+                        ResearchDiscipline disc = ResearchDisciplines.getDiscipline(registryAccess, discKey);
+                        if (disc != null) {
+                            comp.append(Component.literal(" ("));
+                            comp.append(Component.translatable(disc.getNameTranslationKey()));
+                            comp.append(Component.literal(")"));
+                        }
+                    });
+                    tooltip.add(comp);
+                } else {
+                    tooltip.add(Component.literal(key.toString()));
                 }
-                tooltip.add(comp);
+            } else {
+                tooltip.add(Component.literal(key.toString()));
             }
-        }
+        });
         return tooltip;
     }
 }
