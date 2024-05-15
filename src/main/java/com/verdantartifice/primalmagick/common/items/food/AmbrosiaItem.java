@@ -10,8 +10,8 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
@@ -50,7 +50,7 @@ public class AmbrosiaItem extends Item {
             Player player = (Player)entityLiving;
 
             // Only modify attunements if the player has started mod progression
-            if (ResearchManager.isResearchComplete(player, SimpleResearchKey.FIRST_STEPS)) {
+            if (ResearchManager.isResearchComplete(player, ResearchEntries.FIRST_STEPS)) {
                 int limit = Math.min(this.ambrosiaType.getLimit(), AttunementType.INDUCED.getMaximum());
                 int current = AttunementManager.getAttunement(player, this.source, AttunementType.INDUCED);
                 int toIncrement = Math.min(BONUS, limit - current);

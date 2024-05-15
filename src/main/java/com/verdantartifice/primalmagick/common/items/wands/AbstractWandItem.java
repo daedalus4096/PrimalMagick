@@ -18,8 +18,6 @@ import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.armor.IManaDiscountGear;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
@@ -82,8 +80,8 @@ public abstract class AbstractWandItem extends Item implements IWand {
         } else {
             // Otherwise get the current centimana for that source from the stack's NBT tag
             int retVal = 0;
-            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getTag())) {
-                retVal = stack.getTag().getInt(source.getTag());
+            if (stack != null && source != null && stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
+                retVal = stack.getTag().getInt(source.getId().toString());
             }
             return retVal;
         }
@@ -108,9 +106,9 @@ public abstract class AbstractWandItem extends Item implements IWand {
             if (isInfinite) {
                 // If the stack has infinite mana, set that into the returned source list (not merge; it would keep the default zero)
                 retVal = retVal.set(source, -1);
-            } else if (stack.hasTag() && stack.getTag().contains(source.getTag())) {
+            } else if (stack.hasTag() && stack.getTag().contains(source.getId().toString())) {
                 // Otherwise, merge the current centimana into the returned source list
-                retVal = retVal.merge(source, stack.getTag().getInt(source.getTag()));
+                retVal = retVal.merge(source, stack.getTag().getInt(source.getId().toString()));
             } else {
                 retVal = retVal.merge(source, 0);
             }
@@ -131,7 +129,7 @@ public abstract class AbstractWandItem extends Item implements IWand {
     
     protected void setMana(@Nonnull ItemStack stack, @Nonnull Source source, int amount) {
         // Save the given amount of centimana for the given source into the stack's NBT tag
-        stack.addTagElement(source.getTag(), IntTag.valueOf(amount));
+        stack.addTagElement(source.getId().toString(), IntTag.valueOf(amount));
     }
 
     @Override
