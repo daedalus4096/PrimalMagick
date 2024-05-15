@@ -59,6 +59,7 @@ public class ResearchEntries {
     // Sorcery research entries
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_INSCRIPTION = create("wand_inscription");
+    public static final ResourceKey<ResearchEntry> SPELL_PAYLOAD_POLYMORPH_SHEEP = create("spell_payload_polymorph_sheep");
     
     // Runeworking research entries
     // TODO Place in correct order after bootstrapping

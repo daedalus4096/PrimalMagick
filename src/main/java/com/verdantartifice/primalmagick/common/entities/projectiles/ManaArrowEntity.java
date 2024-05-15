@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.sources.Sources;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -49,7 +50,7 @@ public class ManaArrowEntity extends AbstractArrow {
     }
 
     public void setSource(Source source) {
-        this.entityData.set(SOURCE_TAG, source.getTag());
+        this.entityData.set(SOURCE_TAG, source.getId().toString());
         if (source == Sources.EARTH) {
             this.setKnockback(this.getKnockback() + 2);
         } else if (source == Sources.SKY) {
@@ -63,7 +64,7 @@ public class ManaArrowEntity extends AbstractArrow {
     
     @Nullable
     public Source getSource() {
-        return Source.getSource(this.entityData.get(SOURCE_TAG));
+        return Sources.get(new ResourceLocation(this.entityData.get(SOURCE_TAG)));
     }
     
     @Override
