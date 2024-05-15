@@ -172,7 +172,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
             Optional<RecipeHolder<IArcaneRecipe>> arcaneOptional = world.getRecipeManager().getRecipeFor(RecipeTypesPM.ARCANE_CRAFTING.get(), this.craftingInv, world);
             if (arcaneOptional.isPresent()) {
                 RecipeHolder<IArcaneRecipe> recipe = arcaneOptional.get();
-                if (recipe.value().getRequirement() == null || recipe.value().getRequirement().isKnownByStrict(player)) {
+                if (recipe.value().getRequirement().isEmpty() || recipe.value().getRequirement().get().isMetBy(player)) {
                     this.activeArcaneRecipe = recipe;
                 }
             }
@@ -208,7 +208,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu implements IArcan
         // Players must know the correct research and the wand must have enough mana in order to use the recipe
         IArcaneRecipe recipe = recipeHolder.value();
         return this.resultInv.setRecipeUsed(world, player, recipeHolder) &&
-                (recipe.getRequirement() == null || recipe.getRequirement().isKnownByStrict(player)) &&
+                (recipe.getRequirement().isEmpty() || recipe.getRequirement().get().isMetBy(player)) &&
                 (recipe.getManaCosts().isEmpty() || this.wandContainsEnoughMana(player, recipe));
     }
     
