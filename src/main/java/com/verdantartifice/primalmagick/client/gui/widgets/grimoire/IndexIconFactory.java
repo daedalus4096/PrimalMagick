@@ -16,10 +16,10 @@ public class IndexIconFactory {
         if (data == null) {
             return ItemIndexIcon.of(ItemsPM.GRIMOIRE.get(), large);
         } else if (data.isItem()) {
-            Item item = ForgeRegistries.ITEMS.getValue(data.getLocation());
+            Item item = ForgeRegistries.ITEMS.getValue(data.location());
             return ItemIndexIcon.of(item == null ? ItemsPM.GRIMOIRE.get() : item, large);
         } else {
-            return GenericIndexIcon.of(data.getLocation(), large);
+            return GenericIndexIcon.of(data.location(), large);
         }
     }
 }

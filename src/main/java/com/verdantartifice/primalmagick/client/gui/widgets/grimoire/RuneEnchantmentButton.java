@@ -4,6 +4,7 @@ import com.verdantartifice.primalmagick.client.gui.GrimoireScreen;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.topics.EnchantmentResearchTopic;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -16,8 +17,10 @@ import net.minecraft.world.item.enchantment.Enchantment;
 public class RuneEnchantmentButton extends AbstractTopicButton {
     protected Enchantment enchant;
     
+    @SuppressWarnings("resource")
     public RuneEnchantmentButton(int widthIn, int heightIn, Component text, GrimoireScreen screen, Enchantment enchant) {
-        super(widthIn, heightIn, 123, 12, text, screen, GenericIndexIcon.of(ResearchDisciplines.getDiscipline("RUNEWORKING").getIconLocation(), false), new Handler());
+        super(widthIn, heightIn, 123, 12, text, screen, 
+                GenericIndexIcon.of(ResearchDisciplines.getDiscipline(Minecraft.getInstance().level.registryAccess(), ResearchDisciplines.RUNEWORKING).iconLocation(), false), new Handler());
         this.enchant = enchant;
     }
     

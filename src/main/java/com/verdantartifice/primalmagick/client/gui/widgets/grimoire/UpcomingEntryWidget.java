@@ -8,7 +8,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -31,20 +31,20 @@ public class UpcomingEntryWidget extends AbstractWidget {
     public UpcomingEntryWidget(int x, int y, Component text, ResearchEntry entry, boolean showIcon) {
         super(x, y, 123, 12, text);
         this.entry = entry;
-        this.icon = showIcon ? IndexIconFactory.fromEntryIcon(entry.getIcon(), false) : null;
+        this.icon = showIcon ? IndexIconFactory.fromEntryIcon(entry.iconOpt().orElse(null), false) : null;
         
         Minecraft mc = Minecraft.getInstance();
         MutableComponent tooltip = Component.empty();
         tooltip.append(Component.translatable("grimoire.primalmagick.upcoming_tooltip_header"));
         
-        for (SimpleResearchKey parent : this.entry.getParentResearch().getKeys()) {
-            ResearchEntry parentEntry = ResearchEntries.getEntry(parent);
-            if (parentEntry == null && !parent.isKnownByStrict(mc.player)) {
+        for (ResearchEntryKey parent : this.entry.parents()) {
+            ResearchEntry parentEntry = ResearchEntries.getEntry(mc.level.registryAccess(), parent);
+            if (parentEntry == null && !parent.isKnownBy(mc.player)) {
                 tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("research.primalmagick." + parent.getRootKey() + ".text"));
-            } else if (parentEntry != null && !parentEntry.getKey().isKnownByStrict(mc.player)) {
-                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
-                if (!this.entry.getDisciplineKey().equals(parentEntry.getDisciplineKey())) {
-                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(parentEntry.getDisciplineKey());
+            } else if (parentEntry != null && !parentEntry.key().isKnownBy(mc.player)) {
+                MutableComponent comp = Component.translatable(parentEntry.nameTranslationKey());
+                if (!this.entry.disciplineKeyOpt().equals(parentEntry.disciplineKeyOpt()) && parentEntry.disciplineKeyOpt().isPresent()) {
+                    ResearchDiscipline disc = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), parentEntry.disciplineKeyOpt().get());
                     if (disc != null) {
                         comp.append(Component.literal(" ("));
                         comp.append(Component.translatable(disc.getNameTranslationKey()));
