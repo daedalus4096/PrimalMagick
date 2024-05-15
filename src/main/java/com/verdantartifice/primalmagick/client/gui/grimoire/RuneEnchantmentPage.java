@@ -103,21 +103,21 @@ public class RuneEnchantmentPage extends AbstractPage {
             
             int widgetXPos = x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2);
             if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.VERB)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getVerb()), widgetXPos, y, false));
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.verb()), widgetXPos, y, false));
             } else {
                 screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
             }
             
             widgetXPos += 32;
             if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.NOUN)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getNoun()), widgetXPos, y, false));
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.noun()), widgetXPos, y, false));
             } else {
                 screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
             }
             
             widgetXPos += 32;
             if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.SOURCE)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.getSource()), widgetXPos, y, false));
+                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.source()), widgetXPos, y, false));
             } else {
                 screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
             }

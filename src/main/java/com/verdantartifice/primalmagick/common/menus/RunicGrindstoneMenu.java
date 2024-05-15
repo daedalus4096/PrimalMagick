@@ -2,17 +2,17 @@ package com.verdantartifice.primalmagick.common.menus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
@@ -265,17 +265,17 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
         int hintCount = 0;
         
         for (Enchantment enchant : enchants) {
-            SimpleResearchKey fullResearch = SimpleResearchKey.parseRuneEnchantment(enchant);
-            if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownByStrict(this.player)) {
+            RuneEnchantmentKey fullResearch = new RuneEnchantmentKey(enchant);
+            if (RuneManager.hasRuneDefinition(enchant) && !fullResearch.isKnownBy(this.player)) {
                 RuneEnchantmentDefinition definition = RuneManager.getRuneDefinition(enchant);
-                CompoundResearchKey requirements = definition.getRequiredResearch();
-                if (requirements == null || requirements.isKnownByStrict(this.player)) {
-                    List<SimpleResearchKey> candidates = definition.getRunes().stream().filter(rune -> rune.getDiscoveryKey().isKnownByStrict(this.player))
-                            .map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).filter(key -> !key.isKnownByStrict(this.player)).toList();
+                Optional<AbstractRequirement<?>> requirementOpt = definition.requirementOpt();
+                if (requirementOpt.isEmpty() || requirementOpt.get().isMetBy(this.player)) {
+                    List<RuneEnchantmentPartialKey> candidates = definition.getRunes().stream().filter(rune -> rune.getRequirement().isMetBy(this.player))
+                            .map(rune -> new RuneEnchantmentPartialKey(enchant, rune.getType())).filter(key -> !key.isKnownBy(this.player)).toList();
                     if (!candidates.isEmpty()) {
                         // If at least one hint is available, grant one at random
-                        WeightedRandomBag<SimpleResearchKey> candidateBag = new WeightedRandomBag<>();
-                        for (SimpleResearchKey candidate : candidates) {
+                        WeightedRandomBag<RuneEnchantmentPartialKey> candidateBag = new WeightedRandomBag<>();
+                        for (RuneEnchantmentPartialKey candidate : candidates) {
                             candidateBag.add(candidate, 1);
                         }
                         ResearchManager.completeResearch(this.player, ResearchEntries.UNLOCK_RUNE_ENCHANTMENTS);
@@ -283,7 +283,7 @@ public class RunicGrindstoneMenu extends AbstractContainerMenu {
                         hintCount++;
                         
                         // If, after granting the hint, the player knows all three pieces, then grant them the full research
-                        if (definition.getRunes().stream().map(rune -> SimpleResearchKey.parsePartialRuneEnchantment(enchant, rune.getType())).allMatch(key -> key.isKnownByStrict(this.player))) {
+                        if (definition.getRunes().stream().map(rune -> new RuneEnchantmentPartialKey(enchant, rune.getType())).allMatch(key -> key.isKnownBy(this.player))) {
                             ResearchManager.completeResearch(this.player, fullResearch);
                         }
                     }

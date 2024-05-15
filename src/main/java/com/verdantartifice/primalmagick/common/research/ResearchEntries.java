@@ -64,7 +64,27 @@ public class ResearchEntries {
     // Runeworking research entries
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> BASIC_RUNEWORKING = create("basic_runeworking");
+    public static final ResourceKey<ResearchEntry> RUNE_EARTH = create("rune_earth");
+    public static final ResourceKey<ResearchEntry> RUNE_SEA = create("rune_sea");
+    public static final ResourceKey<ResearchEntry> RUNE_SKY = create("rune_sky");
+    public static final ResourceKey<ResearchEntry> RUNE_SUN = create("rune_sun");
+    public static final ResourceKey<ResearchEntry> RUNE_MOON = create("rune_moon");
+    public static final ResourceKey<ResearchEntry> RUNE_BLOOD = create("rune_blood");
+    public static final ResourceKey<ResearchEntry> RUNE_INFERNAL = create("rune_infernal");
+    public static final ResourceKey<ResearchEntry> RUNE_VOID = create("rune_void");
+    public static final ResourceKey<ResearchEntry> RUNE_HALLOWED = create("rune_hallowed");
     public static final ResourceKey<ResearchEntry> RUNE_PROJECT = create("rune_project");
+    public static final ResourceKey<ResearchEntry> RUNE_PROTECT = create("rune_protect");
+    public static final ResourceKey<ResearchEntry> RUNE_ABSORB = create("rune_absorb");
+    public static final ResourceKey<ResearchEntry> RUNE_DISPEL = create("rune_dispel");
+    public static final ResourceKey<ResearchEntry> RUNE_SUMMON = create("rune_summon");
+    public static final ResourceKey<ResearchEntry> RUNE_ITEM = create("rune_item");
+    public static final ResourceKey<ResearchEntry> RUNE_SELF = create("rune_self");
+    public static final ResourceKey<ResearchEntry> RUNE_CREATURE = create("rune_creature");
+    public static final ResourceKey<ResearchEntry> RUNE_AREA = create("rune_area");
+    public static final ResourceKey<ResearchEntry> RUNE_INSIGHT = create("rune_insight");
+    public static final ResourceKey<ResearchEntry> RUNE_POWER = create("rune_power");
+    public static final ResourceKey<ResearchEntry> RUNE_GRACE = create("rune_grace");
     
     // Ritual Magick research entries
     // TODO Place in correct order after bootstrapping
