@@ -1,7 +1,6 @@
 package com.verdantartifice.primalmagick.common.runes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -15,9 +14,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -43,35 +43,20 @@ public class RuneManager {
     protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
     protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
     protected static final Map<SourceRune, Set<Enchantment>> SOURCE_ENCHANTMENTS = new HashMap<>();
-    protected static final Map<Enchantment, CompoundResearchKey> ENCHANTMENT_RESEARCH = new HashMap<>();
+    protected static final Map<Enchantment, AbstractRequirement<?>> ENCHANTMENT_REQUIREMENTS = new HashMap<>();
     protected static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
     
-    // FIXME Make private
-    public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source) {
-        if (enchantment != null && verb != null && noun != null && source != null) {
-            if (REGISTRY.containsKey(enchantment)) {
-                throw new IllegalArgumentException("Rune enchantment already registered for " + ForgeRegistries.ENCHANTMENTS.getKey(enchantment).toString());
-            }
-            REGISTRY.put(enchantment, Arrays.asList(verb, noun, source));
-            VERB_ENCHANTMENTS.computeIfAbsent(verb, r -> new HashSet<>()).add(enchantment);
-            NOUN_ENCHANTMENTS.computeIfAbsent(noun, r -> new HashSet<>()).add(enchantment);
-            SOURCE_ENCHANTMENTS.computeIfAbsent(source, r -> new HashSet<>()).add(enchantment);
-        }
-    }
-    
-    // FIXME Make private
-    public static void registerRuneEnchantment(@Nullable Enchantment enchantment, @Nullable VerbRune verb, @Nullable NounRune noun, @Nullable SourceRune source, @Nullable CompoundResearchKey research) {
-        registerRuneEnchantment(enchantment, verb, noun, source);
-        if (enchantment != null && research != null) {
-            ENCHANTMENT_RESEARCH.put(enchantment, research);
-        }
-    }
-    
-    public static boolean registerRuneEnchantment(@Nonnull RuneEnchantmentDefinition def) {
+    public static boolean registerRuneEnchantment(RuneEnchantmentDefinition def) {
         if (DEFINITIONS.containsKey(def.getId())) {
             return false;
         } else {
-            registerRuneEnchantment(def.getResult(), def.getVerb(), def.getNoun(), def.getSource(), def.getRequiredResearch());
+            REGISTRY.put(def.result(), def.getRunes());
+            VERB_ENCHANTMENTS.computeIfAbsent(def.verb(), r -> new HashSet<>()).add(def.result());
+            NOUN_ENCHANTMENTS.computeIfAbsent(def.noun(), r -> new HashSet<>()).add(def.result());
+            SOURCE_ENCHANTMENTS.computeIfAbsent(def.source(), r -> new HashSet<>()).add(def.result());
+            def.requirementOpt().ifPresent(req -> {
+                ENCHANTMENT_REQUIREMENTS.put(def.result(), req);
+            });
             DEFINITIONS.put(def.getId(), def);
             return true;
         }
@@ -83,7 +68,7 @@ public class RuneManager {
         VERB_ENCHANTMENTS.clear();
         NOUN_ENCHANTMENTS.clear();
         SOURCE_ENCHANTMENTS.clear();
-        ENCHANTMENT_RESEARCH.clear();
+        ENCHANTMENT_REQUIREMENTS.clear();
     }
     
     public static Map<ResourceLocation, RuneEnchantmentDefinition> getAllDefinitions() {
@@ -159,7 +144,7 @@ public class RuneManager {
                         // those already found, it meets the minimum power level, and the player has any needed
                         // research, add the enchantment to the result set
                         if ( possible.canEnchant(stack) && 
-                             (!ENCHANTMENT_RESEARCH.containsKey(possible) || ENCHANTMENT_RESEARCH.get(possible).isKnownByStrict(player)) &&
+                             (!ENCHANTMENT_REQUIREMENTS.containsKey(possible) || ENCHANTMENT_REQUIREMENTS.get(possible).isMetBy(player)) &&
                              powerLevel >= possible.getMinLevel() ) {
                             intermediate.add(new EnchantmentInstance(possible, Math.min(powerLevel, possible.getMaxLevel())));
                         }
@@ -318,7 +303,7 @@ public class RuneManager {
     }
     
     public static boolean isRuneKnown(Player player, Enchantment enchant, RuneType runeType) {
-        return ResearchManager.isResearchComplete(player, SimpleResearchKey.parseRuneEnchantment(enchant)) || 
-                ResearchManager.isResearchComplete(player, SimpleResearchKey.parsePartialRuneEnchantment(enchant, runeType));
+        return ResearchManager.isResearchComplete(player, new RuneEnchantmentKey(enchant)) || 
+                ResearchManager.isResearchComplete(player, new RuneEnchantmentPartialKey(enchant, runeType));
     }
 }

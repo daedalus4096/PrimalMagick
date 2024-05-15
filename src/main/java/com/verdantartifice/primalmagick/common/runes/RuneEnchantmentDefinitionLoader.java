@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.mojang.serialization.JsonOps;
 import com.verdantartifice.primalmagick.PrimalMagick;
 
 import net.minecraft.resources.ResourceLocation;
@@ -60,14 +61,13 @@ public class RuneEnchantmentDefinitionLoader extends SimpleJsonResourceReloadLis
                 continue;
             }
 
-            try {
-                RuneEnchantmentDefinition def = RuneManager.DEFINITION_SERIALIZER.read(location, GsonHelper.convertToJsonObject(entry.getValue(), "top member"));
-                if (def == null || !RuneManager.registerRuneEnchantment(def)) {
-                    LOGGER.error("Failed loading rune enchantment definition {}", location);
-                }
-            } catch (Exception e) {
-                LOGGER.error("Parsing failure loading rune enchantment definition {}", location, e);
-            }
+            RuneEnchantmentDefinition.CODEC.parse(JsonOps.INSTANCE, GsonHelper.convertToJsonObject(entry.getValue(), "top member"))
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(def -> {
+                    if (def == null || !RuneManager.registerRuneEnchantment(def)) {
+                        LOGGER.error("Failed loading rune enchantment definition {}", location);
+                    }
+                });
         }
         LOGGER.info("Loaded {} rune enchantment definitions", RuneManager.getAllDefinitions().size());
     }

@@ -4,9 +4,11 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 
 /**
@@ -15,6 +17,14 @@ import net.minecraft.world.item.Rarity;
  * @author Daedalus4096
  */
 public class SourceRune extends Rune {
+    public static final Codec<SourceRune> CODEC = ResourceLocation.CODEC.<SourceRune>xmap(loc -> {
+        if (Rune.getRune(loc) instanceof SourceRune source) {
+            return source;
+        } else {
+            throw new IllegalArgumentException("Unknown source rune: " + loc.toString());
+        }
+    }, s -> s.getId());
+    
     protected final Source source;
     
     public SourceRune(@Nonnull String tag, @Nonnull Supplier<ResearchName> discoveryKey, @Nonnull Source source) {
