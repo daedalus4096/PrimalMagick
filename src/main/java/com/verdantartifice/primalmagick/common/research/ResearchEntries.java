@@ -95,6 +95,26 @@ public class ResearchEntries {
     // TODO Magitech research entries
     // TODO Place in correct order after bootstrapping
     
+    // Scans research entries
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
+    public static final ResourceKey<ResearchEntry> ROCK_SALT = create("rock_salt");
+    public static final ResourceKey<ResearchEntry> QUARTZ = create("quartz");
+    public static final ResourceKey<ResearchEntry> SUNWOOD_TREES = create("sunwood_trees");
+    public static final ResourceKey<ResearchEntry> MOONWOOD_TREES = create("moonwood_trees");
+    public static final ResourceKey<ResearchEntry> HALLOWED_ORB = create("hallowed_orb");
+    public static final ResourceKey<ResearchEntry> HALLOWOOD_TREES = create("hallowood_trees");
+    public static final ResourceKey<ResearchEntry> BOOKSHELF = create("bookshelf");
+    public static final ResourceKey<ResearchEntry> BEEHIVE = create("beehive");
+    public static final ResourceKey<ResearchEntry> BEACON = create("beacon");
+    public static final ResourceKey<ResearchEntry> DRAGON_EGG = create("dragon_egg");
+    public static final ResourceKey<ResearchEntry> DRAGON_HEAD = create("dragon_head");
+    public static final ResourceKey<ResearchEntry> INNER_DEMON = create("inner_demon");
+    public static final ResourceKey<ResearchEntry> TREEFOLK = create("treefolk");
+    public static final ResourceKey<ResearchEntry> ALCHEMICAL_WASTE = create("alchemical_waste");
+    public static final ResourceKey<ResearchEntry> MYSTICAL_RELIC = create("mystical_relic");
+    public static final ResourceKey<ResearchEntry> HUMMING_ARTIFACT = create("humming_artifact");
+    
     // Internal research entries
     public static final ResourceKey<ResearchEntry> DISCOVER_BLOOD = create("discover_blood");
     public static final ResourceKey<ResearchEntry> DISCOVER_INFERNAL = create("discover_infernal");
@@ -119,6 +139,13 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
     public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
+    public static final ResourceKey<ResearchEntry> SOTU_SCAN_HALLOWED_ORB = create("sotu_scan_hallowed_orb");
+    public static final ResourceKey<ResearchEntry> SCAN_PRIMALITE = create("scan_primalite");
+    public static final ResourceKey<ResearchEntry> SCAN_HEXIUM = create("scan_hexium");
+    public static final ResourceKey<ResearchEntry> SCAN_HALLOWSTEEL = create("scan_hallowsteel");
+    public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
+    public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
+    public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     public static ResourceKey<ResearchEntry> create(String name) {

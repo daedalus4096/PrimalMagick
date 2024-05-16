@@ -1,5 +1,6 @@
 package com.verdantartifice.primalmagick.common.research;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -15,11 +16,11 @@ import net.minecraft.world.level.ItemLike;
 public class ScanItemTagResearchTrigger extends AbstractScanResearchTrigger {
     protected final TagKey<Item> target;
     
-    public ScanItemTagResearchTrigger(TagKey<Item> target, SimpleResearchKey toUnlock) {
+    public ScanItemTagResearchTrigger(TagKey<Item> target, ResourceKey<ResearchEntry> toUnlock) {
         this(target, toUnlock, true);
     }
     
-    public ScanItemTagResearchTrigger(TagKey<Item> target, SimpleResearchKey toUnlock, boolean unlockScansPage) {
+    public ScanItemTagResearchTrigger(TagKey<Item> target, ResourceKey<ResearchEntry> toUnlock, boolean unlockScansPage) {
         super(toUnlock, unlockScansPage);
         this.target = target;
     }

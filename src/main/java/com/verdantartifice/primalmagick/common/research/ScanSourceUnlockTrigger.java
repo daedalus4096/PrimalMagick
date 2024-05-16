@@ -17,13 +17,13 @@ public class ScanSourceUnlockTrigger extends ScanItemResearchTrigger {
     protected final Source source;
     
     public ScanSourceUnlockTrigger(ItemLike target, Source source) {
-        super(target, source.getDiscoverKey(), false);
+        super(target, source.getDiscoverKey().orElseThrow().getRootKey(), false);
         this.source = source;
     }
     
     @Override
     public void onMatch(ServerPlayer player, Object obj) {
         super.onMatch(player, obj);
-        player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getTag()).withStyle(ChatFormatting.GREEN), false);
+        player.displayClientMessage(Component.translatable("event.primalmagick.discover_source." + this.source.getId().getPath()).withStyle(ChatFormatting.GREEN), false);
     }
 }

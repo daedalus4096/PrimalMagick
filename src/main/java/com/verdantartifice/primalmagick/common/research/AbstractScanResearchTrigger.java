@@ -1,7 +1,8 @@
 package com.verdantartifice.primalmagick.common.research;
 
-import java.util.function.Supplier;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
@@ -10,11 +11,11 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public abstract class AbstractScanResearchTrigger implements IScanTrigger {
-    protected final SimpleResearchKey toUnlock;
+    protected final ResearchEntryKey toUnlock;
     protected final boolean unlockScansPage;
     
-    protected AbstractScanResearchTrigger(SimpleResearchKey toUnlock, boolean unlockScansPage) {
-        this.toUnlock = toUnlock.copy();
+    protected AbstractScanResearchTrigger(ResourceKey<ResearchEntry> toUnlock, boolean unlockScansPage) {
+        this.toUnlock = new ResearchEntryKey(toUnlock);
         this.unlockScansPage = unlockScansPage;
     }
 
