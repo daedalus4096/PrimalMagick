@@ -38,7 +38,7 @@ public class EntryButton extends AbstractTopicButton {
                 
                 // Push the current grimoire topic onto the history stack
                 geb.getScreen().pushCurrentHistoryTopic();
-                geb.getScreen().setTopic(new EntryResearchTopic(geb.getEntry(), 0));
+                geb.getScreen().setTopic(new EntryResearchTopic(geb.getEntry().key(), 0));
                 if (geb.getEntry().key().isKnownBy(mc.player)) {
                     // If the research entry has been flagged as new or updated, clear those flags
                     PrimalMagickCapabilities.getKnowledge(mc.player).ifPresent(knowledge -> {

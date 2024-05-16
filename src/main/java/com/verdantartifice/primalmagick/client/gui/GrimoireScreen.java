@@ -53,10 +53,13 @@ import com.verdantartifice.primalmagick.common.network.packets.data.SetResearchT
 import com.verdantartifice.primalmagick.common.research.ResearchAddendum;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.topics.AbstractResearchTopic;
@@ -343,9 +346,14 @@ public class GrimoireScreen extends Screen {
         this.pages.add(new OtherIndexPage());
     }
     
-    protected void parseDisciplinePages(ResearchDiscipline discipline) {
+    protected void parseDisciplinePages(ResearchDisciplineKey disciplineKey) {
         Minecraft mc = this.getMinecraft();
+        RegistryAccess registryAccess = mc.level.registryAccess();
         this.currentStageIndex = 0;
+        if (disciplineKey == null) {
+            return;
+        }
+        ResearchDiscipline discipline = ResearchDisciplines.getDiscipline(registryAccess, disciplineKey);
         if (discipline == null) {
             return;
         }
@@ -489,7 +497,13 @@ public class GrimoireScreen extends Screen {
         return new Tuple<>(parsedText.stream().map((t) -> t.getString()).collect(Collectors.toList()), images);
     }
     
-    protected void parseEntryPages(ResearchEntry entry) {
+    protected void parseEntryPages(ResearchEntryKey entryKey) {
+        if (entryKey == null) {
+            return;
+        }
+        Minecraft mc = Minecraft.getInstance();
+        RegistryAccess registryAccess = mc.level.registryAccess();
+        ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
         if (entry == null || entry.stages().isEmpty()) {
             return;
         }

@@ -4,12 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
-import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
-import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchDisciplineKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -52,13 +50,13 @@ public class ResearchTopicFactory {
         case MAIN_INDEX:
             return MainIndexResearchTopic.INSTANCE;
         case RESEARCH_DISCIPLINE:
-            ResearchDiscipline disc = ResearchDisciplines.getDiscipline(data);
-            return disc == null ? MainIndexResearchTopic.INSTANCE : new DisciplineResearchTopic(disc, page);
+            ResearchDisciplineKey discKey = new ResearchDisciplineKey(ResourceKey.create(RegistryKeysPM.RESEARCH_DISCIPLINES, new ResourceLocation(data)));
+            return new DisciplineResearchTopic(discKey, page);
         case RESEARCH_ENTRY:
-            ResearchEntry entry = ResearchEntries.getEntry(SimpleResearchKey.parse(data));
-            return entry == null ? MainIndexResearchTopic.INSTANCE : new EntryResearchTopic(entry, page);
+            ResearchEntryKey entryKey = new ResearchEntryKey(ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, new ResourceLocation(data)));
+            return new EntryResearchTopic(entryKey, page);
         case SOURCE:
-            Source source = Source.getSource(data);
+            Source source = Sources.get(new ResourceLocation(data));
             return source == null ? MainIndexResearchTopic.INSTANCE : new SourceResearchTopic(source, page);
         case ENCHANTMENT:
             ResourceLocation loc = ResourceLocation.tryParse(data);

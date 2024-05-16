@@ -29,7 +29,7 @@ public class DisciplineButton extends AbstractTopicButton {
         public void onPress(Button button) {
             if (button instanceof DisciplineButton gdb) {
                 // Set the new grimoire topic and open a new screen for it
-                gdb.getScreen().gotoTopic(new DisciplineResearchTopic(gdb.getDiscipline(), 0));
+                gdb.getScreen().gotoTopic(new DisciplineResearchTopic(gdb.getDiscipline().key(), 0));
             }
         }
     }
