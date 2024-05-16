@@ -1547,8 +1547,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.command("source").sub("noexist").output("Source %1$s does not exist").end().build();
         this.command("stats").sub("noexist").output("Statistic %1$s does not exist").end().build();
         this.command("attunement_type").sub("noexist").output("Attunement type does not exist").end().build();
-        this.command("books").sub("noexist").output("Book type does not exist").end().build();
-        this.command("books").sub("nolanguage").output("Book language does not exist").end().build();
+        this.command("books").sub("noexist").output("Book type does not exist: %1$s").end().build();
+        this.command("books").sub("nolanguage").output("Book language does not exist: %1$s").end().build();
         this.command("linguistics").sub("reset").output("Resetting all linguistics knowledge for %1$s").end().build();
         this.command("linguistics").sub("reset").sub("target").output("%1$s has reset all your linguistics knowledge").end().build();
         this.command("linguistics").sub("comprehension").sub("get").output("%1$s has %3$d comprehension for language %2$s").end().build();
