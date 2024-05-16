@@ -123,7 +123,7 @@ public class JsonUtils {
     public static SourceList toSourceList(@Nonnull JsonObject jsonObject) {
         SourceList.Builder retVal = SourceList.builder();
         for (Source source : Sources.getAllSorted()) {
-            retVal.with(source, GsonHelper.getAsInt(jsonObject, source.getTag(), 0));
+            retVal.with(source, GsonHelper.getAsInt(jsonObject, source.getId().toString(), 0));
         }
         return retVal.build();
     }

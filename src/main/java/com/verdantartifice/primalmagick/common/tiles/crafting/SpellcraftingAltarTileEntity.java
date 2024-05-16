@@ -16,6 +16,7 @@ import com.verdantartifice.primalmagick.common.tiles.base.AbstractTilePM;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -69,9 +70,9 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         this.nextSegment = Segment.values()[compound.getInt("NextSegmentIndex")];
         this.currentRotation = RotationPhase.values()[compound.getInt("CurrentRotationIndex")];
         
-        Source last = Source.getSource(compound.getString("LastSource"));
+        Source last = Sources.get(new ResourceLocation(compound.getString("LastSource")));
         this.lastSource = last == null ? Sources.EARTH : last;
-        Source next = Source.getSource(compound.getString("NextSource"));
+        Source next = Sources.get(new ResourceLocation(compound.getString("NextSource")));
         this.nextSource = next == null ? Sources.EARTH : next;
     }
 
@@ -83,8 +84,8 @@ public class SpellcraftingAltarTileEntity extends AbstractTilePM implements Menu
         compound.putInt("LastSegmentIndex", this.lastSegment.ordinal());
         compound.putInt("NextSegmentIndex", this.nextSegment.ordinal());
         compound.putInt("CurrentRotationIndex", this.currentRotation.ordinal());
-        compound.putString("LastSource", this.lastSource.getTag());
-        compound.putString("NextSource", this.nextSource.getTag());
+        compound.putString("LastSource", this.lastSource.getId().toString());
+        compound.putString("NextSource", this.nextSource.getId().toString());
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, SpellcraftingAltarTileEntity entity) {

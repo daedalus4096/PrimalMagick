@@ -17,8 +17,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -32,33 +34,33 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     public static final String TYPE = "tag";
     public static final IProjectMaterialSerializer<ItemTagProjectMaterial> SERIALIZER = new ItemTagProjectMaterial.Serializer();
     
-    protected ResourceLocation tagName;
+    protected TagKey<Item> tag;
     protected int quantity;
     protected boolean consumed;
     
     public ItemTagProjectMaterial() {
         super();
-        this.tagName = null;
+        this.tag = null;
         this.quantity = -1;
         this.consumed = false;
     }
     
-    public ItemTagProjectMaterial(@Nonnull ResourceLocation tagName, int quantity, boolean consumed) {
+    public ItemTagProjectMaterial(@Nonnull TagKey<Item> tag, int quantity, boolean consumed) {
         super();
-        this.tagName = tagName;
+        this.tag = tag;
         this.quantity = quantity;
         this.consumed = consumed;
     }
     
-    public ItemTagProjectMaterial(@Nonnull ResourceLocation tagName, boolean consumed) {
-        this(tagName, 1, consumed);
+    public ItemTagProjectMaterial(@Nonnull TagKey<Item> tag, boolean consumed) {
+        this(tag, 1, consumed);
     }
     
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = super.serializeNBT();
-        if (this.tagName != null) {
-            tag.putString("TagName", this.tagName.toString());
+        if (this.tag != null) {
+            tag.putString("TagName", this.tag.location().toString());
         }
         tag.putInt("Quantity", this.quantity);
         tag.putBoolean("Consumed", this.consumed);
@@ -69,9 +71,9 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     public void deserializeNBT(CompoundTag nbt) {
         super.deserializeNBT(nbt);
         if (nbt.contains("TagName")) {
-            this.tagName = new ResourceLocation(nbt.getString("TagName"));
+            this.tag = ItemTags.create(new ResourceLocation(nbt.getString("TagName")));
         } else {
-            this.tagName = null;
+            this.tag = null;
         }
         this.quantity = nbt.getInt("Quantity");
         this.consumed = nbt.getBoolean("Consumed");
@@ -84,11 +86,11 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
 
     @Override
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
-        if (InventoryUtils.isPlayerCarrying(player, this.tagName, this.quantity)) {
+        if (InventoryUtils.isPlayerCarrying(player, this.tag, this.quantity)) {
             return true;
         } else if (!this.consumed && this.quantity == 1 && surroundings != null) {
             // Only allow satisfaction from surroundings if not consuming the material and only one item is required
-            TagKey<Block> blockTagKey = BlockTags.create(this.tagName);
+            TagKey<Block> blockTagKey = BlockTags.create(this.tag.location());
             List<Block> tagContents = new ArrayList<Block>();
             ForgeRegistries.BLOCKS.tags().getTag(blockTagKey).forEach(b -> tagContents.add(b));
             Set<Block> intersection = new HashSet<>(surroundings);
@@ -102,15 +104,15 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     public boolean consume(Player player) {
         // Remove items matching this material's tag from the player's inventory if it's supposed to be consumed
         if (this.consumed) {
-            return InventoryUtils.consumeItem(player, this.tagName, this.quantity);
+            return InventoryUtils.consumeItem(player, this.tag, this.quantity);
         } else {
             return true;
         }
     }
     
     @Nullable
-    public ResourceLocation getTagName() {
-        return this.tagName;
+    public TagKey<Item> getTag() {
+        return this.tag;
     }
     
     public int getQuantity() {
@@ -130,7 +132,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     @Override
     public AbstractProjectMaterial copy() {
         ItemTagProjectMaterial material = new ItemTagProjectMaterial();
-        material.tagName = new ResourceLocation(this.tagName.toString());
+        material.tag = ItemTags.create(this.tag.location());
         material.quantity = this.quantity;
         material.consumed = this.consumed;
         material.selected = this.selected;
@@ -148,7 +150,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
         int result = super.hashCode();
         result = prime * result + (consumed ? 1231 : 1237);
         result = prime * result + quantity;
-        result = prime * result + ((tagName == null) ? 0 : tagName.hashCode());
+        result = prime * result + ((tag == null) ? 0 : tag.hashCode());
         return result;
     }
 
@@ -165,10 +167,10 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
             return false;
         if (quantity != other.quantity)
             return false;
-        if (tagName == null) {
-            if (other.tagName != null)
+        if (tag == null) {
+            if (other.tag != null)
                 return false;
-        } else if (!tagName.equals(other.tagName))
+        } else if (!tag.equals(other.tag))
             return false;
         return true;
     }
@@ -181,11 +183,12 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
                 throw new JsonSyntaxException("Illegal tag name in material JSON for project " + projectId.toString());
             }
             ResourceLocation tagName = new ResourceLocation(nameStr);
+            TagKey<Item> tag = ItemTags.create(tagName);
             
             boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
             int quantity = json.getAsJsonPrimitive("quantity").getAsInt();
             
-            ItemTagProjectMaterial retVal = new ItemTagProjectMaterial(tagName, quantity, consumed);
+            ItemTagProjectMaterial retVal = new ItemTagProjectMaterial(tag, quantity, consumed);
             
             retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
             if (json.has("bonus_reward")) {
@@ -200,7 +203,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
 
         @Override
         public ItemTagProjectMaterial fromNetwork(FriendlyByteBuf buf) {
-            ItemTagProjectMaterial material = new ItemTagProjectMaterial(buf.readResourceLocation(), buf.readVarInt(), buf.readBoolean());
+            ItemTagProjectMaterial material = new ItemTagProjectMaterial(ItemTags.create(buf.readResourceLocation()), buf.readVarInt(), buf.readBoolean());
             material.setWeight(buf.readDouble());
             material.setBonusReward(buf.readDouble());
             CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
@@ -212,7 +215,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
 
         @Override
         public void toNetwork(FriendlyByteBuf buf, ItemTagProjectMaterial material) {
-            buf.writeResourceLocation(material.tagName);
+            buf.writeResourceLocation(material.tag.location());
             buf.writeVarInt(material.quantity);
             buf.writeBoolean(material.consumed);
             buf.writeDouble(material.weight);

@@ -219,7 +219,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
         for (EssenceType type : EssenceType.values()) {
             CompoundTag typeContents = contentsTag.getCompound(type.getSerializedName());
             for (Source source : Sources.getAllSorted()) {
-                int count = typeContents.getInt(source.getTag());
+                int count = typeContents.getInt(source.getId().toString());
                 this.contents.put(type, source, count);
             }
         }
@@ -237,7 +237,7 @@ public class EssenceCaskTileEntity extends AbstractTileSidedInventoryPM implemen
             CompoundTag typeContents = new CompoundTag();
             for (Source source : Sources.getAllSorted()) {
                 int count = this.contents.contains(type, source) ? this.contents.get(type, source) : 0;
-                typeContents.put(source.getTag(), IntTag.valueOf(count));
+                typeContents.put(source.getId().toString(), IntTag.valueOf(count));
             }
             contentsTag.put(type.getSerializedName(), typeContents);
         }

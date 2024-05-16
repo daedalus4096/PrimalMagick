@@ -16,7 +16,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -77,7 +76,7 @@ public class ItemTagProjectMaterialWidget extends AbstractProjectMaterialWidget<
 
     @Nonnull
     protected ItemStack getStackToDisplay() {
-        TagKey<Item> itemTag = ItemTags.create(this.material.getTagName());
+        TagKey<Item> itemTag = this.material.getTag();
         List<Item> tagContents = new ArrayList<Item>();
         ForgeRegistries.ITEMS.tags().getTag(itemTag).forEach(i -> tagContents.add(i));
         if (tagContents != null && !tagContents.isEmpty()) {
