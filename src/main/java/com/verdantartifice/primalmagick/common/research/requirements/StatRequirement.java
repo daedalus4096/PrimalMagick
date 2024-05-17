@@ -16,7 +16,7 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
 /**
- * Requirement that the player has accumulated at least the given amount of the given statistic.
+ * Requirement that the player has accumulated at least the given amount of the given Primal Magick statistic.
  * 
  * @author Daedalus4096
  */

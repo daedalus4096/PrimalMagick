@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.StatsCounter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
@@ -46,6 +47,19 @@ public class ClientUtils {
     public static Level getCurrentLevel() {
         Minecraft mc = Minecraft.getInstance();
         return mc.level;
+    }
+    
+    /**
+     * Gets the stats counter for the current client-side player.
+     * 
+     * ONLY CALL THIS METHOD AFTER CHECKING YOUR CURRENT FMLENVIRONMENT DIST.
+     * 
+     * @return the stats counter for the current player
+     */
+    @Nullable
+    public static StatsCounter getStatsCounter() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.player.getStats();
     }
     
     /**

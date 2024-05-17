@@ -26,6 +26,8 @@ public class RequirementsPM {
     public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", ItemStackRequirement.CODEC, ItemStackRequirement::fromNetwork);
     public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", ItemTagRequirement.CODEC, ItemTagRequirement::fromNetwork);
     public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", StatRequirement.CODEC, StatRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<VanillaItemUsedStatRequirement>> VANILLA_ITEM_USED_STAT = register("vanilla_item_used_stat", VanillaItemUsedStatRequirement.CODEC, VanillaItemUsedStatRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<VanillaCustomStatRequirement>> VANILLA_CUSTOM_STAT = register("vanilla_custom_stat", VanillaCustomStatRequirement.CODEC, VanillaCustomStatRequirement::fromNetwork);
     public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement.CODEC, AndRequirement::fromNetwork);
     public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement.CODEC, OrRequirement::fromNetwork);
     public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement.CODEC, QuorumRequirement::fromNetwork);
