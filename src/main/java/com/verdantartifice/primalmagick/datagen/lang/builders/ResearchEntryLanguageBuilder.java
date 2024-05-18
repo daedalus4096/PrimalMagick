@@ -4,7 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 
 import net.minecraft.resources.ResourceLocation;
 
@@ -13,9 +13,9 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<SimpleResearchKey, ResearchEntryLanguageBuilder> {
-    public ResearchEntryLanguageBuilder(SimpleResearchKey entry, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(entry, () -> String.join(".", "research", PrimalMagick.MODID, entry.getRootKey().toLowerCase()), untracker, adder);
+public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<ResearchEntry, ResearchEntryLanguageBuilder> {
+    public ResearchEntryLanguageBuilder(ResearchEntry entry, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
+        super(entry, entry::nameTranslationKey, untracker, adder);
     }
 
     @Override
@@ -24,13 +24,18 @@ public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<Simple
     }
 
     @Override
-    protected ResourceLocation getBaseRegistryKey(SimpleResearchKey base) {
-        return PrimalMagick.resource(base.getRootKey().toLowerCase());
+    protected ResourceLocation getBaseRegistryKey(ResearchEntry base) {
+        return PrimalMagick.resource(base.key().getRootKey().location().getPath().toLowerCase());
     }
 
     @Override
     public ResearchEntryLanguageBuilder name(String value) {
         this.add(this.getKey("title"), value);
+        return this;
+    }
+
+    public ResearchEntryLanguageBuilder hint(String value) {
+        this.add(this.getKey("hint"), value);
         return this;
     }
     

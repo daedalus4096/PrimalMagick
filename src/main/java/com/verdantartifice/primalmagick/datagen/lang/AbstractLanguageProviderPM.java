@@ -19,9 +19,7 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
-import com.verdantartifice.primalmagick.common.research.ResearchName;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.stats.Stat;
 import com.verdantartifice.primalmagick.common.wands.IWandComponent;
@@ -45,7 +43,6 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.MobEffectLanguageB
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchDisciplineLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchEntryLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchProjectLanguageBuilder;
-import com.verdantartifice.primalmagick.datagen.lang.builders.ResearchRequirementLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.RitualLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SourceLanguageBuilder;
 import com.verdantartifice.primalmagick.datagen.lang.builders.SpellModLanguageBuilder;
@@ -242,28 +239,9 @@ public abstract class AbstractLanguageProviderPM implements DataProvider {
         return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(discHolder.get(), this::untrack, this::add));
     }
     
-    public ResearchEntryLanguageBuilder researchEntry(String keyStr) {
-        return this.researchEntry(ResearchNames.find(keyStr).orElseThrow());
-    }
-    
-    public ResearchEntryLanguageBuilder researchEntry(ResearchName key) {
-        return this.researchEntry(key.simpleKey());
-    }
-    
-    public ResearchEntryLanguageBuilder researchEntry(SimpleResearchKey key) {
-        return this.createBuilder(() -> new ResearchEntryLanguageBuilder(key, this::untrack, this::add));
-    }
-    
-    public ResearchRequirementLanguageBuilder researchRequirement(String keyStr) {
-        return this.researchRequirement(ResearchNames.find(keyStr).orElseThrow());
-    }
-    
-    public ResearchRequirementLanguageBuilder researchRequirement(ResearchName key) {
-        return this.researchRequirement(key.simpleKey());
-    }
-    
-    public ResearchRequirementLanguageBuilder researchRequirement(SimpleResearchKey key) {
-        return this.createBuilder(() -> new ResearchRequirementLanguageBuilder(key, this::untrack, this::add));
+    public ResearchEntryLanguageBuilder researchEntry(ResourceKey<ResearchEntry> entryKey, HolderLookup.Provider lookupProvider) {
+        Holder.Reference<ResearchEntry> entryHolder = lookupProvider.lookupOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getOrThrow(entryKey);
+        return this.createBuilder(() -> new ResearchEntryLanguageBuilder(entryHolder.get(), this::untrack, this::add));
     }
     
     public ResearchProjectLanguageBuilder researchProject(String id) {
