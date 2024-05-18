@@ -210,12 +210,70 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> MASTER_RITUAL = create("master_ritual");
     public static final ResourceKey<ResearchEntry> SUPREME_RITUAL = create("supreme_ritual");
     public static final ResourceKey<ResearchEntry> COMPLETE_RITUAL = create("complete_ritual");
+    public static final ResourceKey<ResearchEntry> RITUAL_CANDLES = create("ritual_candles");
+    public static final ResourceKey<ResearchEntry> INCENSE_BRAZIER = create("incense_brazier");
     public static final ResourceKey<ResearchEntry> MANAFRUIT = create("manafruit");
+    public static final ResourceKey<ResearchEntry> RITUAL_LECTERN = create("ritual_lectern");
+    public static final ResourceKey<ResearchEntry> RITUAL_BELL = create("ritual_bell");
+    public static final ResourceKey<ResearchEntry> BLOODLETTER = create("bloodletter");
+    public static final ResourceKey<ResearchEntry> SOUL_ANVIL = create("soul_anvil");
+    public static final ResourceKey<ResearchEntry> CELESTIAL_HARP = create("celestial_harp");
+    public static final ResourceKey<ResearchEntry> WAND_CORE_PRIMAL = create("wand_core_primal");
+    public static final ResourceKey<ResearchEntry> WAND_CORE_DARK_PRIMAL = create("wand_core_dark_primal");
+    public static final ResourceKey<ResearchEntry> WAND_CORE_PURE_PRIMAL = create("wand_core_pure_primal");
+    public static final ResourceKey<ResearchEntry> PIXIES = create("pixies");
+    public static final ResourceKey<ResearchEntry> GRAND_PIXIES = create("grand_pixies");
+    public static final ResourceKey<ResearchEntry> MAJESTIC_PIXIES = create("majestic_pixies");
     public static final ResourceKey<ResearchEntry> AMBROSIA = create("ambrosia");
+    public static final ResourceKey<ResearchEntry> GREATER_AMBROSIA = create("greater_ambrosia");
+    public static final ResourceKey<ResearchEntry> SUPREME_AMBROSIA = create("supreme_ambrosia");
+    public static final ResourceKey<ResearchEntry> FLYING_CARPET = create("flying_carpet");
+    public static final ResourceKey<ResearchEntry> CLEANSING_RITE = create("cleansing_rite");
+    public static final ResourceKey<ResearchEntry> PRIMAL_SHOVEL = create("primal_shovel");
+    public static final ResourceKey<ResearchEntry> PRIMAL_FISHING_ROD = create("primal_fishing_rod");
+    public static final ResourceKey<ResearchEntry> PRIMAL_AXE = create("primal_axe");
+    public static final ResourceKey<ResearchEntry> PRIMAL_HOE = create("primal_hoe");
+    public static final ResourceKey<ResearchEntry> PRIMAL_PICKAXE = create("primal_pickaxe");
+    public static final ResourceKey<ResearchEntry> FORBIDDEN_TRIDENT = create("forbidden_trident");
+    public static final ResourceKey<ResearchEntry> FORBIDDEN_BOW = create("forbidden_bow");
+    public static final ResourceKey<ResearchEntry> FORBIDDEN_SWORD = create("forbidden_sword");
+    public static final ResourceKey<ResearchEntry> SACRED_SHIELD = create("sacred_shield");
+    public static final ResourceKey<ResearchEntry> DREAM_VISION_TALISMAN = create("dream_vision_talisman");
+    public static final ResourceKey<ResearchEntry> DOWSING_ROD = create("dowsing_rod");
+    public static final ResourceKey<ResearchEntry> HYDROMELON = create("hydromelon");
+    public static final ResourceKey<ResearchEntry> BLOOD_ROSE = create("blood_rose");
+    public static final ResourceKey<ResearchEntry> EMBERFLOWER = create("emberflower");
 
     // TODO Magitech research entries
     // TODO Place in correct order after bootstrapping
-    
+    public static final ResourceKey<ResearchEntry> BASIC_MAGITECH = create("basic_magitech");
+    public static final ResourceKey<ResearchEntry> EXPERT_MAGITECH = create("expert_magitech");
+    public static final ResourceKey<ResearchEntry> MASTER_MAGITECH = create("master_magitech");
+    public static final ResourceKey<ResearchEntry> SUPREME_MAGITECH = create("supreme_magitech");
+    public static final ResourceKey<ResearchEntry> COMPLETE_MAGITECH = create("complete_magitech");
+    public static final ResourceKey<ResearchEntry> HONEY_EXTRACTOR = create("honey_extractor");
+    public static final ResourceKey<ResearchEntry> SEASCRIBE_PEN = create("seascribe_pen");
+    public static final ResourceKey<ResearchEntry> ARCANOMETER = create("arcanometer");
+    public static final ResourceKey<ResearchEntry> PRIMALITE_GOLEM = create("primalite_golem");
+    public static final ResourceKey<ResearchEntry> HEXIUM_GOLEM = create("hexium_golem");
+    public static final ResourceKey<ResearchEntry> HALLOWSTEEL_GOLEM = create("hallowsteel_golem");
+    public static final ResourceKey<ResearchEntry> CONCOCTING_TINCTURES = create("concocting_tinctures");
+    public static final ResourceKey<ResearchEntry> CONCOCTING_PHILTERS = create("concocting_philters");
+    public static final ResourceKey<ResearchEntry> CONCOCTING_ELIXIRS = create("concocting_elixirs");
+    public static final ResourceKey<ResearchEntry> CONCOCTING_BOMBS = create("concocting_bombs");
+    public static final ResourceKey<ResearchEntry> ENTROPY_SINK = create("entropy_sink");
+    public static final ResourceKey<ResearchEntry> AUTO_CHARGER = create("auto_charger");
+    public static final ResourceKey<ResearchEntry> ESSENCE_TRANSMUTER = create("essence_transmuter");
+    public static final ResourceKey<ResearchEntry> DISSOLUTION_CHAMBER = create("dissolution_chamber");
+    public static final ResourceKey<ResearchEntry> ZEPHYR_ENGINE = create("zephyr_engine");
+    public static final ResourceKey<ResearchEntry> VOID_TURBINE = create("void_turbine");
+    public static final ResourceKey<ResearchEntry> INFERNAL_FURNACE = create("infernal_furnace");
+    public static final ResourceKey<ResearchEntry> MANA_NEXUS = create("mana_nexus");
+    public static final ResourceKey<ResearchEntry> MANA_SINGULARITY = create("mana_singularity");
+    public static final ResourceKey<ResearchEntry> WARDING_MODULE = create("warding_module");
+    public static final ResourceKey<ResearchEntry> GREATER_WARDING_MODULE = create("greater_warding_module");
+    public static final ResourceKey<ResearchEntry> SUPREME_WARDING_MODULE = create("supreme_warding_module");
+
     // Scans research entries
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
