@@ -55,7 +55,7 @@ public class DataGenerators {
         generator.addProvider(event.includeClient(), new WandComponentBlockStateProvider(generator.getPackOutput(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new ItemModelProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new SoundDefinitionsProviderPM(generator.getPackOutput(), event.getExistingFileHelper()));
-        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput()));
+        generator.addProvider(event.includeClient(), new LanguageProviderEnUs(generator.getPackOutput(), event.getLookupProvider()));
         generator.addProvider(event.includeClient(), new StyleGuideProvider(generator.getPackOutput()));
         generator.addProvider(event.includeClient(), new TipDefinitionProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new Recipes(generator.getPackOutput()));

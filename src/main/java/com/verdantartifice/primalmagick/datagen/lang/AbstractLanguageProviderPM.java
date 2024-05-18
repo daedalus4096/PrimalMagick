@@ -1,18 +1,22 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.attunements.AttunementThreshold;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.books.BookDefinition;
 import com.verdantartifice.primalmagick.common.books.BookLanguage;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchName;
@@ -59,6 +63,10 @@ import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenBookLanguag
 import com.verdantartifice.primalmagick.datagen.lang.builders.WrittenLanguageLanguageBuilder;
 
 import net.minecraft.client.KeyMapping;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -69,19 +77,46 @@ import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimPattern;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.LanguageProvider;
 
 /**
  * Language provider with mod-specific helper functions.
  * 
  * @author Daedalus4096
  */
-public abstract class AbstractLanguageProviderPM extends LanguageProvider {
+public abstract class AbstractLanguageProviderPM implements DataProvider {
     protected final Map<String, ILanguageBuilder> tracking = new TreeMap<>();
     protected final Map<Source, String> sourceNames = new HashMap<>();
+    private final Map<String, String> data = new TreeMap<>();
+    private final PackOutput output;
+    private final String modid;
+    private final String locale;
+    private final CompletableFuture<HolderLookup.Provider> lookupProviderFuture;
+
+    public AbstractLanguageProviderPM(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProviderFuture, String locale) {
+        this.output = output;
+        this.modid = PrimalMagick.MODID;
+        this.locale = locale;
+        this.lookupProviderFuture = lookupProviderFuture;
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput pOutput) {
+        return this.lookupProviderFuture.thenCompose(p -> {
+            this.addLocalizations(p);
+            this.validate();
+            return save(pOutput, this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK).resolve(this.modid).resolve("lang").resolve(this.locale + ".json"));
+        });
+    }
+
+    @Override
+    public String getName() {
+        return "Languages: " + this.locale;
+    }
     
-    public AbstractLanguageProviderPM(PackOutput output, String locale) {
-        super(output, PrimalMagick.MODID, locale);
+    private CompletableFuture<?> save(CachedOutput cache, Path target) {
+        JsonObject json = new JsonObject();
+        this.data.forEach(json::addProperty);
+        return DataProvider.saveStable(cache, json, target);
     }
 
     private void track(ILanguageBuilder builder) {
@@ -97,14 +132,8 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         this.tracking.remove(builder.getBuilderKey());
     }
     
-    protected abstract void addLocalizations();
+    protected abstract void addLocalizations(HolderLookup.Provider lookupProvider);
 
-    @Override
-    protected void addTranslations() {
-        this.addLocalizations();
-        this.validate();
-    }
-    
     protected void validate() {
         MutableInt count = new MutableInt(0);
         this.tracking.forEach((key, builder) -> {
@@ -128,7 +157,13 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         if (this.sourceNames.containsKey(source)) {
             return this.sourceNames.get(source);
         } else {
-            throw new IllegalStateException("No source name found for " + source.getTag());
+            throw new IllegalStateException("No source name found for " + source.getId().toString());
+        }
+    }
+    
+    protected void add(String key, String value) {
+        if (this.data.put(key, value) != null) {
+            throw new IllegalStateException("Duplicate translation key " + key);
         }
     }
     
@@ -202,8 +237,9 @@ public abstract class AbstractLanguageProviderPM extends LanguageProvider {
         return this.createBuilder(() -> new AttunementThresholdLanguageBuilder(threshold, this::untrack, this::add));
     }
     
-    public ResearchDisciplineLanguageBuilder researchDiscipline(ResearchDiscipline disc) {
-        return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(disc, this::untrack, this::add));
+    public ResearchDisciplineLanguageBuilder researchDiscipline(ResourceKey<ResearchDiscipline> discKey, HolderLookup.Provider lookupProvider) {
+        Holder.Reference<ResearchDiscipline> discHolder = lookupProvider.lookupOrThrow(RegistryKeysPM.RESEARCH_DISCIPLINES).getOrThrow(discKey);
+        return this.createBuilder(() -> new ResearchDisciplineLanguageBuilder(discHolder.get(), this::untrack, this::add));
     }
     
     public ResearchEntryLanguageBuilder researchEntry(String keyStr) {

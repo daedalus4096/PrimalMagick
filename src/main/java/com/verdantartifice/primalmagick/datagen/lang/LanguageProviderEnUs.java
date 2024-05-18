@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.lang;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import com.verdantartifice.primalmagick.client.config.KeyBindings;
 import com.verdantartifice.primalmagick.common.armortrim.TrimMaterialsPM;
@@ -61,6 +62,7 @@ import com.verdantartifice.primalmagick.common.wands.WandCap;
 import com.verdantartifice.primalmagick.common.wands.WandCore;
 import com.verdantartifice.primalmagick.common.wands.WandGem;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.DyeColor;
@@ -74,12 +76,12 @@ import net.minecraftforge.registries.RegistryObject;
  * @author Daedalus4096
  */
 public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
-    public LanguageProviderEnUs(PackOutput output) {
-        super(output, "en_us");
+    public LanguageProviderEnUs(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProviderFuture) {
+        super(output, lookupProviderFuture, "en_us");
     }
 
     @Override
-    protected void addLocalizations() {
+    protected void addLocalizations(HolderLookup.Provider lookupProvider) {
         // Generate magickal source localizations; it's important to do these first so that the language provider has access to
         // the localized source names for the source-multiplied language builders used later.
         this.source(Sources.EARTH).name("Earth").attunement("Minor attunement to the Earth source makes it easier to channel mana.  In practice, I'll pay 5% less Earth mana for all purposes.<BR>Lesser attunement to the Earth will grant me increased stamina, allowing me to swing swords and tools faster without tiring.<BR>Finally, greater attunement to the Earth will cause the very ground to rise beneath my feet when I walk, allowing me to step up the full height of a block without needing to jump.").build();
@@ -1430,14 +1432,14 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.add("wand_gem.primalmagick.unknown", "Unknown");
         
         // Generate research discipline localizations
-        this.researchDiscipline(ResearchDisciplines.BASICS).name("Fundamentals").build();
-        this.researchDiscipline(ResearchDisciplines.ALCHEMY).name("Alchemy").build();
-        this.researchDiscipline(ResearchDisciplines.SORCERY).name("Sorcery").build();
-        this.researchDiscipline(ResearchDisciplines.MANAWEAVING).name("Manaweaving").build();
-        this.researchDiscipline(ResearchDisciplines.RUNEWORKING).name("Runeworking").build();
-        this.researchDiscipline(ResearchDisciplines.RITUAL).name("Ritual Magick").build();
-        this.researchDiscipline(ResearchDisciplines.MAGITECH).name("Magitech").build();
-        this.researchDiscipline(ResearchDisciplines.SCANS).name("Scans").build();
+        this.researchDiscipline(ResearchDisciplines.BASICS, lookupProvider).name("Fundamentals").build();
+        this.researchDiscipline(ResearchDisciplines.ALCHEMY, lookupProvider).name("Alchemy").build();
+        this.researchDiscipline(ResearchDisciplines.SORCERY, lookupProvider).name("Sorcery").build();
+        this.researchDiscipline(ResearchDisciplines.MANAWEAVING, lookupProvider).name("Manaweaving").build();
+        this.researchDiscipline(ResearchDisciplines.RUNEWORKING, lookupProvider).name("Runeworking").build();
+        this.researchDiscipline(ResearchDisciplines.RITUAL, lookupProvider).name("Ritual Magick").build();
+        this.researchDiscipline(ResearchDisciplines.MAGITECH, lookupProvider).name("Magitech").build();
+        this.researchDiscipline(ResearchDisciplines.SCANS, lookupProvider).name("Scans").build();
         
         // Generate knowledge type localizations
         this.knowledgeType(KnowledgeType.OBSERVATION).name("Observation").build();
