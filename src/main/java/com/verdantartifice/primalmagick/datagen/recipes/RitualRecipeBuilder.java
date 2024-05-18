@@ -7,13 +7,18 @@ import java.util.Optional;
 
 import com.verdantartifice.primalmagick.common.crafting.BlockIngredient;
 import com.verdantartifice.primalmagick.common.crafting.RitualRecipe;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -230,6 +235,14 @@ public class RitualRecipeBuilder {
     public RitualRecipeBuilder requirement(AbstractRequirement<?> requirement) {
         this.requirements.add(requirement);
         return this;
+    }
+    
+    public RitualRecipeBuilder requiredResearch(ResourceKey<ResearchEntry> research) {
+        return this.requirement(new ResearchRequirement(new ResearchEntryKey(research)));
+    }
+    
+    public RitualRecipeBuilder requiredResearch(ResourceKey<ResearchEntry> research, int stage) {
+        return this.requirement(new ResearchRequirement(new ResearchStageKey(research, stage)));
     }
     
     /**
