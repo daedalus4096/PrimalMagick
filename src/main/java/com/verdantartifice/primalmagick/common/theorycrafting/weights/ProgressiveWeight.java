@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class ProgressiveWeight implements IWeightFunction {
+public class ProgressiveWeight implements AbstractWeightFunction {
     public static final String TYPE = "progressive";
     public static final IWeightFunctionSerializer<ProgressiveWeight> SERIALIZER = new Serializer();
     

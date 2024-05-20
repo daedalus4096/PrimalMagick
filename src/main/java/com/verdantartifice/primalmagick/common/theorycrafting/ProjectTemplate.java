@@ -24,7 +24,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Abstract
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.IProjectMaterialSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
-import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
@@ -50,11 +50,11 @@ public class ProjectTemplate {
     protected Optional<Double> baseSuccessChanceOverride = Optional.empty();
     protected double rewardMultiplier = 0.25D;
     protected List<ResourceLocation> aidBlocks = new ArrayList<>();
-    protected Optional<IWeightFunction> weightFunction = Optional.empty();
+    protected Optional<AbstractWeightFunction> weightFunction = Optional.empty();
     
     protected ProjectTemplate(@Nonnull ResourceLocation key, @Nonnull List<AbstractProjectMaterial> materialOptions, @Nonnull List<AbstractReward> otherRewards, @Nullable IResearchKey requiredResearch,
             @Nonnull Optional<Integer> requiredMaterialCountOverride, @Nonnull Optional<Double> baseSuccessChanceOverride, double rewardMultiplier, @Nonnull List<ResourceLocation> aidBlocks,
-            @Nonnull Optional<IWeightFunction> weightFunction) {
+            @Nonnull Optional<AbstractWeightFunction> weightFunction) {
         this.key = key;
         this.materialOptions = materialOptions;
         this.otherRewards = otherRewards;
@@ -226,7 +226,7 @@ public class ProjectTemplate {
                 }
             }
             
-            Optional<IWeightFunction> weightOpt = Optional.empty();
+            Optional<AbstractWeightFunction> weightOpt = Optional.empty();
             if (json.has("weight_function")) {
                 JsonObject weightObj = json.getAsJsonObject("weight_function");
                 String functionType = weightObj.getAsJsonPrimitive("type").getAsString();
@@ -280,7 +280,7 @@ public class ProjectTemplate {
                 }
             }
             
-            Optional<IWeightFunction> weightOpt;
+            Optional<AbstractWeightFunction> weightOpt;
             if (buf.readBoolean()) {
                 String functionType = buf.readUtf();
                 IWeightFunctionSerializer<?> serializer = TheorycraftManager.getWeightFunctionSerializer(functionType);

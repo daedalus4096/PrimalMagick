@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchName;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialType;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionType;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -29,6 +30,7 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<ResearchDiscipline>> RESEARCH_DISCIPLINES = key("research_disciplines");
     public static final ResourceKey<Registry<ResearchEntry>> RESEARCH_ENTRIES = key("research_entries");
     public static final ResourceKey<Registry<ProjectMaterialType<?>>> PROJECT_MATERIAL_TYPES = key("project_material_types");
+    public static final ResourceKey<Registry<WeightFunctionType<?>>> PROJECT_WEIGHT_FUNCTION_TYPES = key("project_weight_function_types");
     
     private static <T> ResourceKey<Registry<T>> key(String name) {
         return ResourceKey.createRegistryKey(PrimalMagick.resource(name));

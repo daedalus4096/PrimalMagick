@@ -19,6 +19,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ProjectMaterialTypesPM;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.WeightFunctionTypesPM;
 import com.verdantartifice.primalmagick.common.tiles.TileEntityTypesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructureFeaturesPM;
 import com.verdantartifice.primalmagick.common.worldgen.structures.StructurePieceTypesPM;
@@ -52,5 +53,6 @@ public class InitRegistries {
         ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();
+        WeightFunctionTypesPM.init();
     }
 }

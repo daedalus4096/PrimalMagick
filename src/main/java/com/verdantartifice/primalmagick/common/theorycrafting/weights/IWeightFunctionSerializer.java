@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
  * 
  * @author Daedalus4096
  */
-public interface IWeightFunctionSerializer<T extends IWeightFunction> {
+public interface IWeightFunctionSerializer<T extends AbstractWeightFunction> {
     /**
      * Read a weight function from JSON
      */
