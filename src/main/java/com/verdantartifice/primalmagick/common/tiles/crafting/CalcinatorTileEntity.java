@@ -67,7 +67,7 @@ public class CalcinatorTileEntity extends AbstractCalcinatorTileEntity {
                                 break;
                             }
                         } else {
-                            currentEssenceType = currentEssenceType.getDowngrade();
+                            currentEssenceType = currentEssenceType.getDowngrade().orElse(null);
                         }
                     }
                     if (currentEssenceType == null && amount > 0 && (alwaysGenerateDregs || this.level.random.nextInt(EssenceType.DUST.getAffinity()) < amount)) {
