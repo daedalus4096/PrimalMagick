@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.datagen.recipes;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
@@ -19,10 +20,7 @@ import com.verdantartifice.primalmagick.common.crafting.WritableBookCraftingReci
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceItem;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -40,6 +38,7 @@ import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTrimRecipeBuilder;
 import net.minecraft.data.recipes.SpecialRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -1285,31 +1284,24 @@ public class Recipes extends RecipeProvider {
     protected void registerEssenceUpgradeRecipes(RecipeOutput consumer) {
         for (Source source : Sources.getAllSorted()) {
             for (EssenceType baseType : EssenceType.values()) {
-                EssenceType upgradeType = baseType.getUpgrade();
-                if (upgradeType != null) {
+                baseType.getUpgrade().ifPresent(upgradeType -> {
                     ItemStack baseStack = EssenceItem.getEssence(baseType, source);
                     ItemStack upgradeStack = EssenceItem.getEssence(upgradeType, source);
-                    Item quartzItem = upgradeType.getUpgradeMedium();
-                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItem != null) {
-                        CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.find(upgradeType.getSerializedName().toUpperCase() + "_SYNTHESIS").orElseThrow();
-                        if (source.getDiscoverKey() == null) {
-                            research = CompoundResearchKey.from(baseResearch);
-                        } else {
-                            research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
-                        }
-                        String name = "essence_" + upgradeType.getSerializedName() + "_" + source.getTag() + "_from_" + baseType.getSerializedName();
-                        ArcaneShapedRecipeBuilder.arcaneShapedRecipe(upgradeStack.getItem())
-                            .patternLine("###")
-                            .patternLine("#Q#")
-                            .patternLine("###")
-                            .key('#', baseStack.getItem())
-                            .key('Q', quartzItem)
-                            .setGroup("essence_" + upgradeType.getSerializedName())
-                            .research(research)
-                            .build(consumer, PrimalMagick.resource(name));
+                    Optional<Item> quartzItemOpt = upgradeType.getUpgradeMedium();
+                    if (!baseStack.isEmpty() && !upgradeStack.isEmpty() && quartzItemOpt.isPresent()) {
+                        String name = "essence_" + upgradeType.getSerializedName() + "_" + source.getId().getPath() + "_from_" + baseType.getSerializedName();
+                        ArcaneShapedRecipeBuilder builder = ArcaneShapedRecipeBuilder.arcaneShapedRecipe(upgradeStack.getItem())
+                                .patternLine("###")
+                                .patternLine("#Q#")
+                                .patternLine("###")
+                                .key('#', baseStack.getItem())
+                                .key('Q', quartzItemOpt.get())
+                                .setGroup("essence_" + upgradeType.getSerializedName());
+                        baseType.getUpgradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
+                        source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
+                        builder.build(consumer, new ResourceLocation(source.getId().getNamespace(), name));
                     }
-                }
+                });
             }
         }
     }
@@ -1317,26 +1309,19 @@ public class Recipes extends RecipeProvider {
     protected void registerEssenceDowngradeRecipes(RecipeOutput consumer) {
         for (Source source : Sources.getAllSorted()) {
             for (EssenceType baseType : EssenceType.values()) {
-                EssenceType downgradeType = baseType.getDowngrade();
-                if (downgradeType != null) {
+                baseType.getDowngrade().ifPresent(downgradeType -> {
                     ItemStack baseStack = EssenceItem.getEssence(baseType, source);
                     ItemStack downgradeStack = EssenceItem.getEssence(downgradeType, source);
                     if (!baseStack.isEmpty() && !downgradeStack.isEmpty()) {
-                        CompoundResearchKey research;
-                        SimpleResearchKey baseResearch = SimpleResearchKey.find(baseType.getSerializedName().toUpperCase() + "_DESYNTHESIS").orElseThrow();
-                        if (source.getDiscoverKey() == null) {
-                            research = CompoundResearchKey.from(baseResearch);
-                        } else {
-                            research = CompoundResearchKey.from(true, baseResearch, source.getDiscoverKey());
-                        }
-                        String name = "essence_" + downgradeType.getSerializedName() + "_" + source.getTag() + "_from_" + baseType.getSerializedName();
-                        ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(downgradeStack.getItem(), 4)
+                        String name = "essence_" + downgradeType.getSerializedName() + "_" + source.getId().getPath() + "_from_" + baseType.getSerializedName();
+                        ArcaneShapelessRecipeBuilder builder = ArcaneShapelessRecipeBuilder.arcaneShapelessRecipe(downgradeStack.getItem(), 4)
                             .addIngredient(baseStack.getItem())
-                            .setGroup("essence_" + downgradeType.getSerializedName())
-                            .research(research)
-                            .build(consumer, PrimalMagick.resource(name));
+                            .setGroup("essence_" + downgradeType.getSerializedName());
+                        baseType.getDowngradeResearchEntry().ifPresent(baseResearch -> builder.requiredResearch(baseResearch));
+                        source.getDiscoverKey().ifPresent(key -> builder.requiredResearch(key.getRootKey()));
+                        builder.build(consumer, new ResourceLocation(source.getId().getNamespace(), name));
                     }
-                }
+                });
             }
         }
     }
