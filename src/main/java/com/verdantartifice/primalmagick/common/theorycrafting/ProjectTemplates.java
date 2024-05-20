@@ -11,7 +11,9 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Experien
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
+import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
 
 import net.minecraft.core.RegistryAccess;
@@ -19,6 +21,7 @@ import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 /**
@@ -31,6 +34,10 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> ADVANCED_ENCHANTING_STUDIES = create("advanced_enchanting_studies");
     public static final ResourceKey<ProjectTemplate> ADVANCED_ESSENCE_ANALYSIS = create("advanced_essence_analysis");
     public static final ResourceKey<ProjectTemplate> ADVANCED_RITUAL_PRACTICE = create("advanced_ritual_practice");
+    public static final ResourceKey<ProjectTemplate> ADVANCED_RUNEWORK = create("advanced_runework");
+    public static final ResourceKey<ProjectTemplate> ADVANCED_SPELLWORK = create("advanced_spellwork");
+    public static final ResourceKey<ProjectTemplate> ADVANCED_WAND_TINKERING = create("advanced_wand_tinkering");
+    public static final ResourceKey<ProjectTemplate> APIAMANCY = create("apiamancy");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -99,6 +106,61 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SUN.get()).consumed().requiredResearch(ResearchEntries.PRIMAL_HOE).bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.PRIMALITE_PICKAXE.get()).consumed().requiredResearch(ResearchEntries.PRIMAL_PICKAXE).bonusReward(0.25D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_MOON.get()).consumed().requiredResearch(ResearchEntries.PRIMAL_PICKAXE).bonusReward(0.25D).weight(1).build())
+                .build());
+        context.register(ADVANCED_RUNEWORK, ProjectTemplate.builder().rewardMultiplier(0.5D)
+                .quorumResearch(3, ResearchEntries.RUNE_BLOOD, ResearchEntries.RUNE_INFERNAL, ResearchEntries.RUNE_VOID, ResearchEntries.RUNE_ABSORB, ResearchEntries.RUNE_DISPEL, ResearchEntries.RUNE_SUMMON, ResearchEntries.RUNE_AREA, ResearchEntries.RUNE_CREATURE, ResearchEntries.RUNE_INSIGHT)
+                .weightFunction(ProgressiveWeight.builder(3).modifier(ResearchEntries.BASIC_RUNEWORKING, 1).modifier(ResearchEntries.EXPERT_RUNEWORKING, 1).modifier(ResearchEntries.MASTER_RUNEWORKING, -1).modifier(ResearchEntries.SUPREME_RUNEWORKING, -1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNECARVING_TABLE.get()).weight(5).build())
+                .material(ItemProjectMaterial.builder(Items.STONE_SLAB, 2).consumed().weight(3).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_LAPIS).quantity(2).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_BLOOD.get()).consumed().requiredResearch(ResearchEntries.RUNE_BLOOD).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.RUNE_INFERNAL).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_VOID.get()).consumed().requiredResearch(ResearchEntries.RUNE_VOID).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_INSIGHT.get()).consumed().requiredResearch(ResearchEntries.RUNE_INSIGHT).bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_ABSORB.get()).consumed().requiredResearch(ResearchEntries.RUNE_ABSORB).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_DISPEL.get()).consumed().requiredResearch(ResearchEntries.RUNE_DISPEL).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_SUMMON.get()).consumed().requiredResearch(ResearchEntries.RUNE_SUMMON).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_AREA.get()).consumed().requiredResearch(ResearchEntries.RUNE_AREA).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_CREATURE.get()).consumed().requiredResearch(ResearchEntries.RUNE_CREATURE).weight(1).build())
+                .build());
+        context.register(ADVANCED_SPELLWORK, ProjectTemplate.builder().rewardMultiplier(0.5D)
+                .requiredResearch(ResearchEntries.EXPERT_SORCERY)
+                .requiredResearch(ResearchEntries.SHARD_SYNTHESIS)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.MASTER_SORCERY, -1).modifier(ResearchEntries.SUPREME_SORCERY, -1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.SPELLCRAFTING_ALTAR.get()).weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_INSCRIPTION_TABLE.get()).requiredResearch(ResearchEntries.WAND_INSCRIPTION).weight(2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.AUTO_CHARGER.get()).requiredResearch(ResearchEntries.AUTO_CHARGER).weight(2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MUNDANE_WAND.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.SPELL_SCROLL_BLANK.get(), 2).consumed().weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_EARTH.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SEA.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SKY.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SUN.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_MOON.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_BLOOD.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_BLOOD).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_VOID.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_VOID).weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
+        context.register(ADVANCED_WAND_TINKERING, ProjectTemplate.builder().rewardMultiplier(0.5D).requiredResearch(ResearchEntries.MASTER_MANAWEAVING)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_ASSEMBLY_TABLE.get()).requiredResearch(ResearchEntries.ADVANCED_WANDMAKING).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_GLAMOUR_TABLE.get()).requiredResearch(ResearchEntries.WAND_GLAMOUR_TABLE).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEARTWOOD.get(), 2).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.BONES).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.RODS_BLAZE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.PURPUR_BLOCK).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.INGOTS_PRIMALITE).consumed().requiredResearch(ResearchEntries.PRIMALITE).weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.INGOTS_HEXIUM).consumed().requiredResearch(ResearchEntries.HEXIUM).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_BLOOD.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_BLOOD).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_VOID.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_VOID).weight(1).build())
+                .build());
+        context.register(APIAMANCY, ProjectTemplate.builder().aid(Blocks.BEEHIVE).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(ItemTags.SMALL_FLOWERS).consumed().weight(1).build())
+                .otherReward(new ItemReward(Items.HONEYCOMB, 3))
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())

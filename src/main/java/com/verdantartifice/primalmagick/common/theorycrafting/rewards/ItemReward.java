@@ -2,6 +2,7 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
@@ -14,6 +15,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 /**
  * Theorycrafting reward that grants a specific item stack.
@@ -29,6 +31,14 @@ public class ItemReward extends AbstractReward<ItemReward> {
     
     public ItemReward(@Nonnull ItemStack stack) {
         this.stack = stack.copy();
+    }
+    
+    public ItemReward(ItemLike item, int count) {
+        this(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
+    }
+    
+    public ItemReward(ItemLike item) {
+        this(item, 1);
     }
 
     @Override

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
@@ -184,7 +185,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             return this.requirement(new QuorumRequirement(count, Arrays.stream(rawKeys).map(k -> new ResearchRequirement(new ResearchEntryKey(k))).toArray(AbstractRequirement<?>[]::new)));
         }
         
-        public Builder requiredMaterialCountOverride(int value) {
+        public Builder materialCountOverride(int value) {
             this.requiredMaterialCountOverride = OptionalInt.of(value);
             return this;
         }
@@ -199,8 +200,8 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             return this;
         }
         
-        public Builder aidBlock(ResourceLocation aid) {
-            this.aidBlocks.add(aid);
+        public Builder aid(Block block) {
+            this.aidBlocks.add(ForgeRegistries.BLOCKS.getKey(Preconditions.checkNotNull(block)));
             return this;
         }
         
