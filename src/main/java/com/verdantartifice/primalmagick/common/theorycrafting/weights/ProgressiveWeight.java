@@ -3,14 +3,19 @@ package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import javax.annotation.Nonnull;
+
+import org.apache.commons.lang3.mutable.MutableDouble;
+
+import com.google.common.collect.ImmutableList;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 
 /**
@@ -18,103 +23,89 @@ import net.minecraft.world.entity.player.Player;
  * 
  * @author Daedalus4096
  */
-public class ProgressiveWeight implements AbstractWeightFunction {
-    public static final String TYPE = "progressive";
-    public static final IWeightFunctionSerializer<ProgressiveWeight> SERIALIZER = new Serializer();
-    
+public class ProgressiveWeight extends AbstractWeightFunction<ProgressiveWeight> {
+    public static final Codec<ProgressiveWeight> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.DOUBLE.fieldOf("startingWeight").forGetter(w -> w.startingWeight),
+            Modifier.CODEC.listOf().fieldOf("modifiers").forGetter(w -> w.modifiers)
+        ).apply(instance, ProgressiveWeight::new));
+
     private final double startingWeight;
     private final List<Modifier> modifiers;
     
     protected ProgressiveWeight(double startingWeight, List<Modifier> modifiers) {
         this.startingWeight = startingWeight;
-        this.modifiers = modifiers;
+        this.modifiers = ImmutableList.copyOf(modifiers);
+    }
+
+    @Override
+    protected WeightFunctionType<ProgressiveWeight> getType() {
+        return WeightFunctionTypesPM.PROGRESSIVE.get();
     }
 
     @Override
     public double getWeight(Player player) {
-        double retVal = this.startingWeight;
-        for (Modifier modifier : this.modifiers) {
-            if (modifier.researchKey().isKnownByStrict(player)) {
-                retVal += modifier.weightModifier();
-            }
-        }
-        return Math.max(0D, retVal);
+        MutableDouble retVal = new MutableDouble(this.startingWeight);
+        this.modifiers.stream().filter(m -> m.researchKey.isKnownBy(player)).forEach(m -> retVal.add(m.weightModifier()));
+        return Math.max(0D, retVal.doubleValue());
+    }
+    
+    @Nonnull
+    public static ProgressiveWeight fromNetworkInner(FriendlyByteBuf buf) {
+        double start = buf.readDouble();
+        List<Modifier> modifiers = buf.readList(Modifier::fromNetwork);
+        return new ProgressiveWeight(start, modifiers);
     }
 
     @Override
-    public String getFunctionType() {
-        return TYPE;
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeDouble(this.startingWeight);
+        buf.writeCollection(this.modifiers, (b, m) -> m.toNetwork(b));
     }
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public IWeightFunctionSerializer<ProgressiveWeight> getSerializer() {
-        return SERIALIZER;
-    }
-    
-    protected static record Modifier(SimpleResearchKey researchKey, double weightModifier) {
-        protected static final Serializer SERIALIZER = new Serializer();
+
+    protected static record Modifier(ResearchEntryKey researchKey, double weightModifier) {
+        public static final Codec<Modifier> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("researchKey").xmap(ResearchEntryKey::new, ResearchEntryKey::getRootKey).forGetter(Modifier::researchKey), 
+                Codec.DOUBLE.fieldOf("weightModifier").forGetter(Modifier::weightModifier)
+            ).apply(instance, Modifier::new));
         
-        protected static class Serializer {
-            public Modifier read(ResourceLocation templateId, JsonObject json) {
-                SimpleResearchKey key = SimpleResearchKey.parse(json.getAsJsonPrimitive("research_key").getAsString());
-                double value = json.getAsJsonPrimitive("weight_modifier").getAsDouble();
-                return new Modifier(key, value);
-            }
-
-            public Modifier fromNetwork(FriendlyByteBuf buf) {
-                SimpleResearchKey key = SimpleResearchKey.parse(buf.readUtf());
-                double value = buf.readDouble();
-                return new Modifier(key, value);
-            }
-
-            public void toNetwork(FriendlyByteBuf buf, Modifier modifier) {
-                buf.writeUtf(modifier.researchKey().toString());
-                buf.writeDouble(modifier.weightModifier());
-            }
+        public Modifier(ResourceKey<ResearchEntry> rawKey, double weightModifier) {
+            this(new ResearchEntryKey(rawKey), weightModifier);
+        }
+        
+        public static Modifier fromNetwork(FriendlyByteBuf buf) {
+            return new Modifier(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES), buf.readDouble());
+        }
+        
+        public void toNetwork(FriendlyByteBuf buf) {
+            buf.writeResourceKey(this.researchKey.getRootKey());
+            buf.writeDouble(this.weightModifier);
         }
     }
     
-    public static class Serializer implements IWeightFunctionSerializer<ProgressiveWeight> {
-        @Override
-        public ProgressiveWeight read(ResourceLocation templateId, JsonObject json) {
-            double start = json.getAsJsonPrimitive("starting_weight").getAsDouble();
-            
-            List<Modifier> modifiers = new ArrayList<>();
-            JsonArray modifiersArray = json.getAsJsonArray("modifiers");
-            for (JsonElement modifierElement : modifiersArray) {
-                try {
-                    JsonObject modifierObj = modifierElement.getAsJsonObject();
-                    modifiers.add(Modifier.SERIALIZER.read(templateId, modifierObj));
-                } catch (Exception e) {
-                    throw new JsonSyntaxException("Invalid modifier in weight function JSON for " + templateId.toString(), e);
-                }
-            }
-            
-            return new ProgressiveWeight(start, modifiers);
+    public static class Builder {
+        protected final double startingWeight;
+        protected final List<Modifier> modifiers = new ArrayList<>();
+        
+        public Builder(double startingWeight) {
+            this.startingWeight = startingWeight;
         }
-
-        @Override
-        public ProgressiveWeight fromNetwork(FriendlyByteBuf buf) {
-            double start = buf.readDouble();
-            
-            List<Modifier> modifiers = new ArrayList<>();
-            Modifier.Serializer modifierSerializer = new Modifier.Serializer();
-            int modifierCount = buf.readVarInt();
-            for (int index = 0; index < modifierCount; index++) {
-                modifiers.add(modifierSerializer.fromNetwork(buf));
-            }
-            
-            return new ProgressiveWeight(start, modifiers);
+        
+        public Builder modifier(ResourceKey<ResearchEntry> rawKey, double weightModifier) {
+            this.modifiers.add(new Modifier(rawKey, weightModifier));
+            return this;
         }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ProgressiveWeight weight) {
-            buf.writeDouble(weight.startingWeight);
-            buf.writeVarInt(weight.modifiers.size());
-            for (Modifier modifier : weight.modifiers) {
-                Modifier.SERIALIZER.toNetwork(buf, modifier);
+        
+        private void validate() {
+            if (this.startingWeight < 0) {
+                throw new IllegalStateException("Progressive weight start value must be non-negative");
+            } else if (this.modifiers.isEmpty()) {
+                throw new IllegalStateException("Progressive weight must have at least one modifier; did you mean to use a constant weight instead?");
             }
+        }
+        
+        public ProgressiveWeight build() {
+            this.validate();
+            return new ProgressiveWeight(this.startingWeight, this.modifiers);
         }
     }
 }

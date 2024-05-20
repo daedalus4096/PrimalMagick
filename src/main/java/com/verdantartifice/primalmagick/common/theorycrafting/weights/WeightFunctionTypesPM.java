@@ -22,6 +22,7 @@ public class WeightFunctionTypesPM {
     }
     
     public static final RegistryObject<WeightFunctionType<ConstantWeight>> CONSTANT = register("constant", ConstantWeight.CODEC, ConstantWeight::fromNetworkInner);
+    public static final RegistryObject<WeightFunctionType<ProgressiveWeight>> PROGRESSIVE = register("progressive", ProgressiveWeight.CODEC, ProgressiveWeight::fromNetworkInner);
 
     protected static <T extends AbstractWeightFunction<T>> RegistryObject<WeightFunctionType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new WeightFunctionType<T>(PrimalMagick.resource(id), codec, networkReader));
