@@ -38,10 +38,10 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
             AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ItemProjectMaterial::getRequirement)
         ).apply(instance, ItemProjectMaterial::new));
     
-    protected ItemStack stack;
-    protected boolean consumed;
-    protected boolean matchNBT;
-    protected int afterCrafting;
+    protected final ItemStack stack;
+    protected final boolean consumed;
+    protected final boolean matchNBT;
+    protected final int afterCrafting;
     
     protected ItemProjectMaterial(ItemStack stack, boolean consumed, boolean matchNBT, int afterCrafting, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         super(weight, bonusReward, requirement);
