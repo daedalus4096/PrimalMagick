@@ -1,18 +1,20 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
+import java.util.Optional;
 import java.util.Set;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import javax.annotation.Nonnull;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.capabilities.IPlayerKnowledge;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
@@ -22,45 +24,27 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ObservationProjectMaterial extends AbstractProjectMaterial {
-    public static final String TYPE = "observation";
-    public static final IProjectMaterialSerializer<ObservationProjectMaterial> SERIALIZER = new ObservationProjectMaterial.Serializer();
+public class ObservationProjectMaterial extends AbstractProjectMaterial<ObservationProjectMaterial> {
+    public static final Codec<ObservationProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ExtraCodecs.POSITIVE_INT.fieldOf("count").forGetter(ObservationProjectMaterial::getCount),
+            Codec.BOOL.fieldOf("consumed").forGetter(ObservationProjectMaterial::isConsumed),
+            Codec.DOUBLE.fieldOf("weight").forGetter(ObservationProjectMaterial::getWeight),
+            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ObservationProjectMaterial::getBonusReward),
+            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ObservationProjectMaterial::getRequirement)
+        ).apply(instance, ObservationProjectMaterial::new));
 
-    protected int count;
-    protected boolean consumed;
-
-    public ObservationProjectMaterial() {
-        this(0, true);
-    }
+    protected final int count;
+    protected final boolean consumed;
     
-    public ObservationProjectMaterial(int count) {
-        this(count, true);
-    }
-    
-    public ObservationProjectMaterial(int count, boolean consumed) {
-        super();
+    protected ObservationProjectMaterial(int count, boolean consumed, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        super(weight, bonusReward, requirement);
         this.count = count;
         this.consumed = consumed;
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.putInt("Count", this.count);
-        tag.putBoolean("Consumed", this.consumed);
-        return tag;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.count = nbt.getInt("Count");
-        this.consumed = nbt.getBoolean("Consumed");
-    }
-
-    @Override
-    protected String getMaterialType() {
-        return TYPE;
+    protected ProjectMaterialType<ObservationProjectMaterial> getType() {
+        return ProjectMaterialTypesPM.OBSERVATION.get();
     }
 
     @Override
@@ -75,28 +59,13 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
         return ResearchManager.addKnowledge(player, KnowledgeType.OBSERVATION, -1 * this.count * KnowledgeType.OBSERVATION.getProgression());
     }
     
-    @Override
-    public boolean isConsumed() {
-        return this.consumed;
+    public int getCount() {
+        return this.count;
     }
     
     @Override
-    public void toNetwork(FriendlyByteBuf buf) {
-        SERIALIZER.toNetwork(buf, this);
-    }
-
-    @Override
-    public AbstractProjectMaterial copy() {
-        ObservationProjectMaterial material = new ObservationProjectMaterial();
-        material.count = this.count;
-        material.consumed = this.consumed;
-        material.selected = this.selected;
-        material.weight = this.weight;
-        material.bonusReward = this.bonusReward;
-        if (this.requiredResearch != null) {
-            material.requiredResearch = this.requiredResearch.copy();
-        }
-        return material;
+    public boolean isConsumed() {
+        return this.consumed;
     }
     
     @Override
@@ -124,48 +93,42 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial {
         return true;
     }
 
-    public static class Serializer implements IProjectMaterialSerializer<ObservationProjectMaterial> {
+    @Nonnull
+    public static ObservationProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        return new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
+    }
+    
+    @Override
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeVarInt(this.count);
+        buf.writeBoolean(this.consumed);
+    }
+    
+    public static class Builder extends AbstractProjectMaterial.Builder<ObservationProjectMaterial, Builder> {
+        protected final int count;
+        protected boolean consumed = false;
+        
+        public Builder(int count) {
+            this.count = count;
+        }
+        
+        public Builder consumed() {
+            this.consumed = true;
+            return this;
+        }
+        
         @Override
-        public ObservationProjectMaterial read(ResourceLocation projectId, JsonObject json) {
-            int count = json.getAsJsonPrimitive("count").getAsInt();
-            if (count <= 0) {
-                throw new JsonSyntaxException("Invalid observation count in material JSON for project " + projectId.toString());
+        protected void validate() {
+            super.validate();
+            if (this.count <= 0) {
+                throw new IllegalStateException("Material count must be positive");
             }
-            
-            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
-            
-            ObservationProjectMaterial retVal = new ObservationProjectMaterial(count, consumed);
-            
-            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
-            if (json.has("bonus_reward")) {
-                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
-            }
-            if (json.has("required_research")) {
-                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
-            }
-            
-            return retVal;
         }
 
         @Override
-        public ObservationProjectMaterial fromNetwork(FriendlyByteBuf buf) {
-            ObservationProjectMaterial material = new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean());
-            material.setWeight(buf.readDouble());
-            material.setBonusReward(buf.readDouble());
-            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
-            if (research != null) {
-                material.setRequiredResearch(research);
-            }
-            return material;
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ObservationProjectMaterial material) {
-            buf.writeVarInt(material.count);
-            buf.writeBoolean(material.consumed);
-            buf.writeDouble(material.weight);
-            buf.writeDouble(material.bonusReward);
-            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
+        public ObservationProjectMaterial build() {
+            this.validate();
+            return new ObservationProjectMaterial(this.count, this.consumed, this.weight, this.bonusReward, this.getFinalRequirement());
         }
     }
 }
