@@ -20,7 +20,6 @@ import com.verdantartifice.primalmagick.common.network.packets.data.TileToServer
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.ManaSparklePacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.OfferingChannelPacket;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
@@ -118,7 +117,6 @@ public class PacketHandler {
             .messageBuilder(ScanEntityPacket.class, ScanEntityPacket.direction()).encoder(ScanEntityPacket::encode).decoder(ScanEntityPacket::decode).consumerMainThread(ScanEntityPacket::onMessage).add()
             .messageBuilder(PotionExplosionPacket.class, PotionExplosionPacket.direction()).encoder(PotionExplosionPacket::encode).decoder(PotionExplosionPacket::decode).consumerMainThread(PotionExplosionPacket::onMessage).add()
             .messageBuilder(UpdateAffinitiesPacket.class, UpdateAffinitiesPacket.direction()).encoder(UpdateAffinitiesPacket::encode).decoder(UpdateAffinitiesPacket::decode).consumerMainThread(UpdateAffinitiesPacket::onMessage).add()
-            .messageBuilder(UpdateTheorycraftingPacket.class, UpdateTheorycraftingPacket.direction()).encoder(UpdateTheorycraftingPacket::encode).decoder(UpdateTheorycraftingPacket::decode).consumerMainThread(UpdateTheorycraftingPacket::onMessage).add()
             .messageBuilder(SyncArcaneRecipeBookPacket.class, SyncArcaneRecipeBookPacket.direction()).encoder(SyncArcaneRecipeBookPacket::encode).decoder(SyncArcaneRecipeBookPacket::decode).consumerMainThread(SyncArcaneRecipeBookPacket::onMessage).add()
             .messageBuilder(PlaceArcaneRecipePacket.class, PlaceArcaneRecipePacket.direction()).encoder(PlaceArcaneRecipePacket::encode).decoder(PlaceArcaneRecipePacket::decode).consumerMainThread(PlaceArcaneRecipePacket::onMessage).add()
             .messageBuilder(PlaceGhostArcaneRecipePacket.class, PlaceGhostArcaneRecipePacket.direction()).encoder(PlaceGhostArcaneRecipePacket::encode).decoder(PlaceGhostArcaneRecipePacket::decode).consumerMainThread(PlaceGhostArcaneRecipePacket::onMessage).add()

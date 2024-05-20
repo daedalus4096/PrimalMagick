@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
@@ -11,30 +12,17 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.verdantartifice.primalmagick.common.research.IResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
-import com.verdantartifice.primalmagick.common.theorycrafting.materials.IProjectMaterialSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
-import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWeightFunction;
-import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunctionSerializer;
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -93,13 +81,15 @@ public record ProjectTemplate(ResourceLocation key, List<AbstractProjectMaterial
         // Randomly select materials to use from the bag of options, disallowing duplicates
         int attempts = 0;
         int maxMaterials = this.getRequiredMaterialCount(player);
-        List<AbstractProjectMaterial<?>> materials = new ArrayList<>();
+        List<MaterialInstance> materials = new ArrayList<>();
+        Set<AbstractProjectMaterial<?>> chosen = new HashSet<>();
         WeightedRandomBag<AbstractProjectMaterial<?>> options = this.getMaterialOptions(player);
         while (materials.size() < maxMaterials && attempts < 1000) {
             attempts++;
             AbstractProjectMaterial<?> material = options.getRandom(player.getRandom());
-            if (!materials.contains(material)) {
-                materials.add(material);
+            if (!chosen.contains(material)) {
+                chosen.add(material);
+                materials.add(new MaterialInstance(material));
             }
         }
         if (materials.size() < maxMaterials) {
@@ -108,7 +98,7 @@ public record ProjectTemplate(ResourceLocation key, List<AbstractProjectMaterial
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, foundAid);
+        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, Optional.ofNullable(foundAid));
     }
     
     protected int getRequiredMaterialCount(Player player) {
