@@ -12,9 +12,11 @@ import org.apache.commons.lang3.mutable.MutableDouble;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.config.Config;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -28,10 +30,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record Project(ResourceLocation templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
+public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
         Optional<ResourceLocation> aidBlock) {
     public static final Codec<Project> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("templateKey").forGetter(Project::templateKey),
+            ResourceKey.codec(RegistryKeysPM.PROJECT_TEMPLATES).fieldOf("templateKey").forGetter(Project::templateKey),
             MaterialInstance.CODEC.listOf().fieldOf("activeMaterials").forGetter(Project::activeMaterials),
             AbstractReward.CODEC.listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
             Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
@@ -41,12 +43,12 @@ public record Project(ResourceLocation templateKey, List<MaterialInstance> activ
     
     @Nonnull
     public String getNameTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "name");
+        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "name");
     }
     
     @Nonnull
     public String getTextTranslationKey() {
-        return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "text");
+        return String.join(".", "research_project", this.templateKey.location().getNamespace(), this.templateKey.location().getPath(), "text");
     }
 
     protected double getSuccessChancePerMaterial() {

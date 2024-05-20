@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
@@ -23,6 +24,8 @@ import com.verdantartifice.primalmagick.common.theorycrafting.weights.AbstractWe
 import com.verdantartifice.primalmagick.common.util.CodecUtils;
 import com.verdantartifice.primalmagick.common.util.WeightedRandomBag;
 
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -35,11 +38,10 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record ProjectTemplate(ResourceLocation key, List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
+public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
         OptionalInt requiredMaterialCountOverride, OptionalDouble baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
         Optional<AbstractWeightFunction<?>> weightFunction) {
     public static final Codec<ProjectTemplate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("key").forGetter(ProjectTemplate::key),
             AbstractProjectMaterial.CODEC.listOf().fieldOf("materialOptions").forGetter(ProjectTemplate::materialOptions),
             AbstractReward.CODEC.listOf().fieldOf("otherRewards").forGetter(ProjectTemplate::otherRewards),
             AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ProjectTemplate::requirement),
@@ -58,6 +60,13 @@ public record ProjectTemplate(ResourceLocation key, List<AbstractProjectMaterial
     public Project initialize(ServerPlayer player, Set<Block> nearby) {
         if (this.requirement.isPresent() && !this.requirement.get().isMetBy(player)) {
             // Fail initialization to prevent use if the player doesn't have the right research unlocked
+            return null;
+        }
+        
+        RegistryAccess registryAccess = player.level().registryAccess();
+        ResourceKey<ProjectTemplate> key = registryAccess.registryOrThrow(RegistryKeysPM.PROJECT_TEMPLATES).getResourceKey(this).orElse(null);
+        if (key == null) {
+            // If this isn't a registered project template, fail initialization to prevent use
             return null;
         }
         
@@ -98,7 +107,7 @@ public record ProjectTemplate(ResourceLocation key, List<AbstractProjectMaterial
         }
         
         // Create new initialized project
-        return new Project(this.key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, Optional.ofNullable(foundAid));
+        return new Project(key, materials, this.otherRewards, this.getBaseSuccessChance(player), this.rewardMultiplier, Optional.ofNullable(foundAid));
     }
     
     protected int getRequiredMaterialCount(Player player) {
