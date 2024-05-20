@@ -1,25 +1,24 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableDouble;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.registries.ForgeRegistries;
 
 /**
@@ -29,81 +28,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class Project implements INBTSerializable<CompoundTag> {
-    protected ResourceLocation templateKey;
-    protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();    // TODO Change to MaterialInstance list
-    protected List<AbstractReward> otherRewards = new ArrayList<>();
-    protected double baseSuccessChance;
-    protected double baseRewardMultiplier;
-    protected ResourceLocation aidBlock;
+public record Project(ResourceLocation templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
+        Optional<ResourceLocation> aidBlock) {
+    public static final Codec<Project> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ResourceLocation.CODEC.fieldOf("templateKey").forGetter(Project::templateKey),
+            MaterialInstance.CODEC.listOf().fieldOf("activeMaterials").forGetter(Project::activeMaterials),
+            AbstractReward.CODEC.listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
+            Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
+            Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
+            ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
+        ).apply(instance, Project::new));
     
-    public Project() {}
-    
-    public Project(@Nonnull ResourceLocation templateKey, @Nonnull List<AbstractProjectMaterial> materials, @Nonnull List<AbstractReward> otherRewards, double baseSuccessChance, 
-            double baseRewardMultiplier, @Nullable ResourceLocation aidBlock) {
-        this.templateKey = templateKey;
-        this.activeMaterials = materials;
-        this.otherRewards = otherRewards;
-        this.baseSuccessChance = baseSuccessChance;
-        this.baseRewardMultiplier = baseRewardMultiplier;
-        this.aidBlock = aidBlock;
-    }
-
-    @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag retVal = new CompoundTag();
-        retVal.putString("TemplateKey", this.templateKey.toString());
-        retVal.putDouble("BaseSuccessChance", this.baseSuccessChance);
-        retVal.putDouble("BaseRewardMultiplier", this.baseRewardMultiplier);
-        if (this.aidBlock != null) {
-            retVal.putString("AidBlock", this.aidBlock.toString());
-        }
-        
-        ListTag materialList = new ListTag();
-        for (AbstractProjectMaterial material : this.activeMaterials) {
-            materialList.add(material.serializeNBT());
-        }
-        retVal.put("Materials", materialList);
-        
-        ListTag rewardList = new ListTag();
-        for (AbstractReward reward : this.otherRewards) {
-            rewardList.add(reward.serializeNBT());
-        }
-        retVal.put("OtherRewards", rewardList);
-        
-        return retVal;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        this.templateKey = new ResourceLocation(nbt.getString("TemplateKey"));
-        this.baseSuccessChance = nbt.getDouble("BaseSuccessChance");
-        this.baseRewardMultiplier = nbt.getDouble("BaseRewardMultiplier");
-        
-        this.aidBlock = null;
-        if (nbt.contains("AidBlock")) {
-            this.aidBlock = new ResourceLocation(nbt.getString("AidBlock"));
-        }
-        
-        this.activeMaterials.clear();
-        ListTag materialList = nbt.getList("Materials", Tag.TAG_COMPOUND);
-        for (int index = 0; index < materialList.size(); index++) {
-            AbstractProjectMaterial material = ProjectFactory.getMaterialFromNBT(materialList.getCompound(index));
-            if (material != null) {
-                this.activeMaterials.add(material);
-            }
-        }
-        
-        this.otherRewards.clear();
-        ListTag rewardList = nbt.getList("OtherRewards", Tag.TAG_COMPOUND);
-        for (int index = 0; index < rewardList.size(); index++) {
-            AbstractReward reward = ProjectFactory.getRewardFromNBT(rewardList.getCompound(index));
-            if (reward != null) {
-                this.otherRewards.add(reward);
-            }
-        }
-    }
-
     @Nonnull
     public String getNameTranslationKey() {
         return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "name");
@@ -114,16 +49,6 @@ public class Project implements INBTSerializable<CompoundTag> {
         return String.join(".", "research_project", this.templateKey.getNamespace(), this.templateKey.getPath(), "text");
     }
 
-    @Nonnull
-    public List<AbstractProjectMaterial> getMaterials() {
-        return this.activeMaterials;
-    }
-    
-    @Nonnull
-    public List<AbstractReward> getOtherRewards() {
-        return this.otherRewards;
-    }
-    
     protected double getSuccessChancePerMaterial() {
         // A full complement of materials should always be enough to get the player to 100% success chance
         int materialCount = this.activeMaterials.size();
@@ -135,50 +60,32 @@ public class Project implements INBTSerializable<CompoundTag> {
     }
     
     public double getSuccessChance() {
-        double chance = this.baseSuccessChance;
-        double per = this.getSuccessChancePerMaterial();
-        for (AbstractProjectMaterial material : this.getMaterials()) {
-            if (material.isSelected()) {
-                chance += per;
-            }
-        }
-        return Mth.clamp(chance, 0.0D, 1.0D);
+        MutableDouble chance = new MutableDouble(this.baseSuccessChance);
+        final double per = this.getSuccessChancePerMaterial();
+        this.activeMaterials().stream().filter(m -> m.isSelected()).forEach($ -> chance.add(per));
+        return Mth.clamp(chance.doubleValue(), 0.0D, 1.0D);
     }
     
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
         // Determine satisfaction from selected materials
-        for (AbstractProjectMaterial material : this.getMaterials()) {
-            if (material.isSelected() && !material.isSatisfied(player, surroundings)) {
-                return false;
-            }
-        }
-        return true;
+        return !this.activeMaterials.stream().anyMatch(m -> m.isSelected() && m.getMaterialDefinition().isSatisfied(player, surroundings));
     }
     
     public boolean consumeSelectedMaterials(Player player) {
-        for (AbstractProjectMaterial material : this.getMaterials()) {
-            if (material.isSelected()) {
-                if (!material.consume(player)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return this.activeMaterials.stream().filter(m -> m.isSelected()).allMatch(m -> m.getMaterialDefinition().consume(player));
     }
     
     public int getTheoryPointReward() {
-        int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.getMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getBonusReward()).sum()));
-        TheorycraftSpeed modifier = Config.THEORYCRAFT_SPEED.get();
-        if (modifier == TheorycraftSpeed.SLOW) {
-            value /= 2;
-        } else if (modifier == TheorycraftSpeed.FAST) {
-            value *= 2;
-        }
-        return value;
+        int value = (int)(KnowledgeType.THEORY.getProgression() * (this.baseRewardMultiplier + this.activeMaterials().stream().filter(m -> m.isSelected()).mapToDouble(m -> m.getMaterialDefinition().getBonusReward()).sum()));
+        return switch (Config.THEORYCRAFT_SPEED.get()) {
+            case SLOW -> value / 2;
+            case FAST -> value * 2;
+            default -> value;
+        };
     }
     
     @Nullable
-    public Block getAidBlock() {
-        return this.aidBlock == null ? null : ForgeRegistries.BLOCKS.getValue(this.aidBlock);
+    public Optional<Block> getAidBlock() {
+        return this.aidBlock.map(loc -> ForgeRegistries.BLOCKS.getValue(loc));
     }
 }
