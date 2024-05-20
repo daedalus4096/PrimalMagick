@@ -15,6 +15,12 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ConstantWeightFunctionBuilder;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ExperienceMaterialBuilder;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ItemMaterialBuilder;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ItemTagMaterialBuilder;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ObservationMaterialBuilder;
+import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectBuilder;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -38,6 +44,11 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> ADVANCED_SPELLWORK = create("advanced_spellwork");
     public static final ResourceKey<ProjectTemplate> ADVANCED_WAND_TINKERING = create("advanced_wand_tinkering");
     public static final ResourceKey<ProjectTemplate> APIAMANCY = create("apiamancy");
+    public static final ResourceKey<ProjectTemplate> BEACON_EMANATIONS = create("beacon_emanations");
+    public static final ResourceKey<ProjectTemplate> BREWING_EXPERIMENTS = create("brewing_experiments");
+    public static final ResourceKey<ProjectTemplate> CONDUIT_FORCES = create("conduit_forces");
+    public static final ResourceKey<ProjectTemplate> DRACONIC_ENERGIES = create("draconic_energies");
+    public static final ResourceKey<ProjectTemplate> DRACONIC_MEMORIES = create("draconic_memories");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -161,6 +172,42 @@ public class ProjectTemplates {
                 .weightFunction(new ConstantWeight(5))
                 .material(ItemTagProjectMaterial.builder(ItemTags.SMALL_FLOWERS).consumed().weight(1).build())
                 .otherReward(new ItemReward(Items.HONEYCOMB, 3))
+                .build());
+        context.register(BEACON_EMANATIONS, ProjectTemplate.builder().aid(Blocks.BEACON).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(ItemTags.BEACON_PAYMENT_ITEMS).consumed().weight(1).build())
+                .build());
+        context.register(BREWING_EXPERIMENTS, ProjectTemplate.builder().rewardMultiplier(0.5D).requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(Items.BREWING_STAND).weight(5).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.CROPS_NETHER_WART).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.FERMENTED_SPIDER_EYE).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.DUSTS_GLOWSTONE).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.DUSTS_REDSTONE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SUGAR).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.RABBIT_FOOT).consumed().bonusReward(0.25D).weight(0.5D).build())
+                .material(ItemProjectMaterial.builder(Items.BLAZE_POWDER).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GLISTERING_MELON_SLICE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SPIDER_EYE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GHAST_TEAR).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.MAGMA_CREAM).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.PUFFERFISH).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_CARROT).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TURTLE_HELMET).consumed().bonusReward(0.25D).weight(0.5D).build())
+                .material(ItemProjectMaterial.builder(Items.PHANTOM_MEMBRANE).consumed().bonusReward(0.25D).weight(0.5D).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(3).build())
+                .build());
+        context.register(CONDUIT_FORCES, ProjectTemplate.builder().aid(Blocks.CONDUIT).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_PRISMARINE).consumed().weight(1).build())
+                .build());
+        context.register(DRACONIC_ENERGIES, ProjectTemplate.builder().aid(Blocks.DRAGON_EGG).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(1.0D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(Tags.Items.ENDER_PEARLS).consumed().weight(1).build())
+                .build());
+        context.register(DRACONIC_MEMORIES, ProjectTemplate.builder().aid(Blocks.DRAGON_HEAD).aid(Blocks.DRAGON_WALL_HEAD).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ExperienceProjectMaterial.builder(3).consumed().weight(1).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
