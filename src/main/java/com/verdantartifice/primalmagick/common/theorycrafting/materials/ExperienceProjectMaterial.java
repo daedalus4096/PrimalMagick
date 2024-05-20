@@ -10,6 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.Block;
  */
 public class ExperienceProjectMaterial extends AbstractProjectMaterial<ExperienceProjectMaterial> {
     public static final Codec<ExperienceProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
+            ExtraCodecs.POSITIVE_INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
             Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed),
             Codec.DOUBLE.fieldOf("weight").forGetter(ExperienceProjectMaterial::getWeight),
             Codec.DOUBLE.fieldOf("bonusReward").forGetter(ExperienceProjectMaterial::getBonusReward),
@@ -108,7 +109,16 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
         }
 
         @Override
+        protected void validate() {
+            super.validate();
+            if (this.levels <= 0) {
+                throw new IllegalStateException("Material levels must be positive");
+            }
+        }
+
+        @Override
         public ExperienceProjectMaterial build() {
+            this.validate();
             return new ExperienceProjectMaterial(this.levels, this.consumed, this.weight, this.bonusReward, this.getFinalRequirement());
         }
     }

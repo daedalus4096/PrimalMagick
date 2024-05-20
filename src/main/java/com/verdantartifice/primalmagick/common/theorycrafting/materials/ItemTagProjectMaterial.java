@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -138,5 +139,39 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         buf.writeResourceLocation(this.tag.location());
         buf.writeVarInt(this.quantity);
         buf.writeBoolean(this.consumed);
+    }
+    
+    public static class Builder extends AbstractProjectMaterial.Builder<ItemTagProjectMaterial, Builder> {
+        protected final TagKey<Item> tag;
+        protected int quantity = 1;
+        protected boolean consumed = false;
+        
+        public Builder(TagKey<Item> tag) {
+            this.tag = Preconditions.checkNotNull(tag);
+        }
+        
+        public Builder quantity(int quantity) {
+            this.quantity = quantity;
+            return this;
+        }
+        
+        public Builder consumed() {
+            this.consumed = true;
+            return this;
+        }
+
+        @Override
+        protected void validate() {
+            super.validate();
+            if (this.quantity <= 0) {
+                throw new IllegalStateException("Material quantity must be positive");
+            }
+        }
+
+        @Override
+        public ItemTagProjectMaterial build() {
+            this.validate();
+            return new ItemTagProjectMaterial(this.tag, this.quantity, this.consumed, this.weight, this.bonusReward, this.getFinalRequirement());
+        }
     }
 }

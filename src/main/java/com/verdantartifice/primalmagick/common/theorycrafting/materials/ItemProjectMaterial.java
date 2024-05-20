@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -137,11 +138,11 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
         protected int afterCrafting = 0;
         
         public Builder(ItemStack stack) {
-            this.stack = stack.copy();
+            this.stack = Preconditions.checkNotNull(stack).copy();
         }
         
         public Builder(ItemLike item, int count) {
-            this(new ItemStack(item.asItem(), count));
+            this(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
         }
         
         public Builder(ItemLike item) {
@@ -164,7 +165,16 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
         }
 
         @Override
+        protected void validate() {
+            super.validate();
+            if (this.afterCrafting < 0) {
+                throw new IllegalStateException("Material crafting minimum must be non-negative");
+            }
+        }
+
+        @Override
         public ItemProjectMaterial build() {
+            this.validate();
             return new ItemProjectMaterial(this.stack, this.consumed, this.matchNBT, this.afterCrafting, this.weight, this.bonusReward, this.getFinalRequirement());
         }
     }
