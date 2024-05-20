@@ -126,8 +126,7 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
     public interface Reader<T extends AbstractProjectMaterial<T>> extends Function4<FriendlyByteBuf, Double, Double, Optional<AbstractRequirement<?>>, T> {
     }
     
-    protected abstract static class Builder<T extends AbstractProjectMaterial<T>, U extends Builder<T, U>> {
-        // TODO Add parent builder reference
+    public abstract static class Builder<T extends AbstractProjectMaterial<T>, U extends Builder<T, U>> {
         protected double weight = 1D;
         protected double bonusReward = 0D;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();

@@ -90,12 +90,16 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
         buf.writeUtf(this.descTranslationKey);
     }
     
+    public static Builder builder(ResourceLocation lootTable) {
+        return new Builder(lootTable);
+    }
+    
     public static class Builder {
         protected final ResourceLocation lootTable;
         protected int pullCount = 1;
         protected String descTranslationKey = null;
         
-        public Builder(ResourceLocation lootTable) {
+        protected Builder(ResourceLocation lootTable) {
             this.lootTable = Preconditions.checkNotNull(lootTable);
         }
         

@@ -82,11 +82,15 @@ public class ProgressiveWeight extends AbstractWeightFunction<ProgressiveWeight>
         }
     }
     
+    public static Builder builder(double startingWeight) {
+        return new Builder(startingWeight);
+    }
+    
     public static class Builder {
         protected final double startingWeight;
         protected final List<Modifier> modifiers = new ArrayList<>();
         
-        public Builder(double startingWeight) {
+        protected Builder(double startingWeight) {
             this.startingWeight = startingWeight;
         }
         

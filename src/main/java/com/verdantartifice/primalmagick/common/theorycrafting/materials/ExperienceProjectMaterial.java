@@ -99,13 +99,21 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
         buf.writeBoolean(this.consumed);
     }
     
+    public static Builder builder(int levels) {
+        return new Builder(levels);
+    }
+    
     public static class Builder extends AbstractProjectMaterial.Builder<ExperienceProjectMaterial, Builder> {
         protected final int levels;
-        protected final boolean consumed;
+        protected boolean consumed = false;
         
-        public Builder(int levels, boolean consumed) {
+        protected Builder(int levels) {
             this.levels = levels;
-            this.consumed = consumed;
+        }
+        
+        public Builder consumed() {
+            this.consumed = true;
+            return this;
         }
 
         @Override

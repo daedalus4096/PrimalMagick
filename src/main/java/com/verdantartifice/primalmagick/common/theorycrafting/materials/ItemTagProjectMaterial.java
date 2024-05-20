@@ -141,12 +141,16 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
         buf.writeBoolean(this.consumed);
     }
     
+    public static Builder builder(TagKey<Item> tag) {
+        return new Builder(tag);
+    }
+    
     public static class Builder extends AbstractProjectMaterial.Builder<ItemTagProjectMaterial, Builder> {
         protected final TagKey<Item> tag;
         protected int quantity = 1;
         protected boolean consumed = false;
         
-        public Builder(TagKey<Item> tag) {
+        protected Builder(TagKey<Item> tag) {
             this.tag = Preconditions.checkNotNull(tag);
         }
         

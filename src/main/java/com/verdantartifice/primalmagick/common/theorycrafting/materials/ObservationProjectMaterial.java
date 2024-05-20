@@ -104,11 +104,15 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial<Observat
         buf.writeBoolean(this.consumed);
     }
     
+    public static Builder builder(int count) {
+        return new Builder(count);
+    }
+    
     public static class Builder extends AbstractProjectMaterial.Builder<ObservationProjectMaterial, Builder> {
         protected final int count;
         protected boolean consumed = false;
         
-        public Builder(int count) {
+        protected Builder(int count) {
             this.count = count;
         }
         

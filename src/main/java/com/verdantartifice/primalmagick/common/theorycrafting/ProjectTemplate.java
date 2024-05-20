@@ -15,7 +15,11 @@ import javax.annotation.Nullable;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
@@ -51,6 +55,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
             AbstractWeightFunction.CODEC.optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
         ).apply(instance, ProjectTemplate::new));
+    public static final int MAX_MATERIALS = 4;
     
     public double getWeight(Player player) {
         return this.weightFunction.map(func -> func.getWeight(player)).orElse(1D);
@@ -114,7 +119,7 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         return this.requiredMaterialCountOverride.orElseGet(() -> {
             // Get projects completed from stats and calculate based on that
             int completed = StatsManager.getValue(player, StatsPM.RESEARCH_PROJECTS_COMPLETED);
-            return Math.min(4, 1 + (completed / 5));
+            return Math.min(MAX_MATERIALS, 1 + (completed / 5));
         });
     }
     
@@ -135,5 +140,96 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
             }
         }
         return retVal;
+    }
+    
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    public static class Builder {
+        protected final List<AbstractProjectMaterial<?>> materialOptions = new ArrayList<>();
+        protected final List<AbstractReward<?>> otherRewards = new ArrayList<>();
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        protected OptionalInt requiredMaterialCountOverride = OptionalInt.empty();
+        protected OptionalDouble baseSuccessChanceOverride = OptionalDouble.empty();
+        protected double rewardMultiplier = 0.25D;
+        protected final List<ResourceLocation> aidBlocks = new ArrayList<>();
+        protected Optional<AbstractWeightFunction<?>> weightFunction = Optional.empty();
+        
+        protected Builder() {}
+        
+        public Builder material(AbstractProjectMaterial<?> material) {
+            this.materialOptions.add(material);
+            return this;
+        }
+        
+        public Builder otherReward(AbstractReward<?> reward) {
+            this.otherRewards.add(reward);
+            return this;
+        }
+        
+        public Builder requirement(AbstractRequirement<?> requirement) {
+            this.requirements.add(requirement);
+            return this;
+        }
+        
+        public Builder requiredResearch(ResourceKey<ResearchEntry> rawKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(rawKey)));
+        }
+        
+        public Builder requiredMaterialCountOverride(int value) {
+            this.requiredMaterialCountOverride = OptionalInt.of(value);
+            return this;
+        }
+        
+        public Builder baseSuccessChanceOverride(double value) {
+            this.baseSuccessChanceOverride = OptionalDouble.of(value);
+            return this;
+        }
+        
+        public Builder rewardMultiplier(double multiplier) {
+            this.rewardMultiplier = multiplier;
+            return this;
+        }
+        
+        public Builder aidBlock(ResourceLocation aid) {
+            this.aidBlocks.add(aid);
+            return this;
+        }
+        
+        public Builder weightFunction(AbstractWeightFunction<?> func) {
+            this.weightFunction = Optional.of(func);
+            return this;
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
+            } else {
+                return Optional.of(new AndRequirement(this.requirements));
+            }
+        }
+        
+        private void validate() {
+            if (this.materialOptions.size() < MAX_MATERIALS) {
+                throw new IllegalStateException("Project template must have at least " + MAX_MATERIALS + " material options");
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() > MAX_MATERIALS) {
+                throw new IllegalStateException("Project template material override must not be greater than " + MAX_MATERIALS);
+            } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() <= 0) {
+                throw new IllegalStateException("Project template material override must be positive");
+            } else if (this.baseSuccessChanceOverride.isPresent() && (this.baseSuccessChanceOverride.getAsDouble() < 0D || this.baseSuccessChanceOverride.getAsDouble() > 1D)) {
+                throw new IllegalStateException("Project template base success chance override must be between 0 and 1, inclusive");
+            } else if (this.rewardMultiplier <= 0D) {
+                throw new IllegalStateException("Project template reward multiplier must be positive");
+            }
+        }
+        
+        public ProjectTemplate build() {
+            this.validate();
+            return new ProjectTemplate(this.materialOptions, this.otherRewards, this.getFinalRequirement(), this.requiredMaterialCountOverride, this.baseSuccessChanceOverride,
+                    this.rewardMultiplier, this.aidBlocks, this.weightFunction);
+        }
     }
 }

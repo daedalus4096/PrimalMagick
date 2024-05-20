@@ -131,22 +131,26 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
         buf.writeVarInt(this.afterCrafting);
     }
     
+    public static Builder builder(ItemStack stack) {
+        return new Builder(stack);
+    }
+    
+    public static Builder builder(ItemLike item, int count) {
+        return builder(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
+    }
+    
+    public static Builder builder(ItemLike item) {
+        return builder(item, 1);
+    }
+    
     public static class Builder extends AbstractProjectMaterial.Builder<ItemProjectMaterial, Builder> {
         protected final ItemStack stack;
         protected boolean consumed = false;
         protected boolean matchNBT = false;
         protected int afterCrafting = 0;
         
-        public Builder(ItemStack stack) {
+        protected Builder(ItemStack stack) {
             this.stack = Preconditions.checkNotNull(stack).copy();
-        }
-        
-        public Builder(ItemLike item, int count) {
-            this(new ItemStack(Preconditions.checkNotNull(item).asItem(), count));
-        }
-        
-        public Builder(ItemLike item) {
-            this(item, 1);
         }
         
         public Builder consumed() {
