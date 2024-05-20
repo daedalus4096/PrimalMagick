@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.QuorumRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
@@ -175,6 +177,11 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         
         public Builder requiredResearch(ResourceKey<ResearchEntry> rawKey) {
             return this.requirement(new ResearchRequirement(new ResearchEntryKey(rawKey)));
+        }
+        
+        @SafeVarargs
+        public final Builder quorumResearch(int count, ResourceKey<ResearchEntry>... rawKeys) {
+            return this.requirement(new QuorumRequirement(count, Arrays.stream(rawKeys).map(k -> new ResearchRequirement(new ResearchEntryKey(k))).toArray(AbstractRequirement<?>[]::new)));
         }
         
         public Builder requiredMaterialCountOverride(int value) {
