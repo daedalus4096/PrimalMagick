@@ -15,12 +15,6 @@ import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ProgressiveWeight;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ConstantWeightFunctionBuilder;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ExperienceMaterialBuilder;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ItemMaterialBuilder;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ItemTagMaterialBuilder;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ObservationMaterialBuilder;
-import com.verdantartifice.primalmagick.datagen.theorycrafting.ProjectBuilder;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
