@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting;
+package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
 import java.util.Objects;
 import java.util.Set;
@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.theorycrafting.IProjectMaterialSerializer;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 

@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.theorycrafting.ObservationProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
 
 public class ObservationMaterialBuilder {
     protected final int count;

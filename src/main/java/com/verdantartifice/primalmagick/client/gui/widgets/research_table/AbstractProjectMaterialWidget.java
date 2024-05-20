@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
-import com.verdantartifice.primalmagick.common.theorycrafting.ItemTagProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
 import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
-import com.verdantartifice.primalmagick.common.theorycrafting.ItemTagProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;

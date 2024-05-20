@@ -20,6 +20,7 @@ import com.verdantartifice.primalmagick.common.research.IResearchKey;
 import com.verdantartifice.primalmagick.common.research.ResearchKeyFactory;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.IRewardSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.IWeightFunction;

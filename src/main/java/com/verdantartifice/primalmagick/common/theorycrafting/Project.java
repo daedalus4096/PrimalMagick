@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.config.Config;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.AbstractReward;
 
 import net.minecraft.nbt.CompoundTag;

@@ -22,9 +22,9 @@ import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.Co
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
-import com.verdantartifice.primalmagick.common.theorycrafting.AbstractProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;

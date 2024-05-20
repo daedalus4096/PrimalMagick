@@ -1,4 +1,4 @@
-package com.verdantartifice.primalmagick.common.theorycrafting;
+package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
 import java.util.Objects;
 import java.util.Set;
