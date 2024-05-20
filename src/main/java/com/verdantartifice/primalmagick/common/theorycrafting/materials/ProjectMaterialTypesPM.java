@@ -6,7 +6,6 @@ import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -21,9 +20,9 @@ public class ProjectMaterialTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<ProjectMaterialType<ExperienceProjectMaterial>> EXPERIENCE = register("experience", ExperienceProjectMaterial.CODEC, ExperienceProjectMaterial::fromNetwork);
+    public static final RegistryObject<ProjectMaterialType<ExperienceProjectMaterial>> EXPERIENCE = register("experience", ExperienceProjectMaterial.CODEC, ExperienceProjectMaterial::fromNetworkInner);
     
-    protected static <T extends AbstractProjectMaterial<T>> RegistryObject<ProjectMaterialType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
+    protected static <T extends AbstractProjectMaterial<T>> RegistryObject<ProjectMaterialType<T>> register(String id, Codec<T> codec, AbstractProjectMaterial.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new ProjectMaterialType<T>(PrimalMagick.resource(id), codec, networkReader));
     }
 }

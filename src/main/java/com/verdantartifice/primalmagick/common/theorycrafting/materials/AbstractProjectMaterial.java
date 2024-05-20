@@ -1,15 +1,23 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
+import com.mojang.datafixers.util.Function4;
 import com.mojang.serialization.Codec;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.AndRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -23,20 +31,24 @@ import net.minecraft.world.level.block.Block;
 public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<T>> {
     public static final Codec<AbstractProjectMaterial<?>> CODEC = ProjectMaterialTypesPM.TYPES.get().getCodec().dispatch("material_type", AbstractProjectMaterial::getType, ProjectMaterialType::codec);
     
-    protected boolean selected;
-    protected double weight;
-    protected double bonusReward;
-    protected CompoundResearchKey requiredResearch;
+    protected final double weight;
+    protected final double bonusReward;
+    protected final Optional<AbstractRequirement<?>> requirement;
     
-    protected AbstractProjectMaterial() {
-        this.selected = false;
+    protected AbstractProjectMaterial(double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        this.weight = weight;
+        this.bonusReward = bonusReward;
+        this.requirement = requirement;
     }
     
     protected abstract ProjectMaterialType<T> getType();
     
     public static AbstractProjectMaterial<?> fromNetwork(FriendlyByteBuf buf) {
         ResourceLocation typeId = buf.readResourceLocation();
-        return ProjectMaterialTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf);
+        double weight = buf.readDouble();
+        double bonusReward = buf.readDouble();
+        Optional<AbstractRequirement<?>> requirement = buf.readOptional(AbstractRequirement::fromNetwork);
+        return ProjectMaterialTypesPM.TYPES.get().getValue(typeId).networkReader().apply(buf, weight, bonusReward, requirement);
     }
     
     public void toNetwork(FriendlyByteBuf buf) {
@@ -70,10 +82,6 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
      */
     public abstract boolean isConsumed();
     
-    public boolean isSelected() {
-        return this.selected;
-    }
-    
     public double getWeight() {
         return this.weight;
     }
@@ -82,25 +90,9 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
         return this.bonusReward;
     }
     
-    @Nullable
-    public CompoundResearchKey getRequiredResearch() {
-        return this.requiredResearch;
-    }
-    
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-    
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-    
-    public void setBonusReward(double bonus) {
-        this.bonusReward = bonus;
-    }
-    
-    public void setRequiredResearch(@Nonnull CompoundResearchKey key) {
-        this.requiredResearch = key.copy();
+    @Nonnull
+    public Optional<AbstractRequirement<?>> getRequirement() {
+        return this.requirement;
     }
     
     public boolean isAllowedInProject(ServerPlayer player) {
@@ -108,18 +100,12 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
     }
     
     public boolean hasRequiredResearch(Player player) {
-        if (this.requiredResearch == null) {
-            return true;
-        } else {
-            return this.requiredResearch.isKnownByStrict(player);
-        }
+        return this.requirement.map(req -> req.isMetBy(player)).orElse(true);
     }
     
-    public abstract T copy();
-
     @Override
     public int hashCode() {
-        return Objects.hash(bonusReward, requiredResearch, selected, weight);
+        return Objects.hash(bonusReward, requirement, weight);
     }
 
     @Override
@@ -132,7 +118,62 @@ public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<
             return false;
         AbstractProjectMaterial<?> other = (AbstractProjectMaterial<?>) obj;
         return Double.doubleToLongBits(bonusReward) == Double.doubleToLongBits(other.bonusReward)
-                && Objects.equals(requiredResearch, other.requiredResearch) && selected == other.selected
+                && Objects.equals(requirement, other.requirement)
                 && Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight);
+    }
+    
+    @FunctionalInterface
+    public interface Reader<T extends AbstractProjectMaterial<T>> extends Function4<FriendlyByteBuf, Double, Double, Optional<AbstractRequirement<?>>, T> {
+    }
+    
+    protected abstract static class Builder<T extends AbstractProjectMaterial<T>, U extends Builder<T, U>> {
+        // TODO Add parent builder reference
+        protected double weight = 1D;
+        protected double bonusReward = 0D;
+        protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
+        
+        @SuppressWarnings("unchecked")
+        private U self() {
+            return (U)this;
+        }
+        
+        public U weight(double weight) {
+            this.weight = weight;
+            return this.self();
+        }
+        
+        public U bonusReward(double bonus) {
+            this.bonusReward = bonus;
+            return this.self();
+        }
+
+        public U requirement(AbstractRequirement<?> req) {
+            this.requirements.add(req);
+            return this.self();
+        }
+        
+        public U requiredResearch(ResourceKey<ResearchEntry> rawKey) {
+            return this.requirement(new ResearchRequirement(new ResearchEntryKey(rawKey)));
+        }
+        
+        protected Optional<AbstractRequirement<?>> getFinalRequirement() {
+            if (this.requirements.isEmpty()) {
+                return Optional.empty();
+            } else if (this.requirements.size() == 1) {
+                return Optional.of(this.requirements.get(0));
+            } else {
+                return Optional.of(new AndRequirement(this.requirements));
+            }
+        }
+        
+        protected void validate() {
+            if (this.weight <= 0D) {
+                throw new IllegalStateException("Material weight must be positive");
+            } else if (this.bonusReward < 0D) {
+                throw new IllegalStateException("Material bonus reward must be non-negative");
+            }
+        }
+        
+        public abstract T build();
     }
 }

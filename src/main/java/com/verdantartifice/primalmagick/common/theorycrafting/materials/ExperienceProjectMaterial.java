@@ -1,11 +1,13 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -20,22 +22,17 @@ import net.minecraft.world.level.block.Block;
 public class ExperienceProjectMaterial extends AbstractProjectMaterial<ExperienceProjectMaterial> {
     public static final Codec<ExperienceProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
-            Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed)
+            Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed),
+            Codec.DOUBLE.fieldOf("weight").forGetter(ExperienceProjectMaterial::getWeight),
+            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ExperienceProjectMaterial::getBonusReward),
+            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ExperienceProjectMaterial::getRequirement)
         ).apply(instance, ExperienceProjectMaterial::new));
 
-    protected int levels;
-    protected boolean consumed;
+    protected final int levels;
+    protected final boolean consumed;
     
-    public ExperienceProjectMaterial() {
-        this(0, true);
-    }
-    
-    public ExperienceProjectMaterial(int levels) {
-        this(levels, true);
-    }
-    
-    public ExperienceProjectMaterial(int levels, boolean consumed) {
-        super();
+    protected ExperienceProjectMaterial(int levels, boolean consumed, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        super(weight, bonusReward, requirement);
         this.levels = levels;
         this.consumed = consumed;
     }
@@ -66,20 +63,6 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
     }
 
     @Override
-    public ExperienceProjectMaterial copy() {
-        ExperienceProjectMaterial retVal = new ExperienceProjectMaterial();
-        retVal.levels = this.levels;
-        retVal.consumed = this.consumed;
-        retVal.selected = this.selected;
-        retVal.weight = this.weight;
-        retVal.bonusReward = this.bonusReward;
-        if (this.requiredResearch != null) {
-            retVal.requiredResearch = this.requiredResearch.copy();
-        }
-        return retVal;
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
@@ -105,13 +88,28 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
     }
 
     @Nonnull
-    public static ExperienceProjectMaterial fromNetwork(FriendlyByteBuf buf) {
-        return new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean());
+    public static ExperienceProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        return new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
     }
     
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeVarInt(this.levels);
         buf.writeBoolean(this.consumed);
+    }
+    
+    public static class Builder extends AbstractProjectMaterial.Builder<ExperienceProjectMaterial, Builder> {
+        protected final int levels;
+        protected final boolean consumed;
+        
+        public Builder(int levels, boolean consumed) {
+            this.levels = levels;
+            this.consumed = consumed;
+        }
+
+        @Override
+        public ExperienceProjectMaterial build() {
+            return new ExperienceProjectMaterial(this.levels, this.consumed, this.weight, this.bonusReward, this.getFinalRequirement());
+        }
     }
 }

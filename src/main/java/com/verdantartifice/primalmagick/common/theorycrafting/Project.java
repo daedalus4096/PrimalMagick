@@ -31,7 +31,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class Project implements INBTSerializable<CompoundTag> {
     protected ResourceLocation templateKey;
-    protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();
+    protected List<AbstractProjectMaterial> activeMaterials = new ArrayList<>();    // TODO Change to MaterialInstance list
     protected List<AbstractReward> otherRewards = new ArrayList<>();
     protected double baseSuccessChance;
     protected double baseRewardMultiplier;
