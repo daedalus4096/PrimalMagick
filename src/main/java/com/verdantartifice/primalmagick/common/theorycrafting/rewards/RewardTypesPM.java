@@ -22,6 +22,7 @@ public class RewardTypesPM {
     }
     
     public static final RegistryObject<RewardType<ExperienceReward>> EXPERIENCE = register("experience", ExperienceReward.CODEC, ExperienceReward::fromNetworkInner);
+    public static final RegistryObject<RewardType<ItemReward>> ITEM = register("item", ItemReward.CODEC, ItemReward::fromNetworkInner);
 
     protected static <T extends AbstractReward<T>> RegistryObject<RewardType<T>> register(String id, Codec<T> codec, FriendlyByteBuf.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new RewardType<T>(PrimalMagick.resource(id), codec, networkReader));

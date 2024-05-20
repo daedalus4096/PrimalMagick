@@ -2,16 +2,13 @@ package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -23,18 +20,20 @@ import net.minecraft.world.item.ItemStack;
  * 
  * @author Daedalus4096
  */
-public class ItemReward extends AbstractReward {
-    public static final String TYPE = "item";
-    public static final IRewardSerializer<ItemReward> SERIALIZER = new Serializer();
+public class ItemReward extends AbstractReward<ItemReward> {
+    public static final Codec<ItemReward> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ItemStack.CODEC.fieldOf("stack").forGetter(r -> r.stack)
+        ).apply(instance, ItemReward::new));
     
-    private ItemStack stack;
+    private final ItemStack stack;
     
-    public ItemReward() {
-        this.stack = ItemStack.EMPTY;
-    }
-    
-    protected ItemReward(@Nonnull ItemStack stack) {
+    public ItemReward(@Nonnull ItemStack stack) {
         this.stack = stack.copy();
+    }
+
+    @Override
+    protected RewardType<ItemReward> getType() {
+        return RewardTypesPM.ITEM.get();
     }
 
     @Override
@@ -59,48 +58,13 @@ public class ItemReward extends AbstractReward {
         return Component.translatable("label.primalmagick.research_table.reward", this.stack.getCount(), itemName);
     }
 
-    @Override
-    public String getRewardType() {
-        return TYPE;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public IRewardSerializer<ItemReward> getSerializer() {
-        return SERIALIZER;
+    @Nonnull
+    public static ItemReward fromNetworkInner(FriendlyByteBuf buf) {
+        return new ItemReward(buf.readItem());
     }
 
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.put("Stack", this.stack.save(new CompoundTag()));
-        return tag;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.stack = ItemStack.of(nbt.getCompound("Stack"));
-    }
-
-    public static class Serializer implements IRewardSerializer<ItemReward> {
-        @Override
-        public ItemReward read(ResourceLocation templateId, JsonObject json) {
-            ItemStack stack = ItemUtils.parseItemStack(json.getAsJsonPrimitive("stack").getAsString());
-            if (stack == null || stack.isEmpty()) {
-                throw new JsonSyntaxException("Invalid item stack for reward in project " + templateId.toString());
-            }
-            return new ItemReward(stack);
-        }
-
-        @Override
-        public ItemReward fromNetwork(FriendlyByteBuf buf) {
-            return new ItemReward(buf.readItem());
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ItemReward reward) {
-            buf.writeItemStack(reward.stack, false);
-        }
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeItemStack(this.stack, false);
     }
 }
