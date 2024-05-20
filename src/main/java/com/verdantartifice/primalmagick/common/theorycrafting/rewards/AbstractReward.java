@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.rewards;
 
+import com.mojang.serialization.Codec;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -11,6 +13,8 @@ import net.minecraft.server.level.ServerPlayer;
  * @author Daedalus4096
  */
 public abstract class AbstractReward<T extends AbstractReward<T>> {
+    public static final Codec<AbstractReward<?>> CODEC = RewardTypesPM.TYPES.get().getCodec().dispatch("reward_type", AbstractReward::getType, RewardType::codec);
+    
     public abstract void grant(ServerPlayer player);
     
     public abstract Component getDescription();

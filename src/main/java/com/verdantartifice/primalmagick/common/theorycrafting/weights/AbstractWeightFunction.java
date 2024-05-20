@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.weights;
 
+import com.mojang.serialization.Codec;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +12,8 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public abstract class AbstractWeightFunction<T extends AbstractWeightFunction<T>> {
+    public static final Codec<AbstractWeightFunction<?>> CODEC = WeightFunctionTypesPM.TYPES.get().getCodec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
+    
     public abstract double getWeight(Player player);
     
     protected abstract WeightFunctionType<T> getType();
