@@ -1,7 +1,6 @@
-package com.verdantartifice.primalmagick.common.theorycrafting;
+package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
 import com.google.gson.JsonObject;
-import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;

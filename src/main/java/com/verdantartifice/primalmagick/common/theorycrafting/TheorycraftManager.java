@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableMap;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.materials.IProjectMaterialSerializer;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;

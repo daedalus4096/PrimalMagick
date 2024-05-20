@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.theorycrafting.IProjectMaterialSerializer;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
 import net.minecraft.nbt.CompoundTag;
