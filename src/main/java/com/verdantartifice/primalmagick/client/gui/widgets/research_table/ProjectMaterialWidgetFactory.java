@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.Block;
  */
 public class ProjectMaterialWidgetFactory {
     @Nullable
-    public static AbstractProjectMaterialWidget<?> create(AbstractProjectMaterial material, int x, int y, Set<Block> surroundings) {
+    public static AbstractProjectMaterialWidget<?> create(AbstractProjectMaterial<?> material, int x, int y, Set<Block> surroundings) {
         if (material instanceof ItemProjectMaterial itemMaterial) {
             return new ItemProjectMaterialWidget(itemMaterial, x, y, surroundings);
         } else if (material instanceof ItemTagProjectMaterial itemTagMaterial) {

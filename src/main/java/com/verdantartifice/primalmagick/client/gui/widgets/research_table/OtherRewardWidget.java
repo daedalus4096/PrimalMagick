@@ -27,7 +27,7 @@ public class OtherRewardWidget extends AbstractWidget {
     protected static final ItemStack ICON_STACK = new ItemStack(Items.CHEST);
     protected static final Component HEADER = Component.translatable("label.primalmagick.research_table.reward.header");
     
-    public OtherRewardWidget(List<AbstractReward> rewards, int x, int y) {
+    public OtherRewardWidget(List<AbstractReward<?>> rewards, int x, int y) {
         super(x, y, 16, 16, Component.empty());
         List<Component> lines = new ArrayList<>();
         lines.add(HEADER);

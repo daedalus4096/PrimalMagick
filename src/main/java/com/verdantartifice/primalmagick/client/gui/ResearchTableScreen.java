@@ -22,6 +22,7 @@ import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.Co
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.SetProjectMaterialSelectionPacket;
 import com.verdantartifice.primalmagick.common.network.packets.theorycrafting.StartProjectPacket;
 import com.verdantartifice.primalmagick.common.research.KnowledgeType;
+import com.verdantartifice.primalmagick.common.theorycrafting.MaterialInstance;
 import com.verdantartifice.primalmagick.common.theorycrafting.Project;
 import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.AbstractProjectMaterial;
@@ -148,9 +149,9 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
     }
     
     public void setMaterialSelection(int index, boolean selected) {
-        if (this.project != null && index >= 0 && index < this.project.getMaterials().size()) {
+        if (this.project != null && index >= 0 && index < this.project.activeMaterials().size()) {
             // Update selection status on client and server side
-            this.project.getMaterials().get(index).setSelected(selected);
+            this.project.activeMaterials().get(index).setSelected(selected);
             PacketHandler.sendToServer(new SetProjectMaterialSelectionPacket(index, selected));
             
             // Trigger a button refresh to recalculate success chance
@@ -180,8 +181,8 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
             this.addRenderableWidget(new KnowledgeTotalWidget(this.leftPos + 203, this.topPos + 116, KnowledgeType.THEORY, OptionalInt.of(this.project.getTheoryPointReward())));
             
             // Render reward widget if non-theory rewards are present for this project
-            if (!this.project.getOtherRewards().isEmpty()) {
-                this.addRenderableWidget(new OtherRewardWidget(this.project.getOtherRewards(), this.leftPos + 203, this.topPos + 97));
+            if (!this.project.otherRewards().isEmpty()) {
+                this.addRenderableWidget(new OtherRewardWidget(this.project.otherRewards(), this.leftPos + 203, this.topPos + 97));
             }
             
             if (this.progressing) {
@@ -206,21 +207,21 @@ public class ResearchTableScreen extends AbstractContainerScreenPM<ResearchTable
                     }
                     
                     // Render unlock widget, if applicable
-                    if (this.project.getAidBlock() != null) {
-                        this.addRenderableWidget(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, this.project.getAidBlock()));
-                    }
+                    this.project.getAidBlock().ifPresent(aid -> {
+                        this.addRenderableWidget(new AidUnlockWidget(this.leftPos + 186, this.topPos + 9, aid));
+                    });
                     
                     // Render material widgets
-                    int materialCount = this.project.getMaterials().size();
+                    int materialCount = this.project.activeMaterials().size();
                     int startX = (152 - (38 * materialCount)) / 2;
                     for (int index = 0, x = startX; index < materialCount; index++, x += 38) {
                         // Render material checkbox
-                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
+                        MaterialInstance material = this.project.activeMaterials().get(index);
                         this.addRenderableWidget(new ProjectMaterialSelectionCheckbox(this.leftPos + 42 + x, this.topPos + 93, this, material.isSelected(), index));
                     }
                     for (int index = 0, x = startX; index < materialCount; index++, x += 38) {
                         // Render material widget
-                        AbstractProjectMaterial material = this.project.getMaterials().get(index);
+                        AbstractProjectMaterial<?> material = this.project.activeMaterials().get(index).getMaterialDefinition();
                         this.addRenderableWidget(ProjectMaterialWidgetFactory.create(material, this.leftPos + 58 + x, this.topPos + 93, surroundings));
                     }
                 });

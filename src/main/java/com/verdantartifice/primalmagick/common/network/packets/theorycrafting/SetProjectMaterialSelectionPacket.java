@@ -48,8 +48,8 @@ public class SetProjectMaterialSelectionPacket implements IMessageToServer {
         ServerPlayer player = ctx.getSender();
         PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
             Project project = knowledge.getActiveResearchProject();
-            if (project != null && message.index >= 0 && message.index < project.getMaterials().size()) {
-                project.getMaterials().get(message.index).setSelected(message.selected);    // No need to sync because the screen updated its end
+            if (project != null && message.index >= 0 && message.index < project.activeMaterials().size()) {
+                project.activeMaterials().get(message.index).setSelected(message.selected);    // No need to sync because the screen updated its end
             }
         });
     }

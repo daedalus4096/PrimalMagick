@@ -7,9 +7,7 @@ import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateAffinitiesPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateLinguisticsGridsPacket;
 import com.verdantartifice.primalmagick.common.network.packets.data.UpdateRuneEnchantmentsPacket;
-import com.verdantartifice.primalmagick.common.network.packets.data.UpdateTheorycraftingPacket;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
-import com.verdantartifice.primalmagick.common.theorycrafting.TheorycraftManager;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
@@ -36,7 +34,6 @@ public class DataEvents {
     
     protected static void syncToPlayer(ServerPlayer player) {
         PacketHandler.sendToPlayer(new UpdateAffinitiesPacket(AffinityManager.getInstance().getAllAffinities()), player);
-        PacketHandler.sendToPlayer(new UpdateTheorycraftingPacket(TheorycraftManager.getAllTemplates()), player);
         PacketHandler.sendToPlayer(new UpdateRuneEnchantmentsPacket(RuneManager.getAllDefinitions()), player);
         PacketHandler.sendToPlayer(new UpdateLinguisticsGridsPacket(LinguisticsManager.getAllGridDefinitions()), player);
     }

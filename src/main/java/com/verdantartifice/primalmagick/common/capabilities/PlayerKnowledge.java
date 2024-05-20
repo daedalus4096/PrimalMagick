@@ -103,7 +103,9 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize active research project, if any
         if (this.project != null) {
-            rootTag.put("project", this.project.serializeNBT());
+            Project.CODEC.encodeStart(NbtOps.INSTANCE, this.project)
+                .resultOrPartial(LOGGER::error)
+                .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
         }
         
         // Serialize last active grimoire topic, if any
