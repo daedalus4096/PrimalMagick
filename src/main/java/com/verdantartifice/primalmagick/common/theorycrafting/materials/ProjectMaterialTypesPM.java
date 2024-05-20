@@ -22,6 +22,7 @@ public class ProjectMaterialTypesPM {
     
     public static final RegistryObject<ProjectMaterialType<ExperienceProjectMaterial>> EXPERIENCE = register("experience", ExperienceProjectMaterial.CODEC, ExperienceProjectMaterial::fromNetworkInner);
     public static final RegistryObject<ProjectMaterialType<ItemProjectMaterial>> ITEM = register("item", ItemProjectMaterial.CODEC, ItemProjectMaterial::fromNetworkInner);
+    public static final RegistryObject<ProjectMaterialType<ItemTagProjectMaterial>> ITEM_TAG = register("item_tag", ItemTagProjectMaterial.CODEC, ItemTagProjectMaterial::fromNetworkInner);
     
     protected static <T extends AbstractProjectMaterial<T>> RegistryObject<ProjectMaterialType<T>> register(String id, Codec<T> codec, AbstractProjectMaterial.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new ProjectMaterialType<T>(PrimalMagick.resource(id), codec, networkReader));

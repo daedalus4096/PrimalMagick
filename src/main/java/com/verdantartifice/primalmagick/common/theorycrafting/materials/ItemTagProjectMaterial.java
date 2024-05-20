@@ -3,22 +3,23 @@ package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -30,58 +31,30 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class ItemTagProjectMaterial extends AbstractProjectMaterial {
-    public static final String TYPE = "tag";
-    public static final IProjectMaterialSerializer<ItemTagProjectMaterial> SERIALIZER = new ItemTagProjectMaterial.Serializer();
+public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProjectMaterial> {
+    public static final Codec<ItemTagProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(ItemTagProjectMaterial::getTag),
+            ExtraCodecs.POSITIVE_INT.fieldOf("quantity").forGetter(ItemTagProjectMaterial::getQuantity),
+            Codec.BOOL.fieldOf("consumed").forGetter(ItemTagProjectMaterial::isConsumed),
+            Codec.DOUBLE.fieldOf("weight").forGetter(ItemTagProjectMaterial::getWeight),
+            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemTagProjectMaterial::getBonusReward),
+            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ItemTagProjectMaterial::getRequirement)
+        ).apply(instance, ItemTagProjectMaterial::new));
     
-    protected TagKey<Item> tag;
-    protected int quantity;
-    protected boolean consumed;
+    protected final TagKey<Item> tag;
+    protected final int quantity;
+    protected final boolean consumed;
     
-    public ItemTagProjectMaterial() {
-        super();
-        this.tag = null;
-        this.quantity = -1;
-        this.consumed = false;
-    }
-    
-    public ItemTagProjectMaterial(@Nonnull TagKey<Item> tag, int quantity, boolean consumed) {
-        super();
+    protected ItemTagProjectMaterial(TagKey<Item> tag, int quantity, boolean consumed, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        super(weight, bonusReward, requirement);
         this.tag = tag;
         this.quantity = quantity;
         this.consumed = consumed;
     }
     
-    public ItemTagProjectMaterial(@Nonnull TagKey<Item> tag, boolean consumed) {
-        this(tag, 1, consumed);
-    }
-    
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        if (this.tag != null) {
-            tag.putString("TagName", this.tag.location().toString());
-        }
-        tag.putInt("Quantity", this.quantity);
-        tag.putBoolean("Consumed", this.consumed);
-        return tag;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        if (nbt.contains("TagName")) {
-            this.tag = ItemTags.create(new ResourceLocation(nbt.getString("TagName")));
-        } else {
-            this.tag = null;
-        }
-        this.quantity = nbt.getInt("Quantity");
-        this.consumed = nbt.getBoolean("Consumed");
-    }
-
-    @Override
-    protected String getMaterialType() {
-        return TYPE;
+    protected ProjectMaterialType<ItemTagProjectMaterial> getType() {
+        return ProjectMaterialTypesPM.ITEM_TAG.get();
     }
 
     @Override
@@ -125,26 +98,6 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
     }
 
     @Override
-    public void toNetwork(FriendlyByteBuf buf) {
-        SERIALIZER.toNetwork(buf, this);
-    }
-
-    @Override
-    public AbstractProjectMaterial copy() {
-        ItemTagProjectMaterial material = new ItemTagProjectMaterial();
-        material.tag = ItemTags.create(this.tag.location());
-        material.quantity = this.quantity;
-        material.consumed = this.consumed;
-        material.selected = this.selected;
-        material.weight = this.weight;
-        material.bonusReward = this.bonusReward;
-        if (this.requiredResearch != null) {
-            material.requiredResearch = this.requiredResearch.copy();
-        }
-        return material;
-    }
-
-    @Override
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
@@ -174,53 +127,16 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial {
             return false;
         return true;
     }
+
+    @Nonnull
+    public static ItemTagProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        return new ItemTagProjectMaterial(ItemTags.create(buf.readResourceLocation()), buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
+    }
     
-    public static class Serializer implements IProjectMaterialSerializer<ItemTagProjectMaterial> {
-        @Override
-        public ItemTagProjectMaterial read(ResourceLocation projectId, JsonObject json) {
-            String nameStr = json.getAsJsonPrimitive("name").getAsString();
-            if (nameStr == null) {
-                throw new JsonSyntaxException("Illegal tag name in material JSON for project " + projectId.toString());
-            }
-            ResourceLocation tagName = new ResourceLocation(nameStr);
-            TagKey<Item> tag = ItemTags.create(tagName);
-            
-            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
-            int quantity = json.getAsJsonPrimitive("quantity").getAsInt();
-            
-            ItemTagProjectMaterial retVal = new ItemTagProjectMaterial(tag, quantity, consumed);
-            
-            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
-            if (json.has("bonus_reward")) {
-                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
-            }
-            if (json.has("required_research")) {
-                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
-            }
-
-            return retVal;
-        }
-
-        @Override
-        public ItemTagProjectMaterial fromNetwork(FriendlyByteBuf buf) {
-            ItemTagProjectMaterial material = new ItemTagProjectMaterial(ItemTags.create(buf.readResourceLocation()), buf.readVarInt(), buf.readBoolean());
-            material.setWeight(buf.readDouble());
-            material.setBonusReward(buf.readDouble());
-            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
-            if (research != null) {
-                material.setRequiredResearch(research);
-            }
-            return material;
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ItemTagProjectMaterial material) {
-            buf.writeResourceLocation(material.tag.location());
-            buf.writeVarInt(material.quantity);
-            buf.writeBoolean(material.consumed);
-            buf.writeDouble(material.weight);
-            buf.writeDouble(material.bonusReward);
-            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
-        }
+    @Override
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeResourceLocation(this.tag.location());
+        buf.writeVarInt(this.quantity);
+        buf.writeBoolean(this.consumed);
     }
 }
