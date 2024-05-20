@@ -1,24 +1,20 @@
 package com.verdantartifice.primalmagick.common.theorycrafting.materials;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.util.InventoryUtils;
-import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -31,67 +27,33 @@ import net.minecraft.world.level.block.Block;
  * 
  * @author Daedalus4096
  */
-public class ItemProjectMaterial extends AbstractProjectMaterial {
-    protected static final Logger LOGGER = LogManager.getLogger();
-    
-    public static final String TYPE = "item";
-    public static final IProjectMaterialSerializer<ItemProjectMaterial> SERIALIZER = new ItemProjectMaterial.Serializer();
+public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMaterial> {
+    public static final Codec<ItemProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ItemStack.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
+            Codec.BOOL.fieldOf("consumed").forGetter(ItemProjectMaterial::isConsumed),
+            Codec.BOOL.fieldOf("matchNBT").forGetter(material -> material.matchNBT),
+            ExtraCodecs.NON_NEGATIVE_INT.fieldOf("afterCrafting").forGetter(ItemProjectMaterial::getAfterCrafting),
+            Codec.DOUBLE.fieldOf("weight").forGetter(ItemProjectMaterial::getWeight),
+            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemProjectMaterial::getBonusReward),
+            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ItemProjectMaterial::getRequirement)
+        ).apply(instance, ItemProjectMaterial::new));
     
     protected ItemStack stack;
     protected boolean consumed;
     protected boolean matchNBT;
     protected int afterCrafting;
     
-    public ItemProjectMaterial() {
-        super();
-        this.stack = ItemStack.EMPTY;
-        this.consumed = false;
-        this.matchNBT = false;
-        this.afterCrafting = 0;
-    }
-    
-    public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed, boolean matchNBT) {
-        super();
-        this.stack = stack;
+    protected ItemProjectMaterial(ItemStack stack, boolean consumed, boolean matchNBT, int afterCrafting, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        super(weight, bonusReward, requirement);
+        this.stack = stack.copy();
         this.consumed = consumed;
         this.matchNBT = matchNBT;
-        this.afterCrafting = 0;
-    }
-    
-    public ItemProjectMaterial(@Nonnull ItemStack stack, boolean consumed) {
-        this(stack, consumed, false);
-    }
-    
-    public ItemProjectMaterial(@Nonnull ItemLike item, boolean consumed, boolean matchNBT) {
-        this(new ItemStack(item), consumed, matchNBT);
-    }
-    
-    public ItemProjectMaterial(@Nonnull ItemLike item, boolean consumed) {
-        this(item, consumed, false);
+        this.afterCrafting = afterCrafting;
     }
     
     @Override
-    public CompoundTag serializeNBT() {
-        CompoundTag tag = super.serializeNBT();
-        tag.put("Stack", this.stack.save(new CompoundTag()));
-        tag.putBoolean("Consumed", this.consumed);
-        tag.putBoolean("MatchNBT", this.matchNBT);
-        tag.putInt("AfterCrafting", this.afterCrafting);
-        return tag;
-    }
-    
-    @Override
-    public void deserializeNBT(CompoundTag nbt) {
-        super.deserializeNBT(nbt);
-        this.stack = ItemStack.of(nbt.getCompound("Stack"));
-        this.consumed = nbt.getBoolean("Consumed");
-        this.matchNBT = nbt.getBoolean("MatchNBT");
-        this.afterCrafting = nbt.getInt("AfterCrafting");
-    }
-
-    @Override
-    protected String getMaterialType() {
-        return TYPE;
+    protected ProjectMaterialType<ItemProjectMaterial> getType() {
+        return ProjectMaterialTypesPM.ITEM.get();
     }
 
     @Override
@@ -129,34 +91,9 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
         return this.afterCrafting;
     }
     
-    public void setAfterCrafting(int after) {
-        this.afterCrafting = after;
-    }
-    
     @Override
     public boolean isAllowedInProject(ServerPlayer player) {
         return super.isAllowedInProject(player) && player.getStats().getValue(Stats.ITEM_CRAFTED.get(this.getItemStack().getItem())) >= this.getAfterCrafting();
-    }
-
-    @Override
-    public void toNetwork(FriendlyByteBuf buf) {
-        SERIALIZER.toNetwork(buf, this);
-    }
-
-    @Override
-    public AbstractProjectMaterial copy() {
-        ItemProjectMaterial material = new ItemProjectMaterial();
-        material.stack = this.stack.copy();
-        material.consumed = this.consumed;
-        material.matchNBT = this.matchNBT;
-        material.selected = this.selected;
-        material.weight = this.weight;
-        material.bonusReward = this.bonusReward;
-        material.afterCrafting = this.afterCrafting;
-        if (this.requiredResearch != null) {
-            material.requiredResearch = this.requiredResearch.copy();
-        }
-        return material;
     }
 
     @Override
@@ -180,55 +117,55 @@ public class ItemProjectMaterial extends AbstractProjectMaterial {
                 && ItemStack.matches(stack, other.stack);
     }
 
-    public static class Serializer implements IProjectMaterialSerializer<ItemProjectMaterial> {
-        @Override
-        public ItemProjectMaterial read(ResourceLocation projectId, JsonObject json) {
-            ItemStack stack = ItemUtils.parseItemStack(json.getAsJsonPrimitive("stack").getAsString());
-            if (stack == null || stack.isEmpty()) {
-                throw new JsonSyntaxException("Invalid item stack for material in project " + projectId.toString());
-            }
-            
-            boolean consumed = json.getAsJsonPrimitive("consumed").getAsBoolean();
-            boolean matchNbt = json.has("match_nbt") ? json.getAsJsonPrimitive("match_nbt").getAsBoolean() : false;
-            
-            ItemProjectMaterial retVal = new ItemProjectMaterial(stack, consumed, matchNbt);
-            
-            retVal.setWeight(json.getAsJsonPrimitive("weight").getAsDouble());
-            if (json.has("bonus_reward")) {
-                retVal.setBonusReward(json.getAsJsonPrimitive("bonus_reward").getAsDouble());
-            }
-            if (json.has("after_crafting")) {
-                retVal.setAfterCrafting(json.getAsJsonPrimitive("after_crafting").getAsInt());
-            }
-            if (json.has("required_research")) {
-                retVal.setRequiredResearch(CompoundResearchKey.parse(json.getAsJsonPrimitive("required_research").getAsString()));
-            }
-            
-            return retVal;
+    @Nonnull
+    public static ItemProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+        return new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), weight, bonusReward, requirement);
+    }
+    
+    @Override
+    protected void toNetworkInner(FriendlyByteBuf buf) {
+        buf.writeItemStack(this.stack, false);
+        buf.writeBoolean(this.consumed);
+        buf.writeBoolean(this.matchNBT);
+        buf.writeVarInt(this.afterCrafting);
+    }
+    
+    public static class Builder extends AbstractProjectMaterial.Builder<ItemProjectMaterial, Builder> {
+        protected final ItemStack stack;
+        protected boolean consumed = false;
+        protected boolean matchNBT = false;
+        protected int afterCrafting = 0;
+        
+        public Builder(ItemStack stack) {
+            this.stack = stack.copy();
+        }
+        
+        public Builder(ItemLike item, int count) {
+            this(new ItemStack(item.asItem(), count));
+        }
+        
+        public Builder(ItemLike item) {
+            this(item, 1);
+        }
+        
+        public Builder consumed() {
+            this.consumed = true;
+            return this;
+        }
+        
+        public Builder matchNBT() {
+            this.matchNBT = true;
+            return this;
+        }
+        
+        public Builder afterCrafting(int count) {
+            this.afterCrafting = count;
+            return this;
         }
 
         @Override
-        public ItemProjectMaterial fromNetwork(FriendlyByteBuf buf) {
-            ItemProjectMaterial material = new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean());
-            material.setWeight(buf.readDouble());
-            material.setBonusReward(buf.readDouble());
-            material.setAfterCrafting(buf.readVarInt());
-            CompoundResearchKey research = CompoundResearchKey.parse(buf.readUtf());
-            if (research != null) {
-                material.setRequiredResearch(research);
-            }
-            return material;
-        }
-
-        @Override
-        public void toNetwork(FriendlyByteBuf buf, ItemProjectMaterial material) {
-            buf.writeItemStack(material.stack, false);
-            buf.writeBoolean(material.consumed);
-            buf.writeBoolean(material.matchNBT);
-            buf.writeDouble(material.weight);
-            buf.writeDouble(material.bonusReward);
-            buf.writeVarInt(material.afterCrafting);
-            buf.writeUtf(material.requiredResearch == null ? "" : material.requiredResearch.toString());
+        public ItemProjectMaterial build() {
+            return new ItemProjectMaterial(this.stack, this.consumed, this.matchNBT, this.afterCrafting, this.weight, this.bonusReward, this.getFinalRequirement());
         }
     }
 }
