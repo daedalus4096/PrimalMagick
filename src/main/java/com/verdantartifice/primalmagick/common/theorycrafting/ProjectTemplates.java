@@ -69,6 +69,10 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> PORTAL_DETRITUS = create("portal_detritus");
     public static final ResourceKey<ProjectTemplate> PROSPEROUS_TRADE = create("prosperous_trade");
     public static final ResourceKey<ProjectTemplate> RAIDING_THE_RAIDERS = create("raiding_the_raiders");
+    public static final ResourceKey<ProjectTemplate> RECUPERATION = create("recuperation");
+    public static final ResourceKey<ProjectTemplate> REDSTONE_TINKERING = create("redstone_tinkering");
+    public static final ResourceKey<ProjectTemplate> RICH_TRADE = create("rich_trade");
+    public static final ResourceKey<ProjectTemplate> RITUAL_PRACTICE = create("ritual_practice");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -510,6 +514,77 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(Items.DARK_OAK_LOG, 16).consumed().weight(3).build())
                 .material(ItemProjectMaterial.builder(Items.CARVED_PUMPKIN).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_EMERALD).consumed().bonusReward(0.25D).weight(1).build())
+                .build());
+        context.register(RECUPERATION, ProjectTemplate.builder()
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.BEDS).weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.JUKEBOX).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BOOK).weight(2).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.FOOD_COOKED_BEEF).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.FOOD_BAKED_POTATO).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsForgeExt.MILK).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CAKE).consumed().bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ROSE_BUSH).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TNT).consumed().bonusReward(0.125D).weight(0.5D).build())
+                .build());
+        context.register(REDSTONE_TINKERING, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_MAGITECH)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.BASIC_MAGITECH, -1).modifier(ResearchEntries.EXPERT_MAGITECH, -1).modifier(ResearchEntries.MASTER_MAGITECH, -1).modifier(ResearchEntries.SUPREME_MAGITECH, -1).build())
+                .material(ItemProjectMaterial.builder(Items.DETECTOR_RAIL).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ACTIVATOR_RAIL).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DISPENSER).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DROPPER).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DAYLIGHT_DETECTOR).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.PISTON).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.HOPPER).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.REDSTONE_LAMP).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.STICKY_PISTON).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.COMPARATOR).weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.DUSTS_REDSTONE).quantity(4).consumed().weight(3).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
+        context.register(RICH_TRADE, ProjectTemplate.builder().rewardMultiplier(1D).requiredResearch(ResearchEntries.DISCOVER_VOID)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_EMERALD).quantity(4).consumed().bonusReward(1D).weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.SHIELD).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_CHESTPLATE).consumed().bonusReward(0.5D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DRIED_KELP_BLOCK, 2).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SWEET_BERRIES, 4).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ITEM_FRAME).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.BANNERS).consumed().weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.GLASS_BOTTLE, 3).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.CROPS_NETHER_WART).quantity(4).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_CARROT).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GLISTERING_MELON_SLICE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.PUFFERFISH).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.BOATS).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TRIPWIRE_HOOK, 2).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CROSSBOW).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.LEATHER_HORSE_ARMOR).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SADDLE).consumed().bonusReward(0.5D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CLOCK).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.NAME_TAG).consumed().bonusReward(0.5D).weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_QUARTZ).quantity(2).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.TERRACOTTA).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.PAINTING).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_AXE).consumed().bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_PICKAXE).consumed().bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_SWORD).consumed().bonusReward(0.25D).weight(1).build())
+                .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/rich_trade")).description("label.primalmagick.loot_table.rich_trade.desc").build())
+                .build());
+        context.register(RITUAL_PRACTICE, ProjectTemplate.builder()
+                .quorumResearch(2, ResearchEntries.MANAFRUIT, ResearchEntries.RITUAL_CANDLES, ResearchEntries.INCENSE_BRAZIER, ResearchEntries.DOWSING_ROD)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.EXPERT_RITUAL, -1).modifier(ResearchEntries.MASTER_RITUAL, -1).modifier(ResearchEntries.SUPREME_RITUAL, -2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RITUAL_ALTAR.get()).weight(10).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.OFFERING_PEDESTAL.get()).weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.REFINED_SALT.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.APPLE).consumed().requiredResearch(ResearchEntries.MANAFRUIT).weight(1).bonusReward(0.125D).build())
+                .material(ItemProjectMaterial.builder(Items.HONEY_BOTTLE).consumed().requiredResearch(ResearchEntries.MANAFRUIT).weight(1).bonusReward(0.125D).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MANA_SALTS.get()).consumed().requiredResearch(ResearchEntries.MANAFRUIT).weight(1).bonusReward(0.125D).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.RITUAL_CANDLES).requiredResearch(ResearchEntries.RITUAL_CANDLES).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.FLINT_AND_STEEL).requiredResearch(ResearchEntries.RITUAL_CANDLES).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.INCENSE_BRAZIER.get()).requiredResearch(ResearchEntries.INCENSE_BRAZIER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.INCENSE_STICK.get()).consumed().requiredResearch(ResearchEntries.INCENSE_BRAZIER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.DOWSING_ROD.get()).requiredResearch(ResearchEntries.DOWSING_ROD).weight(1).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
