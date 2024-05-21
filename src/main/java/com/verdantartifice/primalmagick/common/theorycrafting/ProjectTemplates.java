@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Experien
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemTagProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ObservationProjectMaterial;
+import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ExperienceReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.ItemReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.rewards.LootTableReward;
 import com.verdantartifice.primalmagick.common.theorycrafting.weights.ConstantWeight;
@@ -49,6 +50,10 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> ENCHANTING_STUDIES = create("enchanting_studies");
     public static final ResourceKey<ProjectTemplate> END_EXPEDITION = create("end_expedition");
     public static final ResourceKey<ProjectTemplate> ESSENCE_ANALYSIS = create("essence_analysis");
+    public static final ResourceKey<ProjectTemplate> EXPEDITION = create("expedition");
+    public static final ResourceKey<ProjectTemplate> HIT_THE_BOOKS = create("hit_the_books");
+    public static final ResourceKey<ProjectTemplate> MAGITECH_TINKERING = create("magitech_tinkering");
+    public static final ResourceKey<ProjectTemplate> MASTER_ENCHANTING_STUDIES = create("master_enchanting_studies");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -261,6 +266,59 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_INFERNAL).afterCrafting(5).bonusReward(0.125D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_VOID.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_VOID).afterCrafting(5).bonusReward(0.125D).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_HALLOWED.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_HALLOWED).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .build());
+        context.register(EXPEDITION, ProjectTemplate.builder()
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
+                .material(ItemProjectMaterial.builder(Items.IRON_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BOW).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ARROW, 4).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.IRON_CHESTPLATE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.MAP).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.COMPASS).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CLOCK).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CARTOGRAPHY_TABLE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CAMPFIRE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TORCH, 4).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BREAD).consumed().weight(1).build())
+                .build());
+        context.register(HIT_THE_BOOKS, ProjectTemplate.builder().aid(Blocks.BOOKSHELF).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(Items.BOOK).weight(1).build())
+                .otherReward(new ExperienceReward(5))
+                .build());
+        context.register(MAGITECH_TINKERING, ProjectTemplate.builder().rewardMultiplier(0.5D)
+                .quorumResearch(3, ResearchEntries.ARCANOMETER, ResearchEntries.CONCOCTING_TINCTURES, ResearchEntries.ENTROPY_SINK, ResearchEntries.AUTO_CHARGER, ResearchEntries.ESSENCE_TRANSMUTER, ResearchEntries.DISSOLUTION_CHAMBER, ResearchEntries.INFERNAL_FURNACE)
+                .weightFunction(ProgressiveWeight.builder(3).modifier(ResearchEntries.MASTER_MAGITECH, 2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MAGITECH_PARTS_BASIC.get()).consumed().bonusReward(0.125D).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).consumed().requiredResearch(ResearchEntries.EXPERT_MAGITECH).bonusReward(0.25D).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).consumed().requiredResearch(ResearchEntries.MASTER_MAGITECH).bonusReward(0.5D).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HONEY_EXTRACTOR.get()).requiredResearch(ResearchEntries.HONEY_EXTRACTOR).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ARCANOMETER.get()).requiredResearch(ResearchEntries.ARCANOMETER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.CONCOCTER.get()).requiredResearch(ResearchEntries.CONCOCTING_TINCTURES).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ENTROPY_SINK.get()).requiredResearch(ResearchEntries.ENTROPY_SINK).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.AUTO_CHARGER.get()).requiredResearch(ResearchEntries.AUTO_CHARGER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_TRANSMUTER.get()).requiredResearch(ResearchEntries.ESSENCE_TRANSMUTER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.DISSOLUTION_CHAMBER.get()).requiredResearch(ResearchEntries.DISSOLUTION_CHAMBER).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.INFERNAL_FURNACE.get()).requiredResearch(ResearchEntries.INFERNAL_FURNACE).weight(1).build())
+                .build());
+        context.register(MASTER_ENCHANTING_STUDIES, ProjectTemplate.builder().rewardMultiplier(1D)
+                .requiredResearch(ResearchEntries.MASTER_MANAWEAVING)
+                .requiredResearch(ResearchEntries.HEXIUM)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.ENCHANTING_TABLES).weight(5).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_LAPIS).quantity(3).consumed().weight(5).build())
+                .material(ExperienceProjectMaterial.builder(3).consumed().bonusReward(0.5D).weight(5).build())
+                .material(ItemProjectMaterial.builder(Items.BOOK).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_SWORD.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_PICKAXE.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_SHOVEL.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_AXE.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_HOE.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_HEAD.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_CHEST.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_LEGS.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEXIUM_FEET.get()).weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
