@@ -158,7 +158,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
             return this;
         }
         
-        public Builder matchNBT() {
+        public Builder matchNbt() {
             this.matchNBT = true;
             return this;
         }

@@ -20,7 +20,10 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
@@ -43,6 +46,9 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> CONDUIT_FORCES = create("conduit_forces");
     public static final ResourceKey<ProjectTemplate> DRACONIC_ENERGIES = create("draconic_energies");
     public static final ResourceKey<ProjectTemplate> DRACONIC_MEMORIES = create("draconic_memories");
+    public static final ResourceKey<ProjectTemplate> ENCHANTING_STUDIES = create("enchanting_studies");
+    public static final ResourceKey<ProjectTemplate> END_EXPEDITION = create("end_expedition");
+    public static final ResourceKey<ProjectTemplate> ESSENCE_ANALYSIS = create("essence_analysis");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -202,6 +208,59 @@ public class ProjectTemplates {
         context.register(DRACONIC_MEMORIES, ProjectTemplate.builder().aid(Blocks.DRAGON_HEAD).aid(Blocks.DRAGON_WALL_HEAD).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
                 .material(ExperienceProjectMaterial.builder(3).consumed().weight(1).build())
+                .build());
+        context.register(ENCHANTING_STUDIES, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_MANAWEAVING)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.EXPERT_MANAWEAVING, -1).modifier(ResearchEntries.MASTER_MANAWEAVING, -1).modifier(ResearchEntries.SUPREME_MANAWEAVING, -2).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.ENCHANTING_TABLES).weight(5).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_LAPIS).consumed().weight(5).build())
+                .material(ExperienceProjectMaterial.builder(1).consumed().bonusReward(0.125D).weight(5).build())
+                .material(ItemProjectMaterial.builder(Items.BOOK).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_PICKAXE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_SHOVEL).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_AXE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_HOE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_HELMET).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_CHESTPLATE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_LEGGINGS).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_BOOTS).weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
+        context.register(END_EXPEDITION, ProjectTemplate.builder().requiredResearch(ResearchEntries.DISCOVER_VOID).rewardMultiplier(1.0D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(Items.NETHERITE_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CROSSBOW).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ARROW, 32).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.NETHERITE_CHESTPLATE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.MAP).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CARTOGRAPHY_TABLE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TORCH, 32).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BREAD, 8).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.SLOW_FALLING)).consumed().bonusReward(0.5D).weight(1).matchNbt().build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.ENDER_PEARLS).quantity(4).consumed().bonusReward(0.5D).weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.ENDER_EYE).consumed().weight(1).build())
+                .build());
+        context.register(ESSENCE_ANALYSIS, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_ALCHEMY)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.CRYSTAL_SYNTHESIS, -2).modifier(ResearchEntries.CLUSTER_SYNTHESIS, -2).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_EARTH.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SEA.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SKY.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SUN.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_MOON.get()).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_BLOOD.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_BLOOD).afterCrafting(5).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).afterCrafting(5).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_VOID.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_VOID).afterCrafting(5).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_HALLOWED.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).afterCrafting(5).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_EARTH.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SEA.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SKY.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_SUN.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_MOON.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_BLOOD.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_BLOOD).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_INFERNAL).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_VOID.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_VOID).afterCrafting(5).bonusReward(0.125D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_SHARD_HALLOWED.get()).consumed().requiredResearch(ResearchEntries.SHARD_SYNTHESIS).requiredResearch(ResearchEntries.DISCOVER_HALLOWED).afterCrafting(5).bonusReward(0.125D).weight(1).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
