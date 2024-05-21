@@ -64,38 +64,6 @@ public class ProjectProvider implements DataProvider {
     protected void registerProjects(Consumer<IFinishedProject> consumer) {
         SimpleResearchKey shardSynthesis = ResearchNames.SHARD_SYNTHESIS.get().simpleKey();
         
-        ProjectBuilder.project("mundane_tinkering")
-            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier("BASIC_MAGITECH", -1).modifier("EXPERT_MAGITECH", -1).modifier("MASTER_MAGITECH", -1).modifier("SUPREME_MAGITECH", -1).build())
-            .material(ItemMaterialBuilder.item(Items.CRAFTING_TABLE, false).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(ItemTags.ANVIL, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.FURNACE, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.BLAST_FURNACE, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.LOOM, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.SMOKER, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.SMITHING_TABLE, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.STONECUTTER, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.GRINDSTONE, false).weight(1).build())
-            .material(ObservationMaterialBuilder.observation(1, true).weight(5).build())
-            .build(consumer);
-        ProjectBuilder.project("nether_expedition").requiredResearch(ResearchEntries.DISCOVER_INFERNAL).rewardMultiplier(0.5D)
-            .weightFunction(ProgressiveWeightFunctionBuilder.start(5).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
-            .material(ItemMaterialBuilder.item(Items.DIAMOND_SWORD, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.CROSSBOW, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.ARROW, 16, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.DIAMOND_CHESTPLATE, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.MAP, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.CARTOGRAPHY_TABLE, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.TORCH, 16, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.BREAD, 4, true).weight(1).build())
-            .material(ItemMaterialBuilder.item(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE), true).bonusReward(0.25D).weight(4).matchNbt().build())
-            .material(ItemTagMaterialBuilder.tag(ItemTagsForgeExt.MILK, true).weight(1).build())
-            .material(ItemTagMaterialBuilder.tag(Tags.Items.OBSIDIAN, 10, false).weight(1).build())
-            .material(ItemMaterialBuilder.item(Items.FLINT_AND_STEEL, false).weight(1).build())
-            .build(consumer);
-        ProjectBuilder.project("observation_analysis").aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
-            .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
-            .material(ObservationMaterialBuilder.observation(1, true).weight(1).build())
-            .build(consumer);
         ProjectBuilder.project("piglin_barter").requiredResearch(ResearchEntries.DISCOVER_INFERNAL).rewardMultiplier(1D)
             .weightFunction(ConstantWeightFunctionBuilder.weight(5).build())
             .material(ItemMaterialBuilder.item(Items.BELL, true).weight(0.5D).build())

@@ -3,9 +3,11 @@ package com.verdantartifice.primalmagick.common.theorycrafting;
 import java.util.stream.Stream;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.tags.ItemTagsForgeExt;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ExperienceProjectMaterial;
 import com.verdantartifice.primalmagick.common.theorycrafting.materials.ItemProjectMaterial;
@@ -58,6 +60,9 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> MASTER_RITUAL_PRACTICE = create("master_ritual_practice");
     public static final ResourceKey<ProjectTemplate> MASTER_RUNEWORK = create("master_runework");
     public static final ResourceKey<ProjectTemplate> MASTER_SPELLWORK = create("master_spellwork");
+    public static final ResourceKey<ProjectTemplate> MUNDANE_TINKERING = create("mundane_tinkering");
+    public static final ResourceKey<ProjectTemplate> NETHER_EXPEDITION = create("nether_expedition");
+    public static final ResourceKey<ProjectTemplate> OBSERVATION_ANALYSIS = create("observation_analysis");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -398,6 +403,38 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_CRYSTAL_INFERNAL.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_CRYSTAL_VOID.get()).consumed().requiredResearch(ResearchEntries.DISCOVER_VOID).weight(1).build())
                 .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
+        context.register(MUNDANE_TINKERING, ProjectTemplate.builder()
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.BASIC_MAGITECH, -1).modifier(ResearchEntries.EXPERT_MAGITECH, -1).modifier(ResearchEntries.MASTER_MAGITECH, -1).modifier(ResearchEntries.SUPREME_MAGITECH, -1).build())
+                .material(ItemProjectMaterial.builder(Items.CRAFTING_TABLE).weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.ANVIL).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.FURNACE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BLAST_FURNACE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.LOOM).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SMOKER).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SMITHING_TABLE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.STONECUTTER).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GRINDSTONE).weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
+        context.register(NETHER_EXPEDITION, ProjectTemplate.builder().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).rewardMultiplier(0.5D)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CROSSBOW).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ARROW, 16).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_CHESTPLATE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.MAP).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CARTOGRAPHY_TABLE).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TORCH, 16).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BREAD, 4).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.FIRE_RESISTANCE)).consumed().bonusReward(0.25D).weight(4).matchNbt().build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsForgeExt.MILK).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.OBSIDIAN).quantity(10).weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.FLINT_AND_STEEL).weight(1).build())
+                .build());
+        context.register(OBSERVATION_ANALYSIS, ProjectTemplate.builder().aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(1).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
