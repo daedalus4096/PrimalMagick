@@ -22,7 +22,9 @@ import com.verdantartifice.primalmagick.common.theorycrafting.weights.Progressiv
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -63,6 +65,10 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> MUNDANE_TINKERING = create("mundane_tinkering");
     public static final ResourceKey<ProjectTemplate> NETHER_EXPEDITION = create("nether_expedition");
     public static final ResourceKey<ProjectTemplate> OBSERVATION_ANALYSIS = create("observation_analysis");
+    public static final ResourceKey<ProjectTemplate> PIGLIN_BARTER = create("piglin_barter");
+    public static final ResourceKey<ProjectTemplate> PORTAL_DETRITUS = create("portal_detritus");
+    public static final ResourceKey<ProjectTemplate> PROSPEROUS_TRADE = create("prosperous_trade");
+    public static final ResourceKey<ProjectTemplate> RAIDING_THE_RAIDERS = create("raiding_the_raiders");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
@@ -435,6 +441,75 @@ public class ProjectTemplates {
         context.register(OBSERVATION_ANALYSIS, ProjectTemplate.builder().aid(BlocksPM.ANALYSIS_TABLE.get()).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
                 .weightFunction(new ConstantWeight(5))
                 .material(ObservationProjectMaterial.builder(1).consumed().weight(1).build())
+                .build());
+        context.register(PIGLIN_BARTER, ProjectTemplate.builder().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).rewardMultiplier(1D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(Items.BELL).consumed().weight(0.5D).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.STORAGE_BLOCKS_GOLD).consumed().bonusReward(0.5D).weight(0.5D).build())
+                .material(ItemProjectMaterial.builder(Items.RAW_GOLD_BLOCK).consumed().bonusReward(0.5D).weight(0.5D).build())
+                .material(ItemProjectMaterial.builder(Items.CLOCK).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GILDED_BLACKSTONE).consumed().weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.GLISTERING_MELON_SLICE).consumed().weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.RAW_GOLD).consumed().weight(2).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.INGOTS_GOLD).consumed().weight(5).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_APPLE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_AXE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_BOOTS).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_CARROT).consumed().weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_CHESTPLATE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_HELMET).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_HOE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_HORSE_ARMOR).consumed().bonusReward(0.5D).weight(0.5D).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_LEGGINGS).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_PICKAXE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_SHOVEL).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GOLDEN_SWORD).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.LIGHT_WEIGHTED_PRESSURE_PLATE).consumed().weight(1).build())
+                .otherReward(LootTableReward.builder(new ResourceLocation("gameplay/piglin_bartering")).description("label.primalmagick.loot_table.piglin_bartering.desc").build())
+                .build());
+        context.register(PORTAL_DETRITUS, ProjectTemplate.builder().aid(Blocks.NETHER_PORTAL).materialCountOverride(1).baseSuccessChanceOverride(0.5D).rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(ItemsPM.MAGNIFYING_GLASS.get()).weight(1).build())
+                .build());
+        context.register(PROSPEROUS_TRADE, ProjectTemplate.builder().rewardMultiplier(0.5D).requiredResearch(ResearchEntries.DISCOVER_INFERNAL)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_EMERALD).quantity(2).consumed().bonusReward(0.5D).weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.LAVA_BUCKET).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_DIAMOND).consumed().bonusReward(0.25D).weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.COAL, 2).consumed().weight(2).build())
+                .material(ItemProjectMaterial.builder(Items.MUTTON, 2).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BEEF, 2).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.COMPASS).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.INGOTS_GOLD).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GLOWSTONE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.MELON).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CAKE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SALMON, 2).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.TROPICAL_FISH).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.FLINT, 3).consumed().weight(3).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.FEATHERS).quantity(3).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.RABBIT_HIDE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.INK_SAC).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.WRITABLE_BOOK).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.GRANITE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.ANDESITE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.DIORITE).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.SHEARS).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTags.BEDS).consumed().weight(1).build())
+                .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/prosperous_trade")).description("label.primalmagick.loot_table.prosperous_trade.desc").build())
+                .build());
+        context.register(RAIDING_THE_RAIDERS, ProjectTemplate.builder().rewardMultiplier(0.5D)
+                .weightFunction(new ConstantWeight(5))
+                .material(ItemProjectMaterial.builder(Raid.getLeaderBannerInstance()).consumed().matchNbt().bonusReward(0.25D).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.BLOODY_FLESH.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.CROSSBOW).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.IRON_SWORD).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.IRON_AXE).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.ARROW, 4).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.GLASS_BOTTLE, 3).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.DARK_OAK_LOG, 16).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.CARVED_PUMPKIN).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_EMERALD).consumed().bonusReward(0.25D).weight(1).build())
                 .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
