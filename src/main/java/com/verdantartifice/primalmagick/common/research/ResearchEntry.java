@@ -42,15 +42,15 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, String nameTranslationKey, Optional<Icon> iconOpt, List<ResearchEntryKey> parents,
-        boolean hidden, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<Icon> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
+        boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static final Codec<ResearchEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
             ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
-            Codec.STRING.fieldOf("nameTranslationKey").forGetter(ResearchEntry::nameTranslationKey),
             Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
             ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
             Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
+            Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
             Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
             Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
             ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
@@ -62,25 +62,25 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
         Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
-        String nameTranslationKey = buf.readUtf();
         Optional<Icon> iconOpt = buf.readOptional(Icon::fromNetwork);
         List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
         boolean hidden = buf.readBoolean();
+        boolean hasHint = buf.readBoolean();
         boolean internal = buf.readBoolean();
         boolean finaleExempt = buf.readBoolean();
         List<ResearchDisciplineKey> finales = buf.readList(ResearchDisciplineKey::fromNetwork);
         List<ResearchStage> stages = buf.readList(ResearchStage::fromNetwork);
         List<ResearchAddendum> addenda = buf.readList(ResearchAddendum::fromNetwork);
-        return new ResearchEntry(key, disciplineKeyOpt, nameTranslationKey, iconOpt, parents, hidden, internal, finaleExempt, finales, stages, addenda);
+        return new ResearchEntry(key, disciplineKeyOpt, iconOpt, parents, hidden, hasHint, internal, finaleExempt, finales, stages, addenda);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
         entry.key.toNetwork(buf);
         buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
-        buf.writeUtf(entry.nameTranslationKey);
         buf.writeOptional(entry.iconOpt, Icon::toNetwork);
         buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
+        buf.writeBoolean(entry.hasHint);
         buf.writeBoolean(entry.internal);
         buf.writeBoolean(entry.finaleExempt);
         buf.writeCollection(entry.finales, (b, f) -> f.toNetwork(b));
@@ -90,6 +90,18 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     
     public static Builder builder(ResourceKey<ResearchEntry> key) {
         return new Builder(key);
+    }
+    
+    public String getNameTranslationKey() {
+        return String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath(), "title");
+    }
+    
+    public Optional<String> getHintTranslationKey() {
+        if (this.hasHint) {
+            return Optional.of(String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath(), "hint"));
+        } else {
+            return Optional.empty();
+        }
     }
     
     public boolean isForDiscipline(ResearchDisciplineKey discipline) {
@@ -160,7 +172,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         RegistryAccess registryAccess = player.level().registryAccess();
         
         ResearchStage currentStage = null;
-        int currentStageNum = knowledge.getResearchStage(key);
+        int currentStageNum = knowledge.getResearchStage(this.key);
         if (currentStageNum >= 0) {
             currentStage = this.stages().get(Math.min(currentStageNum, this.stages().size() - 1));
         }
@@ -227,10 +239,10 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         protected final String modId;
         protected final ResearchEntryKey key;
         protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
-        protected final String nameTranslationKey;
         protected Optional<Icon> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
+        protected boolean hasHint = false;
         protected boolean internal = false;
         protected boolean finaleExempt = false;
         protected final List<ResearchDisciplineKey> finales = new ArrayList<>();
@@ -240,7 +252,6 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         public Builder(String modId, ResearchEntryKey key) {
             this.modId = Preconditions.checkNotNull(modId);
             this.key = Preconditions.checkNotNull(key);
-            this.nameTranslationKey = String.join(".", "research", modId.toLowerCase(), this.key.getRootKey().location().getPath().toLowerCase(), "title");
         }
         
         public Builder(String modId, ResourceKey<ResearchEntry> rawKey) {
@@ -288,6 +299,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
             return this;
         }
         
+        public Builder hasHint() {
+            this.hasHint = true;
+            return this;
+        }
+        
         public Builder internal() {
             this.internal = true;
             return this;
@@ -327,7 +343,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         
         public ResearchEntry build() {
             this.validate();
-            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.nameTranslationKey, this.iconOpt, this.parents, this.hidden, this.internal, this.finaleExempt, this.finales,
+            return new ResearchEntry(this.key, this.disciplineKeyOpt, this.iconOpt, this.parents, this.hidden, this.hasHint, this.internal, this.finaleExempt, this.finales,
                     this.stageBuilders.stream().map(b -> b.build()).toList(), this.addendumBuilders.stream().map(b -> b.build()).toList());
         }
     }

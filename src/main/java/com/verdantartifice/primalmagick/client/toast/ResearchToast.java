@@ -41,7 +41,7 @@ public class ResearchToast implements Toast {
         guiGraphics.drawString(mc.font, titleText, 6, 7, this.isComplete ? Sources.VOID.getColor() : Sources.INFERNAL.getColor(), false);
         
         // Render the description of the completed research
-        Component descText = Component.translatable(this.entry.nameTranslationKey());
+        Component descText = Component.translatable(this.entry.getNameTranslationKey());
         float width = mc.font.width(descText.getString());
         if (width > 148.0F) {
             // Scale down the research description to make it fit, if needed

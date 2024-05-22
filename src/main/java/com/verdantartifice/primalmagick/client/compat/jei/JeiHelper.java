@@ -166,7 +166,7 @@ public class JeiHelper implements IModPlugin {
             if (key instanceof ResearchEntryKey entryKey) {
                 ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
                 if (entry != null) {
-                    MutableComponent comp = Component.translatable(entry.nameTranslationKey());
+                    MutableComponent comp = Component.translatable(entry.getNameTranslationKey());
                     entry.disciplineKeyOpt().ifPresent(discKey -> {
                         ResearchDiscipline disc = ResearchDisciplines.getDiscipline(registryAccess, discKey);
                         if (disc != null) {

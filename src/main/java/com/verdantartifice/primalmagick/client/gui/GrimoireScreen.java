@@ -309,7 +309,7 @@ public class GrimoireScreen extends Screen {
     private List<ResearchEntry> buildEntryList(ResearchDiscipline discipline) {
         // Gather a list of all research entries for the given discipline, sorted by their display names
         return discipline.getEntryStream(this.minecraft.level.registryAccess())
-                .sorted(Comparator.comparing(e -> (Component.translatable(e.nameTranslationKey())).getString()))
+                .sorted(Comparator.comparing(e -> (Component.translatable(e.getNameTranslationKey())).getString()))
                 .collect(Collectors.toList());
     }
     

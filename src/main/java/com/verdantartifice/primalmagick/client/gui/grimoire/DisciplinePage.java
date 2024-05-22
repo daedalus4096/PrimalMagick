@@ -68,7 +68,7 @@ public class DisciplinePage extends AbstractPage {
         for (Object obj : this.getContents()) {
             if (obj instanceof ResearchEntry entry) {
                 // If the current content object is a research entry, add a button for it to the screen
-                Component text = Component.translatable(entry.nameTranslationKey());
+                Component text = Component.translatable(entry.getNameTranslationKey());
                 if (entry.isAvailable(mc.player)) {
                     screen.addWidgetToScreen(new EntryButton(x + 12 + (side * 140), y, text, screen, entry, true));
                 } else {

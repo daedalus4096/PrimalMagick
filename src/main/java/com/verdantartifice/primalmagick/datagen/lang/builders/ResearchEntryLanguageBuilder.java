@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class ResearchEntryLanguageBuilder extends AbstractLanguageBuilder<ResearchEntry, ResearchEntryLanguageBuilder> {
     public ResearchEntryLanguageBuilder(ResearchEntry entry, Consumer<ILanguageBuilder> untracker, BiConsumer<String, String> adder) {
-        super(entry, entry::nameTranslationKey, untracker, adder);
+        super(entry, entry::getNameTranslationKey, untracker, adder);
     }
 
     @Override

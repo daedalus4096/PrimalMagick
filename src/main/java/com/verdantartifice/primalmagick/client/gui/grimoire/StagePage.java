@@ -52,7 +52,7 @@ public class StagePage extends AbstractPage {
     
     @Override
     protected Component getTitleText() {
-        return this.parent == null ? Component.empty() : Component.translatable(this.parent.nameTranslationKey());
+        return this.parent == null ? Component.empty() : Component.translatable(this.parent.getNameTranslationKey());
     }
     
     @Override

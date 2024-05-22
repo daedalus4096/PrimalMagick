@@ -42,7 +42,7 @@ public class UpcomingEntryWidget extends AbstractWidget {
             if (parentEntry == null && !parent.isKnownBy(mc.player)) {
                 tooltip.append(CommonComponents.NEW_LINE).append(Component.translatable("research.primalmagick." + parent.getRootKey() + ".text"));
             } else if (parentEntry != null && !parentEntry.key().isKnownBy(mc.player)) {
-                MutableComponent comp = Component.translatable(parentEntry.nameTranslationKey());
+                MutableComponent comp = Component.translatable(parentEntry.getNameTranslationKey());
                 if (!this.entry.disciplineKeyOpt().equals(parentEntry.disciplineKeyOpt()) && parentEntry.disciplineKeyOpt().isPresent()) {
                     ResearchDiscipline disc = ResearchDisciplines.getDiscipline(mc.level.registryAccess(), parentEntry.disciplineKeyOpt().get());
                     if (disc != null) {
