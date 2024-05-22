@@ -73,7 +73,10 @@ public class ProjectTemplates {
     public static final ResourceKey<ProjectTemplate> REDSTONE_TINKERING = create("redstone_tinkering");
     public static final ResourceKey<ProjectTemplate> RICH_TRADE = create("rich_trade");
     public static final ResourceKey<ProjectTemplate> RITUAL_PRACTICE = create("ritual_practice");
+    public static final ResourceKey<ProjectTemplate> RUNEWORK = create("runework");
+    public static final ResourceKey<ProjectTemplate> SPELLWORK = create("spellwork");
     public static final ResourceKey<ProjectTemplate> TRADE = create("trade");
+    public static final ResourceKey<ProjectTemplate> WAND_TINKERING = create("wand_tinkering");
     
     public static ResourceKey<ProjectTemplate> create(String name) {
         return ResourceKey.create(RegistryKeysPM.PROJECT_TEMPLATES, PrimalMagick.resource(name));
@@ -586,6 +589,37 @@ public class ProjectTemplates {
                 .material(ItemProjectMaterial.builder(ItemsPM.INCENSE_STICK.get()).consumed().requiredResearch(ResearchEntries.INCENSE_BRAZIER).weight(1).build())
                 .material(ItemProjectMaterial.builder(ItemsPM.DOWSING_ROD.get()).requiredResearch(ResearchEntries.DOWSING_ROD).weight(1).build())
                 .build());
+        context.register(RUNEWORK, ProjectTemplate.builder()
+                .quorumResearch(3, ResearchEntries.RUNE_EARTH, ResearchEntries.RUNE_SEA, ResearchEntries.RUNE_SKY, ResearchEntries.RUNE_SUN, ResearchEntries.RUNE_MOON, ResearchEntries.RUNE_PROJECT, ResearchEntries.RUNE_PROTECT, ResearchEntries.RUNE_ITEM, ResearchEntries.RUNE_SELF)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.EXPERT_RUNEWORKING, -1).modifier(ResearchEntries.MASTER_RUNEWORKING, -1).modifier(ResearchEntries.SUPREME_RUNEWORKING, -2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNECARVING_TABLE.get()).weight(5).build())
+                .material(ItemProjectMaterial.builder(Items.STONE_SLAB).consumed().weight(3).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_LAPIS).consumed().weight(3).build())
+                .material(ItemProjectMaterial.builder(Items.DIAMOND_SWORD).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_EARTH.get()).consumed().requiredResearch(ResearchEntries.RUNE_EARTH).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_SEA.get()).consumed().requiredResearch(ResearchEntries.RUNE_SEA).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_SKY.get()).consumed().requiredResearch(ResearchEntries.RUNE_SKY).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_SUN.get()).consumed().requiredResearch(ResearchEntries.RUNE_SUN).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_MOON.get()).consumed().requiredResearch(ResearchEntries.RUNE_MOON).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_PROJECT.get()).consumed().requiredResearch(ResearchEntries.RUNE_PROJECT).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_PROTECT.get()).consumed().requiredResearch(ResearchEntries.RUNE_PROTECT).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_ITEM.get()).consumed().requiredResearch(ResearchEntries.RUNE_ITEM).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.RUNE_SELF.get()).consumed().requiredResearch(ResearchEntries.RUNE_SELF).weight(1).build())
+                .build());
+        context.register(SPELLWORK, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_SORCERY)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.EXPERT_SORCERY, -1).modifier(ResearchEntries.MASTER_SORCERY, -1).modifier(ResearchEntries.SUPREME_SORCERY, -2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.SPELLCRAFTING_ALTAR.get()).weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_INSCRIPTION_TABLE.get()).requiredResearch(ResearchEntries.WAND_INSCRIPTION).weight(2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_CHARGER.get()).requiredResearch(ResearchEntries.WAND_CHARGER).weight(2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.MUNDANE_WAND.get()).weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.SPELL_SCROLL_BLANK.get()).consumed().weight(5).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_EARTH.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SEA.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SKY.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_SUN.get()).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.ESSENCE_DUST_MOON.get()).consumed().weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
+                .build());
         context.register(TRADE, ProjectTemplate.builder()
                 .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.DISCOVER_INFERNAL, -2).modifier(ResearchEntries.DISCOVER_VOID, -2).build())
                 .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_EMERALD).consumed().bonusReward(0.25D).weight(2).build())
@@ -610,6 +644,21 @@ public class ProjectTemplates {
                 .material(ItemTagProjectMaterial.builder(ItemTags.WOOL).quantity(2).consumed().weight(1).build())
                 .material(ItemTagProjectMaterial.builder(Tags.Items.DYES).quantity(2).consumed().weight(1).build())
                 .otherReward(LootTableReward.builder(PrimalMagick.resource("gameplay/theorycrafting/trade")).description("label.primalmagick.loot_table.trade.desc").build())
+                .build());
+        context.register(WAND_TINKERING, ProjectTemplate.builder().requiredResearch(ResearchEntries.BASIC_MANAWEAVING)
+                .weightFunction(ProgressiveWeight.builder(5).modifier(ResearchEntries.MASTER_MANAWEAVING, -2).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.WAND_ASSEMBLY_TABLE.get()).requiredResearch(ResearchEntries.ADVANCED_WANDMAKING).weight(3).build())
+                .material(ItemProjectMaterial.builder(ItemsPM.HEARTWOOD.get()).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.OBSIDIAN).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.CORAL_BLOCKS).consumed().weight(1).build())
+                .material(ItemProjectMaterial.builder(Items.BAMBOO).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.SUNWOOD_LOGS).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.MOONWOOD_LOGS).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.INGOTS_IRON).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.INGOTS_GOLD).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(Tags.Items.GEMS_DIAMOND).consumed().weight(1).build())
+                .material(ItemTagProjectMaterial.builder(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).consumed().weight(1).build())
+                .material(ObservationProjectMaterial.builder(1).consumed().weight(5).build())
                 .build());
     }
     
