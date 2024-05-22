@@ -95,14 +95,14 @@ public class PlayerStats implements IPlayerStats {
         if (stat == null) {
             return 0;
         } else {
-            return this.stats.getOrDefault(stat.getLocation(), Integer.valueOf(0)).intValue();
+            return this.stats.getOrDefault(stat.key(), Integer.valueOf(0)).intValue();
         }
     }
 
     @Override
     public void setValue(Stat stat, int value) {
         if (stat != null) {
-            this.stats.put(stat.getLocation(), Integer.valueOf(value));
+            this.stats.put(stat.key(), Integer.valueOf(value));
         }
     }
 

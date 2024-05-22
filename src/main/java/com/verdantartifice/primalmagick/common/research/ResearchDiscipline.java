@@ -38,7 +38,7 @@ public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractReq
             ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
             AbstractRequirement.CODEC.optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
             ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
-            ResourceLocation.CODEC.optionalFieldOf("craftingStat").<Optional<Stat>>xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.getLocation())).forGetter(ResearchDiscipline::craftingStat),
+            ResourceLocation.CODEC.optionalFieldOf("craftingStat").<Optional<Stat>>xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::craftingStat),
             CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
         ).apply(instance, ResearchDiscipline::new));
     

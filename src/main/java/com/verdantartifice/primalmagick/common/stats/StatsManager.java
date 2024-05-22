@@ -60,8 +60,8 @@ public class StatsManager {
     
     public static boolean registerStat(@Nullable Stat stat) {
         if (stat != null) {
-            REGISTRY.put(stat.getLocation(), stat);
-            if (stat.isInternal()) {
+            REGISTRY.put(stat.key(), stat);
+            if (stat.internal()) {
                 return true;    // Don't register internal stats in the display list
             } else {
                 return DISPLAY_STATS.add(stat);
@@ -88,7 +88,7 @@ public class StatsManager {
     
     @Nonnull
     public static Component getFormattedValue(@Nullable Player player, @Nullable Stat stat) {
-        return Component.literal(stat.getFormatter().format(getValue(player, stat)));
+        return Component.literal(stat.formatter().format(getValue(player, stat)));
     }
     
     public static void incrementValue(@Nullable Player player, @Nullable Stat stat) {

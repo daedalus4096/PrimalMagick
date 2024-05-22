@@ -662,13 +662,13 @@ public class GrimoireScreen extends Screen {
         Minecraft mc = this.getMinecraft();
         for (Stat stat : stats) {
             int statValue = StatsManager.getValue(mc.player, stat);
-            if (!stat.isHidden() || statValue > 0) {
+            if (!stat.hidden() || statValue > 0) {
                 // Join the stat text and formatted value with periods in between for spacing
                 Component statText = Component.translatable(stat.getTranslationKey());
                 List<FormattedText> statTextSegments = new ArrayList<>(this.font.getSplitter().splitLines(statText, 124, Style.EMPTY));
                 FormattedText lastStatTextSegment = statTextSegments.get(statTextSegments.size() - 1);
                 int lastStatTextSegmentWidth = this.font.width(lastStatTextSegment);
-                String statFormattedValueStr = stat.getFormatter().format(statValue);
+                String statFormattedValueStr = stat.formatter().format(statValue);
                 int statFormattedValueStrWidth = this.font.width(statFormattedValueStr);
                 int remainingWidth = 124 - lastStatTextSegmentWidth - statFormattedValueStrWidth;
                 if (remainingWidth < 10) {

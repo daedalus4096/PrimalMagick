@@ -22,7 +22,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public class StatRequirement extends AbstractRequirement<StatRequirement> {
     public static final Codec<StatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.getLocation()).forGetter(req -> req.stat),
+            ResourceLocation.CODEC.fieldOf("stat").xmap(loc -> StatsManager.getStat(loc), stat -> stat.key()).forGetter(req -> req.stat),
             ExtraCodecs.POSITIVE_INT.fieldOf("requiredValue").forGetter(req -> req.requiredValue)
         ).apply(instance, StatRequirement::new));
     
@@ -79,7 +79,7 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
     
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
-        buf.writeResourceLocation(this.stat.getLocation());
+        buf.writeResourceLocation(this.stat.key());
         buf.writeVarInt(this.requiredValue);
     }
 }
