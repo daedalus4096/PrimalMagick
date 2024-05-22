@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.stats;
 
+import java.util.Optional;
+
 import javax.annotation.Nonnull;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
@@ -17,7 +19,16 @@ import net.minecraft.stats.StatFormatter;
 public record Stat(ResourceLocation key, StatFormatter formatter, boolean hidden, boolean internal, boolean hasHint) {
     @Nonnull
     public String getTranslationKey() {
-        return "stat." + this.key.getNamespace() + "." + this.key.getPath();
+        return String.join(".", "stat", this.key.getNamespace(), this.key.getPath());
+    }
+    
+    @Nonnull
+    public Optional<String> getHintTranslationKey() {
+        if (this.hasHint) {
+            return Optional.of(String.join(".", "stat", this.key.getNamespace(), this.key.getPath(), "hint"));
+        } else {
+            return Optional.empty();
+        }
     }
     
     public static Builder builder(ResourceLocation loc) {
