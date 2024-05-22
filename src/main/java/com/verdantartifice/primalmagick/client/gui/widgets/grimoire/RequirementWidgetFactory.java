@@ -18,7 +18,7 @@ public class RequirementWidgetFactory {
         } else if (requirement instanceof KnowledgeRequirement req) {
             return new KnowledgeWidget(req.getKnowledgeType(), req.getAmount(), x, y, isComplete);
         } else if (requirement instanceof ResearchRequirement req) {
-            return new ResearchWidget(req.getRootKey(), x, y, isComplete, stage.hints().contains(req.getRootKey()));
+            return new ResearchWidget(req.getRootKey(), x, y, isComplete);
         } else {
             return null;
         }

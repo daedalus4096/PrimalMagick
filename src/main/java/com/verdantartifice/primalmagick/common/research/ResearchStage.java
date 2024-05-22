@@ -15,7 +15,6 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
-import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
@@ -51,7 +50,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
-        List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, List<AbstractResearchKey<?>> hints, SourceList attunements) {
+        List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
     public static final Codec<ResearchStage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
@@ -59,7 +58,6 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
             ResearchEntryKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
-            AbstractResearchKey.CODEC.listOf().fieldOf("hints").forGetter(ResearchStage::hints),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
         ).apply(instance, ResearchStage::new));
     
@@ -71,9 +69,8 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
         List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
         List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
-        List<AbstractResearchKey<?>> hints = buf.readList(AbstractResearchKey::fromNetwork);
         SourceList attunements = SourceList.fromNetwork(buf);
-        return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, hints, attunements);
+        return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, attunements);
     }
     
     public static void toNetwork(FriendlyByteBuf buf, ResearchStage stage) {
@@ -83,7 +80,6 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         buf.writeCollection(stage.recipes, (b, l) -> b.writeResourceLocation(l));
         buf.writeCollection(stage.siblings, (b, s) -> s.toNetwork(b));
         buf.writeCollection(stage.revelations, (b, r) -> r.toNetwork(b));
-        buf.writeCollection(stage.hints, (b, h) -> h.toNetwork(b));
         SourceList.toNetwork(buf, stage.attunements);
     }
     
@@ -133,7 +129,6 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final List<ResourceLocation> recipes = new ArrayList<>();
         protected final List<ResearchEntryKey> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
-        protected final List<AbstractResearchKey<?>> hints = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         
         public Builder(String modId, ResearchEntry.Builder entryBuilder, ResearchEntryKey parentKey, int stageIndex) {
@@ -231,11 +226,6 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this;
         }
         
-        public Builder hint(AbstractResearchKey<?> hintKey) {
-            this.hints.add(hintKey);
-            return this;
-        }
-        
         public Builder attunement(SourceList sources) {
             this.attunements.with(sources);
             return this;
@@ -270,7 +260,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         
         ResearchStage build() {
             this.validate();
-            return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.revelations, this.hints, this.attunements.build());
+            return new ResearchStage(this.parentKey, this.getTextTranslationKey(), this.getFinalRequirement(), this.recipes, this.siblings, this.revelations, this.attunements.build());
         }
         
         public ResearchEntry.Builder end() {

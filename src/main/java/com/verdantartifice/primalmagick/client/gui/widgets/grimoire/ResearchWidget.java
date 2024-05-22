@@ -3,10 +3,13 @@ package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
@@ -23,31 +26,33 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public class ResearchWidget extends AbstractWidget {
-    protected static final ResourceLocation BAG_TEXTURE = PrimalMagick.resource("textures/research/research_bag.png");
-    protected static final ResourceLocation TUBE_TEXTURE = PrimalMagick.resource("textures/research/research_tube.png");
-    protected static final ResourceLocation MAP_TEXTURE = PrimalMagick.resource("textures/research/research_map.png");
     protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
     protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
     
     protected final AbstractResearchKey<?> key;
+    protected final ResearchEntry researchEntry;
     protected final boolean isComplete;
-    protected final boolean hasHint;
     protected final ResourceLocation iconLoc;
     protected MutableComponent lastTooltip = Component.empty();
     protected MutableComponent tooltip = Component.empty();
     
     public ResearchWidget(AbstractResearchKey<?> key, int x, int y, boolean isComplete) {
-        this(key, x, y, isComplete, false);
-    }
-    
-    public ResearchWidget(AbstractResearchKey<?> key, int x, int y, boolean isComplete, boolean hasHint) {
         super(x, y, 16, 16, Component.empty());
         this.key = key;
         this.isComplete = isComplete;
-        this.hasHint = hasHint;
         
-        // TODO Pick the icon to show
-        this.iconLoc = UNKNOWN_TEXTURE;
+        Minecraft mc = Minecraft.getInstance();
+        if (this.key instanceof ResearchEntryKey entryKey) {
+            this.researchEntry = ResearchEntries.getEntry(mc.level.registryAccess(), entryKey);
+        } else {
+            this.researchEntry = null;
+        }
+
+        if (this.researchEntry != null && this.researchEntry.iconOpt().isPresent()) {
+            this.iconLoc = this.researchEntry.iconOpt().get().location();
+        } else {
+            this.iconLoc = UNKNOWN_TEXTURE;
+        }
     }
     
     @Override
@@ -72,18 +77,18 @@ public class ResearchWidget extends AbstractWidget {
         // Prepare the tooltip
         this.lastTooltip = this.tooltip;
         this.tooltip = Component.empty();
-        if (this.key instanceof ResearchEntryKey entryKey) {
-            if (this.hasHint) {
+        if (this.researchEntry != null) {
+            this.researchEntry.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
                 if (Screen.hasShiftDown()) {
-                    this.tooltip.append(Component.translatable(String.join(".", "research", entryKey.getRootKey().location().getNamespace(), entryKey.getRootKey().location().getPath(), "hint")));
+                    this.tooltip.append(Component.translatable(hintTranslationKey));
                 } else {
-                    this.tooltip.append(Component.translatable(String.join(".", "research", entryKey.getRootKey().location().getNamespace(), entryKey.getRootKey().location().getPath(), "text")));
+                    this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));
                     this.tooltip.append(CommonComponents.NEW_LINE);
                     this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
                 }
-            } else {
-                this.tooltip.append(Component.translatable(String.join(".", "research", entryKey.getRootKey().location().getNamespace(), entryKey.getRootKey().location().getPath(), "text")));
-            }
+            }, () -> {
+                this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));
+            });
         }
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
