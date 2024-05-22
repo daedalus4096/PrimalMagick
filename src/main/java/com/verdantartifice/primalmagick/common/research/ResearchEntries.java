@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 
 import net.minecraft.core.Holder;
@@ -16,6 +17,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.
@@ -393,6 +395,14 @@ public class ResearchEntries {
         register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_magitech.png").parent(MANAFRUIT).parent(MANA_SALTS)
                 .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
                 .stage().end()
+                .build());
+        register(context, TERRESTRIAL_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(ATTUNEMENTS)
+                .stage().end()
+                .build());
+        register(context, SOURCE_EARTH, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.EARTH.getImage()).parent(TERRESTRIAL_MAGICK)
+                .stage().requiredItem(Tags.Items.OBSIDIAN).requiredItem(Tags.Items.GEMS_DIAMOND).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_EARTH, 1)
+                    .requiredResearch(ENV_EARTH).requiredStat(StatsPM.MANA_SPENT_EARTH, 100 /*hint*/).end()
+                .stage().attunement(Sources.EARTH, 5).end()
                 .build());
     }
     

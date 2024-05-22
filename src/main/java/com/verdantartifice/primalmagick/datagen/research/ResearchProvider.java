@@ -69,17 +69,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
-        ResearchEntryBuilder.entry("TERRESTRIAL_MAGICK", discipline).parent("ATTUNEMENTS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_EARTH", discipline).icon(Sources.EARTH.getImage()).parent("TERRESTRIAL_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(Tags.Items.OBSIDIAN).requiredItemTag(Tags.Items.GEMS_DIAMOND)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_earth").requiredResearch("m_env_earth").requiredResearch("t_mana_spent_earth_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 5).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("SOURCE_SEA", discipline).icon(Sources.SEA.getImage()).parent("TERRESTRIAL_MAGICK")
             .stage(ResearchStageBuilder.stage()
                     .requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredItemStack(Items.ICE)

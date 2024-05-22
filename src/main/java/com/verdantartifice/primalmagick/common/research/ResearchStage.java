@@ -192,6 +192,14 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this.requirement(new KnowledgeRequirement(type, levels));
         }
         
+        public Builder requiredObservations(int levels) {
+            return this.requiredKnowledge(KnowledgeType.OBSERVATION, levels);
+        }
+        
+        public Builder requiredTheories(int levels) {
+            return this.requiredKnowledge(KnowledgeType.THEORY, levels);
+        }
+        
         public Builder requiredStat(Stat stat, int value) {
             return this.requirement(new StatRequirement(stat, value));
         }
