@@ -15,6 +15,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.
@@ -33,9 +34,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_RUNEWORKING = create("unlock_runeworking");
     public static final ResourceKey<ResearchEntry> UNLOCK_RITUAL = create("unlock_ritual");
     public static final ResourceKey<ResearchEntry> UNLOCK_MAGITECH = create("unlock_magitech");
-    public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
     // TODO Place in correct order after bootstrapping
-    public static final ResourceKey<ResearchEntry> UNLOCK_RUNE_ENCHANTMENTS = create("unlock_rune_enchantments");
     public static final ResourceKey<ResearchEntry> TERRESTRIAL_MAGICK = create("terrestrial_magick");
     public static final ResourceKey<ResearchEntry> SOURCE_EARTH = create("source_earth");
     public static final ResourceKey<ResearchEntry> SOURCE_SEA = create("source_sea");
@@ -295,6 +294,8 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> HUMMING_ARTIFACT = create("humming_artifact");
     
     // Internal research entries
+    public static final ResourceKey<ResearchEntry> UNLOCK_SCANS = create("unlock_scans");
+    public static final ResourceKey<ResearchEntry> UNLOCK_RUNE_ENCHANTMENTS = create("unlock_rune_enchantments");
     public static final ResourceKey<ResearchEntry> DISCOVER_BLOOD = create("discover_blood");
     public static final ResourceKey<ResearchEntry> DISCOVER_INFERNAL = create("discover_infernal");
     public static final ResourceKey<ResearchEntry> DISCOVER_VOID = create("discover_void");
@@ -326,6 +327,12 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
+    
+    // Commonly used research icons
+    private static final ResourceLocation ICON_BAG = PrimalMagick.resource("textures/research/research_bag.png");
+    private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
+    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
+    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
     
     public static ResourceKey<ResearchEntry> create(String name) {
         return ResourceKey.create(RegistryKeysPM.RESEARCH_ENTRIES, PrimalMagick.resource(name));
@@ -390,17 +397,19 @@ public class ResearchEntries {
     }
     
     private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
-        register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+        register(context, UNLOCK_SCANS, key -> ResearchEntry.builder(key).internal().build());
+        register(context, UNLOCK_RUNE_ENCHANTMENTS, key -> ResearchEntry.builder(key).internal().build());
+        register(context, DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_BLOOD).end()
                 .build());
-        register(context, DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+        register(context, DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_INFERNAL).end()
                 .build());
-        register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png")
+        register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_VOID).end()
                 .build());
         register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().build());
-        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon("textures/research/research_tube.png").build());
+        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
