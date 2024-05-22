@@ -69,56 +69,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
-        ResearchEntryBuilder.entry("FIRST_STEPS", discipline).icon(ItemsPM.GRIMOIRE.get())
-            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ARCANE_WORKBENCH.get()).recipe(ItemsPM.MUNDANE_WAND.get()).build())
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_mana_siphoned_basics").recipe(ItemsPM.MUNDANE_WAND.get()).build())
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_observations_made_basics").recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get())
-                    .recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("THEORYCRAFTING", discipline).icon("textures/research/knowledge_theory.png").parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.RESEARCH_TABLE.get()).requiredCraftStack(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).recipe(ItemsPM.RESEARCH_TABLE.get())
-                    .recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_theories_formed_basics").recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get())
-                    .recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("ATTUNEMENTS", discipline).parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        // FIXME Re-add for 1.21 release
-/*
-        ResearchEntryBuilder.entry("LINGUISTICS", discipline).icon(Items.WRITABLE_BOOK).parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredResearch("m_ancient_books_read_basics").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SCRIBE_TABLE.get()).build())
-            .build(consumer);
-*/
-        ResearchEntryBuilder.entry("UNLOCK_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("FIRST_STEPS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("MANA_ARROWS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("WAND_CHARGER")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("CALCINATOR_BASIC")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("WAND_INSCRIPTION").parent("RUNE_PROJECT")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("UNLOCK_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("MANAFRUIT").parent("MANA_SALTS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
         ResearchEntryBuilder.entry("TERRESTRIAL_MAGICK", discipline).parent("ATTUNEMENTS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
