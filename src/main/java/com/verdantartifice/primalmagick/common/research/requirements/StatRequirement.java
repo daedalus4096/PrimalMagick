@@ -36,6 +36,14 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
         this.stat = Preconditions.checkNotNull(stat);
         this.requiredValue = requiredValue;
     }
+    
+    public Stat getStat() {
+        return this.stat;
+    }
+    
+    public int getRequiredValue() {
+        return this.requiredValue;
+    }
 
     @Override
     public boolean isMetBy(Player player) {

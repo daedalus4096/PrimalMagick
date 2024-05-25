@@ -10,6 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
@@ -24,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> {
+public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaItemUsedStatRequirement> implements IVanillaStatRequirement {
     public static final Codec<VanillaItemUsedStatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("item").xmap(loc -> ForgeRegistries.ITEMS.getValue(loc), item -> ForgeRegistries.ITEMS.getKey(item)).forGetter(req -> req.stat.getValue()),
             Codec.INT.fieldOf("threshold").forGetter(VanillaItemUsedStatRequirement::getThreshold)
@@ -42,18 +43,33 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
         this.threshold = threshold;
     }
     
-    protected ResourceLocation getStatTypeLoc() {
+    @Override
+    public Stat<?> getStat() {
+        return this.stat;
+    }
+
+    @Override
+    public ResourceLocation getStatTypeLoc() {
         return ForgeRegistries.STAT_TYPES.getKey(this.stat.getType());
     }
     
-    protected ResourceLocation getStatValueLoc() {
+    @Override
+    public ResourceLocation getStatValueLoc() {
         return ForgeRegistries.ITEMS.getKey(this.stat.getValue());
     }
 
+    @Override
     public int getThreshold() {
         return this.threshold;
     }
     
+    @Override
+    public Component getStatDescription() {
+        Component baseLabel = this.stat.getType().getDisplayName();
+        Component itemLabel = this.stat.getValue().getDescription();
+        return Component.translatable("tooltip.primalmagick.stat_description.vanilla", baseLabel, itemLabel);
+    }
+
     public int getCurrentValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(this.stat);
