@@ -36,7 +36,7 @@ public class StatProgressWidget extends AbstractWidget {
     protected MutableComponent tooltip = Component.empty();
 
     public StatProgressWidget(Stat stat, int maxProgressValue, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, Component.empty());
+        super(x, y, 16, 18, Component.empty());
         Minecraft mc = Minecraft.getInstance();
         this.stat = stat;
         this.maxValue = maxProgressValue;
@@ -62,9 +62,22 @@ public class StatProgressWidget extends AbstractWidget {
             pGuiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
             pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             pGuiGraphics.pose().popPose();
-        } else {
-            // TODO Render the progress bar otherwise
         }
+        
+        // Draw progress bar background
+        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
+        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
+        pGuiGraphics.pose().popPose();
+        
+        // Draw progress bar foreground
+        Minecraft mc = Minecraft.getInstance();
+        int currentValue = StatsManager.getValue(mc.player, this.stat);
+        int px = (int)(16.0D * ((double)currentValue / (double)this.maxValue));
+        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
+        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
+        pGuiGraphics.pose().popPose();
         
         // Prepare the tooltip
         this.lastTooltip = this.tooltip;
@@ -73,16 +86,24 @@ public class StatProgressWidget extends AbstractWidget {
             if (Screen.hasShiftDown()) {
                 this.tooltip.append(Component.translatable(hintTranslationKey));
             } else {
-                this.tooltip.append(Component.translatable(this.stat.getTranslationKey()));
+                this.tooltip.append(this.getStatDescription());
                 this.tooltip.append(CommonComponents.NEW_LINE);
                 this.tooltip.append(Component.translatable("tooltip.primalmagick.more_info").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
             }
         }, () -> {
-            this.tooltip.append(Component.translatable(this.stat.getTranslationKey()));
+            this.tooltip.append(this.getStatDescription());
         });
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
+    }
+    
+    protected Component getStatDescription() {
+        Minecraft mc = Minecraft.getInstance();
+        Component baseDescription = Component.translatable(this.stat.getTranslationKey());
+        String currentValue = this.stat.formatter().format(StatsManager.getValue(mc.player, this.stat));
+        String maxValue = this.stat.formatter().format(this.maxValue);
+        return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
     }
     
     @Override

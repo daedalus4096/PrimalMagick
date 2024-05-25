@@ -25,7 +25,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     protected MutableComponent tooltip = Component.empty();
 
     public VanillaStatProgressWidget(IVanillaStatRequirement requirement, int x, int y, boolean isComplete) {
-        super(x, y, 16, 16, Component.empty());
+        super(x, y, 16, 18, Component.empty());
         this.requirement = requirement;
         this.isComplete = isComplete;
         this.iconLoc = UNKNOWN_TEXTURE; // TODO Get icon location from stat
@@ -48,9 +48,22 @@ public class VanillaStatProgressWidget extends AbstractWidget {
             pGuiGraphics.pose().translate(this.getX() + 8, this.getY(), 100.0F);
             pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 159, 207, 10, 10);
             pGuiGraphics.pose().popPose();
-        } else {
-            // TODO Render the progress bar otherwise
         }
+        
+        // Draw progress bar background
+        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 0.0F);
+        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 234, 16, 2);
+        pGuiGraphics.pose().popPose();
+        
+        // Draw progress bar foreground
+        Minecraft mc = Minecraft.getInstance();
+        int currentValue = mc.player.getStats().getValue(this.requirement.getStat());
+        int px = (int)(16.0D * ((double)currentValue / (double)this.requirement.getThreshold()));
+        pGuiGraphics.pose().pushPose();
+        pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
+        pGuiGraphics.blit(GRIMOIRE_TEXTURE, 0, 0, 0, 232, px, 2);
+        pGuiGraphics.pose().popPose();
         
         // Prepare the tooltip
         this.lastTooltip = this.tooltip;
