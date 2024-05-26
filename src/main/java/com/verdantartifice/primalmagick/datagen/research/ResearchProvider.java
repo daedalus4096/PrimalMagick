@@ -69,38 +69,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
-        ResearchEntryBuilder.entry("SOURCE_SEA", discipline).icon(Sources.SEA.getImage()).parent("TERRESTRIAL_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(ItemTagsPM.CORAL_BLOCKS).requiredItemStack(Items.ICE)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sea").requiredResearch("m_env_sea").requiredResearch("t_mana_spent_sea_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SEA, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_SKY", discipline).icon(Sources.SKY.getImage()).parent("TERRESTRIAL_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemStack(Items.BAMBOO).requiredItemTag(ItemTags.LEAVES)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sky").requiredResearch("m_env_sky").requiredResearch("t_mana_spent_sky_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SKY, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_SUN", discipline).icon(Sources.SUN.getImage()).parent("TERRESTRIAL_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(ItemTagsPM.SUNWOOD_LOGS).requiredItemTag(Tags.Items.SANDSTONE)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_sun").requiredResearch("m_env_sun").requiredResearch("t_mana_spent_sun_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SUN, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_MOON", discipline).icon(Sources.MOON.getImage()).parent("TERRESTRIAL_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(ItemTagsPM.MOONWOOD_LOGS).requiredItemTag(Tags.Items.MUSHROOMS)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("m_found_shrine_moon").requiredResearch("m_env_moon").requiredResearch("t_mana_spent_moon_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.MOON, 5).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("FORBIDDEN_MAGICK", discipline).parent("TERRESTRIAL_MAGICK").parent("t_discover_forbidden")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
