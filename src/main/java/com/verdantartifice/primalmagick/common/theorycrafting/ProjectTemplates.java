@@ -38,7 +38,6 @@ import net.minecraftforge.common.Tags;
  * @author Daedalus4096
  */
 public class ProjectTemplates {
-    // TODO Define other project template keys
     public static final ResourceKey<ProjectTemplate> ADVANCED_ENCHANTING_STUDIES = create("advanced_enchanting_studies");
     public static final ResourceKey<ProjectTemplate> ADVANCED_ESSENCE_ANALYSIS = create("advanced_essence_analysis");
     public static final ResourceKey<ProjectTemplate> ADVANCED_RITUAL_PRACTICE = create("advanced_ritual_practice");
@@ -83,7 +82,6 @@ public class ProjectTemplates {
     }
     
     public static void bootstrap(BootstapContext<ProjectTemplate> context) {
-        // TODO Initialize theorycrafting project templates
         context.register(ADVANCED_ENCHANTING_STUDIES, ProjectTemplate.builder().rewardMultiplier(0.5D)
                 .requiredResearch(ResearchEntries.EXPERT_MANAWEAVING)
                 .requiredResearch(ResearchEntries.PRIMALITE)
