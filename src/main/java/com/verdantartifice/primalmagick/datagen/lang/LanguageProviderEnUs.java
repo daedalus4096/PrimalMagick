@@ -1979,11 +1979,6 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.researchRequirement("t_mana_spent_infernal_expert").name("Spend 100 Infernal mana (before modifiers)").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
         this.researchRequirement("t_mana_spent_void_expert").name("Spend 100 Void mana (before modifiers)").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
         this.researchRequirement("t_mana_spent_hallowed_expert").name("Spend 100 Hallowed mana (before modifiers)").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
-        this.researchRequirement("m_env_earth").name("Visit the dark depths of the earth").build();
-        this.researchRequirement("m_env_sea").name("Behold the vast blue of the ocean").build();
-        this.researchRequirement("m_env_sky").name("Travel to the peak of the world").build();
-        this.researchRequirement("m_env_sun").name("Feel the scorching rays of the desert sun").build();
-        this.researchRequirement("m_env_moon").name("Witness the moonlight filtered through the forest trees").build();
         this.researchRequirement("b_crafted_alchemy_expert").name("Craft 50 alchemy items").build();
         this.researchRequirement("b_crafted_alchemy_master").name("Craft 250 alchemy items").build();
         this.researchRequirement("b_crafted_alchemy_supreme").name("Craft 1000 alchemy items").build();
@@ -3698,5 +3693,10 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
                 .add("What fascinating creatures!  These treefolk appear to be ambulatory plant life.  Not only that, but they seem intelligent!<BR>For the most part, these creatures seem peaceful, or at least content to live and let live.  They will defend themselves if attacked, but will otherwise go about their business and leave me to mine.<BR>Treefolk appear to have a special love of bone meal, which I suppose shouldn't be too surprising given its nutritive properties for plants.  They seem willing to barter various plants they've collected in exchange for the material.  I can either hand the bone meal to them, or just drop it on the ground nearby.  I wonder what they do with the stuff, though; they don't have visible mouths to eat it.  Just one of those mysteries, I guess.<BR>Perhaps most exciting, however, is that treefolk appear to be innately magickal.  They appear to be able to speed the growth of most plant life with a touch!  If only I could convince them to follow me home...  They'd do wonders for my farm.")
                 .end()
             .build();
+        this.researchEntry(ResearchEntries.ENV_EARTH, lookupProvider).name("Visit the dark depths of the earth").build();
+        this.researchEntry(ResearchEntries.ENV_SEA, lookupProvider).name("Behold the vast blue of the ocean").build();
+        this.researchEntry(ResearchEntries.ENV_SKY, lookupProvider).name("Travel to the peak of the world").build();
+        this.researchEntry(ResearchEntries.ENV_SUN, lookupProvider).name("Feel the scorching rays of the desert sun").build();
+        this.researchEntry(ResearchEntries.ENV_MOON, lookupProvider).name("Witness the moonlight filtered through the forest trees").build();
     }
 }

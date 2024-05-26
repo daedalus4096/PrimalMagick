@@ -308,16 +308,16 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> DISCOVER_VOID = create("discover_void");
     public static final ResourceKey<ResearchEntry> DISCOVER_FORBIDDEN = create("discover_forbidden");
     public static final ResourceKey<ResearchEntry> DISCOVER_HALLOWED = create("discover_hallowed");
-    // TODO Place in correct order after bootstrapping
-    public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
-    public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
-    public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
-    public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
     public static final ResourceKey<ResearchEntry> ENV_EARTH = create("env_earth");
     public static final ResourceKey<ResearchEntry> ENV_SEA = create("env_sea");
     public static final ResourceKey<ResearchEntry> ENV_SKY = create("env_sky");
     public static final ResourceKey<ResearchEntry> ENV_SUN = create("env_sun");
     public static final ResourceKey<ResearchEntry> ENV_MOON = create("env_moon");
+    // TODO Place in correct order after bootstrapping
+    public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
+    public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
+    public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
+    public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
     public static final ResourceKey<ResearchEntry> DROWN_A_LITTLE = create("drown_a_little");
     public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
@@ -445,6 +445,11 @@ public class ResearchEntries {
                 .build());
         register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().build());
         register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).build());
+        register(context, ENV_EARTH, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, ENV_SEA, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, ENV_SKY, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, ENV_SUN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, ENV_MOON, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
