@@ -109,8 +109,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
 
     @Override
     protected RequirementType<VanillaCustomStatRequirement> getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return RequirementsPM.VANILLA_CUSTOM_STAT.get();
     }
     
     @Nonnull
