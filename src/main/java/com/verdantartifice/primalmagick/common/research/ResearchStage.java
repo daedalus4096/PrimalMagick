@@ -26,6 +26,8 @@ import com.verdantartifice.primalmagick.common.research.requirements.KnowledgeRe
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.StatRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.VanillaCustomStatRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.VanillaItemUsedStatRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.stats.Stat;
@@ -183,7 +185,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this.requirement(new ResearchRequirement(new ResearchEntryKey(entryKey)));
         }
         
-        public Builder requiredKnowledge(KnowledgeType type, int levels) {
+        protected Builder requiredKnowledge(KnowledgeType type, int levels) {
             return this.requirement(new KnowledgeRequirement(type, levels));
         }
         
@@ -197,6 +199,14 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         
         public Builder requiredStat(Stat stat, int value) {
             return this.requirement(new StatRequirement(stat, value));
+        }
+        
+        public Builder requiredVanillaCustomStat(ResourceLocation statLoc, int value, ResourceLocation iconLoc) {
+            return this.requirement(new VanillaCustomStatRequirement(statLoc, value, iconLoc));
+        }
+        
+        public Builder requiredVanillaItemUsedStat(ItemLike item, int value) {
+            return this.requirement(new VanillaItemUsedStatRequirement(item.asItem(), value));
         }
         
         public Builder recipe(String name) {
