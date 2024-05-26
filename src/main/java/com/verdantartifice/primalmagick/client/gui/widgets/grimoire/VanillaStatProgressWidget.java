@@ -10,12 +10,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public class VanillaStatProgressWidget extends AbstractWidget {
-    protected static final ResourceLocation UNKNOWN_TEXTURE = PrimalMagick.resource("textures/research/research_unknown.png");
     protected static final ResourceLocation GRIMOIRE_TEXTURE = PrimalMagick.resource("textures/gui/grimoire.png");
     
     protected final IVanillaStatRequirement requirement;
@@ -28,18 +29,19 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         super(x, y, 16, 18, Component.empty());
         this.requirement = requirement;
         this.isComplete = isComplete;
-        this.iconLoc = UNKNOWN_TEXTURE; // TODO Get icon location from stat
+        this.iconLoc = requirement.getIconLocation();
     }
 
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
+        @SuppressWarnings("deprecation")
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(this.iconLoc);
         pGuiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        pGuiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        pGuiGraphics.blit(this.iconLoc, 0, 0, 0, 0, 255, 255);
+        pGuiGraphics.blit(0, 0, 0, 16, 16, sprite);
         pGuiGraphics.pose().popPose();
         
         if (this.isComplete) {

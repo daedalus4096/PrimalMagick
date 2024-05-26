@@ -10,4 +10,5 @@ public interface IVanillaStatRequirement {
     ResourceLocation getStatValueLoc();
     int getThreshold();
     Component getStatDescription();
+    ResourceLocation getIconLocation();
 }

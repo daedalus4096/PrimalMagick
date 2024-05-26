@@ -70,6 +70,11 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
         return Component.translatable("tooltip.primalmagick.stat_description.vanilla", baseLabel, itemLabel);
     }
 
+    @Override
+    public ResourceLocation getIconLocation() {
+        return this.getStatValueLoc();
+    }
+
     public int getCurrentValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
             return serverPlayer.getStats().getValue(this.stat);

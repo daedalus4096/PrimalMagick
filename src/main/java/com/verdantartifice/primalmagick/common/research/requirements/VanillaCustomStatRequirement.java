@@ -25,20 +25,23 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCustomStatRequirement> implements IVanillaStatRequirement {
     public static final Codec<VanillaCustomStatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("item").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
-            Codec.INT.fieldOf("threshold").forGetter(VanillaCustomStatRequirement::getThreshold)
+            ResourceLocation.CODEC.fieldOf("statValue").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
+            Codec.INT.fieldOf("threshold").forGetter(VanillaCustomStatRequirement::getThreshold),
+            ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(VanillaCustomStatRequirement::getIconLocation)
         ).apply(instance, VanillaCustomStatRequirement::new));
     
     protected final Stat<ResourceLocation> stat;
     protected final int threshold;
+    protected final ResourceLocation iconLocation;
     
-    public VanillaCustomStatRequirement(ResourceLocation loc, int threshold) {
-        this(Stats.CUSTOM.get(loc), threshold);
+    public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, ResourceLocation iconLocation) {
+        this(Stats.CUSTOM.get(loc), threshold, iconLocation);
     }
     
-    protected VanillaCustomStatRequirement(Stat<ResourceLocation> stat, int threshold) {
+    protected VanillaCustomStatRequirement(Stat<ResourceLocation> stat, int threshold, ResourceLocation iconLocation) {
         this.stat = stat;
         this.threshold = threshold;
+        this.iconLocation = iconLocation;
     }
 
     @Override
@@ -65,6 +68,11 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     public Component getStatDescription() {
         String key = String.join(".", "stat", this.stat.getValue().getNamespace(), this.stat.getValue().getPath());
         return Component.translatable(key);
+    }
+
+    @Override
+    public ResourceLocation getIconLocation() {
+        return this.iconLocation;
     }
 
     public int getCurrentValue(Player player) {
@@ -114,12 +122,13 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     
     @Nonnull
     public static VanillaCustomStatRequirement fromNetwork(FriendlyByteBuf buf) {
-        return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt());
+        return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt(), buf.readResourceLocation());
     }
 
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.getStatValueLoc());
         buf.writeVarInt(this.threshold);
+        buf.writeResourceLocation(this.iconLocation);
     }
 }
