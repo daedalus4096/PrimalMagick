@@ -42,7 +42,7 @@ public class StatProgressWidget extends AbstractWidget {
         this.maxValue = maxProgressValue;
         this.currentValue = StatsManager.getValue(mc.player, stat);
         this.isComplete = isComplete;
-        this.iconLoc = UNKNOWN_TEXTURE; // TODO Get icon location from stat
+        this.iconLoc = stat.iconLocationOpt().orElse(UNKNOWN_TEXTURE);
     }
 
     @Override

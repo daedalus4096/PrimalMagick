@@ -16,7 +16,7 @@ import net.minecraft.stats.StatFormatter;
  * 
  * @author Daedalus4096
  */
-public record Stat(ResourceLocation key, StatFormatter formatter, boolean hidden, boolean internal, boolean hasHint) {
+public record Stat(ResourceLocation key, StatFormatter formatter, Optional<ResourceLocation> iconLocationOpt, boolean hidden, boolean internal, boolean hasHint) {
     @Nonnull
     public String getTranslationKey() {
         return String.join(".", "stat", this.key.getNamespace(), this.key.getPath());
@@ -42,6 +42,7 @@ public record Stat(ResourceLocation key, StatFormatter formatter, boolean hidden
     public static class Builder {
         protected final ResourceLocation key;
         protected StatFormatter formatter = StatFormatter.DEFAULT;
+        protected Optional<ResourceLocation> iconLocationOpt = Optional.empty();
         protected boolean hidden = false;
         protected boolean internal = false;
         protected boolean hasHint = false;
@@ -52,6 +53,11 @@ public record Stat(ResourceLocation key, StatFormatter formatter, boolean hidden
         
         public Builder formatter(StatFormatter formatter) {
             this.formatter = formatter;
+            return this;
+        }
+        
+        public Builder icon(ResourceLocation iconLoc) {
+            this.iconLocationOpt = Optional.ofNullable(iconLoc);
             return this;
         }
         
@@ -71,7 +77,7 @@ public record Stat(ResourceLocation key, StatFormatter formatter, boolean hidden
         }
         
         public Stat build() {
-            return new Stat(this.key, this.formatter, this.hidden, this.internal, this.hasHint);
+            return new Stat(this.key, this.formatter, this.iconLocationOpt, this.hidden, this.internal, this.hasHint);
         }
     }
 }
