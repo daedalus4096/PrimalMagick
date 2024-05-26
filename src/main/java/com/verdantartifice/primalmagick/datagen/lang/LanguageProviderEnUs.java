@@ -1789,6 +1789,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.grimoire("must_craft_header").name("Must craft:").build();
         this.grimoire("required_knowledge_header").name("Required knowledge:").build();
         this.grimoire("required_research_header").name("Must be discovered:").build();
+        this.grimoire("required_stats_header").name("Statistics needed:").build();
         this.grimoire("ritual_offerings_header").name("Offerings:").build();
         this.grimoire("ritual_props_header").name("Props:").build();
         this.grimoire("complete_button").name("Complete").build();

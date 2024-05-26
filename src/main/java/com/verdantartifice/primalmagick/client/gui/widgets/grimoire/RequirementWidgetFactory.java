@@ -1,6 +1,5 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.verdantartifice.primalmagick.common.research.ResearchStage;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.IVanillaStatRequirement;
 import com.verdantartifice.primalmagick.common.research.requirements.ItemStackRequirement;
@@ -12,7 +11,7 @@ import com.verdantartifice.primalmagick.common.research.requirements.StatRequire
 import net.minecraft.client.gui.components.AbstractWidget;
 
 public class RequirementWidgetFactory {
-    public static AbstractWidget fromRequirement(AbstractRequirement<?> requirement, int x, int y, boolean isComplete, ResearchStage stage) {
+    public static AbstractWidget fromRequirement(AbstractRequirement<?> requirement, int x, int y, boolean isComplete) {
         if (requirement instanceof ItemStackRequirement req) {
             return new ItemStackWidget(req.getStack(), x, y, isComplete);
         } else if (requirement instanceof ItemTagRequirement req) {
