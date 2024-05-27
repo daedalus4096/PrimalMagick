@@ -684,6 +684,24 @@ public class ResearchEntries {
                         .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
                         .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).end()
                 .build());
+        register(context, ALCHEMICAL_WASTE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.ALCHEMICAL_WASTE.get()).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, QUARTZ, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.QUARTZ).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.QUARTZ_NUGGET.get()).recipe(PrimalMagick.resource("quartz_from_nuggets")).recipe(PrimalMagick.resource("quartz_from_smelting")).end()
+                .build());
+        register(context, INNER_DEMON, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, BOOKSHELF, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BOOKSHELF).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, BEEHIVE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BEEHIVE).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, BEACON, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BEACON).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
 
     }
     

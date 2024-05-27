@@ -1202,25 +1202,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SCANS";
-        ResearchEntryBuilder.entry("ALCHEMICAL_WASTE", discipline).hidden().icon(ItemsPM.ALCHEMICAL_WASTE.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("QUARTZ", discipline).hidden().icon(Items.QUARTZ).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.QUARTZ_NUGGET.get()).recipe(PrimalMagick.resource("quartz_from_nuggets"))
-                    .recipe(PrimalMagick.resource("quartz_from_smelting")).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("INNER_DEMON", discipline).hidden().icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("BOOKSHELF", discipline).hidden().icon(Items.BOOKSHELF).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("BEEHIVE", discipline).hidden().icon(Items.BEEHIVE).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("BEACON", discipline).hidden().icon(Items.BEACON).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
         ResearchEntryBuilder.entry("DRAGON_EGG", discipline).hidden().icon(Items.DRAGON_EGG).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
