@@ -69,12 +69,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
-        ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.getUnknownImage())
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood", true).requiredResearch("m_sotu_discover_infernal", true).requiredResearch("m_sotu_discover_void", true)
-                    .requiredResearch("t_sotu_research_arcanometer", true).requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true)
-                    .requiredResearch("t_sotu_research_sanguine_crucible", true).requiredResearch("t_sotu_research_cleansing_rite", true).requiredResearch("b_sotu_scan_hallowed_orb", true).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 4).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("COMPLETE_BASICS", discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)

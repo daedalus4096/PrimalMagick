@@ -9,6 +9,7 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -313,6 +314,15 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> ENV_SKY = create("env_sky");
     public static final ResourceKey<ResearchEntry> ENV_SUN = create("env_sun");
     public static final ResourceKey<ResearchEntry> ENV_MOON = create("env_moon");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
+    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
+    public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_ARCANOMETER = create("sotu_research_arcanometer");
+    public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_HEXIUM = create("sotu_research_hexium");
+    public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_POWER_RUNE = create("sotu_research_power_rune");
+    public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_SANGUINE_CRUCIBLE = create("sotu_research_sanguine_crucible");
+    public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_CLEANSING_RITE = create("sotu_research_cleansing_rite");
+    public static final ResourceKey<ResearchEntry> SOTU_SCAN_HALLOWED_ORB = create("sotu_scan_hallowed_orb");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
@@ -323,10 +333,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_BLOOD = create("sotu_discover_blood");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_INFERNAL = create("sotu_discover_infernal");
-    public static final ResourceKey<ResearchEntry> SOTU_DISCOVER_VOID = create("sotu_discover_void");
-    public static final ResourceKey<ResearchEntry> SOTU_SCAN_HALLOWED_ORB = create("sotu_scan_hallowed_orb");
     public static final ResourceKey<ResearchEntry> SCAN_PRIMALITE = create("scan_primalite");
     public static final ResourceKey<ResearchEntry> SCAN_HEXIUM = create("scan_hexium");
     public static final ResourceKey<ResearchEntry> SCAN_HALLOWSTEEL = create("scan_hallowsteel");
@@ -451,6 +457,12 @@ public class ResearchEntries {
                 .stage().requiredItem(Tags.Items.NETHER_STARS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_HALLOWED, 100).end()
                 .stage().attunement(Sources.HALLOWED, 5).end()
                 .build());
+        register(context, SECRETS_OF_THE_UNIVERSE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_UNKNOWN)
+                .stage().requiredResearch(SOTU_DISCOVER_BLOOD).requiredResearch(SOTU_DISCOVER_INFERNAL).requiredResearch(SOTU_DISCOVER_VOID)
+                        .requiredResearch(SOTU_RESEARCH_ARCANOMETER).requiredResearch(SOTU_RESEARCH_HEXIUM).requiredResearch(SOTU_RESEARCH_POWER_RUNE)
+                        .requiredResearch(SOTU_RESEARCH_SANGUINE_CRUCIBLE).requiredResearch(SOTU_RESEARCH_CLEANSING_RITE).requiredResearch(SOTU_SCAN_HALLOWED_ORB).end()
+                .stage().attunement(Sources.HALLOWED, 4).end()
+                .build());
     }
     
     private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
@@ -472,6 +484,15 @@ public class ResearchEntries {
         register(context, ENV_SKY, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
         register(context, ENV_SUN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
         register(context, ENV_MOON, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, SOTU_DISCOVER_BLOOD, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, SOTU_DISCOVER_INFERNAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, SOTU_DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, SOTU_RESEARCH_ARCANOMETER, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
+        register(context, SOTU_RESEARCH_HEXIUM, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
+        register(context, SOTU_RESEARCH_POWER_RUNE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
+        register(context, SOTU_RESEARCH_SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
+        register(context, SOTU_RESEARCH_CLEANSING_RITE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
+        register(context, SOTU_SCAN_HALLOWED_ORB, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
