@@ -508,14 +508,14 @@ public class ResearchEntries {
                         .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).end()
                 .build());
         register(context, SUPREME_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(WAND_CAP_HEXIUM).parent(WAND_GEM_WIZARD)
-                .stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
                 .stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
                         .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BOOKSHELF.get()).end()
                 .build());
         register(context, COMPLETE_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MANAWEAVING).finale(discipline)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
@@ -524,6 +524,28 @@ public class ResearchEntries {
     
     private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
         // TODO Define research entries
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.ALCHEMY;
+        register(context, BASIC_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(UNLOCK_ALCHEMY)
+                .stage().requiredCraft(ItemsPM.ESSENCE_FURNACE.get()).end()
+                .stage().end()
+                .build());
+        register(context, EXPERT_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_BASIC).parent(STONEMELDING)
+                .stage().requiredStat(StatsPM.CRAFTED_ALCHEMY, 50).end()
+                .stage().end()
+                .build());
+        register(context, MASTER_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_ENCHANTED).parent(PRIMALITE)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_ALCHEMY, 250).end()
+                .stage().end()
+                .build());
+        register(context, SUPREME_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(CALCINATOR_FORBIDDEN).parent(HEXIUM)
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_ALCHEMY, 1000).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().end()
+                .build());
+        register(context, COMPLETE_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_ALCHEMY).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
         
     }
     

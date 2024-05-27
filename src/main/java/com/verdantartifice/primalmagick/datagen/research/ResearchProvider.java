@@ -283,27 +283,6 @@ public class ResearchProvider implements DataProvider {
     
     protected void registerAlchemyEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "ALCHEMY";
-        ResearchEntryBuilder.entry("BASIC_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("UNLOCK_ALCHEMY")
-            .stage(ResearchStageBuilder.stage().requiredCraftStack(ItemsPM.ESSENCE_FURNACE.get()).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_BASIC").parent("STONEMELDING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_alchemy_expert").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_ENCHANTED").parent("PRIMALITE")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_alchemy_master").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_ALCHEMY", discipline).icon("textures/research/discipline_alchemy.png").parent("CALCINATOR_FORBIDDEN").parent("HEXIUM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_alchemy_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_ALCHEMY", discipline).hidden().icon("textures/research/discipline_alchemy.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("STONEMELDING", discipline).icon(Items.STONE).parent("BASIC_ALCHEMY")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredCraftStack(Items.STONE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).recipe(PrimalMagick.MODID, "stone_from_stonemelding").recipe(PrimalMagick.MODID, "deepslate_from_stonemelding")
