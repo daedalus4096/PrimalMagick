@@ -57,7 +57,6 @@ public class ResearchProvider implements DataProvider {
     }
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {
-        this.registerBasicsEntries(consumer);
         this.registerManaweavingEntries(consumer);
         this.registerAlchemyEntries(consumer);
         this.registerSorceryEntries(consumer);
@@ -67,21 +66,6 @@ public class ResearchProvider implements DataProvider {
         this.registerScanEntries(consumer);
     }
 
-    protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
-        String discipline = "BASICS";
-        ResearchEntryBuilder.entry("COMPLETE_BASICS", discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("THEORY_OF_EVERYTHING", discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale("BASICS").finale("ALCHEMY").finale("MAGITECH").finale("MANAWEAVING")
-            .finale("RITUAL").finale("RUNEWORKING").finale("SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
-                    .attunement(Sources.BLOOD, 2).attunement(Sources.INFERNAL, 2).attunement(Sources.VOID, 2).attunement(Sources.HALLOWED, 2).build())
-            .build(consumer);
-    }
-    
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MANAWEAVING";
         ResearchEntryBuilder.entry("BASIC_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("UNLOCK_MANAWEAVING")

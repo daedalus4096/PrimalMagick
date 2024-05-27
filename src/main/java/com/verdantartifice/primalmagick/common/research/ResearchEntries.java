@@ -9,7 +9,6 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -42,7 +41,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNLOCK_RUNEWORKING = create("unlock_runeworking");
     public static final ResourceKey<ResearchEntry> UNLOCK_RITUAL = create("unlock_ritual");
     public static final ResourceKey<ResearchEntry> UNLOCK_MAGITECH = create("unlock_magitech");
-    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> TERRESTRIAL_MAGICK = create("terrestrial_magick");
     public static final ResourceKey<ResearchEntry> SOURCE_EARTH = create("source_earth");
     public static final ResourceKey<ResearchEntry> SOURCE_SEA = create("source_sea");
@@ -462,6 +460,18 @@ public class ResearchEntries {
                         .requiredResearch(SOTU_RESEARCH_ARCANOMETER).requiredResearch(SOTU_RESEARCH_HEXIUM).requiredResearch(SOTU_RESEARCH_POWER_RUNE)
                         .requiredResearch(SOTU_RESEARCH_SANGUINE_CRUCIBLE).requiredResearch(SOTU_RESEARCH_CLEANSING_RITE).requiredResearch(SOTU_SCAN_HALLOWED_ORB).end()
                 .stage().attunement(Sources.HALLOWED, 4).end()
+                .build());
+        register(context, COMPLETE_BASICS, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+        register(context, THEORY_OF_EVERYTHING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.GRIMOIRE.get()).finale(ResearchDisciplines.BASICS)
+                .finale(ResearchDisciplines.ALCHEMY).finale(ResearchDisciplines.MAGITECH).finale(ResearchDisciplines.MANAWEAVING)
+                .finale(ResearchDisciplines.RITUAL).finale(ResearchDisciplines.RUNEWORKING).finale(ResearchDisciplines.SORCERY)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
+                        .attunement(Sources.BLOOD, 2).attunement(Sources.INFERNAL, 2).attunement(Sources.VOID, 2).attunement(Sources.HALLOWED, 2).end()
                 .build());
     }
     
