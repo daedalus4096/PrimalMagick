@@ -1026,27 +1026,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerMagitechEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MAGITECH";
-        ResearchEntryBuilder.entry("BASIC_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("UNLOCK_MAGITECH")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HONEY_EXTRACTOR").parent("SEASCRIBE_PEN")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_magitech_expert").requiredResearch("b_scan_primalite", true).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("ARCANOMETER").parent("PRIMALITE_GOLEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_magitech_master").requiredResearch("b_scan_hexium", true).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_MAGITECH", discipline).icon("textures/research/discipline_magitech.png").parent("HEXIUM_GOLEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_magitech_supreme").requiredResearch("b_scan_hallowsteel", true)
-                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_MAGITECH", discipline).hidden().icon("textures/research/discipline_magitech.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("HONEY_EXTRACTOR", discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent("BASIC_MAGITECH")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.HONEYCOMB).requiredItemStack(Items.HONEY_BOTTLE).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HONEY_EXTRACTOR.get()).build())

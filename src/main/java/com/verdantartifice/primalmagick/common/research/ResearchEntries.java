@@ -321,6 +321,9 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_SANGUINE_CRUCIBLE = create("sotu_research_sanguine_crucible");
     public static final ResourceKey<ResearchEntry> SOTU_RESEARCH_CLEANSING_RITE = create("sotu_research_cleansing_rite");
     public static final ResourceKey<ResearchEntry> SOTU_SCAN_HALLOWED_ORB = create("sotu_scan_hallowed_orb");
+    public static final ResourceKey<ResearchEntry> SCAN_PRIMALITE = create("scan_primalite");
+    public static final ResourceKey<ResearchEntry> SCAN_HEXIUM = create("scan_hexium");
+    public static final ResourceKey<ResearchEntry> SCAN_HALLOWSTEEL = create("scan_hallowsteel");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
@@ -331,9 +334,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
-    public static final ResourceKey<ResearchEntry> SCAN_PRIMALITE = create("scan_primalite");
-    public static final ResourceKey<ResearchEntry> SCAN_HEXIUM = create("scan_hexium");
-    public static final ResourceKey<ResearchEntry> SCAN_HALLOWSTEEL = create("scan_hallowsteel");
     public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
@@ -629,7 +629,28 @@ public class ResearchEntries {
     
     private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
         // TODO Define research entries
-        
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MAGITECH;
+        register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
+                .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
+                .build());
+        register(context, EXPERT_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(HONEY_EXTRACTOR).parent(SEASCRIBE_PEN)
+                .stage().requiredStat(StatsPM.CRAFTED_MAGITECH, 5).requiredResearch(SCAN_PRIMALITE).end()
+                .stage().recipe(ItemsPM.MAGITECH_PARTS_ENCHANTED.get()).end()
+                .build());
+        register(context, MASTER_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(ARCANOMETER).parent(PRIMALITE_GOLEM)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_MAGITECH, 25).requiredResearch(SCAN_HEXIUM).end()
+                .stage().recipe(ItemsPM.MAGITECH_PARTS_FORBIDDEN.get()).end()
+                .build());
+        register(context, SUPREME_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(HEXIUM_GOLEM)
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MAGITECH, 100).requiredResearch(SCAN_HALLOWSTEEL).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().recipe(ItemsPM.MAGITECH_PARTS_HEAVENLY.get()).end()
+                .build());
+        register(context, COMPLETE_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MAGITECH).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
     }
     
     private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
@@ -660,6 +681,9 @@ public class ResearchEntries {
         register(context, SOTU_RESEARCH_SANGUINE_CRUCIBLE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
         register(context, SOTU_RESEARCH_CLEANSING_RITE, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).hasHint().build());
         register(context, SOTU_SCAN_HALLOWED_ORB, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
+        register(context, SCAN_PRIMALITE, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
+        register(context, SCAN_HEXIUM, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
+        register(context, SCAN_HALLOWSTEEL, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
