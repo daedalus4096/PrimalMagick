@@ -551,7 +551,28 @@ public class ResearchEntries {
     
     private static void bootstrapSorceryEntries(BootstapContext<ResearchEntry> context) {
         // TODO Define research entries
-        
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SORCERY;
+        register(context, BASIC_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(UNLOCK_SORCERY)
+                .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).end()
+                .build());
+        register(context, EXPERT_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_PAYLOAD_LIGHTNING).parent(SPELL_PAYLOAD_FROST)
+                .stage().requiredStat(StatsPM.SPELLS_CRAFTED, 1).requiredStat(StatsPM.SPELLS_CAST, 10).end()
+                .stage().end()
+                .build());
+        register(context, MASTER_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_VEHICLE_PROJECTILE).parent(SPELL_MOD_AMPLIFY)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.SPELLS_CAST, 50).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 50).end()
+                .stage().end()
+                .build());
+        register(context, SUPREME_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(SPELL_VEHICLE_BOLT).parent(SPELL_MOD_QUICKEN)
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.SPELLS_CAST, 250).requiredStat(StatsPM.SPELLS_CRAFTED_MAX_COST, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().end()
+                .build());
+        register(context, COMPLETE_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_SORCERY).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
     }
     
     private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {

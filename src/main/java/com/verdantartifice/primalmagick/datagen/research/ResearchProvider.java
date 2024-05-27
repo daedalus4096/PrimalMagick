@@ -545,28 +545,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SORCERY";
-        ResearchEntryBuilder.entry("BASIC_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("UNLOCK_SORCERY")
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1)
-                    .recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_PAYLOAD_LIGHTNING").parent("SPELL_PAYLOAD_FROST")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_crafted_expert").requiredResearch("t_spells_cast_expert").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_VEHICLE_PROJECTILE").parent("SPELL_MOD_AMPLIFY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_spells_cast_master").requiredResearch("t_spell_cost_master").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_SORCERY", discipline).icon("textures/research/discipline_sorcery.png").parent("SPELL_VEHICLE_BOLT").parent("SPELL_MOD_QUICKEN")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("t_spells_cast_supreme").requiredResearch("t_spell_cost_supreme")
-                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_SORCERY", discipline).hidden().icon("textures/research/discipline_sorcery.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).icon(ItemsPM.WAND_INSCRIPTION_TABLE.get()).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
             .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_crafted_expert").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_INSCRIPTION_TABLE.get()).build())
