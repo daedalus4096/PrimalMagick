@@ -363,6 +363,7 @@ public class ResearchEntries {
         bootstrapRuneworkingEntries(context);
         bootstrapRitualEntries(context);
         bootstrapMagitechEntries(context);
+        bootstrapScanEntries(context);
         bootstrapInternalEntries(context);
     }
     
@@ -649,6 +650,39 @@ public class ResearchEntries {
                 .stage().requiredObservations(1).end()
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
+    }
+    
+    private static void bootstrapScanEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SCANS;
+        register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
+                        .recipe(ItemsPM.MARBLE_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_BRICK_STAIRS.get()).recipe(ItemsPM.MARBLE_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_PILLAR.get())
+                        .recipe(ItemsPM.MARBLE_CHISELED.get()).recipe(ItemsPM.MARBLE_TILES.get()).recipe(ItemsPM.MARBLE_RUNED.get()).recipe(ItemsPM.MARBLE_BOOKSHELF.get()).end()
+                .build());
+        register(context, HALLOWED_ORB, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HALLOWED_ORB.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.HALLOWOOD_SAPLING.get()).end()
+                .build());
+        register(context, HALLOWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HALLOWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.HALLOWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).recipe(ItemsPM.HALLOWOOD_PLANKS.get())
+                        .recipe(ItemsPM.HALLOWOOD_SLAB.get()).recipe(ItemsPM.HALLOWOOD_STAIRS.get()).recipe(ItemsPM.HALLOWOOD_PILLAR.get()).end()
+                .build());
+        register(context, SUNWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.SUNWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.SUNWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_SUNWOOD_WOOD.get()).recipe(ItemsPM.SUNWOOD_PLANKS.get())
+                        .recipe(ItemsPM.SUNWOOD_SLAB.get()).recipe(ItemsPM.SUNWOOD_STAIRS.get()).recipe(ItemsPM.SUNWOOD_PILLAR.get()).end()
+                .build());
+        register(context, MOONWOOD_TREES, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MOONWOOD_SAPLING.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.MOONWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_MOONWOOD_WOOD.get()).recipe(ItemsPM.MOONWOOD_PLANKS.get())
+                        .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).end()
+                .build());
+        register(context, ROCK_SALT, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.REFINED_SALT.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.REFINED_SALT.get()).recipe(PrimalMagick.resource("rock_salt_from_smelting"))
+                        .recipe(ItemsPM.SALT_BLOCK.get()).recipe(PrimalMagick.resource("refined_salt_from_salt_block"))
+                        .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
+                        .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
+                        .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).end()
                 .build());
 
     }

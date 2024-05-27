@@ -1202,33 +1202,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SCANS";
-        ResearchEntryBuilder.entry("RAW_MARBLE", discipline).hidden().icon(ItemsPM.MARBLE_RAW.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())
-                    .recipe(ItemsPM.MARBLE_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_BRICK_STAIRS.get()).recipe(ItemsPM.MARBLE_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_PILLAR.get())
-                    .recipe(ItemsPM.MARBLE_CHISELED.get()).recipe(ItemsPM.MARBLE_TILES.get()).recipe(ItemsPM.MARBLE_RUNED.get()).recipe(ItemsPM.MARBLE_BOOKSHELF.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("HALLOWED_ORB", discipline).hidden().icon(ItemsPM.HALLOWED_ORB.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_SAPLING.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("HALLOWOOD_TREES", discipline).hidden().icon(ItemsPM.HALLOWOOD_SAPLING.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HALLOWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_HALLOWOOD_WOOD.get()).recipe(ItemsPM.HALLOWOOD_PLANKS.get())
-                    .recipe(ItemsPM.HALLOWOOD_SLAB.get()).recipe(ItemsPM.HALLOWOOD_STAIRS.get()).recipe(ItemsPM.HALLOWOOD_PILLAR.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUNWOOD_TREES", discipline).hidden().icon(ItemsPM.SUNWOOD_SAPLING.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.SUNWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_SUNWOOD_WOOD.get()).recipe(ItemsPM.SUNWOOD_PLANKS.get())
-                    .recipe(ItemsPM.SUNWOOD_SLAB.get()).recipe(ItemsPM.SUNWOOD_STAIRS.get()).recipe(ItemsPM.SUNWOOD_PILLAR.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MOONWOOD_TREES", discipline).hidden().icon(ItemsPM.MOONWOOD_SAPLING.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MOONWOOD_WOOD.get()).recipe(ItemsPM.STRIPPED_MOONWOOD_WOOD.get()).recipe(ItemsPM.MOONWOOD_PLANKS.get())
-                    .recipe(ItemsPM.MOONWOOD_SLAB.get()).recipe(ItemsPM.MOONWOOD_STAIRS.get()).recipe(ItemsPM.MOONWOOD_PILLAR.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("ROCK_SALT", discipline).hidden().icon(ItemsPM.REFINED_SALT.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.REFINED_SALT.get()).recipe(PrimalMagick.resource("rock_salt_from_smelting"))
-                    .recipe(ItemsPM.SALT_BLOCK.get()).recipe(PrimalMagick.resource("refined_salt_from_salt_block"))
-                    .recipe(ItemsPM.SALTED_BAKED_POTATO.get()).recipe(ItemsPM.SALTED_BEETROOT_SOUP.get()).recipe(ItemsPM.SALTED_COOKED_BEEF.get())
-                    .recipe(ItemsPM.SALTED_COOKED_CHICKEN.get()).recipe(ItemsPM.SALTED_COOKED_COD.get()).recipe(ItemsPM.SALTED_COOKED_MUTTON.get()).recipe(ItemsPM.SALTED_COOKED_PORKCHOP.get())
-                    .recipe(ItemsPM.SALTED_COOKED_RABBIT.get()).recipe(ItemsPM.SALTED_COOKED_SALMON.get()).recipe(ItemsPM.SALTED_MUSHROOM_STEW.get()).recipe(ItemsPM.SALTED_RABBIT_STEW.get()).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("ALCHEMICAL_WASTE", discipline).hidden().icon(ItemsPM.ALCHEMICAL_WASTE.get()).parent("UNLOCK_SCANS")
             .stage(ResearchStageBuilder.stage().build())
             .build(consumer);
