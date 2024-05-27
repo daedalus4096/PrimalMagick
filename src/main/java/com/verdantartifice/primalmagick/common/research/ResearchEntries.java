@@ -577,7 +577,28 @@ public class ResearchEntries {
     
     private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
         // TODO Define research entries
-        
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RUNEWORKING;
+        register(context, BASIC_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(UNLOCK_RUNEWORKING)
+                .stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).end()
+                .build());
+        register(context, EXPERT_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_EARTH).parent(RUNE_PROJECT).parent(RUNE_ITEM)
+                .stage().requiredStat(StatsPM.CRAFTED_RUNEWORKING, 10).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 2).end()
+                .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).end()
+                .build());
+        register(context, MASTER_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_ABSORB).parent(RUNE_CREATURE)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 50).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 10).end()
+                .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).end()
+                .build());
+        register(context, SUPREME_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(RUNE_POWER)
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_RUNEWORKING, 250).requiredStat(StatsPM.ITEMS_RUNESCRIBED, 50).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).end()
+                .build());
+        register(context, COMPLETE_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RUNEWORKING).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
     }
     
     private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {

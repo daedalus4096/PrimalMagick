@@ -668,27 +668,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "RUNEWORKING";
-        ResearchEntryBuilder.entry("BASIC_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("UNLOCK_RUNEWORKING")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNECARVING_TABLE.get()).recipe(ItemsPM.RUNE_UNATTUNED.get()).recipe(ItemsPM.RUNESCRIBING_ALTAR_BASIC.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_EARTH").parent("RUNE_PROJECT").parent("RUNE_ITEM")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_runeworking_expert").requiredResearch("t_items_runescribed_expert").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_ENCHANTED.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_ABSORB").parent("RUNE_CREATURE")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_runeworking_master").requiredResearch("t_items_runescribed_master").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_FORBIDDEN.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_RUNEWORKING", discipline).icon("textures/research/discipline_runeworking.png").parent("RUNE_POWER")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_runeworking_supreme").requiredResearch("t_items_runescribed_supreme")
-                    .reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RUNESCRIBING_ALTAR_HEAVENLY.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_RUNEWORKING", discipline).hidden().icon("textures/research/discipline_runeworking.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("RUNE_EARTH", discipline).icon(ItemsPM.RUNE_EARTH.get()).parent("BASIC_RUNEWORKING")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.RUNE_EARTH.get()).build())
