@@ -603,7 +603,28 @@ public class ResearchEntries {
     
     private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {
         // TODO Define research entries
-        
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RITUAL;
+        register(context, BASIC_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(UNLOCK_RITUAL)
+                .stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).end()
+                .build());
+        register(context, EXPERT_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(RITUAL_CANDLES).parent(INCENSE_BRAZIER)
+                .stage().requiredStat(StatsPM.RITUALS_COMPLETED, 2).end()
+                .stage().end()
+                .build());
+        register(context, MASTER_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(RITUAL_LECTERN).parent(RITUAL_BELL)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.RITUALS_COMPLETED, 10).end()
+                .stage().end()
+                .build());
+        register(context, SUPREME_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(BLOODLETTER).parent(SOUL_ANVIL)
+                .stage().requiredResearch(DISCOVER_HALLOWED).requiredStat(StatsPM.RITUALS_COMPLETED, 50).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().end()
+                .build());
+        register(context, COMPLETE_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_RITUAL).finale(discipline)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
     }
     
     private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {

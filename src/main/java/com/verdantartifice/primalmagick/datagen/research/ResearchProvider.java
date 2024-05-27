@@ -778,26 +778,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerRitualEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "RITUAL";
-        ResearchEntryBuilder.entry("BASIC_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("UNLOCK_RITUAL")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("RITUAL_CANDLES").parent("INCENSE_BRAZIER")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_rituals_completed_expert").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("RITUAL_LECTERN").parent("RITUAL_BELL")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("t_rituals_completed_master").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_RITUAL", discipline).icon("textures/research/discipline_ritual.png").parent("BLOODLETTER").parent("SOUL_ANVIL")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("t_rituals_completed_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_RITUAL", discipline).hidden().icon("textures/research/discipline_ritual.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("MANAFRUIT", discipline).icon(ItemsPM.MANAFRUIT.get()).parent("BASIC_RITUAL").parent("MANA_SALTS").parent("RITUAL_CANDLES")
             .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANAFRUIT.get()).build())
