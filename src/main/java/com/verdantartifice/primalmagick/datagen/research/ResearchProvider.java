@@ -68,35 +68,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MANAWEAVING";
-        ResearchEntryBuilder.entry("BASIC_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("UNLOCK_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_PRISM.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EXPERT_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("MANA_ARROWS").parent("WAND_CHARGER")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_crafted_manaweaving_expert").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_ENCHANTED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
-                    .recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICKS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_CHISELED.get())
-                    .recipe(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).recipe(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_SLAB.get())
-                    .recipe(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BOOKSHELF.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MASTER_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("WAND_CAP_GOLD").parent("WAND_GEM_ADEPT")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_discover_forbidden").requiredResearch("b_crafted_manaweaving_master").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_SMOKED.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_STAIRS.get())
-                    .recipe(ItemsPM.MARBLE_SMOKED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICKS.get()).recipe(ItemsPM.MARBLE_SMOKED_CHISELED.get())
-                    .recipe(ItemsPM.MARBLE_SMOKED_PILLAR.get()).recipe(ItemsPM.MARBLE_SMOKED_RUNED.get()).recipe(ItemsPM.MARBLE_SMOKED_SLAB.get())
-                    .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUPREME_MANAWEAVING", discipline).icon("textures/research/discipline_manaweaving.png").parent("WAND_CAP_HEXIUM").parent("WAND_GEM_WIZARD")
-            .stage(ResearchStageBuilder.stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredResearch("b_crafted_manaweaving_supreme").reveals("SECRETS_OF_THE_UNIVERSE").build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
-                    .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
-                    .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
-                    .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BOOKSHELF.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("COMPLETE_MANAWEAVING", discipline).hidden().icon("textures/research/discipline_manaweaving.png").finale(discipline)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
-                    .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("WAND_CHARGER", discipline).icon(ItemsPM.WAND_CHARGER.get()).parent("BASIC_MANAWEAVING")
             .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_CHARGER.get()).build())

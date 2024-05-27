@@ -340,6 +340,12 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     // Commonly used research icons
+    private static final ResourceLocation ICON_MANAWEAVING = PrimalMagick.resource("textures/research/discipline_manaweaving.png");
+    private static final ResourceLocation ICON_ALCHEMY = PrimalMagick.resource("textures/research/discipline_alchemy.png");
+    private static final ResourceLocation ICON_SORCERY = PrimalMagick.resource("textures/research/discipline_sorcery.png");
+    private static final ResourceLocation ICON_RUNEWORKING = PrimalMagick.resource("textures/research/discipline_runeworking.png");
+    private static final ResourceLocation ICON_RITUAL = PrimalMagick.resource("textures/research/discipline_ritual.png");
+    private static final ResourceLocation ICON_MAGITECH = PrimalMagick.resource("textures/research/discipline_magitech.png");
     private static final ResourceLocation ICON_BAG = PrimalMagick.resource("textures/research/research_bag.png");
     private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
     private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
@@ -351,6 +357,12 @@ public class ResearchEntries {
     
     public static void bootstrap(BootstapContext<ResearchEntry> context) {
         bootstrapBasicsEntries(context);
+        bootstrapManaweavingEntries(context); 
+        bootstrapAlchemyEntries(context);
+        bootstrapSorceryEntries(context);
+        bootstrapRuneworkingEntries(context);
+        bootstrapRitualEntries(context);
+        bootstrapMagitechEntries(context);
         bootstrapInternalEntries(context);
     }
     
@@ -381,27 +393,27 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).end()
                 .build());
 */
-        register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_manaweaving.png").parent(FIRST_STEPS)
+        register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        register(context, UNLOCK_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_alchemy.png").parent(MANA_ARROWS)
+        register(context, UNLOCK_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_ALCHEMY).parent(MANA_ARROWS)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        register(context, UNLOCK_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_sorcery.png").parent(WAND_CHARGER)
+        register(context, UNLOCK_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(WAND_CHARGER)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        register(context, UNLOCK_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_runeworking.png").parent(CALCINATOR_BASIC)
+        register(context, UNLOCK_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RUNEWORKING).parent(CALCINATOR_BASIC)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        register(context, UNLOCK_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_ritual.png").parent(WAND_INSCRIPTION).parent(RUNE_PROJECT)
+        register(context, UNLOCK_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(WAND_INSCRIPTION).parent(RUNE_PROJECT)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
-        register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_magitech.png").parent(MANAFRUIT).parent(MANA_SALTS)
+        register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(MANAFRUIT).parent(MANA_SALTS)
                 .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
@@ -473,6 +485,66 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
                         .attunement(Sources.BLOOD, 2).attunement(Sources.INFERNAL, 2).attunement(Sources.VOID, 2).attunement(Sources.HALLOWED, 2).end()
                 .build());
+    }
+    
+    private static void bootstrapManaweavingEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MANAWEAVING;
+        register(context, BASIC_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(UNLOCK_MANAWEAVING)
+                .stage().recipe(ItemsPM.MANA_PRISM.get()).end()
+                .build());
+        register(context, EXPERT_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(MANA_ARROWS).parent(WAND_CHARGER)
+                .stage().requiredStat(StatsPM.CRAFTED_MANAWEAVING, 10).end()
+                .stage().recipe(ItemsPM.MARBLE_ENCHANTED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_STAIRS.get())
+                        .recipe(ItemsPM.MARBLE_ENCHANTED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BRICKS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_CHISELED.get())
+                        .recipe(ItemsPM.MARBLE_ENCHANTED_PILLAR.get()).recipe(ItemsPM.MARBLE_ENCHANTED_RUNED.get()).recipe(ItemsPM.MARBLE_ENCHANTED_SLAB.get())
+                        .recipe(ItemsPM.MARBLE_ENCHANTED_STAIRS.get()).recipe(ItemsPM.MARBLE_ENCHANTED_WALL.get()).recipe(ItemsPM.MARBLE_ENCHANTED_BOOKSHELF.get()).end()
+                .build());
+        register(context, MASTER_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(WAND_CAP_GOLD).parent(WAND_GEM_ADEPT)
+                .stage().requiredResearch(DISCOVER_FORBIDDEN).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 50).end()
+                .stage().recipe(ItemsPM.MARBLE_SMOKED.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICK_STAIRS.get())
+                        .recipe(ItemsPM.MARBLE_SMOKED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BRICKS.get()).recipe(ItemsPM.MARBLE_SMOKED_CHISELED.get())
+                        .recipe(ItemsPM.MARBLE_SMOKED_PILLAR.get()).recipe(ItemsPM.MARBLE_SMOKED_RUNED.get()).recipe(ItemsPM.MARBLE_SMOKED_SLAB.get())
+                        .recipe(ItemsPM.MARBLE_SMOKED_STAIRS.get()).recipe(ItemsPM.MARBLE_SMOKED_WALL.get()).recipe(ItemsPM.MARBLE_SMOKED_BOOKSHELF.get()).end()
+                .build());
+        register(context, SUPREME_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(WAND_CAP_HEXIUM).parent(WAND_GEM_WIZARD)
+                .stage().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).requiredStat(StatsPM.CRAFTED_MANAWEAVING, 250).reveals(SECRETS_OF_THE_UNIVERSE).end()
+                .stage().recipe(ItemsPM.MARBLE_HALLOWED.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_SLAB.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICK_STAIRS.get())
+                        .recipe(ItemsPM.MARBLE_HALLOWED_BRICK_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BRICKS.get()).recipe(ItemsPM.MARBLE_HALLOWED_CHISELED.get())
+                        .recipe(ItemsPM.MARBLE_HALLOWED_PILLAR.get()).recipe(ItemsPM.MARBLE_HALLOWED_RUNED.get()).recipe(ItemsPM.MARBLE_HALLOWED_SLAB.get())
+                        .recipe(ItemsPM.MARBLE_HALLOWED_STAIRS.get()).recipe(ItemsPM.MARBLE_HALLOWED_WALL.get()).recipe(ItemsPM.MARBLE_HALLOWED_BOOKSHELF.get()).end()
+                .build());
+        register(context, COMPLETE_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ICON_MANAWEAVING).finale(discipline)
+                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
+                        .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
+                .build());
+
+    }
+    
+    private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        
+    }
+    
+    private static void bootstrapSorceryEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        
+    }
+    
+    private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        
+    }
+    
+    private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        
+    }
+    
+    private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
+        // TODO Define research entries
+        
     }
     
     private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {
