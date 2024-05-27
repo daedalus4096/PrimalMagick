@@ -69,44 +69,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerBasicsEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "BASICS";
-        ResearchEntryBuilder.entry("FORBIDDEN_MAGICK", discipline).parent("TERRESTRIAL_MAGICK").parent("t_discover_forbidden")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_BLOOD)
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(Tags.Items.BONES).requiredItemStack(ItemsPM.BLOODY_FLESH.get())
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_blood_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_INFERNAL", discipline).icon(Sources.INFERNAL.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_INFERNAL)
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(Tags.Items.RODS_BLAZE).requiredItemStack(Items.SOUL_SAND)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_infernal_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_VOID", discipline).icon(Sources.VOID.getImage()).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_VOID)
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(Tags.Items.END_STONES).requiredItemTag(Tags.Items.ENDER_PEARLS)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_void_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 5).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("HEAVENLY_MAGICK", discipline).parent("FORBIDDEN_MAGICK").parent(ResearchEntries.DISCOVER_HALLOWED)
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SOURCE_HALLOWED", discipline).icon(Sources.HALLOWED.getImage()).parent("HEAVENLY_MAGICK")
-            .stage(ResearchStageBuilder.stage()
-                    .requiredItemTag(Tags.Items.NETHER_STARS)
-                    .requiredKnowledge(KnowledgeType.OBSERVATION, 1)
-                    .requiredResearch("t_mana_spent_hallowed_expert", true)
-                    .build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 5).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("SECRETS_OF_THE_UNIVERSE", discipline).hidden().icon(Source.getUnknownImage())
             .stage(ResearchStageBuilder.stage().requiredResearch("m_sotu_discover_blood", true).requiredResearch("m_sotu_discover_infernal", true).requiredResearch("m_sotu_discover_void", true)
                     .requiredResearch("t_sotu_research_arcanometer", true).requiredResearch("t_sotu_research_hexium", true).requiredResearch("t_sotu_research_power_rune", true)

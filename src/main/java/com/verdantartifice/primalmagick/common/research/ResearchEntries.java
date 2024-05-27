@@ -360,45 +360,45 @@ public class ResearchEntries {
                 .stage().recipe(ItemsPM.MUNDANE_WAND.get()).recipe(ItemsPM.WOOD_TABLE.get()).recipe(ItemsPM.MAGNIFYING_GLASS.get()).recipe(ItemsPM.ANALYSIS_TABLE.get()).end()
                 .build());
         register(context, THEORYCRAFTING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/knowledge_theory.png").parent(FIRST_STEPS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().requiredCraft(ItemsPM.RESEARCH_TABLE.get()).requiredCraft(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get())
                         .recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
                 .stage().requiredStat(StatsPM.THEORIES_FORMED, 1).recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
                 .stage().recipe(ItemsPM.RESEARCH_TABLE.get()).recipe(ItemsPM.ENCHANTED_INK.get()).recipe(ItemsPM.ENCHANTED_INK_AND_QUILL.get()).end()
                 .build());
         register(context, ATTUNEMENTS, key -> ResearchEntry.builder(key).discipline(discipline).parent(FIRST_STEPS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         // FIXME Re-add for 1.21 release
 /*
         register(context, LINGUISTICS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.WRITABLE_BOOK).parent(FIRST_STEPS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
+                .stage().requiredObservations(1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
                 .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).end()
                 .build());
 */
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_manaweaving.png").parent(FIRST_STEPS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, UNLOCK_ALCHEMY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_alchemy.png").parent(MANA_ARROWS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, UNLOCK_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_sorcery.png").parent(WAND_CHARGER)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, UNLOCK_RUNEWORKING, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_runeworking.png").parent(CALCINATOR_BASIC)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, UNLOCK_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_ritual.png").parent(WAND_INSCRIPTION).parent(RUNE_PROJECT)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, UNLOCK_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon("textures/research/discipline_magitech.png").parent(MANAFRUIT).parent(MANA_SALTS)
-                .stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).end()
+                .stage().requiredObservations(1).end()
                 .stage().end()
                 .build());
         register(context, TERRESTRIAL_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(ATTUNEMENTS)
@@ -428,6 +428,28 @@ public class ResearchEntries {
                 .stage().requiredItem(ItemTagsPM.MOONWOOD_LOGS).requiredItem(Tags.Items.MUSHROOMS).requiredObservations(1).requiredStat(StatsPM.SHRINE_FOUND_MOON, 1)
                         .requiredResearch(ENV_MOON).requiredStat(StatsPM.MANA_SPENT_MOON, 100).end()
                 .stage().attunement(Sources.MOON, 5).end()
+                .build());
+        register(context, FORBIDDEN_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(TERRESTRIAL_MAGICK).parent(DISCOVER_FORBIDDEN)
+                .stage().end()
+                .build());
+        register(context, SOURCE_BLOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.BLOOD.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_BLOOD)
+                .stage().requiredItem(Tags.Items.BONES).requiredItem(ItemsPM.BLOODY_FLESH.get()).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_BLOOD, 100).end()
+                .stage().attunement(Sources.BLOOD, 5).end()
+                .build());
+        register(context, SOURCE_INFERNAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.INFERNAL.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_INFERNAL)
+                .stage().requiredItem(Tags.Items.RODS_BLAZE).requiredItem(Items.SOUL_SAND).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_INFERNAL, 100).end()
+                .stage().attunement(Sources.INFERNAL, 5).end()
+                .build());
+        register(context, SOURCE_VOID, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.VOID.getImage()).parent(FORBIDDEN_MAGICK).parent(DISCOVER_VOID)
+                .stage().requiredItem(Tags.Items.END_STONES).requiredItem(Tags.Items.ENDER_PEARLS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_VOID, 100).end()
+                .stage().attunement(Sources.VOID, 5).end()
+                .build());
+        register(context, HEAVENLY_MAGICK, key -> ResearchEntry.builder(key).discipline(discipline).parent(FORBIDDEN_MAGICK).parent(DISCOVER_HALLOWED)
+                .stage().end()
+                .build());
+        register(context, SOURCE_HALLOWED, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.HALLOWED.getImage()).parent(HEAVENLY_MAGICK)
+                .stage().requiredItem(Tags.Items.NETHER_STARS).requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_HALLOWED, 100).end()
+                .stage().attunement(Sources.HALLOWED, 5).end()
                 .build());
     }
     
