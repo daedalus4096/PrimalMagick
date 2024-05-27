@@ -12,6 +12,7 @@ import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
+import com.verdantartifice.primalmagick.datagen.research.ResearchAddendumBuilder;
 import com.verdantartifice.primalmagick.datagen.research.ResearchEntryBuilder;
 import com.verdantartifice.primalmagick.datagen.research.ResearchStageBuilder;
 
@@ -702,7 +703,26 @@ public class ResearchEntries {
         register(context, BEACON, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.BEACON).parent(UNLOCK_SCANS)
                 .stage().end()
                 .build());
-
+        register(context, DRAGON_EGG, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.DRAGON_EGG).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, DRAGON_HEAD, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(Items.DRAGON_HEAD).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
+        register(context, MYSTICAL_RELIC, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MYSTICAL_RELIC.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.MYSTICAL_RELIC.get()).end()
+                .build());
+        register(context, HUMMING_ARTIFACT, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent(UNLOCK_SCANS)
+                .stage().recipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SEA.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
+                        .recipe(ItemsPM.HUMMING_ARTIFACT_SUN.get()).recipe(ItemsPM.HUMMING_ARTIFACT_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).end()
+                .build());
+        register(context, TREEFOLK, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.HEARTWOOD.get()).parent(UNLOCK_SCANS)
+                .stage().end()
+                .build());
     }
     
     private static void bootstrapInternalEntries(BootstapContext<ResearchEntry> context) {

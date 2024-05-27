@@ -63,7 +63,6 @@ public class ResearchProvider implements DataProvider {
         this.registerRuneworkingEntries(consumer);
         this.registerRitualEntries(consumer);
         this.registerMagitechEntries(consumer);
-        this.registerScanEntries(consumer);
     }
 
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
@@ -1200,30 +1199,6 @@ public class ResearchProvider implements DataProvider {
             .build(consumer);
     }
 
-    protected void registerScanEntries(Consumer<IFinishedResearchEntry> consumer) {
-        String discipline = "SCANS";
-        ResearchEntryBuilder.entry("DRAGON_EGG", discipline).hidden().icon(Items.DRAGON_EGG).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("DRAGON_HEAD", discipline).hidden().icon(Items.DRAGON_HEAD).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MYSTICAL_RELIC", discipline).hidden().icon(ItemsPM.MYSTICAL_RELIC.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MYSTICAL_RELIC.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("HUMMING_ARTIFACT", discipline).hidden().icon(ItemsPM.HUMMING_ARTIFACT_UNATTUNED.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HUMMING_ARTIFACT_EARTH.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SEA.get()).recipe(ItemsPM.HUMMING_ARTIFACT_SKY.get())
-                    .recipe(ItemsPM.HUMMING_ARTIFACT_SUN.get()).recipe(ItemsPM.HUMMING_ARTIFACT_MOON.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_BLOOD).recipe(ItemsPM.HUMMING_ARTIFACT_BLOOD.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_INFERNAL).recipe(ItemsPM.HUMMING_ARTIFACT_INFERNAL.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_VOID).recipe(ItemsPM.HUMMING_ARTIFACT_VOID.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch(ResearchEntries.DISCOVER_HALLOWED).recipe(ItemsPM.HUMMING_ARTIFACT_HALLOWED.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("TREEFOLK", discipline).hidden().icon(ItemsPM.HEARTWOOD.get()).parent("UNLOCK_SCANS")
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-    }
-    
     @Override
     public String getName() {
         return "Primal Magick Grimoire Research";
