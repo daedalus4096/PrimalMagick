@@ -572,6 +572,74 @@ public class ResearchEntries {
                 .stage().attunement(Sources.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).end()
                 .addendum().requiredResearch(HEXIUM).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.SPIRIT_LANTERN.get()).end()
                 .build());
+        register(context, WAND_GEM_ADEPT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_GEM_APPRENTICE).parent(SHARD_SYNTHESIS)
+                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(1).end()
+                .stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).end()
+                .build());
+        register(context, WAND_GEM_WIZARD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).parent(MASTER_MANAWEAVING).parent(WAND_GEM_ADEPT).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(2).end()
+                .stage().recipe(ItemsPM.WIZARD_WAND_GEM_ITEM.get()).end()
+                .build());
+        register(context, WAND_GEM_ARCHMAGE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).parent(SUPREME_MANAWEAVING).parent(WAND_GEM_WIZARD).parent(CLUSTER_SYNTHESIS)
+                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredTheories(3).end()
+                .stage().recipe(ItemsPM.ARCHMAGE_WAND_GEM_ITEM.get()).end()
+                .build());
+        register(context, WAND_CAP_GOLD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GOLD_WAND_CAP_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CAP_IRON)
+                .stage().requiredItem(Tags.Items.INGOTS_GOLD).requiredTheories(1).end()
+                .stage().recipe(ItemsPM.GOLD_WAND_CAP_ITEM.get()).end()
+                .build());
+        register(context, WAND_CAP_PRIMALITE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get()).parent(WAND_CAP_GOLD).parent(PRIMALITE)
+                .stage().requiredItem(ItemTagsPM.INGOTS_PRIMALITE).requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMALITE_WAND_CAP_ITEM.get()).end()
+                .build());
+        register(context, WAND_CAP_HEXIUM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEXIUM_WAND_CAP_ITEM.get()).parent(MASTER_MANAWEAVING).parent(WAND_CAP_PRIMALITE).parent(HEXIUM)
+                .stage().requiredItem(ItemTagsPM.INGOTS_HEXIUM).requiredTheories(2).end()
+                .stage().recipe(ItemsPM.HEXIUM_WAND_CAP_ITEM.get()).end()
+                .build());
+        register(context, WAND_CAP_HALLOWSTEEL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get()).parent(SUPREME_MANAWEAVING).parent(WAND_CAP_HEXIUM).parent(HALLOWSTEEL)
+                .stage().requiredItem(ItemTagsPM.INGOTS_HALLOWSTEEL).requiredTheories(3).end()
+                .stage().recipe(ItemsPM.HALLOWSTEEL_WAND_CAP_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_OBSIDIAN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_HEARTWOOD)
+                .stage().requiredItem(Tags.Items.OBSIDIAN).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.OBSIDIAN_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.OBSIDIAN_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_CORAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CORAL_WAND_CORE_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_OBSIDIAN)
+                .stage().requiredItem(ItemTagsPM.CORAL_BLOCKS).requiredTheories(1).end()
+                .stage().attunement(Sources.SEA, 2).recipe(ItemsPM.CORAL_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.CORAL_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_BAMBOO, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BAMBOO_WAND_CORE_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_OBSIDIAN)
+                .stage().requiredItem(Items.BAMBOO).requiredTheories(1).end()
+                .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.BAMBOO_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.BAMBOO_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_SUNWOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_OBSIDIAN)
+                .stage().requiredItem(ItemsPM.SUNWOOD_LOG.get()).requiredTheories(1).end()
+                .stage().attunement(Sources.SUN, 2).recipe(ItemsPM.SUNWOOD_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.SUNWOOD_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_MOONWOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_OBSIDIAN)
+                .stage().requiredItem(ItemsPM.MOONWOOD_LOG.get()).requiredTheories(1).end()
+                .stage().attunement(Sources.MOON, 2).recipe(ItemsPM.MOONWOOD_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.MOONWOOD_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_BONE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BONE_WAND_CORE_ITEM.get()).parent(MASTER_MANAWEAVING).parent(WAND_CORE_HEARTWOOD).parent(DISCOVER_BLOOD)
+                .stage().requiredItem(Items.BONE).requiredTheories(2).end()
+                .stage().attunement(Sources.BLOOD, 3).recipe(ItemsPM.BONE_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.BONE_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_BLAZE_ROD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).parent(MASTER_MANAWEAVING).parent(WAND_CORE_HEARTWOOD).parent(DISCOVER_INFERNAL)
+                .stage().requiredItem(Tags.Items.RODS_BLAZE).requiredTheories(2).end()
+                .stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.BLAZE_ROD_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.BLAZE_ROD_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_PURPUR, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).parent(MASTER_MANAWEAVING).parent(WAND_CORE_HEARTWOOD).parent(DISCOVER_VOID)
+                .stage().requiredItem(Items.PURPUR_BLOCK).requiredTheories(2).end()
+                .stage().attunement(Sources.VOID, 3).recipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get()).end()
+                .build());
 
     }
     
