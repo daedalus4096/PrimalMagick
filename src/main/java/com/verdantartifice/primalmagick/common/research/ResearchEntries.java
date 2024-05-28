@@ -521,6 +521,23 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
+        register(context, WAND_CHARGER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.WAND_CHARGER.get()).parent(BASIC_MANAWEAVING)
+                .stage().requiredItem(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.WAND_CHARGER.get()).end()
+                .build());
+        register(context, MANA_SALTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_SALTS.get()).parent(WAND_CHARGER)
+                .stage().requiredItem(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredItem(ItemsPM.ESSENCE_DUST_SEA.get()).requiredItem(ItemsPM.ESSENCE_DUST_SKY.get())
+                        .requiredItem(ItemsPM.ESSENCE_DUST_SUN.get()).requiredItem(ItemsPM.ESSENCE_DUST_MOON.get()).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.MANA_SALTS.get()).end()
+                .build());
+        register(context, ADVANCED_WANDMAKING, key -> ResearchEntry.builder(key).discipline(discipline).parent(WAND_CHARGER)
+                .stage().requiredObservations(1).requiredStat(StatsPM.MANA_SPENT_TOTAL, 20).end()
+                .stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).end()
+                .build());
+        register(context, STAVES, key -> ResearchEntry.builder(key).discipline(discipline).parent(EXPERT_MANAWEAVING).parent(WAND_GEM_ADEPT).parent(WAND_INSCRIPTION).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(1).end()
+                .stage().end()
+                .build());
 
     }
     
@@ -656,7 +673,6 @@ public class ResearchEntries {
     }
     
     private static void bootstrapScanEntries(BootstapContext<ResearchEntry> context) {
-        // TODO Define research entries
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SCANS;
         register(context, RAW_MARBLE, key -> ResearchEntry.builder(key).discipline(discipline).hidden().icon(ItemsPM.MARBLE_RAW.get()).parent(UNLOCK_SCANS)
                 .stage().recipe(ItemsPM.MARBLE_SLAB.get()).recipe(ItemsPM.MARBLE_STAIRS.get()).recipe(ItemsPM.MARBLE_WALL.get()).recipe(ItemsPM.MARBLE_BRICKS.get())

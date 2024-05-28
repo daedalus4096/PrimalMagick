@@ -67,23 +67,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MANAWEAVING";
-        ResearchEntryBuilder.entry("WAND_CHARGER", discipline).icon(ItemsPM.WAND_CHARGER.get()).parent("BASIC_MANAWEAVING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(ItemTagsPM.ESSENCES_TERRESTRIAL_DUSTS).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_CHARGER.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("MANA_SALTS", discipline).icon(ItemsPM.MANA_SALTS.get()).parent("WAND_CHARGER")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.ESSENCE_DUST_EARTH.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_SEA.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_SKY.get())
-                    .requiredItemStack(ItemsPM.ESSENCE_DUST_SUN.get()).requiredItemStack(ItemsPM.ESSENCE_DUST_MOON.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.MANA_SALTS.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("ADVANCED_WANDMAKING", discipline).parent("WAND_CHARGER").parent("t_mana_spent_total_basics")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_ASSEMBLY_TABLE.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("STAVES", discipline).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_ADEPT").parent("WAND_INSCRIPTION").parent("SHARD_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
         ResearchEntryBuilder.entry("WAND_CORE_HEARTWOOD", discipline).icon(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).parent("ADVANCED_WANDMAKING")
             .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).recipe(PrimalMagick.resource("charcoal_from_smelting_heartwood")).build())
