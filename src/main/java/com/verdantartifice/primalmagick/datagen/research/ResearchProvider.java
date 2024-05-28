@@ -65,49 +65,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SORCERY";
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BREAK", discipline).icon(Sources.EARTH.getImage()).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_blocks_broken_barehanded_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_STONE", discipline).icon(Sources.EARTH.getImage()).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_place_stone_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_WATER", discipline).icon(Sources.SEA.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_FROST")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_drown_a_little", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SEA, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_SHEAR", discipline).icon(Sources.SKY.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING").parent("SPELL_PAYLOAD_BREAK")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_shears_used_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SKY, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLIGHT", discipline).icon(Sources.SKY.getImage()).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_LIGHTNING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_fly_elytra").requiredKnowledge(KnowledgeType.THEORY, 3).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SKY, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LIGHT", discipline).icon(Sources.SUN.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_place_torch_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SUN, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HEALING", discipline).icon(Sources.SUN.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_SOLAR")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_near_death_experience", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SUN, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH", discipline).icon(Sources.MOON.getImage()).parent("EXPERT_SORCERY").parent("SPELL_PAYLOAD_LUNAR")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_furry_friend", true).requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.MOON, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_POLYMORPH_SHEEP", discipline).hidden().finaleExempt().icon(Sources.MOON.getImage())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_ANIMAL", discipline).icon(Sources.BLOOD.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_BLOOD")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_breed_animal", true).requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONJURE_LAVA", discipline).icon(Sources.INFERNAL.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_CONJURE_WATER").parent("SPELL_PAYLOAD_FLAME")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_feel_the_burn", true).requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 3).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", discipline).icon(Sources.INFERNAL.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
             .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SOUL_SAND).requiredItemStack(Items.SOUL_SOIL).requiredKnowledge(KnowledgeType.THEORY, 2).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).build())

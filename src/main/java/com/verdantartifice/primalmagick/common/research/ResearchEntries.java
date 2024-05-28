@@ -22,9 +22,11 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.
@@ -323,16 +325,16 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SCAN_PRIMALITE = create("scan_primalite");
     public static final ResourceKey<ResearchEntry> SCAN_HEXIUM = create("scan_hexium");
     public static final ResourceKey<ResearchEntry> SCAN_HALLOWSTEEL = create("scan_hallowsteel");
+    public static final ResourceKey<ResearchEntry> DROWN_A_LITTLE = create("drown_a_little");
+    public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
+    public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
+    public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
+    public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
-    public static final ResourceKey<ResearchEntry> DROWN_A_LITTLE = create("drown_a_little");
-    public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
-    public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
-    public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
-    public static final ResourceKey<ResearchEntry> NEAR_DEATH_EXPERIENCE = create("near_death_experience");
     public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
@@ -1036,6 +1038,51 @@ public class ResearchEntries {
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.HALLOWED, 1).end()
                 .build());
+        register(context, SPELL_PAYLOAD_BREAK, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.EARTH.getImage()).parent(EXPERT_SORCERY)
+                .stage().requiredStat(StatsPM.BLOCKS_BROKEN_BAREHANDED, 50).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONJURE_STONE, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.EARTH.getImage()).parent(EXPERT_SORCERY)
+                .stage().requiredVanillaItemUsedStat(Items.COBBLESTONE, 100).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONJURE_WATER, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SEA.getImage()).parent(EXPERT_SORCERY).parent(SPELL_PAYLOAD_FROST)
+                .stage().requiredResearch(DROWN_A_LITTLE).requiredTheories(1).end()
+                .stage().attunement(Sources.SEA, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_SHEAR, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SKY.getImage()).parent(EXPERT_SORCERY)
+                .parent(SPELL_PAYLOAD_LIGHTNING).parent(SPELL_PAYLOAD_BREAK)
+                .stage().requiredStat(StatsPM.SHEARS_USED, 50).requiredTheories(1).end()
+                .stage().attunement(Sources.SKY, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_FLIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SKY.getImage()).parent(SUPREME_SORCERY).parent(SPELL_PAYLOAD_LIGHTNING)
+                .stage().requiredVanillaCustomStat(Stats.AVIATE_ONE_CM, 100000, ForgeRegistries.ITEMS.getKey(Items.ELYTRA)).requiredTheories(3).end()
+                .stage().attunement(Sources.SKY, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONJURE_LIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SUN.getImage()).parent(EXPERT_SORCERY).parent(SPELL_PAYLOAD_SOLAR)
+                .stage().requiredVanillaItemUsedStat(Items.TORCH, 100).requiredTheories(1).end()
+                .stage().attunement(Sources.SUN, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_HEALING, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SUN.getImage()).parent(EXPERT_SORCERY).parent(SPELL_PAYLOAD_SOLAR)
+                .stage().requiredResearch(NEAR_DEATH_EXPERIENCE).requiredTheories(1).end()
+                .stage().attunement(Sources.SUN, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_POLYMORPH, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.MOON.getImage()).parent(EXPERT_SORCERY).parent(SPELL_PAYLOAD_LUNAR)
+                .stage().requiredResearch(FURRY_FRIEND).requiredTheories(1).end()
+                .stage().attunement(Sources.MOON, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_POLYMORPH_SHEEP, key -> ResearchEntry.builder(key).discipline(discipline).hidden().finaleExempt().icon(Sources.MOON.getImage())
+                .stage().end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONJURE_ANIMAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.BLOOD.getImage()).parent(MASTER_SORCERY).parent(SPELL_PAYLOAD_BLOOD)
+                .stage().requiredResearch(BREED_ANIMAL).requiredTheories(2).end()
+                .stage().attunement(Sources.BLOOD, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONJURE_LAVA, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.INFERNAL.getImage()).parent(MASTER_SORCERY)
+                .parent(SPELL_PAYLOAD_CONJURE_WATER).parent(SPELL_PAYLOAD_FLAME)
+                .stage().requiredResearch(FEEL_THE_BURN).requiredTheories(2).end()
+                .stage().attunement(Sources.INFERNAL, 3).end()
+                .build());
 
     }
     
@@ -1217,6 +1264,11 @@ public class ResearchEntries {
         register(context, SCAN_PRIMALITE, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
         register(context, SCAN_HEXIUM, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
         register(context, SCAN_HALLOWSTEEL, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
+        register(context, DROWN_A_LITTLE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, NEAR_DEATH_EXPERIENCE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, FURRY_FRIEND, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, BREED_ANIMAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
