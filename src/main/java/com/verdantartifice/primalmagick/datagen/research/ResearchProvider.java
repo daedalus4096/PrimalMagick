@@ -65,50 +65,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "SORCERY";
-        ResearchEntryBuilder.entry("WAND_INSCRIPTION", discipline).icon(ItemsPM.WAND_INSCRIPTION_TABLE.get()).parent("BASIC_SORCERY").parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredResearch("t_spells_crafted_expert").requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.WAND_INSCRIPTION_TABLE.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_VEHICLE_PROJECTILE", discipline).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_VEHICLE_BOLT", discipline).parent("MASTER_SORCERY").parent("SPELL_VEHICLE_PROJECTILE")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FROST", discipline).icon(Sources.SEA.getImage()).parent("BASIC_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SEA, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_LIGHTNING", discipline).icon(Sources.SKY.getImage()).parent("BASIC_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SKY, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_SOLAR", discipline).icon(Sources.SUN.getImage()).parent("SPELL_PAYLOAD_LIGHTNING")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SUN, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_LUNAR", discipline).icon(Sources.MOON.getImage()).parent("SPELL_PAYLOAD_FROST")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.MOON, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_BLOOD", discipline).icon(Sources.BLOOD.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_BLOOD)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.BLOOD, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_FLAME", discipline).icon(Sources.INFERNAL.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_INFERNAL)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_VOID", discipline).icon(Sources.VOID.getImage()).parent("EXPERT_SORCERY").parent(ResearchEntries.DISCOVER_VOID)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 1).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_HOLY", discipline).icon(Sources.HALLOWED.getImage()).parent("MASTER_SORCERY").parent(ResearchEntries.DISCOVER_HALLOWED)
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 1).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("SPELL_PAYLOAD_BREAK", discipline).icon(Sources.EARTH.getImage()).parent("EXPERT_SORCERY")
             .stage(ResearchStageBuilder.stage().requiredResearch("m_blocks_broken_barehanded_expert").requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 3).build())
