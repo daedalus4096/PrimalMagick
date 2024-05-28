@@ -330,6 +330,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FURRY_FRIEND = create("furry_friend");
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
+    public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
@@ -337,7 +338,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
     public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
-    public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     // Commonly used research icons
@@ -972,7 +972,6 @@ public class ResearchEntries {
     }
     
     private static void bootstrapSorceryEntries(BootstapContext<ResearchEntry> context) {
-        // TODO Define research entries
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.SORCERY;
         register(context, BASIC_SORCERY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_SORCERY).parent(UNLOCK_SORCERY)
                 .stage().attunement(Sources.EARTH, 1).recipe(ItemsPM.SPELL_SCROLL_BLANK.get()).recipe(ItemsPM.SPELLCRAFTING_ALTAR.get()).end()
@@ -1083,7 +1082,38 @@ public class ResearchEntries {
                 .stage().requiredResearch(FEEL_THE_BURN).requiredTheories(2).end()
                 .stage().attunement(Sources.INFERNAL, 3).end()
                 .build());
-
+        register(context, SPELL_PAYLOAD_DRAIN_SOUL, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.INFERNAL.getImage()).parent(MASTER_SORCERY).parent(SPELL_PAYLOAD_FLAME)
+                .stage().requiredItem(Items.SOUL_SAND).requiredItem(Items.SOUL_SOIL).requiredTheories(2).end()
+                .stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).end()
+                .build());
+        register(context, SPELL_PAYLOAD_TELEPORT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.VOID.getImage()).parent(MASTER_SORCERY).parent(SPELL_PAYLOAD_VOID)
+                .stage().requiredStat(StatsPM.DISTANCE_TELEPORTED_CM, 10000).requiredTheories(2).end()
+                .stage().attunement(Sources.VOID, 3).end()
+                .build());
+        register(context, SPELL_PAYLOAD_CONSECRATE, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.HALLOWED.getImage()).parent(SUPREME_SORCERY).parent(SPELL_PAYLOAD_HOLY)
+                .stage().requiredResearch(SCAN_NETHER_STAR).requiredTheories(3).end()
+                .stage().attunement(Sources.HALLOWED, 3).end()
+                .build());
+        register(context, SPELL_MOD_AMPLIFY, key -> ResearchEntry.builder(key).discipline(discipline).parent(EXPERT_SORCERY)
+                .stage().requiredTheories(1).end()
+                .stage().end()
+                .build());
+        register(context, SPELL_MOD_MINE, key -> ResearchEntry.builder(key).discipline(discipline).parent(EXPERT_SORCERY)
+                .stage().requiredTheories(1).end()
+                .stage().end()
+                .build());
+        register(context, SPELL_MOD_QUICKEN, key -> ResearchEntry.builder(key).discipline(discipline).parent(MASTER_SORCERY).parent(SPELL_MOD_AMPLIFY)
+                .stage().requiredTheories(2).end()
+                .stage().end()
+                .build());
+        register(context, SPELL_MOD_BURST, key -> ResearchEntry.builder(key).discipline(discipline).parent(MASTER_SORCERY).parent(SPELL_MOD_MINE)
+                .stage().requiredTheories(2).end()
+                .stage().end()
+                .build());
+        register(context, SPELL_MOD_FORK, key -> ResearchEntry.builder(key).discipline(discipline).parent(SUPREME_SORCERY).parent(SPELL_MOD_QUICKEN).parent(SPELL_MOD_BURST)
+                .stage().requiredTheories(3).end()
+                .stage().end()
+                .build());
     }
     
     private static void bootstrapRuneworkingEntries(BootstapContext<ResearchEntry> context) {
@@ -1269,6 +1299,7 @@ public class ResearchEntries {
         register(context, FURRY_FRIEND, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
         register(context, BREED_ANIMAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
         register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
+        register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {

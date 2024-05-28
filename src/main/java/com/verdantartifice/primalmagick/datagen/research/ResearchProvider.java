@@ -57,46 +57,9 @@ public class ResearchProvider implements DataProvider {
     }
     
     protected void registerEntries(Consumer<IFinishedResearchEntry> consumer) {
-        this.registerSorceryEntries(consumer);
         this.registerRuneworkingEntries(consumer);
         this.registerRitualEntries(consumer);
         this.registerMagitechEntries(consumer);
-    }
-
-    protected void registerSorceryEntries(Consumer<IFinishedResearchEntry> consumer) {
-        String discipline = "SORCERY";
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_DRAIN_SOUL", discipline).icon(Sources.INFERNAL.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_FLAME")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.SOUL_SAND).requiredItemStack(Items.SOUL_SOIL).requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.SOUL_GEM.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_TELEPORT", discipline).icon(Sources.VOID.getImage()).parent("MASTER_SORCERY").parent("SPELL_PAYLOAD_VOID")
-            .stage(ResearchStageBuilder.stage().requiredResearch("m_teleport_a_lot").requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.VOID, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_PAYLOAD_CONSECRATE", discipline).icon(Sources.HALLOWED.getImage()).parent("SUPREME_SORCERY").parent("SPELL_PAYLOAD_HOLY")
-            .stage(ResearchStageBuilder.stage().requiredResearch("b_scan_nether_star", true).requiredKnowledge(KnowledgeType.THEORY, 3).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.HALLOWED, 3).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_MOD_AMPLIFY", discipline).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_MOD_MINE", discipline).parent("EXPERT_SORCERY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_MOD_QUICKEN", discipline).parent("MASTER_SORCERY").parent("SPELL_MOD_AMPLIFY")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_MOD_BURST", discipline).parent("MASTER_SORCERY").parent("SPELL_MOD_MINE")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 2).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SPELL_MOD_FORK", discipline).parent("SUPREME_SORCERY").parent("SPELL_MOD_QUICKEN").parent("SPELL_MOD_BURST")
-            .stage(ResearchStageBuilder.stage().requiredKnowledge(KnowledgeType.THEORY, 3).build())
-            .stage(ResearchStageBuilder.stage().build())
-            .build(consumer);
     }
 
     protected void registerRuneworkingEntries(Consumer<IFinishedResearchEntry> consumer) {
