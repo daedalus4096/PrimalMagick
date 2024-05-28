@@ -538,6 +538,40 @@ public class ResearchEntries {
                 .stage().requiredTheories(1).end()
                 .stage().end()
                 .build());
+        register(context, WAND_CORE_HEARTWOOD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).parent(ADVANCED_WANDMAKING)
+                .stage().requiredItem(ItemsPM.HEARTWOOD.get()).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).recipe(PrimalMagick.resource("charcoal_from_smelting_heartwood")).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CAP_IRON, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.IRON_WAND_CAP_ITEM.get()).parent(ADVANCED_WANDMAKING)
+                .stage().requiredItem(Tags.Items.INGOTS_IRON).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.IRON_WAND_CAP_ITEM.get()).end()
+                .build());
+        register(context, WAND_GEM_APPRENTICE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).parent(ADVANCED_WANDMAKING)
+                .stage().requiredItem(Tags.Items.GEMS_DIAMOND).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).end()
+                .build());
+        register(context, EARTHSHATTER_HAMMER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.EARTHSHATTER_HAMMER.get()).parent(EXPERT_MANAWEAVING).parent(SHARD_SYNTHESIS)
+                .stage().requiredItem(Items.RAW_IRON).requiredItem(Items.RAW_GOLD).requiredItem(Items.RAW_COPPER).requiredObservations(1).end()
+                .stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).recipe(PrimalMagick.resource("iron_grit_from_ore"))
+                        .recipe(PrimalMagick.resource("iron_grit_from_raw_metal")).recipe(PrimalMagick.resource("gold_grit_from_ore"))
+                        .recipe(PrimalMagick.resource("gold_grit_from_raw_metal")).recipe(PrimalMagick.resource("copper_grit_from_ore"))
+                        .recipe(PrimalMagick.resource("copper_grit_from_raw_metal")).recipe(PrimalMagick.resource("tin_dust_from_ore"))
+                        .recipe(PrimalMagick.resource("tin_dust_from_raw_metal")).recipe(PrimalMagick.resource("lead_dust_from_ore"))
+                        .recipe(PrimalMagick.resource("lead_dust_from_raw_metal")).recipe(PrimalMagick.resource("silver_dust_from_ore"))
+                        .recipe(PrimalMagick.resource("silver_dust_from_raw_metal")).recipe(PrimalMagick.resource("uranium_dust_from_ore"))
+                        .recipe(PrimalMagick.resource("uranium_dust_from_raw_metal")).recipe(PrimalMagick.resource("iron_ingot_from_grit_smelting"))
+                        .recipe(PrimalMagick.resource("gold_ingot_from_grit_smelting")).recipe(PrimalMagick.resource("copper_ingot_from_grit_smelting"))
+                        .recipe(PrimalMagick.resource("cobblestone_from_earthshatter_hammer")).recipe(PrimalMagick.resource("cobbled_deepslate_from_earthshatter_hammer"))
+                        .recipe(PrimalMagick.resource("gravel_from_earthshatter_hammer")).recipe(PrimalMagick.resource("sand_from_earthshatter_hammer"))
+                        .recipe(PrimalMagick.resource("rock_salt_from_earthshatter_hammer")).recipe(PrimalMagick.resource("refined_salt_from_earthshatter_hammer"))
+                        .recipe(PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer")).end()
+                .build());
+        register(context, SUNLAMP, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SUNLAMP.get()).parent(EXPERT_MANAWEAVING).parent(PRIMALITE)
+                .stage().requiredItem(Items.LANTERN).requiredTheories(1).end()
+                .stage().attunement(Sources.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).end()
+                .addendum().requiredResearch(HEXIUM).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.SPIRIT_LANTERN.get()).end()
+                .build());
 
     }
     

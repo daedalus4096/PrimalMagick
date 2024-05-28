@@ -67,40 +67,6 @@ public class ResearchProvider implements DataProvider {
 
     protected void registerManaweavingEntries(Consumer<IFinishedResearchEntry> consumer) {
         String discipline = "MANAWEAVING";
-        ResearchEntryBuilder.entry("WAND_CORE_HEARTWOOD", discipline).icon(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(ItemsPM.HEARTWOOD.get()).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).recipe(PrimalMagick.resource("charcoal_from_smelting_heartwood")).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("STAVES").recipe(ItemsPM.HEARTWOOD_STAFF_CORE_ITEM.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("WAND_CAP_IRON", discipline).icon(ItemsPM.IRON_WAND_CAP_ITEM.get()).parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.INGOTS_IRON).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.IRON_WAND_CAP_ITEM.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("WAND_GEM_APPRENTICE", discipline).icon(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).parent("ADVANCED_WANDMAKING")
-            .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().recipe(ItemsPM.APPRENTICE_WAND_GEM_ITEM.get()).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("EARTHSHATTER_HAMMER", discipline).icon(ItemsPM.EARTHSHATTER_HAMMER.get()).parent("EXPERT_MANAWEAVING").parent("SHARD_SYNTHESIS")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.RAW_IRON).requiredItemStack(Items.RAW_GOLD).requiredItemStack(Items.RAW_COPPER).requiredKnowledge(KnowledgeType.OBSERVATION, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.EARTH, 2).recipe(ItemsPM.EARTHSHATTER_HAMMER.get()).recipe(PrimalMagick.resource("iron_grit_from_ore"))
-                    .recipe(PrimalMagick.resource("iron_grit_from_raw_metal")).recipe(PrimalMagick.resource("gold_grit_from_ore"))
-                    .recipe(PrimalMagick.resource("gold_grit_from_raw_metal")).recipe(PrimalMagick.resource("copper_grit_from_ore"))
-                    .recipe(PrimalMagick.resource("copper_grit_from_raw_metal")).recipe(PrimalMagick.resource("tin_dust_from_ore"))
-                    .recipe(PrimalMagick.resource("tin_dust_from_raw_metal")).recipe(PrimalMagick.resource("lead_dust_from_ore"))
-                    .recipe(PrimalMagick.resource("lead_dust_from_raw_metal")).recipe(PrimalMagick.resource("silver_dust_from_ore"))
-                    .recipe(PrimalMagick.resource("silver_dust_from_raw_metal")).recipe(PrimalMagick.resource("uranium_dust_from_ore"))
-                    .recipe(PrimalMagick.resource("uranium_dust_from_raw_metal")).recipe(PrimalMagick.resource("iron_ingot_from_grit_smelting"))
-                    .recipe(PrimalMagick.resource("gold_ingot_from_grit_smelting")).recipe(PrimalMagick.resource("copper_ingot_from_grit_smelting"))
-                    .recipe(PrimalMagick.resource("cobblestone_from_earthshatter_hammer")).recipe(PrimalMagick.resource("cobbled_deepslate_from_earthshatter_hammer"))
-                    .recipe(PrimalMagick.resource("gravel_from_earthshatter_hammer")).recipe(PrimalMagick.resource("sand_from_earthshatter_hammer"))
-                    .recipe(PrimalMagick.resource("rock_salt_from_earthshatter_hammer")).recipe(PrimalMagick.resource("refined_salt_from_earthshatter_hammer"))
-                    .recipe(PrimalMagick.resource("netherite_scrap_from_earthshatter_hammer")).build())
-            .build(consumer);
-        ResearchEntryBuilder.entry("SUNLAMP", discipline).icon(ItemsPM.SUNLAMP.get()).parent("EXPERT_MANAWEAVING").parent("PRIMALITE")
-            .stage(ResearchStageBuilder.stage().requiredItemStack(Items.LANTERN).requiredKnowledge(KnowledgeType.THEORY, 1).build())
-            .stage(ResearchStageBuilder.stage().attunement(Sources.SUN, 2).recipe(ItemsPM.SUNLAMP.get()).build())
-            .addendum(ResearchAddendumBuilder.addendum().requiredResearch("HEXIUM").attunement(Sources.INFERNAL, 2).recipe(ItemsPM.SPIRIT_LANTERN.get()).build())
-            .build(consumer);
         ResearchEntryBuilder.entry("WAND_GEM_ADEPT", discipline).icon(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).parent("EXPERT_MANAWEAVING").parent("WAND_GEM_APPRENTICE").parent("SHARD_SYNTHESIS")
             .stage(ResearchStageBuilder.stage().requiredItemTag(Tags.Items.GEMS_DIAMOND).requiredKnowledge(KnowledgeType.THEORY, 1).build())
             .stage(ResearchStageBuilder.stage().recipe(ItemsPM.ADEPT_WAND_GEM_ITEM.get()).build())
