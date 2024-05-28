@@ -59,7 +59,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> THEORY_OF_EVERYTHING = create("theory_of_everything");
     
     // Manaweaving research entries
-    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> BASIC_MANAWEAVING = create("basic_manaweaving");
     public static final ResourceKey<ResearchEntry> EXPERT_MANAWEAVING = create("expert_manaweaving");
     public static final ResourceKey<ResearchEntry> MASTER_MANAWEAVING = create("master_manaweaving");
@@ -281,7 +280,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SUPREME_WARDING_MODULE = create("supreme_warding_module");
 
     // Scans research entries
-    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> RAW_MARBLE = create("raw_marble");
     public static final ResourceKey<ResearchEntry> ROCK_SALT = create("rock_salt");
     public static final ResourceKey<ResearchEntry> QUARTZ = create("quartz");
@@ -490,7 +488,6 @@ public class ResearchEntries {
     }
     
     private static void bootstrapManaweavingEntries(BootstapContext<ResearchEntry> context) {
-        // TODO Define research entries
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MANAWEAVING;
         register(context, BASIC_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(UNLOCK_MANAWEAVING)
                 .stage().recipe(ItemsPM.MANA_PRISM.get()).end()
@@ -640,7 +637,95 @@ public class ResearchEntries {
                 .stage().attunement(Sources.VOID, 3).recipe(ItemsPM.PURPUR_WAND_CORE_ITEM.get()).end()
                 .addendum().requiredResearch(STAVES).recipe(ItemsPM.PURPUR_STAFF_CORE_ITEM.get()).end()
                 .build());
-
+        register(context, IMBUED_WOOL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.IMBUED_WOOL_HEAD.get()).parent(MANA_ARROWS)
+                .stage().requiredItem(ItemTags.WOOL).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.IMBUED_WOOL_HEAD.get()).recipe(ItemsPM.IMBUED_WOOL_CHEST.get()).recipe(ItemsPM.IMBUED_WOOL_LEGS.get())
+                        .recipe(ItemsPM.IMBUED_WOOL_FEET.get()).end()
+                .build());
+        register(context, SPELLCLOTH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SPELLCLOTH_HEAD.get()).parent(EXPERT_MANAWEAVING).parent(IMBUED_WOOL).parent(EARTHSHATTER_HAMMER)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.SPELLCLOTH.get()).recipe(ItemsPM.SPELLCLOTH_HEAD.get()).recipe(ItemsPM.SPELLCLOTH_CHEST.get())
+                        .recipe(ItemsPM.SPELLCLOTH_LEGS.get()).recipe(ItemsPM.SPELLCLOTH_FEET.get()).end()
+                .build());
+        register(context, HEXWEAVE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEXWEAVE_HEAD.get()).parent(MASTER_MANAWEAVING).parent(SPELLCLOTH).parent(SHARD_SYNTHESIS)
+                .parent(DISCOVER_BLOOD).parent(DISCOVER_INFERNAL).parent(DISCOVER_VOID)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.HEXWEAVE.get()).recipe(ItemsPM.HEXWEAVE_HEAD.get()).recipe(ItemsPM.HEXWEAVE_CHEST.get())
+                        .recipe(ItemsPM.HEXWEAVE_LEGS.get()).recipe(ItemsPM.HEXWEAVE_FEET.get()).end()
+                .build());
+        register(context, SAINTSWOOL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SAINTSWOOL_HEAD.get()).parent(SUPREME_MANAWEAVING).parent(HEXWEAVE).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.SAINTSWOOL.get()).recipe(ItemsPM.SAINTSWOOL_HEAD.get()).recipe(ItemsPM.SAINTSWOOL_CHEST.get())
+                        .recipe(ItemsPM.SAINTSWOOL_LEGS.get()).recipe(ItemsPM.SAINTSWOOL_FEET.get()).end()
+                .build());
+        register(context, ARTIFICIAL_MANA_FONTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).parent(EXPERT_MANAWEAVING).parent(SHARD_SYNTHESIS)
+                .parent(PRIMALITE).parent(SUNLAMP)
+                .stage().requiredTheories(1).requiredStat(StatsPM.MANA_SIPHONED, 1000).end()
+                .stage().recipe(ItemsPM.ARTIFICIAL_FONT_EARTH.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SEA.get()).recipe(ItemsPM.ARTIFICIAL_FONT_SKY.get())
+                        .recipe(ItemsPM.ARTIFICIAL_FONT_SUN.get()).recipe(ItemsPM.ARTIFICIAL_FONT_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.ARTIFICIAL_FONT_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.ARTIFICIAL_FONT_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.ARTIFICIAL_FONT_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.ARTIFICIAL_FONT_HALLOWED.get()).end()
+                .build());
+        register(context, FORBIDDEN_MANA_FONTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_FONT_EARTH.get()).parent(ARTIFICIAL_MANA_FONTS).parent(MASTER_MANAWEAVING)
+                .parent(CRYSTAL_SYNTHESIS).parent(HEXIUM)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.FORBIDDEN_FONT_EARTH.get()).recipe(ItemsPM.FORBIDDEN_FONT_SEA.get()).recipe(ItemsPM.FORBIDDEN_FONT_SKY.get())
+                        .recipe(ItemsPM.FORBIDDEN_FONT_SUN.get()).recipe(ItemsPM.FORBIDDEN_FONT_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.FORBIDDEN_FONT_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.FORBIDDEN_FONT_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.FORBIDDEN_FONT_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.FORBIDDEN_FONT_HALLOWED.get()).end()
+                .build());
+        register(context, HEAVENLY_MANA_FONTS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEAVENLY_FONT_EARTH.get()).parent(FORBIDDEN_MANA_FONTS).parent(SUPREME_MANAWEAVING)
+                .parent(CLUSTER_SYNTHESIS).parent(HALLOWSTEEL)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.HEAVENLY_FONT_EARTH.get()).recipe(ItemsPM.HEAVENLY_FONT_SEA.get()).recipe(ItemsPM.HEAVENLY_FONT_SKY.get())
+                        .recipe(ItemsPM.HEAVENLY_FONT_SUN.get()).recipe(ItemsPM.HEAVENLY_FONT_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.HEAVENLY_FONT_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.HEAVENLY_FONT_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.HEAVENLY_FONT_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.HEAVENLY_FONT_HALLOWED.get()).end()
+                .build());
+        register(context, MANA_ARROWS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_ARROW_EARTH.get()).parent(BASIC_MANAWEAVING)
+                .stage().requiredObservations(1).requiredCraft(Items.ARROW).end()
+                .stage().recipe(ItemsPM.MANA_ARROW_EARTH.get()).recipe(ItemsPM.MANA_ARROW_SEA.get()).recipe(ItemsPM.MANA_ARROW_SKY.get()).recipe(ItemsPM.MANA_ARROW_SUN.get())
+                        .recipe(ItemsPM.MANA_ARROW_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.MANA_ARROW_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.MANA_ARROW_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.MANA_ARROW_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.MANA_ARROW_HALLOWED.get()).end()
+                .build());
+        register(context, ESSENCE_CASK_ENCHANTED, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CASK_ENCHANTED.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_HEARTWOOD)
+                .parent(SHARD_SYNTHESIS).parent(PRIMALITE)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.ESSENCE_CASK_ENCHANTED.get()).end()
+                .build());
+        register(context, ESSENCE_CASK_FORBIDDEN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CASK_FORBIDDEN.get()).parent(MASTER_MANAWEAVING).parent(ESSENCE_CASK_ENCHANTED)
+                .parent(CRYSTAL_SYNTHESIS).parent(HEXIUM)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.ESSENCE_CASK_FORBIDDEN.get()).end()
+                .build());
+        register(context, ESSENCE_CASK_HEAVENLY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_CASK_HEAVENLY.get()).parent(SUPREME_MANAWEAVING).parent(ESSENCE_CASK_FORBIDDEN)
+                .parent(CLUSTER_SYNTHESIS).parent(HALLOWSTEEL)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.ESSENCE_CASK_HEAVENLY.get()).end()
+                .build());
+        register(context, WAND_GLAMOUR_TABLE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.WAND_GLAMOUR_TABLE.get()).parent(EXPERT_MANAWEAVING).parent(WAND_CORE_HEARTWOOD)
+                .stage().requiredTheories(1).end()
+                .stage().attunement(Sources.MOON, 2).recipe(ItemsPM.WAND_GLAMOUR_TABLE.get()).end()
+                .build());
+        register(context, ATTUNEMENT_SHACKLES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get()).parent(EXPERT_MANAWEAVING).parent(SHARD_SYNTHESIS)
+                .parent(ATTUNEMENTS)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.ATTUNEMENT_SHACKLES_EARTH.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SEA.get())
+                        .recipe(ItemsPM.ATTUNEMENT_SHACKLES_SKY.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_SUN.get()).recipe(ItemsPM.ATTUNEMENT_SHACKLES_MOON.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe(ItemsPM.ATTUNEMENT_SHACKLES_BLOOD.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe(ItemsPM.ATTUNEMENT_SHACKLES_INFERNAL.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe(ItemsPM.ATTUNEMENT_SHACKLES_VOID.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).recipe(ItemsPM.ATTUNEMENT_SHACKLES_HALLOWED.get()).end()
+                .build());
     }
     
     private static void bootstrapAlchemyEntries(BootstapContext<ResearchEntry> context) {
