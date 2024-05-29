@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.ForgeMod;
@@ -14,10 +16,10 @@ import net.minecraftforge.common.ForgeMod;
  */
 public class TouchSpellVehicle extends AbstractRaycastSpellVehicle {
     public static final String TYPE = "touch";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.BASIC_SORCERY.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.BASIC_SORCERY));
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
 
     @Override

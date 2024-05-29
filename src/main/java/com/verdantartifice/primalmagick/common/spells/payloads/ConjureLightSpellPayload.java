@@ -2,8 +2,10 @@ package com.verdantartifice.primalmagick.common.spells.payloads;
 
 import com.verdantartifice.primalmagick.common.blocks.BlocksPM;
 import com.verdantartifice.primalmagick.common.blocks.misc.GlowFieldBlock;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 
@@ -20,14 +22,14 @@ import net.minecraft.world.level.Level;
  */
 public class ConjureLightSpellPayload extends AbstractConjureBlockSpellPayload {
     public static final String TYPE = "conjure_light";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_CONJURE_LIGHT.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_CONJURE_LIGHT));
     
     public ConjureLightSpellPayload() {
         super(BlocksPM.GLOW_FIELD.get().defaultBlockState().setValue(GlowFieldBlock.FADING, Boolean.TRUE));
     }
 
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
 
     @Override

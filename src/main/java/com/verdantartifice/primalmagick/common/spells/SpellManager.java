@@ -17,7 +17,7 @@ import com.verdantartifice.primalmagick.common.entities.projectiles.SpellMineEnt
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.SpellImpactPacket;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.spells.mods.BurstSpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.ISpellMod;
 import com.verdantartifice.primalmagick.common.spells.mods.MineSpellMod;
@@ -57,21 +57,21 @@ public class SpellManager {
     protected static final Map<String, Supplier<ISpellMod>> MOD_INSTANCE_SUPPLIERS = new HashMap<>();
     
     // Maps of spell component type names to suppliers for keys of required research for those components
-    protected static final Map<String, Supplier<CompoundResearchKey>> VEHICLE_RESEARCH_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<CompoundResearchKey>> PAYLOAD_RESEARCH_SUPPLIERS = new HashMap<>();
-    protected static final Map<String, Supplier<CompoundResearchKey>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<AbstractRequirement<?>>> VEHICLE_RESEARCH_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<AbstractRequirement<?>>> PAYLOAD_RESEARCH_SUPPLIERS = new HashMap<>();
+    protected static final Map<String, Supplier<AbstractRequirement<?>>> MOD_RESEARCH_SUPPLIERS = new HashMap<>();
     
     protected static final DecimalFormat COOLDOWN_FORMATTER = new DecimalFormat("#######.##");
 
     @Nonnull
-    protected static List<String> getFilteredTypes(@Nullable Player player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<CompoundResearchKey>> suppliers) {
+    protected static List<String> getFilteredTypes(@Nullable Player player, @Nonnull List<String> types, @Nonnull Map<String, Supplier<AbstractRequirement<?>>> suppliers) {
         // Compute a list of spell component types that the given player is able to use by dint of their accumulated research
         List<String> retVal = new ArrayList<>();
         for (String type : types) {
-            Supplier<CompoundResearchKey> supplier = suppliers.get(type);
+            Supplier<AbstractRequirement<?>> supplier = suppliers.get(type);
             if (supplier != null) {
-                CompoundResearchKey key = supplier.get();
-                if (key == null || key.isKnownByStrict(player)) {
+                AbstractRequirement<?> req = supplier.get();
+                if (req == null || req.isMetBy(player)) {
                     retVal.add(type);
                 }
             }
@@ -90,7 +90,7 @@ public class SpellManager {
         return VEHICLE_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerVehicleType(@Nullable String type, @Nullable Supplier<ISpellVehicle> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerVehicleType(@Nullable String type, @Nullable Supplier<ISpellVehicle> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
         // Register the given vehicle type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             VEHICLE_TYPES.add(type);
@@ -110,7 +110,7 @@ public class SpellManager {
         return PAYLOAD_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerPayloadType(@Nullable String type, @Nullable Supplier<ISpellPayload> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerPayloadType(@Nullable String type, @Nullable Supplier<ISpellPayload> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
         // Register the given payload type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             PAYLOAD_TYPES.add(type);
@@ -130,7 +130,7 @@ public class SpellManager {
         return MOD_INSTANCE_SUPPLIERS.get(type);
     }
     
-    public static void registerModType(@Nullable String type, @Nullable Supplier<ISpellMod> instanceSupplier, @Nullable Supplier<CompoundResearchKey> researchSupplier) {
+    public static void registerModType(@Nullable String type, @Nullable Supplier<ISpellMod> instanceSupplier, @Nullable Supplier<AbstractRequirement<?>> researchSupplier) {
         // Register the given mod type and associate it with the given instance and research suppliers
         if (type != null && !type.isEmpty() && instanceSupplier != null && researchSupplier != null) {
             MOD_TYPES.add(type);

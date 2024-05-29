@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
@@ -53,7 +53,7 @@ public class EmptySpellPayload extends AbstractSpellPayload {
         return TYPE;
     }
     
-    public static CompoundResearchKey getResearch() {
+    public static AbstractRequirement<?> getRequirement() {
         return null;
     }
 }

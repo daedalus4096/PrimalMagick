@@ -1,6 +1,6 @@
 package com.verdantartifice.primalmagick.common.spells.vehicles;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.spells.SpellPackage;
 
 import net.minecraft.world.entity.LivingEntity;
@@ -32,7 +32,7 @@ public class EmptySpellVehicle extends AbstractSpellVehicle {
         return TYPE;
     }
     
-    public static CompoundResearchKey getResearch() {
+    public static AbstractRequirement<?> getRequirement() {
         return null;
     }
 

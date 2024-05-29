@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
@@ -21,7 +23,7 @@ import net.minecraft.world.level.Level;
  */
 public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
     public static final String TYPE = "blood_damage";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_BLOOD.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_BLOOD));
     
     public BloodDamageSpellPayload() {
         super();
@@ -31,8 +33,8 @@ public class BloodDamageSpellPayload extends AbstractDamageSpellPayload {
         super(power);
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override

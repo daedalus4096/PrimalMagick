@@ -1,7 +1,9 @@
 package com.verdantartifice.primalmagick.common.spells.payloads;
 
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +20,7 @@ import net.minecraft.world.entity.EntityType;
  */
 public class PolymorphSheepSpellPayload extends AbstractPolymorphSpellPayload {
     public static final String TYPE = "polymorph_sheep";
-    protected static final CompoundResearchKey RESEARCH = ResearchNames.SPELL_PAYLOAD_POLYMORPH_SHEEP.get().compoundKey();
+    protected static final AbstractRequirement<?> REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SPELL_PAYLOAD_POLYMORPH_SHEEP));
 
     public PolymorphSheepSpellPayload() {
         super();
@@ -28,8 +30,8 @@ public class PolymorphSheepSpellPayload extends AbstractPolymorphSpellPayload {
         super(duration);
     }
     
-    public static CompoundResearchKey getResearch() {
-        return RESEARCH;
+    public static AbstractRequirement<?> getRequirement() {
+        return REQUIREMENT;
     }
     
     @Override
