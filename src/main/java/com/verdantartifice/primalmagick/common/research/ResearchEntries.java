@@ -329,12 +329,12 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> BREED_ANIMAL = create("breed_animal");
     public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
+    public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
-    public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
@@ -1301,7 +1301,7 @@ public class ResearchEntries {
                 .stage().requiredTheories(2).end()
                 .stage().attunement(Sources.INFERNAL, 1).recipe(ItemsPM.SOUL_ANVIL.get()).end()
                 .build());
-        register(context, CELESTIAL_HARP, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CELESTIAL_HARP.get()).parent(SUPREME_RITUAL).parent(ResearchEntries.DISCOVER_HALLOWED)
+        register(context, CELESTIAL_HARP, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CELESTIAL_HARP.get()).parent(SUPREME_RITUAL).parent(DISCOVER_HALLOWED)
                 .stage().requiredItem(Items.NOTE_BLOCK).requiredItem(Items.JUKEBOX).requiredTheories(3).end()
                 .stage().attunement(Sources.HALLOWED, 1).recipe(ItemsPM.CELESTIAL_HARP.get()).end()
                 .build());
@@ -1324,6 +1324,91 @@ public class ResearchEntries {
                 .stage().requiredItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredTheories(3).end()
                 .stage().attunement(Sources.HALLOWED, 5).recipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get()).end()
                 .addendum().requiredResearch(STAVES).recipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, PIXIES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BASIC_EARTH_PIXIE.get()).parent(EXPERT_RITUAL).parent(MANA_SALTS).parent(SHARD_SYNTHESIS)
+                .parent(RUNE_SUMMON).parent(RUNE_CREATURE).parent(INCENSE_BRAZIER).parent(RITUAL_BELL)
+                .stage().requiredItem(ItemsPM.RUNE_SUMMON.get()).requiredItem(ItemsPM.RUNE_CREATURE.get()).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
+                        .recipe(ItemsPM.BASIC_EARTH_PIXIE.get()).recipe("pixie_basic_earth_revive")
+                        .recipe(ItemsPM.BASIC_SEA_PIXIE.get()).recipe("pixie_basic_sea_revive")
+                        .recipe(ItemsPM.BASIC_SKY_PIXIE.get()).recipe("pixie_basic_sky_revive")
+                        .recipe(ItemsPM.BASIC_SUN_PIXIE.get()).recipe("pixie_basic_sun_revive")
+                        .recipe(ItemsPM.BASIC_MOON_PIXIE.get()).recipe("pixie_basic_moon_revive").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_PIXIE.get()).recipe("pixie_basic_blood_revive").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_PIXIE.get()).recipe("pixie_basic_infernal_revive").end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_PIXIE.get()).recipe("pixie_basic_void_revive").end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_PIXIE.get()).recipe("pixie_basic_hallowed_revive").end()
+                .build());
+        register(context, GRAND_PIXIES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GRAND_EARTH_PIXIE.get()).parent(MASTER_RITUAL).parent(PIXIES).parent(CRYSTAL_SYNTHESIS)
+                .parent(RUNE_POWER).parent(SOUL_ANVIL)
+                .stage().requiredItem(ItemsPM.RUNE_INSIGHT.get()).requiredTheories(2).end()
+                .stage().attunement(Sources.EARTH, 3).attunement(Sources.SEA, 3).attunement(Sources.SKY, 3).attunement(Sources.SUN, 3).attunement(Sources.MOON, 3)
+                        .recipe(ItemsPM.GRAND_EARTH_PIXIE.get()).recipe("pixie_grand_earth_revive")
+                        .recipe(ItemsPM.GRAND_SEA_PIXIE.get()).recipe("pixie_grand_sea_revive")
+                        .recipe(ItemsPM.GRAND_SKY_PIXIE.get()).recipe("pixie_grand_sky_revive")
+                        .recipe(ItemsPM.GRAND_SUN_PIXIE.get()).recipe("pixie_grand_sun_revive")
+                        .recipe(ItemsPM.GRAND_MOON_PIXIE.get()).recipe("pixie_grand_moon_revive").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GRAND_BLOOD_PIXIE.get()).recipe("pixie_grand_blood_revive").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GRAND_INFERNAL_PIXIE.get()).recipe("pixie_grand_infernal_revive").end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 3).recipe(ItemsPM.GRAND_VOID_PIXIE.get()).recipe("pixie_grand_void_revive").end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GRAND_HALLOWED_PIXIE.get()).recipe("pixie_grand_hallowed_revive").end()
+                .build());
+        register(context, MAJESTIC_PIXIES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).parent(SUPREME_RITUAL).parent(GRAND_PIXIES).parent(CLUSTER_SYNTHESIS)
+                .parent(CELESTIAL_HARP)
+                .stage().requiredItem(ItemsPM.RUNE_POWER.get()).requiredTheories(3).end()
+                .stage().attunement(Sources.EARTH, 4).attunement(Sources.SEA, 4).attunement(Sources.SKY, 4).attunement(Sources.SUN, 4).attunement(Sources.MOON, 4)
+                        .recipe(ItemsPM.MAJESTIC_EARTH_PIXIE.get()).recipe("pixie_majestic_earth_revive")
+                        .recipe(ItemsPM.MAJESTIC_SEA_PIXIE.get()).recipe("pixie_majestic_sea_revive")
+                        .recipe(ItemsPM.MAJESTIC_SKY_PIXIE.get()).recipe("pixie_majestic_sky_revive")
+                        .recipe(ItemsPM.MAJESTIC_SUN_PIXIE.get()).recipe("pixie_majestic_sun_revive")
+                        .recipe(ItemsPM.MAJESTIC_MOON_PIXIE.get()).recipe("pixie_majestic_moon_revive").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 4).recipe(ItemsPM.MAJESTIC_BLOOD_PIXIE.get()).recipe("pixie_majestic_blood_revive").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.MAJESTIC_INFERNAL_PIXIE.get()).recipe("pixie_majestic_infernal_revive").end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 4).recipe(ItemsPM.MAJESTIC_VOID_PIXIE.get()).recipe("pixie_majestic_void_revive").end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.MAJESTIC_HALLOWED_PIXIE.get()).recipe("pixie_majestic_hallowed_revive").end()
+                .build());
+        register(context, AMBROSIA, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BASIC_EARTH_AMBROSIA.get()).parent(EXPERT_RITUAL).parent(ATTUNEMENTS).parent(MANAFRUIT)
+                .parent(SHARD_SYNTHESIS).parent(RUNE_ABSORB).parent(RUNE_SELF).parent(RITUAL_LECTERN)
+                .stage().requiredItem(ItemsPM.RUNE_ABSORB.get()).requiredItem(ItemsPM.RUNE_SELF.get()).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 2).attunement(Sources.SEA, 2).attunement(Sources.SKY, 2).attunement(Sources.SUN, 2).attunement(Sources.MOON, 2)
+                        .recipe(ItemsPM.BASIC_EARTH_AMBROSIA.get()).recipe(ItemsPM.BASIC_SEA_AMBROSIA.get()).recipe(ItemsPM.BASIC_SKY_AMBROSIA.get()).recipe(ItemsPM.BASIC_SUN_AMBROSIA.get())
+                        .recipe(ItemsPM.BASIC_MOON_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 2).recipe(ItemsPM.BASIC_BLOOD_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 2).recipe(ItemsPM.BASIC_INFERNAL_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 2).recipe(ItemsPM.BASIC_VOID_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 2).recipe(ItemsPM.BASIC_HALLOWED_AMBROSIA.get()).end()
+                .build());
+        register(context, GREATER_AMBROSIA, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GREATER_EARTH_AMBROSIA.get()).parent(MASTER_RITUAL).parent(AMBROSIA).parent(CRYSTAL_SYNTHESIS)
+                .parent(RUNE_POWER).parent(BLOODLETTER)
+                .stage().requiredItem(ItemsPM.RUNE_INSIGHT.get()).requiredTheories(2).end()
+                .stage().attunement(Sources.EARTH, 3).attunement(Sources.SEA, 3).attunement(Sources.SKY, 3).attunement(Sources.SUN, 3).attunement(Sources.MOON, 3)
+                        .recipe(ItemsPM.GREATER_EARTH_AMBROSIA.get()).recipe(ItemsPM.GREATER_SEA_AMBROSIA.get()).recipe(ItemsPM.GREATER_SKY_AMBROSIA.get()).recipe(ItemsPM.GREATER_SUN_AMBROSIA.get())
+                        .recipe(ItemsPM.GREATER_MOON_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 3).recipe(ItemsPM.GREATER_BLOOD_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 3).recipe(ItemsPM.GREATER_INFERNAL_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 3).recipe(ItemsPM.GREATER_VOID_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 3).recipe(ItemsPM.GREATER_HALLOWED_AMBROSIA.get()).end()
+                .build());
+        register(context, SUPREME_AMBROSIA, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).parent(SUPREME_RITUAL).parent(GREATER_AMBROSIA).parent(CLUSTER_SYNTHESIS)
+                .parent(CELESTIAL_HARP)
+                .stage().requiredItem(ItemsPM.RUNE_POWER.get()).requiredTheories(3).end()
+                .stage().attunement(Sources.EARTH, 4).attunement(Sources.SEA, 4).attunement(Sources.SKY, 4).attunement(Sources.SUN, 4).attunement(Sources.MOON, 4)
+                        .recipe(ItemsPM.SUPREME_EARTH_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SEA_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SKY_AMBROSIA.get()).recipe(ItemsPM.SUPREME_SUN_AMBROSIA.get())
+                        .recipe(ItemsPM.SUPREME_MOON_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).attunement(Sources.BLOOD, 4).recipe(ItemsPM.SUPREME_BLOOD_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).attunement(Sources.INFERNAL, 4).recipe(ItemsPM.SUPREME_INFERNAL_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_VOID).attunement(Sources.VOID, 4).recipe(ItemsPM.SUPREME_VOID_AMBROSIA.get()).end()
+                .addendum().requiredResearch(DISCOVER_HALLOWED).attunement(Sources.HALLOWED, 4).recipe(ItemsPM.SUPREME_HALLOWED_AMBROSIA.get()).end()
+                .build());
+        register(context, FLYING_CARPET, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FLYING_CARPET.get()).parent(MASTER_RITUAL).parent(CRYSTAL_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_PROJECT)
+                .parent(RUNE_ITEM).parent(RUNE_POWER).parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN).parent(RITUAL_BELL)
+                .stage().requiredResearch(SCAN_FLYING_CREATURE).requiredTheories(2).end()
+                .stage().attunement(Sources.SKY, 3).recipe(ItemsPM.FLYING_CARPET.get()).end()
+                .build());
+        register(context, CLEANSING_RITE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SANGUINE_CORE_BLANK.get()).parent(MASTER_RITUAL).parent(SANGUINE_CRUCIBLE).parent(RUNE_SUMMON)
+                .parent(RUNE_SELF).parent(RUNE_POWER).parent(RITUAL_CANDLES).parent(RITUAL_BELL).parent(RITUAL_LECTERN).parent(BLOODLETTER).parent(SOUL_ANVIL)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).sibling(SOTU_RESEARCH_CLEANSING_RITE).end()
                 .build());
 
     }
@@ -1460,6 +1545,7 @@ public class ResearchEntries {
         register(context, BREED_ANIMAL, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
         register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
         register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
+        register(context, SCAN_FLYING_CREATURE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
