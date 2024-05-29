@@ -1267,6 +1267,64 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
+        register(context, MANAFRUIT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANAFRUIT.get()).parent(BASIC_RITUAL).parent(MANA_SALTS).parent(RITUAL_CANDLES)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.MANAFRUIT.get()).end()
+                .build());
+        register(context, RITUAL_CANDLES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RITUAL_CANDLE_WHITE.get()).parent(BASIC_RITUAL)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.SUN, 1).recipe(ItemsPM.TALLOW.get()).recipe("ritual_candle_white_from_tallow")
+                        .recipe(ItemsPM.RITUAL_CANDLE_BLACK.get()).recipe(ItemsPM.RITUAL_CANDLE_BLUE.get()).recipe(ItemsPM.RITUAL_CANDLE_BROWN.get()).recipe(ItemsPM.RITUAL_CANDLE_CYAN.get())
+                        .recipe(ItemsPM.RITUAL_CANDLE_GRAY.get()).recipe(ItemsPM.RITUAL_CANDLE_GREEN.get()).recipe(ItemsPM.RITUAL_CANDLE_LIGHT_BLUE.get()).recipe(ItemsPM.RITUAL_CANDLE_LIGHT_GRAY.get())
+                        .recipe(ItemsPM.RITUAL_CANDLE_LIME.get()).recipe(ItemsPM.RITUAL_CANDLE_MAGENTA.get()).recipe(ItemsPM.RITUAL_CANDLE_ORANGE.get()).recipe(ItemsPM.RITUAL_CANDLE_PINK.get())
+                        .recipe(ItemsPM.RITUAL_CANDLE_PURPLE.get()).recipe(ItemsPM.RITUAL_CANDLE_RED.get()).recipe(ItemsPM.RITUAL_CANDLE_WHITE.get()).recipe(ItemsPM.RITUAL_CANDLE_YELLOW.get())
+                        .end()
+                .addendum().requiredResearch(HONEY_EXTRACTOR).recipe("ritual_candle_white_from_beeswax").end()
+                .build());
+        register(context, INCENSE_BRAZIER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.INCENSE_BRAZIER.get()).parent(BASIC_RITUAL)
+                .stage().requiredObservations(1).end()
+                .stage().attunement(Sources.SKY, 1).recipe(ItemsPM.INCENSE_BRAZIER.get()).recipe(ItemsPM.INCENSE_STICK.get()).end()
+                .build());
+        register(context, RITUAL_LECTERN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RITUAL_LECTERN.get()).parent(EXPERT_RITUAL)
+                .stage().requiredTheories(1).end()
+                .stage().attunement(Sources.MOON, 1).recipe(ItemsPM.RITUAL_LECTERN.get()).end()
+                .build());
+        register(context, RITUAL_BELL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.RITUAL_BELL.get()).parent(EXPERT_RITUAL)
+                .stage().requiredTheories(1).end()
+                .stage().attunement(Sources.SEA, 1).recipe(ItemsPM.RITUAL_BELL.get()).end()
+                .build());
+        register(context, BLOODLETTER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BLOODLETTER.get()).parent(MASTER_RITUAL).parent(DISCOVER_BLOOD)
+                .stage().requiredTheories(2).end()
+                .stage().attunement(Sources.BLOOD, 1).recipe(ItemsPM.BLOODLETTER.get()).end()
+                .build());
+        register(context, SOUL_ANVIL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SOUL_ANVIL.get()).parent(MASTER_RITUAL).parent(HEXIUM).parent(SPELL_PAYLOAD_DRAIN_SOUL)
+                .stage().requiredTheories(2).end()
+                .stage().attunement(Sources.INFERNAL, 1).recipe(ItemsPM.SOUL_ANVIL.get()).end()
+                .build());
+        register(context, CELESTIAL_HARP, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CELESTIAL_HARP.get()).parent(SUPREME_RITUAL).parent(ResearchEntries.DISCOVER_HALLOWED)
+                .stage().requiredItem(Items.NOTE_BLOCK).requiredItem(Items.JUKEBOX).requiredTheories(3).end()
+                .stage().attunement(Sources.HALLOWED, 1).recipe(ItemsPM.CELESTIAL_HARP.get()).end()
+                .build());
+        register(context, WAND_CORE_PRIMAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_WAND_CORE_ITEM.get()).parent(EXPERT_RITUAL).parent(WAND_CORE_OBSIDIAN)
+                .parent(WAND_CORE_CORAL).parent(WAND_CORE_BAMBOO).parent(WAND_CORE_SUNWOOD).parent(WAND_CORE_MOONWOOD).parent(MANA_SALTS).parent(RITUAL_CANDLES)
+                .parent(RITUAL_LECTERN).parent(RITUAL_BELL)
+                .stage().requiredItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredTheories(1).end()
+                .stage().attunement(Sources.EARTH, 3).attunement(Sources.SEA, 3).attunement(Sources.SKY, 3).attunement(Sources.SUN, 3).attunement(Sources.MOON, 3)
+                        .recipe(ItemsPM.PRIMAL_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.PRIMAL_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_DARK_PRIMAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get()).parent(MASTER_RITUAL).parent(WAND_CORE_PRIMAL)
+                .parent(WAND_CORE_BONE).parent(WAND_CORE_BLAZE_ROD).parent(WAND_CORE_PURPUR).parent(BLOODLETTER).parent(SOUL_ANVIL)
+                .stage().requiredItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredTheories(2).end()
+                .stage().attunement(Sources.BLOOD, 4).attunement(Sources.INFERNAL, 4).attunement(Sources.VOID, 4).recipe(ItemsPM.DARK_PRIMAL_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.DARK_PRIMAL_STAFF_CORE_ITEM.get()).end()
+                .build());
+        register(context, WAND_CORE_PURE_PRIMAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get()).parent(SUPREME_RITUAL).parent(WAND_CORE_DARK_PRIMAL)
+                .parent(CELESTIAL_HARP)
+                .stage().requiredItem(ItemsPM.HEARTWOOD_WAND_CORE_ITEM.get()).requiredTheories(3).end()
+                .stage().attunement(Sources.HALLOWED, 5).recipe(ItemsPM.PURE_PRIMAL_WAND_CORE_ITEM.get()).end()
+                .addendum().requiredResearch(STAVES).recipe(ItemsPM.PURE_PRIMAL_STAFF_CORE_ITEM.get()).end()
+                .build());
 
     }
     
