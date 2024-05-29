@@ -397,7 +397,7 @@ public class ResearchManager {
                 }
                 
                 // Grant any sibling research from the current stage
-                for (ResearchEntryKey sibling : currentStage.siblings()) {
+                for (AbstractResearchKey<?> sibling : currentStage.siblings()) {
                     completeResearch(player, sibling, sync);
                 }
                 
@@ -423,7 +423,7 @@ public class ResearchManager {
                         serverPlayer.awardRecipes(recipesToUnlock);
                         
                         // Grant any sibling research from this entry's addenda
-                        for (ResearchEntryKey sibling : addendum.siblings()) {
+                        for (AbstractResearchKey<?> sibling : addendum.siblings()) {
                             completeResearch(player, sibling, sync);
                         }
                     }
@@ -475,7 +475,7 @@ public class ResearchManager {
                             }
                             
                             // Grant any unlocked sibling research
-                            for (ResearchEntryKey sibling : addendum.siblings()) {
+                            for (AbstractResearchKey<?> sibling : addendum.siblings()) {
                                 completeResearch(player, sibling, sync);
                             }
                         });

@@ -10,7 +10,9 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -30,6 +32,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -41,13 +44,13 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, 
-        List<ResourceLocation> recipes, List<ResearchEntryKey> siblings, SourceList attunements) {
+        List<ResourceLocation> recipes, List<AbstractResearchKey<?>> siblings, SourceList attunements) {
     public static final Codec<ResearchAddendum> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchAddendum::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchAddendum::textTranslationKey),
             AbstractRequirement.CODEC.optionalFieldOf("completionRequirementOpt").forGetter(ResearchAddendum::completionRequirementOpt),
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
-            ResearchEntryKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
+            AbstractResearchKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchAddendum::attunements)
         ).apply(instance, ResearchAddendum::new));
     
@@ -57,7 +60,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         String textKey = buf.readUtf();
         Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
-        List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
+        List<AbstractResearchKey<?>> siblings = buf.readList(AbstractResearchKey::fromNetwork);
         SourceList attunements = SourceList.fromNetwork(buf);
         return new ResearchAddendum(parentKey, textKey, compReqOpt, recipes, siblings, attunements);
     }
@@ -77,7 +80,7 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         protected final ResearchEntryKey parentKey;
         protected final int addendumIndex;
         protected final List<ResourceLocation> recipes = new ArrayList<>();
-        protected final List<ResearchEntryKey> siblings = new ArrayList<>();
+        protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         
@@ -111,6 +114,11 @@ public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslatio
         
         public Builder sibling(ResourceKey<ResearchEntry> siblingKey) {
             this.siblings.add(new ResearchEntryKey(siblingKey));
+            return this;
+        }
+        
+        public Builder sibling(Enchantment runeEnchantment) {
+            this.siblings.add(new RuneEnchantmentKey(runeEnchantment));
             return this;
         }
         

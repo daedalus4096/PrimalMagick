@@ -15,6 +15,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
 import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
@@ -52,13 +53,13 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
-        List<ResearchEntryKey> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
+        List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
     public static final Codec<ResearchStage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
             AbstractRequirement.CODEC.optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
-            ResearchEntryKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
+            AbstractResearchKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
         ).apply(instance, ResearchStage::new));
@@ -69,7 +70,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         String textKey = buf.readUtf();
         Optional<AbstractRequirement<?>> compReqOpt = buf.readOptional(AbstractRequirement::fromNetwork);
         List<ResourceLocation> recipes = buf.readList(b -> b.readResourceLocation());
-        List<ResearchEntryKey> siblings = buf.readList(ResearchEntryKey::fromNetwork);
+        List<AbstractResearchKey<?>> siblings = buf.readList(ResearchEntryKey::fromNetwork);
         List<ResearchEntryKey> revelations = buf.readList(ResearchEntryKey::fromNetwork);
         SourceList attunements = SourceList.fromNetwork(buf);
         return new ResearchStage(parentKey, textKey, compReqOpt, recipes, siblings, revelations, attunements);
@@ -129,7 +130,7 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
         protected final int stageIndex;
         protected final List<AbstractRequirement<?>> requirements = new ArrayList<>();
         protected final List<ResourceLocation> recipes = new ArrayList<>();
-        protected final List<ResearchEntryKey> siblings = new ArrayList<>();
+        protected final List<AbstractResearchKey<?>> siblings = new ArrayList<>();
         protected final List<ResearchEntryKey> revelations = new ArrayList<>();
         protected final SourceList.Builder attunements = SourceList.builder();
         

@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.enchantments.EnchantmentsPM;
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
@@ -1245,7 +1246,6 @@ public class ResearchEntries {
     }
     
     private static void bootstrapRitualEntries(BootstapContext<ResearchEntry> context) {
-        // TODO Define research entries
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.RITUAL;
         register(context, BASIC_RITUAL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_RITUAL).parent(UNLOCK_RITUAL)
                 .stage().recipe(ItemsPM.RITUAL_ALTAR.get()).recipe(ItemsPM.OFFERING_PEDESTAL.get()).end()
@@ -1410,7 +1410,93 @@ public class ResearchEntries {
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.SANGUINE_CORE_INNER_DEMON.get()).sibling(SOTU_RESEARCH_CLEANSING_RITE).end()
                 .build());
-
+        register(context, PRIMAL_SHOVEL, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_SHOVEL.get()).parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .parent(MANA_SALTS).parent(RUNE_EARTH).parent(RITUAL_CANDLES).parent(RITUAL_BELL)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMAL_SHOVEL.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_AREA).requiredResearch(RUNE_EARTH)
+                        .sibling(EnchantmentsPM.REVERBERATION.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, PRIMAL_FISHING_ROD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_FISHING_ROD.get()).parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .parent(MANA_SALTS).parent(RUNE_SEA).parent(RITUAL_BELL).parent(RITUAL_LECTERN)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMAL_FISHING_ROD.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_AREA).requiredResearch(RUNE_SEA)
+                        .sibling(EnchantmentsPM.BOUNTY.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, PRIMAL_AXE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_AXE.get()).parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .parent(MANA_SALTS).parent(RUNE_SKY).parent(RITUAL_BELL).parent(INCENSE_BRAZIER)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMAL_AXE.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_AREA).requiredResearch(RUNE_SKY)
+                        .sibling(EnchantmentsPM.DISINTEGRATION.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, PRIMAL_HOE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_HOE.get()).parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .parent(MANA_SALTS).parent(RUNE_SUN).parent(RITUAL_CANDLES).parent(INCENSE_BRAZIER)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMAL_HOE.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_SUN)
+                        .sibling(EnchantmentsPM.VERDANT.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, PRIMAL_PICKAXE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMAL_PICKAXE.get()).parent(EXPERT_RITUAL).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .parent(MANA_SALTS).parent(RUNE_MOON).parent(RITUAL_LECTERN).parent(INCENSE_BRAZIER)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMAL_PICKAXE.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_MOON)
+                        .sibling(EnchantmentsPM.LUCKY_STRIKE.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, FORBIDDEN_TRIDENT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_TRIDENT.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent(MASTER_RITUAL)
+                .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_BLOOD).parent(BLOODLETTER)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_BLOOD)
+                        .sibling(EnchantmentsPM.RENDING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, FORBIDDEN_BOW, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_BOW.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent(MASTER_RITUAL)
+                .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_INFERNAL).parent(SOUL_ANVIL)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_ABSORB).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_INFERNAL)
+                        .sibling(EnchantmentsPM.SOULPIERCING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, FORBIDDEN_SWORD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_SWORD.get()).parent(ResearchEntries.DISCOVER_VOID).parent(MASTER_RITUAL)
+                .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_VOID).parent(BLOODLETTER).parent(SOUL_ANVIL)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_VOID)
+                        .sibling(EnchantmentsPM.ESSENCE_THIEF.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, SACRED_SHIELD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SACRED_SHIELD.get()).parent(ResearchEntries.DISCOVER_HALLOWED).parent(SUPREME_RITUAL)
+                .parent(HALLOWSTEEL).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_HALLOWED).parent(CELESTIAL_HARP)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.SACRED_SHIELD.get()).end()
+                .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROTECT).requiredResearch(RUNE_SELF).requiredResearch(RUNE_HALLOWED)
+                        .sibling(EnchantmentsPM.BULWARK.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
+                .build());
+        register(context, DREAM_VISION_TALISMAN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.DREAM_VISION_TALISMAN.get()).parent(EXPERT_RITUAL).parent(RITUAL_CANDLES)
+                .parent(INCENSE_BRAZIER).parent(RITUAL_LECTERN)
+                .stage().requiredTheories(1).requiredStat(StatsPM.OBSERVATIONS_MADE, 25).end()
+                .stage().recipe(ItemsPM.DREAM_VISION_TALISMAN.get()).end()
+                .build());
+        register(context, DOWSING_ROD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.DOWSING_ROD.get()).parent(BASIC_RITUAL)
+                .stage().requiredObservations(1).end()
+                .stage().recipe(ItemsPM.DOWSING_ROD.get()).end()
+                .build());
+        register(context, HYDROMELON, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HYDROMELON_SLICE.get()).parent(EXPERT_RITUAL).parent(RITUAL_CANDLES).parent(RITUAL_BELL)
+                .parent(RUNE_SEA).parent(SHARD_SYNTHESIS)
+                .stage().requiredItem(ItemsPM.SUNWOOD_SAPLING.get()).requiredItem(ItemsPM.MOONWOOD_SAPLING.get()).requiredItem(Items.MELON).requiredTheories(1).end()
+                .stage().attunement(Sources.SEA, 2).recipe("hydromelon_seeds_from_ritual").recipe(ItemsPM.HYDROMELON.get()).recipe(ItemsPM.HYDROMELON_SEEDS.get()).end()
+                .build());
+        register(context, BLOOD_ROSE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent(EXPERT_RITUAL)
+                .parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_BLOOD)
+                .stage().requiredItem(Items.ROSE_BUSH).requiredTheories(1).end()
+                .stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).end()
+                .build());
+        register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent(EXPERT_RITUAL)
+                .parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_INFERNAL)
+                .stage().requiredItem(Items.SUNFLOWER).requiredTheories(1).end()
+                .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).end()
+                .build());
     }
     
     private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
