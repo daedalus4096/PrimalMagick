@@ -327,7 +327,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
     public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
-    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
@@ -1798,6 +1797,11 @@ public class ResearchEntries {
         register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
         register(context, SCAN_FLYING_CREATURE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
         register(context, SCAN_GOLEM, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, WAND_TRANSFORM_HINT, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, FOUND_SHRINE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, GOT_DREAM, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, SIPHON_PROMPT, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, UNKNOWN_RUNE, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
