@@ -156,7 +156,6 @@ public class PlayerEvents {
             if (player.tickCount % 200 == 0) {
                 // Periodically check for environmentally-triggered research entries and for photosynthesis
                 checkEnvironmentalResearch(player);
-                checkVanillaStatistics(player);
                 handlePhotosynthesis(player);
             }
             if (player.tickCount % 1200 == 0) {
@@ -328,22 +327,6 @@ public class PlayerEvents {
         });
     }
     
-    protected static void checkVanillaStatistics(ServerPlayer player) {
-        SimpleResearchKey elytraKey = ResearchNames.INTERNAL_FLY_ELYTRA.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, elytraKey) && player.getStats().getValue(Stats.CUSTOM.get(Stats.AVIATE_ONE_CM)) >= 100000) {
-            ResearchManager.completeResearch(player, elytraKey);
-        }
-        SimpleResearchKey torchKey = ResearchNames.INTERNAL_PLACE_TORCH_EXPERT.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, torchKey) && player.getStats().getValue(Stats.ITEM_USED.get(Items.TORCH)) >= 100) {
-            ResearchManager.completeResearch(player, torchKey);
-        }
-        SimpleResearchKey stoneKey = ResearchNames.INTERNAL_PLACE_STONE_EXPERT.get().simpleKey();
-        if (!ResearchManager.isResearchComplete(player, stoneKey) &&
-                (player.getStats().getValue(Stats.ITEM_USED.get(Items.STONE)) + player.getStats().getValue(Stats.ITEM_USED.get(Items.COBBLESTONE))) >= 100) {
-            ResearchManager.completeResearch(player, stoneKey);
-        }
-    }
-
     @SuppressWarnings("deprecation")
     protected static void handlePhotosynthesis(ServerPlayer player) {
         Level level = player.level();
