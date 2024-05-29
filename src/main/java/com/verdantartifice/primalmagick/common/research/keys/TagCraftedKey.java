@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.core.registries.Registries;
@@ -22,6 +23,7 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
     
     public TagCraftedKey(TagKey<Item> tagKey) {
         this.tagKey = Preconditions.checkNotNull(tagKey);
+        ResearchManager.addCraftingReference(this.tagKey.hashCode());
     }
 
     @Override

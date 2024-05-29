@@ -48,8 +48,9 @@ import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoun
 import com.verdantartifice.primalmagick.common.network.packets.misc.ResetFallDistancePacket;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchStageKey;
+import com.verdantartifice.primalmagick.common.research.keys.StackCraftedKey;
+import com.verdantartifice.primalmagick.common.research.keys.TagCraftedKey;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsManager;
@@ -516,18 +517,16 @@ public class PlayerEvents {
     
     protected static void registerItemCrafted(Player player, ItemStack stack) {
         if (player != null && !player.level().isClientSide) {
-            int stackHash = ItemUtils.getHashCode(stack);
-            
             // If a research entry requires crafting the item that was just crafted, grant the appropriate research
-            if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(stackHash))) {
-                ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(stackHash));
+            if (ResearchManager.getAllCraftingReferences().contains(ItemUtils.getHashCode(stack))) {
+                ResearchManager.completeResearch(player, new StackCraftedKey(stack));
             }
             
             // If a research entry requires crafting the a tag containing the item that was just crafted, grant the appropriate research
             stack.getTags().filter(tag -> tag != null).forEach(tagKey -> {
-                int tagHash = ("tag:" + tagKey.location().toString()).hashCode();
-                if (ResearchManager.getAllCraftingReferences().contains(Integer.valueOf(tagHash))) {
-                    ResearchManager.completeResearch(player, SimpleResearchKey.parseCrafted(tagHash));
+                int tagHash = tagKey.hashCode();
+                if (ResearchManager.getAllCraftingReferences().contains(tagHash)) {
+                    ResearchManager.completeResearch(player, new TagCraftedKey(tagKey));
                 }
             });
         }
