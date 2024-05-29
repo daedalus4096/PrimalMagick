@@ -14,9 +14,6 @@ import com.verdantartifice.primalmagick.common.sources.SourceList;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.stats.StatsPM;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
-import com.verdantartifice.primalmagick.datagen.research.ResearchAddendumBuilder;
-import com.verdantartifice.primalmagick.datagen.research.ResearchEntryBuilder;
-import com.verdantartifice.primalmagick.datagen.research.ResearchStageBuilder;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -210,7 +207,6 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> ENDERWARD = create("enderward");
     
     // Ritual Magick research entries
-    // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> BASIC_RITUAL = create("basic_ritual");
     public static final ResourceKey<ResearchEntry> EXPERT_RITUAL = create("expert_ritual");
     public static final ResourceKey<ResearchEntry> MASTER_RITUAL = create("master_ritual");
@@ -250,8 +246,7 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> BLOOD_ROSE = create("blood_rose");
     public static final ResourceKey<ResearchEntry> EMBERFLOWER = create("emberflower");
 
-    // TODO Magitech research entries
-    // TODO Place in correct order after bootstrapping
+    // Magitech research entries
     public static final ResourceKey<ResearchEntry> BASIC_MAGITECH = create("basic_magitech");
     public static final ResourceKey<ResearchEntry> EXPERT_MAGITECH = create("expert_magitech");
     public static final ResourceKey<ResearchEntry> MASTER_MAGITECH = create("master_magitech");
@@ -331,12 +326,12 @@ public class ResearchEntries {
     public static final ResourceKey<ResearchEntry> FEEL_THE_BURN = create("feel_the_burn");
     public static final ResourceKey<ResearchEntry> SCAN_NETHER_STAR = create("scan_nether_star");
     public static final ResourceKey<ResearchEntry> SCAN_FLYING_CREATURE = create("scan_flying_creature");
+    public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     // TODO Place in correct order after bootstrapping
     public static final ResourceKey<ResearchEntry> WAND_TRANSFORM_HINT = create("wand_transform_hint");
     public static final ResourceKey<ResearchEntry> FOUND_SHRINE = create("found_shrine");
     public static final ResourceKey<ResearchEntry> GOT_DREAM = create("got_dream");
     public static final ResourceKey<ResearchEntry> SIPHON_PROMPT = create("siphon_prompt");
-    public static final ResourceKey<ResearchEntry> SCAN_GOLEM = create("scan_golem");
     public static final ResourceKey<ResearchEntry> UNKNOWN_RUNE = create("unknown_rune");
     
     // Commonly used research icons
@@ -1445,28 +1440,28 @@ public class ResearchEntries {
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_MOON)
                         .sibling(EnchantmentsPM.LUCKY_STRIKE.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
-        register(context, FORBIDDEN_TRIDENT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_TRIDENT.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent(MASTER_RITUAL)
+        register(context, FORBIDDEN_TRIDENT, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_TRIDENT.get()).parent(DISCOVER_BLOOD).parent(MASTER_RITUAL)
                 .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_BLOOD).parent(BLOODLETTER)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_TRIDENT.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_PROJECT).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_BLOOD)
                         .sibling(EnchantmentsPM.RENDING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
-        register(context, FORBIDDEN_BOW, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_BOW.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent(MASTER_RITUAL)
+        register(context, FORBIDDEN_BOW, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_BOW.get()).parent(DISCOVER_INFERNAL).parent(MASTER_RITUAL)
                 .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_INFERNAL).parent(SOUL_ANVIL)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_BOW.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_ABSORB).requiredResearch(RUNE_CREATURE).requiredResearch(RUNE_INFERNAL)
                         .sibling(EnchantmentsPM.SOULPIERCING.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
-        register(context, FORBIDDEN_SWORD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_SWORD.get()).parent(ResearchEntries.DISCOVER_VOID).parent(MASTER_RITUAL)
+        register(context, FORBIDDEN_SWORD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.FORBIDDEN_SWORD.get()).parent(DISCOVER_VOID).parent(MASTER_RITUAL)
                 .parent(HEXIUM).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_VOID).parent(BLOODLETTER).parent(SOUL_ANVIL)
                 .stage().requiredTheories(2).end()
                 .stage().recipe(ItemsPM.FORBIDDEN_SWORD.get()).end()
                 .addendum().requiredResearch(MASTER_RUNEWORKING).requiredResearch(RUNE_SUMMON).requiredResearch(RUNE_ITEM).requiredResearch(RUNE_VOID)
                         .sibling(EnchantmentsPM.ESSENCE_THIEF.get()).sibling(UNLOCK_RUNE_ENCHANTMENTS).end()
                 .build());
-        register(context, SACRED_SHIELD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SACRED_SHIELD.get()).parent(ResearchEntries.DISCOVER_HALLOWED).parent(SUPREME_RITUAL)
+        register(context, SACRED_SHIELD, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SACRED_SHIELD.get()).parent(DISCOVER_HALLOWED).parent(SUPREME_RITUAL)
                 .parent(HALLOWSTEEL).parent(SHARD_SYNTHESIS).parent(MANA_SALTS).parent(RUNE_HALLOWED).parent(CELESTIAL_HARP)
                 .stage().requiredTheories(3).end()
                 .stage().recipe(ItemsPM.SACRED_SHIELD.get()).end()
@@ -1487,12 +1482,12 @@ public class ResearchEntries {
                 .stage().requiredItem(ItemsPM.SUNWOOD_SAPLING.get()).requiredItem(ItemsPM.MOONWOOD_SAPLING.get()).requiredItem(Items.MELON).requiredTheories(1).end()
                 .stage().attunement(Sources.SEA, 2).recipe("hydromelon_seeds_from_ritual").recipe(ItemsPM.HYDROMELON.get()).recipe(ItemsPM.HYDROMELON_SEEDS.get()).end()
                 .build());
-        register(context, BLOOD_ROSE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(ResearchEntries.DISCOVER_BLOOD).parent(EXPERT_RITUAL)
+        register(context, BLOOD_ROSE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BLOOD_ROSE.get()).parent(DISCOVER_BLOOD).parent(EXPERT_RITUAL)
                 .parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_BLOOD)
                 .stage().requiredItem(Items.ROSE_BUSH).requiredTheories(1).end()
                 .stage().attunement(Sources.BLOOD, 2).recipe(ItemsPM.BLOOD_ROSE.get()).end()
                 .build());
-        register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(ResearchEntries.DISCOVER_INFERNAL).parent(EXPERT_RITUAL)
+        register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL)
                 .parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_INFERNAL)
                 .stage().requiredItem(Items.SUNFLOWER).requiredTheories(1).end()
                 .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).end()
@@ -1500,7 +1495,6 @@ public class ResearchEntries {
     }
     
     private static void bootstrapMagitechEntries(BootstapContext<ResearchEntry> context) {
-        // TODO Define research entries
         ResourceKey<ResearchDiscipline> discipline = ResearchDisciplines.MAGITECH;
         register(context, BASIC_MAGITECH, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MAGITECH).parent(UNLOCK_MAGITECH)
                 .stage().recipe(ItemsPM.MAGITECH_PARTS_BASIC.get()).end()
@@ -1522,7 +1516,178 @@ public class ResearchEntries {
                 .stage().attunement(Sources.EARTH, 1).attunement(Sources.SEA, 1).attunement(Sources.SKY, 1).attunement(Sources.SUN, 1).attunement(Sources.MOON, 1)
                         .attunement(Sources.BLOOD, 1).attunement(Sources.INFERNAL, 1).attunement(Sources.VOID, 1).attunement(Sources.HALLOWED, 1).end()
                 .build());
-
+        register(context, HONEY_EXTRACTOR, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HONEY_EXTRACTOR.get()).parent(BASIC_MAGITECH)
+                .stage().requiredItem(Items.HONEYCOMB).requiredItem(Items.HONEY_BOTTLE).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.HONEY_EXTRACTOR.get()).end()
+                .build());
+        register(context, SEASCRIBE_PEN, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SEASCRIBE_PEN.get()).parent(BASIC_MAGITECH).parent(THEORYCRAFTING)
+                .stage().requiredItem(ItemsPM.ENCHANTED_INK.get()).requiredStat(StatsPM.RESEARCH_PROJECTS_COMPLETED, 10).requiredObservations(1).end()
+                .stage().recipe(ItemsPM.SEASCRIBE_PEN.get()).end()
+                .build());
+        register(context, ARCANOMETER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ARCANOMETER.get()).parent(EXPERT_MAGITECH)
+                .stage().requiredStat(StatsPM.ITEMS_ANALYZED, 25).requiredTheories(1).end()
+                .stage().sibling(SOTU_RESEARCH_ARCANOMETER).recipe(ItemsPM.ARCANOMETER.get()).end()
+                .build());
+        register(context, PRIMALITE_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).parent(EXPERT_MAGITECH).parent(PRIMALITE)
+                .stage().requiredResearch(SCAN_GOLEM).requiredTheories(1).end()
+                .stage().recipe(ItemsPM.PRIMALITE_GOLEM_CONTROLLER.get()).end()
+                .build());
+        register(context, HEXIUM_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).parent(MASTER_MAGITECH).parent(PRIMALITE_GOLEM).parent(HEXIUM)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.HEXIUM_GOLEM_CONTROLLER.get()).end()
+                .build());
+        register(context, HALLOWSTEEL_GOLEM, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).parent(SUPREME_MAGITECH).parent(HEXIUM_GOLEM).parent(HALLOWSTEEL)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.HALLOWSTEEL_GOLEM_CONTROLLER.get()).end()
+                .build());
+        register(context, CONCOCTING_TINCTURES, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(EXPERT_MAGITECH).parent(SKYGLASS).parent(DISCOVER_INFERNAL)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.SKYGLASS_FLASK.get()).recipe(ItemsPM.CONCOCTER.get()).recipe("night_vision_tincture")
+                        .recipe("long_night_vision_tincture").recipe("invisibility_tincture")
+                        .recipe("long_invisibility_tincture").recipe("leaping_tincture")
+                        .recipe("long_leaping_tincture").recipe("strong_leaping_tincture")
+                        .recipe("swiftness_tincture").recipe("long_swiftness_tincture")
+                        .recipe("strong_swiftness_tincture").recipe("turtle_master_tincture")
+                        .recipe("long_turtle_master_tincture").recipe("strong_turtle_master_tincture")
+                        .recipe("water_breathing_tincture").recipe("long_water_breathing_tincture")
+                        .recipe("strength_tincture").recipe("long_strength_tincture")
+                        .recipe("strong_strength_tincture").recipe("slow_falling_tincture")
+                        .recipe("long_slow_falling_tincture").recipe("luck_tincture").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe("healing_tincture")
+                        .recipe("strong_healing_tincture").recipe("regeneration_tincture")
+                        .recipe("long_regeneration_tincture").recipe("strong_regeneration_tincture").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_tincture")
+                        .recipe("long_fire_resistance_tincture").end()
+                .build());
+        register(context, CONCOCTING_PHILTERS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().recipe("night_vision_philter")
+                        .recipe("long_night_vision_philter").recipe("invisibility_philter")
+                        .recipe("long_invisibility_philter").recipe("leaping_philter")
+                        .recipe("long_leaping_philter").recipe("strong_leaping_philter")
+                        .recipe("swiftness_philter").recipe("long_swiftness_philter")
+                        .recipe("strong_swiftness_philter").recipe("turtle_master_philter")
+                        .recipe("long_turtle_master_philter").recipe("strong_turtle_master_philter")
+                        .recipe("water_breathing_philter").recipe("long_water_breathing_philter")
+                        .recipe("strength_philter").recipe("long_strength_philter")
+                        .recipe("strong_strength_philter").recipe("slow_falling_philter")
+                        .recipe("long_slow_falling_philter").recipe("luck_philter").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe("healing_philter")
+                        .recipe("strong_healing_philter").recipe("regeneration_philter")
+                        .recipe("long_regeneration_philter").recipe("strong_regeneration_philter").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_philter")
+                        .recipe("long_fire_resistance_philter").end()
+                .build());
+        register(context, CONCOCTING_ELIXIRS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(SUPREME_MAGITECH).parent(CONCOCTING_PHILTERS).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(3).end()
+                .stage().recipe("night_vision_elixir")
+                        .recipe("long_night_vision_elixir").recipe("invisibility_elixir")
+                        .recipe("long_invisibility_elixir").recipe("leaping_elixir")
+                        .recipe("long_leaping_elixir").recipe("strong_leaping_elixir")
+                        .recipe("swiftness_elixir").recipe("long_swiftness_elixir")
+                        .recipe("strong_swiftness_elixir").recipe("turtle_master_elixir")
+                        .recipe("long_turtle_master_elixir").recipe("strong_turtle_master_elixir")
+                        .recipe("water_breathing_elixir").recipe("long_water_breathing_elixir")
+                        .recipe("strength_elixir").recipe("long_strength_elixir")
+                        .recipe("strong_strength_elixir").recipe("slow_falling_elixir")
+                        .recipe("long_slow_falling_elixir").recipe("luck_elixir").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe("healing_elixir")
+                        .recipe("strong_healing_elixir").recipe("regeneration_elixir")
+                        .recipe("long_regeneration_elixir").recipe("strong_regeneration_elixir").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_elixir")
+                        .recipe("long_fire_resistance_elixir").end()
+                .build());
+        register(context, CONCOCTING_BOMBS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.CONCOCTER.get()).parent(MASTER_MAGITECH).parent(CONCOCTING_TINCTURES).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.BOMB_CASING.get()).recipe("night_vision_bomb")
+                        .recipe("long_night_vision_bomb").recipe("invisibility_bomb")
+                        .recipe("long_invisibility_bomb").recipe("leaping_bomb")
+                        .recipe("long_leaping_bomb").recipe("strong_leaping_bomb")
+                        .recipe("swiftness_bomb").recipe("long_swiftness_bomb")
+                        .recipe("strong_swiftness_bomb").recipe("turtle_master_bomb")
+                        .recipe("long_turtle_master_bomb").recipe("strong_turtle_master_bomb")
+                        .recipe("water_breathing_bomb").recipe("long_water_breathing_bomb")
+                        .recipe("strength_bomb").recipe("long_strength_bomb")
+                        .recipe("strong_strength_bomb").recipe("slow_falling_bomb")
+                        .recipe("long_slow_falling_bomb").recipe("luck_bomb").end()
+                .addendum().requiredResearch(DISCOVER_BLOOD).recipe("healing_bomb")
+                        .recipe("strong_healing_bomb").recipe("regeneration_bomb")
+                        .recipe("long_regeneration_bomb").recipe("strong_regeneration_bomb")
+                        .recipe("harming_bomb").recipe("strong_harming_bomb")
+                        .recipe("poison_bomb").recipe("long_poison_bomb")
+                        .recipe("strong_poison_bomb").end()
+                .addendum().requiredResearch(DISCOVER_INFERNAL).recipe("fire_resistance_bomb")
+                        .recipe("long_fire_resistance_bomb").end()
+                .addendum().requiredResearch(DISCOVER_VOID).recipe("slowness_bomb")
+                        .recipe("long_slowness_bomb").recipe("strong_slowness_bomb")
+                        .recipe("weakness_bomb").recipe("long_weakness_bomb").end()
+                .build());
+        register(context, ENTROPY_SINK, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ENTROPY_SINK.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(MANAFRUIT)
+                .stage().requiredTheories(1).requiredStat(StatsPM.RITUAL_MISHAPS, 1).end()
+                .stage().recipe(ItemsPM.ENTROPY_SINK.get()).end()
+                .build());
+        register(context, AUTO_CHARGER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.AUTO_CHARGER.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING).parent(WAND_CHARGER)
+                .parent(ARTIFICIAL_MANA_FONTS)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.AUTO_CHARGER.get()).end()
+                .build());
+        register(context, ESSENCE_TRANSMUTER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ESSENCE_TRANSMUTER.get()).parent(EXPERT_MAGITECH).parent(EXPERT_MANAWEAVING)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.ESSENCE_TRANSMUTER.get()).end()
+                .build());
+        register(context, DISSOLUTION_CHAMBER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.DISSOLUTION_CHAMBER.get()).parent(MASTER_MAGITECH).parent(MASTER_MANAWEAVING)
+                .parent(EARTHSHATTER_HAMMER)
+                .stage().requiredItem(ItemsPM.IRON_GRIT.get(), 20).requiredItem(ItemsPM.COPPER_GRIT.get(), 20).requiredItem(ItemsPM.GOLD_GRIT.get(), 10)
+                        .requiredTheories(2).end()
+                .stage().attunement(Sources.EARTH, 3).recipe(ItemsPM.DISSOLUTION_CHAMBER.get()).recipe("iron_grit_from_dissolving_ore")
+                        .recipe("iron_grit_from_dissolving_raw_metal").recipe("gold_grit_from_dissolving_ore")
+                        .recipe("gold_grit_from_dissolving_raw_metal").recipe("copper_grit_from_dissolving_ore")
+                        .recipe("copper_grit_from_dissolving_raw_metal").recipe("tin_dust_from_dissolving_ore")
+                        .recipe("tin_dust_from_dissolving_raw_metal").recipe("lead_dust_from_dissolving_ore")
+                        .recipe("lead_dust_from_dissolving_raw_metal").recipe("silver_dust_from_dissolving_ore")
+                        .recipe("silver_dust_from_dissolving_raw_metal").recipe("uranium_dust_from_dissolving_ore")
+                        .recipe("uranium_dust_from_dissolving_raw_metal").recipe("cobblestone_from_dissolving_surface_stone")
+                        .recipe("cobbled_deepslate_from_dissolving_deep_stone").recipe("gravel_from_dissolving_cobblestone")
+                        .recipe("sand_from_dissolving_gravel").recipe("bone_meal_from_dissolving_bone")
+                        .recipe("blaze_powder_from_dissolving_blaze_rod").recipe("string_from_dissolving_wool")
+                        .recipe("quartz_from_dissolving_quartz_block").recipe("glowstone_dust_from_dissolving_glowstone_block")
+                        .recipe("rock_salt_from_dissolving_rock_salt_ore").recipe("refined_salt_from_dissolving_rock_salt")
+                        .recipe("netherite_scrap_from_dissolving_ancient_debris").end()
+                .build());
+        register(context, ZEPHYR_ENGINE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.ZEPHYR_ENGINE.get()).parent(EXPERT_MAGITECH).parent(PRIMALITE).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(1).requiredItem(Items.PISTON).end()
+                .stage().attunement(Sources.SKY, 2).recipe(ItemsPM.ZEPHYR_ENGINE.get()).end()
+                .build());
+        register(context, VOID_TURBINE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.VOID_TURBINE.get()).parent(MASTER_MAGITECH).parent(HEXIUM).parent(SHARD_SYNTHESIS)
+                .stage().requiredTheories(2).requiredItem(Items.STICKY_PISTON).end()
+                .stage().attunement(Sources.VOID, 3).recipe(ItemsPM.VOID_TURBINE.get()).end()
+                .build());
+        register(context, INFERNAL_FURNACE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.INFERNAL_FURNACE.get()).parent(MASTER_MAGITECH).parent(HEXIUM).parent(CRYSTAL_SYNTHESIS)
+                .stage().requiredTheories(2).end()
+                .stage().attunement(Sources.INFERNAL, 3).recipe(ItemsPM.INFERNAL_FURNACE.get()).end()
+                .addendum().requiredResearch(IGNYX).end()
+                .build());
+        register(context, MANA_NEXUS, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_NEXUS.get()).parent(MASTER_MAGITECH).parent(AUTO_CHARGER).parent(HEXIUM).parent(WAND_GEM_WIZARD)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.MANA_NEXUS.get()).end()
+                .build());
+        register(context, MANA_SINGULARITY, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.MANA_SINGULARITY.get()).parent(SUPREME_MAGITECH).parent(MANA_NEXUS).parent(HALLOWSTEEL).parent(WAND_GEM_ARCHMAGE)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.MANA_SINGULARITY.get()).end()
+                .build());
+        register(context, WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.BASIC_WARDING_MODULE.get()).parent(EXPERT_MAGITECH).parent(RUNE_PROTECT).parent(RUNE_SELF).parent(RUNE_INSIGHT)
+                .parent(PRIMALITE).parent(WAND_CHARGER)
+                .stage().requiredTheories(1).end()
+                .stage().recipe(ItemsPM.BASIC_WARDING_MODULE.get()).end()
+                .build());
+        register(context, GREATER_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.GREATER_WARDING_MODULE.get()).parent(MASTER_MAGITECH).parent(RUNE_POWER).parent(WARDING_MODULE)
+                .stage().requiredTheories(2).end()
+                .stage().recipe(ItemsPM.GREATER_WARDING_MODULE.get()).end()
+                .build());
+        register(context, SUPREME_WARDING_MODULE, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.SUPREME_WARDING_MODULE.get()).parent(SUPREME_MAGITECH).parent(RUNE_GRACE).parent(GREATER_WARDING_MODULE)
+                .stage().requiredTheories(3).end()
+                .stage().recipe(ItemsPM.SUPREME_WARDING_MODULE.get()).end()
+                .build());
     }
     
     private static void bootstrapScanEntries(BootstapContext<ResearchEntry> context) {
@@ -1632,6 +1797,7 @@ public class ResearchEntries {
         register(context, FEEL_THE_BURN, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).hasHint().build());
         register(context, SCAN_NETHER_STAR, key -> ResearchEntry.builder(key).internal().icon(ICON_BAG).hasHint().build());
         register(context, SCAN_FLYING_CREATURE, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
+        register(context, SCAN_GOLEM, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
     }
     
     private static Holder.Reference<ResearchEntry> register(BootstapContext<ResearchEntry> context, ResourceKey<ResearchEntry> key, Function<ResourceKey<ResearchEntry>, ResearchEntry> supplier) {
