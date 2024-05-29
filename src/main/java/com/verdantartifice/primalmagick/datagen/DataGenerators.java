@@ -20,7 +20,6 @@ import com.verdantartifice.primalmagick.datagen.loot_tables.LibraryLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TheorycraftingRewardLootTables;
 import com.verdantartifice.primalmagick.datagen.loot_tables.TreefolkBarteringLootTables;
 import com.verdantartifice.primalmagick.datagen.recipes.Recipes;
-import com.verdantartifice.primalmagick.datagen.runes.RuneEnchantmentProvider;
 import com.verdantartifice.primalmagick.datagen.sounds.SoundDefinitionsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BiomeTagsProviderPM;
 import com.verdantartifice.primalmagick.datagen.tags.BlockTagsProviderPM;
@@ -71,7 +70,6 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new RecipeSerializerTagsProviderPM(generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper()));
         generator.addProvider(event.includeServer(), new AffinityProvider(generator.getPackOutput()));
         generator.addProvider(event.includeServer(), new LootModifierProvider(generator.getPackOutput()));
-        generator.addProvider(event.includeServer(), new RuneEnchantmentProvider(generator.getPackOutput()));
         CompletableFuture<HolderLookup.Provider> registryLookupFuture = RegistryDataGenerator.addProviders(event.includeServer(), generator, generator.getPackOutput(), event.getLookupProvider(), event.getExistingFileHelper());
         generator.addProvider(event.includeServer(), new GridDefinitionProvider(generator.getPackOutput(), registryLookupFuture));
     }
