@@ -7,7 +7,7 @@ import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementType;
 import com.verdantartifice.primalmagick.common.network.PacketHandler;
 import com.verdantartifice.primalmagick.common.network.packets.fx.PlayClientSoundPacket;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
 import com.verdantartifice.primalmagick.common.sources.Source;
 
@@ -43,7 +43,7 @@ public abstract class AbstractAttunementGainItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            if (SimpleResearchKey.FIRST_STEPS.isKnownByStrict(player)) {
+            if (ResearchManager.hasStartedProgression(player)) {
                 AttunementManager.incrementAttunement(player, this.source, this.attunementType, this.amount);
                 player.displayClientMessage(Component.translatable("event.primalmagick.attunement_item.success").withStyle(ChatFormatting.GREEN), true);
                 if (player instanceof ServerPlayer serverPlayer) {

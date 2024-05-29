@@ -69,6 +69,8 @@ public class ResearchManager {
     // Reverse map of recipe IDs to the research entries that contain the stage or addendum that grants them
     private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
     
+    private static final ResearchEntryKey FIRST_STEPS = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
+    
     public static Set<Integer> getAllCraftingReferences() {
         return Collections.unmodifiableSet(CRAFTING_REFERENCES);
     }
@@ -92,6 +94,10 @@ public class ResearchManager {
     
     static void clearRecipeMap() {
         RECIPE_MAP.clear();
+    }
+    
+    public static boolean hasStartedProgression(Player player) {
+        return FIRST_STEPS.isKnownBy(player);
     }
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
