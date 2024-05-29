@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.entities.companions.CompanionManager;
 import com.verdantartifice.primalmagick.common.entities.companions.golems.AbstractEnchantedGolemEntity;
-import com.verdantartifice.primalmagick.common.research.SimpleResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 import com.verdantartifice.primalmagick.common.wands.IInteractWithWand;
 import com.verdantartifice.primalmagick.common.wands.IWand;
 
@@ -47,7 +47,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
     
-    protected abstract SimpleResearchKey getRequiredResearch();
+    protected abstract AbstractRequirement<?> getRequirement();
     
     protected abstract EntityType<T> getEntityType();
     
@@ -79,7 +79,7 @@ public abstract class AbstractEnchantedGolemControllerBlock<T extends AbstractEn
     
     @Override
     public InteractionResult onWandRightClick(ItemStack wandStack, Level world, Player player, BlockPos pos, Direction direction) {
-        if (!world.isClientSide && wandStack.getItem() instanceof IWand && this.getRequiredResearch().isKnownByStrict(player)) {
+        if (!world.isClientSide && wandStack.getItem() instanceof IWand && this.getRequirement().isMetBy(player)) {
             BlockPattern.BlockPatternMatch helper = this.getGolemPattern().find(world, pos);
             if (helper != null) {
                 for (int i = 0; i < this.getGolemPattern().getWidth(); i++) {

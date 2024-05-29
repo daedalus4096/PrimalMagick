@@ -4,7 +4,10 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
 import com.verdantartifice.primalmagick.common.tiles.mana.WandChargerTileEntity;
 import com.verdantartifice.primalmagick.common.wands.IWand;
@@ -32,6 +35,9 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
     public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
     protected static final Component ESSENCE_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.essence");
     protected static final Component WAND_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.wand_charger.slot.wand");
+    protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));
+    protected static final AbstractRequirement<?> CRYSTAL_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CRYSTAL_SYNTHESIS));
+    protected static final AbstractRequirement<?> CLUSTER_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CLUSTER_SYNTHESIS));
 
     protected final ContainerData chargerData;
     protected final Slot essenceSlot;
@@ -49,9 +55,9 @@ public class WandChargerMenu extends AbstractTileSidedInventoryMenu<WandChargerT
         // Slot 0: essence input
         this.essenceSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 52, 35, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(ESSENCE_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
-                .background(SHARD_SLOT_TEXTURE, $ -> ResearchNames.SHARD_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
-                .background(CRYSTAL_SLOT_TEXTURE, $ -> ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
-                .background(CLUSTER_SLOT_TEXTURE, $ -> ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))));
+                .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CLUSTER_SLOT_TEXTURE, $ -> CLUSTER_REQUIREMENT.isMetBy(playerInv.player))));
         
         // Slot 1: wand input/output
         this.wandSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.NORTH), 0, 108, 35, 

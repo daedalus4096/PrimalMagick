@@ -4,7 +4,10 @@ import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.items.essence.EssenceType;
 import com.verdantartifice.primalmagick.common.menus.base.AbstractTileSidedInventoryMenu;
 import com.verdantartifice.primalmagick.common.menus.slots.FilteredSlot;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
+import com.verdantartifice.primalmagick.common.research.ResearchEntries;
+import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
+import com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.Sources;
 import com.verdantartifice.primalmagick.common.tags.ItemTagsPM;
@@ -33,6 +36,9 @@ public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskT
     public static final ResourceLocation CRYSTAL_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_crystal_slot");
     public static final ResourceLocation CLUSTER_SLOT_TEXTURE = PrimalMagick.resource("item/empty_essence_cluster_slot");
     protected static final Component INPUT_SLOT_TOOLTIP = Component.translatable("tooltip.primalmagick.essence_cask.slot.essence");
+    protected static final AbstractRequirement<?> SHARD_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.SHARD_SYNTHESIS));
+    protected static final AbstractRequirement<?> CRYSTAL_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CRYSTAL_SYNTHESIS));
+    protected static final AbstractRequirement<?> CLUSTER_REQUIREMENT = new ResearchRequirement(new ResearchEntryKey(ResearchEntries.CLUSTER_SYNTHESIS));
     
     protected final ContainerData caskData;
     protected final Slot inputSlot;
@@ -51,9 +57,9 @@ public class EssenceCaskMenu extends AbstractTileSidedInventoryMenu<EssenceCaskT
         // Slot 0: Cask input
         this.inputSlot = this.addSlot(new FilteredSlot(this.getTileInventory(Direction.UP), 0, 80, 108, new FilteredSlot.Properties().tag(ItemTagsPM.ESSENCES).tooltip(INPUT_SLOT_TOOLTIP)
                 .background(DUST_SLOT_TEXTURE)
-                .background(SHARD_SLOT_TEXTURE, $ -> ResearchNames.SHARD_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
-                .background(CRYSTAL_SLOT_TEXTURE, $ -> ResearchNames.CRYSTAL_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))
-                .background(CLUSTER_SLOT_TEXTURE, $ -> ResearchNames.CLUSTER_SYNTHESIS.get().simpleKey().isKnownBy(playerInv.player))));
+                .background(SHARD_SLOT_TEXTURE, $ -> SHARD_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CRYSTAL_SLOT_TEXTURE, $ -> CRYSTAL_REQUIREMENT.isMetBy(playerInv.player))
+                .background(CLUSTER_SLOT_TEXTURE, $ -> CLUSTER_REQUIREMENT.isMetBy(playerInv.player))));
         
         // Slots 1-27: Player backpack
         for (int i = 0; i < 3; i++) {

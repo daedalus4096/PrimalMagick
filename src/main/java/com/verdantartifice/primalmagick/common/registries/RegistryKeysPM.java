@@ -6,7 +6,6 @@ import com.verdantartifice.primalmagick.common.books.BookLanguage;
 import com.verdantartifice.primalmagick.common.books.Culture;
 import com.verdantartifice.primalmagick.common.research.ResearchDiscipline;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
-import com.verdantartifice.primalmagick.common.research.ResearchName;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyType;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementType;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplate;
@@ -26,7 +25,6 @@ public class RegistryKeysPM {
     public static final ResourceKey<Registry<BookDefinition>> BOOKS = key("books");
     public static final ResourceKey<Registry<BookLanguage>> BOOK_LANGUAGES = key("book_languages");
     public static final ResourceKey<Registry<Culture>> CULTURES = key("cultures");
-    public static final ResourceKey<Registry<ResearchName>> RESEARCH_NAMES = key("research_names");
     public static final ResourceKey<Registry<RequirementType<?>>> REQUIREMENT_TYPES = key("requirement_types");
     public static final ResourceKey<Registry<ResearchKeyType<?>>> RESEARCH_KEY_TYPES = key("research_key_types");
     public static final ResourceKey<Registry<ResearchDiscipline>> RESEARCH_DISCIPLINES = key("research_disciplines");

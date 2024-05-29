@@ -14,7 +14,6 @@ import com.verdantartifice.primalmagick.common.entities.ai.sensing.SensorTypesPM
 import com.verdantartifice.primalmagick.common.items.ItemsPM;
 import com.verdantartifice.primalmagick.common.loot.modifiers.LootModifierSerializersPM;
 import com.verdantartifice.primalmagick.common.menus.MenuTypesPM;
-import com.verdantartifice.primalmagick.common.research.ResearchNames;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchKeyTypesPM;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementsPM;
 import com.verdantartifice.primalmagick.common.sounds.SoundsPM;
@@ -50,7 +49,6 @@ public class InitRegistries {
         ArgumentTypesPM.init();
         SensorTypesPM.init();
         MemoryModuleTypesPM.init();
-        ResearchNames.init();
         ResearchKeyTypesPM.init();
         RequirementsPM.init();
         ProjectMaterialTypesPM.init();
