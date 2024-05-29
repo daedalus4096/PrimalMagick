@@ -605,8 +605,7 @@ public class ResearchManager {
                 // If the given itemstack has no affinities, consider it already scanned
                 return true;
             }
-            SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
-            return (key != null && key.isKnownByStrict(player));
+            return new ItemScanKey(stack).isKnownBy(player);
         } else {
             // If the affinities for the item are not ready yet, temporarily consider the item scanned
             return true;
@@ -623,8 +622,7 @@ public class ResearchManager {
                 // If the given itemstack has no affinities, consider it already scanned
                 return true;
             }
-            SimpleResearchKey key = SimpleResearchKey.parseItemScan(stack);
-            return (key != null && key.isKnownByStrict(player));
+            return new ItemScanKey(stack).isKnownBy(player);
         });
     }
     
@@ -639,8 +637,7 @@ public class ResearchManager {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
             }
-            SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
-            return (key != null && key.isKnownByStrict(player));
+            return new EntityScanKey(type).isKnownBy(player);
         } else {
             // If the affinities for the entity are not ready yet, temporarily consider the entity scanned
             return true;
@@ -657,8 +654,7 @@ public class ResearchManager {
                 // If the given entity has no affinities, consider it already scanned
                 return true;
             }
-            SimpleResearchKey key = SimpleResearchKey.parseEntityScan(type);
-            return (key != null && key.isKnownByStrict(player));
+            return new EntityScanKey(type).isKnownBy(player);
         });
     }
 
