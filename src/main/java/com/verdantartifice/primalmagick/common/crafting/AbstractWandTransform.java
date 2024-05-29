@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.common.misc.BlockSwapper;
-import com.verdantartifice.primalmagick.common.research.CompoundResearchKey;
+import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
@@ -20,16 +20,16 @@ import net.minecraftforge.event.ForgeEventFactory;
  */
 public abstract class AbstractWandTransform implements IWandTransform {
     protected final ItemStack result;
-    protected final CompoundResearchKey research;
+    protected final AbstractRequirement<?> requirement;
 
-    public AbstractWandTransform(@Nonnull ItemStack result, @Nullable CompoundResearchKey research) {
+    public AbstractWandTransform(@Nonnull ItemStack result, @Nullable AbstractRequirement<?> requirement) {
         this.result = result;
-        this.research = research;
+        this.requirement = requirement;
     }
 
     @Override
     public boolean isValid(Level world, Player player, BlockPos pos) {
-        return this.research == null || this.research.isKnownBy(player);
+        return this.requirement == null || this.requirement.isMetBy(player);
     }
 
     @Override
