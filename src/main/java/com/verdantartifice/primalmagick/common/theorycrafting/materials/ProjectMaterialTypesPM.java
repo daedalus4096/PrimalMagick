@@ -20,12 +20,12 @@ public class ProjectMaterialTypesPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<ProjectMaterialType<ExperienceProjectMaterial>> EXPERIENCE = register("experience", ExperienceProjectMaterial.codec(), ExperienceProjectMaterial::fromNetworkInner);
-    public static final RegistryObject<ProjectMaterialType<ItemProjectMaterial>> ITEM = register("item", ItemProjectMaterial.codec(), ItemProjectMaterial::fromNetworkInner);
-    public static final RegistryObject<ProjectMaterialType<ItemTagProjectMaterial>> ITEM_TAG = register("item_tag", ItemTagProjectMaterial.codec(), ItemTagProjectMaterial::fromNetworkInner);
-    public static final RegistryObject<ProjectMaterialType<ObservationProjectMaterial>> OBSERVATION = register("observation", ObservationProjectMaterial.codec(), ObservationProjectMaterial::fromNetworkInner);
+    public static final RegistryObject<ProjectMaterialType<ExperienceProjectMaterial>> EXPERIENCE = register("experience", ExperienceProjectMaterial::codec, ExperienceProjectMaterial::fromNetworkInner);
+    public static final RegistryObject<ProjectMaterialType<ItemProjectMaterial>> ITEM = register("item", ItemProjectMaterial::codec, ItemProjectMaterial::fromNetworkInner);
+    public static final RegistryObject<ProjectMaterialType<ItemTagProjectMaterial>> ITEM_TAG = register("item_tag", ItemTagProjectMaterial::codec, ItemTagProjectMaterial::fromNetworkInner);
+    public static final RegistryObject<ProjectMaterialType<ObservationProjectMaterial>> OBSERVATION = register("observation", ObservationProjectMaterial::codec, ObservationProjectMaterial::fromNetworkInner);
     
-    protected static <T extends AbstractProjectMaterial<T>> RegistryObject<ProjectMaterialType<T>> register(String id, Codec<T> codec, AbstractProjectMaterial.Reader<T> networkReader) {
-        return DEFERRED_TYPES.register(id, () -> new ProjectMaterialType<T>(PrimalMagick.resource(id), codec, networkReader));
+    protected static <T extends AbstractProjectMaterial<T>> RegistryObject<ProjectMaterialType<T>> register(String id, Supplier<Codec<T>> codecSupplier, AbstractProjectMaterial.Reader<T> networkReader) {
+        return DEFERRED_TYPES.register(id, () -> new ProjectMaterialType<T>(PrimalMagick.resource(id), codecSupplier, networkReader));
     }
 }
