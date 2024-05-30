@@ -163,8 +163,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
     }
     
     protected void slotChangedCraftingGrid() {
-        if (!this.world.isClientSide && this.player instanceof ServerPlayer) {
-            ServerPlayer spe = (ServerPlayer)this.player;
+        if (!this.world.isClientSide && this.player instanceof ServerPlayer spe) {
             ItemStack stack = ItemStack.EMPTY;
             ItemStack baseStack = this.altarInv.getItem(0);
             
@@ -180,7 +179,7 @@ public abstract class AbstractRunescribingAltarMenu extends AbstractTileMenu<Run
                 }
 
                 // Determine what enchantments can be applied with the slotted rune combination
-                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(runes, baseStack, this.player, true);
+                Map<Enchantment, Integer> inputEnch = RuneManager.getRuneEnchantments(this.world.registryAccess(), runes, baseStack, this.player, true);
                 if (!inputEnch.isEmpty()) {
                     Map<Enchantment, Integer> finalEnch = RuneManager.mergeEnchantments(EnchantmentHelper.getEnchantments(baseStack), inputEnch);
                     stack = baseStack.copy();

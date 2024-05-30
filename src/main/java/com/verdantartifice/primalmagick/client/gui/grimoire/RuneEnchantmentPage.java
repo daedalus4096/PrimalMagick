@@ -13,7 +13,6 @@ import com.verdantartifice.primalmagick.client.gui.widgets.grimoire.ResearchWidg
 import com.verdantartifice.primalmagick.common.items.misc.RuneItem;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
-import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinition;
 import com.verdantartifice.primalmagick.common.runes.RuneManager;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 
@@ -98,29 +97,29 @@ public class RuneEnchantmentPage extends AbstractPage {
         int overlayWidth = 52;
 
         // Render rune item stacks if applicable
-        if (this.isFirstPage() && side == 0 && RuneManager.hasRuneDefinition(this.enchant)) {
-            RuneEnchantmentDefinition def = RuneManager.getRuneDefinition(this.enchant);
-            
-            int widgetXPos = x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2);
-            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.VERB)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.verb()), widgetXPos, y, false));
-            } else {
-                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
-            }
-            
-            widgetXPos += 32;
-            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.NOUN)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.noun()), widgetXPos, y, false));
-            } else {
-                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
-            }
-            
-            widgetXPos += 32;
-            if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.SOURCE)) {
-                screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.source()), widgetXPos, y, false));
-            } else {
-                screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
-            }
+        if (this.isFirstPage() && side == 0) {
+            RuneManager.getRuneDefinition(mc.level.registryAccess(), enchant).ifPresent(def -> {
+                int widgetXPos = x - 5 + (side * 140) + (indent / 2) - (overlayWidth / 2);
+                if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.VERB)) {
+                    screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.verb()), widgetXPos, y, false));
+                } else {
+                    screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
+                }
+                
+                widgetXPos += 32;
+                if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.NOUN)) {
+                    screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.noun()), widgetXPos, y, false));
+                } else {
+                    screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
+                }
+                
+                widgetXPos += 32;
+                if (RuneManager.isRuneKnown(mc.player, enchant, RuneType.SOURCE)) {
+                    screen.addWidgetToScreen(new ItemStackWidget(RuneItem.getRune(def.source()), widgetXPos, y, false));
+                } else {
+                    screen.addWidgetToScreen(new ResearchWidget(UNKNOWN_RUNE_KEY, widgetXPos, y, false));
+                }
+            });
         }
     }
 }

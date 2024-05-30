@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,11 +15,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentKey;
 import com.verdantartifice.primalmagick.common.research.keys.RuneEnchantmentPartialKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
@@ -28,60 +31,22 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
- * Primary access point for rune-related methods.  Also stores registered rune combinations in a
- * static registry.
+ * Primary access point for rune-related methods.
  * 
  * @author Daedalus4096
  */
 public class RuneManager {
-    public static final IRuneEnchantmentDefinitionSerializer DEFINITION_SERIALIZER = new RuneEnchantmentDefinition.Serializer();
-    protected static final Map<ResourceLocation, RuneEnchantmentDefinition> DEFINITIONS = new HashMap<>();
-    protected static final Map<Enchantment, List<Rune>> REGISTRY = new HashMap<>();
-    protected static final Map<VerbRune, Set<Enchantment>> VERB_ENCHANTMENTS = new HashMap<>();
-    protected static final Map<NounRune, Set<Enchantment>> NOUN_ENCHANTMENTS = new HashMap<>();
-    protected static final Map<SourceRune, Set<Enchantment>> SOURCE_ENCHANTMENTS = new HashMap<>();
-    protected static final Map<Enchantment, AbstractRequirement<?>> ENCHANTMENT_REQUIREMENTS = new HashMap<>();
-    protected static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
-    
-    public static boolean registerRuneEnchantment(RuneEnchantmentDefinition def) {
-        if (DEFINITIONS.containsKey(def.getId())) {
-            return false;
-        } else {
-            REGISTRY.put(def.result(), def.getRunes());
-            VERB_ENCHANTMENTS.computeIfAbsent(def.verb(), r -> new HashSet<>()).add(def.result());
-            NOUN_ENCHANTMENTS.computeIfAbsent(def.noun(), r -> new HashSet<>()).add(def.result());
-            SOURCE_ENCHANTMENTS.computeIfAbsent(def.source(), r -> new HashSet<>()).add(def.result());
-            def.requirementOpt().ifPresent(req -> {
-                ENCHANTMENT_REQUIREMENTS.put(def.result(), req);
-            });
-            DEFINITIONS.put(def.getId(), def);
-            return true;
-        }
-    }
-    
-    public static void clearAllRuneEnchantments() {
-        DEFINITIONS.clear();
-        REGISTRY.clear();
-        VERB_ENCHANTMENTS.clear();
-        NOUN_ENCHANTMENTS.clear();
-        SOURCE_ENCHANTMENTS.clear();
-        ENCHANTMENT_REQUIREMENTS.clear();
-    }
-    
-    public static Map<ResourceLocation, RuneEnchantmentDefinition> getAllDefinitions() {
-        return DEFINITIONS;
-    }
+    private static final String RUNE_TAG_NAME = PrimalMagick.MODID + ":runes";
     
     /**
      * Gets the set of enchantments that can be replicated with runes.
      * 
      * @return the set of enchantments that can be replicated with runes
      */
-    public static Set<Enchantment> getRuneEnchantments() {
-        return Collections.unmodifiableSet(REGISTRY.keySet());
+    public static Set<Enchantment> getRuneEnchantments(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().map(RuneEnchantmentDefinition::result).collect(Collectors.toUnmodifiableSet());
     }
     
     /**
@@ -89,21 +54,10 @@ public class RuneManager {
      * 
      * @return the list of enchantments that can be replicated with runes, sorted by display name
      */
-    public static List<Enchantment> getRuneEnchantmentsSorted() {
-        return getRuneEnchantments().stream().sorted((e1, e2) -> {
+    public static List<Enchantment> getRuneEnchantmentsSorted(RegistryAccess registryAccess) {
+        return getRuneEnchantments(registryAccess).stream().sorted((e1, e2) -> {
             return e1.getFullname(1).getString().compareTo(e2.getFullname(1).getString());
         }).collect(Collectors.toList());
-    }
-    
-    /**
-     * Gets the registered list of runes for the given enchantment, or null if no runes are registered.
-     * 
-     * @param enchant the enchantment to be queried
-     * @return the registered list of runes for the given enchantment
-     */
-    @Nullable
-    public static List<Rune> getRunesForEnchantment(@Nullable Enchantment enchant) {
-        return REGISTRY.get(enchant);
     }
     
     /**
@@ -117,7 +71,7 @@ public class RuneManager {
      * @return the map of rune enchantments and the levels at which they should be applied
      */
     @Nonnull
-    public static Map<Enchantment, Integer> getRuneEnchantments(@Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
+    public static Map<Enchantment, Integer> getRuneEnchantments(RegistryAccess registryAccess, @Nullable List<Rune> runes, @Nullable ItemStack stack, @Nullable Player player, boolean filterIncompatible) {
         if (runes == null || runes.isEmpty() || stack == null || stack.isEmpty() || player == null || !checkLimits(runes)) {
             return Collections.emptyMap();
         }
@@ -135,16 +89,17 @@ public class RuneManager {
                 for (SourceRune source : sourceRunes) {
                     // Intersect the sets of enchantments for each verb, noun, and source combination
                     Set<Enchantment> possibleEnchantments = new HashSet<>();
-                    possibleEnchantments.addAll(VERB_ENCHANTMENTS.getOrDefault(verb, Collections.emptySet()));
-                    possibleEnchantments.retainAll(NOUN_ENCHANTMENTS.getOrDefault(noun, Collections.emptySet()));
-                    possibleEnchantments.retainAll(SOURCE_ENCHANTMENTS.getOrDefault(source, Collections.emptySet()));
+                    possibleEnchantments.addAll(getVerbEnchantments(registryAccess, verb));
+                    possibleEnchantments.retainAll(getNounEnchantments(registryAccess, noun));
+                    possibleEnchantments.retainAll(getSourceEnchantments(registryAccess, source));
                     
                     for (Enchantment possible : possibleEnchantments) {
                         // If the rune enchantment can be applied to the given item stack, is compatible with 
                         // those already found, it meets the minimum power level, and the player has any needed
                         // research, add the enchantment to the result set
+                        Optional<AbstractRequirement<?>> reqOpt = getEnchantmentRequirement(registryAccess, possible);
                         if ( possible.canEnchant(stack) && 
-                             (!ENCHANTMENT_REQUIREMENTS.containsKey(possible) || ENCHANTMENT_REQUIREMENTS.get(possible).isMetBy(player)) &&
+                             (reqOpt.isEmpty() || reqOpt.get().isMetBy(player)) &&
                              powerLevel >= possible.getMinLevel() ) {
                             intermediate.add(new EnchantmentInstance(possible, Math.min(powerLevel, possible.getMaxLevel())));
                         }
@@ -165,6 +120,22 @@ public class RuneManager {
         });
         
         return retVal;
+    }
+    
+    private static Set<Enchantment> getVerbEnchantments(RegistryAccess registryAccess, VerbRune verb) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.verb().equals(verb)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
+    }
+    
+    private static Set<Enchantment> getNounEnchantments(RegistryAccess registryAccess, NounRune noun) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.noun().equals(noun)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
+    }
+    
+    private static Set<Enchantment> getSourceEnchantments(RegistryAccess registryAccess, SourceRune source) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.source().equals(source)).map(def -> def.result()).collect(Collectors.toUnmodifiableSet());
+    }
+    
+    private static Optional<AbstractRequirement<?>> getEnchantmentRequirement(RegistryAccess registryAccess, Enchantment enchant) {
+        return getRuneDefinition(registryAccess, enchant).flatMap(def -> def.requirementOpt());
     }
     
     /**
@@ -286,9 +257,8 @@ public class RuneManager {
      * @param enchant the enchantment to query
      * @return true if the enchantment has a rune combination defined for it, false otherwise
      */
-    public static boolean hasRuneDefinition(Enchantment enchant) {
-        ResourceLocation loc = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
-        return loc != null && DEFINITIONS.containsKey(loc);
+    public static boolean hasRuneDefinition(RegistryAccess registryAccess, Enchantment enchant) {
+        return getRuneEnchantments(registryAccess).contains(enchant);
     }
     
     /**
@@ -297,9 +267,8 @@ public class RuneManager {
      * @param enchant the enchantment to query
      * @return the rune combination definition for the given enchant, or null if one was not registered
      */
-    public static RuneEnchantmentDefinition getRuneDefinition(Enchantment enchant) {
-        ResourceLocation loc = ForgeRegistries.ENCHANTMENTS.getKey(enchant);
-        return loc == null ? null : DEFINITIONS.getOrDefault(loc, null);
+    public static Optional<RuneEnchantmentDefinition> getRuneDefinition(RegistryAccess registryAccess, Enchantment enchant) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS).stream().filter(def -> def.result().equals(enchant)).findFirst();
     }
     
     public static boolean isRuneKnown(Player player, Enchantment enchant, RuneType runeType) {
