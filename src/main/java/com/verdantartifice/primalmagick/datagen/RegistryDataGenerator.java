@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.books.BooksPM;
 import com.verdantartifice.primalmagick.common.books.CulturesPM;
 import com.verdantartifice.primalmagick.common.damagesource.DamageTypesPM;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.ResearchDisciplines;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.runes.RuneEnchantmentDefinitions;
 import com.verdantartifice.primalmagick.common.theorycrafting.ProjectTemplates;
@@ -47,6 +48,7 @@ public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
             .add(Registries.TRIM_MATERIAL, TrimMaterialsPM::bootstrap)
             .add(Registries.TRIM_PATTERN, TrimPatternsPM::bootstrap)
             .add(Registries.DAMAGE_TYPE, DamageTypesPM::bootstrap)
+            .add(RegistryKeysPM.RESEARCH_DISCIPLINES, ResearchDisciplines::bootstrap)
             .add(RegistryKeysPM.RESEARCH_ENTRIES, ResearchEntries::bootstrap)
             .add(RegistryKeysPM.PROJECT_TEMPLATES, ProjectTemplates::bootstrap)
             .add(RegistryKeysPM.RUNE_ENCHANTMENT_DEFINITIONS, RuneEnchantmentDefinitions::bootstrap)
