@@ -224,8 +224,9 @@ public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, 
         }
         
         private void validate() {
-            if (this.materialOptions.size() < MAX_MATERIALS) {
-                throw new IllegalStateException("Project template must have at least " + MAX_MATERIALS + " material options");
+            int maxMaterialCount = this.requiredMaterialCountOverride.orElse(MAX_MATERIALS);
+            if (this.materialOptions.size() < maxMaterialCount) {
+                throw new IllegalStateException("Project template must have at least " + maxMaterialCount + " material option(s)");
             } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() > MAX_MATERIALS) {
                 throw new IllegalStateException("Project template material override must not be greater than " + MAX_MATERIALS);
             } else if (this.requiredMaterialCountOverride.isPresent() && this.requiredMaterialCountOverride.getAsInt() <= 0) {
