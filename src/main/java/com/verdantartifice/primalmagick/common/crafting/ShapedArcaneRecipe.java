@@ -85,17 +85,15 @@ public class ShapedArcaneRecipe extends AbstractStackCraftingRecipe<CraftingCont
     }
 
     public static class Serializer implements RecipeSerializer<ShapedArcaneRecipe> {
-        public static final Codec<ShapedArcaneRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
-                ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
-                ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
-                AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(rsar -> rsar.requirement),
-                SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
-        ).apply(instance, ShapedArcaneRecipe::new));
-
         @Override
         public Codec<ShapedArcaneRecipe> codec() {
-            return CODEC;
+            return RecordCodecBuilder.create(instance -> instance.group(
+                    ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(r -> r.group),
+                    ItemStack.CODEC.fieldOf("result").forGetter(r -> r.output),
+                    ShapedRecipePattern.MAP_CODEC.forGetter(r -> r.pattern),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rsar -> rsar.requirement),
+                    SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rsar -> rsar.manaCosts)
+            ).apply(instance, ShapedArcaneRecipe::new));
         }
 
         @Override

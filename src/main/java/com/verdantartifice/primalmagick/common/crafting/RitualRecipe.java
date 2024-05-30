@@ -85,8 +85,9 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
     }
 
     public static class Serializer implements RecipeSerializer<RitualRecipe> {
-        protected static final Codec<RitualRecipe> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(
+        @Override
+        public Codec<RitualRecipe> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").flatXmap(ingredients -> {
@@ -105,17 +106,13 @@ public class RitualRecipe extends AbstractStackCraftingRecipe<Container> impleme
                             return DataResult.success(NonNullList.of(BlockIngredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(rr -> rr.recipeProps),
-                    AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(rr -> rr.manaCosts),
                     ExtraCodecs.NON_NEGATIVE_INT.fieldOf("instability").forGetter(rr -> rr.instability)
-                ).apply(instance, RitualRecipe::new);
-        });
-        
-        @Override
-        public Codec<RitualRecipe> codec() {
-            return CODEC;
+                ).apply(instance, RitualRecipe::new)
+            );
         }
-
+        
         @Override
         public RitualRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf(32767);

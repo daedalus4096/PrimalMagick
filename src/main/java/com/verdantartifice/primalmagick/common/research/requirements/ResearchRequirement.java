@@ -20,7 +20,9 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class ResearchRequirement extends AbstractRequirement<ResearchRequirement> {
-    public static final Codec<ResearchRequirement> CODEC = AbstractResearchKey.CODEC.fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey).codec();
+    public static Codec<ResearchRequirement> codec() {
+        return AbstractResearchKey.dispatchCodec().fieldOf("rootKey").xmap(ResearchRequirement::new, req -> req.rootKey).codec();
+    }
     
     protected final AbstractResearchKey<?> rootKey;
     

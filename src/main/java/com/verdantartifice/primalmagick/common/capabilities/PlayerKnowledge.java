@@ -69,7 +69,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         ListTag researchList = new ListTag();
         for (AbstractResearchKey<?> key : this.research) {
             CompoundTag tag = new CompoundTag();
-            AbstractResearchKey.CODEC.encodeStart(NbtOps.INSTANCE, key).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> tag.put("key", encodedTag));
+            AbstractResearchKey.dispatchCodec().encodeStart(NbtOps.INSTANCE, key).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> tag.put("key", encodedTag));
             if (this.stages.containsKey(key)) {
                 tag.putInt("stage", this.stages.get(key));
             }
@@ -103,7 +103,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         
         // Serialize active research project, if any
         if (this.project != null) {
-            Project.CODEC.encodeStart(NbtOps.INSTANCE, this.project)
+            Project.codec().encodeStart(NbtOps.INSTANCE, this.project)
                 .resultOrPartial(LOGGER::error)
                 .ifPresent(encodedProject -> rootTag.put("project", encodedProject));
         }
@@ -140,7 +140,7 @@ public class PlayerKnowledge implements IPlayerKnowledge {
         ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundTag tag = researchList.getCompound(index);
-            AbstractResearchKey.CODEC.parse(NbtOps.INSTANCE, tag.get("key")).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> {
+            AbstractResearchKey.dispatchCodec().parse(NbtOps.INSTANCE, tag.get("key")).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> {
                 if (!this.isResearchKnown(parsedKey)) {
                     this.research.add(parsedKey);
                     int stage = tag.getInt("stage");

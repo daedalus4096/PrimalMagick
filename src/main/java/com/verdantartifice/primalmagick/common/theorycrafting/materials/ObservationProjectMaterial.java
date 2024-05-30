@@ -25,13 +25,15 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ObservationProjectMaterial extends AbstractProjectMaterial<ObservationProjectMaterial> {
-    public static final Codec<ObservationProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ExtraCodecs.POSITIVE_INT.fieldOf("count").forGetter(ObservationProjectMaterial::getCount),
-            Codec.BOOL.fieldOf("consumed").forGetter(ObservationProjectMaterial::isConsumed),
-            Codec.DOUBLE.fieldOf("weight").forGetter(ObservationProjectMaterial::getWeight),
-            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ObservationProjectMaterial::getBonusReward),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ObservationProjectMaterial::getRequirement)
-        ).apply(instance, ObservationProjectMaterial::new));
+    public static Codec<ObservationProjectMaterial> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ExtraCodecs.POSITIVE_INT.fieldOf("count").forGetter(ObservationProjectMaterial::getCount),
+                Codec.BOOL.fieldOf("consumed").forGetter(ObservationProjectMaterial::isConsumed),
+                Codec.DOUBLE.fieldOf("weight").forGetter(ObservationProjectMaterial::getWeight),
+                Codec.DOUBLE.fieldOf("bonusReward").forGetter(ObservationProjectMaterial::getBonusReward),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ObservationProjectMaterial::getRequirement)
+            ).apply(instance, ObservationProjectMaterial::new));
+    }
 
     protected final int count;
     protected final boolean consumed;

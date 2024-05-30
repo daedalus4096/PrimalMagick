@@ -27,13 +27,15 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public record RuneEnchantmentDefinition(Enchantment result, VerbRune verb, NounRune noun, SourceRune source, Optional<AbstractRequirement<?>> requirementOpt) {
-    public static final Codec<RuneEnchantmentDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceLocation.CODEC.fieldOf("result").xmap(loc -> ForgeRegistries.ENCHANTMENTS.getValue(loc), ench -> ForgeRegistries.ENCHANTMENTS.getKey(ench)).forGetter(RuneEnchantmentDefinition::result),
-            VerbRune.CODEC.fieldOf("verb").forGetter(RuneEnchantmentDefinition::verb),
-            NounRune.CODEC.fieldOf("noun").forGetter(RuneEnchantmentDefinition::noun),
-            SourceRune.CODEC.fieldOf("source").forGetter(RuneEnchantmentDefinition::source),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(RuneEnchantmentDefinition::requirementOpt)
-        ).apply(instance, RuneEnchantmentDefinition::new));
+    public static Codec<RuneEnchantmentDefinition> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResourceLocation.CODEC.fieldOf("result").xmap(loc -> ForgeRegistries.ENCHANTMENTS.getValue(loc), ench -> ForgeRegistries.ENCHANTMENTS.getKey(ench)).forGetter(RuneEnchantmentDefinition::result),
+                VerbRune.CODEC.fieldOf("verb").forGetter(RuneEnchantmentDefinition::verb),
+                NounRune.CODEC.fieldOf("noun").forGetter(RuneEnchantmentDefinition::noun),
+                SourceRune.CODEC.fieldOf("source").forGetter(RuneEnchantmentDefinition::source),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(RuneEnchantmentDefinition::requirementOpt)
+            ).apply(instance, RuneEnchantmentDefinition::new));
+    }
     
     public ResourceLocation getId() {
         return ForgeRegistries.ENCHANTMENTS.getKey(this.result);

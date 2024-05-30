@@ -22,10 +22,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
-    public static final Codec<QuorumRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static Codec<QuorumRequirement> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
             ExtraCodecs.POSITIVE_INT.fieldOf("requiredCount").forGetter(req -> req.requiredCount), 
-            AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").forGetter(req -> req.subs)
+            AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").forGetter(req -> req.subs)
         ).apply(instance, QuorumRequirement::new));
+    }
     
     protected final List<AbstractRequirement<?>> subs = new ArrayList<>();
     protected final int requiredCount;

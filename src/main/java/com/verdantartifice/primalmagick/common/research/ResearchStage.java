@@ -54,15 +54,17 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, List<ResourceLocation> recipes,
         List<AbstractResearchKey<?>> siblings, List<ResearchEntryKey> revelations, SourceList attunements) {
-    public static final Codec<ResearchStage> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+    public static Codec<ResearchStage> codec() { 
+        return RecordCodecBuilder.create(instance -> instance.group(
             ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchStage::parentKey),
             Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchStage::textTranslationKey),
-            AbstractRequirement.CODEC.optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
+            AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchStage::completionRequirementOpt),
             ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchStage::recipes),
-            AbstractResearchKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
+            AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchStage::siblings),
             ResearchEntryKey.CODEC.listOf().fieldOf("revelations").forGetter(ResearchStage::revelations),
             SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchStage::attunements)
         ).apply(instance, ResearchStage::new));
+    }
     
     @Nonnull
     public static ResearchStage fromNetwork(FriendlyByteBuf buf) {

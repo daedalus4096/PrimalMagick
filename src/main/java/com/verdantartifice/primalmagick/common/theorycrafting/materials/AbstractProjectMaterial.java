@@ -29,7 +29,9 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<T>> {
-    public static final Codec<AbstractProjectMaterial<?>> CODEC = ProjectMaterialTypesPM.TYPES.get().getCodec().dispatch("material_type", AbstractProjectMaterial::getType, ProjectMaterialType::codec);
+    public static Codec<AbstractProjectMaterial<?>> dispatchCodec() {
+        return ProjectMaterialTypesPM.TYPES.get().getCodec().dispatch("material_type", AbstractProjectMaterial::getType, ProjectMaterialType::codec);
+    }
     
     protected final double weight;
     protected final double bonusReward;

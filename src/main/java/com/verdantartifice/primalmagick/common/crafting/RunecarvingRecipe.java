@@ -65,21 +65,18 @@ public class RunecarvingRecipe extends AbstractStackCraftingRecipe<Container> im
     }
 
     public static class Serializer implements RecipeSerializer<RunecarvingRecipe> {
-        protected static final Codec<RunecarvingRecipe> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(
+        @Override
+        public Codec<RunecarvingRecipe> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(rr -> rr.group),
                     ItemStack.CODEC.fieldOf("result").forGetter(rr -> rr.output),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient1").forGetter(rr -> rr.ingredient1),
                     Ingredient.CODEC_NONEMPTY.fieldOf("ingredient2").forGetter(rr -> rr.ingredient2),
-                    AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(rr -> rr.requirement)
-                ).apply(instance, RunecarvingRecipe::new);
-        });
-        
-        @Override
-        public Codec<RunecarvingRecipe> codec() {
-            return CODEC;
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(rr -> rr.requirement)
+                ).apply(instance, RunecarvingRecipe::new)
+            );
         }
-
+        
         @Override
         public RunecarvingRecipe fromNetwork(FriendlyByteBuf buffer) {
             String group = buffer.readUtf();

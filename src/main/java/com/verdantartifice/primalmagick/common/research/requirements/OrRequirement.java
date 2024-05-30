@@ -19,7 +19,9 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public class OrRequirement extends AbstractRequirement<OrRequirement> {
-    public static final Codec<OrRequirement> CODEC = AbstractRequirement.CODEC.listOf().fieldOf("subRequirements").xmap(OrRequirement::new, req -> req.subs).codec();
+    public static Codec<OrRequirement> codec() {
+        return AbstractRequirement.dispatchCodec().listOf().fieldOf("subRequirements").xmap(OrRequirement::new, req -> req.subs).codec();
+    }
     
     protected final List<AbstractRequirement<?>> subs = new ArrayList<>();
     

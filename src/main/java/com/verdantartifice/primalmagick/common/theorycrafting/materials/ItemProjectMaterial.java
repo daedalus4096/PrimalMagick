@@ -29,15 +29,17 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMaterial> {
-    public static final Codec<ItemProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ItemStack.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
-            Codec.BOOL.fieldOf("consumed").forGetter(ItemProjectMaterial::isConsumed),
-            Codec.BOOL.fieldOf("matchNBT").forGetter(material -> material.matchNBT),
-            ExtraCodecs.NON_NEGATIVE_INT.fieldOf("afterCrafting").forGetter(ItemProjectMaterial::getAfterCrafting),
-            Codec.DOUBLE.fieldOf("weight").forGetter(ItemProjectMaterial::getWeight),
-            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemProjectMaterial::getBonusReward),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ItemProjectMaterial::getRequirement)
-        ).apply(instance, ItemProjectMaterial::new));
+    public static Codec<ItemProjectMaterial> codec() { 
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ItemStack.CODEC.fieldOf("stack").forGetter(ItemProjectMaterial::getItemStack),
+                Codec.BOOL.fieldOf("consumed").forGetter(ItemProjectMaterial::isConsumed),
+                Codec.BOOL.fieldOf("matchNBT").forGetter(material -> material.matchNBT),
+                ExtraCodecs.NON_NEGATIVE_INT.fieldOf("afterCrafting").forGetter(ItemProjectMaterial::getAfterCrafting),
+                Codec.DOUBLE.fieldOf("weight").forGetter(ItemProjectMaterial::getWeight),
+                Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemProjectMaterial::getBonusReward),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ItemProjectMaterial::getRequirement)
+            ).apply(instance, ItemProjectMaterial::new));
+    }
     
     protected final ItemStack stack;
     protected final boolean consumed;

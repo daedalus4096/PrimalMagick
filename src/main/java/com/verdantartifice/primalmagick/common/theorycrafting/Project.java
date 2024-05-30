@@ -32,14 +32,16 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialInstance> activeMaterials, List<AbstractReward<?>> otherRewards, double baseSuccessChance, double baseRewardMultiplier,
         Optional<ResourceLocation> aidBlock) {
-    public static final Codec<Project> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResourceKey.codec(RegistryKeysPM.PROJECT_TEMPLATES).fieldOf("templateKey").forGetter(Project::templateKey),
-            MaterialInstance.CODEC.listOf().fieldOf("activeMaterials").forGetter(Project::activeMaterials),
-            AbstractReward.CODEC.listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
-            Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
-            Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
-            ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
-        ).apply(instance, Project::new));
+    public static Codec<Project> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResourceKey.codec(RegistryKeysPM.PROJECT_TEMPLATES).fieldOf("templateKey").forGetter(Project::templateKey),
+                MaterialInstance.codec().listOf().fieldOf("activeMaterials").forGetter(Project::activeMaterials),
+                AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(Project::otherRewards),
+                Codec.DOUBLE.fieldOf("baseSuccessChance").forGetter(Project::baseSuccessChance),
+                Codec.DOUBLE.fieldOf("baseRewardMultiplier").forGetter(Project::baseRewardMultiplier),
+                ResourceLocation.CODEC.optionalFieldOf("aidBlock").forGetter(Project::aidBlock)
+            ).apply(instance, Project::new));
+    }
     
     @Nonnull
     public String getNameTranslationKey() {

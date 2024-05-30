@@ -34,13 +34,15 @@ import net.minecraft.resources.ResourceLocation;
  * @author Daedalus4096
  */
 public record ResearchDiscipline(ResearchDisciplineKey key, Optional<AbstractRequirement<?>> unlockRequirementOpt, ResourceLocation iconLocation, Optional<Stat> craftingStat, OptionalInt indexSortOrder) {
-    public static final Codec<ResearchDiscipline> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
-            AbstractRequirement.CODEC.optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
-            ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
-            ResourceLocation.CODEC.optionalFieldOf("craftingStat").<Optional<Stat>>xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::craftingStat),
-            CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
-        ).apply(instance, ResearchDiscipline::new));
+    public static Codec<ResearchDiscipline> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResearchDisciplineKey.CODEC.fieldOf("key").forGetter(ResearchDiscipline::key),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("unlockRequirementOpt").forGetter(ResearchDiscipline::unlockRequirementOpt),
+                ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(ResearchDiscipline::iconLocation),
+                ResourceLocation.CODEC.optionalFieldOf("craftingStat").<Optional<Stat>>xmap(locOpt -> locOpt.map(loc -> StatsManager.getStat(loc)), statOpt -> statOpt.map(stat -> stat.key())).forGetter(ResearchDiscipline::craftingStat),
+                CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("indexSortOrder")).forGetter(ResearchDiscipline::indexSortOrder)
+            ).apply(instance, ResearchDiscipline::new));
+    }
     
     @Nonnull
     public String getNameTranslationKey() {

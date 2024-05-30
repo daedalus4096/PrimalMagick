@@ -38,7 +38,7 @@ public class TipDefinitionProvider implements DataProvider {
             }
         });
         map.entrySet().forEach(entry -> {
-            TipDefinition.CODEC.encodeStart(JsonOps.INSTANCE, entry.getValue())
+            TipDefinition.codec().encodeStart(JsonOps.INSTANCE, entry.getValue())
                     .resultOrPartial(LOGGER::error)
                     .ifPresent(json -> futuresBuilder.add(DataProvider.saveStable(pOutput, json, this.getPath(this.packOutput, entry.getKey()))));
         });

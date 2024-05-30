@@ -48,17 +48,20 @@ import net.minecraftforge.registries.ForgeRegistries;
 public record ProjectTemplate(List<AbstractProjectMaterial<?>> materialOptions, List<AbstractReward<?>> otherRewards, Optional<AbstractRequirement<?>> requirement,
         OptionalInt requiredMaterialCountOverride, OptionalDouble baseSuccessChanceOverride, double rewardMultiplier, List<ResourceLocation> aidBlocks,
         Optional<AbstractWeightFunction<?>> weightFunction) {
-    public static final Codec<ProjectTemplate> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            AbstractProjectMaterial.CODEC.listOf().fieldOf("materialOptions").forGetter(ProjectTemplate::materialOptions),
-            AbstractReward.CODEC.listOf().fieldOf("otherRewards").forGetter(ProjectTemplate::otherRewards),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ProjectTemplate::requirement),
-            CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("requiredMaterialCountOverride")).forGetter(ProjectTemplate::requiredMaterialCountOverride),
-            CodecUtils.asOptionalDouble(Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride")).forGetter(ProjectTemplate::baseSuccessChanceOverride),
-            Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
-            ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
-            AbstractWeightFunction.CODEC.optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
-        ).apply(instance, ProjectTemplate::new));
     public static final int MAX_MATERIALS = 4;
+    
+    public static Codec<ProjectTemplate> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                AbstractProjectMaterial.dispatchCodec().listOf().fieldOf("materialOptions").forGetter(ProjectTemplate::materialOptions),
+                AbstractReward.dispatchCodec().listOf().fieldOf("otherRewards").forGetter(ProjectTemplate::otherRewards),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ProjectTemplate::requirement),
+                CodecUtils.asOptionalInt(Codec.INT.optionalFieldOf("requiredMaterialCountOverride")).forGetter(ProjectTemplate::requiredMaterialCountOverride),
+                CodecUtils.asOptionalDouble(Codec.DOUBLE.optionalFieldOf("baseSuccessChanceOverride")).forGetter(ProjectTemplate::baseSuccessChanceOverride),
+                Codec.DOUBLE.fieldOf("rewardMultiplier").forGetter(ProjectTemplate::rewardMultiplier),
+                ResourceLocation.CODEC.listOf().fieldOf("aidBlocks").forGetter(ProjectTemplate::aidBlocks),
+                AbstractWeightFunction.dispatchCodec().optionalFieldOf("weightFunction").forGetter(ProjectTemplate::weightFunction)
+            ).apply(instance, ProjectTemplate::new));
+    }
     
     public double getWeight(Player player) {
         return this.weightFunction.map(func -> func.getWeight(player)).orElse(1D);

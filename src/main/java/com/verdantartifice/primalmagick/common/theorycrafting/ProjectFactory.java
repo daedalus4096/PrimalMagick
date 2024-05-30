@@ -21,7 +21,7 @@ public class ProjectFactory {
     public static Project getProjectFromNBT(@Nullable CompoundTag tag) {
         // Deserialize a research project instance from the given NBT data
         MutableObject<Project> retVal = new MutableObject<>();
-        Project.CODEC.parse(NbtOps.INSTANCE, tag)
+        Project.codec().parse(NbtOps.INSTANCE, tag)
             .resultOrPartial(LOGGER::error)
             .ifPresent(project -> retVal.setValue(project));
         return retVal.getValue();

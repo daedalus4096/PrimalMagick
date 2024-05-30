@@ -11,10 +11,12 @@ import com.verdantartifice.primalmagick.common.theorycrafting.materials.Abstract
  * @author Daedalus4096
  */
 public class MaterialInstance {
-    public static final Codec<MaterialInstance> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            AbstractProjectMaterial.CODEC.fieldOf("materialDefinition").forGetter(MaterialInstance::getMaterialDefinition),
-            Codec.BOOL.fieldOf("selected").forGetter(MaterialInstance::isSelected)
-        ).apply(instance, MaterialInstance::new));
+    public static Codec<MaterialInstance> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                AbstractProjectMaterial.dispatchCodec().fieldOf("materialDefinition").forGetter(MaterialInstance::getMaterialDefinition),
+                Codec.BOOL.fieldOf("selected").forGetter(MaterialInstance::isSelected)
+            ).apply(instance, MaterialInstance::new));
+    }
     
     protected final AbstractProjectMaterial<?> materialDefinition;
     protected boolean selected = false;

@@ -33,14 +33,16 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProjectMaterial> {
-    public static final Codec<ItemTagProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(ItemTagProjectMaterial::getTag),
-            ExtraCodecs.POSITIVE_INT.fieldOf("quantity").forGetter(ItemTagProjectMaterial::getQuantity),
-            Codec.BOOL.fieldOf("consumed").forGetter(ItemTagProjectMaterial::isConsumed),
-            Codec.DOUBLE.fieldOf("weight").forGetter(ItemTagProjectMaterial::getWeight),
-            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemTagProjectMaterial::getBonusReward),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ItemTagProjectMaterial::getRequirement)
-        ).apply(instance, ItemTagProjectMaterial::new));
+    public static Codec<ItemTagProjectMaterial> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                TagKey.codec(Registries.ITEM).fieldOf("tag").forGetter(ItemTagProjectMaterial::getTag),
+                ExtraCodecs.POSITIVE_INT.fieldOf("quantity").forGetter(ItemTagProjectMaterial::getQuantity),
+                Codec.BOOL.fieldOf("consumed").forGetter(ItemTagProjectMaterial::isConsumed),
+                Codec.DOUBLE.fieldOf("weight").forGetter(ItemTagProjectMaterial::getWeight),
+                Codec.DOUBLE.fieldOf("bonusReward").forGetter(ItemTagProjectMaterial::getBonusReward),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ItemTagProjectMaterial::getRequirement)
+            ).apply(instance, ItemTagProjectMaterial::new));
+    }
     
     protected final TagKey<Item> tag;
     protected final int quantity;

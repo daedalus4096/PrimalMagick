@@ -45,14 +45,16 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public record ResearchAddendum(ResearchEntryKey parentKey, String textTranslationKey, Optional<AbstractRequirement<?>> completionRequirementOpt, 
         List<ResourceLocation> recipes, List<AbstractResearchKey<?>> siblings, SourceList attunements) {
-    public static final Codec<ResearchAddendum> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchAddendum::parentKey),
-            Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchAddendum::textTranslationKey),
-            AbstractRequirement.CODEC.optionalFieldOf("completionRequirementOpt").forGetter(ResearchAddendum::completionRequirementOpt),
-            ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
-            AbstractResearchKey.CODEC.listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
-            SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchAddendum::attunements)
-        ).apply(instance, ResearchAddendum::new));
+    public static Codec<ResearchAddendum> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResearchEntryKey.CODEC.fieldOf("parentKey").forGetter(ResearchAddendum::parentKey),
+                Codec.STRING.fieldOf("textTranslationKey").forGetter(ResearchAddendum::textTranslationKey),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("completionRequirementOpt").forGetter(ResearchAddendum::completionRequirementOpt),
+                ResourceLocation.CODEC.listOf().fieldOf("recipes").forGetter(ResearchAddendum::recipes),
+                AbstractResearchKey.dispatchCodec().listOf().fieldOf("siblings").forGetter(ResearchAddendum::siblings),
+                SourceList.CODEC.optionalFieldOf("attunements", SourceList.EMPTY).forGetter(ResearchAddendum::attunements)
+            ).apply(instance, ResearchAddendum::new));
+    }
     
     @Nonnull
     public static ResearchAddendum fromNetwork(FriendlyByteBuf buf) {

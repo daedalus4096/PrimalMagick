@@ -18,7 +18,9 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
-    public static final Codec<AbstractResearchKey<?>> CODEC = ResearchKeyTypesPM.TYPES.get().getCodec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+    public static Codec<AbstractResearchKey<?>> dispatchCodec() {
+        return ResearchKeyTypesPM.TYPES.get().getCodec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+    }
     
     @Override
     public abstract String toString();

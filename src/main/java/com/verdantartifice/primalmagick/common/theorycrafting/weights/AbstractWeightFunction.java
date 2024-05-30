@@ -12,7 +12,9 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public abstract class AbstractWeightFunction<T extends AbstractWeightFunction<T>> {
-    public static final Codec<AbstractWeightFunction<?>> CODEC = WeightFunctionTypesPM.TYPES.get().getCodec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
+    public static Codec<AbstractWeightFunction<?>> dispatchCodec() {
+        return WeightFunctionTypesPM.TYPES.get().getCodec().dispatch("reward_type", AbstractWeightFunction::getType, WeightFunctionType::codec);
+    }
     
     public abstract double getWeight(Player player);
     

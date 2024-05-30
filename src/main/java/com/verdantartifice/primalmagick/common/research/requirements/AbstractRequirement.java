@@ -16,7 +16,9 @@ import net.minecraft.world.entity.player.Player;
  * progressing in the research system.
  */
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
-    public static final Codec<AbstractRequirement<?>> CODEC = RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, RequirementType::codec);
+    public static Codec<AbstractRequirement<?>> dispatchCodec() {
+        return RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, RequirementType::codec);
+    }
     
     public abstract boolean isMetBy(@Nullable Player player);
     public abstract void consumeComponents(@Nullable Player player);

@@ -34,7 +34,7 @@ public class TileResearchCache implements ITileResearchCache {
         // Serialize cached completed research
         ListTag researchList = new ListTag();
         this.research.forEach(k -> {
-            AbstractResearchKey.CODEC.encodeStart(NbtOps.INSTANCE, k).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> researchList.add(encodedTag));
+            AbstractResearchKey.dispatchCodec().encodeStart(NbtOps.INSTANCE, k).resultOrPartial(LOGGER::error).ifPresent(encodedTag -> researchList.add(encodedTag));
         });
         rootTag.put("research", researchList);
         
@@ -53,7 +53,7 @@ public class TileResearchCache implements ITileResearchCache {
         ListTag researchList = nbt.getList("research", Tag.TAG_COMPOUND);
         for (int index = 0; index < researchList.size(); index++) {
             CompoundTag innerTag = researchList.getCompound(index);
-            AbstractResearchKey.CODEC.parse(NbtOps.INSTANCE, innerTag).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> this.research.add(parsedKey));
+            AbstractResearchKey.dispatchCodec().parse(NbtOps.INSTANCE, innerTag).resultOrPartial(LOGGER::error).ifPresent(parsedKey -> this.research.add(parsedKey));
         }
     }
 

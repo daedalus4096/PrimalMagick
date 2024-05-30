@@ -44,19 +44,21 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<Icon> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
         boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
-    public static final Codec<ResearchEntry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
-            ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
-            Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
-            ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
-            Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
-            Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
-            Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
-            Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
-            ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
-            ResearchStage.CODEC.listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
-            ResearchAddendum.CODEC.listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
-        ).apply(instance, ResearchEntry::new));
+    public static Codec<ResearchEntry> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
+                ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
+                Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
+                ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
+                Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
+                Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
+                Codec.BOOL.optionalFieldOf("internal", false).forGetter(ResearchEntry::internal),
+                Codec.BOOL.optionalFieldOf("finaleExempt", false).forGetter(ResearchEntry::finaleExempt),
+                ResearchDisciplineKey.CODEC.listOf().fieldOf("finales").forGetter(ResearchEntry::finales),
+                ResearchStage.codec().listOf().fieldOf("stages").forGetter(ResearchEntry::stages),
+                ResearchAddendum.codec().listOf().fieldOf("addenda").forGetter(ResearchEntry::addenda)
+            ).apply(instance, ResearchEntry::new));
+    }
     
     @Nonnull
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {

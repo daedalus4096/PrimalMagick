@@ -21,13 +21,15 @@ import net.minecraft.world.level.block.Block;
  * @author Daedalus4096
  */
 public class ExperienceProjectMaterial extends AbstractProjectMaterial<ExperienceProjectMaterial> {
-    public static final Codec<ExperienceProjectMaterial> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ExtraCodecs.POSITIVE_INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
-            Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed),
-            Codec.DOUBLE.fieldOf("weight").forGetter(ExperienceProjectMaterial::getWeight),
-            Codec.DOUBLE.fieldOf("bonusReward").forGetter(ExperienceProjectMaterial::getBonusReward),
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(ExperienceProjectMaterial::getRequirement)
-        ).apply(instance, ExperienceProjectMaterial::new));
+    public static Codec<ExperienceProjectMaterial> codec() { 
+        return RecordCodecBuilder.create(instance -> instance.group(
+                ExtraCodecs.POSITIVE_INT.fieldOf("levels").forGetter(ExperienceProjectMaterial::getLevels),
+                Codec.BOOL.fieldOf("consumed").forGetter(ExperienceProjectMaterial::isConsumed),
+                Codec.DOUBLE.fieldOf("weight").forGetter(ExperienceProjectMaterial::getWeight),
+                Codec.DOUBLE.fieldOf("bonusReward").forGetter(ExperienceProjectMaterial::getBonusReward),
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(ExperienceProjectMaterial::getRequirement)
+            ).apply(instance, ExperienceProjectMaterial::new));
+    }
 
     protected final int levels;
     protected final boolean consumed;

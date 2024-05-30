@@ -66,8 +66,9 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
     }
 
     public static class Serializer implements RecipeSerializer<ShapelessArcaneTagRecipe> {
-        protected static final Codec<ShapelessArcaneTagRecipe> CODEC = RecordCodecBuilder.create(instance -> {
-            return instance.group(
+        @Override
+        public Codec<ShapelessArcaneTagRecipe> codec() {
+            return RecordCodecBuilder.create(instance -> instance.group(
                     ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(sar -> sar.group),
                     TagKey.codec(Registries.ITEM).fieldOf("outputTag").forGetter(sar -> sar.outputTag),
                     Codec.INT.fieldOf("outputAmount").forGetter(sar -> sar.outputAmount),
@@ -81,16 +82,12 @@ public class ShapelessArcaneTagRecipe extends AbstractTagCraftingRecipe<Crafting
                             return DataResult.success(NonNullList.of(Ingredient.EMPTY, ingArray));
                         }
                     }, DataResult::success).forGetter(sar -> sar.recipeItems),
-                    AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
+                    AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(sar -> sar.requirement),
                     SourceList.CODEC.optionalFieldOf("mana", SourceList.EMPTY).forGetter(sar -> sar.manaCosts)
-                ).apply(instance, ShapelessArcaneTagRecipe::new);
-        });
-        
-        @Override
-        public Codec<ShapelessArcaneTagRecipe> codec() {
-            return CODEC;
+                ).apply(instance, ShapelessArcaneTagRecipe::new)
+            );
         }
-
+        
         @Override
         public ShapelessArcaneTagRecipe fromNetwork(FriendlyByteBuf pBuffer) {
             String group = pBuffer.readUtf();

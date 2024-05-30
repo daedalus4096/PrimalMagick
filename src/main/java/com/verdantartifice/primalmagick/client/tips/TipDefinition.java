@@ -24,10 +24,12 @@ import net.minecraft.world.entity.player.Player;
  * @author Daedalus4096
  */
 public record TipDefinition(String translationKey, Optional<AbstractRequirement<?>> requirement) {
-    public static final Codec<TipDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.STRING.fieldOf("translationKey").forGetter(TipDefinition::translationKey), 
-            AbstractRequirement.CODEC.optionalFieldOf("requirement").forGetter(TipDefinition::requirement)
-        ).apply(instance, TipDefinition::new));
+    public static Codec<TipDefinition> codec() {
+        return RecordCodecBuilder.create(instance -> instance.group(
+                Codec.STRING.fieldOf("translationKey").forGetter(TipDefinition::translationKey), 
+                AbstractRequirement.dispatchCodec().optionalFieldOf("requirement").forGetter(TipDefinition::requirement)
+            ).apply(instance, TipDefinition::new));
+    }
     
     public Component getText() {
         return Component.translatable(this.translationKey);
