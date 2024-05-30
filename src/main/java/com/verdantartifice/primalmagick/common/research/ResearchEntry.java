@@ -336,9 +336,9 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         private void validate() {
             if (this.modId.isBlank()) {
                 throw new IllegalStateException("No mod ID specified for entry");
-            } else if (this.internal && this.disciplineKeyOpt.isEmpty()) {
+            } else if (!this.internal && this.disciplineKeyOpt.isEmpty()) {
                 throw new IllegalStateException("No discipline specified for non-internal entry");
-            } else if (this.internal && this.stageBuilders.isEmpty()) {
+            } else if (!this.internal && this.stageBuilders.isEmpty()) {
                 throw new IllegalStateException("Non-internal entries must have at least one stage");
             }
         }
