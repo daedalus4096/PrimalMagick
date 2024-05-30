@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public static Codec<AbstractRequirement<?>> dispatchCodec() {
-        return RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, RequirementType::codec);
+        return RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);
