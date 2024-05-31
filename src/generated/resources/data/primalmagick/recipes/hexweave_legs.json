@@ -10,7 +10,13 @@
     "# #",
     "# #"
   ],
-  "research": "HEXWEAVE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexweave"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hexweave_legs",

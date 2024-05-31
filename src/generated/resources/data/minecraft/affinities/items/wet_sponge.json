@@ -1,11 +1,11 @@
 {
   "type": "item",
   "add": {
-    "sea": 10
+    "primalmagick:sea": 10
   },
   "base": "minecraft:sponge",
   "remove": {
-    "void": 10
+    "primalmagick:void": 10
   },
   "target": "minecraft:wet_sponge"
 }

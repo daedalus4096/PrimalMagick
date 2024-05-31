@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "earth": 5
+    "primalmagick:earth": 5
   },
   "base": "minecraft:stone",
   "target": "primalmagick:rock_salt_ore"

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "blood": 2
+    "primalmagick:blood": 2
   },
   "base": "minecraft:chiseled_stone_bricks",
   "target": "minecraft:infested_chiseled_stone_bricks"

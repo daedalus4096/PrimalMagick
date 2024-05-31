@@ -13,7 +13,13 @@
     "SDS",
     "SSS"
   ],
-  "research": "STONEMELDING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:stonemelding"
+    }
+  },
   "result": {
     "Count": 8,
     "id": "minecraft:cobblestone"

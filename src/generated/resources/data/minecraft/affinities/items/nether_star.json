@@ -1,15 +1,15 @@
 {
   "type": "item",
   "set": {
-    "blood": 25,
-    "earth": 25,
-    "hallowed": 25,
-    "infernal": 25,
-    "moon": 25,
-    "sea": 25,
-    "sky": 25,
-    "sun": 25,
-    "void": 25
+    "primalmagick:blood": 25,
+    "primalmagick:earth": 25,
+    "primalmagick:hallowed": 25,
+    "primalmagick:infernal": 25,
+    "primalmagick:moon": 25,
+    "primalmagick:sea": 25,
+    "primalmagick:sky": 25,
+    "primalmagick:sun": 25,
+    "primalmagick:void": 25
   },
   "target": "minecraft:nether_star"
 }

@@ -1,0 +1,34 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "minecraft:beacon"
+  },
+  "key": {
+    "rootKey": "primalmagick:beacon"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:beacon"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.beacon.text.stage.0"
+    }
+  ]
+}

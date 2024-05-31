@@ -1,0 +1,14 @@
+{
+  "addenda": [],
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/research_map.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:env_earth"
+  },
+  "parents": [],
+  "stages": []
+}

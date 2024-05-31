@@ -17,9 +17,9 @@
   },
   "mana": {
     "sources": {
-      "blood": 50,
-      "infernal": 50,
-      "void": 50
+      "primalmagick:blood": 50,
+      "primalmagick:infernal": 50,
+      "primalmagick:void": 50
     }
   },
   "pattern": [
@@ -27,7 +27,13 @@
     "DAD",
     "MMM"
   ],
-  "research": "MASTER_RUNEWORKING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:master_runeworking"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:runescribing_altar_forbidden"

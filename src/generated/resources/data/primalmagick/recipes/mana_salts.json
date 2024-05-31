@@ -13,14 +13,20 @@
   ],
   "mana": {
     "sources": {
-      "earth": 5,
-      "moon": 5,
-      "sea": 5,
-      "sky": 5,
-      "sun": 5
+      "primalmagick:earth": 5,
+      "primalmagick:moon": 5,
+      "primalmagick:sea": 5,
+      "primalmagick:sky": 5,
+      "primalmagick:sun": 5
     }
   },
-  "research": "MANA_SALTS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:mana_salts"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:mana_salts"

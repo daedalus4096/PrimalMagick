@@ -13,9 +13,9 @@
   },
   "mana": {
     "sources": {
-      "blood": 20,
-      "infernal": 20,
-      "void": 20
+      "primalmagick:blood": 20,
+      "primalmagick:infernal": 20,
+      "primalmagick:void": 20
     }
   },
   "pattern": [
@@ -23,7 +23,13 @@
     " C ",
     "ESE"
   ],
-  "research": "HEXWEAVE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexweave"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hexweave"

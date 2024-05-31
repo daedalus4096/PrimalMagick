@@ -11,7 +11,13 @@
       "item": "primalmagick:essence_dust_infernal"
     }
   ],
-  "research": "IGNYX",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ignyx"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ignyx"

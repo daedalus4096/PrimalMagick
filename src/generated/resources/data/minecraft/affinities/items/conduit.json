@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "blood": 12,
-    "sea": 78,
-    "sun": 15
+    "primalmagick:blood": 12,
+    "primalmagick:sea": 78,
+    "primalmagick:sun": 15
   },
   "target": "minecraft:conduit"
 }

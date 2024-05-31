@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sea": 6
+    "primalmagick:sea": 6
   },
   "base": "minecraft:melon_slice",
   "target": "primalmagick:hydromelon_slice"

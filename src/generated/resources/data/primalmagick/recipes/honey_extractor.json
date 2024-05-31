@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "sky": 10
+      "primalmagick:sky": 10
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "WPW",
     "BWH"
   ],
-  "research": "HONEY_EXTRACTOR",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:honey_extractor"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:honey_extractor"

@@ -1,0 +1,15 @@
+{
+  "addenda": [],
+  "finales": [],
+  "hasHint": true,
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/research_tube.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:sotu_research_arcanometer"
+  },
+  "parents": [],
+  "stages": []
+}

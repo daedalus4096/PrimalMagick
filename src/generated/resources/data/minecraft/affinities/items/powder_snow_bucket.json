@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sea": 20
+    "primalmagick:sea": 20
   },
   "base": "minecraft:bucket",
   "target": "minecraft:powder_snow_bucket"

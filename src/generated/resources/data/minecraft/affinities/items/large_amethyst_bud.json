@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "earth": 15
+    "primalmagick:earth": 15
   },
   "target": "minecraft:large_amethyst_bud"
 }

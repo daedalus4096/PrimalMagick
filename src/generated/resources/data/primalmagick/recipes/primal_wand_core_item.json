@@ -26,11 +26,11 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "earth": 15,
-      "moon": 15,
-      "sea": 15,
-      "sky": 15,
-      "sun": 15
+      "primalmagick:earth": 15,
+      "primalmagick:moon": 15,
+      "primalmagick:sea": 15,
+      "primalmagick:sky": 15,
+      "primalmagick:sun": 15
     }
   },
   "props": [
@@ -44,7 +44,13 @@
       "tag": "primalmagick:ritual_candles"
     }
   ],
-  "research": "WAND_CORE_PRIMAL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_core_primal"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primal_wand_core_item"

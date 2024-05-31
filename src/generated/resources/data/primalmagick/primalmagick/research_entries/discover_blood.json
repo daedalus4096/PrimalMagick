@@ -1,0 +1,36 @@
+{
+  "addenda": [],
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/research_tube.png"
+  },
+  "internal": true,
+  "key": {
+    "rootKey": "primalmagick:discover_blood"
+  },
+  "parents": [],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:discover_blood"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_forbidden"
+        },
+        {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:sotu_discover_blood"
+        }
+      ],
+      "textTranslationKey": "research.primalmagick.discover_blood.text.stage.0"
+    }
+  ]
+}

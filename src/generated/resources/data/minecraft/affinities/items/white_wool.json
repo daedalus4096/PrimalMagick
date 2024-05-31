@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "blood": 5
+    "primalmagick:blood": 5
   },
   "target": "minecraft:white_wool"
 }

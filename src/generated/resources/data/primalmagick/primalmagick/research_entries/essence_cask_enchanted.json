@@ -1,0 +1,61 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cask_enchanted"
+  },
+  "key": {
+    "rootKey": "primalmagick:essence_cask_enchanted"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_heartwood"
+    },
+    {
+      "rootKey": "primalmagick:shard_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:primalite"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_enchanted"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_enchanted.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_enchanted"
+      },
+      "recipes": [
+        "primalmagick:essence_cask_enchanted"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_enchanted.text.stage.1"
+    }
+  ]
+}

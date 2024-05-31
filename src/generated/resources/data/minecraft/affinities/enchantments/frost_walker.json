@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
   "multiplier": {
-    "sea": 1
+    "primalmagick:sea": 1
   },
   "target": "minecraft:frost_walker"
 }

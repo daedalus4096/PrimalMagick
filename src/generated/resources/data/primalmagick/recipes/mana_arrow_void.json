@@ -11,7 +11,7 @@
   },
   "mana": {
     "sources": {
-      "void": 5
+      "primalmagick:void": 5
     }
   },
   "pattern": [
@@ -19,7 +19,25 @@
     "ADA",
     " A "
   ],
-  "research": "MANA_ARROWS&&t_discover_void",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:mana_arrows"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:mana_arrow_void"

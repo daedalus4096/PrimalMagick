@@ -13,7 +13,14 @@
     " P ",
     "SPS"
   ],
-  "research": "FIRST_STEPS@2",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:first_steps",
+      "stage": 2
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:wood_table"

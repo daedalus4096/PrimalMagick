@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 20,
-    "void": 20
+    "primalmagick:earth": 20,
+    "primalmagick:void": 20
   },
   "target": "minecraft:bedrock"
 }

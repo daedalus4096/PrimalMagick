@@ -2,8 +2,8 @@
   "type": "entity_type",
   "target": "minecraft:wither_skeleton",
   "values": {
-    "blood": 10,
-    "infernal": 10,
-    "void": 10
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 10,
+    "primalmagick:void": 10
   }
 }

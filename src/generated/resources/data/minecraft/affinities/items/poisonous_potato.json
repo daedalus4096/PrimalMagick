@@ -1,12 +1,12 @@
 {
   "type": "item",
   "add": {
-    "moon": 5,
-    "void": 2
+    "primalmagick:moon": 5,
+    "primalmagick:void": 2
   },
   "base": "minecraft:potato",
   "remove": {
-    "sun": 5
+    "primalmagick:sun": 5
   },
   "target": "minecraft:poisonous_potato"
 }

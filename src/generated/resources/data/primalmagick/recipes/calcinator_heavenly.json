@@ -14,7 +14,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 100
+      "primalmagick:hallowed": 100
     }
   },
   "pattern": [
@@ -22,7 +22,13 @@
     "MCM",
     "EEE"
   ],
-  "research": "CALCINATOR_HEAVENLY",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:calcinator_heavenly"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:calcinator_heavenly"

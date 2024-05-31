@@ -16,7 +16,13 @@
     "QDQ",
     " N "
   ],
-  "research": "BASIC_MANAWEAVING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_manaweaving"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:mana_prism"

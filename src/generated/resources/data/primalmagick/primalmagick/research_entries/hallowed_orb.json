@@ -1,0 +1,36 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:scans"
+  },
+  "finales": [],
+  "hidden": true,
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:hallowed_orb"
+  },
+  "key": {
+    "rootKey": "primalmagick:hallowed_orb"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_scans"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:hallowed_orb"
+      },
+      "recipes": [
+        "primalmagick:hallowood_sapling"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.hallowed_orb.text.stage.0"
+    }
+  ]
+}

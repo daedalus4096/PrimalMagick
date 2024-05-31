@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "sea": 40
+      "primalmagick:sea": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
-  "research": "PRIMAL_FISHING_ROD",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primal_fishing_rod"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primal_fishing_rod",

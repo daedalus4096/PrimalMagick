@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "earth": 25
+    "primalmagick:earth": 25
   },
   "target": "primalmagick:ancient_font_earth"
 }

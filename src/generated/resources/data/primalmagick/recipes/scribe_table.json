@@ -11,7 +11,13 @@
       "item": "minecraft:writable_book"
     }
   ],
-  "research": "LINGUISTICS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:linguistics"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:scribe_table"

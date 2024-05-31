@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:mule",
   "values": {
-    "blood": 10
+    "primalmagick:blood": 10
   }
 }

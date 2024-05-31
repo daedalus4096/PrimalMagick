@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 2,
-    "sun": 2
+    "primalmagick:earth": 2,
+    "primalmagick:sun": 2
   },
   "target": "minecraft:pink_petals"
 }

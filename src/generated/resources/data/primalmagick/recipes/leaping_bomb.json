@@ -20,10 +20,16 @@
   ],
   "mana": {
     "sources": {
-      "infernal": 3
+      "primalmagick:infernal": 3
     }
   },
-  "research": "CONCOCTING_BOMBS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_bombs"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:alchemical_bomb",

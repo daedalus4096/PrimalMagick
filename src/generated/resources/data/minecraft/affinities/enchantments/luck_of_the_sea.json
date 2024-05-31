@@ -1,7 +1,7 @@
 {
   "type": "enchantment_bonus",
   "multiplier": {
-    "moon": 1
+    "primalmagick:moon": 1
   },
   "target": "minecraft:luck_of_the_sea"
 }

@@ -67,7 +67,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "moon"
+        "source": "primalmagick:moon"
       },
       "x": 3,
       "y": 1
@@ -87,7 +87,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "moon"
+        "source": "primalmagick:moon"
       },
       "x": 5,
       "y": 1
@@ -257,7 +257,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "moon"
+        "source": "primalmagick:moon"
       },
       "x": 1,
       "y": 6
@@ -277,7 +277,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "moon"
+        "source": "primalmagick:moon"
       },
       "x": 3,
       "y": 6
@@ -297,7 +297,7 @@
       "reward": {
         "type": "attunement",
         "points": 1,
-        "source": "moon"
+        "source": "primalmagick:moon"
       },
       "x": 5,
       "y": 6

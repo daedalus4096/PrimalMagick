@@ -8,7 +8,14 @@
       "tag": "forge:feathers"
     }
   ],
-  "research": "THEORYCRAFTING@2",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_stage",
+      "rootKey": "primalmagick:theorycrafting",
+      "stage": 2
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:enchanted_ink_and_quill",

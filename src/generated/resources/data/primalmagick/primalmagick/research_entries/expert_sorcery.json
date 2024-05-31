@@ -1,0 +1,63 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:sorcery"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_sorcery.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:expert_sorcery"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:spell_payload_lightning"
+    },
+    {
+      "rootKey": "primalmagick:spell_payload_frost"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requiredValue": 1,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_crafted"
+          },
+          {
+            "requiredValue": 10,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:spells_cast"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_sorcery.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_sorcery"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_sorcery.text.stage.1"
+    }
+  ]
+}

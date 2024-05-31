@@ -11,10 +11,28 @@
   ],
   "mana": {
     "sources": {
-      "void": 40
+      "primalmagick:void": 40
     }
   },
-  "research": "HUMMING_ARTIFACT&&t_discover_void",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:humming_artifact"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:humming_artifact_void"

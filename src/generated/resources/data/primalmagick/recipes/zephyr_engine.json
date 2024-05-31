@@ -19,7 +19,7 @@
   },
   "mana": {
     "sources": {
-      "sky": 40
+      "primalmagick:sky": 40
     }
   },
   "pattern": [
@@ -27,7 +27,13 @@
     "WSW",
     "WRW"
   ],
-  "research": "ZEPHYR_ENGINE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:zephyr_engine"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:zephyr_engine"

@@ -1,12 +1,12 @@
 {
   "type": "item",
   "add": {
-    "infernal": 5,
-    "moon": 5
+    "primalmagick:infernal": 5,
+    "primalmagick:moon": 5
   },
   "base": "minecraft:vine",
   "remove": {
-    "sun": 5
+    "primalmagick:sun": 5
   },
   "target": "minecraft:weeping_vines"
 }

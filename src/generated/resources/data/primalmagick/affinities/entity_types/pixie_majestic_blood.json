@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "primalmagick:pixie_majestic_blood",
   "values": {
-    "blood": 25,
-    "sky": 10
+    "primalmagick:blood": 25,
+    "primalmagick:sky": 10
   }
 }

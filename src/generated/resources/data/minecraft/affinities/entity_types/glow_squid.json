@@ -2,8 +2,8 @@
   "type": "entity_type",
   "target": "minecraft:glow_squid",
   "values": {
-    "blood": 10,
-    "sea": 10,
-    "sun": 10
+    "primalmagick:blood": 10,
+    "primalmagick:sea": 10,
+    "primalmagick:sun": 10
   }
 }

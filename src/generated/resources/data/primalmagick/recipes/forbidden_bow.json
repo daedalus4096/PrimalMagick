@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "infernal": 40
+      "primalmagick:infernal": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
-  "research": "FORBIDDEN_BOW",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:forbidden_bow"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:forbidden_bow",

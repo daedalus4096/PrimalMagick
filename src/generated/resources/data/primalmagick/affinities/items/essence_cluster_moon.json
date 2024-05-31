@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "moon": 100
+    "primalmagick:moon": 100
   },
   "target": "primalmagick:essence_cluster_moon"
 }

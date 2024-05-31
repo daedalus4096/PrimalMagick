@@ -1,0 +1,90 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bamboo"
+      },
+      "recipes": [
+        "primalmagick:bamboo_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bamboo.text.addenda.0"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:bamboo_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_bamboo"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_obsidian"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 1,
+              "id": "minecraft:bamboo"
+            }
+          },
+          {
+            "amount": 1,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bamboo"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bamboo.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:sky": 2
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_bamboo"
+      },
+      "recipes": [
+        "primalmagick:bamboo_wand_core_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_bamboo.text.stage.1"
+    }
+  ]
+}

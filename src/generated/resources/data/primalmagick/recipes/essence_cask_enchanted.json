@@ -16,11 +16,11 @@
   },
   "mana": {
     "sources": {
-      "earth": 40,
-      "moon": 40,
-      "sea": 40,
-      "sky": 40,
-      "sun": 40
+      "primalmagick:earth": 40,
+      "primalmagick:moon": 40,
+      "primalmagick:sea": 40,
+      "primalmagick:sky": 40,
+      "primalmagick:sun": 40
     }
   },
   "pattern": [
@@ -28,7 +28,13 @@
     "MBM",
     "WWW"
   ],
-  "research": "ESSENCE_CASK_ENCHANTED",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:essence_cask_enchanted"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:essence_cask_enchanted"

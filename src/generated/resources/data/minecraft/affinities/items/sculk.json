@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "infernal": 5,
-    "void": 5
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 5,
+    "primalmagick:void": 5
   },
   "target": "minecraft:sculk"
 }

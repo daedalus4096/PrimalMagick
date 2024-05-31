@@ -23,7 +23,7 @@
   "instability": 3,
   "mana": {
     "sources": {
-      "sky": 40
+      "primalmagick:sky": 40
     }
   },
   "props": [
@@ -34,7 +34,13 @@
       "block": "primalmagick:incense_brazier"
     }
   ],
-  "research": "PRIMAL_AXE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primal_axe"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primal_axe",

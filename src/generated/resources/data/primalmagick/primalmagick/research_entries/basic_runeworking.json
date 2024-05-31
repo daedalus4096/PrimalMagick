@@ -1,0 +1,37 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_runeworking.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:basic_runeworking"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:unlock_runeworking"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:basic_runeworking"
+      },
+      "recipes": [
+        "primalmagick:runecarving_table",
+        "primalmagick:rune_unattuned",
+        "primalmagick:runescribing_altar_basic"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.basic_runeworking.text.stage.0"
+    }
+  ]
+}

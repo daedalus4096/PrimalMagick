@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 24,
-    "sea": 52,
-    "sun": 15
+    "primalmagick:earth": 24,
+    "primalmagick:sea": 52,
+    "primalmagick:sun": 15
   },
   "target": "minecraft:sea_lantern"
 }

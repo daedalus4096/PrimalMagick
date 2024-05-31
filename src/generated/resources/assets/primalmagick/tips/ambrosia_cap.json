@@ -1,4 +1,10 @@
 {
-  "requiredResearch": "AMBROSIA",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ambrosia"
+    }
+  },
   "translationKey": "tip.primalmagick.ambrosia_cap"
 }

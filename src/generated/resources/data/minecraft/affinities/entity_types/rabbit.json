@@ -2,6 +2,6 @@
   "type": "entity_type",
   "target": "minecraft:rabbit",
   "values": {
-    "blood": 5
+    "primalmagick:blood": 5
   }
 }

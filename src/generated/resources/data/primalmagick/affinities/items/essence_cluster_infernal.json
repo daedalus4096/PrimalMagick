@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "infernal": 100
+    "primalmagick:infernal": 100
   },
   "target": "primalmagick:essence_cluster_infernal"
 }

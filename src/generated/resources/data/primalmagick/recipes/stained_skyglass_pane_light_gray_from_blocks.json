@@ -10,7 +10,13 @@
     "GGG",
     "GGG"
   ],
-  "research": "SKYGLASS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:skyglass"
+    }
+  },
   "result": {
     "Count": 16,
     "id": "primalmagick:stained_skyglass_pane_light_gray"

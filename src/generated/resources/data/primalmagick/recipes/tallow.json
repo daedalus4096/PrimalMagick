@@ -8,7 +8,13 @@
       "item": "primalmagick:essence_dust_sun"
     }
   ],
-  "research": "RITUAL_CANDLES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_candles"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:tallow"

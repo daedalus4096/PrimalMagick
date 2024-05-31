@@ -1,0 +1,74 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_magitech.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:master_magitech"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:arcanometer"
+    },
+    {
+      "rootKey": "primalmagick:primalite_golem"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:discover_forbidden"
+            }
+          },
+          {
+            "requiredValue": 25,
+            "requirement_type": "primalmagick:stat",
+            "stat": "primalmagick:crafted_magitech"
+          },
+          {
+            "requirement_type": "primalmagick:research",
+            "rootKey": {
+              "key_type": "primalmagick:research_entry",
+              "rootKey": "primalmagick:scan_hexium"
+            }
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_magitech"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_magitech.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:master_magitech"
+      },
+      "recipes": [
+        "primalmagick:magitech_parts_forbidden"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.master_magitech.text.stage.1"
+    }
+  ]
+}

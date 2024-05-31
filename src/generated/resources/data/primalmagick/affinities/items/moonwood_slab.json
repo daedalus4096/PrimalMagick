@@ -1,11 +1,11 @@
 {
   "type": "item",
   "add": {
-    "moon": 2
+    "primalmagick:moon": 2
   },
   "base": "minecraft:oak_slab",
   "remove": {
-    "sun": 1
+    "primalmagick:sun": 1
   },
   "target": "primalmagick:moonwood_slab"
 }

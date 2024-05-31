@@ -1,8 +1,8 @@
 {
   "type": "item",
   "add": {
-    "blood": 5,
-    "sea": 5
+    "primalmagick:blood": 5,
+    "primalmagick:sea": 5
   },
   "base": "minecraft:bucket",
   "target": "minecraft:cod_bucket"

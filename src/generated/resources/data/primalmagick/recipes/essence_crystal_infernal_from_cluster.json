@@ -6,7 +6,25 @@
       "item": "primalmagick:essence_cluster_infernal"
     }
   ],
-  "research": "CLUSTER_DESYNTHESIS&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:cluster_desynthesis"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 4,
     "id": "primalmagick:essence_crystal_infernal"

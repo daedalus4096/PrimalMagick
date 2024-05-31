@@ -16,7 +16,7 @@
   },
   "mana": {
     "sources": {
-      "sea": 10
+      "primalmagick:sea": 10
     }
   },
   "pattern": [
@@ -24,7 +24,13 @@
     "GIG",
     "NG "
   ],
-  "research": "SEASCRIBE_PEN",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:seascribe_pen"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:seascribe_pen"

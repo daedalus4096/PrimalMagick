@@ -19,7 +19,7 @@
   },
   "mana": {
     "sources": {
-      "earth": 200
+      "primalmagick:earth": 200
     }
   },
   "pattern": [
@@ -27,7 +27,13 @@
     "PES",
     " M "
   ],
-  "research": "GREATER_WARDING_MODULE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:greater_warding_module"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:warding_module_greater"

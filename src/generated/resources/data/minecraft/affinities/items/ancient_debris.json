@@ -1,8 +1,8 @@
 {
   "type": "item",
   "add": {
-    "earth": 5,
-    "infernal": 10
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 10
   },
   "base": "minecraft:netherrack",
   "target": "minecraft:ancient_debris"

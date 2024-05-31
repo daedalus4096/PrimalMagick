@@ -19,7 +19,7 @@
   },
   "mana": {
     "sources": {
-      "void": 40
+      "primalmagick:void": 40
     }
   },
   "pattern": [
@@ -27,7 +27,13 @@
     "CSC",
     "CRC"
   ],
-  "research": "VOID_TURBINE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:void_turbine"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:void_turbine"

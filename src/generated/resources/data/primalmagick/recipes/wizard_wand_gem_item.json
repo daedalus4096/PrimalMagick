@@ -10,14 +10,20 @@
   ],
   "mana": {
     "sources": {
-      "earth": 100,
-      "moon": 100,
-      "sea": 100,
-      "sky": 100,
-      "sun": 100
+      "primalmagick:earth": 100,
+      "primalmagick:moon": 100,
+      "primalmagick:sea": 100,
+      "primalmagick:sky": 100,
+      "primalmagick:sun": 100
     }
   },
-  "research": "WAND_GEM_WIZARD",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_gem_wizard"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:wizard_wand_gem_item"

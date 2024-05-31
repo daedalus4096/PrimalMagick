@@ -1,14 +1,14 @@
 {
   "type": "item",
   "set": {
-    "blood": 30,
-    "earth": 3,
-    "infernal": 27,
-    "moon": 3,
-    "sea": 3,
-    "sky": 29,
-    "sun": 3,
-    "void": 27
+    "primalmagick:blood": 30,
+    "primalmagick:earth": 3,
+    "primalmagick:infernal": 27,
+    "primalmagick:moon": 3,
+    "primalmagick:sea": 3,
+    "primalmagick:sky": 29,
+    "primalmagick:sun": 3,
+    "primalmagick:void": 27
   },
   "target": "primalmagick:hexweave"
 }

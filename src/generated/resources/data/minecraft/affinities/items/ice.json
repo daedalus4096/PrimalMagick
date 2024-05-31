@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "sea": 5
+    "primalmagick:sea": 5
   },
   "target": "minecraft:ice"
 }

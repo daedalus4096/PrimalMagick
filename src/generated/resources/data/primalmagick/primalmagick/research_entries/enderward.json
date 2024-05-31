@@ -1,0 +1,97 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:recall_stone"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:enderward"
+      },
+      "recipes": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.enderward.text.addenda.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:spell_payload_teleport"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:enderward"
+      },
+      "recipes": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.enderward.text.addenda.1"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:enderward"
+  },
+  "key": {
+    "rootKey": "primalmagick:enderward"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:rune_dispel"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:enderward"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.enderward.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:enderward"
+      },
+      "recipes": [
+        "primalmagick:enderward"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.enderward.text.stage.1"
+    }
+  ]
+}

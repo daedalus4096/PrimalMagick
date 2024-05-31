@@ -20,7 +20,7 @@
   "instability": 4,
   "mana": {
     "sources": {
-      "void": 40
+      "primalmagick:void": 40
     }
   },
   "props": [
@@ -34,7 +34,25 @@
       "block": "primalmagick:ritual_lectern"
     }
   ],
-  "research": "AMBROSIA&&t_discover_void",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_void"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_basic_void"

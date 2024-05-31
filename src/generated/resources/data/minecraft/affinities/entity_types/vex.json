@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:vex",
   "values": {
-    "sky": 10,
-    "void": 5
+    "primalmagick:sky": 10,
+    "primalmagick:void": 5
   }
 }

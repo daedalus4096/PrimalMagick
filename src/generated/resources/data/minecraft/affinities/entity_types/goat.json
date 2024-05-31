@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:goat",
   "values": {
-    "blood": 10,
-    "sky": 5
+    "primalmagick:blood": 10,
+    "primalmagick:sky": 5
   }
 }

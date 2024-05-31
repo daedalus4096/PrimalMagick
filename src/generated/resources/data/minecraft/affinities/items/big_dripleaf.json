@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "moon": 5
+    "primalmagick:earth": 5,
+    "primalmagick:moon": 5
   },
   "target": "minecraft:big_dripleaf"
 }

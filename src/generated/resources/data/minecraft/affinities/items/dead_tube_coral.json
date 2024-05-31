@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "sea": 5
+    "primalmagick:earth": 5,
+    "primalmagick:sea": 5
   },
   "target": "minecraft:dead_tube_coral"
 }

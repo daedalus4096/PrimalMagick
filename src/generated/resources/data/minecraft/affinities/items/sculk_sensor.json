@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "infernal": 5,
-    "void": 20
+    "primalmagick:earth": 5,
+    "primalmagick:infernal": 5,
+    "primalmagick:void": 20
   },
   "target": "minecraft:sculk_sensor"
 }

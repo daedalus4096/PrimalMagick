@@ -1,0 +1,57 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:runeworking"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:rune_void"
+  },
+  "key": {
+    "rootKey": "primalmagick:rune_void"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:expert_runeworking"
+    },
+    {
+      "rootKey": "primalmagick:discover_void"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 1,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_void"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_void.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:void": 1
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:rune_void"
+      },
+      "recipes": [
+        "primalmagick:rune_void"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.rune_void.text.stage.1"
+    }
+  ]
+}

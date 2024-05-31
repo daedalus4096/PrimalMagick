@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 2,
-    "moon": 2,
-    "sun": 2
+    "primalmagick:earth": 2,
+    "primalmagick:moon": 2,
+    "primalmagick:sun": 2
   },
   "target": "minecraft:glow_lichen"
 }

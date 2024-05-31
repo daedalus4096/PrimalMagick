@@ -13,7 +13,13 @@
     "PPP",
     "S  "
   ],
-  "research": "BASIC_SORCERY",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_sorcery"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:spell_scroll_blank"

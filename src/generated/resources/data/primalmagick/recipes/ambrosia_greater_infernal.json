@@ -23,7 +23,7 @@
   "instability": 6,
   "mana": {
     "sources": {
-      "infernal": 100
+      "primalmagick:infernal": 100
     }
   },
   "props": [
@@ -40,7 +40,25 @@
       "block": "primalmagick:bloodletter"
     }
   ],
-  "research": "GREATER_AMBROSIA&&t_discover_infernal",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:greater_ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_infernal"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_greater_infernal"

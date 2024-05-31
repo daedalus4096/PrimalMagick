@@ -1,7 +1,7 @@
 {
   "type": "potion_bonus",
   "bonus": {
-    "earth": 2
+    "primalmagick:earth": 2
   },
   "target": "minecraft:strength"
 }

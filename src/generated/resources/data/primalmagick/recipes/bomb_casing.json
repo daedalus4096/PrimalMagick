@@ -16,7 +16,13 @@
     "IFI",
     " I "
   ],
-  "research": "CONCOCTING_BOMBS",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:concocting_bombs"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:bomb_casing"

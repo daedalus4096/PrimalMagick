@@ -10,7 +10,7 @@
   },
   "mana": {
     "sources": {
-      "hallowed": 100
+      "primalmagick:hallowed": 100
     }
   },
   "pattern": [
@@ -18,7 +18,13 @@
     "SSW",
     "SW "
   ],
-  "research": "CELESTIAL_HARP",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:celestial_harp"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:celestial_harp"

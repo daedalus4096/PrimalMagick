@@ -21,7 +21,13 @@
       "item": "primalmagick:essence_dust_moon"
     }
   ],
-  "research": "PRIMALITE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:primalite"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:primalite_ingot"

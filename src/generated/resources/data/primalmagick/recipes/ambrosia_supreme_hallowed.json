@@ -23,7 +23,7 @@
   "instability": 8,
   "mana": {
     "sources": {
-      "hallowed": 200
+      "primalmagick:hallowed": 200
     }
   },
   "props": [
@@ -46,7 +46,25 @@
       "block": "primalmagick:celestial_harp"
     }
   ],
-  "research": "SUPREME_AMBROSIA&&t_discover_hallowed",
+  "requirement": {
+    "requirement_type": "primalmagick:and",
+    "subRequirements": [
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:supreme_ambrosia"
+        }
+      },
+      {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:discover_hallowed"
+        }
+      }
+    ]
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ambrosia_supreme_hallowed"

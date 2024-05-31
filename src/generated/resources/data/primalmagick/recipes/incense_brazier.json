@@ -16,7 +16,13 @@
     "GGG",
     " P "
   ],
-  "research": "INCENSE_BRAZIER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:incense_brazier"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:incense_brazier"

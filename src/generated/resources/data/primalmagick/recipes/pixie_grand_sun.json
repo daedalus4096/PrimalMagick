@@ -23,7 +23,7 @@
   "instability": 5,
   "mana": {
     "sources": {
-      "sun": 100
+      "primalmagick:sun": 100
     }
   },
   "props": [
@@ -37,7 +37,13 @@
       "block": "primalmagick:soul_anvil"
     }
   ],
-  "research": "GRAND_PIXIES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:grand_pixies"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_grand_sun"

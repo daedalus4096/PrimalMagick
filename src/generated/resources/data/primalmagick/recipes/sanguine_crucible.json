@@ -13,8 +13,8 @@
   },
   "mana": {
     "sources": {
-      "blood": 100,
-      "infernal": 100
+      "primalmagick:blood": 100,
+      "primalmagick:infernal": 100
     }
   },
   "pattern": [
@@ -22,7 +22,13 @@
     "IWI",
     "III"
   ],
-  "research": "SANGUINE_CRUCIBLE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_crucible"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:sanguine_crucible"

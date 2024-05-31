@@ -20,7 +20,7 @@
   "instability": 4,
   "mana": {
     "sources": {
-      "blood": 50
+      "primalmagick:blood": 50
     }
   },
   "props": [
@@ -31,7 +31,13 @@
       "block": "primalmagick:bloodletter"
     }
   ],
-  "research": "BLOOD_ROSE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:blood_rose"
+    }
+  },
   "result": {
     "Count": 2,
     "id": "primalmagick:blood_rose"

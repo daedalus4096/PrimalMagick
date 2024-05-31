@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 42,
-    "sky": 18,
-    "sun": 18
+    "primalmagick:earth": 42,
+    "primalmagick:sky": 18,
+    "primalmagick:sun": 18
   },
   "target": "minecraft:map"
 }

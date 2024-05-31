@@ -1,9 +1,9 @@
 {
   "type": "item",
   "set": {
-    "earth": 5,
-    "moon": 5,
-    "void": 20
+    "primalmagick:earth": 5,
+    "primalmagick:moon": 5,
+    "primalmagick:void": 20
   },
   "target": "minecraft:chorus_fruit"
 }

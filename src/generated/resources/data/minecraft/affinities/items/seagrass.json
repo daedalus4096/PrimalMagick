@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "sea": 2
+    "primalmagick:sea": 2
   },
   "base": "minecraft:short_grass",
   "target": "minecraft:seagrass"

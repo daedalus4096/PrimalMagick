@@ -12,7 +12,13 @@
       "item": "minecraft:seagrass"
     }
   ],
-  "research": "SANGUINE_CORE_SEA_CREATURES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:sanguine_core_sea_creatures"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:sanguine_core_turtle",

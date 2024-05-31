@@ -10,7 +10,13 @@
     "III",
     "III"
   ],
-  "research": "HEXIUM",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:hexium"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:hexium_chest",

@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:strider",
   "values": {
-    "blood": 10,
-    "infernal": 10
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 10
   }
 }

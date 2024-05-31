@@ -13,7 +13,13 @@
     "P",
     "S"
   ],
-  "research": "BASIC_RITUAL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_ritual"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:offering_pedestal"

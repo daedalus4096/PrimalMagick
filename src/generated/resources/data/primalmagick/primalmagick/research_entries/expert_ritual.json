@@ -1,0 +1,53 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": false,
+    "location": "primalmagick:textures/research/discipline_ritual.png"
+  },
+  "key": {
+    "rootKey": "primalmagick:expert_ritual"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:ritual_candles"
+    },
+    {
+      "rootKey": "primalmagick:incense_brazier"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requiredValue": 2,
+        "requirement_type": "primalmagick:stat",
+        "stat": "primalmagick:rituals_completed"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_ritual.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:expert_ritual"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.expert_ritual.text.stage.1"
+    }
+  ]
+}

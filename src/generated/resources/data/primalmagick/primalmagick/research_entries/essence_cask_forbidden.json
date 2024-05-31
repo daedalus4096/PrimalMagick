@@ -1,0 +1,61 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:manaweaving"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:essence_cask_forbidden"
+  },
+  "key": {
+    "rootKey": "primalmagick:essence_cask_forbidden"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:essence_cask_enchanted"
+    },
+    {
+      "rootKey": "primalmagick:crystal_synthesis"
+    },
+    {
+      "rootKey": "primalmagick:hexium"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "amount": 2,
+        "knowledgeType": "theory",
+        "requirement_type": "primalmagick:knowledge"
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_forbidden"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_forbidden.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:essence_cask_forbidden"
+      },
+      "recipes": [
+        "primalmagick:essence_cask_forbidden"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.essence_cask_forbidden.text.stage.1"
+    }
+  ]
+}

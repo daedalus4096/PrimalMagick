@@ -1,0 +1,93 @@
+{
+  "addenda": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:research",
+        "rootKey": {
+          "key_type": "primalmagick:research_entry",
+          "rootKey": "primalmagick:staves"
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_pure_primal"
+      },
+      "recipes": [
+        "primalmagick:pure_primal_staff_core_item"
+      ],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_pure_primal.text.addenda.0"
+    }
+  ],
+  "disciplineKey": {
+    "rootKey": "primalmagick:ritual"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:pure_primal_wand_core_item"
+  },
+  "key": {
+    "rootKey": "primalmagick:wand_core_pure_primal"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:supreme_ritual"
+    },
+    {
+      "rootKey": "primalmagick:wand_core_dark_primal"
+    },
+    {
+      "rootKey": "primalmagick:celestial_harp"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 1,
+              "id": "primalmagick:heartwood_wand_core_item"
+            }
+          },
+          {
+            "amount": 3,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_pure_primal"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_pure_primal.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:hallowed": 5
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:wand_core_pure_primal"
+      },
+      "recipes": [
+        "primalmagick:pure_primal_wand_core_item"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.wand_core_pure_primal.text.stage.1"
+    }
+  ]
+}

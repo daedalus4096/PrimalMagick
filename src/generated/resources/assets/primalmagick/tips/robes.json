@@ -1,4 +1,10 @@
 {
-  "requiredResearch": "IMBUED_WOOL",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:imbued_wool"
+    }
+  },
   "translationKey": "tip.primalmagick.robes"
 }

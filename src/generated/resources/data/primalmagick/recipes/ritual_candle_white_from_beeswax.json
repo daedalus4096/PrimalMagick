@@ -14,7 +14,13 @@
     "W",
     "W"
   ],
-  "research": "RITUAL_CANDLES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:ritual_candles"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:ritual_candle_white"

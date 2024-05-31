@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "blood": 10
+    "primalmagick:blood": 10
   },
   "base": "minecraft:bucket",
   "target": "minecraft:milk_bucket"

@@ -2,7 +2,7 @@
   "type": "entity_type",
   "target": "minecraft:piglin_brute",
   "values": {
-    "blood": 10,
-    "infernal": 5
+    "primalmagick:blood": 10,
+    "primalmagick:infernal": 5
   }
 }

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "set": {
-    "void": 20
+    "primalmagick:void": 20
   },
   "target": "primalmagick:essence_shard_void"
 }

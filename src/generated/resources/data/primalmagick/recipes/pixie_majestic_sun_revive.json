@@ -8,7 +8,13 @@
       "item": "primalmagick:essence_dust_sun"
     }
   ],
-  "research": "MAJESTIC_PIXIES",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:majestic_pixies"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:pixie_majestic_sun"

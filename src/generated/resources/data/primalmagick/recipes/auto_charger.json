@@ -16,11 +16,11 @@
   },
   "mana": {
     "sources": {
-      "earth": 20,
-      "moon": 20,
-      "sea": 20,
-      "sky": 20,
-      "sun": 20
+      "primalmagick:earth": 20,
+      "primalmagick:moon": 20,
+      "primalmagick:sea": 20,
+      "primalmagick:sky": 20,
+      "primalmagick:sun": 20
     }
   },
   "pattern": [
@@ -28,7 +28,13 @@
     "PCP",
     "EME"
   ],
-  "research": "AUTO_CHARGER",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:auto_charger"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:auto_charger"

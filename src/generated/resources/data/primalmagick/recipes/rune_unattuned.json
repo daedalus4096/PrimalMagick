@@ -6,7 +6,13 @@
   "ingredient2": {
     "tag": "forge:gems/lapis"
   },
-  "research": "BASIC_RUNEWORKING",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:basic_runeworking"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:rune_unattuned"

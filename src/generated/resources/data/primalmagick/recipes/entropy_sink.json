@@ -19,11 +19,11 @@
   },
   "mana": {
     "sources": {
-      "earth": 75,
-      "moon": 75,
-      "sea": 75,
-      "sky": 75,
-      "sun": 75
+      "primalmagick:earth": 75,
+      "primalmagick:moon": 75,
+      "primalmagick:sea": 75,
+      "primalmagick:sky": 75,
+      "primalmagick:sun": 75
     }
   },
   "pattern": [
@@ -31,7 +31,13 @@
     "TRT",
     "MMM"
   ],
-  "research": "ENTROPY_SINK",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:entropy_sink"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:entropy_sink"

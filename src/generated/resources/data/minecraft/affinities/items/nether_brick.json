@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "infernal": 5
+    "primalmagick:infernal": 5
   },
   "base": "minecraft:brick",
   "target": "minecraft:nether_brick"

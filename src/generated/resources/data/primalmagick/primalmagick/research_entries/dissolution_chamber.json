@@ -1,0 +1,112 @@
+{
+  "addenda": [],
+  "disciplineKey": {
+    "rootKey": "primalmagick:magitech"
+  },
+  "finales": [],
+  "icon": {
+    "isItem": true,
+    "location": "primalmagick:dissolution_chamber"
+  },
+  "key": {
+    "rootKey": "primalmagick:dissolution_chamber"
+  },
+  "parents": [
+    {
+      "rootKey": "primalmagick:master_magitech"
+    },
+    {
+      "rootKey": "primalmagick:master_manaweaving"
+    },
+    {
+      "rootKey": "primalmagick:earthshatter_hammer"
+    }
+  ],
+  "stages": [
+    {
+      "attunements": {
+        "sources": {}
+      },
+      "completionRequirementOpt": {
+        "requirement_type": "primalmagick:and",
+        "subRequirements": [
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 20,
+              "id": "primalmagick:iron_grit"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 20,
+              "id": "primalmagick:copper_grit"
+            }
+          },
+          {
+            "requirement_type": "primalmagick:item_stack",
+            "stack": {
+              "Count": 10,
+              "id": "primalmagick:gold_grit"
+            }
+          },
+          {
+            "amount": 2,
+            "knowledgeType": "theory",
+            "requirement_type": "primalmagick:knowledge"
+          }
+        ]
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dissolution_chamber"
+      },
+      "recipes": [],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dissolution_chamber.text.stage.0"
+    },
+    {
+      "attunements": {
+        "sources": {
+          "primalmagick:earth": 3
+        }
+      },
+      "parentKey": {
+        "rootKey": "primalmagick:dissolution_chamber"
+      },
+      "recipes": [
+        "primalmagick:dissolution_chamber",
+        "primalmagick:iron_grit_from_dissolving_ore",
+        "primalmagick:iron_grit_from_dissolving_raw_metal",
+        "primalmagick:gold_grit_from_dissolving_ore",
+        "primalmagick:gold_grit_from_dissolving_raw_metal",
+        "primalmagick:copper_grit_from_dissolving_ore",
+        "primalmagick:copper_grit_from_dissolving_raw_metal",
+        "primalmagick:tin_dust_from_dissolving_ore",
+        "primalmagick:tin_dust_from_dissolving_raw_metal",
+        "primalmagick:lead_dust_from_dissolving_ore",
+        "primalmagick:lead_dust_from_dissolving_raw_metal",
+        "primalmagick:silver_dust_from_dissolving_ore",
+        "primalmagick:silver_dust_from_dissolving_raw_metal",
+        "primalmagick:uranium_dust_from_dissolving_ore",
+        "primalmagick:uranium_dust_from_dissolving_raw_metal",
+        "primalmagick:cobblestone_from_dissolving_surface_stone",
+        "primalmagick:cobbled_deepslate_from_dissolving_deep_stone",
+        "primalmagick:gravel_from_dissolving_cobblestone",
+        "primalmagick:sand_from_dissolving_gravel",
+        "primalmagick:bone_meal_from_dissolving_bone",
+        "primalmagick:blaze_powder_from_dissolving_blaze_rod",
+        "primalmagick:string_from_dissolving_wool",
+        "primalmagick:quartz_from_dissolving_quartz_block",
+        "primalmagick:glowstone_dust_from_dissolving_glowstone_block",
+        "primalmagick:rock_salt_from_dissolving_rock_salt_ore",
+        "primalmagick:refined_salt_from_dissolving_rock_salt",
+        "primalmagick:netherite_scrap_from_dissolving_ancient_debris"
+      ],
+      "revelations": [],
+      "siblings": [],
+      "textTranslationKey": "research.primalmagick.dissolution_chamber.text.stage.1"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "type": "item",
   "set": {
-    "earth": 45,
-    "infernal": 22
+    "primalmagick:earth": 45,
+    "primalmagick:infernal": 22
   },
   "target": "minecraft:netherite_shovel"
 }

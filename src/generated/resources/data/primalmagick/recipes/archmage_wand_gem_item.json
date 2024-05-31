@@ -10,14 +10,20 @@
   ],
   "mana": {
     "sources": {
-      "earth": 300,
-      "moon": 300,
-      "sea": 300,
-      "sky": 300,
-      "sun": 300
+      "primalmagick:earth": 300,
+      "primalmagick:moon": 300,
+      "primalmagick:sea": 300,
+      "primalmagick:sky": 300,
+      "primalmagick:sun": 300
     }
   },
-  "research": "WAND_GEM_ARCHMAGE",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:wand_gem_archmage"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:archmage_wand_gem_item"

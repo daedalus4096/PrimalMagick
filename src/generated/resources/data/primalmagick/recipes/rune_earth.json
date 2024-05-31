@@ -9,7 +9,13 @@
       "item": "primalmagick:essence_dust_earth"
     }
   ],
-  "research": "RUNE_EARTH",
+  "requirement": {
+    "requirement_type": "primalmagick:research",
+    "rootKey": {
+      "key_type": "primalmagick:research_entry",
+      "rootKey": "primalmagick:rune_earth"
+    }
+  },
   "result": {
     "Count": 1,
     "id": "primalmagick:rune_earth"

@@ -1,7 +1,7 @@
 {
   "type": "item",
   "add": {
-    "earth": 20
+    "primalmagick:earth": 20
   },
   "base": "minecraft:stone",
   "target": "minecraft:diamond_ore"
