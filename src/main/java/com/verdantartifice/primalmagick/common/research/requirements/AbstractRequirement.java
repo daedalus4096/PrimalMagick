@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import javax.annotation.Nullable;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -17,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractRequirement<T extends AbstractRequirement<T>> {
     public static Codec<AbstractRequirement<?>> dispatchCodec() {
-        return RequirementsPM.TYPES.get().getCodec().dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
+        return RegistryCodecs.codec(RequirementsPM.TYPES).dispatch("requirement_type", AbstractRequirement::getType, type -> type.codecSupplier().get());
     }
     
     public abstract boolean isMetBy(@Nullable Player player);
