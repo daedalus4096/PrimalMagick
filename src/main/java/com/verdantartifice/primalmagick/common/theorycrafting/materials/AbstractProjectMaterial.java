@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import com.mojang.datafixers.util.Function4;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.ResearchEntryKey;
 import com.verdantartifice.primalmagick.common.research.requirements.AbstractRequirement;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.block.Block;
  */
 public abstract class AbstractProjectMaterial<T extends AbstractProjectMaterial<T>> {
     public static Codec<AbstractProjectMaterial<?>> dispatchCodec() {
-        return ProjectMaterialTypesPM.TYPES.get().getCodec().dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
+        return RegistryCodecs.codec(ProjectMaterialTypesPM.TYPES).dispatch("material_type", AbstractProjectMaterial::getType, type -> type.codecSupplier().get());
     }
     
     protected final double weight;

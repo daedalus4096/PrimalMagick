@@ -6,6 +6,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
+import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
 import net.minecraft.network.FriendlyByteBuf;
@@ -19,7 +20,7 @@ import net.minecraft.world.entity.player.Player;
  */
 public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     public static Codec<AbstractResearchKey<?>> dispatchCodec() {
-        return ResearchKeyTypesPM.TYPES.get().getCodec().dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
+        return RegistryCodecs.codec(ResearchKeyTypesPM.TYPES).dispatch("key_type", AbstractResearchKey::getType, ResearchKeyType::codec);
     }
     
     @Override
