@@ -30,33 +30,29 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
             ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(VanillaCustomStatRequirement::getIconLocation)
         ).apply(instance, VanillaCustomStatRequirement::new));
     
-    protected final Stat<ResourceLocation> stat;
+    protected final ResourceLocation statValueLocation;
     protected final int threshold;
     protected final ResourceLocation iconLocation;
     
     public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, ResourceLocation iconLocation) {
-        this(Stats.CUSTOM.get(loc), threshold, iconLocation);
-    }
-    
-    protected VanillaCustomStatRequirement(Stat<ResourceLocation> stat, int threshold, ResourceLocation iconLocation) {
-        this.stat = stat;
+        this.statValueLocation = loc;
         this.threshold = threshold;
         this.iconLocation = iconLocation;
     }
-
+    
     @Override
     public Stat<?> getStat() {
-        return this.stat;
+        return Stats.CUSTOM.get(this.statValueLocation);
     }
 
     @Override
     public ResourceLocation getStatTypeLoc() {
-        return ForgeRegistries.STAT_TYPES.getKey(this.stat.getType());
+        return ForgeRegistries.STAT_TYPES.getKey(Stats.CUSTOM);
     }
     
     @Override
     public ResourceLocation getStatValueLoc() {
-        return this.stat.getValue();
+        return this.statValueLocation;
     }
 
     @Override
@@ -66,7 +62,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     
     @Override
     public Component getStatDescription() {
-        String key = String.join(".", "stat", this.stat.getValue().getNamespace(), this.stat.getValue().getPath());
+        String key = String.join(".", "stat", this.statValueLocation.getNamespace(), this.statValueLocation.getPath());
         return Component.translatable(key);
     }
 
@@ -77,9 +73,9 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
 
     public int getCurrentValue(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            return serverPlayer.getStats().getValue(this.stat);
+            return serverPlayer.getStats().getValue(this.getStat());
         } else if (FMLEnvironment.dist.isClient()) {
-            return ClientUtils.getStatsCounter().getValue(this.stat);
+            return ClientUtils.getStatsCounter().getValue(this.getStat());
         } else {
             throw new IllegalStateException("Player is neither server nor client side!");
         }
@@ -98,7 +94,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     @Override
     public boolean forceComplete(Player player) {
         if (player instanceof ServerPlayer serverPlayer && this.threshold > this.getCurrentValue(serverPlayer)) {
-            serverPlayer.getStats().setValue(serverPlayer, this.stat, this.threshold);
+            serverPlayer.getStats().setValue(serverPlayer, this.getStat(), this.threshold);
             return true;
         } else {
             return false;
