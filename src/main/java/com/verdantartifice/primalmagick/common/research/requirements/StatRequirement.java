@@ -81,7 +81,7 @@ public class StatRequirement extends AbstractRequirement<StatRequirement> {
     }
 
     @Nonnull
-    public static StatRequirement fromNetwork(FriendlyByteBuf buf) {
+    static StatRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new StatRequirement(StatsManager.getStat(buf.readResourceLocation()), buf.readVarInt());
     }
     

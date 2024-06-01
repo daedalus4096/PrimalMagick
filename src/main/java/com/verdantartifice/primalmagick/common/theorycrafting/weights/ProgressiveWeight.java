@@ -50,7 +50,7 @@ public class ProgressiveWeight extends AbstractWeightFunction<ProgressiveWeight>
     }
     
     @Nonnull
-    public static ProgressiveWeight fromNetworkInner(FriendlyByteBuf buf) {
+    static ProgressiveWeight fromNetworkInner(FriendlyByteBuf buf) {
         double start = buf.readDouble();
         List<Modifier> modifiers = buf.readList(Modifier::fromNetwork);
         return new ProgressiveWeight(start, modifiers);

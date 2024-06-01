@@ -21,16 +21,16 @@ public class RequirementsPM {
         DEFERRED_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
     
-    public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, KnowledgeRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, ItemStackRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", () -> ItemTagRequirement.CODEC, ItemTagRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", () -> StatRequirement.CODEC, StatRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<VanillaItemUsedStatRequirement>> VANILLA_ITEM_USED_STAT = register("vanilla_item_used_stat", () -> VanillaItemUsedStatRequirement.CODEC, VanillaItemUsedStatRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<VanillaCustomStatRequirement>> VANILLA_CUSTOM_STAT = register("vanilla_custom_stat", () -> VanillaCustomStatRequirement.CODEC, VanillaCustomStatRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement::codec, AndRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement::codec, OrRequirement::fromNetwork);
-    public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement::codec, QuorumRequirement::fromNetwork);
+    public static final RegistryObject<RequirementType<ResearchRequirement>> RESEARCH = register("research", ResearchRequirement::codec, ResearchRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<KnowledgeRequirement>> KNOWLEDGE = register("knowledge", () -> KnowledgeRequirement.CODEC, KnowledgeRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<ItemStackRequirement>> ITEM_STACK = register("item_stack", () -> ItemStackRequirement.CODEC, ItemStackRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<ItemTagRequirement>> ITEM_TAG = register("item_tag", () -> ItemTagRequirement.CODEC, ItemTagRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<StatRequirement>> STAT = register("stat", () -> StatRequirement.CODEC, StatRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<VanillaItemUsedStatRequirement>> VANILLA_ITEM_USED_STAT = register("vanilla_item_used_stat", () -> VanillaItemUsedStatRequirement.CODEC, VanillaItemUsedStatRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<VanillaCustomStatRequirement>> VANILLA_CUSTOM_STAT = register("vanilla_custom_stat", () -> VanillaCustomStatRequirement.CODEC, VanillaCustomStatRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<AndRequirement>> AND = register("and", AndRequirement::codec, AndRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<OrRequirement>> OR = register("or", OrRequirement::codec, OrRequirement::fromNetworkInner);
+    public static final RegistryObject<RequirementType<QuorumRequirement>> QUORUM = register("quorum", QuorumRequirement::codec, QuorumRequirement::fromNetworkInner);
     
     protected static <T extends AbstractRequirement<T>> RegistryObject<RequirementType<T>> register(String id, Supplier<Codec<T>> codecSupplier, FriendlyByteBuf.Reader<T> networkReader) {
         return DEFERRED_TYPES.register(id, () -> new RequirementType<T>(PrimalMagick.resource(id), codecSupplier, networkReader));

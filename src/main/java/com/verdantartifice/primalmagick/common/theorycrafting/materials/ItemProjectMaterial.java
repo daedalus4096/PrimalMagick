@@ -121,7 +121,7 @@ public class ItemProjectMaterial extends AbstractProjectMaterial<ItemProjectMate
     }
 
     @Nonnull
-    public static ItemProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+    static ItemProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         return new ItemProjectMaterial(buf.readItem(), buf.readBoolean(), buf.readBoolean(), buf.readVarInt(), weight, bonusReward, requirement);
     }
     

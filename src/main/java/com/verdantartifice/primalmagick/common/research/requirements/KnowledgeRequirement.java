@@ -91,7 +91,7 @@ public class KnowledgeRequirement extends AbstractRequirement<KnowledgeRequireme
     }
 
     @Nonnull
-    public static KnowledgeRequirement fromNetwork(FriendlyByteBuf buf) {
+    static KnowledgeRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new KnowledgeRequirement(buf.readEnum(KnowledgeType.class), buf.readVarInt());
     }
     

@@ -57,7 +57,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     }
     
     @Nonnull
-    public static ItemScanKey fromNetwork(FriendlyByteBuf buf) {
+    static ItemScanKey fromNetworkInner(FriendlyByteBuf buf) {
         return new ItemScanKey(buf.readItem());
     }
 

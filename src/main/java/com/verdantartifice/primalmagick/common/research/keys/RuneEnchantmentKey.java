@@ -61,7 +61,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     }
 
     @Nonnull
-    public static RuneEnchantmentKey fromNetwork(FriendlyByteBuf buf) {
+    static RuneEnchantmentKey fromNetworkInner(FriendlyByteBuf buf) {
         ResourceLocation loc = buf.readResourceLocation();
         return new RuneEnchantmentKey(ForgeRegistries.ENCHANTMENTS.getValue(loc));
     }

@@ -59,7 +59,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     }
 
     @Nonnull
-    public static StackCraftedKey fromNetwork(FriendlyByteBuf buf) {
+    static StackCraftedKey fromNetworkInner(FriendlyByteBuf buf) {
         return new StackCraftedKey(buf.readItem());
     }
     

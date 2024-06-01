@@ -121,7 +121,7 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     }
     
     @Nonnull
-    public static VanillaItemUsedStatRequirement fromNetwork(FriendlyByteBuf buf) {
+    static VanillaItemUsedStatRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new VanillaItemUsedStatRequirement(ForgeRegistries.ITEMS.getValue(buf.readResourceLocation()), buf.readVarInt());
     }
 

@@ -121,7 +121,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     }
     
     @Nonnull
-    public static VanillaCustomStatRequirement fromNetwork(FriendlyByteBuf buf) {
+    static VanillaCustomStatRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt(), buf.readResourceLocation());
     }
 

@@ -91,7 +91,7 @@ public class QuorumRequirement extends AbstractRequirement<QuorumRequirement> {
     }
 
     @Nonnull
-    public static QuorumRequirement fromNetwork(FriendlyByteBuf buf) {
+    static QuorumRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new QuorumRequirement(buf.readVarInt(), buf.readList(AbstractRequirement::fromNetwork));
     }
     

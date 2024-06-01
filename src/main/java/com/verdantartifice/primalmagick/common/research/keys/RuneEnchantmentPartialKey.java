@@ -74,7 +74,7 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
     }
 
     @Nonnull
-    public static RuneEnchantmentPartialKey fromNetwork(FriendlyByteBuf buf) {
+    static RuneEnchantmentPartialKey fromNetworkInner(FriendlyByteBuf buf) {
         ResourceLocation loc = buf.readResourceLocation();
         RuneType runeType = buf.readEnum(RuneType.class);
         return new RuneEnchantmentPartialKey(ForgeRegistries.ENCHANTMENTS.getValue(loc), runeType);

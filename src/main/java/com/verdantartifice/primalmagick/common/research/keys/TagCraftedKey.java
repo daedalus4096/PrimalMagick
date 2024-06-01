@@ -59,7 +59,7 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
     }
 
     @Nonnull
-    public static TagCraftedKey fromNetwork(FriendlyByteBuf buf) {
+    static TagCraftedKey fromNetworkInner(FriendlyByteBuf buf) {
         return new TagCraftedKey(ItemTags.create(buf.readResourceLocation()));
     }
     

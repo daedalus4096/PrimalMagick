@@ -80,7 +80,7 @@ public class OrRequirement extends AbstractRequirement<OrRequirement> {
     }
 
     @Nonnull
-    public static OrRequirement fromNetwork(FriendlyByteBuf buf) {
+    static OrRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new OrRequirement(buf.readList(AbstractRequirement::fromNetwork));
     }
     

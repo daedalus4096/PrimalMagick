@@ -96,7 +96,7 @@ public class ObservationProjectMaterial extends AbstractProjectMaterial<Observat
     }
 
     @Nonnull
-    public static ObservationProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+    static ObservationProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         return new ObservationProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
     }
     

@@ -83,7 +83,7 @@ public class ResearchRequirement extends AbstractRequirement<ResearchRequirement
     }
 
     @Nonnull
-    public static ResearchRequirement fromNetwork(FriendlyByteBuf buf) {
+    static ResearchRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new ResearchRequirement(AbstractResearchKey.fromNetwork(buf));
     }
     

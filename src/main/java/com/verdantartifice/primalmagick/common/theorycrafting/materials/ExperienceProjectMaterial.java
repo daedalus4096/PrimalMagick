@@ -91,7 +91,7 @@ public class ExperienceProjectMaterial extends AbstractProjectMaterial<Experienc
     }
 
     @Nonnull
-    public static ExperienceProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+    static ExperienceProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         return new ExperienceProjectMaterial(buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
     }
     

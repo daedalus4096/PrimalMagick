@@ -59,6 +59,11 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     
     @Nonnull
     public static ResearchEntryKey fromNetwork(FriendlyByteBuf buf) {
+        return (ResearchEntryKey)AbstractResearchKey.fromNetwork(buf);
+    }
+    
+    @Nonnull
+    static ResearchEntryKey fromNetworkInner(FriendlyByteBuf buf) {
         return new ResearchEntryKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES));
     }
     

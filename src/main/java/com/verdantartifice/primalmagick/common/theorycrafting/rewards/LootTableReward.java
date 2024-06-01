@@ -79,7 +79,7 @@ public class LootTableReward extends AbstractReward<LootTableReward> {
     }
 
     @Nonnull
-    public static LootTableReward fromNetworkInner(FriendlyByteBuf buf) {
+    static LootTableReward fromNetworkInner(FriendlyByteBuf buf) {
         return new LootTableReward(buf.readResourceLocation(), buf.readVarInt(), buf.readUtf());
     }
 

@@ -61,9 +61,8 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     }
     
     @Nonnull
-    public static EntityScanKey fromNetwork(FriendlyByteBuf buf) {
-        ResourceLocation loc = buf.readResourceLocation();
-        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(loc));
+    static EntityScanKey fromNetworkInner(FriendlyByteBuf buf) {
+        return new EntityScanKey(ForgeRegistries.ENTITY_TYPES.getValue(buf.readResourceLocation()));
     }
     
     @Override

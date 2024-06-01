@@ -33,7 +33,7 @@ public class ConstantWeight extends AbstractWeightFunction<ConstantWeight> {
     }
     
     @Nonnull
-    public static ConstantWeight fromNetworkInner(FriendlyByteBuf buf) {
+    static ConstantWeight fromNetworkInner(FriendlyByteBuf buf) {
         return new ConstantWeight(buf.readDouble());
     }
 

@@ -69,7 +69,7 @@ public class ItemReward extends AbstractReward<ItemReward> {
     }
 
     @Nonnull
-    public static ItemReward fromNetworkInner(FriendlyByteBuf buf) {
+    static ItemReward fromNetworkInner(FriendlyByteBuf buf) {
         return new ItemReward(buf.readItem());
     }
 

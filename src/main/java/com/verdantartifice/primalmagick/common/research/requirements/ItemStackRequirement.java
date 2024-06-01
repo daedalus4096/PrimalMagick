@@ -67,7 +67,7 @@ public class ItemStackRequirement extends AbstractRequirement<ItemStackRequireme
     }
 
     @Nonnull
-    public static ItemStackRequirement fromNetwork(FriendlyByteBuf buf) {
+    static ItemStackRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new ItemStackRequirement(buf.readItem());
     }
     

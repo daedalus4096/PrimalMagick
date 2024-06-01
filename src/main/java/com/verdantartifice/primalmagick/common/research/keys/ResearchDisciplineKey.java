@@ -63,6 +63,11 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     
     @Nonnull
     public static ResearchDisciplineKey fromNetwork(FriendlyByteBuf buf) {
+        return (ResearchDisciplineKey)AbstractResearchKey.fromNetwork(buf);
+    }
+    
+    @Nonnull
+    static ResearchDisciplineKey fromNetworkInner(FriendlyByteBuf buf) {
         return new ResearchDisciplineKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_DISCIPLINES));
     }
 

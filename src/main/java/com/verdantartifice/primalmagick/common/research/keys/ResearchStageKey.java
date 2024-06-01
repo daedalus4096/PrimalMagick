@@ -88,7 +88,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     }
 
     @Nonnull
-    public static ResearchStageKey fromNetwork(FriendlyByteBuf buf) {
+    static ResearchStageKey fromNetworkInner(FriendlyByteBuf buf) {
         return new ResearchStageKey(buf.readResourceKey(RegistryKeysPM.RESEARCH_ENTRIES), buf.readVarInt());
     }
     

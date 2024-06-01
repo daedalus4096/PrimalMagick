@@ -132,7 +132,7 @@ public class ItemTagProjectMaterial extends AbstractProjectMaterial<ItemTagProje
     }
 
     @Nonnull
-    public static ItemTagProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
+    static ItemTagProjectMaterial fromNetworkInner(FriendlyByteBuf buf, double weight, double bonusReward, Optional<AbstractRequirement<?>> requirement) {
         return new ItemTagProjectMaterial(ItemTags.create(buf.readResourceLocation()), buf.readVarInt(), buf.readBoolean(), weight, bonusReward, requirement);
     }
     

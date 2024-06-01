@@ -80,7 +80,7 @@ public class AndRequirement extends AbstractRequirement<AndRequirement> {
     }
 
     @Nonnull
-    public static AndRequirement fromNetwork(FriendlyByteBuf buf) {
+    static AndRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new AndRequirement(buf.readList(AbstractRequirement::fromNetwork));
     }
     

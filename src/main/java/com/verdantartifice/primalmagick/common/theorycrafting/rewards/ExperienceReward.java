@@ -43,7 +43,7 @@ public class ExperienceReward extends AbstractReward<ExperienceReward> {
     }
 
     @Nonnull
-    public static ExperienceReward fromNetworkInner(FriendlyByteBuf buf) {
+    static ExperienceReward fromNetworkInner(FriendlyByteBuf buf) {
         return new ExperienceReward(buf.readVarInt());
     }
 

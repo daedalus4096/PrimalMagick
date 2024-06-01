@@ -82,7 +82,7 @@ public class ItemTagRequirement extends AbstractRequirement<ItemTagRequirement> 
     }
 
     @Nonnull
-    public static ItemTagRequirement fromNetwork(FriendlyByteBuf buf) {
+    static ItemTagRequirement fromNetworkInner(FriendlyByteBuf buf) {
         return new ItemTagRequirement(ItemTags.create(buf.readResourceLocation()), buf.readVarInt());
     }
     
