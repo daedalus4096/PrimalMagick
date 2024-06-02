@@ -77,7 +77,9 @@ public record Stat(ResourceLocation key, StatFormatter formatter, Optional<Resou
         }
         
         public Stat build() {
-            return new Stat(this.key, this.formatter, this.iconLocationOpt, this.hidden, this.internal, this.hasHint);
+            Stat retVal = new Stat(this.key, this.formatter, this.iconLocationOpt, this.hidden, this.internal, this.hasHint);
+            StatsManager.registerStat(retVal);
+            return retVal;
         }
     }
 }
