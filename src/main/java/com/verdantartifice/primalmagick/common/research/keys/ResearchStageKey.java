@@ -81,7 +81,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                retVal.setValue(knowledge.getResearchStage(this) + 1 >= this.getStage());
+                retVal.setValue(knowledge.getResearchStage(this) >= this.getStage());
             });
             return retVal.booleanValue();
         }
