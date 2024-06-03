@@ -32,7 +32,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.0"
+      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.1"
     },
     {
       "attunements": {
@@ -49,7 +49,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.1"
+      "textTranslationKey": "research.primalmagick.incense_brazier.text.stage.2"
     }
   ]
 }

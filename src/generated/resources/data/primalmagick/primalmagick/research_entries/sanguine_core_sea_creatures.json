@@ -32,7 +32,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.0"
+      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.1"
     },
     {
       "attunements": {
@@ -60,7 +60,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.1"
+      "textTranslationKey": "research.primalmagick.sanguine_core_sea_creatures.text.stage.2"
     }
   ]
 }

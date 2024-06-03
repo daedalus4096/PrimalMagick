@@ -64,7 +64,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.source_moon.text.stage.0"
+      "textTranslationKey": "research.primalmagick.source_moon.text.stage.1"
     },
     {
       "attunements": {
@@ -78,7 +78,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.source_moon.text.stage.1"
+      "textTranslationKey": "research.primalmagick.source_moon.text.stage.2"
     }
   ]
 }

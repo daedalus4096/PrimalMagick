@@ -18,7 +18,7 @@
         "primalmagick:blaze_rod_staff_core_item"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -69,7 +69,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.0"
+      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.1"
     },
     {
       "attunements": {
@@ -85,7 +85,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.1"
+      "textTranslationKey": "research.primalmagick.wand_core_blaze_rod.text.stage.2"
     }
   ]
 }

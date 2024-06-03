@@ -18,7 +18,7 @@
         "primalmagick:moonwood_staff_core_item"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -68,7 +68,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.0"
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.1"
     },
     {
       "attunements": {
@@ -84,7 +84,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.1"
+      "textTranslationKey": "research.primalmagick.wand_core_moonwood.text.stage.2"
     }
   ]
 }

@@ -18,7 +18,7 @@
         "primalmagick:bone_staff_core_item"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_bone.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -71,7 +71,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.0"
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.1"
     },
     {
       "attunements": {
@@ -87,7 +87,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.1"
+      "textTranslationKey": "research.primalmagick.wand_core_bone.text.stage.2"
     }
   ]
 }

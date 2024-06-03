@@ -41,7 +41,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.0"
+      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.1"
     },
     {
       "attunements": {
@@ -55,7 +55,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.1"
+      "textTranslationKey": "research.primalmagick.essence_cask_heavenly.text.stage.2"
     }
   ]
 }

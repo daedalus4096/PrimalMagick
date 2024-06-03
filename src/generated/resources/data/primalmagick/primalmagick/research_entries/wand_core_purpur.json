@@ -18,7 +18,7 @@
         "primalmagick:purpur_staff_core_item"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -71,7 +71,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.stage.0"
+      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.stage.1"
     },
     {
       "attunements": {
@@ -87,7 +87,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.stage.1"
+      "textTranslationKey": "research.primalmagick.wand_core_purpur.text.stage.2"
     }
   ]
 }

@@ -42,7 +42,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.0"
+      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.1"
     },
     {
       "attunements": {
@@ -56,7 +56,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.1"
+      "textTranslationKey": "research.primalmagick.spell_payload_conjure_stone.text.stage.2"
     }
   ]
 }

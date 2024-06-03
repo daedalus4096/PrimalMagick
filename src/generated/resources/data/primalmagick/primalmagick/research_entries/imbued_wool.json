@@ -42,7 +42,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.0"
+      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.1"
     },
     {
       "attunements": {
@@ -59,7 +59,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.1"
+      "textTranslationKey": "research.primalmagick.imbued_wool.text.stage.2"
     }
   ]
 }

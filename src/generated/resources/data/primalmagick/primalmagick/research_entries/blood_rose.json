@@ -56,7 +56,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.blood_rose.text.stage.0"
+      "textTranslationKey": "research.primalmagick.blood_rose.text.stage.1"
     },
     {
       "attunements": {
@@ -72,7 +72,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.blood_rose.text.stage.1"
+      "textTranslationKey": "research.primalmagick.blood_rose.text.stage.2"
     }
   ]
 }

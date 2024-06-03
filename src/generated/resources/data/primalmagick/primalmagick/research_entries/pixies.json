@@ -21,7 +21,7 @@
         "primalmagick:pixie_basic_blood_revive"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.pixies.text.addenda.1"
     },
     {
       "attunements": {
@@ -44,7 +44,7 @@
         "primalmagick:pixie_basic_infernal_revive"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.pixies.text.addenda.2"
     },
     {
       "attunements": {
@@ -67,7 +67,7 @@
         "primalmagick:pixie_basic_void_revive"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.addenda.2"
+      "textTranslationKey": "research.primalmagick.pixies.text.addenda.3"
     },
     {
       "attunements": {
@@ -90,7 +90,7 @@
         "primalmagick:pixie_basic_hallowed_revive"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.addenda.3"
+      "textTranslationKey": "research.primalmagick.pixies.text.addenda.4"
     }
   ],
   "disciplineKey": {
@@ -162,7 +162,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.stage.0"
+      "textTranslationKey": "research.primalmagick.pixies.text.stage.1"
     },
     {
       "attunements": {
@@ -191,7 +191,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.pixies.text.stage.1"
+      "textTranslationKey": "research.primalmagick.pixies.text.stage.2"
     }
   ]
 }

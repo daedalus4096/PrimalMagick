@@ -46,7 +46,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.0"
+      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.1"
     },
     {
       "attunements": {
@@ -60,7 +60,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.1"
+      "textTranslationKey": "research.primalmagick.spell_payload_flight.text.stage.2"
     }
   ]
 }

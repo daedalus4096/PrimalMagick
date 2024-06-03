@@ -20,7 +20,7 @@
         "primalmagick:ambrosia_greater_blood"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.1"
     },
     {
       "attunements": {
@@ -42,7 +42,7 @@
         "primalmagick:ambrosia_greater_infernal"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.2"
     },
     {
       "attunements": {
@@ -64,7 +64,7 @@
         "primalmagick:ambrosia_greater_void"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.2"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.3"
     },
     {
       "attunements": {
@@ -86,7 +86,7 @@
         "primalmagick:ambrosia_greater_hallowed"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.3"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.addenda.4"
     }
   ],
   "disciplineKey": {
@@ -145,7 +145,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.0"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.1"
     },
     {
       "attunements": {
@@ -169,7 +169,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.1"
+      "textTranslationKey": "research.primalmagick.greater_ambrosia.text.stage.2"
     }
   ]
 }

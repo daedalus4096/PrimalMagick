@@ -18,7 +18,7 @@
         "primalmagick:sunwood_staff_core_item"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -68,7 +68,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.stage.0"
+      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.stage.1"
     },
     {
       "attunements": {
@@ -84,7 +84,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.stage.1"
+      "textTranslationKey": "research.primalmagick.wand_core_sunwood.text.stage.2"
     }
   ]
 }

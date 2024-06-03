@@ -331,13 +331,13 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         }
         
         public ResearchStage.Builder stage() {
-            ResearchStage.Builder retVal = new ResearchStage.Builder(this.modId, this, this.key, this.stageBuilders.size());
+            ResearchStage.Builder retVal = new ResearchStage.Builder(this.modId, this, this.key, this.stageBuilders.size() + 1);
             this.stageBuilders.add(retVal);
             return retVal;
         }
         
         public ResearchAddendum.Builder addendum() {
-            ResearchAddendum.Builder retVal = new ResearchAddendum.Builder(this.modId, this, this.key, this.addendumBuilders.size());
+            ResearchAddendum.Builder retVal = new ResearchAddendum.Builder(this.modId, this, this.key, this.addendumBuilders.size() + 1);
             this.addendumBuilders.add(retVal);
             return retVal;
         }

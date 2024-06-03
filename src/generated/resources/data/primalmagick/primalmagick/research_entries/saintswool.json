@@ -38,7 +38,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.saintswool.text.stage.0"
+      "textTranslationKey": "research.primalmagick.saintswool.text.stage.1"
     },
     {
       "attunements": {
@@ -56,7 +56,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.saintswool.text.stage.1"
+      "textTranslationKey": "research.primalmagick.saintswool.text.stage.2"
     }
   ]
 }

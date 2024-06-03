@@ -20,7 +20,7 @@
         "primalmagick:essence_crystal_blood_from_shard"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.1"
     },
     {
       "attunements": {
@@ -42,7 +42,7 @@
         "primalmagick:essence_crystal_infernal_from_shard"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.2"
     },
     {
       "attunements": {
@@ -64,7 +64,7 @@
         "primalmagick:essence_crystal_void_from_shard"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.2"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.3"
     },
     {
       "attunements": {
@@ -86,7 +86,7 @@
         "primalmagick:essence_crystal_hallowed_from_shard"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.3"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.addenda.4"
     }
   ],
   "disciplineKey": {
@@ -124,7 +124,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.stage.0"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.stage.1"
     },
     {
       "attunements": {
@@ -148,7 +148,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.stage.1"
+      "textTranslationKey": "research.primalmagick.crystal_synthesis.text.stage.2"
     }
   ]
 }

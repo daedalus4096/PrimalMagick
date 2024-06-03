@@ -51,7 +51,7 @@
           "rootKey": "primalmagick:unlock_rune_enchantments"
         }
       ],
-      "textTranslationKey": "research.primalmagick.forbidden_sword.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.forbidden_sword.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -107,7 +107,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.forbidden_sword.text.stage.0"
+      "textTranslationKey": "research.primalmagick.forbidden_sword.text.stage.1"
     },
     {
       "attunements": {
@@ -121,7 +121,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.forbidden_sword.text.stage.1"
+      "textTranslationKey": "research.primalmagick.forbidden_sword.text.stage.2"
     }
   ]
 }

@@ -18,7 +18,7 @@
         "primalmagick:humming_artifact_blood"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.1"
     },
     {
       "attunements": {
@@ -38,7 +38,7 @@
         "primalmagick:humming_artifact_infernal"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.2"
     },
     {
       "attunements": {
@@ -58,7 +58,7 @@
         "primalmagick:humming_artifact_void"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.2"
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.3"
     },
     {
       "attunements": {
@@ -78,7 +78,7 @@
         "primalmagick:humming_artifact_hallowed"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.3"
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.addenda.4"
     }
   ],
   "disciplineKey": {
@@ -115,7 +115,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.humming_artifact.text.stage.0"
+      "textTranslationKey": "research.primalmagick.humming_artifact.text.stage.1"
     }
   ]
 }

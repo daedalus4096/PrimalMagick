@@ -35,7 +35,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.0"
+      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.1"
     },
     {
       "attunements": {
@@ -47,7 +47,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.1"
+      "textTranslationKey": "research.primalmagick.expert_alchemy.text.stage.2"
     }
   ]
 }

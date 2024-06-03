@@ -16,7 +16,7 @@
       },
       "recipes": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.infernal_furnace.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -57,7 +57,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.0"
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.1"
     },
     {
       "attunements": {
@@ -73,7 +73,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.1"
+      "textTranslationKey": "research.primalmagick.infernal_furnace.text.stage.2"
     }
   ]
 }

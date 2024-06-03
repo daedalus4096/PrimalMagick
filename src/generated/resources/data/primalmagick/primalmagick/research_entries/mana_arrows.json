@@ -18,7 +18,7 @@
         "primalmagick:mana_arrow_blood"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.1"
     },
     {
       "attunements": {
@@ -38,7 +38,7 @@
         "primalmagick:mana_arrow_infernal"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.2"
     },
     {
       "attunements": {
@@ -58,7 +58,7 @@
         "primalmagick:mana_arrow_void"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.2"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.3"
     },
     {
       "attunements": {
@@ -78,7 +78,7 @@
         "primalmagick:mana_arrow_hallowed"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.3"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.addenda.4"
     }
   ],
   "disciplineKey": {
@@ -128,7 +128,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.0"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.1"
     },
     {
       "attunements": {
@@ -146,7 +146,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.1"
+      "textTranslationKey": "research.primalmagick.mana_arrows.text.stage.2"
     }
   ]
 }

@@ -28,7 +28,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_mod_amplify.text.stage.0"
+      "textTranslationKey": "research.primalmagick.spell_mod_amplify.text.stage.1"
     },
     {
       "attunements": {
@@ -40,7 +40,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.spell_mod_amplify.text.stage.1"
+      "textTranslationKey": "research.primalmagick.spell_mod_amplify.text.stage.2"
     }
   ]
 }

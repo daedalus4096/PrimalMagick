@@ -32,7 +32,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.0"
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.1"
     },
     {
       "attunements": {
@@ -76,7 +76,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.1"
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.2"
     },
     {
       "attunements": {
@@ -97,7 +97,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.2"
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.3"
     },
     {
       "attunements": {
@@ -113,7 +113,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.3"
+      "textTranslationKey": "research.primalmagick.theorycrafting.text.stage.4"
     }
   ]
 }

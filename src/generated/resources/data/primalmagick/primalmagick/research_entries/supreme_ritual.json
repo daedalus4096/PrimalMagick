@@ -51,7 +51,7 @@
         }
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.0"
+      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.1"
     },
     {
       "attunements": {
@@ -63,7 +63,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.1"
+      "textTranslationKey": "research.primalmagick.supreme_ritual.text.stage.2"
     }
   ]
 }

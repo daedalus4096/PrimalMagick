@@ -57,7 +57,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.source_infernal.text.stage.0"
+      "textTranslationKey": "research.primalmagick.source_infernal.text.stage.1"
     },
     {
       "attunements": {
@@ -71,7 +71,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.source_infernal.text.stage.1"
+      "textTranslationKey": "research.primalmagick.source_infernal.text.stage.2"
     }
   ]
 }

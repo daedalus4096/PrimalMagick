@@ -18,7 +18,7 @@
         "primalmagick:ritual_candle_white_from_beeswax"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.ritual_candles.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -53,7 +53,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.0"
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.1"
     },
     {
       "attunements": {
@@ -86,7 +86,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.1"
+      "textTranslationKey": "research.primalmagick.ritual_candles.text.stage.2"
     }
   ]
 }

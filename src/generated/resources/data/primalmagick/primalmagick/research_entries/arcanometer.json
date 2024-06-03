@@ -42,7 +42,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.0"
+      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.1"
     },
     {
       "attunements": {
@@ -61,7 +61,7 @@
           "rootKey": "primalmagick:sotu_research_arcanometer"
         }
       ],
-      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.1"
+      "textTranslationKey": "research.primalmagick.arcanometer.text.stage.2"
     }
   ]
 }

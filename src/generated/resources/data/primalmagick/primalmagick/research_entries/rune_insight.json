@@ -35,7 +35,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.0"
+      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.1"
     },
     {
       "attunements": {
@@ -49,7 +49,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.1"
+      "textTranslationKey": "research.primalmagick.rune_insight.text.stage.2"
     }
   ]
 }

@@ -22,7 +22,7 @@
         "primalmagick:strong_regeneration_philter"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.1"
     },
     {
       "attunements": {
@@ -43,7 +43,7 @@
         "primalmagick:long_fire_resistance_philter"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.addenda.2"
     }
   ],
   "disciplineKey": {
@@ -84,7 +84,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.0"
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.1"
     },
     {
       "attunements": {
@@ -118,7 +118,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.1"
+      "textTranslationKey": "research.primalmagick.concocting_philters.text.stage.2"
     }
   ]
 }

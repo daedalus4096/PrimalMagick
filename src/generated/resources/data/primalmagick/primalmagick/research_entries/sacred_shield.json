@@ -51,7 +51,7 @@
           "rootKey": "primalmagick:unlock_rune_enchantments"
         }
       ],
-      "textTranslationKey": "research.primalmagick.sacred_shield.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -104,7 +104,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.0"
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.1"
     },
     {
       "attunements": {
@@ -118,7 +118,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.1"
+      "textTranslationKey": "research.primalmagick.sacred_shield.text.stage.2"
     }
   ]
 }

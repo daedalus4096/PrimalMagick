@@ -31,7 +31,7 @@
         "primalmagick:flawed_budding_quartz_block"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -82,7 +82,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.0"
+      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.1"
     },
     {
       "attunements": {
@@ -102,7 +102,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.1"
+      "textTranslationKey": "research.primalmagick.synthetic_gem_buds.text.stage.2"
     }
   ]
 }

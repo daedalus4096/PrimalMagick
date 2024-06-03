@@ -20,7 +20,7 @@
         "primalmagick:spirit_lantern"
       ],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sunlamp.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.sunlamp.text.addenda.1"
     }
   ],
   "disciplineKey": {
@@ -70,7 +70,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.0"
+      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.1"
     },
     {
       "attunements": {
@@ -86,7 +86,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.1"
+      "textTranslationKey": "research.primalmagick.sunlamp.text.stage.2"
     }
   ]
 }

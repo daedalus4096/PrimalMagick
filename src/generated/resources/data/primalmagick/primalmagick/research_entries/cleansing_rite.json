@@ -59,7 +59,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.0"
+      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.1"
     },
     {
       "attunements": {
@@ -78,7 +78,7 @@
           "rootKey": "primalmagick:sotu_research_cleansing_rite"
         }
       ],
-      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.1"
+      "textTranslationKey": "research.primalmagick.cleansing_rite.text.stage.2"
     }
   ]
 }

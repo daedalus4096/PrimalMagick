@@ -90,7 +90,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.0"
+      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.1"
     },
     {
       "attunements": {
@@ -104,7 +104,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.1"
+      "textTranslationKey": "research.primalmagick.runic_trim.text.stage.2"
     }
   ]
 }

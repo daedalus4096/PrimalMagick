@@ -83,7 +83,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.hexium.text.stage.0"
+      "textTranslationKey": "research.primalmagick.hexium.text.stage.1"
     },
     {
       "attunements": {
@@ -123,7 +123,7 @@
           "rootKey": "primalmagick:sotu_research_hexium"
         }
       ],
-      "textTranslationKey": "research.primalmagick.hexium.text.stage.1"
+      "textTranslationKey": "research.primalmagick.hexium.text.stage.2"
     }
   ]
 }

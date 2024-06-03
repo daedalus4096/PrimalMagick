@@ -16,7 +16,7 @@
       },
       "recipes": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.enderward.text.addenda.0"
+      "textTranslationKey": "research.primalmagick.enderward.text.addenda.1"
     },
     {
       "attunements": {
@@ -34,7 +34,7 @@
       },
       "recipes": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.enderward.text.addenda.1"
+      "textTranslationKey": "research.primalmagick.enderward.text.addenda.2"
     }
   ],
   "disciplineKey": {
@@ -75,7 +75,7 @@
       "recipes": [],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.enderward.text.stage.0"
+      "textTranslationKey": "research.primalmagick.enderward.text.stage.1"
     },
     {
       "attunements": {
@@ -91,7 +91,7 @@
       ],
       "revelations": [],
       "siblings": [],
-      "textTranslationKey": "research.primalmagick.enderward.text.stage.1"
+      "textTranslationKey": "research.primalmagick.enderward.text.stage.2"
     }
   ]
 }
