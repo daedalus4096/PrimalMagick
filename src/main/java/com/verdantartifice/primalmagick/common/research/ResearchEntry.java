@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
@@ -28,9 +27,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Definition of a research entry, the primary component of the research system.  A research entry
@@ -42,13 +39,13 @@ import net.minecraftforge.registries.ForgeRegistries;
  * 
  * @author Daedalus4096
  */
-public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<Icon> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
+public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey> disciplineKeyOpt, Optional<IconDefinition> iconOpt, List<ResearchEntryKey> parents, boolean hidden,
         boolean hasHint, boolean internal, boolean finaleExempt, List<ResearchDisciplineKey> finales, List<ResearchStage> stages, List<ResearchAddendum> addenda) {
     public static Codec<ResearchEntry> codec() {
         return RecordCodecBuilder.create(instance -> instance.group(
                 ResearchEntryKey.CODEC.fieldOf("key").forGetter(ResearchEntry::key),
                 ResearchDisciplineKey.CODEC.optionalFieldOf("disciplineKey").forGetter(ResearchEntry::disciplineKeyOpt),
-                Icon.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
+                IconDefinition.CODEC.optionalFieldOf("icon").forGetter(ResearchEntry::iconOpt),
                 ResearchEntryKey.CODEC.listOf().fieldOf("parents").forGetter(ResearchEntry::parents),
                 Codec.BOOL.optionalFieldOf("hidden", false).forGetter(ResearchEntry::hidden),
                 Codec.BOOL.optionalFieldOf("hasHint", false).forGetter(ResearchEntry::hasHint),
@@ -64,7 +61,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public static ResearchEntry fromNetwork(FriendlyByteBuf buf) {
         ResearchEntryKey key = ResearchEntryKey.fromNetwork(buf);
         Optional<ResearchDisciplineKey> disciplineKeyOpt = buf.readOptional(ResearchDisciplineKey::fromNetwork);
-        Optional<Icon> iconOpt = buf.readOptional(Icon::fromNetwork);
+        Optional<IconDefinition> iconOpt = buf.readOptional(IconDefinition::fromNetwork);
         List<ResearchEntryKey> parents = buf.readList(ResearchEntryKey::fromNetwork);
         boolean hidden = buf.readBoolean();
         boolean hasHint = buf.readBoolean();
@@ -79,7 +76,7 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     public static void toNetwork(FriendlyByteBuf buf, ResearchEntry entry) {
         entry.key.toNetwork(buf);
         buf.writeOptional(entry.disciplineKeyOpt, (b, d) -> d.toNetwork(b));
-        buf.writeOptional(entry.iconOpt, Icon::toNetwork);
+        buf.writeOptional(entry.iconOpt, IconDefinition::toNetwork);
         buf.writeCollection(entry.parents, (b, p) -> p.toNetwork(b));
         buf.writeBoolean(entry.hidden);
         buf.writeBoolean(entry.hasHint);
@@ -216,41 +213,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return retVal;
     }
     
-    public static record Icon(boolean isItem, ResourceLocation location) {
-        public static final Codec<Icon> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-                Codec.BOOL.fieldOf("isItem").forGetter(Icon::isItem),
-                ResourceLocation.CODEC.fieldOf("location").forGetter(Icon::location)
-            ).apply(instance, Icon::new));
-        
-        public static Icon of(ItemLike item) {
-            return new Icon(true, ForgeRegistries.ITEMS.getKey(item.asItem()));
-        }
-        
-        public static Icon of(ResourceLocation loc) {
-            return new Icon(false, Preconditions.checkNotNull(loc));
-        }
-        
-        @Nullable
-        public Item asItem() {
-            return this.isItem ? ForgeRegistries.ITEMS.getValue(this.location) : null;
-        }
-        
-        @Nullable
-        public static Icon fromNetwork(FriendlyByteBuf buf) {
-            return new Icon(buf.readBoolean(), buf.readResourceLocation());
-        }
-        
-        public static void toNetwork(FriendlyByteBuf buf, @Nullable ResearchEntry.Icon icon) {
-            buf.writeBoolean(icon.isItem);
-            buf.writeResourceLocation(icon.location);
-        }
-    }
-    
     public static class Builder {
         protected final String modId;
         protected final ResearchEntryKey key;
         protected Optional<ResearchDisciplineKey> disciplineKeyOpt = Optional.empty();
-        protected Optional<Icon> iconOpt = Optional.empty();
+        protected Optional<IconDefinition> iconOpt = Optional.empty();
         protected final List<ResearchEntryKey> parents = new ArrayList<>();
         protected boolean hidden = false;
         protected boolean hasHint = false;
@@ -283,12 +250,12 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         }
         
         public Builder icon(ItemLike item) {
-            this.iconOpt = Optional.of(Icon.of(item));
+            this.iconOpt = Optional.of(IconDefinition.of(item));
             return this;
         }
         
         public Builder icon(ResourceLocation loc) {
-            this.iconOpt = Optional.of(Icon.of(loc));
+            this.iconOpt = Optional.of(IconDefinition.of(loc));
             return this;
         }
         
