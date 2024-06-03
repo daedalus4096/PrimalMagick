@@ -42,7 +42,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     @Override
     public String toString() {
-        return this.rootKey.location().getPath() + "@" + this.stage;
+        return this.rootKey.location().toString() + "@" + this.stage;
     }
 
     @Override

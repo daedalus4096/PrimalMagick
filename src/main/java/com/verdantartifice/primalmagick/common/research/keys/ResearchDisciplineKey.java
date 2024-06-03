@@ -30,7 +30,7 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
 
     @Override
     public String toString() {
-        return this.rootKey.toString();
+        return this.rootKey.location().toString();
     }
 
     @Override

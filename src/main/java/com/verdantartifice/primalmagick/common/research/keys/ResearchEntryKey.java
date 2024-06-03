@@ -27,7 +27,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
 
     @Override
     public String toString() {
-        return this.rootKey.toString();
+        return this.rootKey.location().toString();
     }
 
     @Override
