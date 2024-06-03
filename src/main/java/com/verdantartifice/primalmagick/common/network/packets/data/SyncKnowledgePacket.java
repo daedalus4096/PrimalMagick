@@ -57,7 +57,7 @@ public class SyncKnowledgePacket implements IMessageToClient {
                 // Show a research completion toast for any research entries so flagged
                 if (key instanceof ResearchEntryKey entryKey && knowledge.hasResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP)) {
                     ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
-                    if (entry != null && FMLEnvironment.dist == Dist.CLIENT) {
+                    if (entry != null && !entry.internal() && FMLEnvironment.dist == Dist.CLIENT) {
                         ToastManager.showResearchToast(entry, knowledge.isResearchComplete(registryAccess, entry.key()));
                     }
                     knowledge.removeResearchFlag(key, IPlayerKnowledge.ResearchFlag.POPUP);
