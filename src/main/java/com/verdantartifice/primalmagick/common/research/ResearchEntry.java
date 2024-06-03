@@ -170,6 +170,11 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
     @Nonnull
     public Set<ResourceLocation> getKnownRecipeIds(Player player) {
         Set<ResourceLocation> retVal = new HashSet<>();
+        if (this.stages().isEmpty()) {
+            // If this research entry has no stages, then it can't have any recipes, so just abort
+            return retVal;
+        }
+        
         IPlayerKnowledge knowledge = this.getKnowledge(player);
         RegistryAccess registryAccess = player.level().registryAccess();
         
