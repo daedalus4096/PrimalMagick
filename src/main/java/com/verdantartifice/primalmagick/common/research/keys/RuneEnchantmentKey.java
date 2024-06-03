@@ -45,7 +45,7 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
 
     @Override
     public int hashCode() {
-        return Objects.hash(enchant);
+        return Objects.hash(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant));
     }
 
     @Override

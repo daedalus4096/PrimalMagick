@@ -55,22 +55,19 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + Objects.hash(runeType);
-        return result;
+        return Objects.hash(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant), runeType);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (!super.equals(obj))
+        if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
         RuneEnchantmentPartialKey other = (RuneEnchantmentPartialKey) obj;
-        return runeType == other.runeType;
+        return Objects.equals(ForgeRegistries.ENCHANTMENTS.getKey(this.enchant), ForgeRegistries.ENCHANTMENTS.getKey(other.enchant)) && runeType == other.runeType;
     }
 
     @Nonnull

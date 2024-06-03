@@ -45,7 +45,7 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(entityType);
+        return Objects.hash(EntityType.getKey(this.entityType));
     }
 
     @Override

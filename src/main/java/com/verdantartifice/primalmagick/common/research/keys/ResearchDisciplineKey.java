@@ -1,5 +1,7 @@
 package com.verdantartifice.primalmagick.common.research.keys;
 
+import java.util.Objects;
+
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -31,6 +33,23 @@ public class ResearchDisciplineKey extends AbstractResearchKey<ResearchDisciplin
     @Override
     public String toString() {
         return this.rootKey.location().toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.rootKey.registry(), this.rootKey.location());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ResearchDisciplineKey other = (ResearchDisciplineKey) obj;
+        return Objects.equals(rootKey, other.rootKey);
     }
 
     @Override

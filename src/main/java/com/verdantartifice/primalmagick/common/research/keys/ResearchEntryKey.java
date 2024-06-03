@@ -42,7 +42,7 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(rootKey);
+        return Objects.hash(this.rootKey.registry(), this.rootKey.location());
     }
 
     @Override

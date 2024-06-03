@@ -10,6 +10,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
     public static final Codec<ItemScanKey> CODEC = ItemStack.SINGLE_ITEM_CODEC.fieldOf("stack").xmap(ItemScanKey::new, key -> key.stack).codec();
@@ -41,7 +42,7 @@ public class ItemScanKey extends AbstractResearchKey<ItemScanKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(stack);
+        return Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()));
     }
 
     @Override

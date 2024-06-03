@@ -43,7 +43,7 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(tagKey);
+        return Objects.hash(this.tagKey);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
         if (getClass() != obj.getClass())
             return false;
         TagCraftedKey other = (TagCraftedKey) obj;
-        return Objects.equals(tagKey, other.tagKey);
+        return Objects.equals(this.tagKey, other.tagKey);
     }
 
     @Nonnull

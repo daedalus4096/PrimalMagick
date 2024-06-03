@@ -26,6 +26,12 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     @Override
     public abstract String toString();
     
+    @Override
+    public abstract int hashCode();
+    
+    @Override
+    public abstract boolean equals(Object obj);
+    
     /**
      * Returns the category of requirement to be used when this key is part of a {@link com.verdantartifice.primalmagick.common.research.requirements.ResearchRequirement}.
      * 

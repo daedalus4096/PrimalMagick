@@ -11,6 +11,7 @@ import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     public static final Codec<StackCraftedKey> CODEC = ItemStack.CODEC.fieldOf("stack").xmap(StackCraftedKey::new, key -> key.stack).codec();
@@ -43,7 +44,7 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(stack);
+        return this.stack.hasTag() ? Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()), this.stack.getTag()) : Objects.hash(ForgeRegistries.ITEMS.getKey(this.stack.getItem()));
     }
 
     @Override
