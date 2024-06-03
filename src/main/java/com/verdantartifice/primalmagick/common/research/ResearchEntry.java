@@ -94,13 +94,17 @@ public record ResearchEntry(ResearchEntryKey key, Optional<ResearchDisciplineKey
         return new Builder(key);
     }
     
-    public String getNameTranslationKey() {
+    public String getBaseTranslationKey() {
         return String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath());
+    }
+    
+    public String getNameTranslationKey() {
+        return String.join(".", this.getBaseTranslationKey(), "title");
     }
     
     public Optional<String> getHintTranslationKey() {
         if (this.hasHint) {
-            return Optional.of(String.join(".", "research", this.key.getRootKey().location().getNamespace(), this.key.getRootKey().location().getPath(), "hint"));
+            return Optional.of(String.join(".", this.getBaseTranslationKey(), "hint"));
         } else {
             return Optional.empty();
         }
