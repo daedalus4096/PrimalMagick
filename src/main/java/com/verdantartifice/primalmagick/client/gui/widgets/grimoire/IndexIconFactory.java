@@ -18,7 +18,7 @@ public class IndexIconFactory {
             Item item = data.asItem();
             return ItemIndexIcon.of(item == null ? ItemsPM.GRIMOIRE.get() : item, large);
         } else {
-            return GenericIndexIcon.of(data.location(), large);
+            return GenericIndexIcon.of(data.getLocation(), large);
         }
     }
 }

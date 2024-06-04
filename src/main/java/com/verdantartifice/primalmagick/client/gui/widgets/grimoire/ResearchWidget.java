@@ -49,7 +49,7 @@ public class ResearchWidget extends AbstractWidget {
         }
 
         if (this.researchEntry != null && this.researchEntry.iconOpt().isPresent()) {
-            this.iconLoc = this.researchEntry.iconOpt().get().location();
+            this.iconLoc = this.researchEntry.iconOpt().get().getLocation();
         } else {
             this.iconLoc = UNKNOWN_TEXTURE;
         }
