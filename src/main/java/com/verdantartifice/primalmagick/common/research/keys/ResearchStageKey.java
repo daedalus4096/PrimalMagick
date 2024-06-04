@@ -31,10 +31,12 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
 
     protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;
+    protected final ResearchEntryKey strippedKey;
     
     public ResearchStageKey(ResourceKey<ResearchEntry> rootKey, int stage) {
         this.rootKey = rootKey;
         this.stage = stage;
+        this.strippedKey = new ResearchEntryKey(rootKey);
     }
     
     public ResourceKey<ResearchEntry> getRootKey() {
@@ -44,7 +46,7 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     public int getStage() {
         return this.stage;
     }
-
+    
     @Override
     public String toString() {
         return this.rootKey.location().toString() + "@" + this.stage;
@@ -91,7 +93,8 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
         } else {
             MutableBoolean retVal = new MutableBoolean(false);
             PrimalMagickCapabilities.getKnowledge(player).ifPresent(knowledge -> {
-                retVal.setValue(knowledge.getResearchStage(this) >= this.getStage());
+                int currentStage = knowledge.getResearchStage(this.strippedKey) + 1;
+                retVal.setValue(currentStage >= this.getStage());
             });
             return retVal.booleanValue();
         }
