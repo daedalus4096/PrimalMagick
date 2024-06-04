@@ -101,7 +101,7 @@ public class StatProgressWidget extends AbstractWidget {
     protected Component getStatDescription() {
         Minecraft mc = Minecraft.getInstance();
         Component baseDescription = Component.translatable(this.stat.getTranslationKey());
-        String currentValue = this.stat.formatter().format(StatsManager.getValue(mc.player, this.stat));
+        String currentValue = this.stat.formatter().format(Math.min(StatsManager.getValue(mc.player, this.stat), this.maxValue));
         String maxValue = this.stat.formatter().format(this.maxValue);
         return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
     }

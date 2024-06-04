@@ -78,7 +78,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     protected MutableComponent getDescription() {
         Minecraft mc = Minecraft.getInstance();
         Component baseDescription = this.requirement.getStatDescription();
-        String currentValue = this.requirement.getStat().format(mc.player.getStats().getValue(this.requirement.getStat()));
+        String currentValue = this.requirement.getStat().format(Math.min(mc.player.getStats().getValue(this.requirement.getStat()), this.requirement.getThreshold()));
         String maxValue = this.requirement.getStat().format(this.requirement.getThreshold());
         return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
     }
