@@ -29,7 +29,7 @@ public class BloodyFleshItem extends Item {
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
         if (!worldIn.isClientSide && entityLiving instanceof Player player) {
-            if (ResearchManager.isResearchKnown(player, ResearchEntries.FIRST_STEPS) && !ResearchManager.isResearchKnown(player, ResearchEntries.DISCOVER_BLOOD)) {
+            if (ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS) && !ResearchManager.isResearchStarted(player, ResearchEntries.DISCOVER_BLOOD)) {
                 // Only unlock the Blood source if the player has started mod progression and hasn't already unlocked it
                 ResearchManager.completeResearch(player, ResearchEntries.DISCOVER_BLOOD);
                 player.displayClientMessage(Component.translatable("event.primalmagick.discover_source.blood").withStyle(ChatFormatting.GREEN), false);

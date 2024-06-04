@@ -167,11 +167,11 @@ public class ResearchManager {
         }
     }
     
-    public static boolean isResearchKnown(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
-        return isResearchKnown(player, new ResearchEntryKey(rawKey));
+    public static boolean isResearchStarted(@Nullable Player player, @Nonnull ResourceKey<ResearchEntry> rawKey) {
+        return isResearchStarted(player, new ResearchEntryKey(rawKey));
     }
     
-    public static boolean isResearchKnown(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
+    public static boolean isResearchStarted(@Nullable Player player, @Nullable AbstractResearchKey<?> key) {
         if (player == null || key == null) {
             return false;
         }

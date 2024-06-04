@@ -38,7 +38,7 @@ public class ForbiddenSourceGainItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide) {
-            if (ResearchManager.isResearchKnown(player, ResearchEntries.FIRST_STEPS)) {
+            if (ResearchManager.isResearchStarted(player, ResearchEntries.FIRST_STEPS)) {
                 if (!this.source.isDiscovered(player)) {
                     // FIXME Refactor this to either be blood-specific or fully generic, stop splitting the difference
                     this.source.getDiscoverKey().ifPresent(key -> ResearchManager.completeResearch(player, key));
