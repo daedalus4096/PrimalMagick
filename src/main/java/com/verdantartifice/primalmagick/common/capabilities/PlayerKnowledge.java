@@ -228,9 +228,13 @@ public class PlayerKnowledge implements IPlayerKnowledge {
                 ResearchEntry entry = ResearchEntries.getEntry(registryAccess, entryKey);
                 if (entry == null || entry.stages().isEmpty() || this.getResearchStage(research) >= entry.stages().size()) {
                     return ResearchStatus.COMPLETE;
+                } else {
+                    return ResearchStatus.IN_PROGRESS;
                 }
+            } else {
+                // If the key isn't for a research entry (it's a StackCraftedKey, for example), then it's complete if it's in the known set
+                return ResearchStatus.COMPLETE;
             }
-            return ResearchStatus.IN_PROGRESS;
         }
     }
 
