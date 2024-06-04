@@ -359,7 +359,7 @@ public class ResearchManager {
         }
         
         ResearchEntry entry = key instanceof ResearchEntryKey entryKey ? ResearchEntries.getEntry(registryAccess, entryKey) : null;
-        boolean entryComplete = true;   // Default to true for non-entry research (e.g. stat triggers)
+        boolean entryComplete = true;   // Default to true for non-entry research (e.g. scan triggers)
         if (entry != null && !entry.stages().isEmpty()) {
             // Get the current stage number of the research entry
             ResearchStage currentStage = null;
