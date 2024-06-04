@@ -7,8 +7,10 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import com.mojang.serialization.Codec;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.registries.RegistryCodecs;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -40,6 +42,8 @@ public abstract class AbstractResearchKey<T extends AbstractResearchKey<T>> {
     public abstract RequirementCategory getRequirementCategory();
 
     protected abstract ResearchKeyType<T> getType();
+    
+    public abstract IconDefinition getIcon(RegistryAccess registryAccess);
     
     public boolean isKnownBy(@Nullable Player player) {
         if (player == null) {

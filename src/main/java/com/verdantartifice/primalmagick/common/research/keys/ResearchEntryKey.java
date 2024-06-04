@@ -5,16 +5,21 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 
 public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     public static final Codec<ResearchEntryKey> CODEC = ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").xmap(ResearchEntryKey::new, key -> key.rootKey).codec();
-    
+    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+
     protected final ResourceKey<ResearchEntry> rootKey;
     
     public ResearchEntryKey(ResourceKey<ResearchEntry> rootKey) {
@@ -38,6 +43,11 @@ public class ResearchEntryKey extends AbstractResearchKey<ResearchEntryKey> {
     @Override
     protected ResearchKeyType<ResearchEntryKey> getType() {
         return ResearchKeyTypesPM.RESEARCH_ENTRY.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(this.rootKey).flatMap(ref -> ref.get().iconOpt()).orElse(IconDefinition.of(ICON_UNKNOWN));
     }
 
     @Override

@@ -8,13 +8,17 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.common.capabilities.PrimalMagickCapabilities;
 import com.verdantartifice.primalmagick.common.registries.RegistryKeysPM;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.player.Player;
 
@@ -23,7 +27,8 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
             ResourceKey.codec(RegistryKeysPM.RESEARCH_ENTRIES).fieldOf("rootKey").forGetter(ResearchStageKey::getRootKey), 
             ExtraCodecs.NON_NEGATIVE_INT.fieldOf("stage").forGetter(ResearchStageKey::getStage)
         ).apply(instance, ResearchStageKey::new));
-    
+    private static final ResourceLocation ICON_UNKNOWN = PrimalMagick.resource("textures/research/research_unknown.png");
+
     protected final ResourceKey<ResearchEntry> rootKey;
     protected final int stage;
     
@@ -53,6 +58,11 @@ public class ResearchStageKey extends AbstractResearchKey<ResearchStageKey> {
     @Override
     protected ResearchKeyType<ResearchStageKey> getType() {
         return ResearchKeyTypesPM.RESEARCH_STAGE.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return registryAccess.registryOrThrow(RegistryKeysPM.RESEARCH_ENTRIES).getHolder(this.rootKey).flatMap(ref -> ref.get().iconOpt()).orElse(IconDefinition.of(ICON_UNKNOWN));
     }
 
     @Override

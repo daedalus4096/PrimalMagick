@@ -5,10 +5,12 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.util.ItemUtils;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -40,6 +42,11 @@ public class StackCraftedKey extends AbstractResearchKey<StackCraftedKey> {
     @Override
     protected ResearchKeyType<StackCraftedKey> getType() {
         return ResearchKeyTypesPM.STACK_CRAFTED.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return IconDefinition.of(this.stack.getItem());
     }
 
     @Override

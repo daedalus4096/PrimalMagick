@@ -6,8 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -21,7 +24,8 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     }).codec();
     
     private static final String PREFIX = "&";
-    
+    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
+
     protected final Enchantment enchant;
     
     public RuneEnchantmentKey(Enchantment enchant) {
@@ -41,6 +45,11 @@ public class RuneEnchantmentKey extends AbstractResearchKey<RuneEnchantmentKey> 
     @Override
     protected ResearchKeyType<RuneEnchantmentKey> getType() {
         return ResearchKeyTypesPM.RUNE_ENCHANTMENT.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return IconDefinition.of(ICON_TUBE);
     }
 
     @Override

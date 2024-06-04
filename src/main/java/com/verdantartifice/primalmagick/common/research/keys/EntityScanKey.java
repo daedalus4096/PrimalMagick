@@ -6,8 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +24,8 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     }).codec();
     
     private static final String PREFIX = "*";
-    
+    private static final ResourceLocation ICON_MAP = PrimalMagick.resource("textures/research/research_map.png");
+
     protected final EntityType<?> entityType;
     
     public EntityScanKey(EntityType<?> entityType) {
@@ -41,6 +45,11 @@ public class EntityScanKey extends AbstractResearchKey<EntityScanKey> {
     @Override
     protected ResearchKeyType<EntityScanKey> getType() {
         return ResearchKeyTypesPM.ENTITY_SCAN.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return IconDefinition.of(ICON_MAP);
     }
 
     @Override

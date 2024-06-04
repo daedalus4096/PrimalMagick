@@ -6,9 +6,11 @@ import javax.annotation.Nonnull;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchManager;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ItemTags;
@@ -39,6 +41,11 @@ public class TagCraftedKey extends AbstractResearchKey<TagCraftedKey> {
     @Override
     protected ResearchKeyType<TagCraftedKey> getType() {
         return ResearchKeyTypesPM.TAG_CRAFTED.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return IconDefinition.of(this.tagKey);
     }
 
     @Override

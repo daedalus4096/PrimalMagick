@@ -7,9 +7,12 @@ import javax.annotation.Nonnull;
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.RequirementCategory;
 import com.verdantartifice.primalmagick.common.runes.RuneType;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -26,7 +29,8 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
         ).apply(instance, RuneEnchantmentPartialKey::new));
     
     private static final String PREFIX = "&";
-    
+    private static final ResourceLocation ICON_TUBE = PrimalMagick.resource("textures/research/research_tube.png");
+
     protected final Enchantment enchant;
     protected final RuneType runeType;
     
@@ -51,6 +55,11 @@ public class RuneEnchantmentPartialKey extends AbstractResearchKey<RuneEnchantme
     @Override
     protected ResearchKeyType<RuneEnchantmentPartialKey> getType() {
         return ResearchKeyTypesPM.RUNE_ENCHANTMENT_PARTIAL.get();
+    }
+
+    @Override
+    public IconDefinition getIcon(RegistryAccess registryAccess) {
+        return IconDefinition.of(ICON_TUBE);
     }
 
     @Override
