@@ -3,7 +3,6 @@
   "finales": [],
   "hasHint": true,
   "icon": {
-    "isItem": false,
     "location": "primalmagick:textures/research/research_map.png"
   },
   "internal": true,

@@ -10,7 +10,6 @@
   ],
   "hidden": true,
   "icon": {
-    "isItem": false,
     "location": "primalmagick:textures/research/discipline_sorcery.png"
   },
   "key": {

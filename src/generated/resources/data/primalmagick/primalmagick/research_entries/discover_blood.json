@@ -2,7 +2,6 @@
   "addenda": [],
   "finales": [],
   "icon": {
-    "isItem": false,
     "location": "primalmagick:textures/research/research_tube.png"
   },
   "internal": true,

@@ -7,7 +7,6 @@
   "finales": [],
   "hidden": true,
   "icon": {
-    "isItem": false,
     "location": "primalmagick:textures/sources/moon.png"
   },
   "key": {

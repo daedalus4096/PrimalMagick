@@ -21,8 +21,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class IconDefinition {
     public static final Codec<IconDefinition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            Codec.BOOL.fieldOf("isItem").forGetter(IconDefinition::isItem),
-            Codec.BOOL.fieldOf("isTag").forGetter(IconDefinition::isTag),
+            Codec.BOOL.optionalFieldOf("isItem", false).forGetter(IconDefinition::isItem),
+            Codec.BOOL.optionalFieldOf("isTag", false).forGetter(IconDefinition::isTag),
             ResourceLocation.CODEC.fieldOf("location").forGetter(IconDefinition::getLocation),
             Codec.STRING.optionalFieldOf("tooltipOverride").forGetter(def -> def.tooltipOverrideOpt)
         ).apply(instance, IconDefinition::new));
