@@ -283,7 +283,7 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Earth Source research, check if they're far enough down
-            if (ResearchManager.isResearchStarted(player, SOURCE_EARTH_START) && !ResearchManager.isResearchStarted(player, SOURCE_EARTH_END)) {
+            if (SOURCE_EARTH_START.isKnownBy(player) && !SOURCE_EARTH_END.isKnownBy(player)) {
                 if (player.position().y < -16.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_EARTH)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_EARTH);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_earth").withStyle(ChatFormatting.GREEN), false);
@@ -291,7 +291,7 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sea Source research, check if they're in the ocean
-            if (ResearchManager.isResearchStarted(player, SOURCE_SEA_START) && !ResearchManager.isResearchStarted(player, SOURCE_SEA_END)) {
+            if (SOURCE_SEA_START.isKnownBy(player) && !SOURCE_SEA_END.isKnownBy(player)) {
                 if (biomeHolder.is(BiomeTags.IS_OCEAN) && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SEA)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SEA);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sea").withStyle(ChatFormatting.GREEN), false);
@@ -299,7 +299,7 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sky Source research, check if they're high up enough
-            if (ResearchManager.isResearchStarted(player, SOURCE_SKY_START) && !ResearchManager.isResearchStarted(player, SOURCE_SKY_END)) {
+            if (SOURCE_SKY_START.isKnownBy(player) && !SOURCE_SKY_END.isKnownBy(player)) {
                 if (player.position().y > 128.0D && inOverworld && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SKY)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SKY);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sky").withStyle(ChatFormatting.GREEN), false);
@@ -307,7 +307,7 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Sun Source research, check if they're in the desert during the daytime
-            if (ResearchManager.isResearchStarted(player, SOURCE_SUN_START) && !ResearchManager.isResearchStarted(player, SOURCE_SUN_END)) {
+            if (SOURCE_SUN_START.isKnownBy(player) && !SOURCE_SUN_END.isKnownBy(player)) {
                 if ((biomeHolder.is(Biomes.DESERT) || biomeHolder.is(BiomeTags.IS_BADLANDS)) && TimePhase.getSunPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_SUN)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_SUN);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_sun").withStyle(ChatFormatting.GREEN), false);
@@ -315,7 +315,7 @@ public class PlayerEvents {
             }
             
             // If the player is working on the Moon Source research, check if they're in the forest during the night-time
-            if (ResearchManager.isResearchStarted(player, SOURCE_MOON_START) && !ResearchManager.isResearchStarted(player, SOURCE_MOON_END)) {
+            if (SOURCE_MOON_START.isKnownBy(player) && !SOURCE_MOON_END.isKnownBy(player)) {
                 if (biomeHolder.is(BiomeTags.IS_FOREST) && TimePhase.getMoonPhase(level) == TimePhase.FULL && !ResearchManager.isResearchStarted(player, ResearchEntries.ENV_MOON)) {
                     ResearchManager.completeResearch(player, ResearchEntries.ENV_MOON);
                     player.displayClientMessage(Component.translatable("event.primalmagick.env_moon").withStyle(ChatFormatting.GREEN), false);
