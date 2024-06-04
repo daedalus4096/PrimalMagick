@@ -1,8 +1,14 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.ResearchEntries;
 import com.verdantartifice.primalmagick.common.research.ResearchEntry;
 import com.verdantartifice.primalmagick.common.research.keys.AbstractResearchKey;
@@ -19,6 +25,10 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Display widget for showing a specific required research entry on the requirements page.
@@ -32,7 +42,6 @@ public class ResearchWidget extends AbstractWidget {
     protected final AbstractResearchKey<?> key;
     protected final ResearchEntry researchEntry;
     protected final boolean isComplete;
-    protected final ResourceLocation iconLoc;
     protected MutableComponent lastTooltip = Component.empty();
     protected MutableComponent tooltip = Component.empty();
     
@@ -47,23 +56,27 @@ public class ResearchWidget extends AbstractWidget {
         } else {
             this.researchEntry = null;
         }
-
-        if (this.researchEntry != null && this.researchEntry.iconOpt().isPresent()) {
-            this.iconLoc = this.researchEntry.iconOpt().get().getLocation();
-        } else {
-            this.iconLoc = UNKNOWN_TEXTURE;
-        }
     }
     
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+        Minecraft mc = Minecraft.getInstance();
+        IconDefinition iconDef = this.key.getIcon(mc.level.registryAccess());
+        long time = System.currentTimeMillis();
+        
         // Render the icon
         guiGraphics.pose().pushPose();
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-        guiGraphics.blit(this.iconLoc, 0, 0, 0, 0, 255, 255);
+        if (iconDef.isItem()) {
+            GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
+        } else if (iconDef.isTag()) {
+            GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey(), time), 0, 0, null, true);
+        } else {
+            guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+            guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
+        }
         guiGraphics.pose().popPose();
         
         if (this.isComplete) {
@@ -78,6 +91,7 @@ public class ResearchWidget extends AbstractWidget {
         this.lastTooltip = this.tooltip;
         this.tooltip = Component.empty();
         if (this.researchEntry != null) {
+            // If there's a research entry behind this key, use its info for the tooltip
             this.researchEntry.getHintTranslationKey().ifPresentOrElse(hintTranslationKey -> {
                 if (Screen.hasShiftDown()) {
                     this.tooltip.append(Component.translatable(hintTranslationKey));
@@ -89,10 +103,33 @@ public class ResearchWidget extends AbstractWidget {
             }, () -> {
                 this.tooltip.append(Component.translatable(this.researchEntry.getNameTranslationKey()));
             });
+        } else {
+            // If there's no research entry behind this key, use the tooltip data baked into the icon definition, if any
+            getIconTooltip(iconDef, time).ifPresent(this.tooltip::append);
         }
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
+    }
+    
+    protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time) {
+        List<Item> tagContents = new ArrayList<>();
+        ForgeRegistries.ITEMS.tags().getTag(key).forEach(tagContents::add);
+        if (!tagContents.isEmpty()) {
+            // Cycle through each matching stack of the tag and display them one at a time
+            int index = (int)((time / 1000L) % tagContents.size());
+            return new ItemStack(tagContents.get(index));
+        }
+        return ItemStack.EMPTY;
+    }
+    
+    protected static Optional<Component> getIconTooltip(IconDefinition iconDef, long time) {
+        List<Component> lines = iconDef.getTooltipLines();
+        if (!lines.isEmpty()) {
+            int index = (int)((time / 1000L) % lines.size());
+            return Optional.ofNullable(lines.get(index));
+        }
+        return Optional.empty();
     }
     
     @Override
