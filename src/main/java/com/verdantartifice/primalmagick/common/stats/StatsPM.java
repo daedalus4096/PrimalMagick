@@ -22,9 +22,9 @@ public class StatsPM {
     public static final Stat ITEMS_ANALYZED = Stat.builder("items_analyzed").icon(ICON_TUBE).build();
     public static final Stat ENTITIES_ANALYZED = Stat.builder("entities_analyzed").icon(ICON_TUBE).build();
     public static final Stat MANA_SIPHONED = Stat.builder("mana_siphoned").icon(ICON_MAP).build();
-    public static final Stat OBSERVATIONS_MADE = Stat.builder("observations_made").icon(ICON_TUBE).build();
+    public static final Stat OBSERVATIONS_MADE = Stat.builder("observations_made").icon(ICON_TUBE).hasHint().build();
     public static final Stat RESEARCH_PROJECTS_COMPLETED = Stat.builder("research_projects_completed").icon(ICON_TUBE).build();
-    public static final Stat THEORIES_FORMED = Stat.builder("theories_formed").icon(ICON_TUBE).build();
+    public static final Stat THEORIES_FORMED = Stat.builder("theories_formed").icon(ICON_TUBE).hasHint().build();
     public static final Stat CRAFTED_MANAWEAVING = Stat.builder("crafted_manaweaving").icon(ICON_BAG).build();
     public static final Stat CRAFTED_ALCHEMY = Stat.builder("crafted_alchemy").icon(ICON_BAG).build();
     public static final Stat CRAFTED_SORCERY = Stat.builder("crafted_sorcery").icon(ICON_BAG).build();
@@ -38,7 +38,7 @@ public class StatsPM {
     public static final Stat RITUALS_COMPLETED = Stat.builder("rituals_completed").icon(ICON_TUBE).build();
     public static final Stat RITUAL_MISHAPS = Stat.builder("ritual_mishaps").icon(ICON_TUBE).build();
     public static final Stat CONCOCTIONS_USED = Stat.builder("concoctions_used").icon(ICON_BAG).build();
-    public static final Stat DISTANCE_TELEPORTED_CM = Stat.builder("distance_teleported_cm").formatter(StatFormatter.DISTANCE).icon(ICON_MAP).build();
+    public static final Stat DISTANCE_TELEPORTED_CM = Stat.builder("distance_teleported_cm").formatter(StatFormatter.DISTANCE).icon(ICON_MAP).hasHint().build();
     public static final Stat MANA_SPENT_TOTAL = Stat.builder("mana_spent_total").icon(ICON_TUBE).hasHint().build();
     public static final Stat MANA_SPENT_EARTH = Stat.builder("mana_spent_earth").icon(ICON_TUBE).hasHint().build();
     public static final Stat MANA_SPENT_SEA = Stat.builder("mana_spent_sea").icon(ICON_TUBE).hasHint().build();
@@ -56,7 +56,7 @@ public class StatsPM {
     public static final Stat SHRINE_FOUND_MOON = Stat.builder("shrine_found_moon").icon(ICON_MAP).build();
     public static final Stat ANCIENT_BOOKS_READ = Stat.builder("ancient_books_read").icon(ICON_BAG).hidden().build();   // FIXME Make non-hidden for 1.21 release
     public static final Stat VOCABULARY_STUDIED = Stat.builder("vocabulary_studied").icon(ICON_BAG).hidden().build();   // FIXME Make non-hidden for 1.21 release
-    public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.builder("blocks_broken_barehanded").icon(ICON_MAP).build();
-    public static final Stat SHEARS_USED = Stat.builder("shears_used").icon(ICON_BAG).build();
+    public static final Stat BLOCKS_BROKEN_BAREHANDED = Stat.builder("blocks_broken_barehanded").icon(ICON_MAP).hasHint().build();
+    public static final Stat SHEARS_USED = Stat.builder("shears_used").icon(ICON_BAG).hasHint().build();
     public static final Stat TREANTS_NAMED = Stat.builder("treants_named").icon(ICON_MAP).build();
 }

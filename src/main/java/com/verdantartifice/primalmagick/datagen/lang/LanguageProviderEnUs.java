@@ -1874,8 +1874,8 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.ITEMS_ANALYZED).name("Item types analyzed").build();
         this.stat(StatsPM.ENTITIES_ANALYZED).name("Creature types analyzed").build();
         this.stat(StatsPM.MANA_SIPHONED).name("Mana siphoned from fonts").build();
-        this.stat(StatsPM.OBSERVATIONS_MADE).name("Observations made").build();
-        this.stat(StatsPM.THEORIES_FORMED).name("Theories formed").build();
+        this.stat(StatsPM.OBSERVATIONS_MADE).name("Observations made").hint("Observations are made by destroying items at an Analysis Table; other methods may be revealed in time").build();
+        this.stat(StatsPM.THEORIES_FORMED).name("Theories formed").hint("Theories are formed by completing research projects at a Research Table").build();
         this.stat(StatsPM.CRAFTED_MANAWEAVING).name("Manaweaving items crafted").build();
         this.stat(StatsPM.CRAFTED_ALCHEMY).name("Alchemy items crafted").build();
         this.stat(StatsPM.CRAFTED_SORCERY).name("Sorcery items crafted").build();
@@ -1890,7 +1890,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.RITUALS_COMPLETED).name("Rituals conducted").build();
         this.stat(StatsPM.RITUAL_MISHAPS).name("Ritual mishaps endured").build();
         this.stat(StatsPM.CONCOCTIONS_USED).name("Concoctions used").build();
-        this.stat(StatsPM.DISTANCE_TELEPORTED_CM).name("Distance teleported").build();
+        this.stat(StatsPM.DISTANCE_TELEPORTED_CM).name("Distance teleported").hint("Ender pearls, Chorus fruit, or other means of Ender teleportation all count").build();
         this.stat(StatsPM.MANA_SPENT_TOTAL).name("Total mana spent").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
         this.stat(StatsPM.MANA_SPENT_EARTH).name("Earth mana spent").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
         this.stat(StatsPM.MANA_SPENT_SEA).name("Sea mana spent").hint("Mana is spent by crafting items that require it, such as at an Arcane Workbench, or by casting spells from a wand").build();
@@ -1909,7 +1909,7 @@ public class LanguageProviderEnUs extends AbstractLanguageProviderPM {
         this.stat(StatsPM.ANCIENT_BOOKS_READ).name("Unique ancient books read").build();
         this.stat(StatsPM.VOCABULARY_STUDIED).name("Ancient vocabulary studied").build();
         this.stat(StatsPM.BLOCKS_BROKEN_BAREHANDED).name("Hard blocks broken bare-handed").hint("The blocks must be at least as hard as wood").build();
-        this.stat(StatsPM.SHEARS_USED).name("Times shears used").build();
+        this.stat(StatsPM.SHEARS_USED).name("Times shears used").hint("Right click shearable blocks and entities for credit; breaking blocks with shears in hand does not count").build();
         this.stat(StatsPM.TREANTS_NAMED).name("Treefolk driven to self-immolation").build();
         
         // Generate research project localizations
