@@ -89,6 +89,7 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringDecomposer;
@@ -181,6 +182,7 @@ public class GrimoireScreen extends Screen {
         this.scaledTop = (int)(this.height - BG_HEIGHT * SCALE) / 2;
         Minecraft mc = this.getMinecraft();
         this.knowledge = PrimalMagickCapabilities.getKnowledge(mc.player).orElseThrow(() -> new IllegalStateException("No knowledge provider found for player"));
+        this.minecraft.getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
         this.generateIndexMap();
         this.setCurrentPage(this.knowledge.getLastResearchTopic().getPage());
         this.initPages();

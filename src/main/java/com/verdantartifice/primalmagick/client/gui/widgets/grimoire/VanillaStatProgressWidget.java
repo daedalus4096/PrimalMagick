@@ -51,7 +51,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         
         // Draw progress bar foreground
         Minecraft mc = Minecraft.getInstance();
-        int currentValue = mc.player.getStats().getValue(this.requirement.getStat());
+        int currentValue = this.requirement.getCurrentValue(mc.player);
         int px = (int)(16.0D * ((double)currentValue / (double)this.requirement.getThreshold()));
         pGuiGraphics.pose().pushPose();
         pGuiGraphics.pose().translate(this.getX(), this.getY() + 17, 1.0F);
@@ -69,7 +69,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     protected MutableComponent getDescription() {
         Minecraft mc = Minecraft.getInstance();
         Component baseDescription = this.requirement.getStatDescription();
-        String currentValue = this.requirement.getStat().format(Math.min(mc.player.getStats().getValue(this.requirement.getStat()), this.requirement.getThreshold()));
+        String currentValue = this.requirement.getStat().format(Math.min(this.requirement.getCurrentValue(mc.player), this.requirement.getThreshold()));
         String maxValue = this.requirement.getStat().format(this.requirement.getThreshold());
         return Component.translatable("tooltip.primalmagick.stat_progress", baseDescription, currentValue, maxValue);
     }

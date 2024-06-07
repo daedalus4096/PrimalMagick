@@ -9,6 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +35,7 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     protected final ResourceLocation statValueLocation;
     protected final int threshold;
     protected final IconDefinition iconDefinition;
+    protected Stat<ResourceLocation> statCache = null;
     
     public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, IconDefinition iconDefinition) {
         this.statValueLocation = loc;
@@ -43,7 +45,14 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     
     @Override
     public Stat<?> getStat() {
-        return Stats.CUSTOM.get(this.statValueLocation);
+        if (this.statCache == null) {
+            // This is stupid.  This should be as simple as a call to Stats.CUSTOM.get(this.statValueLocation), but apparently
+            // on the client side that results in a crash because it thinks the stat isn't registered?  Anyway, this is how the
+            // vanilla statistics screen reads all the statistics on the client side, and it works.  Revisit someday and fix.
+            ObjectArrayList<Stat<ResourceLocation>> statsList = new ObjectArrayList<>(Stats.CUSTOM.iterator());
+            this.statCache = statsList.stream().filter(s -> s.getValue().equals(this.statValueLocation)).findFirst().orElse(null);
+        }
+        return this.statCache;
     }
 
     @Override
