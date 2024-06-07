@@ -27,7 +27,10 @@
         "requirement_type": "primalmagick:and",
         "subRequirements": [
           {
-            "iconLocation": "minecraft:elytra",
+            "iconDefinition": {
+              "isItem": true,
+              "location": "minecraft:elytra"
+            },
             "requirement_type": "primalmagick:vanilla_custom_stat",
             "statValue": "minecraft:aviate_one_cm",
             "threshold": 100000
