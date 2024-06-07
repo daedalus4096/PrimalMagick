@@ -1,8 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
+import com.verdantartifice.primalmagick.client.util.GuiUtils;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.research.requirements.IVanillaStatRequirement;
 
 import net.minecraft.client.Minecraft;
@@ -10,8 +10,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.renderer.texture.TextureAtlas;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +19,7 @@ public class VanillaStatProgressWidget extends AbstractWidget {
     
     protected final IVanillaStatRequirement requirement;
     protected final boolean isComplete;
-    protected final ResourceLocation iconLoc;
+    protected final IconDefinition iconDef;
     protected MutableComponent lastTooltip = Component.empty();
     protected MutableComponent tooltip = Component.empty();
 
@@ -29,20 +27,13 @@ public class VanillaStatProgressWidget extends AbstractWidget {
         super(x, y, 16, 18, Component.empty());
         this.requirement = requirement;
         this.isComplete = isComplete;
-        this.iconLoc = requirement.getIconLocation();
+        this.iconDef = requirement.getIconDefinition();
     }
 
     @Override
     protected void renderWidget(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render the icon
-        @SuppressWarnings("deprecation")
-        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(this.iconLoc);
-        pGuiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        pGuiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        pGuiGraphics.blit(0, 0, 0, 16, 16, sprite);
-        pGuiGraphics.pose().popPose();
+        GuiUtils.renderIconFromDefinition(pGuiGraphics, this.iconDef, this.getX(), this.getY());
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate

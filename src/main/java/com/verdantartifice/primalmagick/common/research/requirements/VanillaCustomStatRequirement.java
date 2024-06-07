@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -27,17 +28,17 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     public static final Codec<VanillaCustomStatRequirement> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ResourceLocation.CODEC.fieldOf("statValue").forGetter(VanillaCustomStatRequirement::getStatValueLoc),
             Codec.INT.fieldOf("threshold").forGetter(VanillaCustomStatRequirement::getThreshold),
-            ResourceLocation.CODEC.fieldOf("iconLocation").forGetter(VanillaCustomStatRequirement::getIconLocation)
+            IconDefinition.CODEC.fieldOf("iconDefinition").forGetter(VanillaCustomStatRequirement::getIconDefinition)
         ).apply(instance, VanillaCustomStatRequirement::new));
     
     protected final ResourceLocation statValueLocation;
     protected final int threshold;
-    protected final ResourceLocation iconLocation;
+    protected final IconDefinition iconDefinition;
     
-    public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, ResourceLocation iconLocation) {
+    public VanillaCustomStatRequirement(ResourceLocation loc, int threshold, IconDefinition iconDefinition) {
         this.statValueLocation = loc;
         this.threshold = threshold;
-        this.iconLocation = iconLocation;
+        this.iconDefinition = iconDefinition;
     }
     
     @Override
@@ -67,8 +68,8 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
-        return this.iconLocation;
+    public IconDefinition getIconDefinition() {
+        return this.iconDefinition;
     }
 
     public int getCurrentValue(Player player) {
@@ -118,13 +119,13 @@ public class VanillaCustomStatRequirement extends AbstractRequirement<VanillaCus
     
     @Nonnull
     static VanillaCustomStatRequirement fromNetworkInner(FriendlyByteBuf buf) {
-        return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt(), buf.readResourceLocation());
+        return new VanillaCustomStatRequirement(buf.readResourceLocation(), buf.readVarInt(), IconDefinition.fromNetwork(buf));
     }
 
     @Override
     protected void toNetworkInner(FriendlyByteBuf buf) {
         buf.writeResourceLocation(this.getStatValueLoc());
         buf.writeVarInt(this.threshold);
-        buf.writeResourceLocation(this.iconLocation);
+        IconDefinition.toNetwork(buf, this.iconDefinition);
     }
 }

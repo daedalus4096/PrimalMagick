@@ -1,6 +1,7 @@
 package com.verdantartifice.primalmagick.client.util;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 import com.verdantartifice.primalmagick.common.sources.Source;
 import com.verdantartifice.primalmagick.common.sources.SourceList;
 
@@ -34,12 +36,15 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Utility methods for dealing with GUI rendering.
@@ -263,5 +268,36 @@ public class GuiUtils {
                 shiftX += 16.0D * scale;
             }
         }
+    }
+    
+    public static void renderIconFromDefinition(GuiGraphics guiGraphics, IconDefinition iconDef, int x, int y) {
+        guiGraphics.pose().pushPose();
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+        guiGraphics.pose().translate(x, y, 0.0F);
+        if (iconDef.isItem()) {
+            GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
+        } else if (iconDef.isTag()) {
+            GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey()), 0, 0, null, true);
+        } else {
+            guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
+            guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
+        }
+        guiGraphics.pose().popPose();
+    }
+    
+    protected static ItemStack getTagDisplayStack(TagKey<Item> key) {
+        return getTagDisplayStack(key, System.currentTimeMillis(), 1000L);
+    }
+    
+    protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time, long millisPerItem) {
+        List<Item> tagContents = new ArrayList<>();
+        ForgeRegistries.ITEMS.tags().getTag(key).forEach(tagContents::add);
+        if (!tagContents.isEmpty()) {
+            // Cycle through each matching stack of the tag and display them one at a time
+            int index = (int)((time / millisPerItem) % tagContents.size());
+            return new ItemStack(tagContents.get(index));
+        }
+        return ItemStack.EMPTY;
     }
 }

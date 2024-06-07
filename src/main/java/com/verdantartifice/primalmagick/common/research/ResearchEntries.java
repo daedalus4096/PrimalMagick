@@ -24,7 +24,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Datapack registry for the mod's research entries, the backbone of its progression system.
@@ -1048,7 +1047,7 @@ public class ResearchEntries {
                 .stage().attunement(Sources.SKY, 3).end()
                 .build());
         register(context, SPELL_PAYLOAD_FLIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SKY.getImage()).parent(SUPREME_SORCERY).parent(SPELL_PAYLOAD_LIGHTNING)
-                .stage().requiredVanillaCustomStat(Stats.AVIATE_ONE_CM, 100000, ForgeRegistries.ITEMS.getKey(Items.ELYTRA)).requiredTheories(3).end()
+                .stage().requiredVanillaCustomStat(Stats.AVIATE_ONE_CM, 100000, IconDefinition.of(Items.ELYTRA)).requiredTheories(3).end()
                 .stage().attunement(Sources.SKY, 3).end()
                 .build());
         register(context, SPELL_PAYLOAD_CONJURE_LIGHT, key -> ResearchEntry.builder(key).discipline(discipline).icon(Sources.SUN.getImage()).parent(EXPERT_SORCERY).parent(SPELL_PAYLOAD_SOLAR)

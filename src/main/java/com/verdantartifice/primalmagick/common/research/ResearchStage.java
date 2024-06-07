@@ -204,8 +204,8 @@ public record ResearchStage(ResearchEntryKey parentKey, String textTranslationKe
             return this.requirement(new StatRequirement(stat, value));
         }
         
-        public Builder requiredVanillaCustomStat(ResourceLocation statLoc, int value, ResourceLocation iconLoc) {
-            return this.requirement(new VanillaCustomStatRequirement(statLoc, value, iconLoc));
+        public Builder requiredVanillaCustomStat(ResourceLocation statLoc, int value, IconDefinition iconDef) {
+            return this.requirement(new VanillaCustomStatRequirement(statLoc, value, iconDef));
         }
         
         public Builder requiredVanillaItemUsedStat(ItemLike item, int value) {

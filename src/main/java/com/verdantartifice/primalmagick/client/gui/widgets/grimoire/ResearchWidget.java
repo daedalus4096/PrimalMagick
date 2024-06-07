@@ -1,11 +1,8 @@
 package com.verdantartifice.primalmagick.client.gui.widgets.grimoire;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.verdantartifice.primalmagick.PrimalMagick;
 import com.verdantartifice.primalmagick.client.util.GuiUtils;
 import com.verdantartifice.primalmagick.common.research.IconDefinition;
@@ -25,10 +22,6 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Display widget for showing a specific required research entry on the requirements page.
@@ -65,19 +58,7 @@ public class ResearchWidget extends AbstractWidget {
         long time = System.currentTimeMillis();
         
         // Render the icon
-        guiGraphics.pose().pushPose();
-        RenderSystem.enableBlend();
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        guiGraphics.pose().translate(this.getX(), this.getY(), 0.0F);
-        if (iconDef.isItem()) {
-            GuiUtils.renderItemStack(guiGraphics, new ItemStack(iconDef.asItem()), 0, 0, null, true);
-        } else if (iconDef.isTag()) {
-            GuiUtils.renderItemStack(guiGraphics, getTagDisplayStack(iconDef.asTagKey(), time), 0, 0, null, true);
-        } else {
-            guiGraphics.pose().scale(0.0625F, 0.0625F, 0.0625F);
-            guiGraphics.blit(iconDef.getLocation(), 0, 0, 0, 0, 255, 255);
-        }
-        guiGraphics.pose().popPose();
+        GuiUtils.renderIconFromDefinition(guiGraphics, iconDef, this.getX(), this.getY());
         
         if (this.isComplete) {
             // Render completion checkmark if appropriate
@@ -110,17 +91,6 @@ public class ResearchWidget extends AbstractWidget {
         if (!this.lastTooltip.equals(this.tooltip)) {
             this.setTooltip(Tooltip.create(this.tooltip));
         }
-    }
-    
-    protected static ItemStack getTagDisplayStack(TagKey<Item> key, long time) {
-        List<Item> tagContents = new ArrayList<>();
-        ForgeRegistries.ITEMS.tags().getTag(key).forEach(tagContents::add);
-        if (!tagContents.isEmpty()) {
-            // Cycle through each matching stack of the tag and display them one at a time
-            int index = (int)((time / 1000L) % tagContents.size());
-            return new ItemStack(tagContents.get(index));
-        }
-        return ItemStack.EMPTY;
     }
     
     protected static Optional<Component> getIconTooltip(IconDefinition iconDef, long time) {

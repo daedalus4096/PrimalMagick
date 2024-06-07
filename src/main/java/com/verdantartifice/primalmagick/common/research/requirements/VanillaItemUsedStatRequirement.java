@@ -8,6 +8,7 @@ import com.google.common.base.Preconditions;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.verdantartifice.primalmagick.client.util.ClientUtils;
+import com.verdantartifice.primalmagick.common.research.IconDefinition;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -71,8 +72,8 @@ public class VanillaItemUsedStatRequirement extends AbstractRequirement<VanillaI
     }
 
     @Override
-    public ResourceLocation getIconLocation() {
-        return this.getStatValueLoc();
+    public IconDefinition getIconDefinition() {
+        return IconDefinition.of(this.stat.getValue());
     }
 
     public int getCurrentValue(Player player) {
