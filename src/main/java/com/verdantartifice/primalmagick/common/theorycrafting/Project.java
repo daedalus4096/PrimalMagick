@@ -72,7 +72,7 @@ public record Project(ResourceKey<ProjectTemplate> templateKey, List<MaterialIns
     
     public boolean isSatisfied(Player player, Set<Block> surroundings) {
         // Determine satisfaction from selected materials
-        return !this.activeMaterials.stream().anyMatch(m -> m.isSelected() && m.getMaterialDefinition().isSatisfied(player, surroundings));
+        return !this.activeMaterials.stream().anyMatch(m -> m.isSelected() && !m.getMaterialDefinition().isSatisfied(player, surroundings));
     }
     
     public boolean consumeSelectedMaterials(Player player) {
