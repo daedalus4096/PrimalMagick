@@ -2,10 +2,8 @@ package com.verdantartifice.primalmagick.common.research;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -16,6 +14,9 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.verdantartifice.primalmagick.common.affinities.AffinityManager;
 import com.verdantartifice.primalmagick.common.attunements.AttunementManager;
@@ -57,6 +58,8 @@ import net.minecraftforge.registries.ForgeRegistries;
  * @author Daedalus4096
  */
 public class ResearchManager {
+    private static final Logger LOGGER = LogManager.getLogger();
+    
     // Hash codes of items that must be crafted to complete one or more research stages
     private static final Set<Integer> CRAFTING_REFERENCES = new HashSet<>();
     
@@ -65,9 +68,6 @@ public class ResearchManager {
     
     // Registry of all defined scan triggers
     private static final List<IScanTrigger> SCAN_TRIGGERS = new ArrayList<>();
-    
-    // Reverse map of recipe IDs to the research entries that contain the stage or addendum that grants them
-    private static final Map<ResourceLocation, ResearchEntry> RECIPE_MAP = new HashMap<>();
     
     private static final ResearchEntryKey FIRST_STEPS = new ResearchEntryKey(ResearchEntries.FIRST_STEPS);
     
@@ -84,16 +84,10 @@ public class ResearchManager {
     }
     
     @Nullable
-    public static ResearchEntry getEntryForRecipe(ResourceLocation recipeId) {
-        return RECIPE_MAP.get(recipeId);
-    }
-    
-    static void addRecipeMapping(ResourceLocation recipeId, ResearchEntry entry) {
-        RECIPE_MAP.put(recipeId, entry);
-    }
-    
-    static void clearRecipeMap() {
-        RECIPE_MAP.clear();
+    public static Optional<ResearchEntry> getEntryForRecipe(RegistryAccess registryAccess, ResourceLocation recipeId) {
+        return ResearchEntries.stream(registryAccess)
+                .filter(entry -> entry.getAllRecipeIds().contains(recipeId))
+                .findFirst();
     }
     
     public static boolean hasStartedProgression(Player player) {
@@ -102,7 +96,7 @@ public class ResearchManager {
     
     public static boolean isRecipeVisible(ResourceLocation recipeId, Player player) {
         IPlayerKnowledge know = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(recipeId);
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(player.level().registryAccess(), recipeId).orElse(null);
         if (entry == null) {
             // If the recipe has no controlling research, then assume it's visible
             return true;

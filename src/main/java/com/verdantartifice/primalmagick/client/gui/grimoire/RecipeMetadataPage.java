@@ -59,7 +59,7 @@ public class RecipeMetadataPage extends AbstractPage {
         RenderSystem.enableBlend();
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipeHolder.id());
+        boolean isEntryMissing = ResearchManager.getEntryForRecipe(this.registryAccess, this.recipeHolder.id()).isEmpty();
         Component noneComponent = Component.translatable("tooltip.primalmagick.none");
 
         // Render the metadata's discipline header
@@ -67,7 +67,7 @@ public class RecipeMetadataPage extends AbstractPage {
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research discipline
-        if (entry == null) {
+        if (isEntryMissing) {
             guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
         }
         y += 2 * mc.font.lineHeight;
@@ -77,7 +77,7 @@ public class RecipeMetadataPage extends AbstractPage {
         y += mc.font.lineHeight;
         
         // Render a label if the recipe has no associated research entry
-        if (entry == null) {
+        if (isEntryMissing) {
             guiGraphics.drawString(mc.font, noneComponent, x - 3 + (side * 138), y - 4, Color.BLACK.getRGB(), false);
         }
     }
@@ -91,10 +91,10 @@ public class RecipeMetadataPage extends AbstractPage {
     @Override
     public void initWidgets(GrimoireScreen screen, int side, int x, int y) {
         Minecraft mc = screen.getMinecraft();
-        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.recipeHolder.id());
         if (!this.isFirstPage()) {
             y += 24;
         }
+        ResearchEntry entry = ResearchManager.getEntryForRecipe(this.registryAccess, this.recipeHolder.id()).orElse(null);
         if (entry != null) {
             y += mc.font.lineHeight + 3;
             final int discY = y;
