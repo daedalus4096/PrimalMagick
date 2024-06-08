@@ -93,8 +93,8 @@ public class ResearchManager {
         IPlayerKnowledge know = PrimalMagickCapabilities.getKnowledge(player).orElseThrow(() -> new IllegalStateException("No knowledge provider for player"));
         ResearchEntry entry = ResearchManager.getEntryForRecipe(player.level().registryAccess(), recipeId).orElse(null);
         if (entry == null) {
-            // If the recipe has no controlling research, then assume it's visible
-            return true;
+            // If the recipe has no controlling research, then assume it's not visible
+            return false;
         }
         
         // First check to see if the current stage for the entry has the recipe listed
