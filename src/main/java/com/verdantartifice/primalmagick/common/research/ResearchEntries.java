@@ -1769,8 +1769,8 @@ public class ResearchEntries {
         register(context, DISCOVER_VOID, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE)
                 .stage().sibling(DISCOVER_FORBIDDEN).sibling(SOTU_DISCOVER_VOID).end()
                 .build());
-        register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().build());
-        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon(ICON_TUBE).build());
+        register(context, DISCOVER_FORBIDDEN, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
+        register(context, DISCOVER_HALLOWED, key -> ResearchEntry.builder(key).internal().icon(ICON_UNKNOWN).build());
         register(context, ENV_EARTH, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
         register(context, ENV_SEA, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
         register(context, ENV_SKY, key -> ResearchEntry.builder(key).internal().icon(ICON_MAP).build());
