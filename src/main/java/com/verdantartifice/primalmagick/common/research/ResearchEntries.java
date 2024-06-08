@@ -384,7 +384,7 @@ public class ResearchEntries {
 /*
         register(context, LINGUISTICS, key -> ResearchEntry.builder(key).discipline(discipline).icon(Items.WRITABLE_BOOK).parent(FIRST_STEPS)
                 .stage().requiredObservations(1).requiredStat(StatsPM.ANCIENT_BOOKS_READ, 1).end()
-                .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).end()
+                .stage().recipe(ItemsPM.SCRIBE_TABLE.get()).recipe(ItemsPM.LORE_TABLET_DIRTY.get()).end()
                 .build());
 */
         register(context, UNLOCK_MANAWEAVING, key -> ResearchEntry.builder(key).discipline(discipline).icon(ICON_MANAWEAVING).parent(FIRST_STEPS)
@@ -1488,7 +1488,7 @@ public class ResearchEntries {
         register(context, EMBERFLOWER, key -> ResearchEntry.builder(key).discipline(discipline).icon(ItemsPM.EMBERFLOWER.get()).parent(DISCOVER_INFERNAL).parent(EXPERT_RITUAL)
                 .parent(HYDROMELON).parent(BLOODLETTER).parent(RUNE_INFERNAL)
                 .stage().requiredItem(Items.SUNFLOWER).requiredTheories(1).end()
-                .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).end()
+                .stage().attunement(Sources.INFERNAL, 2).recipe(ItemsPM.EMBERFLOWER.get()).recipe("blaze_powder_from_emberflower").end()
                 .build());
     }
     

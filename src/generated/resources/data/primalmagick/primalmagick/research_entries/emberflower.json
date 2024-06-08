@@ -68,7 +68,8 @@
         "rootKey": "primalmagick:emberflower"
       },
       "recipes": [
-        "primalmagick:emberflower"
+        "primalmagick:emberflower",
+        "primalmagick:blaze_powder_from_emberflower"
       ],
       "revelations": [],
       "siblings": [],
